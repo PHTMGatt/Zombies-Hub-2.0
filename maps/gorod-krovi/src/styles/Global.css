@@ -1,5 +1,4 @@
-/* Global.css */
-
+/* Gorod Krovi legacy globals. PostCSS scopes these rules to .gorod-module. */
 :root {
   --accent-color: #ff5f3c;
   --text-color: #e0e0e0;
@@ -16,12 +15,10 @@
 html,
 body,
 #root {
-  height: 100%;
+  min-height: 100%;
   font-family: 'Segoe UI', sans-serif;
   color: var(--text-color);
-  display: flex;
-  flex-direction: column;
-  background: url('/src/assets/GK_BG.jpg') no-repeat center center fixed;
+  background: url('../assets/GK_BG.jpg') no-repeat center center fixed;
   background-size: cover;
 }
 
@@ -33,16 +30,13 @@ main {
   align-items: center;
 }
 
-/* Glass-card default */
 .glass-card {
-  /* background: rgba(255, 255, 255, 0.05); */
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 1rem;
   backdrop-filter: blur(10px);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
 
-/* Links & Buttons */
 a {
   text-decoration: none;
   color: inherit;
@@ -65,10 +59,9 @@ button:focus {
   background: rgba(0, 0, 0, 0.8);
 }
 
-/* Fixed Nav & Footer */
 nav.nav-container {
   position: sticky;
-  top: 0;
+  top: var(--hub-nav-height);
   width: 100%;
   z-index: 10;
 }
@@ -80,16 +73,11 @@ footer.footer-container {
   z-index: 10;
 }
 
-/* Utility Text */
-.section-title {
-  color: var(--accent-color);
-}
+.section-title { color: var(--accent-color); }
 
 .section-subtitle,
 .step-text,
-.section-intro {
-  color: var(--text-color);
-}
+.section-intro { color: var(--text-color); }
 
 .footer-text {
   color: var(--text-muted);
@@ -103,4 +91,3 @@ footer.footer-container {
   border-radius: 0 !important;
   box-shadow: 0 -4px 10px rgba(255, 0, 0, 0.15) !important;
 }
-
