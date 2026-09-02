@@ -8,8 +8,7 @@ function Header() {
   return (
     <header className="rev-header">
       <div className="rev-header__left">
-        <span className="rev-header__kicker">Zombies Hub 2.0 · Black Ops III</span>
-        <h1 className="rev-header__title">Revelations</h1>
+        <h1 className="rev-header__title">Revelations Easter Egg Guide</h1>
         <p className="rev-header__subtitle">For The Good Of All — and A Better Tomorrow</p>
       </div>
 
