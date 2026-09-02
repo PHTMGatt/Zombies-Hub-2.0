@@ -2,14 +2,16 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/Nav.css';
 
+const BASE = '/maps/gorod-krovi';
+
 const Nav = () => {
   return (
     <nav className="main-nav">
-      <Link to="/">Main Guide</Link>
-      <Link to="/buildables">Buildables</Link>
-      <Link to="/trophies">Trophy Challenges</Link>
-      <Link to="/valves">Valve Solver</Link>
-      <Link to="/boss">Boss Fight</Link>
+      <Link to={BASE}>Main Guide</Link>
+      <Link to={`${BASE}/buildables`}>Buildables</Link>
+      <Link to={`${BASE}/trophies`}>Trophy Challenges</Link>
+      <Link to={`${BASE}/valves`}>Valve Solver</Link>
+      <Link to={`${BASE}/boss`}>Boss Fight</Link>
     </nav>
   );
 };
