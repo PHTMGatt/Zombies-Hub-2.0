@@ -21,15 +21,16 @@ export default function MainGuide() {
         <GuideHero
           kicker="Shadows of Evil"
           title="Main Easter Egg Guide"
-          description="Condensed from the full guide transcript into a run-first format: the objective you need, the important detail underneath it, and no wiki wall between you and the next step."
+          description="The full Morg City quest in actual run order: rituals, sword, Pack-a-Punch, sword upgrade, flags, Shadowman, and the four-player train finale."
         >
           <GuideChip>Black Ops III</GuideChip>
-          <GuideChip>Full EE: 4 players</GuideChip>
+          <GuideChip>Solo through Shadowman</GuideChip>
+          <GuideChip>4 players for full ending</GuideChip>
           <GuideChip>Transcript verified</GuideChip>
         </GuideHero>
 
-        <GuideCallout label="Before the run" tone="info" className="soe-player-note">
-          The complete Shadows of Evil ending requires four players. The guide still keeps the earlier quest flow useful for practice and setup, but the final Gateworm sequence is a coordinated four-player step.
+        <GuideCallout label="Player requirement" tone="info" className="soe-player-note">
+          You can play the quest solo through the Shadowman boss fight. The final train / Keeper sequence, ending cutscene, and Summoning Key achievement require a four-player game.
         </GuideCallout>
 
         <GuideSection
@@ -86,3 +87,5 @@ export default function MainGuide() {
     </main>
   );
 }
+
+export default MainGuide;
