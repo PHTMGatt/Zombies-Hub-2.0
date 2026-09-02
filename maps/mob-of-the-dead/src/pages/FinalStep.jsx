@@ -1,23 +1,19 @@
-// src/pages/FinalStep.jsx
 import React from 'react';
-import '../styles/FinalStep.css';
+import MobSectionPage from '../components/MobSectionPage';
+import { finalSteps } from '../data/mobGuide';
 
-const FinalStep = () => (
-  <main className="finalstep-page">
-    <h2>Step 5: The Final Showdown</h2>
-    <ol>
-      <li>Enter Afterlife and board the plane on the island.</li>
-      <li>All players are transported to the plane—crash at the bridge.</li>
-      <li>Revive at electric chairs, Weasel appears as enemy.</li>
-      <li>
-        Ending conditions:
-        <ul>
-          <li><strong>Continue cycle:</strong> Mobsters kill Weasel.</li>
-          <li><strong>Break cycle:</strong> Weasel kills all others.</li>
-        </ul>
-      </li>
-    </ol>
-  </main>
-);
-
-export default FinalStep;
+export default function FinalStep() {
+  return (
+    <MobSectionPage
+      kicker="Mob of the Dead"
+      title="Final Afterlife Flight"
+      description="Once the code and audio sequence is complete, the rooftop plane becomes the final trigger. No fuel is required for this flight."
+      chips={['Co-op required', 'Afterlife flight', 'Weasel showdown']}
+      note={{
+        label: 'Final requirement',
+        body: 'This is the point where a solo run stops. The final bridge fight requires multiple players, and a two- or three-player game needs Weasel present.',
+      }}
+      steps={finalSteps}
+    />
+  );
+}
