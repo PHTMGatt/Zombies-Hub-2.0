@@ -1,201 +1,255 @@
-/* Reusing unified style */
-
-.rev-page {
+.revelations-module .rev-page {
   position: relative;
-  padding: 5rem 1rem;
-  min-height: 100vh;
+  padding: 1.4rem 1rem 2rem;
+  min-height: 0;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   flex-direction: column;
   z-index: 1;
 }
 
-.rev-background {
+.revelations-module .rev-background {
   position: absolute;
   inset: 0;
   background: url('../assets/rev-guide/Main/Revelations.webp') no-repeat center center/cover;
-  filter: blur(10px) brightness(0.3);
+  filter: blur(8px) brightness(0.32);
   z-index: 0;
-  animation: bgFloat 40s ease-in-out infinite alternate;
 }
 
-@keyframes bgFloat {
-  0% {
-    transform: scale(1) translate(0px, 0px);
-  }
-  100% {
-    transform: scale(1.05) translate(10px, 10px);
-  }
-}
-
-.sk-container {
+.revelations-module .sk-container {
   position: relative;
   z-index: 2;
-  width: 100%;
-  max-width: 1200px;
+  width: min(100%, 980px);
   text-align: center;
   color: #aad4ff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
-.sk-title {
-  font-size: 2.8rem;
-  font-weight: 800;
-  margin-bottom: 2rem;
+.revelations-module .rev-page-heading {
+  margin-bottom: 0.7rem;
+}
+
+.revelations-module .sk-title {
+  margin: 0.1rem 0 0.35rem;
   color: #cce6ff;
-  text-shadow: 2px 2px 6px #000;
+  font-size: clamp(1.8rem, 3vw, 2.35rem);
+  font-weight: 800;
+  text-shadow: 0 0 10px rgba(109, 194, 255, 0.55);
 }
 
-/* Wraps video + cards */
-.rev-glow-box {
-  background: rgba(0, 0, 0, 0.4);
-  border-radius: 16px;
-  border: 2px solid rgba(109, 194, 255, 0.5);
-  box-shadow: 0 0 40px rgba(109, 194, 255, 0.35), 0 0 80px rgba(0, 255, 255, 0.15) inset;
-  padding: 2rem 1.5rem;
-  max-width: 1000px;
-  width: 100%;
-  margin-bottom: 2rem;
-  backdrop-filter: blur(10px);
-  z-index: 2;
+.revelations-module .rev-page-intro {
+  max-width: 780px;
+  margin: 0 auto;
+  color: #bdcbe2;
+  font-size: 0.9rem;
+  line-height: 1.45;
 }
 
-.video-card {
+.revelations-module .rev-glow-box {
   width: 100%;
-  max-width: 960px;
-  border-radius: 16px;
+  padding: 0.8rem;
+  border: 1px solid rgba(109, 194, 255, 0.35);
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.36);
+  box-shadow: 0 0 24px rgba(109, 194, 255, 0.18);
+  backdrop-filter: blur(8px);
+}
+
+.revelations-module .video-card {
+  width: min(100%, 760px);
+  margin: 0 auto 0.45rem;
+  border: 2px solid rgba(109, 194, 255, 0.52);
+  border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 0 40px rgba(0, 255, 255, 0.6);
-  border: 4px solid rgba(109, 194, 255, 0.8);
-  background: rgba(0, 0, 0, 0.5);
-  margin-bottom: 1rem;
-  transition: all 0.3s ease;
+  background: rgba(0, 0, 0, 0.45);
+  box-shadow: 0 0 20px rgba(0, 191, 255, 0.26);
 }
 
-.video-caption {
-  font-size: 0.95rem;
-  color: #aad4ff;
-  padding: 0.5rem 0;
-  text-shadow: 1px 1px 2px #000;
-  background: rgba(0, 0, 0, 0.35);
+.revelations-module .rev-video-player__iframe {
+  width: 100% !important;
+  height: 310px !important;
+  display: block;
 }
 
-/* === Sound Carousel === */
-.carousel-wrapper {
+.revelations-module .video-caption {
+  padding: 0.3rem 0.55rem;
+  color: #aacbe4;
+  font-size: 0.78rem;
+  background: rgba(0, 0, 0, 0.28);
+}
+
+.revelations-module .sk-selected-label {
+  margin: 0.35rem 0 0.4rem;
+  color: #d4ecff;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.revelations-module .rev-selected-prefix {
+  color: #7dcfff;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.revelations-module .carousel-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
-  height: 260px;
+  height: 150px;
+  overflow: hidden;
 }
 
-.sound-card {
+.revelations-module .sound-card {
   position: absolute;
-  width: 300px;
-  min-height: 180px;
-  border-radius: 16px;
-  padding: 1.5rem;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(10px);
-  border: 2px solid #00c3ff;
-  box-shadow: 0 0 20px rgba(109, 194, 255, 0.3);
+  width: 220px;
+  min-height: 92px;
+  padding: 0.7rem;
+  border: 1px solid rgba(0, 195, 255, 0.62);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.54);
   color: #aad4ff;
-  transition: transform 0.5s ease, opacity 0.4s ease;
+  box-shadow: 0 0 14px rgba(109, 194, 255, 0.18);
+  transition: transform 0.35s ease, opacity 0.3s ease;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  transform-style: preserve-3d;
   z-index: 1;
+  cursor: pointer;
 }
 
-.card-overlay {
+.revelations-module .card-overlay {
   position: absolute;
   inset: 0;
   background: url('../assets/rev-guide/Main/RevRed.jpg') no-repeat center center/cover;
-  filter: blur(8px) brightness(0.5);
-  opacity: 0.8;
+  filter: blur(6px) brightness(0.42);
+  opacity: 0.6;
   z-index: 0;
-  border-radius: 16px;
+  border-radius: 10px;
   pointer-events: none;
 }
 
-
-.sound-card h2 {
-  font-size: 1.4rem;
-  margin-bottom: 1rem;
-  color: #cce6ff;
-  text-shadow: 1px 1px 3px #000;
+.revelations-module .sound-card h2 {
+  position: relative;
+  z-index: 2;
+  margin: 0 0 0.45rem;
+  color: #d9efff;
+  font-size: 1rem;
+  text-shadow: 0 1px 3px #000;
 }
 
-.card-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+.revelations-module .card-buttons {
+  position: relative;
   z-index: 2;
   width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.35rem;
 }
 
-.card-buttons button {
-  background: transparent;
-  border: 2px solid #00c3ff;
-  border-radius: 6px;
-  padding: 0.5rem 1rem;
-  color: #aad4ff;
-  font-family: 'Orbitron', sans-serif;
-  font-size: 0.95rem;
-  letter-spacing: 1px;
-  text-shadow: 0 0 5px #00d9ff;
-  box-shadow: inset 0 0 12px rgba(0, 191, 255, 0.25), 0 0 10px rgba(0, 191, 255, 0.3);
-  transition: all 0.3s ease;
+.revelations-module .card-buttons button {
+  min-width: 0;
+  padding: 0.38rem 0.32rem;
+  border: 1px solid #00c3ff;
+  border-radius: 5px;
+  background: rgba(0, 25, 40, 0.58);
+  color: #d1efff;
+  font-size: 0.7rem;
   cursor: pointer;
 }
 
-.card-buttons button:hover {
-  background: rgba(0, 255, 255, 0.2);
-  transform: scale(1.04);
+.revelations-module .card-buttons button span,
+.revelations-module .card-buttons button small {
+  display: block;
 }
 
-/* Carousel positions */
-.sound-card.center {
-  transform: translateX(0) scale(1.1);
+.revelations-module .card-buttons button small {
+  margin-top: 0.12rem;
+  color: #7fdcff;
+  font-size: 0.62rem;
+}
+
+.revelations-module .card-buttons button:hover,
+.revelations-module .card-buttons button.active {
+  background: rgba(0, 195, 255, 0.18);
+}
+
+.revelations-module .sound-card.center {
+  width: 330px;
+  min-height: 118px;
+  transform: translateX(0) scale(1);
   z-index: 3;
 }
-.sound-card.left {
-  transform: translateX(-270px) scale(0.85) rotateY(12deg);
-  opacity: 0.6;
-  z-index: 2;
-}
-.sound-card.right {
-  transform: translateX(270px) scale(0.85) rotateY(-12deg);
-  opacity: 0.6;
+
+.revelations-module .sound-card.left {
+  transform: translateX(-285px) scale(0.78) rotateY(10deg);
+  opacity: 0.42;
   z-index: 2;
 }
 
-.spinner-controls {
-  margin-top: 2.5rem;
+.revelations-module .sound-card.right {
+  transform: translateX(285px) scale(0.78) rotateY(-10deg);
+  opacity: 0.42;
+  z-index: 2;
+}
+
+.revelations-module .spinner-controls {
+  margin-top: 0.55rem;
   display: flex;
+  align-items: center;
   justify-content: center;
-  gap: 2rem;
+  gap: 0.8rem;
 }
 
-.spinner-controls button {
-  background: #00c3ff;
-  border: none;
-  color: black;
-  font-weight: bold;
-  padding: 0.5rem 1.2rem;
-  border-radius: 8px;
-  font-size: 1.25rem;
+.revelations-module .spinner-controls span {
+  min-width: 42px;
+  color: #bfe6ff;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.revelations-module .spinner-controls button {
+  min-width: 44px;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid rgba(109, 194, 255, 0.65);
+  border-radius: 6px;
+  background: rgba(4, 22, 34, 0.88);
+  color: #bfeaff;
+  font-size: 1rem;
   cursor: pointer;
-  box-shadow: 0 0 10px #00c3ff88;
-  transition: background 0.3s ease, transform 0.2s ease;
 }
 
-.spinner-controls button:hover {
-  background: #00e6ff;
-  transform: scale(1.1);
+.revelations-module .spinner-controls button:hover {
+  background: rgba(16, 76, 108, 0.9);
+}
+
+@media (max-width: 760px) {
+  .revelations-module .rev-video-player__iframe {
+    height: 240px !important;
+  }
+
+  .revelations-module .carousel-wrapper {
+    height: 142px;
+  }
+
+  .revelations-module .sound-card.left,
+  .revelations-module .sound-card.right {
+    display: none;
+  }
+
+  .revelations-module .sound-card.center {
+    width: min(100%, 360px);
+  }
+}
+
+@media (max-width: 520px) {
+  .revelations-module .card-buttons {
+    grid-template-columns: 1fr;
+  }
+
+  .revelations-module .sound-card.center {
+    min-height: 138px;
+  }
 }
