@@ -5,18 +5,14 @@ import '../styles/Header.css';
 
 const Header = () => (
   <header className="mob-header">
-    <img
-      src={bannerSrc}
-      alt="Mob of the Dead banner"
-      className="header-bg"
-    />
+    <img src={bannerSrc} alt="" aria-hidden="true" className="header-bg" />
 
     <div className="header-content">
-      <span className="mob-header__kicker">Alcatraz · Zombies Hub 2.0</span>
-      <h1>
-        Mob of the Dead
+      <div className="mob-header__identity">
+        <span className="mob-header__kicker">Alcatraz</span>
+        <h1>Mob of the Dead</h1>
         <small>Pop Goes the Weasel</small>
-      </h1>
+      </div>
       <Nav />
     </div>
   </header>
