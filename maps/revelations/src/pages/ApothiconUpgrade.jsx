@@ -1,43 +1,45 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
+import GuideVideoPlayer from '../components/GuideVideoPlayer';
 import upgradeData from '../data/ApothiconUpgradeData';
 import '../styles/ApothiconUpgrade.css';
 
 const ApothiconUpgrade = () => {
+  const videoRef = useRef(null);
   const [selected, setSelected] = useState(upgradeData[0]);
-  const [videoTimes, setVideoTimes] = useState({ start: selected.start, end: selected.end });
-  const [autoplay, setAutoplay] = useState(false);
 
   const handlePlay = (item) => {
     setSelected(item);
-    setVideoTimes({ start: item.start, end: item.end });
-    setAutoplay(true);
+    videoRef.current?.playSegment(item.start, item.end);
   };
 
   return (
     <div className="rev-page">
       <div className="rev-background" />
       <div className="sk-container">
-        <h1 className="sk-title">Apothicon Upgrade Locations</h1>
+        <div className="rev-page-heading">
+          <span className="rev-page-kicker">Quick Reference</span>
+          <h1 className="sk-title">Apothicon Servant Upgrade</h1>
+          <p className="rev-page-intro">
+            Pick the area you need and the guide jumps directly to that short location segment.
+          </p>
+        </div>
 
         <div className="rev-glow-box">
-          <div className="video-card">
-            <iframe
-              width="100%"
-              height="400"
-              src={`https://www.youtube.com/embed/tt3mpH7Rrfo?start=${videoTimes.start}&end=${videoTimes.end}&autoplay=${autoplay ? 1 : 0}&rel=0`}
-              title="Apothicon Upgrade Video"
-              frameBorder="0"
-              allowFullScreen
-            />
-            <div className="video-caption">(Click a section or location to play)</div>
+          <GuideVideoPlayer
+            ref={videoRef}
+            title="Apothicon Servant upgrade locations"
+            caption="Choose an area below to play only that location segment."
+          />
+
+          <div className="sk-selected-label">
+            <span className="rev-selected-prefix">Selected:</span> {selected.name}
           </div>
 
-          <div className="sk-selected-label">{selected.name}</div>
-
-          <div className="sk-buttons">
-            {upgradeData.map((item, index) => (
+          <div className="sk-buttons" aria-label="Apothicon upgrade locations">
+            {upgradeData.map((item) => (
               <button
-                key={index}
+                key={item.name}
+                type="button"
                 onClick={() => handlePlay(item)}
                 className={`sk-button ${selected.name === item.name ? 'active' : ''}`}
               >
