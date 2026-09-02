@@ -8,7 +8,7 @@
   --guide-muted: #c4d0e1;
 
   position: relative;
-  padding: 1.35rem 1rem 2.4rem;
+  padding: 1rem 1rem 1.8rem;
   min-height: 0;
   align-items: stretch;
 }
@@ -31,35 +31,55 @@
 
 .revelations-module .rev-main-note {
   width: min(100%, 980px);
-  margin: 0 auto 1rem;
+  margin: 0 auto 0.8rem;
 }
 
-.revelations-module .rev-phase-link,
-.revelations-module .rev-sound-link {
+.revelations-module .rev-phase-link {
   display: inline-flex;
-  margin-top: 0.38rem;
+  margin-top: 0.35rem;
   color: #91ddff;
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   font-weight: 700;
   text-decoration: none;
 }
 
-.revelations-module .rev-phase-link:hover,
-.revelations-module .rev-sound-link:hover {
+.revelations-module .rev-phase-link:hover {
   color: #d8f5ff;
   text-decoration: underline;
 }
 
-.revelations-module .rev-sound-link {
-  margin-top: 0;
-  padding: 0.62rem 0.8rem;
+.revelations-module .rev-main-shortcuts {
+  width: min(100%, 1020px);
+  margin: 0.15rem auto 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.45rem;
+}
+
+.revelations-module .rev-main-shortcuts a {
+  min-height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem 0.7rem;
+  color: #cfeaff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-decoration: none;
   border: 1px solid rgba(109, 194, 255, 0.18);
-  border-radius: 8px;
-  background: rgba(4, 8, 20, 0.7);
+  border-radius: 999px;
+  background: rgba(4, 8, 20, 0.58);
+}
+
+.revelations-module .rev-main-shortcuts a:hover {
+  color: #fff;
+  border-color: rgba(109, 194, 255, 0.4);
+  background: rgba(15, 43, 70, 0.62);
 }
 
 @media (max-width: 640px) {
   .revelations-module .rev-main-guide {
-    padding: 1rem 0.5rem 2rem;
+    padding: 0.8rem 0.5rem 1.5rem;
   }
 }
