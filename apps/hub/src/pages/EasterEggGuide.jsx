@@ -7,6 +7,7 @@ import '../styles/compStyles/EggGuideCard.css';
 const dedicatedGuides = new Set([
   'origins',
   'mob-of-the-dead',
+  'shadows-of-evil',
   'der-eisendrache',
   'zetsubou-no-shima',
   'gorod-krovi',
