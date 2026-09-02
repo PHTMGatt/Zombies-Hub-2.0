@@ -164,7 +164,7 @@ const mapData = [
     slug:        "tranzit",
     game:        "Black Ops 2",
     dlc:         "Base Game",
-    released:    "2012-11-01",            // <-- add your release date
+    released:    "2012-11-01",
     description: "Traverse the ruined Pacific Northwest aboard an upgradable bus and …",
     hasEasterEgg: true,
     coverImage:  imageData.TranzitCoverMap,
@@ -231,6 +231,7 @@ const mapData = [
     game: "Black Ops 3",
     dlc: "Base Game",
     isEasterEgg: true,
+    internalRoute: '/maps/shadows-of-evil',
     coverImage: getCover("shadows of evil"),
     layoutImage: getLayout("shadows of evil"),
     hoverImage: null
