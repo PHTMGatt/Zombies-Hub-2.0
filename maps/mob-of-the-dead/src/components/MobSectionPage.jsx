@@ -1,12 +1,4 @@
 import React from 'react';
-import {
-  GuideHero,
-  GuideSection,
-  GuideStepList,
-  GuideStepCard,
-  GuideCallout,
-  GuideChip,
-} from '../../../../shared/ui/GuideLayout';
 import '../styles/MobSections.css';
 
 export default function MobSectionPage({
@@ -19,35 +11,40 @@ export default function MobSectionPage({
 }) {
   return (
     <main className="mob-section-page">
-      <GuideHero kicker={kicker} title={title} description={description}>
-        {chips.map((chip) => <GuideChip key={chip}>{chip}</GuideChip>)}
-      </GuideHero>
+      <header className="mob-sheet-header">
+        {kicker && <span>{kicker}</span>}
+        <h2>{title}</h2>
+        {description && <p>{description}</p>}
+        {chips.length > 0 && (
+          <div className="mob-sheet-chips">
+            {chips.map((chip) => <small key={chip}>{chip}</small>)}
+          </div>
+        )}
+      </header>
 
       {note && (
-        <GuideCallout label={note.label} tone="info" className="mob-section-note">
-          {note.body}
-        </GuideCallout>
+        <aside className="mob-sheet-note">
+          <strong>{note.label}</strong>
+          <span>{note.body}</span>
+        </aside>
       )}
 
-      <GuideSection kicker="Quick Reference" title="Run it in order">
-        <GuideStepList>
-          {steps.map((step, index) => (
-            <GuideStepCard
-              key={step.title}
-              step={index + 1}
-              label={step.label || 'Objective'}
-              title={step.title}
-              summary={step.summary}
-            >
-              {step.details?.length > 0 && (
-                <ul className="mob-section-details">
-                  {step.details.map((detail) => <li key={detail}>{detail}</li>)}
-                </ul>
-              )}
-            </GuideStepCard>
-          ))}
-        </GuideStepList>
-      </GuideSection>
+      <div className="mob-sheet">
+        {steps.map((step, index) => (
+          <section className="mob-sheet-step" key={step.title}>
+            <div className="mob-sheet-step__heading">
+              <span>{index + 1}</span>
+              <h3>{step.title}</h3>
+            </div>
+            <p>{step.summary}</p>
+            {step.details?.length > 0 && (
+              <ul>
+                {step.details.map((detail) => <li key={detail}>{detail}</li>)}
+              </ul>
+            )}
+          </section>
+        ))}
+      </div>
     </main>
   );
 }
