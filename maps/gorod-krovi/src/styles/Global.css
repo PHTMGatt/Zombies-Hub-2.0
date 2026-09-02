@@ -1,93 +1,60 @@
-/* Gorod Krovi legacy globals. PostCSS scopes these rules to .gorod-module. */
-:root {
-  --accent-color: #ff5f3c;
-  --text-color: #e0e0e0;
-  --text-muted: #b0b0b0;
-  --background-gradient: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
-}
+.gorod-module {
+  --gorod-accent: #ff704d;
+  --gorod-text: #efe5e1;
+  --gorod-muted: #c4aaa0;
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html,
-body,
-#root {
-  min-height: 100%;
-  font-family: 'Segoe UI', sans-serif;
-  color: var(--text-color);
-  background: url('../assets/GK_BG.jpg') no-repeat center center fixed;
-  background-size: cover;
-}
-
-main {
-  flex: 1;
-  padding: 2rem;
+  position: relative;
+  min-height: calc(100vh - var(--hub-nav-height));
   display: flex;
   flex-direction: column;
-  align-items: center;
+  color: var(--gorod-text);
+  font-family: 'Segoe UI', sans-serif;
+  background:
+    linear-gradient(rgba(4, 4, 5, 0.38), rgba(7, 4, 4, 0.56)),
+    url('../assets/GK_BG.jpg') center / cover fixed no-repeat;
+  isolation: isolate;
 }
 
-.glass-card {
-  border: 1px solid rgba(255, 255, 255, 0.15);
+.gorod-module::before {
+  content: '';
+  position: fixed;
+  inset: var(--hub-nav-height) 0 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 18% 28%, rgba(140, 31, 13, 0.12), transparent 34%),
+    radial-gradient(circle at 82% 62%, rgba(219, 83, 32, 0.08), transparent 36%);
+  z-index: 0;
+}
+
+.gorod-module > * {
+  position: relative;
+  z-index: 1;
+}
+
+.gorod-module > main {
+  flex: 1;
+  width: 100%;
+}
+
+.gorod-module .glass-card {
+  border: 1px solid rgba(255, 255, 255, 0.11);
   border-radius: 1rem;
+  background: rgba(8, 7, 7, 0.62);
   backdrop-filter: blur(10px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
 }
 
-a {
-  text-decoration: none;
+.gorod-module a {
   color: inherit;
 }
 
-button {
-  background: rgba(0, 0, 0, 0.6);
-  color: var(--text-color);
-  padding: 0.5rem 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 0.5rem;
-  cursor: pointer;
-  font-weight: bold;
-  transition: transform 0.2s ease, background 0.3s ease;
+.gorod-module button,
+.gorod-module select {
+  font-family: inherit;
 }
 
-button:hover,
-button:focus {
-  transform: scale(1.03);
-  background: rgba(0, 0, 0, 0.8);
-}
-
-nav.nav-container {
-  position: sticky;
-  top: var(--hub-nav-height);
-  width: 100%;
-  z-index: 10;
-}
-
-footer.footer-container {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  z-index: 10;
-}
-
-.section-title { color: var(--accent-color); }
-
-.section-subtitle,
-.step-text,
-.section-intro { color: var(--text-color); }
-
-.footer-text {
-  color: var(--text-muted);
-  font-size: 0.9rem;
-}
-
-.footer-card.glass-card {
-  background: rgba(0, 0, 0, 0.75) !important;
-  border: none !important;
-  border-top: 1px solid rgba(255, 0, 0, 0.15) !important;
-  border-radius: 0 !important;
-  box-shadow: 0 -4px 10px rgba(255, 0, 0, 0.15) !important;
+@media (max-width: 720px) {
+  .gorod-module {
+    background-attachment: scroll;
+  }
 }
