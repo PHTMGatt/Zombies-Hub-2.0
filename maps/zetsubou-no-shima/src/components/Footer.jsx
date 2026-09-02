@@ -4,10 +4,19 @@ import '../styles/Footer.css';
 const Footer = () => {
   return (
     <footer className="zets-footer">
-      <div className="footer-glow-line" />
-      <p className="footer-text">
-        <strong>Seeds of Doubt</strong> © Zetsubou No Shima — A Call of Duty Zombies Fan Project
-      </p>
+      <div className="zets-footer__backdrop" aria-hidden="true" />
+      <div className="zets-footer__content">
+        <div className="zets-footer__identity">
+          <span className="zets-footer__kicker">Zombies Hub 2.0</span>
+          <strong>Zetsubou No Shima</strong>
+        </div>
+        <div className="zets-footer__divider" aria-hidden="true" />
+        <div className="zets-footer__meta">
+          <span>Seeds of Doubt</span>
+          <span className="zets-footer__dot" aria-hidden="true">•</span>
+          <span>Pohnpei</span>
+        </div>
+      </div>
     </footer>
   );
 };
