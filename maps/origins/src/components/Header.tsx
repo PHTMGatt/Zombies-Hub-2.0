@@ -9,11 +9,15 @@ const Header = () => {
       <div className="origins-header__backdrop" aria-hidden="true" />
 
       <div className="origins-header__content">
-        <div className="origins-header__identity">
-          <img src={ReviveIcon} alt="" aria-hidden="true" className="revive-header-icon" />
-          <h1 className="header-title">Origins</h1>
-          <span className="origins-header__subtitle">Little Lost Girl</span>
-          <img src={ReviveIcon} alt="" aria-hidden="true" className="revive-header-icon origins-header__end-icon" />
+        <div className="header-left">
+          <div className="title-box">
+            <img src={ReviveIcon} alt="Revive Icon" className="revive-header-icon" />
+            <h1 className="header-title">
+              <span className="black-text">Origins Easter Egg</span>{" "}
+              <span className="white-text">Little Lost Girl</span>
+            </h1>
+            <img src={ReviveIcon} alt="Revive Icon" className="revive-header-icon" />
+          </div>
         </div>
 
         <div className="header-right">
