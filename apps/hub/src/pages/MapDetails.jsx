@@ -7,6 +7,7 @@ import '../styles/pageStyles/MapDetails.css';
 const dedicatedGuides = new Set([
   'origins',
   'mob-of-the-dead',
+  'shadows-of-evil',
   'der-eisendrache',
   'zetsubou-no-shima',
   'gorod-krovi',
