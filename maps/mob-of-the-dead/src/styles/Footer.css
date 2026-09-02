@@ -1,45 +1,103 @@
-/* src/styles/Footer.css */
-
-/* Full-width footer container, fixed at bottom */
-.footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
+.mob-module .mob-footer {
+  position: relative;
   width: 100%;
+  min-height: 96px;
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 1.5rem;
   overflow: hidden;
-  z-index: 1000;
-  background: transparent;
-  padding: 0; /* no extra padding—panel itself is full height */
+  color: #eee5d8;
+  border-top: 1px solid rgba(240, 179, 33, 0.18);
+  background:
+    linear-gradient(to bottom, rgba(6, 7, 9, 0.52), rgba(4, 5, 7, 0.9)),
+    url('../assets/images/mob-banner.png') center 70% / cover no-repeat;
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.28), 0 -2px 18px rgba(177, 52, 17, 0.1);
+  isolation: isolate;
 }
 
-/* Glass-style panel spanning full width */
-.footer-panel {
-  width: 100%;
-  padding: 1rem 0;                 /* vertical padding */
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(8px);
-  border-radius: 0 0 0 0;          /* square corners */
-  box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.7);
-  text-align: center;
-  color: #ccc;
-  font-size: 0.9rem;
+.mob-module .mob-footer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 100%, rgba(240, 179, 33, 0.08), transparent 55%);
 }
 
-/* Push content up so nothing hides behind footer */
-#root {
-  /* Note; increased bottom padding to ensure everything sits above the footer */
-  padding-bottom: 6rem;
+.mob-module .mob-footer__content {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 980px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
 }
 
-/* Mobile tweaks */
-@media (max-width: 600px) {
-  .footer-panel {
-    padding: 0.75rem 0;
-    font-size: 0.8rem;
-    box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.6);
+.mob-module .mob-footer__identity {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  text-align: right;
+}
+
+.mob-module .mob-footer__kicker {
+  color: #f0b321;
+  font-size: 0.62rem;
+  font-weight: 850;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.mob-module .mob-footer__identity strong {
+  color: #fff5e9;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+}
+
+.mob-module .mob-footer__divider {
+  width: 1px;
+  height: 36px;
+  background: linear-gradient(to bottom, transparent, rgba(240, 179, 33, 0.42), transparent);
+}
+
+.mob-module .mob-footer__meta {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: #d6c7b6;
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+}
+
+.mob-module .mob-footer__meta span:nth-child(2) {
+  color: #f0b321;
+}
+
+@media (max-width: 620px) {
+  .mob-module .mob-footer {
+    min-height: 90px;
   }
-  #root {
-    /* Note; match mobile padding */
-    padding-bottom: 5rem;
+
+  .mob-module .mob-footer__content {
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .mob-module .mob-footer__identity {
+    text-align: center;
+  }
+
+  .mob-module .mob-footer__divider {
+    width: 70px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(240, 179, 33, 0.42), transparent);
+  }
+
+  .mob-module .mob-footer__meta {
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
   }
 }
