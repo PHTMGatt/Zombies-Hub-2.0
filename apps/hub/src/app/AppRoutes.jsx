@@ -11,6 +11,7 @@ import SideEEInfo from '../pages/SideEEInfo';
 import ComingSoon from '../pages/ComingSoon';
 import OriginsRoutes from '../../../../maps/origins/routes/OriginsRoutes';
 import MobRoutes from '../../../../maps/mob-of-the-dead/routes/MobRoutes';
+import ShadowsRoutes from '../../../../maps/shadows-of-evil/routes/ShadowsRoutes';
 import DerEisendracheRoutes from '../../../../maps/der-eisendrache/routes/DerEisendracheRoutes';
 import ZetsubouRoutes from '../../../../maps/zetsubou-no-shima/routes/ZetsubouRoutes';
 import GorodRoutes from '../../../../maps/gorod-krovi/routes/GorodRoutes';
@@ -32,6 +33,7 @@ export default function AppRoutes({ RootLayout }) {
         {/* Dedicated guide applications now mount inside the Hub shell. */}
         <Route path="maps/origins/*" element={<OriginsRoutes />} />
         <Route path="maps/mob-of-the-dead/*" element={<MobRoutes />} />
+        <Route path="maps/shadows-of-evil/*" element={<ShadowsRoutes />} />
         <Route path="maps/der-eisendrache/*" element={<DerEisendracheRoutes />} />
         <Route path="maps/zetsubou-no-shima/*" element={<ZetsubouRoutes />} />
         <Route path="maps/gorod-krovi/*" element={<GorodRoutes />} />
