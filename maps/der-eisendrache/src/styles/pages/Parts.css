@@ -1,105 +1,146 @@
-/* 'Parts.css' */
-/* ------------- */
-
-/* 1. PAGE CONTAINER */
-.parts-page {
-  max-width: 800px;
-  margin: 12rem auto 2rem auto;
-  padding: 1.5rem;
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(4px);
-  border-radius: 0.75rem;
-  color: #efefef;
-  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.4);
-  box-sizing: border-box;
+.de-parts-page {
+  width: min(1100px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 2.4rem 0 5rem;
 }
 
-/* 2. TYPOGRAPHY */
-.parts-page__title {
-  margin: 0 0 1.5rem;
-  font-size: 2rem;
-  font-weight: 600;
-  color: #ffffff;
+.de-parts-page .zh-guide-hero {
+  background:
+    linear-gradient(135deg, rgba(79, 166, 224, 0.17), transparent 45%),
+    rgba(4, 12, 22, 0.84);
 }
 
-.parts-page__section {
-  margin-bottom: 1.5rem;
+.de-parts-zone-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.8rem;
+  margin-bottom: 1rem;
 }
 
-.parts-page__subtitle {
-  margin: 0 0 0.75rem;
-  font-size: 1.25rem;
-  font-weight: 500;
-  color: #ffffff;
+.de-parts-zone-card {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: start;
+  padding: 1rem;
+  border: 1px solid rgba(123, 207, 255, 0.15);
+  border-radius: 14px;
+  background:
+    linear-gradient(145deg, rgba(69, 152, 211, 0.1), transparent 45%),
+    rgba(3, 10, 18, 0.76);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.26);
 }
 
-/* LIST STYLES */
-.parts-page__list {
+.de-parts-zone-card__number {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #06111a;
+  background: #7bcfff;
+  font-size: 0.82rem;
+  font-weight: 900;
+}
+
+.de-parts-zone-card h3 {
+  margin: 0 0 0.55rem;
+  color: #eaf7ff;
+  font-size: 1rem;
+}
+
+.de-parts-zone-card ul {
   margin: 0;
-  padding-left: 1.5rem;
+  padding-left: 1.1rem;
 }
 
-.parts-page__list--ordered {
-  list-style: decimal inside;
-}
-
-.parts-page__list:not(.parts-page__list--ordered) {
-  list-style: disc inside;
-}
-
-.parts-page__item {
-  margin-bottom: 0.5rem;
+.de-parts-zone-card li {
+  margin-bottom: 0.42rem;
+  color: #b9cbd8;
+  font-size: 0.86rem;
   line-height: 1.5;
 }
 
-/* 3. RESPONSIVE BREAKPOINTS */
-@media (max-width: 768px) {
-  .parts-page {
-    margin: 1rem;
-    padding: 1rem;
-  }
-  .parts-page__title {
-    font-size: 1.75rem;
-  }
-  .parts-page__subtitle {
-    font-size: 1.1rem;
-  }
+.de-parts-quick-grid,
+.de-parts-optional-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
 }
 
-@media (max-width: 480px) {
-  .parts-page {
-    padding: 0.75rem;
-    margin: 8rem 1rem 1rem;
-  }
-  .parts-page__title {
-    font-size: 1.5rem;
-  }
-  .parts-page__subtitle {
-    font-size: 1rem;
-  }
-  .parts-page__item {
-    font-size: 0.95rem;
-  }
+.de-parts-quick-grid > div {
+  padding: 1rem 1.1rem;
+  border: 1px solid rgba(123, 207, 255, 0.14);
+  border-radius: 13px;
+  background: rgba(3, 10, 18, 0.74);
 }
 
-/* 4. VIDEO LINK STYLING */
-.parts-page__video-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-weight: 500;
-  color: #4da6ff;
+.de-parts-quick-grid strong {
+  display: block;
+  margin-bottom: 0.38rem;
+  color: #8dd8ff;
+  font-size: 0.93rem;
+}
+
+.de-parts-quick-grid p {
+  margin: 0;
+  color: #b8cad7;
+  font-size: 0.88rem;
+  line-height: 1.58;
+}
+
+.de-parts-optional-grid a {
+  min-height: 92px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.28rem;
+  padding: 1rem 1.15rem;
+  border: 1px solid rgba(184, 154, 255, 0.16);
+  border-radius: 13px;
+  background:
+    linear-gradient(135deg, rgba(135, 88, 207, 0.1), transparent 48%),
+    rgba(3, 9, 17, 0.76);
   text-decoration: none;
-  transition: color 0.2s ease;
+  transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
 }
 
-.parts-page__video-link:hover {
-  color: #ffffff;
-  text-decoration: underline;
+.de-parts-optional-grid a:hover {
+  transform: translateY(-2px);
+  border-color: rgba(184, 154, 255, 0.38);
+  background:
+    linear-gradient(135deg, rgba(135, 88, 207, 0.18), transparent 52%),
+    rgba(3, 9, 17, 0.84);
 }
 
-.parts-page__video-link::before {
-  content: '🔗';
+.de-parts-optional-grid span {
+  color: #aa94dd;
+  font-size: 0.66rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.de-parts-optional-grid strong {
+  color: #e9e1ff;
   font-size: 1rem;
-  display: inline-block;
+}
+
+@media (max-width: 820px) {
+  .de-parts-zone-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 620px) {
+  .de-parts-page {
+    width: calc(100% - 1rem);
+    padding: 1.5rem 0 3.5rem;
+  }
+
+  .de-parts-quick-grid,
+  .de-parts-optional-grid {
+    grid-template-columns: 1fr;
+  }
 }
