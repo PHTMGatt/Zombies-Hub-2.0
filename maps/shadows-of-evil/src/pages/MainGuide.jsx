@@ -18,17 +18,17 @@ const phases = [
     notes: [...soeGuide[0].notes, ...soeGuide[1].notes],
   },
   {
-    title: 'Open Pack-a-Punch + Upgrade the Sword',
+    title: 'Pack-a-Punch + Sword Upgrade',
     summary: 'Use the four Gateworms to open Pack-a-Punch, then complete the Arch-Ovum Margwa challenges and claim the upgraded sword.',
     notes: [...soeGuide[2].notes, ...soeGuide[3].notes],
   },
   {
-    title: 'Complete the Flag Step',
+    title: 'Flag Step',
     summary: soeGuide[4].summary,
     notes: soeGuide[4].notes,
   },
   {
-    title: 'Defeat the Shadowman',
+    title: 'Shadowman Fight',
     summary: soeGuide[5].summary,
     notes: soeGuide[5].notes,
   },
@@ -47,7 +47,7 @@ function MainGuide() {
         <GuideHero
           kicker="Shadows of Evil"
           title="Main Easter Egg Guide"
-          description="Five phases from rituals to the final train sequence. Open the quick notes only when you reach that phase."
+          description="Five phases from rituals to the train finale. Open the notes only when you reach that part of the run."
         >
           <GuideChip>Solo through Shadowman</GuideChip>
           <GuideChip>4 players for full ending</GuideChip>
@@ -58,7 +58,7 @@ function MainGuide() {
         </GuideCallout>
 
         <GuideSection kicker="Main Run" title="Five phases">
-          <GuideStepList>
+          <GuideStepList className="zh-guide-step-list--roadmap">
             {phases.map((phase, index) => (
               <GuideStepCard
                 key={phase.title}
