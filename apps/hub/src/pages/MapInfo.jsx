@@ -2,6 +2,7 @@ import React from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import mapInfo from '../data/mapInfo';
 import mapData from '../data/mapData';
+import { getDedicatedGuideRoute } from '../data/dedicatedGuides';
 import '../styles/pageStyles/MapInfo.css';
 
 export default function MapInfo() {
@@ -14,7 +15,8 @@ export default function MapInfo() {
 
   const meta = mapData.find(m => m.slug === slug) || mapData.find(m => m.name === info.name) || {};
   const banner = meta.coverImage || meta.layoutImage;
-  const guideRoute = meta.internalRoute || `/easter-eggs/${slug}`;
+  const dedicatedRoute = getDedicatedGuideRoute(slug);
+  const guideRoute = dedicatedRoute || `/easter-eggs/${slug}`;
 
   return (
     <div className="map-info-container">
@@ -40,7 +42,7 @@ export default function MapInfo() {
             {info.releasedIn && <span><strong>Released:</strong> {info.releasedIn}</span>}
             {info.hasEasterEgg ? (
               <Link to={guideRoute} className="badge">
-                {meta.internalRoute ? '📖 Open Easter Egg Guide' : '🎁 Easter-Egg Inside'}
+                {dedicatedRoute ? '📖 Open Easter Egg Guide' : '🎁 Easter-Egg Inside'}
               </Link>
             ) : (
               <span className="badge no-egg">No Easter-Egg</span>
