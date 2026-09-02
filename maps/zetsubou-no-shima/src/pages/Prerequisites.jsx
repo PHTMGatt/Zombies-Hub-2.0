@@ -1,38 +1,51 @@
 import React from 'react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import {
+  GuideHero,
+  GuideSection,
+  GuideCallout,
+  GuideChip,
+} from '../../../../shared/ui/GuideLayout';
 
-const Prerequisites = () => {
-  return (
-    <>
-      <Header />
-      <main className="guide-page">
-        <section className="guide-section">
-          <h2 className="guide-title">Prerequisites</h2>
+const setup = [
+  ['Anywhere But Here!', 'Bring this GobbleGum into the game. It is required for the hidden-room cog.'],
+  ['All three Trials', 'Complete your three challenge tablets during setup; the completed trials also feed into the electrified-shield cog step.'],
+  ['Skull of Nan Sapwe', 'Clean all four skulls and finish the Keeper encounter so Mesmerize is available for hidden quest objects.'],
+  ['KT-4 → Masamune', 'Build the KT-4, then complete the upgrade ingredients before the elevator/boss stretch.'],
+  ['Zombie Shield', 'Build it during setup and keep a usable shield for the electrified zipline cog.'],
+  ['Gas Mask', 'Build one during setup and replace it with a fresh mask before the elevator descent.'],
+  ['Bucket + Seeds', 'Keep the bucket and seeds moving through the colored-water plant steps instead of leaving them until the end.'],
+];
 
-          <p>
-            Before starting the <strong>Seeds of Doubt</strong> Easter Egg, make sure every player has completed or obtained the following:
-          </p>
+const Prerequisites = () => (
+  <main className="zets-detail-page">
+    <GuideHero
+      kicker="Zetsubou No Shima"
+      title="Setup Checklist"
+      description="The things that can stall Seeds of Doubt later if you ignore them during the early rounds."
+    >
+      <GuideChip>Anywhere But Here!</GuideChip>
+      <GuideChip>3 Trials</GuideChip>
+      <GuideChip>KT-4 / Masamune</GuideChip>
+    </GuideHero>
 
-          <ul className="guide-list">
-            <li><strong>Skull of Nan Sapwe</strong> – Fully obtained and unlocked</li>
-            <li><strong>Anywhere But Here!</strong> GobbleGum – Needed to access the Cog 1 hidden room</li>
-            <li><strong>KT-4</strong> – Must be crafted; used in multiple steps and upgraded to the Masamune</li>
-            <li><strong>Gas Mask</strong> – Required to survive the elevator descent</li>
-            <li><strong>Zombie Shield</strong> – Used to electrify the zipline for Cog 3</li>
-            <li><strong>All Trials of the Ancients</strong> – Each player must complete all three of their trials</li>
-            <li><strong>Bucket</strong> – For collecting and using colored water for plant growth</li>
-            <li><strong>Seeds</strong> – At least two: one for the Masamune upgrade and one for the Flak Shell (Cog 2)</li>
-          </ul>
+    <GuideCallout label="Run philosophy" tone="info" className="zets-detail-note">
+      Do these alongside power, Pack-a-Punch, and skull setup. The goal is to arrive at the three-cog stage with the specialist, shield, gas mask, and Masamune progression already handled.
+    </GuideCallout>
 
-          <p className="note">
-            <strong>Note:</strong> If any player is missing a required item or step, it can prevent progression.
-          </p>
-        </section>
-      </main>
-      <Footer />
-    </>
-  );
-};
+    <GuideSection kicker="Checklist" title="Have these covered before the endgame">
+      <div className="zets-checklist-grid">
+        {setup.map(([title, body], index) => (
+          <article className="zets-detail-card" key={title}>
+            <span className="zets-detail-number">{String(index + 1).padStart(2, '0')}</span>
+            <div>
+              <h3>{title}</h3>
+              <p>{body}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </GuideSection>
+  </main>
+);
 
 export default Prerequisites;
