@@ -1,14 +1,20 @@
-// 'Footer.tsx'
-// -------------
-
 import React from 'react';
+import { Link } from 'react-router-dom';
 import '../styles/components/Footer.css';
 
 const Footer: React.FC = () => (
-  <footer className="footer-site">
-    <div className="footer-site__bg" />
-    <div className="footer-site__content">
-      <p className="footer-site__text">Created for Zombies Hub | DE Guide © 2025</p>
+  <footer className="de-footer">
+    <div className="de-footer__art" aria-hidden="true" />
+    <div className="de-footer__content">
+      <div>
+        <span>Der Eisendrache</span>
+        <strong>My Brother’s Keeper</strong>
+      </div>
+      <nav aria-label="Der Eisendrache footer navigation">
+        <Link to="/maps/der-eisendrache">Main Quest</Link>
+        <Link to="/maps/der-eisendrache/bows">Bows</Link>
+        <Link to="/maps/der-eisendrache/boss">Boss</Link>
+      </nav>
     </div>
   </footer>
 );
