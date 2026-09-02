@@ -1,57 +1,64 @@
-.zets-nav {
+.zets-module .zets-nav {
   position: relative;
   z-index: 2;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 0.75rem;
-  background: rgba(0, 30, 15, 0.55);
-  backdrop-filter: blur(4px);
-  padding: 0.6rem 1.2rem;
-  border: 1px solid rgba(0, 255, 170, 0.08);
-  border-radius: 10px;
-  box-shadow: 0 0 12px rgba(0, 255, 170, 0.12);
-  margin-top: 0.5rem;
+  gap: 0.45rem;
+  width: min(100%, 920px);
+  margin: 0 auto;
+  padding: 0;
 }
 
-.zets-nav a {
-  color: var(--zets-text, #bfffea);
-  font-weight: bold;
-  padding: 6px 14px;
-  border-radius: 6px;
-  transition: all 0.2s ease-in-out;
+.zets-module .zets-nav a {
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.38rem 0.78rem;
+  color: #deefe6;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
   text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  background: rgba(3, 15, 10, 0.5);
+  backdrop-filter: blur(8px);
+  transition: transform 0.2s ease, border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
 }
 
-.zets-nav a:hover,
-.zets-nav a.active {
-  background: var(--zets-highlight, #00ffaa);
-  color: #000;
-  box-shadow:
-    0 0 14px var(--zets-highlight, #00ffaa),
-    0 0 4px #33ffaa;
+.zets-module .zets-nav a:hover,
+.zets-module .zets-nav a.active {
+  color: #99f0c3;
+  border-color: rgba(105, 230, 173, 0.42);
+  background: rgba(13, 63, 42, 0.66);
   transform: translateY(-1px);
 }
 
-/* === Mobile Dropdown === */
 @media (max-width: 768px) {
-  .zets-nav {
+  .zets-module .zets-nav {
     display: none;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    width: 100%;
-    padding: 1rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.45rem;
+    width: min(100% - 0.5rem, 620px);
+    padding-top: 0.45rem;
   }
 
-  .zets-nav.open {
-    display: flex;
+  .zets-module .zets-nav.open {
+    display: grid;
   }
 
-  .zets-nav a {
+  .zets-module .zets-nav a {
     width: 100%;
-    text-align: center;
-    font-size: 1rem;
-    padding: 6px 12px;
+    min-height: 42px;
+    padding-inline: 0.5rem;
+    box-sizing: border-box;
+  }
+}
+
+@media (max-width: 430px) {
+  .zets-module .zets-nav {
+    grid-template-columns: 1fr;
   }
 }
