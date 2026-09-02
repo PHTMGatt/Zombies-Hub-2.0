@@ -1,36 +1,58 @@
 .gorod-module .gorod-footer {
   position: relative;
   width: 100%;
+  min-height: 58px;
   margin-top: 0;
-  overflow: hidden;
-  border-top: 1px solid rgba(255, 112, 77, 0.14);
-  background: linear-gradient(90deg, rgba(25, 8, 5, 0.96), rgba(8, 7, 8, 0.97) 50%, rgba(25, 8, 5, 0.96));
+  display: flex;
+  align-items: center;
+  overflow: visible;
+  border-top: 0;
+  background:
+    linear-gradient(to bottom, rgba(18, 7, 4, 0.68), rgba(8, 5, 4, 0.98)),
+    url('../assets/GK_Banner.png') center 72% / cover no-repeat;
+  box-shadow: 0 -8px 26px rgba(0, 0, 0, 0.2);
+  isolation: isolate;
+}
+
+.gorod-module .gorod-footer::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -34px;
+  height: 36px;
+  pointer-events: none;
+  background: linear-gradient(to bottom, transparent, rgba(14, 6, 4, 0.72));
+  filter: blur(4px);
 }
 
 .gorod-module .gorod-footer__glow {
   position: absolute;
   inset: 0;
+  z-index: -1;
   pointer-events: none;
-  background: radial-gradient(circle at 50% 50%, rgba(255, 90, 45, 0.1), transparent 42%);
+  background: radial-gradient(circle at 50% 50%, rgba(255, 90, 45, 0.08), transparent 42%);
 }
 
 .gorod-module .gorod-footer__content {
   position: relative;
   z-index: 1;
   width: min(100% - 2rem, 1180px);
-  min-height: 62px;
+  min-height: 58px;
   margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 0.5rem;
-  color: #c6a89c;
-  font-size: 0.8rem;
+  gap: 0.48rem;
+  color: #c9a99d;
+  font-size: 0.78rem;
   text-align: center;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.85);
 }
 
 .gorod-module .gorod-footer__content strong {
   color: #fff1ea;
-  font-size: 0.9rem;
+  font-size: 0.86rem;
+  letter-spacing: 0.02em;
 }
