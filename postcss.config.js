@@ -1,4 +1,13 @@
-const mapScopes = [
+const featureScopes = [
+  // Legacy Hub presentation CSS is contained so generic classes such as
+  // .bg-blur cannot affect a dedicated map module.
+  ['apps/hub/src/styles/compStyles/', '.hub-content'],
+  ['apps/hub/src/styles/pageStyles/', '.hub-content'],
+  ['apps/hub/src/styles/SideEE/', '.hub-content'],
+  ['apps/hub/src/styles/Global.css', '.hub-content'],
+
+  // Dedicated map applications keep their original CSS, automatically scoped
+  // to their feature root at build time.
   ['maps/mob-of-the-dead/', '.mob-module'],
   ['maps/der-eisendrache/', '.de-module'],
   ['maps/zetsubou-no-shima/', '.zets-module'],
@@ -15,12 +24,8 @@ function scopeSelector(selector, scope) {
     return scope;
   }
 
-  if (trimmed.startsWith('body::') || trimmed.startsWith('body:')) {
-    return trimmed.replace(/^body/, scope);
-  }
-
-  if (trimmed.startsWith('html::') || trimmed.startsWith('html:')) {
-    return trimmed.replace(/^html/, scope);
+  if (/^(body|html)(?=[:.#\[])/.test(trimmed)) {
+    return trimmed.replace(/^(body|html)/, scope);
   }
 
   if (trimmed.startsWith('#root')) {
@@ -30,11 +35,11 @@ function scopeSelector(selector, scope) {
   return `${scope} ${trimmed}`;
 }
 
-const zombiesMapScope = {
-  postcssPlugin: 'zombies-map-scope',
+const zombiesFeatureScope = {
+  postcssPlugin: 'zombies-feature-scope',
   Rule(rule) {
     const file = rule.source?.input?.file?.replaceAll('\\', '/') || '';
-    const match = mapScopes.find(([fragment]) => file.includes(fragment));
+    const match = featureScopes.find(([fragment]) => file.includes(fragment));
     if (!match) return;
 
     let parent = rule.parent;
@@ -49,5 +54,5 @@ const zombiesMapScope = {
 };
 
 export default {
-  plugins: [zombiesMapScope],
+  plugins: [zombiesFeatureScope],
 };
