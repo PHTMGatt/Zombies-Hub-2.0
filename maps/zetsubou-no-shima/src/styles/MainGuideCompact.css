@@ -1,0 +1,54 @@
+.zets-module .zets-main-guide {
+  width: min(100% - 1.5rem, 1080px);
+  padding: 1.35rem 0 2.4rem;
+}
+
+.zets-module .zets-main-guide .zh-guide-hero {
+  background: linear-gradient(90deg, rgba(28, 128, 82, 0.16), transparent 48%);
+  box-shadow: none;
+}
+
+.zets-module .zets-guide-note {
+  width: min(100%, 980px);
+  margin: 0 auto 1rem;
+}
+
+.zets-module .zets-main-guide .zh-guide-step-card {
+  border-left: 3px solid rgba(105, 230, 173, 0.54);
+}
+
+.zets-module .zets-phase-link {
+  display: inline-flex;
+  margin-top: 0.38rem;
+  color: #83e9b6;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.zets-module .zets-phase-link:hover {
+  text-decoration: underline;
+}
+
+.zets-module .zets-main-guide .zets-reference-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.55rem;
+}
+
+.zets-module .zets-main-guide .zets-reference-grid a {
+  min-height: 48px;
+  padding: 0.55rem 0.7rem;
+  border-radius: 8px;
+  box-shadow: none;
+}
+
+@media (max-width: 520px) {
+  .zets-module .zets-main-guide {
+    width: min(100% - 1rem, 680px);
+    padding-top: 1rem;
+  }
+
+  .zets-module .zets-main-guide .zets-reference-grid {
+    grid-template-columns: 1fr;
+  }
+}
