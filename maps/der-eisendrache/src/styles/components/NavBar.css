@@ -1,47 +1,86 @@
-/* 'NavBar.css' */
-/* ------------- */
-
-/* 1. BASE STYLES */
-.nav-bar {
+.de-nav {
+  flex: 0 0 auto;
   display: flex;
-  gap: 1rem;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.38rem;
+  padding: 0.35rem;
+  border: 1px solid rgba(132, 203, 250, 0.14);
+  border-radius: 14px;
+  background: rgba(2, 8, 14, 0.68);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.04), 0 8px 24px rgba(0,0,0,0.24);
+  backdrop-filter: blur(12px);
 }
 
-.nav-bar__btn {
-  display: block;
-  padding: 0.5rem 1rem;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(8px);
-  border-radius: 0.375rem;
-  font-weight: 500;
-  color: #e0e0e0;
-  text-decoration: none;
-  transition: 
-    background 0.2s ease, 
-    transform 0.2s ease, 
-    color 0.2s ease;
+.de-nav__link {
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.52rem 0.78rem;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  color: #bfd1df !important;
+  font-size: 0.76rem;
+  font-weight: 750;
+  letter-spacing: 0.02em;
+  text-decoration: none !important;
+  white-space: nowrap;
+  transition: color 0.18s ease, background 0.18s ease, border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
 }
 
-.nav-bar__btn:hover {
-  background: rgba(255, 255, 255, 0.3);
-  transform: translateY(-2px);
-  color: #ffffff;
+.de-nav__link:hover {
+  color: #fff !important;
+  border-color: rgba(111, 198, 255, 0.18);
+  background: rgba(83, 169, 229, 0.1);
+  transform: translateY(-1px);
 }
 
-/* ACTIVE STATE */
-.nav-bar__btn--active {
-  background: rgba(255, 255, 255, 0.3);
-  color: #ffffff;
+.de-nav__link.is-active {
+  color: #07121c !important;
+  border-color: rgba(161, 221, 255, 0.82);
+  background: linear-gradient(135deg, #9bdcff, #64b6ea);
+  box-shadow: 0 0 22px rgba(83, 181, 242, 0.25);
 }
 
-/* 2. RESPONSIVE ADJUSTMENTS */
-@media (max-width: 480px) {
-  .nav-bar {
-    gap: 0.5rem;
+.de-nav__short {
+  display: none;
+}
+
+@media (max-width: 940px) {
+  .de-nav__link {
+    padding-inline: 0.62rem;
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 720px) {
+  .de-nav {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 0.3rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    border-radius: 12px;
   }
 
-  .nav-bar__btn {
-    padding: 0.4rem 0.8rem;
-    font-size: 0.9rem;
+  .de-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .de-nav__link {
+    flex: 1 0 auto;
+    min-width: 62px;
+    min-height: 34px;
+    padding: 0.42rem 0.6rem;
+    font-size: 0.68rem;
+  }
+
+  .de-nav__full {
+    display: none;
+  }
+
+  .de-nav__short {
+    display: inline;
   }
 }
