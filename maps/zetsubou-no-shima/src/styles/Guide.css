@@ -193,7 +193,8 @@
 }
 
 .zets-checklist-grid,
-.zets-cog-grid {
+.zets-cog-grid,
+.zets-reward-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.85rem;
@@ -289,6 +290,30 @@
   background: rgba(10, 45, 30, 0.78);
 }
 
+.zets-reward-note {
+  margin-top: 1.5rem;
+}
+
+.zets-post-complete {
+  padding: 1rem 1.1rem;
+  color: #cae5d6;
+  border: 1px solid rgba(105, 230, 173, 0.15);
+  border-radius: 14px;
+  background: rgba(4, 15, 10, 0.8);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.26);
+}
+
+.zets-post-complete p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.zets-post-complete p + p {
+  margin-top: 0.7rem;
+  padding-top: 0.7rem;
+  border-top: 1px solid rgba(105, 230, 173, 0.1);
+}
+
 @media (max-width: 760px) {
   .zets-main-guide,
   .zets-detail-page {
@@ -298,14 +323,16 @@
 
   .zets-reference-grid,
   .zets-checklist-grid,
-  .zets-cog-grid {
+  .zets-cog-grid,
+  .zets-reward-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (max-width: 520px) {
   .zets-checklist-grid,
-  .zets-cog-grid {
+  .zets-cog-grid,
+  .zets-reward-grid {
     grid-template-columns: 1fr;
   }
 }
