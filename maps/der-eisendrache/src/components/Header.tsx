@@ -8,7 +8,6 @@ const Header: React.FC = () => (
     <div className="de-header__veil" aria-hidden="true" />
     <div className="de-header__content">
       <div className="de-header__identity">
-        <span className="de-header__eyebrow">Black Ops III Zombies</span>
         <div className="de-header__title-row">
           <h1>Der Eisendrache</h1>
           <span>My Brother’s Keeper</span>
