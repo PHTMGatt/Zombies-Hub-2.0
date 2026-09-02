@@ -1,0 +1,31 @@
+name: Integration path audit
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/integration-audit.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Find legacy absolute navigation and deployment links
+        run: |
+          echo '=== React absolute navigation ==='
+          grep -RInE 'to=["'"'']/|href=["'"'']/' apps/hub/src maps \
+            --exclude-dir=legacy --exclude='LEGACY_README.md' || true
+          echo
+          echo '=== Legacy Render URLs ==='
+          grep -RInE 'onrender\.com|renderLink|renderUrl' apps/hub/src maps \
+            --exclude-dir=legacy --exclude='legacy-package.json' --exclude='LEGACY_README.md' || true
+          echo
+          echo '=== Root-relative CSS assets ==='
+          grep -RInE 'url\(["'"'']?/(src|images)/' apps/hub/src maps \
+            --include='*.css' --exclude-dir=legacy || true
