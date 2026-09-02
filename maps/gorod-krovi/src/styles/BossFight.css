@@ -1,45 +1,48 @@
-.bossfight-page {
-  display: flex;
-  justify-content: center;
-  padding: 2rem 1rem;
-  background: transparent;
+.gorod-boss-page {
+  --guide-accent: #ff704d;
+  --guide-accent-soft: rgba(183, 47, 21, 0.18);
+  --guide-panel: rgba(13, 8, 7, 0.8);
+  --guide-panel-strong: rgba(10, 6, 5, 0.95);
+  --guide-border: rgba(255, 112, 77, 0.2);
+  --guide-text: #fff4ee;
+  --guide-muted: #d5bbb1;
+
+  width: min(100% - 2rem, 1040px);
+  margin: 0 auto;
+  padding: 3rem 0 5rem;
 }
 
-.bossfight-card {
-  max-width: 800px;
-  width: 100%;
-  padding: 2rem;
-  background: rgba(0, 0, 0, 0.45);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 1rem;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+.gorod-boss-page .zh-guide-hero {
+  background:
+    linear-gradient(135deg, rgba(158, 40, 18, 0.27), transparent 45%),
+    rgba(11, 7, 6, 0.86);
 }
 
-/* Main red title */
-.section-title {
-  font-size: 2.25rem;
-  margin-bottom: 1.5rem;
-  color: var(--accent-color);
-  text-align: center;
-  font-weight: bold;
+.gorod-boss-note {
+  width: min(100%, 900px);
+  margin: -0.6rem auto 2rem;
+  box-sizing: border-box;
 }
 
-/* Yellow glowing subtitles */
-.step-title-glow {
-  font-size: 1.5rem;
-  margin-top: 1.75rem;
-  margin-bottom: 0.75rem;
-  color: #ffc857;
-  font-weight: 600;
-  text-shadow: 0 0 6px rgba(255, 200, 87, 0.4);
+.gorod-boss-page .zh-guide-step-card {
+  border-left: 3px solid rgba(255, 112, 77, 0.58);
 }
 
-/* Body text */
-.step-text {
-  font-size: 1rem;
-  line-height: 1.6;
-  color: var(--text-color);
-  margin-bottom: 1rem;
+.gorod-boss-details {
+  margin: 0.8rem 0 0;
+  padding: 0.8rem 1rem 0.75rem 2rem;
+  color: #e5cfc6;
+  border-top: 1px solid rgba(255, 112, 77, 0.13);
+}
+
+.gorod-boss-details li {
+  margin: 0.38rem 0;
+  line-height: 1.55;
+}
+
+@media (max-width: 720px) {
+  .gorod-boss-page {
+    width: min(100% - 1rem, 680px);
+    padding: 1.75rem 0 3rem;
+  }
 }
