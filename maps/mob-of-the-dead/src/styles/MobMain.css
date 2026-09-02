@@ -1,112 +1,80 @@
-/* src/styles/MobMain.css */
+.mobmain-page {
+  --guide-accent: #f0b321;
+  --guide-accent-soft: rgba(186, 68, 22, 0.2);
+  --guide-panel: rgba(7, 8, 10, 0.74);
+  --guide-panel-strong: rgba(5, 6, 8, 0.92);
+  --guide-border: rgba(240, 179, 33, 0.2);
+  --guide-text: #f5f1e8;
+  --guide-muted: #c6beb0;
 
-/* Intro */
-.mobmain-page .intro h2 {
-  font-size: 2rem;
-  text-align: center;
-  margin-bottom: 1rem;
-  color: #ffd700;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
-}
-
-.mobmain-page .intro p {
-  text-align: center;
-  font-size: 1.1rem;
-  margin: 0 auto 2rem;
-  max-width: 600px;
-  line-height: 1.5;
+  width: min(100% - 2rem, 1120px);
+  margin: 0 auto;
+  padding: 3rem 0 5rem;
 }
 
-/* Steps overview */
-.mobmain-page .overview-steps {
-  max-width: 700px;
-  margin: 0 auto 2.5rem;
+.mobmain-page .zh-guide-hero {
+  background:
+    linear-gradient(135deg, rgba(177, 52, 17, 0.24), transparent 40%),
+    rgba(5, 7, 10, 0.78);
+  border-color: rgba(240, 179, 33, 0.24);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.035),
+    0 0 34px rgba(151, 46, 13, 0.12);
 }
 
-.mobmain-page .overview-steps ol {
-  list-style: decimal inside;
-  padding: 0;
-}
-.mobmain-page .overview-steps li {
-  margin-bottom: 1rem;
-  line-height: 1.6;
-}
-.mobmain-page .overview-steps strong {
-  color: #ffd700; /* Gold accent */
+.mobmain-page .zh-guide-step-card {
+  border-left: 3px solid rgba(240, 179, 33, 0.65);
 }
 
-/* Trivia section */
-.mobmain-page .trivia-section {
-  margin-top: 2rem;
-  text-align: center;
-}
-.mobmain-page .trivia-section h3 {
-  font-size: 1.75rem;
-  margin-bottom: 1rem;
-  color: #fff;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+.mobmain-page .zh-guide-step-marker {
+  color: #1c1202;
+  background: linear-gradient(145deg, #ffd75a, #e1910f);
+  box-shadow: 0 0 18px rgba(240, 179, 33, 0.24);
 }
 
-/* Trivia cards container */
 .mobmain-page .trivia-list {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
-  justify-content: center;
 }
 
-/* Individual trivia card */
 .mobmain-page .trivia-list > * {
-  flex: 1 1 200px;
-  max-width: 260px;
-  background-image: url('../assets/images/mob-banner.png');
-  background-size: cover;
-  background-position: center;
-  background-blend-mode: multiply;
-  background-color: rgba(170, 68, 34, 0.7); /* rusty-red overlay */
-  color: #fff;
-  backdrop-filter: blur(6px);
-  padding: 1rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
-  text-align: center;
+  min-height: 130px;
+  padding: 1.25rem;
+  border: 1px solid rgba(240, 179, 33, 0.2);
+  border-radius: 14px;
+  background:
+    linear-gradient(rgba(10, 8, 7, 0.76), rgba(10, 8, 7, 0.84)),
+    url('../assets/images/mob-banner.png') center / cover no-repeat;
+  color: #f5f1e8;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.34);
+  backdrop-filter: blur(10px);
 }
 
-/* Trivia title */
 .mobmain-page .trivia-list > * h4,
 .mobmain-page .trivia-list > * .title {
   margin: 0 0 0.5rem;
-  font-size: 1.1rem;
-  color: #ffd700;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+  color: #f0b321;
+  font-size: 1.05rem;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
 }
 
-/* Trivia details */
 .mobmain-page .trivia-list > * p,
 .mobmain-page .trivia-list > * .details {
-  font-size: 0.95rem;
-  line-height: 1.4;
+  margin: 0;
+  color: #d9d1c5;
+  font-size: 0.94rem;
+  line-height: 1.55;
 }
 
-/* Tablet & down */
-@media (max-width: 768px) {
-  .mobmain-page .trivia-list > * {
-    flex: 1 1 45%;
+@media (max-width: 720px) {
+  .mobmain-page {
+    width: min(100% - 1rem, 680px);
+    padding-top: 1.75rem;
   }
-}
 
-/* Small phones */
-@media (max-width: 480px) {
   .mobmain-page .trivia-list {
-    flex-direction: column;
+    grid-template-columns: 1fr;
   }
-  .mobmain-page .trivia-list > * {
-    max-width: none;
-    flex: none;
-  }
-}
-
-/* Note; add bottom padding so cards fully clear the fixed footer */
-.mobmain-page {
-  padding-bottom: 4rem;
 }
