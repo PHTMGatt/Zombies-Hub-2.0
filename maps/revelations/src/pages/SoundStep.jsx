@@ -36,7 +36,7 @@ function SoundStep() {
   };
 
   const handleClick = (spot) => {
-    setSelectedSpot(`${spot.area} · ${spot.label}`);
+    setSelectedSpot(spot);
     videoRef.current?.playSegment(spot.start, getEndTime(spot));
   };
 
@@ -48,27 +48,28 @@ function SoundStep() {
   };
 
   return (
-    <div className="rev-page">
+    <main className="rev-page">
       <div className="rev-background" />
       <div className="sk-container">
         <div className="rev-page-heading">
-          <span className="rev-page-kicker">Audio Step Reference</span>
+          <span className="rev-page-kicker">Rune Placement Reference</span>
           <h1 className="sk-title">Sound Step</h1>
           <p className="rev-page-intro">
-            Rotate between map areas, then choose a spot to jump directly to the matching sound location.
+            Each region has three possible Gateworm placement spots. Rotate to the region you are searching,
+            then use the actual location name and listen for the beeping that confirms the correct spot.
           </p>
         </div>
 
         <div className="rev-glow-box">
           <GuideVideoPlayer
             ref={videoRef}
-            title="Revelations sound step locations"
-            caption="Select a spot from the active area to play that short location segment."
+            title="Revelations Rune of Creation sound-step locations"
+            caption="Choose a location to play only that short reference segment."
           />
 
           <div className="sk-selected-label">
             <span className="rev-selected-prefix">Area:</span> {areaList[currentIndex]}
-            {selectedSpot && <span className="rev-selected-location"> · {selectedSpot.split(' · ')[1]}</span>}
+            {selectedSpot && <span className="rev-selected-location"> · {selectedSpot.label}</span>}
           </div>
 
           <div className="carousel-wrapper">
@@ -93,6 +94,7 @@ function SoundStep() {
                         <button
                           key={`${spot.area}-${spot.label}`}
                           type="button"
+                          className={selectedSpot?.label === spot.label ? 'active' : ''}
                           onClick={(event) => {
                             event.stopPropagation();
                             handleClick(spot);
@@ -116,7 +118,7 @@ function SoundStep() {
           <button type="button" onClick={() => handleRotate('right')} aria-label="Next area">&rarr;</button>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
 
