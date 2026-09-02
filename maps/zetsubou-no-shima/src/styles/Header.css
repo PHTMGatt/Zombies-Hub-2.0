@@ -1,14 +1,14 @@
 .zets-module .zets-header {
   position: relative;
-  min-height: 122px;
+  min-height: 88px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding: 0.75rem 1rem;
+  padding: 0.45rem 1rem;
   overflow: hidden;
-  border-bottom: 1px solid rgba(105, 230, 173, 0.16);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.38);
+  border-bottom: 1px solid rgba(105, 230, 173, 0.14);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.32);
   isolation: isolate;
   z-index: 2;
 }
@@ -27,44 +27,37 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, rgba(3, 11, 8, 0.88), rgba(4, 20, 14, 0.42), rgba(3, 11, 8, 0.86));
+  background: linear-gradient(90deg, rgba(3, 11, 8, 0.9), rgba(4, 20, 14, 0.38), rgba(3, 11, 8, 0.86));
   z-index: -1;
 }
 
 .zets-module .zets-header-content {
   position: relative;
   z-index: 2;
-  flex: 0 1 auto;
+  flex: 0 0 auto;
   min-width: 0;
-  text-align: left;
 }
 
 .zets-module .zets-header-identity {
   min-width: 0;
-}
-
-.zets-module .zets-header-kicker {
-  display: inline-block;
-  margin-bottom: 0.1rem;
-  color: #7ce4b3;
-  font-size: 0.62rem;
-  font-weight: 800;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
+  display: flex;
+  align-items: baseline;
+  gap: 0.7rem;
+  white-space: nowrap;
 }
 
 .zets-module .zets-header-title {
   margin: 0;
   color: #effff7;
-  font-size: clamp(2rem, 4vw, 3rem);
-  line-height: 0.98;
+  font-size: clamp(1.8rem, 3vw, 2.35rem);
+  line-height: 1;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.95), 0 0 18px rgba(74, 214, 146, 0.16);
 }
 
 .zets-module .zets-header-subtitle {
-  margin: 0.28rem 0 0;
+  margin: 0;
   color: #b9e6d0;
-  font-size: 0.92rem;
+  font-size: 0.82rem;
   font-weight: 600;
 }
 
@@ -72,11 +65,12 @@
   display: none;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .zets-module .zets-header {
     min-height: 0;
     flex-direction: column;
-    padding: 0.75rem 0.75rem 0.9rem;
+    padding: 0.65rem 0.75rem 0.8rem;
+    gap: 0.45rem;
   }
 
   .zets-module .zets-header-content {
@@ -84,16 +78,22 @@
     text-align: center;
   }
 
+  .zets-module .zets-header-identity {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
   .zets-module .zets-nav-toggle {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 0.4rem;
-    min-height: 34px;
-    margin-top: 0.55rem;
-    padding: 0.3rem 0.65rem;
+    min-height: 32px;
+    margin-top: 0.45rem;
+    padding: 0.28rem 0.62rem;
     color: #dff8ea;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     border: 1px solid rgba(105, 230, 173, 0.18);
     border-radius: 999px;
     background: rgba(3, 15, 10, 0.58);
@@ -102,7 +102,17 @@
 
   .zets-module .toggle-label {
     color: #c8ecda;
-    font-size: 0.78rem;
+    font-size: 0.76rem;
     font-weight: 700;
+  }
+}
+
+@media (max-width: 520px) {
+  .zets-module .zets-header-identity {
+    display: block;
+  }
+
+  .zets-module .zets-header-subtitle {
+    margin-top: 0.18rem;
   }
 }
