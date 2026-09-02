@@ -1,0 +1,58 @@
+const mapScopes = [
+  ['maps/mob-of-the-dead/', '.mob-module'],
+  ['maps/der-eisendrache/', '.de-module'],
+  ['maps/zetsubou-no-shima/', '.zets-module'],
+  ['maps/gorod-krovi/', '.gorod-module'],
+  ['maps/revelations/', '.revelations-module'],
+];
+
+function scopeSelector(selector, scope) {
+  const trimmed = selector.trim();
+
+  if (!trimmed || trimmed.includes(scope)) return trimmed;
+
+  // Legacy apps often target the document root. Inside 2.0 those rules should
+  // apply to the map feature root instead of html/body/#root globally.
+  if (trimmed === ':root' || trimmed === 'html' || trimmed === 'body' || trimmed === '#root') {
+    return scope;
+  }
+
+  if (trimmed.startsWith('body::') || trimmed.startsWith('body:')) {
+    return trimmed.replace(/^body/, scope);
+  }
+
+  if (trimmed.startsWith('html::') || trimmed.startsWith('html:')) {
+    return trimmed.replace(/^html/, scope);
+  }
+
+  if (trimmed.startsWith('#root')) {
+    return trimmed.replace(/^#root/, scope);
+  }
+
+  return `${scope} ${trimmed}`;
+}
+
+const zombiesMapScope = {
+  postcssPlugin: 'zombies-map-scope',
+  Rule(rule) {
+    const file = rule.source?.input?.file?.replaceAll('\\', '/') || '';
+    const match = mapScopes.find(([fragment]) => file.includes(fragment));
+    if (!match) return;
+
+    // Never prefix keyframe step selectors such as from/to/0%.
+    let parent = rule.parent;
+    while (parent) {
+      if (parent.type === 'atrule' && /keyframes$/i.test(parent.name)) return;
+      parent = parent.parent;
+    }
+
+    const scope = match[1];
+    rule.selectors = rule.selectors.map(selector => scopeSelector(selector, scope));
+  },
+};
+
+zombiesMapScope.postcss = true;
+
+export default {
+  plugins: [zombiesMapScope],
+};
