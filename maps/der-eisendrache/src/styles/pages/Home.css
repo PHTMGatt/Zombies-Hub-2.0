@@ -1,31 +1,109 @@
 .de-home-page {
-  --guide-accent: #77c9ff;
-  --guide-accent-soft: rgba(88, 164, 224, 0.16);
-  --guide-panel: rgba(5, 14, 25, 0.76);
-  --guide-panel-strong: rgba(4, 10, 18, 0.92);
-  --guide-border: rgba(124, 202, 255, 0.2);
-  --guide-text: #eef8ff;
-  --guide-muted: #b9cddd;
-
-  width: min(100% - 2rem, 1120px);
+  width: min(1160px, calc(100% - 2rem));
   margin: 0 auto;
-  padding: 3rem 0 5rem;
+  padding: 2.4rem 0 5rem;
 }
 
 .de-home-page .zh-guide-hero {
+  position: relative;
+  overflow: hidden;
   background:
-    linear-gradient(135deg, rgba(54, 127, 187, 0.16), transparent 44%),
-    rgba(5, 13, 24, 0.8);
-  border-color: rgba(119, 201, 255, 0.22);
-  box-shadow: 0 20px 58px rgba(0, 0, 0, 0.35), 0 0 36px rgba(79, 166, 224, 0.09);
+    linear-gradient(135deg, rgba(60, 145, 205, 0.2), transparent 42%),
+    linear-gradient(180deg, rgba(4, 14, 26, 0.78), rgba(2, 8, 15, 0.9));
+  border-color: rgba(124, 207, 255, 0.25);
+  box-shadow: 0 22px 62px rgba(0, 0, 0, 0.38), 0 0 42px rgba(70, 165, 228, 0.08);
+}
+
+.de-run-nav {
+  position: sticky;
+  top: calc(var(--hub-nav-height) + 136px);
+  z-index: 50;
+  width: max-content;
+  max-width: 100%;
+  margin: -0.65rem auto 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.35rem;
+  overflow-x: auto;
+  border: 1px solid rgba(123, 207, 255, 0.16);
+  border-radius: 999px;
+  background: rgba(2, 8, 15, 0.88);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.34);
+  backdrop-filter: blur(14px);
+  scrollbar-width: none;
+}
+
+.de-run-nav::-webkit-scrollbar { display: none; }
+
+.de-run-nav a {
+  flex: 0 0 auto;
+  min-width: 34px;
+  min-height: 34px;
+  display: grid;
+  place-items: center;
+  padding: 0.4rem 0.7rem;
+  border-radius: 999px;
+  color: #c2d6e4;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-decoration: none;
+  transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease;
+}
+
+.de-run-nav a:hover {
+  color: #08131c;
+  background: #8bd5ff;
+  transform: translateY(-1px);
+}
+
+.de-preflight-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.7rem;
+  margin-bottom: 1rem;
+}
+
+.de-preflight-item {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: start;
+  padding: 0.9rem 1rem;
+  border: 1px solid rgba(128, 205, 255, 0.13);
+  border-radius: 12px;
+  background: rgba(3, 10, 18, 0.68);
+}
+
+.de-preflight-item:last-child {
+  grid-column: 1 / -1;
+}
+
+.de-preflight-item > span {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #07121b;
+  background: #7bcfff;
+  font-size: 0.78rem;
+  font-weight: 900;
+  box-shadow: 0 0 16px rgba(83, 184, 244, 0.25);
+}
+
+.de-preflight-item p {
+  margin: 0;
+  color: #c8d7e3;
+  line-height: 1.55;
 }
 
 .de-video-panel {
   overflow: hidden;
   border: 1px solid rgba(119, 201, 255, 0.24);
   border-radius: 16px;
-  background: rgba(2, 7, 13, 0.84);
-  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.34), 0 0 28px rgba(60, 158, 226, 0.1);
+  background: rgba(2, 7, 13, 0.9);
+  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.34), 0 0 28px rgba(60, 158, 226, 0.08);
 }
 
 .de-youtube,
@@ -38,7 +116,7 @@
 .de-youtube__iframe {
   aspect-ratio: 16 / 9;
   height: auto !important;
-  min-height: 300px;
+  min-height: 280px;
   border: 0;
   background: #000;
 }
@@ -48,90 +126,163 @@
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding: 0.85rem 1rem;
-  border-top: 1px solid rgba(119, 201, 255, 0.16);
-  background: linear-gradient(90deg, rgba(31, 86, 127, 0.18), rgba(4, 10, 18, 0.94));
+  padding: 0.82rem 1rem;
+  border-top: 1px solid rgba(119, 201, 255, 0.14);
+  background: linear-gradient(90deg, rgba(31, 86, 127, 0.16), rgba(4, 10, 18, 0.94));
 }
 
 .de-video-status span {
-  color: #77c9ff;
-  font-size: 0.68rem;
-  font-weight: 800;
+  color: #7bcfff;
+  font-size: 0.66rem;
+  font-weight: 850;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   white-space: nowrap;
 }
 
 .de-video-status strong {
-  overflow: hidden;
   color: #deeffb;
-  font-size: 0.9rem;
-  font-weight: 700;
+  font-size: 0.88rem;
   text-align: right;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
-.de-step-button {
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  text-align: left;
-  border: 0;
-  background: transparent;
-  color: inherit;
+.de-phase-anchor + .de-phase-anchor {
+  margin-top: 0.45rem;
+}
+
+.de-phase-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.85rem;
+  padding: 0.58rem 0.65rem 0.58rem 0.9rem;
+  border: 1px solid rgba(123, 207, 255, 0.12);
+  border-radius: 11px;
+  background: rgba(2, 8, 15, 0.66);
+}
+
+.de-phase-toolbar > span {
+  color: #92aabd;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.de-phase-toolbar button {
+  min-height: 34px;
+  padding: 0.45rem 0.72rem;
+  border: 1px solid rgba(123, 207, 255, 0.28);
+  border-radius: 8px;
+  color: #dff3ff;
+  background: rgba(73, 156, 215, 0.12);
   font: inherit;
+  font-size: 0.72rem;
+  font-weight: 800;
   cursor: pointer;
+  transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
 }
 
-.de-step-button .zh-guide-step-card {
-  width: 100%;
-  box-sizing: border-box;
-  border-left: 3px solid rgba(119, 201, 255, 0.6);
+.de-phase-toolbar button:hover {
+  border-color: rgba(123, 207, 255, 0.62);
+  background: rgba(73, 156, 215, 0.24);
+  transform: translateY(-1px);
 }
 
-.de-step-button:hover .zh-guide-step-card,
-.de-step-button.is-active .zh-guide-step-card {
-  border-color: rgba(119, 201, 255, 0.72);
+.de-danger-step {
+  --guide-accent: #ffad66;
+  --guide-accent-soft: rgba(255, 132, 56, 0.18);
+  --guide-border: rgba(255, 167, 93, 0.34);
+  border-left: 3px solid #ff9f55 !important;
+}
+
+.de-boss-launch {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.15rem 1.25rem;
+  border: 1px solid rgba(184, 154, 255, 0.24);
+  border-radius: 15px;
   background:
-    linear-gradient(135deg, rgba(90, 172, 229, 0.22), transparent 36%),
-    rgba(5, 14, 25, 0.84);
-  box-shadow: 0 15px 36px rgba(0, 0, 0, 0.34), 0 0 28px rgba(73, 163, 226, 0.11);
+    linear-gradient(135deg, rgba(133, 87, 214, 0.17), transparent 48%),
+    rgba(3, 9, 18, 0.82);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.28);
 }
 
-.de-step-button.is-active .zh-guide-step-marker {
-  box-shadow: 0 0 24px rgba(119, 201, 255, 0.56);
+.de-boss-launch > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.22rem;
 }
 
-.de-step-button--boss {
-  --guide-accent: #c79cff;
-  --guide-accent-soft: rgba(159, 104, 220, 0.16);
-  --guide-border: rgba(199, 156, 255, 0.2);
+.de-boss-launch strong {
+  color: #d8c3ff;
+  font-size: 1.05rem;
 }
 
-.de-step-button--boss .zh-guide-step-card {
-  border-left-color: rgba(199, 156, 255, 0.62);
+.de-boss-launch span {
+  color: #aebdca;
+  font-size: 0.85rem;
+}
+
+.de-boss-launch > a {
+  flex: 0 0 auto;
+  padding: 0.72rem 0.9rem;
+  border: 1px solid rgba(190, 163, 255, 0.34);
+  border-radius: 10px;
+  color: #efe7ff;
+  background: rgba(132, 90, 203, 0.16);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.de-boss-launch > a:hover {
+  color: #fff;
+  background: rgba(132, 90, 203, 0.28);
 }
 
 @media (max-width: 720px) {
   .de-home-page {
     width: min(100% - 1rem, 700px);
-    padding: 1.75rem 0 3rem;
+    padding: 1.5rem 0 3.5rem;
+  }
+
+  .de-run-nav {
+    top: calc(var(--hub-nav-height) + 144px);
+    width: 100%;
+    justify-content: flex-start;
+    border-radius: 12px;
+  }
+
+  .de-preflight-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .de-preflight-item:last-child {
+    grid-column: auto;
   }
 
   .de-youtube__iframe {
-    min-height: 220px;
+    min-height: 210px;
   }
 
-  .de-video-status {
-    align-items: flex-start;
+  .de-video-status,
+  .de-phase-toolbar,
+  .de-boss-launch {
+    align-items: stretch;
     flex-direction: column;
-    gap: 0.3rem;
   }
 
   .de-video-status strong {
-    width: 100%;
     text-align: left;
-    white-space: normal;
+  }
+
+  .de-phase-toolbar button,
+  .de-boss-launch > a {
+    width: 100%;
+    text-align: center;
   }
 }
