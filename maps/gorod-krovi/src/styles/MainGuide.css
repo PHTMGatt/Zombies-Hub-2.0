@@ -1,133 +1,47 @@
 .gorod-main-guide {
   --guide-accent: #ff704d;
-  --guide-accent-soft: rgba(183, 47, 21, 0.18);
-  --guide-panel: rgba(13, 8, 7, 0.78);
-  --guide-panel-strong: rgba(11, 6, 5, 0.94);
-  --guide-border: rgba(255, 112, 77, 0.2);
+  --guide-accent-soft: rgba(183, 47, 21, 0.14);
+  --guide-panel: rgba(13, 8, 7, 0.74);
+  --guide-panel-strong: rgba(11, 6, 5, 0.92);
+  --guide-border: rgba(255, 112, 77, 0.18);
   --guide-text: #fff4ee;
   --guide-muted: #d5bbb1;
 
-  width: min(100% - 2rem, 1120px);
+  width: min(100% - 1.5rem, 1080px);
   margin: 0 auto;
-  padding: 3rem 0 5rem;
+  padding: 1.35rem 0 2.4rem;
 }
 
 .gorod-main-guide .zh-guide-hero {
-  background:
-    linear-gradient(135deg, rgba(157, 39, 18, 0.28), transparent 43%),
-    rgba(12, 7, 6, 0.82);
-  border-color: rgba(255, 112, 77, 0.23);
-  box-shadow:
-    0 22px 58px rgba(0, 0, 0, 0.4),
-    0 0 34px rgba(166, 42, 18, 0.1);
+  background: linear-gradient(90deg, rgba(157, 39, 18, 0.18), transparent 48%);
+}
+
+.gorod-main-guide .zh-guide-step-card {
+  border-left: 3px solid rgba(255, 112, 77, 0.56);
 }
 
 .gorod-guide-note {
-  width: min(100%, 960px);
-  margin: -0.65rem auto 2rem;
+  width: min(100%, 980px);
+  margin: 0 auto 1.1rem;
   box-sizing: border-box;
 }
 
-.gorod-prereq-list {
-  margin: 0;
-  padding-left: 1.15rem;
-}
-
-.gorod-prereq-list li {
-  margin: 0.25rem 0;
-  line-height: 1.55;
-}
-
-.gorod-run-step {
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  color: inherit;
-  font: inherit;
-  text-align: left;
-  border: 0;
-  background: transparent;
-  cursor: pointer;
-}
-
-.gorod-run-step .zh-guide-step-card {
-  width: 100%;
-  box-sizing: border-box;
-  border-left: 3px solid rgba(255, 112, 77, 0.58);
-}
-
-.gorod-run-step:hover .zh-guide-step-card,
-.gorod-run-step.is-open .zh-guide-step-card {
-  border-color: rgba(255, 132, 96, 0.58);
-  background:
-    linear-gradient(135deg, rgba(170, 43, 19, 0.25), transparent 42%),
-    rgba(13, 8, 7, 0.9);
-  box-shadow:
-    0 16px 40px rgba(0, 0, 0, 0.4),
-    0 0 28px rgba(174, 49, 22, 0.11);
-}
-
-.gorod-step-details {
-  margin: 0.85rem 0 0;
-  padding: 0.85rem 1rem 0.75rem 2rem;
-  color: #e7d4cd;
-  border-top: 1px solid rgba(255, 112, 77, 0.13);
-}
-
-.gorod-step-details li {
-  margin: 0.4rem 0;
-  line-height: 1.55;
-}
-
-.gorod-tool-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.85rem;
-}
-
-.gorod-tool-grid a {
-  min-height: 116px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 0.35rem;
-  padding: 1rem 1.1rem;
-  color: #fff2ec;
-  text-decoration: none;
-  border: 1px solid rgba(255, 112, 77, 0.18);
-  border-radius: 14px;
-  background:
-    linear-gradient(135deg, rgba(148, 36, 16, 0.18), transparent 60%),
-    rgba(10, 7, 6, 0.8);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
-  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
-}
-
-.gorod-tool-grid a:hover {
-  transform: translateY(-2px);
-  border-color: rgba(255, 132, 96, 0.48);
-  background:
-    linear-gradient(135deg, rgba(166, 42, 18, 0.28), transparent 60%),
-    rgba(13, 8, 7, 0.9);
-}
-
-.gorod-tool-grid strong {
+.gorod-phase-link {
+  display: inline-flex;
+  margin-top: 0.38rem;
   color: #ffb08f;
-  font-size: 1.03rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-decoration: none;
 }
 
-.gorod-tool-grid span {
-  color: #ceb8af;
-  line-height: 1.45;
+.gorod-phase-link:hover {
+  text-decoration: underline;
 }
 
 @media (max-width: 720px) {
   .gorod-main-guide {
     width: min(100% - 1rem, 680px);
-    padding: 1.75rem 0 3rem;
-  }
-
-  .gorod-tool-grid {
-    grid-template-columns: 1fr;
+    padding-top: 1rem;
   }
 }
