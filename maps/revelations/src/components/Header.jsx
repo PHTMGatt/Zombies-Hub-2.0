@@ -1,6 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import './Header.css';
+
+const BASE = '/maps/revelations';
 
 function Header() {
   return (
@@ -11,11 +13,11 @@ function Header() {
       </div>
 
       <nav className="header-nav">
-        <Link to="/" className="nav-link">Main Guide</Link>
-        <Link to="/apothicon-upgrade" className="nav-link">Apothicon Upgrade</Link>
-        <Link to="/egg-locations" className="nav-link">Egg Locations</Link>
-        <Link to="/summoning-key" className="nav-link">Summoning Key</Link>
-        <Link to="/sound-step" className="nav-link">Sound Step</Link>
+        <NavLink to={BASE} end className="nav-link">Main Guide</NavLink>
+        <NavLink to={`${BASE}/apothicon-upgrade`} className="nav-link">Apothicon Upgrade</NavLink>
+        <NavLink to={`${BASE}/egg-locations`} className="nav-link">Egg Locations</NavLink>
+        <NavLink to={`${BASE}/summoning-key`} className="nav-link">Summoning Key</NavLink>
+        <NavLink to={`${BASE}/sound-step`} className="nav-link">Sound Step</NavLink>
       </nav>
     </header>
   );
