@@ -7,8 +7,6 @@ const Footer = () => (
       <strong>Mob of the Dead</strong>
       <span aria-hidden="true">•</span>
       <span>Pop Goes the Weasel</span>
-      <span aria-hidden="true">•</span>
-      <span>Alcatraz</span>
     </div>
   </footer>
 );
