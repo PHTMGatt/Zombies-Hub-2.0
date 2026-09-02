@@ -1,6 +1,3 @@
-// src/'App.tsx'
-// ------------------------
-
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
@@ -10,6 +7,7 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import Parts from './pages/Parts';
 import Bows from './pages/bows/Bows';
+import BowLanding from './pages/bows/BowLanding';
 import BaseBow from './pages/bows/BaseBow';
 import ElectricBow from './pages/bows/ElectricBow';
 import FireBow from './pages/bows/FireBow';
@@ -30,14 +28,7 @@ const App: React.FC = () => (
         <Route path="/wisps" element={<Wisp />} />
 
         <Route path="/bows" element={<Bows />}>
-          <Route
-            index
-            element={
-              <div className="bows-content">
-                <p>Select a bow above to view its upgrade steps.</p>
-              </div>
-            }
-          />
+          <Route index element={<BowLanding />} />
           <Route path="base" element={<BaseBow />} />
           <Route path="electric" element={<ElectricBow />} />
           <Route path="fire" element={<FireBow />} />
