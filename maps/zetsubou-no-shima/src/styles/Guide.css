@@ -91,7 +91,8 @@
 }
 
 /* === Zombies Hub 2.0 run-first layout === */
-.zets-main-guide {
+.zets-main-guide,
+.zets-detail-page {
   --guide-accent: #69e6ad;
   --guide-accent-soft: rgba(31, 150, 99, 0.17);
   --guide-panel: rgba(5, 18, 13, 0.78);
@@ -107,7 +108,8 @@
   z-index: 2;
 }
 
-.zets-main-guide .zh-guide-hero {
+.zets-main-guide .zh-guide-hero,
+.zets-detail-page .zh-guide-hero {
   background:
     linear-gradient(135deg, rgba(28, 128, 82, 0.2), transparent 42%),
     rgba(4, 16, 11, 0.82);
@@ -115,7 +117,8 @@
   box-shadow: 0 20px 56px rgba(0, 0, 0, 0.36), 0 0 34px rgba(52, 190, 128, 0.08);
 }
 
-.zets-guide-note {
+.zets-guide-note,
+.zets-detail-note {
   width: min(100%, 960px);
   margin: -0.6rem auto 2rem;
   box-sizing: border-box;
@@ -133,7 +136,8 @@
   cursor: pointer;
 }
 
-.zets-run-step .zh-guide-step-card {
+.zets-run-step .zh-guide-step-card,
+.zets-detail-page .zh-guide-step-card {
   width: 100%;
   box-sizing: border-box;
   border-left: 3px solid rgba(105, 230, 173, 0.55);
@@ -188,14 +192,121 @@
   background: rgba(10, 46, 31, 0.82);
 }
 
+.zets-checklist-grid,
+.zets-cog-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+.zets-detail-card,
+.zets-cog-card {
+  min-height: 130px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.8rem;
+  align-items: start;
+  padding: 1rem;
+  color: #eafff4;
+  text-decoration: none;
+  border: 1px solid rgba(105, 230, 173, 0.16);
+  border-radius: 14px;
+  background:
+    linear-gradient(135deg, rgba(31, 128, 85, 0.14), transparent 60%),
+    rgba(4, 15, 10, 0.82);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+}
+
+.zets-cog-card {
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.zets-cog-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(105, 230, 173, 0.44);
+  background:
+    linear-gradient(135deg, rgba(37, 152, 101, 0.23), transparent 60%),
+    rgba(5, 20, 14, 0.9);
+}
+
+.zets-detail-number {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  color: #032116;
+  font-size: 0.75rem;
+  font-weight: 900;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #a7f7cf, #4bd69a);
+  box-shadow: 0 0 18px rgba(76, 215, 155, 0.16);
+}
+
+.zets-detail-card h3,
+.zets-cog-card h3 {
+  margin: 0 0 0.38rem;
+  color: #a9f1ce;
+  font-size: 1rem;
+}
+
+.zets-detail-card p,
+.zets-cog-card p {
+  margin: 0;
+  color: #c9e2d5;
+  line-height: 1.5;
+}
+
+.zets-cog-open {
+  display: inline-block;
+  margin-top: 0.65rem;
+  color: #73dda9;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+}
+
+.zets-back-row {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.zets-back-row a {
+  padding: 0.6rem 0.9rem;
+  color: #a9e9c9;
+  font-size: 0.84rem;
+  font-weight: 750;
+  text-decoration: none;
+  border: 1px solid rgba(105, 230, 173, 0.17);
+  border-radius: 999px;
+  background: rgba(4, 15, 10, 0.7);
+}
+
+.zets-back-row a:hover {
+  border-color: rgba(105, 230, 173, 0.43);
+  background: rgba(10, 45, 30, 0.78);
+}
+
 @media (max-width: 760px) {
-  .zets-main-guide {
+  .zets-main-guide,
+  .zets-detail-page {
     width: min(100% - 1rem, 720px);
     padding: 1.75rem 0 3rem;
   }
 
-  .zets-reference-grid {
+  .zets-reference-grid,
+  .zets-checklist-grid,
+  .zets-cog-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .zets-checklist-grid,
+  .zets-cog-grid {
+    grid-template-columns: 1fr;
   }
 }
 
