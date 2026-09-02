@@ -3,22 +3,11 @@ import { Outlet, useLocation } from 'react-router-dom';
 import AppRoutes from './AppRoutes';
 import HubHeader from '../components/HubHeader';
 import HubFooter from '../components/HubFooter';
-
-const dedicatedMapPrefixes = [
-  '/maps/origins',
-  '/maps/mob-of-the-dead',
-  '/maps/shadows-of-evil',
-  '/maps/der-eisendrache',
-  '/maps/zetsubou-no-shima',
-  '/maps/gorod-krovi',
-  '/maps/revelations',
-];
+import { isDedicatedMapPath } from '../data/dedicatedGuides';
 
 function RootLayout() {
   const { pathname } = useLocation();
-  const isDedicatedMapRoute = dedicatedMapPrefixes.some(prefix =>
-    pathname === prefix || pathname.startsWith(`${prefix}/`),
-  );
+  const isDedicatedMapRoute = isDedicatedMapPath(pathname);
 
   return (
     <div className="zh-app">
