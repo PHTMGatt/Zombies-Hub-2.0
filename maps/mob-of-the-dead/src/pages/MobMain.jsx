@@ -55,8 +55,8 @@ const MobMain = () => (
       {mobPrerequisites.join(' ')}
     </GuideCallout>
 
-    <GuideSection kicker="Main Run" title="Four phases. That’s it.">
-      <GuideStepList>
+    <GuideSection kicker="Main Run" title="Four phases">
+      <GuideStepList className="zh-guide-step-list--roadmap">
         {phases.map((phase, index) => (
           <GuideStepCard
             key={phase.title}
