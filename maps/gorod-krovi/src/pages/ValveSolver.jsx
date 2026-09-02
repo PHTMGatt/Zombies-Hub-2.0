@@ -1,104 +1,122 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import valveSolutions from '../data/valveSolutions';
 import GKMap from '../assets/GK_Map.png';
+import {
+  GuideHero,
+  GuideCallout,
+  GuideChip,
+} from '../../../../shared/ui/GuideLayout';
 import '../styles/ValveSolver.css';
+
+const locations = [
+  'Dragon Command',
+  'Infirmary',
+  'Armory',
+  'Department Store',
+  'Supply Depot',
+  'Tank Station',
+];
 
 const ValveSolver = () => {
   const [greenValve, setGreenValve] = useState('');
   const [cylinderLocation, setCylinderLocation] = useState('');
-  const [solution, setSolution] = useState(null);
 
-  const locations = [
-    'Dragon Command',
-    'Infirmary',
-    'Armory',
-    'Department Store',
-    'Supply Depot',
-    'Tank Station',
-  ];
+  const solution = useMemo(() => {
+    if (!greenValve || !cylinderLocation) return null;
 
-  const handleSolve = () => {
-    const match = valveSolutions.find(
-      (entry) =>
-        entry.start === greenValve && entry.end === cylinderLocation
-    );
-    setSolution(match || null);
+    return valveSolutions.find(
+      (entry) => entry.start === greenValve && entry.end === cylinderLocation
+    ) || null;
+  }, [greenValve, cylinderLocation]);
+
+  const reset = () => {
+    setGreenValve('');
+    setCylinderLocation('');
   };
 
   return (
-    <div className="valve-solver-page">
-      <div className="glass-card valve-solver-card">
-        <h1 className="section-title">Valve Solver</h1>
-        <p className="section-intro">
-          Identify the valve holding the Master Code Cylinder (green) and its location to get the correct settings for all six valves.
-        </p>
+    <main className="gorod-valve-page">
+      <GuideHero
+        kicker="Gorod Krovi"
+        title="Valve Solver"
+        description="Choose where the green light starts and where the Master Code Cylinder is located. The solver returns the six valve settings for that game."
+      >
+        <GuideChip>Randomized puzzle</GuideChip>
+        <GuideChip>6 valves</GuideChip>
+        <GuideChip>S.O.P.H.I.A. setup</GuideChip>
+      </GuideHero>
 
-        <img
-          src={GKMap}
-          alt="Gorod Krovi valve locations"
-          className="valve-map"
-        />
+      <GuideCallout label="What to look for" tone="info" className="gorod-valve-note">
+        Find the valve with the green light, then find the air-vent location holding the Master Code Cylinder. Those two locations are the only inputs the solver needs.
+      </GuideCallout>
 
-        <div className="valve-selectors">
-          <label>
-            Master Cylinder Valve:
-            <select
-              value={greenValve}
-              onChange={(e) => {
-                setGreenValve(e.target.value);
-                setSolution(null);
-              }}
-            >
-              <option value="">Select one</option>
-              {locations.map((loc) => (
-                <option key={loc} value={loc}>
-                  {loc}
-                </option>
-              ))}
-            </select>
-          </label>
-
-          <label>
-            Cylinder At Valve:
-            <select
-              value={cylinderLocation}
-              onChange={(e) => {
-                setCylinderLocation(e.target.value);
-                setSolution(null);
-              }}
-            >
-              <option value="">Select one</option>
-              {locations.map((loc) => (
-                <option key={loc} value={loc}>
-                  {loc}
-                </option>
-              ))}
-            </select>
-          </label>
-
-          <button
-            onClick={handleSolve}
-            disabled={!greenValve || !cylinderLocation}
-          >
-            Solve
-          </button>
+      <section className="gorod-valve-workspace">
+        <div className="gorod-valve-map-wrap">
+          <img
+            src={GKMap}
+            alt="Gorod Krovi map showing valve areas"
+            className="gorod-valve-map"
+          />
         </div>
 
-        {solution && (
-          <div className="valve-solution">
+        <div className="gorod-valve-controls">
+          <div className="gorod-valve-fields">
+            <label>
+              <span>Green light starts at</span>
+              <select value={greenValve} onChange={(e) => setGreenValve(e.target.value)}>
+                <option value="">Choose location</option>
+                {locations.map((loc) => <option key={loc} value={loc}>{loc}</option>)}
+              </select>
+            </label>
+
+            <label>
+              <span>Master Cylinder is at</span>
+              <select value={cylinderLocation} onChange={(e) => setCylinderLocation(e.target.value)}>
+                <option value="">Choose location</option>
+                {locations.map((loc) => <option key={loc} value={loc}>{loc}</option>)}
+              </select>
+            </label>
+          </div>
+
+          {(greenValve || cylinderLocation) && (
+            <button type="button" className="gorod-valve-reset" onClick={reset}>Reset</button>
+          )}
+        </div>
+
+        {!greenValve || !cylinderLocation ? (
+          <div className="gorod-valve-empty">
+            <strong>Select both locations.</strong>
+            <span>Your six settings will appear here immediately.</span>
+          </div>
+        ) : solution ? (
+          <div className="gorod-valve-solution" aria-live="polite">
+            <div className="gorod-valve-solution__header">
+              <span>Solution</span>
+              <strong>{greenValve} → {cylinderLocation}</strong>
+            </div>
+
             {solution.message ? (
-              <p>{solution.message}</p>
+              <p className="gorod-valve-message">{solution.message}</p>
             ) : (
-              Object.entries(solution.valves).map(([location, setting]) => (
-                <p key={location}>
-                  Set <strong>{location}</strong> to <strong>{setting}</strong>
-                </p>
-              ))
+              <div className="gorod-valve-setting-grid">
+                {Object.entries(solution.valves).map(([location, setting], index) => (
+                  <div className="gorod-valve-setting" key={location}>
+                    <span className="gorod-valve-setting__number">{index + 1}</span>
+                    <span className="gorod-valve-setting__location">{location}</span>
+                    <strong>{setting}</strong>
+                  </div>
+                ))}
+              </div>
             )}
           </div>
+        ) : (
+          <div className="gorod-valve-empty is-error" aria-live="polite">
+            <strong>No stored solution for that combination.</strong>
+            <span>Double-check the two locations before changing valves in-game.</span>
+          </div>
         )}
-      </div>
-    </div>
+      </section>
+    </main>
   );
 };
 
