@@ -1,35 +1,39 @@
 import React from 'react';
-import Header from '../../components/Header';
-import Footer from '../../components/Footer';
+import CogGuidePage from '../CogGuidePage';
 
-const CogThree = () => {
-  return (
-    <>
-      <Header />
-      <main className="guide-page">
-        <section className="guide-section">
-          <h2 className="guide-title">Cog 3 – Electrified Shield Zipline Drop</h2>
-          <p>
-            After completing all <strong>Trials of the Ancients</strong>, stand on the lightning platform with your shield equipped to charge it.
-          </p>
-          <p>
-            Head to the zipline between Lab A and the Docks. Use the charged shield to shock the panel.
-          </p>
-
-          <h3 className="guide-subtitle">How to Drop onto the Dock</h3>
-          <ul>
-            <li><strong>Solo:</strong> Shock the panel, ride the zipline, melee mid-ride to drop.</li>
-            <li><strong>Co-op:</strong> One rides while the other shocks the panel to drop them.</li>
-          </ul>
-
-          <p>
-            Start from the Docks heading toward Lab A. Missing the drop results in instant death.
-          </p>
-        </section>
-      </main>
-      <Footer />
-    </>
-  );
-};
+const CogThree = () => (
+  <CogGuidePage
+    number="3"
+    title="Electrified Zipline Drop"
+    description="Charge the Zombie Shield from the completed Trials, electrify the zipline setup, and drop onto the hidden dock for the third cog."
+    chips={['All Trials complete', 'Zombie Shield', 'Zipline drop']}
+    note={{
+      label: 'Failure point',
+      body: 'The dangerous part is the drop timing. Missing the hidden dock can down or kill you, so clear the area and set the attempt up before riding.',
+    }}
+    steps={[
+      {
+        title: 'Charge the shield',
+        summary: 'After completing all three Trials, use the challenge lightning/electric reward to charge the Zombie Shield for this step.',
+      },
+      {
+        title: 'Set the zipline',
+        summary: 'Go to the Lab A / Docks zipline and use the electrified-shield setup on the zipline control panel.',
+      },
+      {
+        title: 'Drop onto the hidden dock',
+        summary: 'Ride from the Docks side toward Lab A and trigger the drop when you are over the hidden pier.',
+        details: [
+          'Solo: use the electrified setup, ride the zipline, then melee at the correct point to release onto the dock.',
+          'Co-op: one player rides while another activates/electrifies the panel at the correct moment to drop the rider.',
+        ],
+      },
+      {
+        title: 'Pick up the cog',
+        summary: 'Collect the cog from the hidden dock and return to the main map with the final elevator component.',
+      },
+    ]}
+  />
+);
 
 export default CogThree;
