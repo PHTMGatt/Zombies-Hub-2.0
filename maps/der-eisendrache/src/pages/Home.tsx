@@ -19,18 +19,17 @@ const Home: React.FC = () => {
       <GuideHero
         kicker="Der Eisendrache"
         title="My Brother’s Keeper"
-        description="Use this page as the full-run roadmap. Open Bows, Wisps, Gear, or Boss only when that phase starts."
+        description="Five major phases. Open Bows, Wisps, Gear, or Boss only when that part of the run starts."
       >
         <GuideChip>Solo + Co-op</GuideChip>
-        <GuideChip>Black Ops III</GuideChip>
       </GuideHero>
 
       <GuideCallout label="Run setup">
-        Feed all three dragons, collect the Wrath of the Ancients, start the Shield/Ragnarok parts early, and choose the bow upgrade(s) your lobby needs.
+        Feed all three dragons, collect Wrath of the Ancients, start Shield/Ragnarok parts early, and choose the bow upgrade(s) your lobby needs.
       </GuideCallout>
 
       <GuideSection kicker="Main Run" title="Five phases">
-        <GuideStepList>
+        <GuideStepList className="zh-guide-step-list--roadmap">
           {deGuide.phases.map((phase, index) => (
             <GuideStepCard
               key={phase.id}
@@ -43,10 +42,10 @@ const Home: React.FC = () => {
         </GuideStepList>
       </GuideSection>
 
-      <GuideSection kicker="Focused Guides" title="Open the detail only when you need it">
+      <GuideSection kicker="Focused Guides" title="Open only what you need">
         <div className="de-quick-links">
-          <Link to={`${BASE}/bows`}>Bows <span>Base + all four upgrades</span></Link>
-          <Link to={`${BASE}/wisp`}>Wisps <span>Both wisp cycles + locations</span></Link>
+          <Link to={`${BASE}/bows`}>Bows <span>Base + four upgrades</span></Link>
+          <Link to={`${BASE}/wisp`}>Wisps <span>Both cycles + locations</span></Link>
           <Link to={`${BASE}/parts`}>Gear <span>Shield + Ragnarok DG-4</span></Link>
           <Link to={`${BASE}/boss`}>Boss <span>Keeper fight + ending</span></Link>
         </div>
