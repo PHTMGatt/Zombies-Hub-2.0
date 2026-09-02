@@ -1,6 +1,6 @@
-.revelations-module .rev-page {
+.revelations-module .sound-step-page {
   position: relative;
-  padding: 1.4rem 1rem 2rem;
+  padding: 1rem 1rem 1.5rem;
   min-height: 0;
   display: flex;
   justify-content: flex-start;
@@ -9,7 +9,7 @@
   z-index: 1;
 }
 
-.revelations-module .rev-background {
+.revelations-module .sound-step-page .rev-background {
   position: absolute;
   inset: 0;
   background: url('../assets/rev-guide/Main/Revelations.webp') no-repeat center center/cover;
@@ -20,75 +20,87 @@
 .revelations-module .sk-container {
   position: relative;
   z-index: 2;
-  width: min(100%, 980px);
+  width: min(100%, 1080px);
   text-align: center;
   color: #aad4ff;
 }
 
-.revelations-module .rev-page-heading {
-  margin-bottom: 0.7rem;
+.revelations-module .sound-step-page .rev-page-heading {
+  margin-bottom: 0.55rem;
 }
 
 .revelations-module .sk-title {
-  margin: 0.1rem 0 0.35rem;
+  margin: 0.05rem 0 0.25rem;
   color: #cce6ff;
-  font-size: clamp(1.8rem, 3vw, 2.35rem);
+  font-size: clamp(1.65rem, 2.7vw, 2.15rem);
   font-weight: 800;
   text-shadow: 0 0 10px rgba(109, 194, 255, 0.55);
 }
 
-.revelations-module .rev-page-intro {
-  max-width: 780px;
+.revelations-module .sound-step-page .rev-page-intro {
+  max-width: 760px;
   margin: 0 auto;
   color: #bdcbe2;
-  font-size: 0.9rem;
-  line-height: 1.45;
+  font-size: 0.84rem;
+  line-height: 1.4;
 }
 
-.revelations-module .rev-glow-box {
+.revelations-module .sound-workspace {
   width: 100%;
-  padding: 0.8rem;
-  border: 1px solid rgba(109, 194, 255, 0.35);
-  border-radius: 12px;
-  background: rgba(0, 0, 0, 0.36);
-  box-shadow: 0 0 24px rgba(109, 194, 255, 0.18);
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(330px, 0.75fr);
+  gap: 0.75rem;
+  align-items: stretch;
+  padding: 0.65rem;
+  border: 1px solid rgba(109, 194, 255, 0.3);
+  border-radius: 11px;
+  background: rgba(0, 0, 0, 0.34);
+  box-shadow: 0 0 22px rgba(109, 194, 255, 0.16);
   backdrop-filter: blur(8px);
 }
 
-.revelations-module .video-card {
-  width: min(100%, 760px);
-  margin: 0 auto 0.45rem;
-  border: 2px solid rgba(109, 194, 255, 0.52);
-  border-radius: 10px;
+.revelations-module .sound-workspace .video-card {
+  width: 100%;
+  margin: 0;
+  align-self: stretch;
+  border: 1px solid rgba(109, 194, 255, 0.46);
+  border-radius: 9px;
   overflow: hidden;
   background: rgba(0, 0, 0, 0.45);
-  box-shadow: 0 0 20px rgba(0, 191, 255, 0.26);
+  box-shadow: 0 0 16px rgba(0, 191, 255, 0.18);
 }
 
-.revelations-module .rev-video-player__iframe {
+.revelations-module .sound-workspace .rev-video-player__iframe {
   width: 100% !important;
-  height: 310px !important;
+  height: 248px !important;
   display: block;
 }
 
-.revelations-module .video-caption {
-  padding: 0.3rem 0.55rem;
+.revelations-module .sound-workspace .video-caption {
+  padding: 0.28rem 0.5rem;
   color: #aacbe4;
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   background: rgba(0, 0, 0, 0.28);
 }
 
+.revelations-module .sound-picker {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .revelations-module .sk-selected-label {
-  margin: 0.35rem 0 0.4rem;
+  margin: 0 0 0.3rem;
   color: #d4ecff;
-  font-size: 0.9rem;
+  font-size: 0.82rem;
   font-weight: 700;
 }
 
 .revelations-module .rev-selected-prefix {
   color: #7dcfff;
-  font-size: 0.7rem;
-  letter-spacing: 0.1em;
+  font-size: 0.68rem;
+  letter-spacing: 0.09em;
   text-transform: uppercase;
 }
 
@@ -97,21 +109,21 @@
   justify-content: center;
   align-items: center;
   position: relative;
-  height: 150px;
+  height: 154px;
   overflow: hidden;
 }
 
 .revelations-module .sound-card {
   position: absolute;
-  width: 220px;
-  min-height: 92px;
-  padding: 0.7rem;
-  border: 1px solid rgba(0, 195, 255, 0.62);
-  border-radius: 10px;
+  width: 190px;
+  min-height: 82px;
+  padding: 0.6rem;
+  border: 1px solid rgba(0, 195, 255, 0.52);
+  border-radius: 9px;
   background: rgba(0, 0, 0, 0.54);
   color: #aad4ff;
-  box-shadow: 0 0 14px rgba(109, 194, 255, 0.18);
-  transition: transform 0.35s ease, opacity 0.3s ease;
+  box-shadow: 0 0 12px rgba(109, 194, 255, 0.14);
+  transition: transform 0.3s ease, opacity 0.25s ease;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -125,18 +137,18 @@
   inset: 0;
   background: url('../assets/rev-guide/Main/RevRed.jpg') no-repeat center center/cover;
   filter: blur(6px) brightness(0.42);
-  opacity: 0.6;
+  opacity: 0.55;
   z-index: 0;
-  border-radius: 10px;
+  border-radius: 9px;
   pointer-events: none;
 }
 
 .revelations-module .sound-card h2 {
   position: relative;
   z-index: 2;
-  margin: 0 0 0.45rem;
+  margin: 0 0 0.38rem;
   color: #d9efff;
-  font-size: 1rem;
+  font-size: 0.92rem;
   text-shadow: 0 1px 3px #000;
 }
 
@@ -146,17 +158,17 @@
   width: 100%;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.35rem;
+  gap: 0.28rem;
 }
 
 .revelations-module .card-buttons button {
   min-width: 0;
-  padding: 0.38rem 0.32rem;
-  border: 1px solid #00c3ff;
+  padding: 0.32rem 0.26rem;
+  border: 1px solid rgba(0, 195, 255, 0.8);
   border-radius: 5px;
   background: rgba(0, 25, 40, 0.58);
   color: #d1efff;
-  font-size: 0.7rem;
+  font-size: 0.66rem;
   cursor: pointer;
 }
 
@@ -166,9 +178,9 @@
 }
 
 .revelations-module .card-buttons button small {
-  margin-top: 0.12rem;
+  margin-top: 0.1rem;
   color: #7fdcff;
-  font-size: 0.62rem;
+  font-size: 0.58rem;
 }
 
 .revelations-module .card-buttons button:hover,
@@ -177,47 +189,47 @@
 }
 
 .revelations-module .sound-card.center {
-  width: 330px;
-  min-height: 118px;
+  width: 300px;
+  min-height: 108px;
   transform: translateX(0) scale(1);
   z-index: 3;
 }
 
 .revelations-module .sound-card.left {
-  transform: translateX(-285px) scale(0.78) rotateY(10deg);
-  opacity: 0.42;
+  transform: translateX(-235px) scale(0.72) rotateY(10deg);
+  opacity: 0.32;
   z-index: 2;
 }
 
 .revelations-module .sound-card.right {
-  transform: translateX(285px) scale(0.78) rotateY(-10deg);
-  opacity: 0.42;
+  transform: translateX(235px) scale(0.72) rotateY(-10deg);
+  opacity: 0.32;
   z-index: 2;
 }
 
 .revelations-module .spinner-controls {
-  margin-top: 0.55rem;
+  margin-top: 0.28rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.8rem;
+  gap: 0.65rem;
 }
 
 .revelations-module .spinner-controls span {
-  min-width: 42px;
+  min-width: 40px;
   color: #bfe6ff;
-  font-size: 0.8rem;
+  font-size: 0.74rem;
   font-weight: 700;
 }
 
 .revelations-module .spinner-controls button {
-  min-width: 44px;
-  padding: 0.35rem 0.7rem;
-  border: 1px solid rgba(109, 194, 255, 0.65);
+  min-width: 40px;
+  padding: 0.28rem 0.62rem;
+  border: 1px solid rgba(109, 194, 255, 0.6);
   border-radius: 6px;
   background: rgba(4, 22, 34, 0.88);
   color: #bfeaff;
-  font-size: 1rem;
+  font-size: 0.9rem;
   cursor: pointer;
 }
 
@@ -225,13 +237,19 @@
   background: rgba(16, 76, 108, 0.9);
 }
 
-@media (max-width: 760px) {
-  .revelations-module .rev-video-player__iframe {
-    height: 240px !important;
+@media (max-width: 920px) {
+  .revelations-module .sound-workspace {
+    grid-template-columns: 1fr;
   }
 
-  .revelations-module .carousel-wrapper {
-    height: 142px;
+  .revelations-module .sound-workspace .rev-video-player__iframe {
+    height: 220px !important;
+  }
+}
+
+@media (max-width: 760px) {
+  .revelations-module .sound-step-page {
+    padding: 0.8rem 0.6rem 1.25rem;
   }
 
   .revelations-module .sound-card.left,
@@ -240,16 +258,24 @@
   }
 
   .revelations-module .sound-card.center {
-    width: min(100%, 360px);
+    width: min(100%, 340px);
   }
 }
 
 @media (max-width: 520px) {
+  .revelations-module .sound-workspace .rev-video-player__iframe {
+    height: 190px !important;
+  }
+
   .revelations-module .card-buttons {
     grid-template-columns: 1fr;
   }
 
+  .revelations-module .carousel-wrapper {
+    height: 178px;
+  }
+
   .revelations-module .sound-card.center {
-    min-height: 138px;
+    min-height: 150px;
   }
 }
