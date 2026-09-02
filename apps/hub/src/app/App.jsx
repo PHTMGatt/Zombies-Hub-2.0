@@ -7,6 +7,7 @@ import HubFooter from '../components/HubFooter';
 const dedicatedMapPrefixes = [
   '/maps/origins',
   '/maps/mob-of-the-dead',
+  '/maps/shadows-of-evil',
   '/maps/der-eisendrache',
   '/maps/zetsubou-no-shima',
   '/maps/gorod-krovi',
