@@ -8,14 +8,19 @@ const Header = () => {
   return (
     <header className="zets-header">
       <div className="zets-header-content">
-        <h1 className="zets-header-title">Seeds of Doubt</h1>
-        <p className="zets-header-subtitle">Zetsubou No Shima Easter Egg Guide</p>
+        <span className="zets-header-kicker">Pohnpei · Zombies Hub 2.0</span>
+        <h1 className="zets-header-title">Zetsubou No Shima</h1>
+        <p className="zets-header-subtitle">Seeds of Doubt</p>
 
         <button
+          type="button"
           className="zets-nav-toggle"
           onClick={() => setMenuOpen(!menuOpen)}
+          aria-expanded={menuOpen}
+          aria-label="Toggle Zetsubou guide navigation"
         >
-          ☰ <span className="toggle-label">{menuOpen ? 'Close' : 'Menu'}</span>
+          <span aria-hidden="true">☰</span>
+          <span className="toggle-label">{menuOpen ? 'Close' : 'Guide Menu'}</span>
         </button>
       </div>
 
