@@ -1,95 +1,52 @@
 .mobmain-page {
   --guide-accent: #f0b321;
-  --guide-accent-soft: rgba(186, 68, 22, 0.2);
-  --guide-panel: rgba(7, 8, 10, 0.74);
-  --guide-panel-strong: rgba(5, 6, 8, 0.92);
-  --guide-border: rgba(240, 179, 33, 0.2);
+  --guide-accent-soft: rgba(186, 68, 22, 0.16);
+  --guide-panel: rgba(7, 8, 10, 0.72);
+  --guide-panel-strong: rgba(5, 6, 8, 0.9);
+  --guide-border: rgba(240, 179, 33, 0.18);
   --guide-text: #f5f1e8;
   --guide-muted: #c6beb0;
 
-  width: min(100% - 2rem, 1120px);
+  width: min(100% - 1.5rem, 1080px);
   margin: 0 auto;
-  padding: 3rem 0 5rem;
+  padding: 1.35rem 0 2.25rem;
 }
 
 .mobmain-page .zh-guide-hero {
-  background:
-    linear-gradient(135deg, rgba(177, 52, 17, 0.24), transparent 40%),
-    rgba(5, 7, 10, 0.78);
-  border-color: rgba(240, 179, 33, 0.24);
-  box-shadow:
-    0 20px 60px rgba(0, 0, 0, 0.38),
-    inset 0 1px 0 rgba(255, 255, 255, 0.035),
-    0 0 34px rgba(151, 46, 13, 0.12);
+  background: linear-gradient(90deg, rgba(177, 52, 17, 0.18), transparent 48%);
 }
 
 .mobmain-page .zh-guide-step-card {
-  border-left: 3px solid rgba(240, 179, 33, 0.65);
+  border-left: 3px solid rgba(240, 179, 33, 0.62);
 }
 
 .mobmain-page .zh-guide-step-marker {
   color: #1c1202;
   background: linear-gradient(145deg, #ffd75a, #e1910f);
-  box-shadow: 0 0 18px rgba(240, 179, 33, 0.24);
 }
 
 .mob-prereq-callout {
-  width: min(100%, 960px);
-  margin: -0.7rem auto 2rem;
+  width: min(100%, 980px);
+  margin: 0 auto 1.1rem;
   box-sizing: border-box;
 }
 
-.mob-prereq-list {
-  margin: 0;
-  padding-left: 1.1rem;
+.mob-phase-link {
+  display: inline-flex;
+  margin-top: 0.38rem;
+  color: #ffd15c;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-decoration: none;
 }
 
-.mob-prereq-list li {
-  margin: 0.2rem 0;
-  line-height: 1.5;
-}
-
-.mob-run-step {
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  text-align: left;
-  border: 0;
-  background: transparent;
-  color: inherit;
-  font: inherit;
-  cursor: pointer;
-}
-
-.mob-run-step .zh-guide-step-card {
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.mob-run-step:hover .zh-guide-step-card,
-.mob-run-step.is-open .zh-guide-step-card {
-  border-color: rgba(240, 179, 33, 0.55);
-  background:
-    linear-gradient(135deg, rgba(177, 52, 17, 0.26), transparent 40%),
-    rgba(7, 8, 10, 0.86);
-  box-shadow: 0 16px 38px rgba(0, 0, 0, 0.38), 0 0 26px rgba(183, 70, 18, 0.12);
-}
-
-.mob-step-details {
-  margin: 0.9rem 0 0;
-  padding: 0.85rem 1rem 0.85rem 2rem;
-  border-top: 1px solid rgba(240, 179, 33, 0.14);
-  color: #ddd5c8;
-}
-
-.mob-step-details li {
-  margin: 0.4rem 0;
-  line-height: 1.55;
+.mob-phase-link:hover {
+  text-decoration: underline;
 }
 
 @media (max-width: 720px) {
   .mobmain-page {
     width: min(100% - 1rem, 680px);
-    padding-top: 1.75rem;
+    padding-top: 1rem;
   }
 }
