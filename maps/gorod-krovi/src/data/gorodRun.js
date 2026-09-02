@@ -94,3 +94,83 @@ export const gorodPrerequisites = [
   'Keep the shield available throughout the run; it is required for the egg and trophy progression.',
   'Ray Gun Mark 3 is strongly recommended for the S.O.P.H.I.A. challenges and boss fight.',
 ];
+
+export const gorodTrophies = [
+  {
+    location: 'Tank Factory',
+    method: 'Use the Dragon Shield blast on the trophy window to knock the trophy loose.',
+  },
+  {
+    location: 'Outside Dragon Command',
+    method: 'Shoot the trophy down so it lands on the rock below.',
+  },
+  {
+    location: 'Outside Supply Depot',
+    method: 'Place a Dragon Strike on the puddle to reveal the trophy.',
+  },
+  {
+    location: 'Supply Depot',
+    method: 'Activate the laser trap and collect the trophy after the trap finishes.',
+  },
+  {
+    location: 'Pack-a-Punch / Hatchery',
+    method: 'Collect the trophy from the toilet after the sewer-light setup has been completed.',
+  },
+  {
+    location: 'Mule Kick room safe',
+    method: 'After earning the Gauntlet of Siegfried, use its melee attack on the safe to reveal the sixth trophy.',
+  },
+];
+
+export const gorodChallenges = [
+  {
+    title: 'Gersh Orb',
+    objective: 'Find the floating orb, damage it, follow its teleports, and repeat until it returns to Dragon Command.',
+    tip: 'The Pack-a-Punched Ray Gun Mark 3 makes the repeated damage windows much easier.',
+  },
+  {
+    title: 'Bomb Sequence',
+    objective: 'Watch the Dragon Command screen, memorize the flashed location order, then disable every terminal in that same order.',
+    tip: 'Write or screenshot the sequence before leaving Dragon Command if needed.',
+  },
+  {
+    title: 'Mangler Escort',
+    objective: 'Find the green-eyed Mangler, break the correct shoulder armor, then walk him onto the Dragon Command circle without killing him.',
+    tip: 'Use a normal un-Pack-a-Punched bullet weapon for the shoulder shot and keep stray bullets away from the Mangler afterward.',
+  },
+  {
+    title: 'Valkyrie Escort',
+    objective: 'Find the injured Valkyrie at the back of spawn and stay with it while it travels toward Dragon Command.',
+    tip: 'Avoid Widow’s Wine and Electric Cherry effects near the drone because accidental damage can fail the challenge.',
+  },
+  {
+    title: 'Groph Module Drop',
+    objective: 'Go to the location called out on screen, defend the Groph Module, then use the Gauntlet dragon to collect its drop and return it to S.O.P.H.I.A.',
+    tip: 'The called-out module can be at Dragon Command, Tank Factory, or Supply Depot.',
+  },
+  {
+    title: 'Motherboard Lockdown',
+    objective: 'Take the motherboard to the Hatchery computer, survive the Mangler lockdown, retrieve the motherboard, and return it to S.O.P.H.I.A.',
+    tip: 'This is always the final challenge in the walkthrough sequence.',
+  },
+];
+
+export const gorodBossPhases = [
+  {
+    title: 'Dragon Phase',
+    summary: 'Activate the arena and survive until Nikolai fires on the dragon. When a wounded weak point opens, focus the Ray Gun Mark 3 on that exposed area.',
+    details: [
+      'Keep the shield between you and incoming dragon fire when repositioning.',
+      'Repeat the exposed-weak-point cycle as the dragon lands at its different positions.',
+      'After the final weak point is destroyed, the dragon dies and the Nikolai phase begins.',
+    ],
+  },
+  {
+    title: 'Nikolai Phase',
+    summary: 'Use In Plain Sight as the phase begins, destroy the exposed mech weak points, then shoot the center when it opens.',
+    details: [
+      'The walkthrough focuses the lit mech sections and the upper left/right weak points first.',
+      'Once those are destroyed, the middle opens for the finishing damage.',
+    ],
+  },
+];
