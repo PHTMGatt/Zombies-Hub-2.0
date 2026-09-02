@@ -11,7 +11,7 @@ import soeGuide from '../data/soeGuide';
 import soeLayout from '../../../../apps/hub/src/assets/images/BO3/Shadows_Of_Evil.webp';
 import '../styles/Shadows.css';
 
-export default function MainGuide() {
+function MainGuide() {
   const [openStep, setOpenStep] = useState(0);
 
   return (
