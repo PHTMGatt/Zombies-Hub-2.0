@@ -18,7 +18,7 @@ body {
   font-family: var(--font-family);
   font-size: var(--font-size-base);
   color: var(--text-color);
-  background-image: url('/images/Robot.webp');
+  background-image: url('../../public/images/Robot.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

@@ -14,7 +14,7 @@
 .rev-background {
   position: absolute;
   inset: 0;
-  background: url('/src/assets/rev-guide/Main/Revelations.webp') no-repeat center center/cover;
+  background: url('../assets/rev-guide/Main/Revelations.webp') no-repeat center center/cover;
   filter: blur(10px) brightness(0.3);
   z-index: 0;
   animation: bgFloat 40s ease-in-out infinite alternate;
@@ -115,7 +115,7 @@
 .card-overlay {
   position: absolute;
   inset: 0;
-  background: url('/src/assets/rev-guide/Main/RevRed.jpg') no-repeat center center/cover;
+  background: url('../assets/rev-guide/Main/RevRed.jpg') no-repeat center center/cover;
   filter: blur(8px) brightness(0.5);
   opacity: 0.8;
   z-index: 0;
