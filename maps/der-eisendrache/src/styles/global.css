@@ -1,101 +1,123 @@
-/* Der Eisendrache legacy globals. PostCSS scopes these rules to .de-module. */
-html,
-body,
-#root {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
+/* Der Eisendrache module shell — fully isolated from the Hub. */
+
+.de-module,
+.de-module *,
+.de-module *::before,
+.de-module *::after {
   box-sizing: border-box;
 }
 
-#root {
+.de-module {
+  position: relative;
+  min-height: calc(100vh - var(--hub-nav-height));
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  color: #eef6ff;
+  font-family: 'Segoe UI', sans-serif;
+  background:
+    linear-gradient(rgba(3, 9, 17, 0.45), rgba(3, 8, 15, 0.68)),
+    url('../assets/images/Der_Eisendrache.webp') center / cover fixed no-repeat;
+  overflow-x: hidden;
+  isolation: isolate;
 }
 
-body::before {
+.de-module::before {
   content: '';
   position: fixed;
-  inset: 0;
-  background: url('../assets/images/Der_Eisendrache.webp') center/cover no-repeat fixed;
-  filter: blur(8px) brightness(0.8);
-  transform: scale(1.05);
-  z-index: -1;
+  inset: var(--hub-nav-height) 0 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(59, 135, 208, 0.13), transparent 34%),
+    radial-gradient(circle at 82% 66%, rgba(105, 84, 186, 0.1), transparent 36%);
+  backdrop-filter: blur(1.5px);
+  z-index: 0;
 }
 
-.layout-wrapper {
+.de-module > * {
+  position: relative;
+  z-index: 1;
+}
+
+.de-module .page-wrapper {
+  flex: 1;
+  width: 100%;
+}
+
+.de-module .layout-wrapper {
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  flex: 1;
-  padding: 2rem;
-  gap: 2rem;
   width: 100%;
-  box-sizing: border-box;
+  gap: 2rem;
+  padding: 2rem;
 }
 
-.layout-container {
+.de-module .layout-container {
   flex: 1;
   max-width: 900px;
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(4px);
-  border-radius: 0.75rem;
-  box-shadow: 0 0 1.25rem rgba(0, 0, 0, 0.4);
   padding: 2rem;
   position: relative;
   z-index: 1;
-  box-sizing: border-box;
+  border: 1px solid rgba(150, 201, 255, 0.1);
+  border-radius: 0.85rem;
+  background: rgba(3, 9, 17, 0.64);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.34);
 }
 
-.header-spacer { height: 150px; }
-
-@media (max-width: 768px) {
-  .header-spacer { height: 130px; }
+.de-module .header-spacer {
+  height: 156px;
 }
 
-h1, h2, h3 {
-  margin: 0 0 1rem;
-  font-weight: 600;
-  color: #fff;
+.de-module h1,
+.de-module h2,
+.de-module h3 {
+  color: #f4f9ff;
 }
 
-p, li {
-  margin: 0 0 0.75rem;
+.de-module p,
+.de-module li {
+  color: #e5edf7;
   line-height: 1.6;
-  color: #efefef;
 }
 
-ol, ul {
-  padding-left: 1.5rem;
-  margin: 0 0 1rem;
-}
-
-a {
-  color: #4da6ff;
+.de-module a {
+  color: #8bc7ff;
   text-decoration: none;
 }
 
-a:hover { text-decoration: underline; }
+.de-module a:hover {
+  color: #c7e6ff;
+}
 
 @media (max-width: 768px) {
-  .layout-wrapper {
-    flex-direction: column;
-    padding: 1rem;
-    gap: 1rem;
+  .de-module {
+    background-attachment: scroll;
   }
 
-  .layout-container {
+  .de-module .header-spacer {
+    height: 190px;
+  }
+
+  .de-module .layout-wrapper {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .de-module .layout-container {
     margin: 0;
     padding: 1.5rem;
   }
 }
 
 @media (max-width: 480px) {
-  html { font-size: 14px; }
-  .layout-container { margin: 0.5rem 0; padding: 1rem; }
-  h1 { font-size: 1.75rem; }
-  h2 { font-size: 1.5rem; }
-  h3 { font-size: 1.25rem; }
+  .de-module .layout-container {
+    margin: 0.5rem 0;
+    padding: 1rem;
+  }
+
+  .de-module h1 { font-size: 1.75rem; }
+  .de-module h2 { font-size: 1.5rem; }
+  .de-module h3 { font-size: 1.25rem; }
 }
