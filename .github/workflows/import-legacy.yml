@@ -1,0 +1,90 @@
+name: Import legacy Zombies sources
+
+on:
+  push:
+    paths:
+      - '.github/workflows/import-legacy.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Zombies Hub 2.0
+        uses: actions/checkout@v4
+
+      - name: Clone read-only source repositories
+        run: |
+          mkdir -p /tmp/zombies-legacy
+          cd /tmp/zombies-legacy
+          git clone --depth 1 https://github.com/PHTMGatt/Zombies-Hub.git hub
+          git clone --depth 1 https://github.com/PHTMGatt/Origins-Guide.git origins
+          git clone --depth 1 https://github.com/PHTMGatt/MOTD-Guide.git mob
+          git clone --depth 1 https://github.com/PHTMGatt/Der-Eisendrache-Guide.git der-eisendrache
+          git clone --depth 1 https://github.com/PHTMGatt/Zetsubou-Guide.git zetsubou
+          git clone --depth 1 https://github.com/PHTMGatt/Gorod-Krovi-Guide.git gorod
+          git clone --depth 1 https://github.com/PHTMGatt/Revelations-Guide.git revelations
+          git clone --depth 1 --branch Main https://github.com/PHTMGatt/Origins-EE.git origins-ee
+
+      - name: Import original Hub source
+        run: |
+          mkdir -p apps/hub/src
+          rsync -a /tmp/zombies-legacy/hub/src/assets/ apps/hub/src/assets/
+          rsync -a /tmp/zombies-legacy/hub/src/components/ apps/hub/src/components/
+          rsync -a /tmp/zombies-legacy/hub/src/data/ apps/hub/src/data/
+          rsync -a /tmp/zombies-legacy/hub/src/pages/ apps/hub/src/pages/
+          rsync -a /tmp/zombies-legacy/hub/src/styles/ apps/hub/src/styles/
+          cp /tmp/zombies-legacy/hub/package.json apps/hub/legacy-package.json
+
+      - name: Import dedicated map applications
+        run: |
+          for spec in \
+            'origins:origins' \
+            'mob:mob-of-the-dead' \
+            'der-eisendrache:der-eisendrache' \
+            'zetsubou:zetsubou-no-shima' \
+            'gorod:gorod-krovi' \
+            'revelations:revelations'; do
+            source_name="${spec%%:*}"
+            target_name="${spec##*:}"
+            mkdir -p "maps/${target_name}"
+            rsync -a "/tmp/zombies-legacy/${source_name}/src/" "maps/${target_name}/src/"
+            if [ -d "/tmp/zombies-legacy/${source_name}/public" ]; then
+              rsync -a "/tmp/zombies-legacy/${source_name}/public/" "maps/${target_name}/public/"
+            fi
+            cp "/tmp/zombies-legacy/${source_name}/package.json" "maps/${target_name}/legacy-package.json"
+            if [ -f "/tmp/zombies-legacy/${source_name}/README.md" ]; then
+              cp "/tmp/zombies-legacy/${source_name}/README.md" "maps/${target_name}/LEGACY_README.md"
+            fi
+          done
+
+      - name: Preserve Origins historical Easter egg source
+        run: |
+          mkdir -p maps/origins/legacy/origins-ee
+          rsync -a --exclude='.git' /tmp/zombies-legacy/origins-ee/ maps/origins/legacy/origins-ee/
+
+      - name: Record source revisions
+        run: |
+          {
+            echo '# Imported source revisions'
+            echo
+            for repo in hub origins mob der-eisendrache zetsubou gorod revelations origins-ee; do
+              printf '%s: ' "$repo"
+              git -C "/tmp/zombies-legacy/$repo" rev-parse HEAD
+            done
+          } > docs/imported-source-revisions.md
+
+      - name: Commit imported source and assets
+        run: |
+          git config user.name 'Zombies Hub 2.0 Migration'
+          git config user.email 'actions@users.noreply.github.com'
+          git add apps/hub maps docs/imported-source-revisions.md
+          if git diff --cached --quiet; then
+            echo 'No migration changes to commit.'
+            exit 0
+          fi
+          git commit -m 'Import legacy Hub and map source assets'
+          git push
