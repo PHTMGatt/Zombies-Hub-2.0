@@ -1,107 +1,137 @@
-/* src/styles/pages/Home.css */
+.de-home-page {
+  --guide-accent: #77c9ff;
+  --guide-accent-soft: rgba(88, 164, 224, 0.16);
+  --guide-panel: rgba(5, 14, 25, 0.76);
+  --guide-panel-strong: rgba(4, 10, 18, 0.92);
+  --guide-border: rgba(124, 202, 255, 0.2);
+  --guide-text: #eef8ff;
+  --guide-muted: #b9cddd;
 
-/* 1. WRAPPER & RESET */
-.home-page-container {
-  max-width: 960px;
+  width: min(100% - 2rem, 1120px);
   margin: 0 auto;
-  padding: 0 1rem;
-  padding-top: 5rem;
-  box-sizing: border-box;
+  padding: 3rem 0 5rem;
 }
 
-
-/* 2. INNER CARD */
-.home-page {
-  margin: 2rem 0;
-  padding: 2rem;
-  background: rgba(0, 0, 0, 0.6);
-  border-radius: 1rem;
-  box-shadow: 0 0 1.5rem rgba(0, 0, 0, 0.5);
-  color: #e3f0ff;
-  margin-top: 6rem; /* ~80px */
+.de-home-page .zh-guide-hero {
+  background:
+    linear-gradient(135deg, rgba(54, 127, 187, 0.16), transparent 44%),
+    rgba(5, 13, 24, 0.8);
+  border-color: rgba(119, 201, 255, 0.22);
+  box-shadow: 0 20px 58px rgba(0, 0, 0, 0.35), 0 0 36px rgba(79, 166, 224, 0.09);
 }
 
-/* 3. TYPOGRAPHY */
-.home-page__title {
-  margin: 0 0 1rem;
-  font-size: 2.4rem;
-  font-weight: 900;
-  color: #d6eaff;
-  text-shadow: 0 0 6px #4da6ff;
+.de-video-panel {
+  overflow: hidden;
+  border: 1px solid rgba(119, 201, 255, 0.24);
+  border-radius: 16px;
+  background: rgba(2, 7, 13, 0.84);
+  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.34), 0 0 28px rgba(60, 158, 226, 0.1);
 }
 
-.home-page__intro {
-  margin: 0 0 2rem;
-  font-size: 1.1rem;
-  color: #bbbbbb;
+.de-youtube,
+.de-youtube > div,
+.de-youtube__iframe {
+  display: block;
+  width: 100% !important;
 }
 
-/* 4. VIDEO */
-.video-wrapper {
-  position: relative;
-  padding-bottom: 56.25%;
-  height: 0;
-  margin-bottom: 2rem;
+.de-youtube__iframe {
+  aspect-ratio: 16 / 9;
+  height: auto !important;
+  min-height: 300px;
+  border: 0;
+  background: #000;
 }
 
-.youtube-frame {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 0.5rem;
-}
-
-/* 5. SECTION HEADER */
-.home-page__section {
-  margin: 2rem 0 1rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 2px solid #4da6ff;
-  font-size: 1.6rem;
-  font-weight: 700;
-  color: #fff;
-}
-
-/* 6. STEP GRID & ITEMS */
-.step-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1rem 2rem;
-}
-
-.step-item {
+.de-video-status {
   display: flex;
   align-items: center;
-  background: rgba(255, 255, 255, 0.05);
-  border: none;
-  padding: 0.75rem 1rem;
-  border-radius: 0.5rem;
-  font-size: 1rem;
-  color: #d4eaff;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 1rem;
+  border-top: 1px solid rgba(119, 201, 255, 0.16);
+  background: linear-gradient(90deg, rgba(31, 86, 127, 0.18), rgba(4, 10, 18, 0.94));
+}
+
+.de-video-status span {
+  color: #77c9ff;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.de-video-status strong {
+  overflow: hidden;
+  color: #deeffb;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-align: right;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.de-step-button {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
   cursor: pointer;
-  transition: transform 0.2s ease-in-out, background 0.2s;
 }
 
-.step-item:hover {
-  background: rgba(255, 255, 255, 0.1);
-  transform: translateX(4px);
-  color: #fff;
+.de-step-button .zh-guide-step-card {
+  width: 100%;
+  box-sizing: border-box;
+  border-left: 3px solid rgba(119, 201, 255, 0.6);
 }
 
-.step-index {
-  margin-right: 0.5rem;
-  font-weight: bold;
-  color: #4da6ff;
+.de-step-button:hover .zh-guide-step-card,
+.de-step-button.is-active .zh-guide-step-card {
+  border-color: rgba(119, 201, 255, 0.72);
+  background:
+    linear-gradient(135deg, rgba(90, 172, 229, 0.22), transparent 36%),
+    rgba(5, 14, 25, 0.84);
+  box-shadow: 0 15px 36px rgba(0, 0, 0, 0.34), 0 0 28px rgba(73, 163, 226, 0.11);
 }
 
-/* 7. MOBILE */
-@media (max-width: 768px) {
-  .home-page-container {
-    padding: 0 0.5rem;
-    padding-top: 1rem;
+.de-step-button.is-active .zh-guide-step-marker {
+  box-shadow: 0 0 24px rgba(119, 201, 255, 0.56);
+}
+
+.de-step-button--boss {
+  --guide-accent: #c79cff;
+  --guide-accent-soft: rgba(159, 104, 220, 0.16);
+  --guide-border: rgba(199, 156, 255, 0.2);
+}
+
+.de-step-button--boss .zh-guide-step-card {
+  border-left-color: rgba(199, 156, 255, 0.62);
+}
+
+@media (max-width: 720px) {
+  .de-home-page {
+    width: min(100% - 1rem, 700px);
+    padding: 1.75rem 0 3rem;
   }
 
-  .home-page__title {
-    font-size: 1.9rem;
+  .de-youtube__iframe {
+    min-height: 220px;
+  }
+
+  .de-video-status {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .de-video-status strong {
+    width: 100%;
+    text-align: left;
+    white-space: normal;
   }
 }
