@@ -5,6 +5,7 @@ import Footer from '../src/components/Footer';
 import Home from '../src/pages/Home';
 import Parts from '../src/pages/Parts';
 import Wisp from '../src/pages/Wisp';
+import BossFight from '../src/pages/BossFight';
 import Bows from '../src/pages/bows/Bows';
 import BowLanding from '../src/pages/bows/BowLanding';
 import BaseBow from '../src/pages/bows/BaseBow';
@@ -19,11 +20,12 @@ export default function DerEisendracheRoutes() {
     <section className="map-module de-module">
       <Header />
       <div className="header-spacer" />
-      <div className="page-wrapper">
+      <div className="de-page-shell">
         <Routes>
           <Route index element={<Home />} />
           <Route path="parts" element={<Parts />} />
           <Route path="wisps" element={<Wisp />} />
+          <Route path="boss" element={<BossFight />} />
           <Route path="bows" element={<Bows />}>
             <Route index element={<BowLanding />} />
             <Route path="base" element={<BaseBow />} />
