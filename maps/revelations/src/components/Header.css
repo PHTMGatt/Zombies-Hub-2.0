@@ -1,29 +1,27 @@
 .revelations-module .rev-header {
   position: relative;
-  min-height: 210px;
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
-  gap: 2rem;
-  padding: 2rem 2.25rem 1.4rem;
+  align-items: center;
+  gap: 1.25rem;
+  min-height: 122px;
+  padding: 1rem 1.4rem;
   overflow: hidden;
-  background:
-    linear-gradient(to bottom, rgba(3, 5, 14, 0.06), rgba(4, 6, 18, 0.78)),
-    url('../assets/images/Rev3.png') center / cover no-repeat;
-  border-bottom: 1px solid rgba(109, 194, 255, 0.2);
-  box-shadow: 0 14px 38px rgba(0, 0, 0, 0.4);
+  background-image: url('../assets/images/Rev3.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   isolation: isolate;
 }
 
-.revelations-module .rev-header::before {
+.revelations-module .rev-header::after {
   content: '';
   position: absolute;
   inset: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(circle at 22% 30%, rgba(109, 194, 255, 0.12), transparent 38%),
-    radial-gradient(circle at 72% 25%, rgba(183, 131, 255, 0.1), transparent 36%);
+  background: linear-gradient(90deg, rgba(5, 8, 20, 0.18), rgba(5, 8, 20, 0.05), rgba(5, 8, 20, 0.34));
   z-index: 0;
+  pointer-events: none;
 }
 
 .revelations-module .rev-header__left,
@@ -33,91 +31,78 @@
 }
 
 .revelations-module .rev-header__left {
-  max-width: 640px;
-}
-
-.revelations-module .rev-header__kicker {
-  display: inline-block;
-  margin-bottom: 0.35rem;
-  color: #84d6ff;
-  font-size: 0.68rem;
-  font-weight: 850;
-  letter-spacing: 0.17em;
-  text-transform: uppercase;
-  text-shadow: 0 0 10px rgba(109, 194, 255, 0.5);
+  min-width: 0;
+  max-width: 620px;
 }
 
 .revelations-module .rev-header__title {
   margin: 0;
-  color: #eef5ff;
-  font-size: clamp(2.5rem, 6vw, 4rem);
-  font-weight: 850;
-  line-height: 0.95;
-  letter-spacing: 0.01em;
-  text-shadow:
-    0 0 10px rgba(109, 194, 255, 0.7),
-    0 0 24px rgba(109, 194, 255, 0.38),
-    0 2px 8px rgba(0, 0, 0, 0.9);
+  color: #d0e7ff;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: 800;
+  line-height: 1;
+  text-shadow: 0 0 10px #6dc2ff, 0 0 22px rgba(109, 194, 255, 0.65);
 }
 
 .revelations-module .rev-header__subtitle {
-  margin: 0.55rem 0 0;
-  color: #d5ddff;
-  font-size: 1rem;
-  font-weight: 500;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9), 0 0 8px rgba(183, 131, 255, 0.35);
+  margin: 0.38rem 0 0;
+  color: #cce6ff;
+  font-size: 0.95rem;
+  text-shadow: 0 0 6px rgba(109, 194, 255, 0.8);
 }
 
 .revelations-module .rev-header__nav {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
-  gap: 0.5rem;
-  max-width: 620px;
+  gap: 0.45rem;
 }
 
 .revelations-module .rev-nav-link {
-  min-height: 40px;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  padding: 0.45rem 0.78rem;
-  color: #f4f6ff;
-  font-size: 0.82rem;
+  min-height: 34px;
+  padding: 0.35rem 0.65rem;
+  color: #fff;
+  font-size: 0.78rem;
   font-weight: 700;
   text-decoration: none;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 999px;
-  background: rgba(2, 5, 14, 0.58);
-  backdrop-filter: blur(8px);
-  transition: transform 0.2s ease, color 0.2s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.3);
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
 .revelations-module .rev-nav-link:hover,
 .revelations-module .rev-nav-link.active {
-  transform: translateY(-1px);
-  color: #dff7ff;
-  border-color: rgba(109, 194, 255, 0.48);
-  background: rgba(36, 57, 91, 0.62);
-  box-shadow: 0 0 18px rgba(109, 194, 255, 0.14);
+  color: #dff6ff;
+  border-color: rgba(109, 194, 255, 0.45);
+  background: rgba(255, 255, 255, 0.16);
 }
 
 @media (max-width: 900px) {
   .revelations-module .rev-header {
     min-height: 0;
-    align-items: center;
     flex-direction: column;
-    padding: 1.5rem 1rem 1.15rem;
+    align-items: center;
+    padding: 0.85rem 0.85rem 1rem;
     text-align: center;
   }
 
   .revelations-module .rev-header__nav {
     justify-content: center;
-    max-width: 760px;
   }
 }
 
 @media (max-width: 560px) {
+  .revelations-module .rev-header__title {
+    font-size: 1.75rem;
+  }
+
+  .revelations-module .rev-header__subtitle {
+    font-size: 0.84rem;
+  }
+
   .revelations-module .rev-header__nav {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -125,8 +110,7 @@
   }
 
   .revelations-module .rev-nav-link {
-    width: 100%;
-    padding-inline: 0.55rem;
+    justify-content: center;
   }
 
   .revelations-module .rev-nav-link:first-child {
