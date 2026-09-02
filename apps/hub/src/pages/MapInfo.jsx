@@ -14,6 +14,7 @@ export default function MapInfo() {
 
   const meta = mapData.find(m => m.slug === slug) || mapData.find(m => m.name === info.name) || {};
   const banner = meta.coverImage || meta.layoutImage;
+  const guideRoute = meta.internalRoute || `/easter-eggs/${slug}`;
 
   return (
     <div className="map-info-container">
@@ -38,8 +39,8 @@ export default function MapInfo() {
           <div className="info-row">
             {info.releasedIn && <span><strong>Released:</strong> {info.releasedIn}</span>}
             {info.hasEasterEgg ? (
-              <Link to={`/easter-eggs/${slug}`} className="badge">
-                🎁 Easter-Egg Inside
+              <Link to={guideRoute} className="badge">
+                {meta.internalRoute ? '📖 Open Easter Egg Guide' : '🎁 Easter-Egg Inside'}
               </Link>
             ) : (
               <span className="badge no-egg">No Easter-Egg</span>
