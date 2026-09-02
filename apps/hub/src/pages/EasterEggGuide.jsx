@@ -1,24 +1,16 @@
 import React from 'react';
 import { useParams, Navigate, Link } from 'react-router-dom';
 import guides from '../data/EasterEggGuides';
+import { getDedicatedGuideRoute } from '../data/dedicatedGuides';
 import ComingSoon from './ComingSoon';
 import '../styles/compStyles/EggGuideCard.css';
 
-const dedicatedGuides = new Set([
-  'origins',
-  'mob-of-the-dead',
-  'shadows-of-evil',
-  'der-eisendrache',
-  'zetsubou-no-shima',
-  'gorod-krovi',
-  'revelations',
-]);
-
 export default function EasterEggGuide() {
   const { slug } = useParams();
+  const dedicatedRoute = getDedicatedGuideRoute(slug);
 
-  if (dedicatedGuides.has(slug)) {
-    return <Navigate to={`/maps/${slug}`} replace />;
+  if (dedicatedRoute) {
+    return <Navigate to={dedicatedRoute} replace />;
   }
 
   const guide = guides.find(g => g.slug === slug);
