@@ -1,86 +1,107 @@
-/* Buildables.css */
+.gorod-buildables-page {
+  --guide-accent: #ff704d;
+  --guide-accent-soft: rgba(183, 47, 21, 0.18);
+  --guide-panel: rgba(13, 8, 7, 0.8);
+  --guide-panel-strong: rgba(10, 6, 5, 0.95);
+  --guide-border: rgba(255, 112, 77, 0.2);
+  --guide-text: #fff4ee;
+  --guide-muted: #d5bbb1;
 
-/* ── Page wrapper to center content ── */
-.buildables-page {
-  display: flex;
-  justify-content: center;
-  padding: 2rem 1rem;
+  width: min(100% - 2rem, 1120px);
+  margin: 0 auto;
+  padding: 3rem 0 5rem;
 }
 
-/* ── Outer glass card container ── */
-.buildables-card {
-  width: 100%;
-  max-width: 900px;
-  padding: 2rem;
-  background: rgba(0, 0, 0, 0.45);
-  border: 1px solid rgba(255, 0, 0, 0.2);
-  border-radius: 1rem;
-  backdrop-filter: blur(12px);
-  box-shadow: 0 0 40px rgba(255, 0, 0, 0.15);
-  text-align: center;
+.gorod-buildables-page .zh-guide-hero {
+  background:
+    linear-gradient(135deg, rgba(161, 40, 18, 0.25), transparent 44%),
+    rgba(11, 7, 6, 0.84);
 }
 
-/* ── Section title ── */
-.section-title {
-  font-size: 2.25rem;
-  margin-bottom: 0.75rem;
-  color: #ff4e4e;
-  text-shadow: 0 0 8px rgba(255, 0, 0, 0.6);
-}
-
-/* ── Subtitle text ── */
-.buildables-card .section-subtitle {
-  font-size: 1rem;
-  margin-bottom: 1.5rem;
-  color: var(--text-color);
-  text-shadow: 0 0 3px rgba(255, 255, 255, 0.08);
-}
-
-/* ── Grid layout for buildable items ── */
-.buildables-grid {
+.gorod-buildables-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.25rem;
-  justify-items: center;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.85rem;
 }
 
-/* ── Step card ── */
-.step-card {
+.gorod-buildable-card {
+  min-height: 100%;
   padding: 1rem;
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 0, 0, 0.1);
-  border-radius: 0.75rem;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 12px rgba(255, 0, 0, 0.05);
+  border: 1px solid rgba(255, 112, 77, 0.17);
+  border-radius: 14px;
+  background:
+    linear-gradient(135deg, rgba(150, 37, 16, 0.16), transparent 62%),
+    rgba(10, 7, 6, 0.82);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.29);
 }
 
-/* ── Step card hover effect ── */
-.step-card:hover {
-  transform: translateY(-6px);
-  background: rgba(0, 0, 0, 0.5);
-  border-color: rgba(255, 0, 0, 0.3);
-  box-shadow: 0 0 18px rgba(255, 0, 0, 0.2);
+.gorod-buildable-card__header {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.7rem;
+  align-items: center;
+  margin-bottom: 0.8rem;
 }
 
-/* ── Step title ── */
-.step-card .step-title {
-  font-size: 1.25rem;
-  margin-bottom: 0.5rem;
-  font-weight: bold;
-  color: #ff4e4e;
-  text-shadow: 0 0 5px rgba(255, 0, 0, 0.4);
+.gorod-buildable-card__number {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #1b0904;
+  font-size: 0.76rem;
+  font-weight: 900;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #ffb28c, #ff6843);
 }
 
-/* ── Bullet list ── */
-.step-list {
-  list-style: disc inside;
-  margin: 0.5rem 0 0;
-  padding: 0;
+.gorod-buildable-card__type {
+  display: block;
+  margin-bottom: 0.15rem;
+  color: #b78f80;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
 }
 
-.step-list li {
-  margin-bottom: 0.75rem;
-  font-size: 0.95rem;
-  color: var(--text-color);
+.gorod-buildable-card h3 {
+  margin: 0;
+  color: #ffb394;
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
+.gorod-buildable-card ol {
+  margin: 0;
+  padding-left: 1.2rem;
+  color: #dec9c0;
+}
+
+.gorod-buildable-card li {
+  margin: 0.45rem 0;
   line-height: 1.5;
+}
+
+.gorod-buildable-card__note {
+  margin: 0.9rem 0 0;
+  padding-top: 0.75rem;
+  color: #bca298;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  border-top: 1px solid rgba(255, 112, 77, 0.11);
+}
+
+@media (max-width: 920px) {
+  .gorod-buildables-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .gorod-buildables-page {
+    width: min(100% - 1rem, 680px);
+    padding: 1.75rem 0 3rem;
+  }
 }
