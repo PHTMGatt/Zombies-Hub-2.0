@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import {
   GuideHero,
@@ -8,94 +8,69 @@ import {
   GuideCallout,
   GuideChip,
 } from '../../../../shared/ui/GuideLayout';
-import { gorodPrerequisites, gorodRun } from '../data/gorodRun';
+import { gorodPrerequisites } from '../data/gorodRun';
 import '../styles/MainGuide.css';
 
 const BASE = '/maps/gorod-krovi';
 
-const MainGuide = () => {
-  const [openStep, setOpenStep] = useState(0);
+const phases = [
+  {
+    title: 'Open the Dragon Network',
+    summary: 'Turn on power, finish the three Groph Modules, install the Dragon Network parts, ride the dragon, earn Dragon Strike, and complete the dragon-egg/Gauntlet setup.',
+    to: `${BASE}/buildables`,
+    link: 'Open Gear + Buildables',
+  },
+  {
+    title: 'Solve Valves + Spell KRONOS',
+    summary: 'Use the randomized valve solution to release the Master Code Cylinder, insert it at S.O.P.H.I.A., then rotate the letter wheels to spell KRONOS.',
+    to: `${BASE}/valves`,
+    link: 'Open Valve Solver',
+  },
+  {
+    title: 'Trophies + S.O.P.H.I.A. Challenges',
+    summary: 'Collect all six trophies, place them at Dragon Command, then complete the randomized challenge set and final motherboard lockdown.',
+    to: `${BASE}/trophies`,
+    link: 'Open Trophies + Challenges',
+  },
+  {
+    title: 'Power Core + Boss Fight',
+    summary: 'Take S.O.P.H.I.A.’s Power Core, open the boss route, kill the dragon, then destroy Nikolai’s mech weak points to finish Love and War.',
+    to: `${BASE}/boss`,
+    link: 'Open Boss Guide',
+  },
+];
 
-  return (
-    <main className="gorod-main-guide">
-      <GuideHero
-        kicker="Gorod Krovi"
-        title="Love and War"
-        description="A run-first version of the Easter Egg built from the full solo walkthrough: Dragon Network, Dragon Strike, egg and Gauntlet, valves, KRONOS, trophies, S.O.P.H.I.A. challenges, and both boss phases."
-      >
-        <GuideChip>Solo + Co-op</GuideChip>
-        <GuideChip>Stalingrad</GuideChip>
-        <GuideChip>Main Easter Egg</GuideChip>
-      </GuideHero>
+const MainGuide = () => (
+  <main className="gorod-main-guide">
+    <GuideHero
+      kicker="Gorod Krovi"
+      title="Love and War"
+      description="Four major phases. Use the focused pages for valves, trophies, buildables, and the boss instead of scrolling through the whole quest."
+    >
+      <GuideChip>Solo + Co-op</GuideChip>
+      <GuideChip>Stalingrad</GuideChip>
+    </GuideHero>
 
-      <GuideCallout label="Before you start" tone="info" className="gorod-guide-note">
-        <ul className="gorod-prereq-list">
-          {gorodPrerequisites.map((item) => <li key={item}>{item}</li>)}
-        </ul>
-      </GuideCallout>
+    <GuideCallout label="Before you start" tone="info" className="gorod-guide-note">
+      {gorodPrerequisites.join(' ')}
+    </GuideCallout>
 
-      <GuideSection
-        kicker="Run Order"
-        title="What do I do next?"
-        description="The main page now stays short enough to use during a game. Open the current objective only when you need its extra setup details."
-      >
-        <GuideStepList>
-          {gorodRun.map((step, index) => {
-            const isOpen = openStep === index;
-
-            return (
-              <button
-                key={step.title}
-                type="button"
-                className={`gorod-run-step ${isOpen ? 'is-open' : ''}`}
-                onClick={() => setOpenStep(isOpen ? -1 : index)}
-                aria-expanded={isOpen}
-              >
-                <GuideStepCard
-                  step={index + 1}
-                  label={index >= 8 ? 'Boss Fight' : 'Main Quest'}
-                  title={step.title}
-                  summary={step.summary}
-                >
-                  {isOpen && (
-                    <ul className="gorod-step-details">
-                      {step.details.map((detail) => <li key={detail}>{detail}</li>)}
-                    </ul>
-                  )}
-                </GuideStepCard>
-              </button>
-            );
-          })}
-        </GuideStepList>
-      </GuideSection>
-
-      <GuideSection
-        kicker="Quick Tools"
-        title="Open the detailed section only when needed"
-        description="Keep the main run clean; use these for the randomized or location-heavy parts."
-        className="gorod-tools-section"
-      >
-        <div className="gorod-tool-grid">
-          <Link to={`${BASE}/valves`}>
-            <strong>Valve Solver</strong>
-            <span>Set the six valve dials from your green-light and cylinder locations.</span>
-          </Link>
-          <Link to={`${BASE}/trophies`}>
-            <strong>Trophies + Challenges</strong>
-            <span>Six trophy locations and the S.O.P.H.I.A. challenge references.</span>
-          </Link>
-          <Link to={`${BASE}/buildables`}>
-            <strong>Buildables</strong>
-            <span>Shield and supporting buildable references without interrupting the run.</span>
-          </Link>
-          <Link to={`${BASE}/boss`}>
-            <strong>Boss Fight</strong>
-            <span>Dragon and Nikolai phases in one focused battle page.</span>
-          </Link>
-        </div>
-      </GuideSection>
-    </main>
-  );
-};
+    <GuideSection kicker="Main Run" title="Four phases">
+      <GuideStepList>
+        {phases.map((phase, index) => (
+          <GuideStepCard
+            key={phase.title}
+            step={index + 1}
+            label="Main Quest"
+            title={phase.title}
+            summary={phase.summary}
+          >
+            <Link className="gorod-phase-link" to={phase.to}>{phase.link} →</Link>
+          </GuideStepCard>
+        ))}
+      </GuideStepList>
+    </GuideSection>
+  </main>
+);
 
 export default MainGuide;
