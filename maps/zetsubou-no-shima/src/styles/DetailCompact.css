@@ -1,0 +1,89 @@
+.zets-module .zets-detail-page {
+  width: min(100% - 1.5rem, 1060px);
+  padding: 1rem 0 2rem;
+}
+
+.zets-module .zets-detail-page .zh-guide-hero {
+  margin-bottom: 0.8rem;
+  box-shadow: none;
+  background: linear-gradient(90deg, rgba(28, 128, 82, 0.16), transparent 48%);
+}
+
+.zets-module .zets-detail-note {
+  width: min(100%, 980px);
+  margin: 0 auto 0.8rem;
+}
+
+.zets-module .zets-detail-page .zh-guide-section {
+  margin-bottom: 1rem;
+}
+
+.zets-module .zets-checklist-grid,
+.zets-module .zets-cog-grid,
+.zets-module .zets-reward-grid {
+  gap: 0.55rem 0.7rem;
+}
+
+.zets-module .zets-detail-card,
+.zets-module .zets-cog-card {
+  min-height: 0;
+  gap: 0.6rem;
+  padding: 0.7rem;
+  border-radius: 9px;
+  box-shadow: none;
+  background: linear-gradient(135deg, rgba(31, 128, 85, 0.1), transparent 60%), rgba(4, 15, 10, 0.7);
+}
+
+.zets-module .zets-detail-number {
+  width: 28px;
+  height: 28px;
+  font-size: 0.66rem;
+  box-shadow: none;
+}
+
+.zets-module .zets-detail-card h3,
+.zets-module .zets-cog-card h3 {
+  margin-bottom: 0.2rem;
+  font-size: 0.92rem;
+}
+
+.zets-module .zets-detail-card p,
+.zets-module .zets-cog-card p {
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+
+.zets-module .zets-cog-open {
+  margin-top: 0.35rem;
+  font-size: 0.7rem;
+}
+
+.zets-module .zets-reference-grid {
+  gap: 0.5rem;
+}
+
+.zets-module .zets-reference-grid a {
+  min-height: 46px;
+  padding: 0.5rem;
+  border-radius: 8px;
+  box-shadow: none;
+  font-size: 0.78rem;
+}
+
+.zets-module .zets-post-complete {
+  padding: 0.7rem 0.8rem;
+  border-radius: 9px;
+  box-shadow: none;
+  font-size: 0.8rem;
+}
+
+.zets-module .zets-back-row {
+  margin-top: 0.8rem;
+}
+
+@media (max-width: 760px) {
+  .zets-module .zets-detail-page {
+    width: min(100% - 1rem, 700px);
+    padding: 0.8rem 0 1.6rem;
+  }
+}
