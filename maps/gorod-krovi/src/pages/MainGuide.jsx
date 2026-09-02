@@ -56,7 +56,7 @@ const MainGuide = () => (
     </GuideCallout>
 
     <GuideSection kicker="Main Run" title="Four phases">
-      <GuideStepList>
+      <GuideStepList className="zh-guide-step-list--roadmap">
         {phases.map((phase, index) => (
           <GuideStepCard
             key={phase.title}
