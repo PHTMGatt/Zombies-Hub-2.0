@@ -5,26 +5,26 @@
   top: var(--hub-nav-height);
   z-index: 9000;
   width: 100%;
-  min-height: 178px;
+  min-height: 96px;
   padding: 0;
   overflow: hidden;
   color: #f4fbff;
   font-family: 'Rajdhani', sans-serif;
-  border-bottom: 1px solid rgba(170, 224, 255, 0.24);
+  border-bottom: 1px solid rgba(170, 224, 255, 0.18);
   background: #061522;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.42), 0 2px 18px rgba(50, 153, 218, 0.08);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.34);
   isolation: isolate;
 }
 
 .origins-module .origins-header__backdrop {
   position: absolute;
-  inset: -14px;
+  inset: -10px;
   z-index: -2;
   background:
-    linear-gradient(90deg, rgba(3, 15, 27, 0.9), rgba(7, 50, 80, 0.52), rgba(3, 15, 27, 0.9)),
+    linear-gradient(90deg, rgba(3, 15, 27, 0.93), rgba(7, 50, 80, 0.45), rgba(3, 15, 27, 0.93)),
     url('../../../public/images/Robot.webp') center 38% / cover no-repeat;
-  filter: blur(2px) saturate(0.8) brightness(0.7);
-  transform: scale(1.025);
+  filter: blur(1.5px) saturate(0.8) brightness(0.68);
+  transform: scale(1.02);
 }
 
 .origins-module .site-header.origins-map-header::after {
@@ -33,79 +33,64 @@
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background:
-    linear-gradient(to bottom, rgba(3, 16, 28, 0.04), rgba(3, 17, 30, 0.78)),
-    radial-gradient(circle at 22% 28%, rgba(95, 197, 255, 0.18), transparent 38%),
-    radial-gradient(circle at 80% 30%, rgba(255, 210, 85, 0.08), transparent 32%);
+  background: linear-gradient(to bottom, rgba(3, 16, 28, 0.02), rgba(3, 17, 30, 0.68));
 }
 
 .origins-module .origins-header__content {
-  width: min(1240px, calc(100% - 48px));
-  min-height: 178px;
+  width: min(1240px, calc(100% - 36px));
+  min-height: 96px;
   margin: 0 auto;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: space-between;
-  gap: 2rem;
-  padding: 1.4rem 0 1rem;
+  gap: 1.25rem;
+  padding: 0.55rem 0;
 }
 
 .origins-module .origins-header__identity {
-  flex: 0 1 520px;
-  min-width: 0;
-}
-
-.origins-module .origins-header__kicker {
-  display: inline-block;
-  margin-bottom: 0.3rem;
-  color: #8ed7ff;
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  text-shadow: 0 0 12px rgba(109, 194, 255, 0.45);
-}
-
-.origins-module .origins-header__title-row {
   display: flex;
-  align-items: center;
-  gap: 0.75rem;
+  align-items: baseline;
+  gap: 0.65rem;
+  flex: 0 1 auto;
+  min-width: 0;
+  white-space: nowrap;
 }
 
 .origins-module .header-title {
   margin: 0;
   color: #f7fbff;
-  font-size: clamp(2.7rem, 6vw, 4.35rem);
+  font-size: clamp(2.1rem, 4.5vw, 3.3rem);
   font-weight: 700;
-  line-height: 0.9;
+  line-height: 0.92;
   letter-spacing: 0.015em;
-  text-shadow:
-    0 0 10px rgba(109, 194, 255, 0.62),
-    0 0 24px rgba(109, 194, 255, 0.25),
-    0 3px 10px rgba(0, 0, 0, 0.92);
+  text-shadow: 0 0 12px rgba(109, 194, 255, 0.48), 0 2px 8px rgba(0, 0, 0, 0.9);
 }
 
 .origins-module .origins-header__subtitle {
-  margin: 0.48rem 0 0;
   color: #d8ebf7;
-  font-size: 1.04rem;
+  font-size: 0.98rem;
   font-weight: 600;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
 }
 
 .origins-module .revive-header-icon {
-  width: 34px;
-  height: 34px;
+  width: 26px;
+  height: 26px;
   flex-shrink: 0;
-  opacity: 0.9;
-  filter: drop-shadow(0 0 10px rgba(109, 194, 255, 0.32));
+  align-self: center;
+  opacity: 0.88;
+  filter: drop-shadow(0 0 8px rgba(109, 194, 255, 0.28));
+}
+
+.origins-module .origins-header__end-icon {
+  margin-left: -0.15rem;
 }
 
 .origins-module .header-right {
-  flex: 1 1 620px;
+  flex: 1 1 auto;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: flex-end;
 }
 
@@ -115,55 +100,41 @@
   }
 
   .origins-module .origins-header__content {
-    width: min(100% - 28px, 900px);
+    width: min(100% - 24px, 900px);
     min-height: 0;
     flex-direction: column;
-    align-items: center;
-    gap: 0.85rem;
-    padding: 1.15rem 0 1rem;
-    text-align: center;
+    gap: 0.5rem;
+    padding: 0.7rem 0;
   }
 
-  .origins-module .origins-header__identity,
   .origins-module .header-right {
-    flex: 0 1 auto;
     width: 100%;
-  }
-
-  .origins-module .origins-header__title-row,
-  .origins-module .header-right {
     justify-content: center;
   }
 }
 
 @media (max-width: 620px) {
-  .origins-module .origins-header__content {
-    width: min(100% - 18px, 600px);
-    padding-top: 0.95rem;
-  }
-
-  .origins-module .origins-header__kicker {
-    font-size: 0.6rem;
-    letter-spacing: 0.13em;
+  .origins-module .origins-header__identity {
+    gap: 0.45rem;
   }
 
   .origins-module .header-title {
-    font-size: clamp(2.25rem, 13vw, 3.3rem);
+    font-size: clamp(1.9rem, 11vw, 2.75rem);
   }
 
   .origins-module .origins-header__subtitle {
-    margin-top: 0.35rem;
-    font-size: 0.92rem;
+    font-size: 0.84rem;
   }
 
   .origins-module .revive-header-icon {
-    width: 28px;
-    height: 28px;
+    width: 22px;
+    height: 22px;
   }
 }
 
-@media (max-width: 420px) {
-  .origins-module .revive-header-icon {
+@media (max-width: 460px) {
+  .origins-module .revive-header-icon,
+  .origins-module .origins-header__end-icon {
     display: none;
   }
 }
