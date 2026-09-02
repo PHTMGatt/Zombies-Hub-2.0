@@ -1,14 +1,14 @@
 .zets-module .zets-header {
   position: relative;
-  min-height: 235px;
+  min-height: 122px;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 1.5rem 1rem 1.15rem;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
   overflow: hidden;
-  border-bottom: 1px solid rgba(105, 230, 173, 0.18);
-  box-shadow: 0 12px 38px rgba(0, 0, 0, 0.46);
+  border-bottom: 1px solid rgba(105, 230, 173, 0.16);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.38);
   isolation: isolate;
   z-index: 2;
 }
@@ -16,10 +16,10 @@
 .zets-module .zets-header::before {
   content: '';
   position: absolute;
-  inset: -12px;
+  inset: -10px;
   background: url('../assets/images/Zets_banner.jpg') center 47% / cover no-repeat;
-  filter: blur(1.6px) saturate(0.82) brightness(0.62);
-  transform: scale(1.025);
+  filter: blur(1.2px) saturate(0.8) brightness(0.58);
+  transform: scale(1.02);
   z-index: -2;
 }
 
@@ -27,47 +27,45 @@
   content: '';
   position: absolute;
   inset: 0;
-  background:
-    linear-gradient(to bottom, rgba(3, 11, 8, 0.12), rgba(4, 20, 14, 0.86)),
-    radial-gradient(circle at 50% 25%, rgba(61, 196, 132, 0.13), transparent 46%);
+  background: linear-gradient(90deg, rgba(3, 11, 8, 0.88), rgba(4, 20, 14, 0.42), rgba(3, 11, 8, 0.86));
   z-index: -1;
 }
 
 .zets-module .zets-header-content {
   position: relative;
   z-index: 2;
-  width: min(100%, 960px);
-  text-align: center;
-  margin-bottom: 0.85rem;
+  flex: 0 1 auto;
+  min-width: 0;
+  text-align: left;
+}
+
+.zets-module .zets-header-identity {
+  min-width: 0;
 }
 
 .zets-module .zets-header-kicker {
   display: inline-block;
-  margin-bottom: 0.35rem;
+  margin-bottom: 0.1rem;
   color: #7ce4b3;
-  font-size: 0.68rem;
+  font-size: 0.62rem;
   font-weight: 800;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  text-shadow: 0 0 12px rgba(73, 210, 144, 0.35);
 }
 
 .zets-module .zets-header-title {
   margin: 0;
   color: #effff7;
-  font-size: clamp(2.2rem, 6vw, 3.65rem);
-  line-height: 1;
-  letter-spacing: 0.015em;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.95), 0 0 22px rgba(74, 214, 146, 0.2);
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 0.98;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.95), 0 0 18px rgba(74, 214, 146, 0.16);
 }
 
 .zets-module .zets-header-subtitle {
-  margin: 0.45rem 0 0;
+  margin: 0.28rem 0 0;
   color: #b9e6d0;
-  font-size: clamp(0.95rem, 2.5vw, 1.16rem);
+  font-size: 0.92rem;
   font-weight: 600;
-  letter-spacing: 0.045em;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
 }
 
 .zets-module .zets-nav-toggle {
@@ -77,34 +75,34 @@
 @media (max-width: 768px) {
   .zets-module .zets-header {
     min-height: 0;
-    padding: 1.2rem 0.75rem 1rem;
+    flex-direction: column;
+    padding: 0.75rem 0.75rem 0.9rem;
   }
 
   .zets-module .zets-header-content {
-    margin-bottom: 0.4rem;
+    width: 100%;
+    text-align: center;
   }
 
   .zets-module .zets-nav-toggle {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.45rem;
-    min-height: 40px;
-    margin-top: 0.9rem;
-    padding: 0.35rem 0.75rem;
+    gap: 0.4rem;
+    min-height: 34px;
+    margin-top: 0.55rem;
+    padding: 0.3rem 0.65rem;
     color: #dff8ea;
-    font-size: 1.15rem;
+    font-size: 0.95rem;
     border: 1px solid rgba(105, 230, 173, 0.18);
     border-radius: 999px;
     background: rgba(3, 15, 10, 0.58);
-    backdrop-filter: blur(8px);
     cursor: pointer;
   }
 
   .zets-module .toggle-label {
     color: #c8ecda;
-    font-size: 0.82rem;
+    font-size: 0.78rem;
     font-weight: 700;
-    letter-spacing: 0.03em;
   }
 }
