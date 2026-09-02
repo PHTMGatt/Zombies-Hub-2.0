@@ -4,7 +4,7 @@ import bannerSrc from '../assets/images/mob-banner.png';
 import '../styles/Header.css';
 
 const Header = () => (
-  <header className="header mob-header">
+  <header className="mob-header">
     <img
       src={bannerSrc}
       alt="Mob of the Dead banner"
