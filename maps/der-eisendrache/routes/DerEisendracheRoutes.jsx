@@ -6,6 +6,7 @@ import Home from '../src/pages/Home';
 import Parts from '../src/pages/Parts';
 import Wisp from '../src/pages/Wisp';
 import Bows from '../src/pages/bows/Bows';
+import BowLanding from '../src/pages/bows/BowLanding';
 import BaseBow from '../src/pages/bows/BaseBow';
 import ElectricBow from '../src/pages/bows/ElectricBow';
 import FireBow from '../src/pages/bows/FireBow';
@@ -24,7 +25,7 @@ export default function DerEisendracheRoutes() {
           <Route path="parts" element={<Parts />} />
           <Route path="wisps" element={<Wisp />} />
           <Route path="bows" element={<Bows />}>
-            <Route index element={<div className="bows-content"><p>Select a bow above to view its upgrade steps.</p></div>} />
+            <Route index element={<BowLanding />} />
             <Route path="base" element={<BaseBow />} />
             <Route path="electric" element={<ElectricBow />} />
             <Route path="fire" element={<FireBow />} />
