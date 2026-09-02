@@ -7,11 +7,11 @@ export default function Codes() {
     <MobSectionPage
       kicker="Mob of the Dead"
       title="Afterlife Codes + Audio Trail"
-      description="After the third bridge trip, enter the fixed code sequence in Afterlife and follow the black-and-white audio trail back through Alcatraz."
-      chips={['101 · 386 · 872 · 481', 'Afterlife', '5 audio pickups']}
+      description="After the third bridge trip, enter all four prisoner numbers in Afterlife and follow the black-and-white audio trail back through Alcatraz."
+      chips={['101 · 386 · 872 · 481', 'Any code order', '5 audio pickups']}
       note={{
-        label: 'Code order',
-        body: 'Enter 101, 386, 872, then 481. After the fourth code, revive and follow the audio pickups until the screen returns to color.',
+        label: 'Code rule',
+        body: 'All four numbers must be accepted, but they do not have to be entered in a specific order or in one Afterlife session.',
       }}
       steps={codeSteps}
     />
