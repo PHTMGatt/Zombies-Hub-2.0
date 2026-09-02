@@ -1,27 +1,94 @@
-.footer-container {
-  position: fixed;
-  bottom: 0;
+.gorod-module .gorod-footer {
+  position: relative;
   width: 100%;
-  z-index: 10;
+  margin-top: 2rem;
+  overflow: hidden;
+  border-top: 1px solid rgba(255, 112, 77, 0.18);
+  background:
+    linear-gradient(90deg, rgba(25, 8, 5, 0.96), rgba(8, 7, 8, 0.97) 50%, rgba(25, 8, 5, 0.96));
+  box-shadow: 0 -12px 36px rgba(0, 0, 0, 0.35);
 }
 
-.footer-card {
-  width: 100%;
-  margin: 0;
-  padding: 0.75rem 1.5rem;
-  background: rgba(0, 0, 0, 0.75); /* black glass */
-  border-top: 1px solid rgba(255, 0, 0, 0.15);
-  backdrop-filter: blur(10px);
+.gorod-module .gorod-footer__glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 15% 50%, rgba(255, 90, 45, 0.15), transparent 30%),
+    radial-gradient(circle at 85% 50%, rgba(255, 132, 69, 0.09), transparent 30%);
+}
+
+.gorod-module .gorod-footer__content {
+  position: relative;
+  z-index: 1;
+  width: min(100% - 2rem, 1180px);
+  min-height: 94px;
+  margin: 0 auto;
   display: flex;
-  justify-content: center;
   align-items: center;
-  box-shadow: 0 -4px 10px rgba(255, 0, 0, 0.15);
-  border-radius: 0; /* remove round corners */
+  justify-content: center;
+  gap: 1.25rem;
+  padding: 1rem 0;
+  box-sizing: border-box;
 }
 
-.footer-text {
-  color: #ff4d4d; /* strong red */
-  font-size: 0.95rem;
-  font-weight: bold;
-  text-shadow: 0 0 6px rgba(255, 50, 50, 0.25);
+.gorod-module .gorod-footer__identity,
+.gorod-module .gorod-footer__meta {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.gorod-module .gorod-footer__identity {
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.05rem;
+}
+
+.gorod-module .gorod-footer__kicker {
+  color: #bc7b67;
+  font-size: 0.63rem;
+  font-weight: 800;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+}
+
+.gorod-module .gorod-footer__identity strong {
+  color: #fff1ea;
+  font-size: 0.98rem;
+  letter-spacing: 0.02em;
+}
+
+.gorod-module .gorod-footer__divider {
+  width: 1px;
+  height: 34px;
+  background: linear-gradient(to bottom, transparent, rgba(255, 112, 77, 0.5), transparent);
+}
+
+.gorod-module .gorod-footer__meta {
+  color: #c6a89c;
+  font-size: 0.82rem;
+}
+
+.gorod-module .gorod-footer__dot {
+  color: #ff704d;
+}
+
+@media (max-width: 560px) {
+  .gorod-module .gorod-footer__content {
+    min-height: 0;
+    flex-direction: column;
+    gap: 0.55rem;
+    padding: 1rem 0;
+  }
+
+  .gorod-module .gorod-footer__identity {
+    align-items: center;
+  }
+
+  .gorod-module .gorod-footer__divider {
+    width: 80px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(255, 112, 77, 0.48), transparent);
+  }
 }
