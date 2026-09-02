@@ -1,5 +1,3 @@
-// src/pages/SideEEInfo.jsx
-
 import React from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import imageData from '../data/imageData';
@@ -7,7 +5,6 @@ import sideEEs from '../data/sideEE';
 import SideEECard from '../components/SideEECard';
 import '../styles/SideEE/SideEEInfo.css';
 
-// Static metadata for each side EE map
 const SIDE_EE_META = {
   kino: {
     label: 'Kino der Toten',
@@ -24,53 +21,44 @@ const SIDE_EE_META = {
       'Radio 2 – atop the tower visible from the alley by the Double Tap Root Beer perk machine.',
     ],
   },
-  gk:  { label: 'Gorod Krovi',     cover: imageData.Gorod_KroviCover },
-  de:  { label: 'Der Eisendrache', cover: imageData.Der_EisendracheCover },
+  gk: { label: 'Gorod Krovi', cover: imageData.Gorod_KroviCover },
+  de: { label: 'Der Eisendrache', cover: imageData.Der_EisendracheCover },
   soe: { label: 'Shadows of Evil', cover: imageData.Shadows_Of_EvilCover },
 };
 
 export default function SideEEInfo() {
   const { mapKey } = useParams();
-  const meta = SIDE_EE_META[mapKey];         // map-level meta (name, cover, etc.)
-  const entries = sideEEs[mapKey] || [];     // guide entries (videos or text cards)
+  const meta = SIDE_EE_META[mapKey];
+  const entries = sideEEs[mapKey] || [];
 
-  // Fallback: invalid map key
   if (!meta) {
     return (
-      <div className="ee-page-wrapper">
+      <div className="side-ee-info-page">
         <p>Map not found.</p>
-        <Link to="/side-easter-eggs" className="side-ee-info__back-link">
-          ← Back to Side Easter Eggs
-        </Link>
+        <Link to="/side-easter-eggs" className="side-ee-info__back-link">← Back to Side Easter Eggs</Link>
       </div>
     );
   }
 
-  // Fallback: valid map but no content yet
   if (entries.length === 0) {
     return <Navigate to="/coming-soon" replace />;
   }
 
   return (
-    <div className="ee-page-wrapper">
-      {/* Header with background image and title */}
+    <div className="side-ee-info-page">
       <div className="side-ee-info">
-        <div
-          className="side-ee-info__header"
-          style={{ backgroundImage: `url(${meta.cover})` }}
-        >
+        <div className="side-ee-info__header" style={{ backgroundImage: `url(${meta.cover})` }}>
           <h1 className="side-ee-info__title">{meta.label}</h1>
         </div>
 
         <div className="side-ee-info__body">
-          {/* Special Kino layout */}
           {mapKey === 'kino' ? (
             <>
               <section className="side-ee-info__section">
                 <h2 className="side-ee-info__section-title">Film Reels</h2>
                 <p className="side-ee-info__section-intro">{meta.reelsIntro}</p>
                 <ul className="side-ee-info__section-list">
-                  {meta.reels.map((item, i) => <li key={i}>{item}</li>)}
+                  {meta.reels.map((item) => <li key={item}>{item}</li>)}
                 </ul>
               </section>
 
@@ -78,37 +66,28 @@ export default function SideEEInfo() {
                 <h2 className="side-ee-info__section-title">Radios</h2>
                 <p className="side-ee-info__section-intro">{meta.radiosIntro}</p>
                 <ul className="side-ee-info__section-list">
-                  {meta.radios.map((item, i) => <li key={i}>{item}</li>)}
+                  {meta.radios.map((item) => <li key={item}>{item}</li>)}
                 </ul>
               </section>
             </>
           ) : (
-            // Render cards or videos for other maps
-            entries.map((ee) =>
+            entries.map((ee) => (
               ee.videoUrl ? (
                 <div key={ee.id} className="side-ee-info__video-wrapper">
                   <iframe
                     src={ee.videoUrl}
                     title={ee.title}
-                    frameBorder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
                   />
                 </div>
               ) : (
-                <SideEECard
-                  key={ee.id}
-                  title={ee.title}
-                  description={ee.description}
-                />
+                <SideEECard key={ee.id} title={ee.title} description={ee.description} />
               )
-            )
+            ))
           )}
 
-          {/* Back nav */}
-          <Link to="/side-easter-eggs" className="side-ee-info__back-link">
-            ← Back to Side Easter Eggs
-          </Link>
+          <Link to="/side-easter-eggs" className="side-ee-info__back-link">← Back to Side Easter Eggs</Link>
         </div>
       </div>
     </div>
