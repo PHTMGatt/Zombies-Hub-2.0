@@ -1,80 +1,151 @@
-/* TrophyChallenges.css */
+.gorod-trophies-page {
+  --guide-accent: #ff704d;
+  --guide-accent-soft: rgba(183, 47, 21, 0.18);
+  --guide-panel: rgba(13, 8, 7, 0.8);
+  --guide-panel-strong: rgba(10, 6, 5, 0.95);
+  --guide-border: rgba(255, 112, 77, 0.2);
+  --guide-text: #fff4ee;
+  --guide-muted: #d5bbb1;
 
-/* ── Page wrapper ── */
-.trophies-page {
+  width: min(100% - 2rem, 1120px);
+  margin: 0 auto;
+  padding: 3rem 0 5rem;
+}
+
+.gorod-trophies-page .zh-guide-hero {
+  background:
+    linear-gradient(135deg, rgba(162, 40, 18, 0.25), transparent 44%),
+    rgba(12, 7, 6, 0.84);
+}
+
+.gorod-reference-toggle {
+  width: fit-content;
+  max-width: 100%;
+  margin: -0.55rem auto 2rem;
   display: flex;
-  justify-content: center;
-  padding: 2rem 1rem;
-  background: var(--background-gradient);
+  gap: 0.35rem;
+  padding: 0.35rem;
+  border: 1px solid rgba(255, 112, 77, 0.16);
+  border-radius: 999px;
+  background: rgba(10, 6, 5, 0.82);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
 }
 
-/* ── Outer glass card ── */
-.trophies-card {
-  width: 100%;
-  max-width: 900px;
-  padding: 2rem;
-  background: rgba(0, 0, 0, 0.45);
-  border: 1px solid rgba(255, 0, 0, 0.2);
-  border-radius: 1rem;
-  backdrop-filter: blur(12px);
-  box-shadow: 0 0 40px rgba(255, 0, 0, 0.15);
-  text-align: center;
+.gorod-reference-toggle button {
+  min-height: 42px;
+  padding: 0.5rem 1rem;
+  color: #d9bbb0;
+  font: inherit;
+  font-size: 0.86rem;
+  font-weight: 750;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: transparent;
+  cursor: pointer;
+  transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 }
 
-/* ── Section title ── */
-.section-title {
-  font-size: 2.25rem;
-  margin-bottom: 0.75rem;
-  color: #ff4e4e;
-  text-shadow: 0 0 8px rgba(255, 0, 0, 0.6);
+.gorod-reference-toggle button:hover,
+.gorod-reference-toggle button.is-active {
+  color: #fff8f4;
+  border-color: rgba(255, 128, 91, 0.32);
+  background: rgba(130, 34, 16, 0.64);
+  transform: translateY(-1px);
 }
 
-/* ── Section intro ── */
-.section-intro {
-  font-size: 1rem;
-  margin-bottom: 1.5rem;
-  color: var(--text-color);
-  text-shadow: 0 0 3px rgba(255, 255, 255, 0.08);
-}
-
-/* ── Grid layout for trophies ── */
-.trophies-list {
+.gorod-trophy-grid,
+.gorod-challenge-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.25rem;
-  justify-items: center;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
 }
 
-/* ── Trophy card ── */
-.trophy-card {
-  padding: 1rem;
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 0, 0, 0.1);
-  border-radius: 0.75rem;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 12px rgba(255, 0, 0, 0.05);
+.gorod-reference-card {
+  min-height: 150px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.9rem;
+  align-items: start;
+  padding: 1rem 1.05rem;
+  border: 1px solid rgba(255, 112, 77, 0.17);
+  border-radius: 14px;
+  background:
+    linear-gradient(135deg, rgba(152, 37, 16, 0.16), transparent 60%),
+    rgba(10, 7, 6, 0.8);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
 }
 
-/* ── Hover glow ── */
-.trophy-card:hover {
-  transform: translateY(-6px);
-  background: rgba(0, 0, 0, 0.5);
-  border-color: rgba(255, 0, 0, 0.3);
-  box-shadow: 0 0 18px rgba(255, 0, 0, 0.2);
+.gorod-reference-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 128, 91, 0.42);
+  background:
+    linear-gradient(135deg, rgba(169, 43, 18, 0.25), transparent 60%),
+    rgba(13, 8, 7, 0.9);
 }
 
-/* ── Card title ── */
-.trophy-title {
-  font-size: 1.25rem;
-  margin-bottom: 0.5rem;
-  font-weight: bold;
-  color: #ff4e4e;
-  text-shadow: 0 0 5px rgba(255, 0, 0, 0.4);
+.gorod-reference-number {
+  min-width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #1b0904;
+  font-size: 0.76rem;
+  font-weight: 900;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #ffb28c, #ff6843);
+  box-shadow: 0 0 18px rgba(255, 92, 52, 0.18);
 }
 
-/* ── Card description ── */
-.trophy-description {
-  font-size: 0.95rem;
-  line-height: 1.5;
-  color: var(--text-color);
+.gorod-reference-card h3 {
+  margin: 0 0 0.42rem;
+  color: #ffb698;
+  font-size: 1.02rem;
+}
+
+.gorod-reference-card p {
+  margin: 0;
+  color: #dfcac2;
+  line-height: 1.52;
+}
+
+.gorod-reference-tip {
+  display: block;
+  margin-top: 0.65rem;
+  padding-top: 0.65rem;
+  color: #bc9d91;
+  font-size: 0.83rem;
+  line-height: 1.45;
+  border-top: 1px solid rgba(255, 112, 77, 0.11);
+}
+
+.gorod-challenge-note {
+  width: min(100%, 940px);
+  margin: -0.55rem auto 1.9rem;
+  box-sizing: border-box;
+}
+
+@media (max-width: 760px) {
+  .gorod-trophies-page {
+    width: min(100% - 1rem, 720px);
+    padding: 1.75rem 0 3rem;
+  }
+
+  .gorod-trophy-grid,
+  .gorod-challenge-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .gorod-reference-toggle {
+    width: 100%;
+    border-radius: 14px;
+  }
+
+  .gorod-reference-toggle button {
+    flex: 1;
+    border-radius: 10px;
+  }
 }
