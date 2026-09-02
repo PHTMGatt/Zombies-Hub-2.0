@@ -51,7 +51,7 @@ const GuideVideoPlayer = forwardRef(function GuideVideoPlayer(
 
   const opts = {
     width: '100%',
-    height: '400',
+    height: '310',
     playerVars: {
       autoplay: 0,
       controls: 1,
