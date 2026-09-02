@@ -48,74 +48,75 @@ function SoundStep() {
   };
 
   return (
-    <main className="rev-page">
+    <main className="rev-page sound-step-page">
       <div className="rev-background" />
       <div className="sk-container">
         <div className="rev-page-heading">
           <span className="rev-page-kicker">Rune Placement Reference</span>
           <h1 className="sk-title">Sound Step</h1>
           <p className="rev-page-intro">
-            Each region has three possible Gateworm placement spots. Rotate to the region you are searching,
-            then use the actual location name and listen for the beeping that confirms the correct spot.
+            Rotate to the region you are checking, then tap the exact location to play only that short reference segment.
           </p>
         </div>
 
-        <div className="rev-glow-box">
+        <div className="rev-glow-box sound-workspace">
           <GuideVideoPlayer
             ref={videoRef}
             title="Revelations Rune of Creation sound-step locations"
-            caption="Choose a location to play only that short reference segment."
+            caption="The video only jumps when you choose a location."
           />
 
-          <div className="sk-selected-label">
-            <span className="rev-selected-prefix">Area:</span> {areaList[currentIndex]}
-            {selectedSpot && <span className="rev-selected-location"> · {selectedSpot.label}</span>}
+          <div className="sound-picker">
+            <div className="sk-selected-label">
+              <span className="rev-selected-prefix">Area:</span> {areaList[currentIndex]}
+              {selectedSpot && <span className="rev-selected-location"> · {selectedSpot.label}</span>}
+            </div>
+
+            <div className="carousel-wrapper">
+              {areaList.map((area, index) => {
+                const position = getPosition(index);
+                if (position === 'off') return null;
+
+                return (
+                  <div
+                    key={area}
+                    className={`sound-card ${position}`}
+                    onClick={() => {
+                      setSelectedSpot(null);
+                      setCurrentIndex(index);
+                    }}
+                  >
+                    <div className="card-overlay" />
+                    <h2 className="egg-subtitle">{area}</h2>
+                    {position === 'center' && (
+                      <div className="card-buttons">
+                        {groupedData[area].map((spot) => (
+                          <button
+                            key={`${spot.area}-${spot.label}`}
+                            type="button"
+                            className={selectedSpot?.label === spot.label ? 'active' : ''}
+                            onClick={(event) => {
+                              event.stopPropagation();
+                              handleClick(spot);
+                            }}
+                          >
+                            <span>{spot.label}</span>
+                            <small>{spot.time}</small>
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="spinner-controls" aria-label="Change sound step area">
+              <button type="button" onClick={() => handleRotate('left')} aria-label="Previous area">&larr;</button>
+              <span>{currentIndex + 1} / {areaList.length}</span>
+              <button type="button" onClick={() => handleRotate('right')} aria-label="Next area">&rarr;</button>
+            </div>
           </div>
-
-          <div className="carousel-wrapper">
-            {areaList.map((area, index) => {
-              const position = getPosition(index);
-              if (position === 'off') return null;
-
-              return (
-                <div
-                  key={area}
-                  className={`sound-card ${position}`}
-                  onClick={() => {
-                    setSelectedSpot(null);
-                    setCurrentIndex(index);
-                  }}
-                >
-                  <div className="card-overlay" />
-                  <h2 className="egg-subtitle">{area}</h2>
-                  {position === 'center' && (
-                    <div className="card-buttons">
-                      {groupedData[area].map((spot) => (
-                        <button
-                          key={`${spot.area}-${spot.label}`}
-                          type="button"
-                          className={selectedSpot?.label === spot.label ? 'active' : ''}
-                          onClick={(event) => {
-                            event.stopPropagation();
-                            handleClick(spot);
-                          }}
-                        >
-                          <span>{spot.label}</span>
-                          <small>{spot.time}</small>
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        <div className="spinner-controls" aria-label="Change sound step area">
-          <button type="button" onClick={() => handleRotate('left')} aria-label="Previous area">&larr;</button>
-          <span>{currentIndex + 1} / {areaList.length}</span>
-          <button type="button" onClick={() => handleRotate('right')} aria-label="Next area">&rarr;</button>
         </div>
       </div>
     </main>
