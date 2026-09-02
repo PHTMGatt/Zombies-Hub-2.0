@@ -173,9 +173,43 @@
   font-weight: 700;
 }
 
+/* Main-map roadmaps: short, scan-friendly flow rather than a tall documentation stack. */
+.zh-guide-step-list--roadmap {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.55rem 0.75rem;
+}
+
+.zh-guide-step-list--roadmap .zh-guide-step-card {
+  height: 100%;
+  min-height: 104px;
+  padding: 0.68rem 0.78rem;
+  border-radius: 7px;
+  box-shadow: none;
+  background: linear-gradient(90deg, var(--zh-guide-accent-soft), transparent 54%), rgba(3, 8, 14, 0.58);
+}
+
+.zh-guide-step-list--roadmap > :last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+
+.zh-guide-step-list--roadmap .zh-guide-step-content p {
+  font-size: 0.84rem;
+  line-height: 1.38;
+}
+
 @media (min-width: 760px) {
   .zh-guide-step-list.zh-guide-step-list--two-column {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .zh-guide-step-list--roadmap {
+    grid-template-columns: 1fr;
+  }
+
+  .zh-guide-step-list--roadmap > :last-child:nth-child(odd) {
+    grid-column: auto;
   }
 }
 
