@@ -1,48 +1,127 @@
 .gorod-boss-page {
-  --guide-accent: #ff704d;
-  --guide-accent-soft: rgba(183, 47, 21, 0.18);
-  --guide-panel: rgba(13, 8, 7, 0.8);
-  --guide-panel-strong: rgba(10, 6, 5, 0.95);
-  --guide-border: rgba(255, 112, 77, 0.2);
-  --guide-text: #fff4ee;
-  --guide-muted: #d5bbb1;
-
-  width: min(100% - 2rem, 1040px);
+  width: min(100% - 1.5rem, 1020px);
   margin: 0 auto;
-  padding: 3rem 0 5rem;
+  padding: 1rem 0 2rem;
+  color: #f3e6e0;
 }
 
-.gorod-boss-page .zh-guide-hero {
-  background:
-    linear-gradient(135deg, rgba(158, 40, 18, 0.27), transparent 45%),
-    rgba(11, 7, 6, 0.86);
+.gorod-boss-header {
+  margin-bottom: 0.65rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid rgba(255, 112, 77, 0.18);
 }
 
-.gorod-boss-note {
-  width: min(100%, 900px);
-  margin: -0.6rem auto 2rem;
-  box-sizing: border-box;
+.gorod-boss-header > span {
+  display: block;
+  color: #ff8a68;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
-.gorod-boss-page .zh-guide-step-card {
-  border-left: 3px solid rgba(255, 112, 77, 0.58);
+.gorod-boss-header h2 {
+  margin: 0.08rem 0 0;
+  color: #fff4ee;
+  font-size: clamp(1.7rem, 3vw, 2.2rem);
+  line-height: 1.05;
 }
 
-.gorod-boss-details {
-  margin: 0.8rem 0 0;
-  padding: 0.8rem 1rem 0.75rem 2rem;
-  color: #e5cfc6;
-  border-top: 1px solid rgba(255, 112, 77, 0.13);
+.gorod-boss-header p {
+  max-width: 780px;
+  margin: 0.3rem 0 0;
+  color: #d0b8ae;
+  font-size: 0.84rem;
+  line-height: 1.4;
 }
 
-.gorod-boss-details li {
-  margin: 0.38rem 0;
-  line-height: 1.55;
+.gorod-boss-loadout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+  margin-bottom: 0.7rem;
+  padding: 0.5rem 0.65rem;
+  border-left: 3px solid #ff704d;
+  background: rgba(10, 7, 6, 0.68);
+  color: #cab2a8;
+  font-size: 0.76rem;
+}
+
+.gorod-boss-loadout strong {
+  color: #ffb091;
+}
+
+.gorod-boss-loadout span {
+  padding: 0.14rem 0.42rem;
+  border: 1px solid rgba(255, 112, 77, 0.14);
+  border-radius: 999px;
+}
+
+.gorod-boss-phases {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.gorod-boss-phase {
+  padding: 0.82rem;
+  border: 1px solid rgba(255, 112, 77, 0.15);
+  border-radius: 9px;
+  background: linear-gradient(135deg, rgba(152, 37, 16, 0.12), transparent 60%), rgba(10, 7, 6, 0.72);
+}
+
+.gorod-boss-phase__title {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.gorod-boss-phase__title > span {
+  width: 26px;
+  height: 26px;
+  flex: 0 0 26px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #1b0904;
+  background: #ff704d;
+  font-size: 0.68rem;
+  font-weight: 900;
+}
+
+.gorod-boss-phase h3 {
+  margin: 0;
+  color: #ffb394;
+  font-size: 1rem;
+}
+
+.gorod-boss-phase > p {
+  margin: 0.4rem 0 0;
+  color: #dec9c0;
+  font-size: 0.82rem;
+  line-height: 1.42;
+}
+
+.gorod-boss-phase ul {
+  margin: 0.45rem 0 0;
+  padding-left: 1rem;
+  color: #bca298;
+  font-size: 0.76rem;
+}
+
+.gorod-boss-phase li {
+  margin: 0.24rem 0;
+  line-height: 1.38;
 }
 
 @media (max-width: 720px) {
   .gorod-boss-page {
     width: min(100% - 1rem, 680px);
-    padding: 1.75rem 0 3rem;
+    padding-top: 0.8rem;
+  }
+
+  .gorod-boss-phases {
+    grid-template-columns: 1fr;
   }
 }
