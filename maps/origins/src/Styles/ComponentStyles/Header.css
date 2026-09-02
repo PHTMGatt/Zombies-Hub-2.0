@@ -1,12 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@700&display=swap');
 
-.site-header {
+.origins-module .site-header {
   font-family: 'Rajdhani', sans-serif;
   background: linear-gradient(to right, #0a4b78, #1c7ed6, #0a4b78);
   color: white;
   position: sticky;
-  top: 0;
-  z-index: 1000;
+  top: var(--hub-nav-height);
+  z-index: 9000;
   width: 100%;
   padding: 20px 32px;
   display: flex;
@@ -17,20 +17,20 @@
   border-bottom: 2px solid rgba(255, 255, 255, 0.15);
 }
 
-.header-left,
-.header-right {
+.origins-module .header-left,
+.origins-module .header-right {
   display: flex;
   align-items: center;
 }
 
-.title-box {
+.origins-module .title-box {
   display: flex;
   align-items: center;
   gap: 10px;
   flex-wrap: nowrap;
 }
 
-.header-title {
+.origins-module .header-title {
   font-size: 2.2rem;
   font-weight: 700;
   margin: 0;
@@ -41,69 +41,42 @@
   line-height: 1.2;
 }
 
-.black-text {
-  color: black;
-}
+.origins-module .black-text { color: black; }
+.origins-module .white-text { color: white; }
 
-.white-text {
-  color: white;
-}
-
-.revive-header-icon {
+.origins-module .revive-header-icon {
   width: 36px;
   height: 36px;
   flex-shrink: 0;
 }
 
-/* ======= Medium: Tablet (stacked 2-line layout) ======= */
 @media (max-width: 1024px) {
-  .site-header {
+  .origins-module .site-header {
     flex-direction: column;
     align-items: center;
     gap: 12px;
     padding: 20px 16px;
   }
 
-  .header-left, .header-right {
+  .origins-module .header-left,
+  .origins-module .header-right {
     justify-content: center;
   }
 
-  .title-box {
+  .origins-module .title-box {
     flex-wrap: wrap;
     justify-content: center;
   }
 
-  .header-title {
+  .origins-module .header-title {
     font-size: 1.8rem;
     text-align: center;
   }
 }
 
-/* ======= Mobile (tight 2-line layout) ======= */
 @media (max-width: 768px) {
-  .header-title {
-    font-size: 1.4rem;
-  }
-
-  .revive-header-icon {
-    width: 24px;
-    height: 24px;
-  }
-
-  .site-header {
-    padding: 16px 12px;
-    gap: 8px;
-  }
-
-  .title-box {
-    gap: 6px;
-  }
+  .origins-module .header-title { font-size: 1.4rem; }
+  .origins-module .revive-header-icon { display: none; }
+  .origins-module .site-header { padding: 16px 12px; gap: 8px; }
+  .origins-module .title-box { gap: 6px; }
 }
-
-/* Hide the revive-header-icon on mobile */
-@media (max-width: 768px) {
-  .revive-header-icon {
-    display: none;
-  }
-}
-
