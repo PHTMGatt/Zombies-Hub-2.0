@@ -1,22 +1,25 @@
-/* ==== components.css ==== */
+/* ==== Mob of the Dead module components ==== */
 
-/* Nav Bar */
-.nav ul {
+.mob-module .nav ul {
   display: flex;
   justify-content: center;
-  gap: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1.15rem;
   list-style: none;
-  margin: 1.5rem 0;
+  margin: 1.25rem 0;
+  padding: 0;
 }
-.nav a {
+
+.mob-module .nav a {
   position: relative;
   color: #fff;
-  font-weight: 500;
+  font-weight: 600;
   text-decoration: none;
   padding: 0.25rem 0;
-  transition: color 0.2s;
+  transition: color 0.2s ease;
 }
-.nav a::after {
+
+.mob-module .nav a::after {
   content: '';
   position: absolute;
   bottom: -0.25rem;
@@ -24,66 +27,53 @@
   width: 100%;
   height: 2px;
   background: transparent;
-  transition: background-color 0.2s;
-}
-.nav a:hover,
-.nav a.active {
-  color: #ffd700;
-}
-.nav a:hover::after,
-.nav a.active::after {
-  background-color: #ffd700;
+  transition: background-color 0.2s ease;
 }
 
-/* MobMain wrapper */
-.mobmain-page {
-  /* No extra bottom padding needed—the .app-main margin handles it */
+.mob-module .nav a:hover,
+.mob-module .nav a.active {
+  color: #f0b321;
 }
 
-/* ===========================================================================
-   Trivia Hover — Tooltip Below Card, No Scroll
-   =========================================================================== */
-.trivia-hover {
+.mob-module .nav a:hover::after,
+.mob-module .nav a.active::after {
+  background-color: #f0b321;
+}
+
+.mob-module .trivia-hover {
   position: relative;
   display: inline-block;
   margin: 0.5rem;
 }
 
-.trivia-details {
+.mob-module .trivia-details {
   position: absolute;
-  top: calc(100% + 0.5rem);   /* place below the card */
+  top: calc(100% + 0.5rem);
   left: 50%;
-  transform: translateX(-50%) scale(0.9);
-
   min-width: 200px;
   max-width: 260px;
-
-  /* Let tooltip grow naturally—no scrollbars */
   height: auto;
   max-height: none;
   overflow: visible;
-
-  background: rgba(30, 30, 30, 0.95);
   padding: 0.85rem;
-  border-radius: 6px;
+  color: #f0f0f0;
   font-size: 0.9rem;
   line-height: 1.4;
-  color: #f0f0f0;
+  border-radius: 6px;
+  background: rgba(30, 30, 30, 0.95);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.7);
-
   opacity: 0;
   visibility: hidden;
-  transition:
-    opacity 0.25s ease-out,
-    transform 0.25s ease-out;
+  transform: translateX(-50%) scale(0.9);
+  transition: opacity 0.25s ease-out, transform 0.25s ease-out;
   z-index: 12;
 }
 
-.trivia-details::before {
-  display: none; /* no arrow */
+.mob-module .trivia-details::before {
+  display: none;
 }
 
-.trivia-hover:hover .trivia-details {
+.mob-module .trivia-hover:hover .trivia-details {
   opacity: 1;
   visibility: visible;
   transform: translateX(-50%) scale(1);
