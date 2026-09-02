@@ -1,0 +1,146 @@
+.de-module .de-bow-guide {
+  width: min(100%, 980px);
+  margin: 0.9rem auto 2rem;
+}
+
+.de-module .de-bow-guide .zh-guide-hero {
+  margin-bottom: 0.8rem;
+}
+
+.de-module .de-bow-warning {
+  width: min(100%, 940px);
+  margin: 0 auto 0.8rem;
+}
+
+.de-module .de-bow-sheet,
+.de-module .de-bow-notes,
+.de-module .de-bow-video-reference {
+  width: min(100%, 940px);
+  margin: 0 auto 0.8rem;
+  border: 1px solid color-mix(in srgb, var(--guide-accent) 22%, transparent);
+  border-radius: 10px;
+  background: rgba(3, 10, 18, 0.74);
+}
+
+.de-module .de-bow-sheet {
+  padding: 0.85rem 1rem 0.95rem;
+}
+
+.de-module .de-bow-sheet__heading {
+  margin-bottom: 0.55rem;
+}
+
+.de-module .de-bow-sheet__heading > span {
+  display: block;
+  margin-bottom: 0.08rem;
+  color: var(--guide-accent);
+  font-size: 0.62rem;
+  font-weight: 850;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.de-module .de-bow-sheet__heading h2,
+.de-module .de-bow-notes h2 {
+  margin: 0;
+  color: #eff8ff;
+  font-size: 1.25rem;
+}
+
+.de-module .de-bow-steps {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.de-module .de-bow-steps li {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: 0.65rem;
+  align-items: start;
+  padding: 0.62rem 0;
+  border-top: 1px solid rgba(123, 207, 255, 0.09);
+}
+
+.de-module .de-bow-steps li:first-child {
+  border-top: 0;
+}
+
+.de-module .de-bow-step-number {
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #06121c;
+  background: var(--guide-accent);
+  font-size: 0.7rem;
+  font-weight: 900;
+}
+
+.de-module .de-bow-steps h3 {
+  margin: 0;
+  color: #eef8ff;
+  font-size: 0.94rem;
+}
+
+.de-module .de-bow-steps p {
+  margin: 0.18rem 0 0;
+  color: #b9cbd9;
+  font-size: 0.84rem;
+  line-height: 1.42;
+}
+
+.de-module .de-bow-notes {
+  padding: 0.75rem 1rem;
+}
+
+.de-module .de-bow-notes ul {
+  margin: 0.45rem 0 0;
+  padding-left: 1.1rem;
+  color: #bdcad5;
+  font-size: 0.82rem;
+}
+
+.de-module .de-bow-notes li {
+  margin: 0.25rem 0;
+  line-height: 1.4;
+}
+
+.de-module .de-bow-video-reference {
+  overflow: hidden;
+}
+
+.de-module .de-bow-video-reference > summary {
+  padding: 0.65rem 0.8rem;
+  color: #c8eaff;
+  font-size: 0.8rem;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.de-module .de-bow-video-reference .de-bow-video {
+  border: 0;
+  border-top: 1px solid rgba(123, 207, 255, 0.12);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.de-module .de-bow-video-reference .de-bow-credit {
+  margin: 0;
+  padding: 0.45rem 0.7rem;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 620px) {
+  .de-module .de-bow-guide {
+    width: 100%;
+    margin-top: 0.65rem;
+  }
+
+  .de-module .de-bow-sheet {
+    padding-inline: 0.75rem;
+  }
+}
