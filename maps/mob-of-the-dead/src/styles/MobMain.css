@@ -33,38 +33,57 @@
   box-shadow: 0 0 18px rgba(240, 179, 33, 0.24);
 }
 
-.mobmain-page .trivia-list {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1rem;
+.mob-prereq-callout {
+  width: min(100%, 960px);
+  margin: -0.7rem auto 2rem;
+  box-sizing: border-box;
 }
 
-.mobmain-page .trivia-list > * {
-  min-height: 130px;
-  padding: 1.25rem;
-  border: 1px solid rgba(240, 179, 33, 0.2);
-  border-radius: 14px;
-  background:
-    linear-gradient(rgba(10, 8, 7, 0.76), rgba(10, 8, 7, 0.84)),
-    url('../assets/images/mob-banner.png') center / cover no-repeat;
-  color: #f5f1e8;
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.34);
-  backdrop-filter: blur(10px);
-}
-
-.mobmain-page .trivia-list > * h4,
-.mobmain-page .trivia-list > * .title {
-  margin: 0 0 0.5rem;
-  color: #f0b321;
-  font-size: 1.05rem;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
-}
-
-.mobmain-page .trivia-list > * p,
-.mobmain-page .trivia-list > * .details {
+.mob-prereq-list {
   margin: 0;
-  color: #d9d1c5;
-  font-size: 0.94rem;
+  padding-left: 1.1rem;
+}
+
+.mob-prereq-list li {
+  margin: 0.2rem 0;
+  line-height: 1.5;
+}
+
+.mob-run-step {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.mob-run-step .zh-guide-step-card {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.mob-run-step:hover .zh-guide-step-card,
+.mob-run-step.is-open .zh-guide-step-card {
+  border-color: rgba(240, 179, 33, 0.55);
+  background:
+    linear-gradient(135deg, rgba(177, 52, 17, 0.26), transparent 40%),
+    rgba(7, 8, 10, 0.86);
+  box-shadow: 0 16px 38px rgba(0, 0, 0, 0.38), 0 0 26px rgba(183, 70, 18, 0.12);
+}
+
+.mob-step-details {
+  margin: 0.9rem 0 0;
+  padding: 0.85rem 1rem 0.85rem 2rem;
+  border-top: 1px solid rgba(240, 179, 33, 0.14);
+  color: #ddd5c8;
+}
+
+.mob-step-details li {
+  margin: 0.4rem 0;
   line-height: 1.55;
 }
 
@@ -72,9 +91,5 @@
   .mobmain-page {
     width: min(100% - 1rem, 680px);
     padding-top: 1.75rem;
-  }
-
-  .mobmain-page .trivia-list {
-    grid-template-columns: 1fr;
   }
 }
