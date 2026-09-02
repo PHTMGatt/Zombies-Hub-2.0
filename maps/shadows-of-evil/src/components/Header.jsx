@@ -11,9 +11,11 @@ export default function Header() {
       <img className="soe-header__image" src={soeCover} alt="Shadows of Evil" />
       <div className="soe-header__overlay" />
       <div className="soe-header__content">
-        <span className="soe-header__kicker">Morg City · Zombies Hub 2.0</span>
-        <h1>Shadows of Evil</h1>
-        <p>Transcript-verified Easter Egg guide</p>
+        <div className="soe-header__identity">
+          <span className="soe-header__kicker">Morg City</span>
+          <h1>Shadows of Evil</h1>
+          <p>Main Easter Egg Guide</p>
+        </div>
         <nav aria-label="Shadows of Evil guide navigation">
           <NavLink to={BASE} end>Guide</NavLink>
         </nav>
