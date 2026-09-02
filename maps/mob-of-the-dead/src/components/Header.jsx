@@ -9,7 +9,6 @@ const Header = () => (
 
     <div className="header-content">
       <div className="mob-header__identity">
-        <span className="mob-header__kicker">Alcatraz</span>
         <h1>Mob of the Dead</h1>
         <small>Pop Goes the Weasel</small>
       </div>
