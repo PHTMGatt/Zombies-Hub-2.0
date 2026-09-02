@@ -1,117 +1,133 @@
-.main-guide-page {
-  display: flex;
-  justify-content: center;
-  padding: 2rem;
+.gorod-main-guide {
+  --guide-accent: #ff704d;
+  --guide-accent-soft: rgba(183, 47, 21, 0.18);
+  --guide-panel: rgba(13, 8, 7, 0.78);
+  --guide-panel-strong: rgba(11, 6, 5, 0.94);
+  --guide-border: rgba(255, 112, 77, 0.2);
+  --guide-text: #fff4ee;
+  --guide-muted: #d5bbb1;
+
+  width: min(100% - 2rem, 1120px);
+  margin: 0 auto;
+  padding: 3rem 0 5rem;
 }
 
-.main-guide-card {
-  position: relative;
-  max-width: 960px;
+.gorod-main-guide .zh-guide-hero {
+  background:
+    linear-gradient(135deg, rgba(157, 39, 18, 0.28), transparent 43%),
+    rgba(12, 7, 6, 0.82);
+  border-color: rgba(255, 112, 77, 0.23);
+  box-shadow:
+    0 22px 58px rgba(0, 0, 0, 0.4),
+    0 0 34px rgba(166, 42, 18, 0.1);
+}
+
+.gorod-guide-note {
+  width: min(100%, 960px);
+  margin: -0.65rem auto 2rem;
+  box-sizing: border-box;
+}
+
+.gorod-prereq-list {
+  margin: 0;
+  padding-left: 1.15rem;
+}
+
+.gorod-prereq-list li {
+  margin: 0.25rem 0;
+  line-height: 1.55;
+}
+
+.gorod-run-step {
   width: 100%;
-  padding: 2rem 2.5rem;
-  backdrop-filter: blur(8px);
-  border-radius: 16px;
-  box-shadow: 0 0 22px rgba(255, 150, 80, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: #eee;
-  font-size: 1rem;
-  line-height: 1.6;
-  overflow: hidden;
-  z-index: 0; /* base */
+  margin: 0;
+  padding: 0;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
 }
 
-.main-guide-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.4); /* Soft black tint */
-  z-index: -1; /* <--- fixes the issue: places tint behind content */
-  pointer-events: none;
-  border-radius: 16px;
+.gorod-run-step .zh-guide-step-card {
+  width: 100%;
+  box-sizing: border-box;
+  border-left: 3px solid rgba(255, 112, 77, 0.58);
 }
 
-/* Title with shadow glow */
-.main-guide-title {
-  font-size: 2.2rem;
-  font-weight: 800;
-  text-align: center;
-  color: #ff5f40;
-  margin-bottom: 1.2rem;
-  text-shadow:
-    0 0 10px rgba(0, 0, 0, 0.9),
-    0 0 16px rgba(255, 95, 64, 0.4),
-    0 0 26px rgba(255, 95, 64, 0.3);
+.gorod-run-step:hover .zh-guide-step-card,
+.gorod-run-step.is-open .zh-guide-step-card {
+  border-color: rgba(255, 132, 96, 0.58);
+  background:
+    linear-gradient(135deg, rgba(170, 43, 19, 0.25), transparent 42%),
+    rgba(13, 8, 7, 0.9);
+  box-shadow:
+    0 16px 40px rgba(0, 0, 0, 0.4),
+    0 0 28px rgba(174, 49, 22, 0.11);
 }
 
-/* Subtitle below title */
-.main-guide-subtext {
-  font-size: 1.05rem;
-  text-align: center;
-  margin-bottom: 1.5rem;
-  color: #ccc;
+.gorod-step-details {
+  margin: 0.85rem 0 0;
+  padding: 0.85rem 1rem 0.75rem 2rem;
+  color: #e7d4cd;
+  border-top: 1px solid rgba(255, 112, 77, 0.13);
 }
 
-/* Subheaders like "Step 1" */
-.main-guide-card h3 {
-  font-size: 1.4rem;
-  margin-top: 1.5rem;
-  color: #f9bb77;
-  text-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
+.gorod-step-details li {
+  margin: 0.4rem 0;
+  line-height: 1.55;
 }
 
-/* Bolded text */
-.main-guide-card strong {
-  color: #fbdba0;
-  font-weight: 700;
+.gorod-tool-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
 }
 
-/* Ordered list tweaks */
-.main-guide-card ol {
-  margin-left: 1.8rem;
-  padding-left: 0.5rem;
-  margin-bottom: 1rem;
+.gorod-tool-grid a {
+  min-height: 116px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 1rem 1.1rem;
+  color: #fff2ec;
+  text-decoration: none;
+  border: 1px solid rgba(255, 112, 77, 0.18);
+  border-radius: 14px;
+  background:
+    linear-gradient(135deg, rgba(148, 36, 16, 0.18), transparent 60%),
+    rgba(10, 7, 6, 0.8);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
 }
 
-.main-guide-card li {
-  margin-bottom: 0.4rem;
+.gorod-tool-grid a:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 132, 96, 0.48);
+  background:
+    linear-gradient(135deg, rgba(166, 42, 18, 0.28), transparent 60%),
+    rgba(13, 8, 7, 0.9);
 }
 
-.main-guide-card ul {
-  padding-left: 1.5rem;
-  margin-bottom: 1rem;
+.gorod-tool-grid strong {
+  color: #ffb08f;
+  font-size: 1.03rem;
 }
 
-.main-guide-card li {
-  margin-bottom: 0.4rem;
-  line-height: 1.6;
+.gorod-tool-grid span {
+  color: #ceb8af;
+  line-height: 1.45;
 }
 
-/* Optional links (like S.O.P.H.I.A) */
-.main-guide-card a {
-  color: #78e4ff;
-  text-decoration: underline;
-}
-@media (max-width: 768px) {
-  .main-guide-page {
-    padding: 1rem;
+@media (max-width: 720px) {
+  .gorod-main-guide {
+    width: min(100% - 1rem, 680px);
+    padding: 1.75rem 0 3rem;
   }
 
-  .main-guide-card {
-    padding: 1.2rem 1rem;
-    font-size: 0.95rem;
-  }
-
-  .main-guide-title {
-    font-size: 1.6rem;
-    margin-bottom: 1rem;
-  }
-
-  .main-guide-subtext {
-    font-size: 0.95rem;
-    margin-bottom: 1.2rem;
-  }
-
-  .main-guide-card h3 {
-    font-size: 1.15rem;
+  .gorod-tool-grid {
+    grid-template-columns: 1fr;
   }
 }
