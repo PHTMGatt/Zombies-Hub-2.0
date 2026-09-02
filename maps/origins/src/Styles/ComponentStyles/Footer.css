@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@700&display=swap');
 
-.footer {
+.origins-module .footer {
   position: relative;
   background: linear-gradient(to right, #0a4b78, #1c7ed6, #0a4b78);
   padding: 1rem 2rem;
