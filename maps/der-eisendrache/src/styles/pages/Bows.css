@@ -1,176 +1,266 @@
-/* 1. PAGE LAYOUT */
 .bows-page {
+  --de-ice: #74c9ff;
+  --de-panel: rgba(5, 13, 24, 0.78);
+  --de-border: rgba(139, 207, 255, 0.2);
+
+  width: min(100% - 2rem, 1040px);
+  margin: 0 auto;
+  padding: 3rem 0 4.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
-  padding: 2rem 1rem;
-  margin-top: 3rem;
+  gap: 1rem;
 }
 
-/* 2. TOP NAV (unchanged except for spacing) */
-.bow-nav {
-  width: 100%;
-  max-width: 720px;
-  background-color: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(4px);
-  border-radius: 0.75rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  display: flex;
-  justify-content: center;
-  padding: 0.75rem 1rem;
-}
-
-.bow-nav__list {
-  display: flex;
-  gap: 1.5rem;
-  margin: 0;
-  padding: 0;
-}
-
-.bow-nav__item {
-  margin: 0;
-}
-
-/* 3. NAV LINK STYLING */
-.bow-nav__link {
-  color: #4da6ff;
-  font-weight: 500;
-  text-decoration: none;
-  position: relative;
-  padding: 0.25rem;
-  transition: color 0.2s ease;
-}
-
-.bow-nav__link::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -4px;
-  height: 2px;
-  background: #4da6ff;
-  transform: scaleX(0);
-  transform-origin: center;
-  transition: transform 0.2s ease;
-}
-
-.bow-nav__link:hover,
-.bow-nav__link--active {
-  color: #ffffff;
-}
-
-.bow-nav__link:hover::after,
-.bow-nav__link--active::after {
-  transform: scaleX(1);
-}
-
-/* 4. CONTENT PANEL */
 .bows-page__outlet {
   width: 100%;
-  max-width: 720px;
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(4px);
-  border-radius: 0.75rem;
-  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.4);
-  padding: 2rem;
-  color: #efefef;
-  margin-inline: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+  min-height: 340px;
+  padding: 1.5rem;
   box-sizing: border-box;
+  color: #edf7ff;
+  border: 1px solid var(--de-border);
+  border-radius: 18px;
+  background:
+    linear-gradient(145deg, rgba(79, 153, 211, 0.08), transparent 36%),
+    var(--de-panel);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
 }
 
 .bows-page__outlet h1,
 .bows-page__outlet h2,
+.bows-page__outlet h3,
 .bows-page__outlet p,
 .bows-page__outlet li {
-  color: #eee;
+  color: #edf7ff;
 }
 
-.bows-page__outlet p {
-  margin-bottom: 1rem;
-  line-height: 1.6;
+.bows-page__outlet p,
+.bows-page__outlet li {
+  line-height: 1.65;
 }
 
 .bows-page__outlet ol,
 .bows-page__outlet ul {
-  margin: 0 0 1rem;
-  padding-left: 1.5rem;
+  padding-left: 1.35rem;
 }
 
-.bows-page__outlet ol li,
-.bows-page__outlet ul li {
-  margin-bottom: 0.75rem;
-  line-height: 1.5;
+.bows-page__outlet li {
+  margin-bottom: 0.65rem;
 }
 
-/* 5. EMBEDDED VIDEO STYLING */
+.bow-landing {
+  text-align: center;
+}
+
+.bow-landing__kicker {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  color: var(--de-ice);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-shadow: 0 0 14px rgba(116, 201, 255, 0.35);
+}
+
+.bow-landing h1 {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  line-height: 1.05;
+  text-shadow: 0 0 20px rgba(116, 201, 255, 0.24);
+}
+
+.bow-landing__intro {
+  max-width: 700px;
+  margin: 0.8rem auto 1.6rem;
+  color: #bcd0df !important;
+  font-size: 0.98rem;
+}
+
+.bow-choice-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+  text-align: left;
+}
+
+.bow-choice-card {
+  --bow-accent: #8ed5ff;
+  --bow-accent-soft: rgba(142, 213, 255, 0.12);
+
+  position: relative;
+  min-height: 116px;
+  display: grid;
+  grid-template-columns: 58px minmax(0, 1fr);
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem 1.1rem;
+  overflow: hidden;
+  color: #eef8ff;
+  text-decoration: none;
+  border: 1px solid color-mix(in srgb, var(--bow-accent) 30%, transparent);
+  border-radius: 14px;
+  background:
+    linear-gradient(135deg, var(--bow-accent-soft), transparent 48%),
+    rgba(3, 9, 17, 0.76);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.26);
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.bow-choice-card:last-child {
+  grid-column: 1 / -1;
+}
+
+.bow-choice-card:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--bow-accent) 68%, transparent);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.34), 0 0 24px color-mix(in srgb, var(--bow-accent) 13%, transparent);
+}
+
+.bow-choice-card--base {
+  --bow-accent: #d8edff;
+  --bow-accent-soft: rgba(216, 237, 255, 0.1);
+}
+
+.bow-choice-card--electric {
+  --bow-accent: #59bfff;
+  --bow-accent-soft: rgba(40, 150, 255, 0.16);
+}
+
+.bow-choice-card--fire {
+  --bow-accent: #ff9853;
+  --bow-accent-soft: rgba(255, 94, 40, 0.15);
+}
+
+.bow-choice-card--wolf {
+  --bow-accent: #a7d7ff;
+  --bow-accent-soft: rgba(126, 177, 220, 0.14);
+}
+
+.bow-choice-card--void {
+  --bow-accent: #b58cff;
+  --bow-accent-soft: rgba(137, 83, 220, 0.16);
+}
+
+.bow-choice-card__sigil {
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--bow-accent) 52%, transparent);
+  background: radial-gradient(circle, color-mix(in srgb, var(--bow-accent) 15%, transparent), rgba(0, 0, 0, 0.4));
+  box-shadow: inset 0 0 18px color-mix(in srgb, var(--bow-accent) 15%, transparent), 0 0 16px color-mix(in srgb, var(--bow-accent) 14%, transparent);
+}
+
+.bow-choice-card__sigil > span {
+  position: relative;
+  width: 28px;
+  height: 28px;
+  border: 2px solid var(--bow-accent);
+  border-radius: 50%;
+  transform: rotate(45deg);
+}
+
+.bow-choice-card__sigil > span::before,
+.bow-choice-card__sigil > span::after {
+  content: '';
+  position: absolute;
+  background: var(--bow-accent);
+  border-radius: 999px;
+}
+
+.bow-choice-card__sigil > span::before {
+  width: 2px;
+  height: 34px;
+  left: 50%;
+  top: -5px;
+  transform: translateX(-50%);
+}
+
+.bow-choice-card__sigil > span::after {
+  width: 34px;
+  height: 2px;
+  top: 50%;
+  left: -5px;
+  transform: translateY(-50%);
+}
+
+.bow-choice-card__copy {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.bow-choice-card__label {
+  color: var(--bow-accent);
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.bow-choice-card__copy strong {
+  font-size: 1.08rem;
+}
+
+.bow-choice-card__action {
+  margin-top: 0.2rem;
+  color: #b8cad8;
+  font-size: 0.82rem;
+}
+
 .video-container {
   position: relative;
-  padding-bottom: 56.25%;
-  height: 0;
+  width: 100%;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
-  border-radius: 0.75rem;
-  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
-  max-width: 100%;
+  border-radius: 14px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
 }
 
 .video-container iframe {
   position: absolute;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 100%;
   height: 100%;
-  border-radius: 0.75rem;
+  border: 0;
 }
 
-/* 6. RESPONSIVE BREAKPOINTS */
-@media (max-width: 768px) {
+@media (max-width: 760px) {
   .bows-page {
-    padding: 1.5rem;
-  }
-
-  .bow-nav {
-    flex-wrap: wrap;
-    gap: 1rem;
-    padding: 0.5rem 1rem;
-  }
-
-  .bows-page__outlet {
-    padding: 1.5rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .bows-page {
-    padding: 1rem;
-  }
-
-  .bow-nav__list {
-    flex-direction: column;
-    align-items: center;
+    width: min(100% - 1rem, 720px);
+    padding: 1.75rem 0 3rem;
   }
 
   .bows-page__outlet {
     padding: 1rem;
   }
 
-  .bows-page__link,
-  .bows-page__item {
-    font-size: 0.95rem;
+  .bow-choice-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .bow-choice-card:last-child {
+    grid-column: auto;
   }
 }
 
-/* 7. BOWS PAGE SPECIFIC STYLES */
+@media (max-width: 440px) {
+  .bow-choice-card {
+    grid-template-columns: 46px minmax(0, 1fr);
+    min-height: 96px;
+    padding: 0.85rem;
+  }
 
-.bows-page {
-  padding-top: 12rem; /* adjust to match your header height */
-}
-@media (max-width: 600px) {
-  .bows-page {
-    padding-top: 5rem; /* smaller header space on mobile if needed */
+  .bow-choice-card__sigil {
+    width: 44px;
+    height: 44px;
+  }
+
+  .bow-choice-card__sigil > span {
+    transform: scale(0.8) rotate(45deg);
   }
 }
