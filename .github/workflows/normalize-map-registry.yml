@@ -1,0 +1,51 @@
+name: Normalize migrated map registry
+
+on:
+  push:
+    paths:
+      - '.github/workflows/normalize-map-registry.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  normalize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Replace legacy Render targets with internal routes
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path('apps/hub/src/data/mapData.js')
+          text = path.read_text()
+          replacements = {
+              "renderLink: 'https://motd-guide.onrender.com',": "internalRoute: '/maps/mob-of-the-dead',",
+              "renderLink: 'https://origins-wtyd.onrender.com',": "internalRoute: '/maps/origins',",
+              "renderLink: 'https://der-eisendrache-guide.onrender.com',": "internalRoute: '/maps/der-eisendrache',",
+              "renderLink: 'https://zetsubou-guide.onrender.com',": "internalRoute: '/maps/zetsubou-no-shima',",
+              "renderLink: 'https://gorod-krovi-guide.onrender.com',": "internalRoute: '/maps/gorod-krovi',",
+              "renderLink: 'https://revelations-guide.onrender.com',": "internalRoute: '/maps/revelations',",
+          }
+          for old, new in replacements.items():
+              text = text.replace(old, new)
+          path.write_text(text)
+          PY
+
+      - name: Commit normalized registry
+        run: |
+          git config user.name 'Zombies Hub 2.0 Migration'
+          git config user.email 'actions@users.noreply.github.com'
+          git add apps/hub/src/data/mapData.js
+          if git diff --cached --quiet; then
+            echo 'No registry changes required.'
+            exit 0
+          fi
+          git commit -m 'Replace legacy Render map links with internal routes'
+          git pull --rebase origin main
+          git push origin main
