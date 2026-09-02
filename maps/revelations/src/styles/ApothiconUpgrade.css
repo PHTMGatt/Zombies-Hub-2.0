@@ -1,122 +1,137 @@
-.rev-page {
+.revelations-module .apothicon-upgrade-page {
   position: relative;
-  padding: 5rem 1rem;
-  min-height: 100vh;
+  min-height: 0;
+  padding: 1rem 1rem 1.5rem;
   display: flex;
+  align-items: flex-start;
   justify-content: center;
-  align-items: center;
-  flex-direction: column;
   z-index: 1;
 }
 
-.rev-background {
+.revelations-module .apothicon-upgrade-page .rev-background {
   position: absolute;
   inset: 0;
-  background: url('../assets/rev-guide/Main/Revelations.webp') no-repeat center center/cover;
-  filter: blur(10px) brightness(0.3);
+  background: url('../assets/rev-guide/Main/Revelations.webp') no-repeat center center / cover;
+  filter: blur(8px) brightness(0.32);
   z-index: 0;
-  animation: bgFloat 40s ease-in-out infinite alternate;
 }
 
-@keyframes bgFloat {
-  0% {
-    transform: scale(1) translate(0px, 0px);
-  }
-  100% {
-    transform: scale(1.05) translate(10px, 10px);
-  }
-}
-
-.sk-container {
+.revelations-module .apothicon-upgrade-page .sk-container {
   position: relative;
   z-index: 2;
-  width: 100%;
-  max-width: 1200px;
+  width: min(100%, 960px);
+  margin: 0 auto;
   text-align: center;
   color: #aad4ff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
-.sk-title {
-  font-size: 2.8rem;
-  font-weight: 800;
-  margin-bottom: 2rem;
+.revelations-module .apothicon-upgrade-page .rev-page-heading {
+  margin-bottom: 0.55rem;
+}
+
+.revelations-module .apothicon-upgrade-page .sk-title {
+  margin: 0.05rem 0 0.25rem;
   color: #cce6ff;
-  text-shadow: 2px 2px 6px #000;
+  font-size: clamp(1.65rem, 2.8vw, 2.15rem);
+  font-weight: 800;
+  text-shadow: 0 0 10px rgba(109, 194, 255, 0.55);
 }
 
-.rev-glow-box {
-  background: rgba(0, 0, 0, 0.4);
-  border-radius: 16px;
-  border: 2px solid rgba(109, 194, 255, 0.5);
-  box-shadow: 0 0 40px rgba(109, 194, 255, 0.35), 0 0 80px rgba(0, 255, 255, 0.15) inset;
-  padding: 2rem 1.5rem;
-  max-width: 1000px;
-  width: 100%;
-  margin-top: 1rem;
-  margin-bottom: 2rem;
-  backdrop-filter: blur(10px);
-  z-index: 2;
+.revelations-module .apothicon-upgrade-page .rev-page-intro {
+  margin: 0 auto;
+  color: #bdcbe2;
+  font-size: 0.84rem;
+  line-height: 1.4;
 }
 
-.video-card {
+.revelations-module .apothicon-upgrade-page .rev-glow-box {
   width: 100%;
-  max-width: 960px;
-  border-radius: 16px;
+  margin: 0;
+  padding: 0.65rem;
+  border: 1px solid rgba(109, 194, 255, 0.3);
+  border-radius: 11px;
+  background: rgba(0, 0, 0, 0.34);
+  box-shadow: 0 0 22px rgba(109, 194, 255, 0.16);
+  backdrop-filter: blur(8px);
+}
+
+.revelations-module .apothicon-upgrade-page .video-card {
+  width: min(100%, 760px);
+  margin: 0 auto 0.35rem;
+  border: 1px solid rgba(109, 194, 255, 0.46);
+  border-radius: 9px;
   overflow: hidden;
-  box-shadow: 0 0 40px rgba(0, 255, 255, 0.6);
-  border: 4px solid rgba(109, 194, 255, 0.8);
-  background: rgba(0, 0, 0, 0.5);
-  margin-bottom: 1rem;
-  transition: all 0.3s ease;
+  background: rgba(0, 0, 0, 0.45);
+  box-shadow: 0 0 16px rgba(0, 191, 255, 0.18);
 }
 
-.video-caption {
-  font-size: 0.95rem;
-  color: #aad4ff;
-  padding: 0.5rem 0;
-  text-shadow: 1px 1px 2px #000;
-  background: rgba(0, 0, 0, 0.35);
+.revelations-module .apothicon-upgrade-page .rev-video-player__iframe {
+  width: 100% !important;
+  height: 280px !important;
+  display: block;
 }
 
-.sk-selected-label {
-  font-size: 1.3rem;
+.revelations-module .apothicon-upgrade-page .video-caption {
+  padding: 0.28rem 0.5rem;
+  color: #aacbe4;
+  font-size: 0.72rem;
+  background: rgba(0, 0, 0, 0.28);
+}
+
+.revelations-module .apothicon-upgrade-page .sk-selected-label {
+  margin: 0.3rem 0 0.38rem;
+  color: #d4ecff;
+  font-size: 0.82rem;
   font-weight: 700;
-  margin: 1.2rem 0 1.6rem;
-  color: #6dc2ff;
-  text-shadow: 0 0 10px #00bfff;
 }
 
-.sk-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1rem;
-  padding: 1rem 0;
+.revelations-module .apothicon-upgrade-page .sk-buttons {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.35rem;
+  padding: 0;
 }
 
-.sk-button {
-  background: transparent;
-  border: 2px solid #00c3ff;
-  color: #aad4ff;
-  padding: 0.7rem 1.3rem;
-  font-family: 'Orbitron', sans-serif;
-  font-size: 0.95rem;
+.revelations-module .apothicon-upgrade-page .sk-button {
+  min-height: 34px;
+  padding: 0.32rem 0.42rem;
+  border: 1px solid rgba(0, 195, 255, 0.75);
   border-radius: 6px;
+  background: rgba(0, 25, 40, 0.5);
+  color: #cceaff;
+  font-size: 0.72rem;
+  font-weight: 700;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: inset 0 0 12px rgba(0, 191, 255, 0.25), 0 0 10px rgba(0, 191, 255, 0.3);
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
-.sk-button:hover {
-  background: rgba(0, 255, 255, 0.15);
-  transform: scale(1.04);
+.revelations-module .apothicon-upgrade-page .sk-button:hover,
+.revelations-module .apothicon-upgrade-page .sk-button.active {
+  color: #fff;
+  border-color: rgba(109, 220, 255, 0.95);
+  background: rgba(0, 195, 255, 0.16);
 }
 
-.sk-button.active {
-  background: #00c3ff;
-  color: black;
-  box-shadow: 0 0 30px #00e6ff;
+@media (max-width: 760px) {
+  .revelations-module .apothicon-upgrade-page {
+    padding: 0.8rem 0.6rem 1.25rem;
+  }
+
+  .revelations-module .apothicon-upgrade-page .rev-video-player__iframe {
+    height: 220px !important;
+  }
+
+  .revelations-module .apothicon-upgrade-page .sk-buttons {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .revelations-module .apothicon-upgrade-page .rev-video-player__iframe {
+    height: 190px !important;
+  }
+
+  .revelations-module .apothicon-upgrade-page .sk-buttons {
+    grid-template-columns: 1fr;
+  }
 }
