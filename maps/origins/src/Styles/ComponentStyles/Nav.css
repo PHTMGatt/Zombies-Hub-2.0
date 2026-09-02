@@ -1,64 +1,89 @@
 .origins-module .origins-nav {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   width: 100%;
 }
 
 .origins-module .origins-nav-links {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding: 10px 0;
-  max-width: 960px;
   width: 100%;
+  max-width: 720px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.45rem;
+  padding: 0;
 }
 
 .origins-module .origins-nav-link {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 1rem;
-  font-weight: 600;
-  color: white;
-  text-decoration: none;
-  padding: 6px 12px;
-  border-radius: 6px;
-  transition: all 0.2s ease;
+  --origin-link-accent: #8ed7ff;
+  --origin-link-soft: rgba(109, 194, 255, 0.08);
+
   position: relative;
-  text-shadow: 0 0 4px #000;
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.42rem;
+  padding: 0.42rem 0.72rem;
+  color: #eaf6ff;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  background: rgba(2, 10, 18, 0.58);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  transition: transform 0.2s ease, color 0.2s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
 }
 
-.origins-module .origins-nav-link:hover {
-  background-color: rgba(255, 255, 255, 0.08);
+.origins-module .origins-nav-link.main {
+  --origin-link-accent: #6dc2ff;
+  --origin-link-soft: rgba(109, 194, 255, 0.13);
+}
+
+.origins-module .origins-nav-link.ice {
+  --origin-link-accent: #78e8e1;
+  --origin-link-soft: rgba(120, 232, 225, 0.11);
+}
+
+.origins-module .origins-nav-link.fire {
+  --origin-link-accent: #ff7844;
+  --origin-link-soft: rgba(255, 120, 68, 0.11);
+}
+
+.origins-module .origins-nav-link.wind {
+  --origin-link-accent: #ffe657;
+  --origin-link-soft: rgba(255, 230, 87, 0.1);
+}
+
+.origins-module .origins-nav-link.lightning {
+  --origin-link-accent: #d8a8ff;
+  --origin-link-soft: rgba(216, 168, 255, 0.11);
+}
+
+.origins-module .origins-nav-link:hover,
+.origins-module .origins-nav-link.active {
+  transform: translateY(-1px);
+  color: var(--origin-link-accent);
+  border-color: color-mix(in srgb, var(--origin-link-accent) 55%, transparent);
+  background: linear-gradient(135deg, var(--origin-link-soft), rgba(2, 10, 18, 0.7));
+  box-shadow: 0 0 16px color-mix(in srgb, var(--origin-link-accent) 14%, transparent);
 }
 
 .origins-module .origins-nav-link svg {
-  font-size: 18px;
-  transition: transform 0.2s ease;
+  color: var(--origin-link-accent);
+  font-size: 17px;
+  transition: transform 0.2s ease, filter 0.2s ease;
 }
 
-.origins-module .origins-nav-link:hover svg {
-  transform: scale(1.1);
+.origins-module .origins-nav-link:hover svg,
+.origins-module .origins-nav-link.active svg {
+  transform: scale(1.08);
+  filter: drop-shadow(0 0 6px color-mix(in srgb, var(--origin-link-accent) 55%, transparent));
 }
 
 .origins-module .origins-nav-link::after {
-  content: "";
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: transparent;
-  transition: background 0.3s ease;
-}
-
-.origins-module .origins-nav-link:hover::after {
-  background: rgba(255, 255, 255, 0.3);
-}
-
-.origins-module .origins-nav-link.active::after {
-  background: currentColor;
+  display: none;
 }
 
 .origins-module .main-active { color: #6dc2ff; }
@@ -67,22 +92,38 @@
 .origins-module .wind-active { color: #ffe657; }
 .origins-module .lightning-active { color: #d8a8ff; }
 
-@media (max-width: 1024px) {
+@media (max-width: 1040px) {
   .origins-module .origins-nav-links {
     justify-content: center;
-    gap: 16px;
-    padding: 6px;
+    max-width: 860px;
   }
 }
 
-@media (max-width: 768px) {
-  .origins-module .origins-nav-link {
-    font-size: 0.85rem;
-    padding: 5px 10px;
-    gap: 4px;
+@media (max-width: 620px) {
+  .origins-module .origins-nav-links {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
   }
 
-  .origins-module .origins-nav-link svg {
-    font-size: 16px;
+  .origins-module .origins-nav-link {
+    width: 100%;
+    justify-content: center;
+    padding-inline: 0.5rem;
+    font-size: 0.78rem;
+  }
+
+  .origins-module .origins-nav-link.main {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 380px) {
+  .origins-module .origins-nav-links {
+    grid-template-columns: 1fr;
+  }
+
+  .origins-module .origins-nav-link.main {
+    grid-column: auto;
   }
 }
