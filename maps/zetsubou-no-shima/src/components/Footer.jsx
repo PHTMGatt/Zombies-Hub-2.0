@@ -8,8 +8,6 @@ const Footer = () => (
       <strong>Zetsubou No Shima</strong>
       <span aria-hidden="true">•</span>
       <span>Seeds of Doubt</span>
-      <span aria-hidden="true">•</span>
-      <span>Pohnpei</span>
     </div>
   </footer>
 );
