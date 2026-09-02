@@ -1,0 +1,48 @@
+.mob-section-page {
+  --guide-accent: #f0b321;
+  --guide-accent-soft: rgba(177, 52, 17, 0.2);
+  --guide-panel: rgba(7, 8, 10, 0.78);
+  --guide-panel-strong: rgba(5, 6, 8, 0.94);
+  --guide-border: rgba(240, 179, 33, 0.2);
+  --guide-text: #f5f1e8;
+  --guide-muted: #c6beb0;
+
+  width: min(100% - 2rem, 1080px);
+  margin: 0 auto;
+  padding: 3rem 0 5rem;
+}
+
+.mob-section-page .zh-guide-hero {
+  background:
+    linear-gradient(135deg, rgba(177, 52, 17, 0.22), transparent 42%),
+    rgba(6, 7, 9, 0.82);
+}
+
+.mob-section-page .zh-guide-step-card {
+  border-left: 3px solid rgba(240, 179, 33, 0.62);
+}
+
+.mob-section-note {
+  width: min(100%, 920px);
+  margin: -0.6rem auto 2rem;
+  box-sizing: border-box;
+}
+
+.mob-section-details {
+  margin: 0.8rem 0 0;
+  padding: 0.8rem 1rem 0.75rem 2rem;
+  border-top: 1px solid rgba(240, 179, 33, 0.13);
+  color: #ddd5c8;
+}
+
+.mob-section-details li {
+  margin: 0.35rem 0;
+  line-height: 1.55;
+}
+
+@media (max-width: 720px) {
+  .mob-section-page {
+    width: min(100% - 1rem, 680px);
+    padding: 1.75rem 0 3rem;
+  }
+}
