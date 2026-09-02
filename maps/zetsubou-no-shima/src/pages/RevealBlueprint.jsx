@@ -1,39 +1,46 @@
 import React from 'react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import {
+  GuideHero,
+  GuideSection,
+  GuideStepList,
+  GuideStepCard,
+  GuideCallout,
+  GuideChip,
+} from '../../../../shared/ui/GuideLayout';
 
-const RevealBlueprint = () => {
-  return (
-    <>
-      <Header />
-      <main className="guide-page">
-        <section className="guide-section">
-          <h2 className="guide-title">Step 1: Reveal the Blueprint & Elevator Machinery</h2>
+const RevealBlueprint = () => (
+  <main className="zets-detail-page">
+    <GuideHero
+      kicker="Zetsubou No Shima"
+      title="Reveal the Elevator Quest"
+      description="Use the Skull of Nan Sapwe to expose the hidden blueprint and elevator machinery before you start hunting the three cogs."
+    >
+      <GuideChip>Skull of Nan Sapwe</GuideChip>
+      <GuideChip>Mesmerize</GuideChip>
+      <GuideChip>3-cog objective</GuideChip>
+    </GuideHero>
 
-          <p>
-            After obtaining the <strong>Skull of Nan Sapwe</strong>, head to the <strong>Bunker Living Quarters</strong> near the
-            purple water pool. On the wall across from the pool, you’ll find a torn blueprint. Use the Skull’s
-            <strong> Mesmerize</strong> ability to reveal the second half of the plan.
-          </p>
+    <GuideCallout label="You are ready when" tone="info" className="zets-detail-note">
+      The concealed elevator machinery is visible and the panel shows three missing cog positions. At that point the three cog routes are your next objective.
+    </GuideCallout>
 
-          <p>
-            This unlocks the ability to expose hidden doors and walls throughout the map using the Skull’s power.
-          </p>
-
-          <h3 className="guide-subtitle">Finding the Elevator Panel</h3>
-          <p>
-            Travel to the <strong>Anti-Aircraft Platform</strong>. Just across from its entrance is a sealed elevator.
-            To the left of it is a concealed wall — use <strong>Mesmerize</strong> again to reveal a broken generator panel.
-          </p>
-
-          <p>
-            The elevator now displays its missing components — <strong>three cogs</strong>. These become your next goal.
-          </p>
-        </section>
-      </main>
-      <Footer />
-    </>
-  );
-};
+    <GuideSection kicker="Quest Trigger" title="Reveal it in two moves">
+      <GuideStepList>
+        <GuideStepCard
+          step={1}
+          label="Mesmerize"
+          title="Reveal the blueprint"
+          summary="Use the Skull of Nan Sapwe on the hidden/torn blueprint in the bunker area to expose the quest information."
+        />
+        <GuideStepCard
+          step={2}
+          label="Mesmerize"
+          title="Reveal the elevator machinery"
+          summary="Use Mesmerize again on the concealed wall/panel by the elevator so the broken machinery and three missing cog slots are exposed."
+        />
+      </GuideStepList>
+    </GuideSection>
+  </main>
+);
 
 export default RevealBlueprint;
