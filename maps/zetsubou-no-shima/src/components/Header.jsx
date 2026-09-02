@@ -8,9 +8,11 @@ const Header = () => {
   return (
     <header className="zets-header">
       <div className="zets-header-content">
-        <span className="zets-header-kicker">Pohnpei · Zombies Hub 2.0</span>
-        <h1 className="zets-header-title">Zetsubou No Shima</h1>
-        <p className="zets-header-subtitle">Seeds of Doubt</p>
+        <div className="zets-header-identity">
+          <span className="zets-header-kicker">Pohnpei</span>
+          <h1 className="zets-header-title">Zetsubou No Shima</h1>
+          <p className="zets-header-subtitle">Seeds of Doubt</p>
+        </div>
 
         <button
           type="button"
