@@ -1,76 +1,80 @@
-import React, { useState } from 'react';
-import '../styles/EggLocations.css';
+import React, { useRef, useState } from 'react';
+import GuideVideoPlayer from '../components/GuideVideoPlayer';
 import eggData from '../data/eggData';
+import '../styles/EggLocations.css';
 
 const EggLocations = () => {
-  const [videoTimes, setVideoTimes] = useState({ start: 380, end: 540 });
-  const [autoplay, setAutoplay] = useState(false);
-  const [currentCard, setCurrentCard] = useState(null);
+  const videoRef = useRef(null);
+  const [currentCard, setCurrentCard] = useState(eggData[0]);
+  const [selectedLocation, setSelectedLocation] = useState(null);
 
-  const handlePlaySection = (start, end) => {
-    setVideoTimes({ start, end });
-    setAutoplay(true);
+  const playSegment = (start, end) => {
+    videoRef.current?.playSegment(start, end);
   };
 
   const handleSelectCard = (section) => {
     setCurrentCard(section);
-    handlePlaySection(section.sectionStart, section.sectionEnd);
+    setSelectedLocation(null);
+    playSegment(section.sectionStart, section.sectionEnd);
+  };
+
+  const handleLocation = (location) => {
+    setSelectedLocation(location.name);
+    playSegment(location.start, location.end);
   };
 
   return (
     <div className="rev-page">
       <div className="rev-background" />
       <div className="sk-container">
-        <h1 className="sk-title" onClick={() => handlePlaySection(380, 400)}>
-          Egg Locations
-        </h1>
-
-        <div className="rev-glow-box">
-          <div className="video-card">
-            <iframe
-              width="100%"
-              height="400"
-              src={`https://www.youtube.com/embed/tt3mpH7Rrfo?start=${videoTimes.start}&end=${videoTimes.end}&autoplay=${autoplay ? 1 : 0}&rel=0`}
-              title="Egg Locations"
-              frameBorder="0"
-              allowFullScreen
-            />
-            <div className="video-caption">(Click a section or location to play)</div>
-          </div>
-
-          {currentCard && (
-            <>
-              <div className="sk-selected-label">{currentCard.section}</div>
-              <div className="sk-buttons">
-                {currentCard.locations.map((loc, i) => (
-                  <button
-                    key={i}
-                    className="sk-button"
-                    onClick={() => handlePlaySection(loc.start, loc.end)}
-                  >
-                    {loc.name}
-                  </button>
-                ))}
-              </div>
-            </>
-          )}
+        <div className="rev-page-heading">
+          <span className="rev-page-kicker">Location Reference</span>
+          <h1 className="sk-title">Egg Locations</h1>
+          <p className="rev-page-intro">
+            Choose a map area first, then jump straight to the exact spawn location you need.
+          </p>
         </div>
 
-        {/* Below box: all selectable section cards */}
-        <div className="egg-section-cards">
-          {eggData.map((section, index) => (
-            section !== currentCard && (
-              <div
-                key={index}
-                className="egg-glass-card clickable"
-                onClick={() => handleSelectCard(section)}
+        <div className="rev-glow-box">
+          <GuideVideoPlayer
+            ref={videoRef}
+            title="Revelations egg locations"
+            caption="Select an area or exact location below to jump to that short clip."
+          />
+
+          <div className="sk-selected-label">
+            <span className="rev-selected-prefix">Area:</span> {currentCard.section}
+            {selectedLocation && (
+              <span className="rev-selected-location"> · {selectedLocation}</span>
+            )}
+          </div>
+
+          <div className="sk-buttons" aria-label={`${currentCard.section} egg locations`}>
+            {currentCard.locations.map((loc) => (
+              <button
+                key={loc.name}
+                type="button"
+                className={`sk-button ${selectedLocation === loc.name ? 'active' : ''}`}
+                onClick={() => handleLocation(loc)}
               >
-                <h2 className="egg-subtitle">{section.section}</h2>
-                {section.locations.map((loc, idx) => (
-                  <p key={idx} className="egg-text">- {loc.name}</p>
-                ))}
-              </div>
-            )
+                {loc.name}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="egg-section-cards" aria-label="Revelations map areas">
+          {eggData.map((section) => (
+            <button
+              type="button"
+              key={section.section}
+              className={`egg-glass-card clickable ${section.section === currentCard.section ? 'active' : ''}`}
+              onClick={() => handleSelectCard(section)}
+            >
+              <span className="egg-card-kicker">Map Area</span>
+              <span className="egg-subtitle">{section.section}</span>
+              <span className="egg-card-count">{section.locations.length} possible locations</span>
+            </button>
           ))}
         </div>
       </div>
