@@ -1,130 +1,123 @@
-:root {
+.revelations-module {
   --text-primary: #e0d7ff;
   --text-secondary: #bbb0d9;
   --accent-hover: rgba(157, 117, 203, 0.2);
   --text-glow: #b783ff;
   --background-primary: #0c0c1b;
   --background-secondary: #181830;
-}
 
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Poppins', sans-serif;
-  background: linear-gradient(135deg, var(--background-primary), var(--background-secondary));
-  color: var(--text-primary);
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
-}
-
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
-ul {
-  list-style: none;
-  padding: 0;
-}
-
-.app {
+  position: relative;
+  min-height: calc(100vh - var(--hub-nav-height));
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  color: var(--text-primary);
+  font-family: 'Poppins', 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, var(--background-primary), var(--background-secondary));
+  overflow-x: hidden;
+  isolation: isolate;
 }
 
-/* === Shared Revelations Page Wrapper === */
-.rev-page {
+.revelations-module,
+.revelations-module *,
+.revelations-module *::before,
+.revelations-module *::after {
+  box-sizing: border-box;
+}
+
+.revelations-module h1,
+.revelations-module h2,
+.revelations-module h3,
+.revelations-module h4,
+.revelations-module h5,
+.revelations-module h6 {
+  font-family: 'Poppins', 'Segoe UI', sans-serif;
+}
+
+.revelations-module a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.revelations-module .rev-page {
   position: relative;
-  padding: 5rem 2rem;
-  min-height: 100vh;
+  z-index: 1;
   width: 100%;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-sizing: border-box;
-  z-index: 1;
+  padding: 5rem 2rem;
 }
 
-/* === Blurred, Glowing, Darkened Background === */
-.rev-background {
+.revelations-module .rev-background {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: url('../src/assets/rev-guide/Main/Revelations.webp') no-repeat center center/cover;
+  inset: 0;
+  background: url('./assets/rev-guide/Main/Revelations.webp') center / cover no-repeat;
   filter: blur(12px) brightness(0.5);
+  transform: scale(1.025);
   z-index: 0;
-  border: 20px solid rgba(109, 194, 255, 0.2);
-  box-shadow: 0 0 60px rgba(109, 194, 255, 0.5) inset;
+  border: 20px solid rgba(109, 194, 255, 0.12);
+  box-shadow: 0 0 60px rgba(109, 194, 255, 0.32) inset;
+  pointer-events: none;
 }
 
-/* === Standard Card Layout === */
-.rev-card {
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(14px);
-  border: 2px solid rgba(109, 194, 255, 0.4);
-  box-shadow: 0 0 30px rgba(109, 194, 255, 0.3);
-  border-radius: 20px;
-  padding: 2.5rem;
-  max-width: 1200px;
-  width: 100%;
-  margin-bottom: 2.5rem;
+.revelations-module .rev-card {
   position: relative;
   z-index: 2;
-  transition: all 0.3s ease;
+  width: min(100%, 1200px);
+  margin-bottom: 2.5rem;
+  padding: 2.5rem;
+  color: var(--text-primary);
+  border: 2px solid rgba(109, 194, 255, 0.4);
+  border-radius: 20px;
+  background: rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 30px rgba(109, 194, 255, 0.3);
+  backdrop-filter: blur(14px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.rev-card:hover {
-  transform: translateY(-5px) scale(1.01);
-  box-shadow: 0 0 40px rgba(109, 194, 255, 0.6);
+.revelations-module .rev-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 40px rgba(109, 194, 255, 0.5);
 }
 
-.rev-title {
-  font-size: 2.5rem;
-  font-weight: 800;
-  color: #cce6ff;
-  text-align: center;
-  margin-bottom: 1.5rem;
-  text-shadow: 0 0 12px var(--text-glow);
+.revelations-module .rev-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.rev-list li {
-  font-size: 1.25rem;
-  line-height: 1.8;
-  color: #d0e7ff;
+.revelations-module .rev-list li {
   margin-bottom: 1rem;
+  color: #d0e7ff;
+  font-size: 1.1rem;
+  line-height: 1.75;
   text-shadow: 0 0 4px #000;
 }
 
-.rev-content,
-.rev-columns {
+.revelations-module .rev-content,
+.revelations-module .rev-columns {
+  position: relative;
+  z-index: 2;
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
-  gap: 2rem;
   justify-content: center;
-  width: 100%;
-  z-index: 2;
+  gap: 2rem;
 }
 
-.rev-intro {
+.revelations-module .rev-intro {
+  position: relative;
+  z-index: 2;
   max-width: 900px;
   margin-bottom: 3rem;
-  z-index: 2;
-  text-align: center;
-  font-size: 1.25rem;
-  line-height: 1.8;
   color: var(--text-secondary);
+  font-size: 1.1rem;
+  line-height: 1.75;
+  text-align: center;
 }
 
-/* === Unified guide-page heading === */
-.rev-page-heading {
+.revelations-module .rev-page-heading {
   position: relative;
   z-index: 2;
   width: min(100%, 920px);
@@ -132,7 +125,7 @@ ul {
   text-align: center;
 }
 
-.rev-page-kicker {
+.revelations-module .rev-page-kicker {
   display: inline-block;
   margin-bottom: 0.55rem;
   color: #6dc2ff;
@@ -143,11 +136,11 @@ ul {
   text-shadow: 0 0 12px rgba(0, 191, 255, 0.7);
 }
 
-.rev-page-heading .sk-title {
+.revelations-module .rev-page-heading .sk-title {
   margin-bottom: 0.65rem;
 }
 
-.rev-page-intro {
+.revelations-module .rev-page-intro {
   max-width: 760px;
   margin: 0 auto;
   color: #c9d9ea;
@@ -156,32 +149,32 @@ ul {
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
 }
 
-/* === Universal Video Card Styling === */
-.video-card {
+.revelations-module .video-card {
+  position: relative;
+  z-index: 2;
   width: 100%;
   max-width: 960px;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 0 30px rgba(0, 255, 255, 0.7);
-  border: 4px solid rgba(109, 194, 255, 0.7);
   margin-bottom: 1rem;
-  z-index: 2;
+  overflow: hidden;
+  border: 2px solid rgba(109, 194, 255, 0.62);
+  border-radius: 16px;
+  box-shadow: 0 0 30px rgba(0, 208, 255, 0.36);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-.video-card:hover {
-  box-shadow: 0 0 42px rgba(109, 194, 255, 0.95);
+.revelations-module .video-card:hover {
   transform: translateY(-2px);
+  box-shadow: 0 0 38px rgba(109, 194, 255, 0.58);
 }
 
-.rev-video-player > div:first-child,
-.rev-video-player .sk-video,
-.rev-video-player__iframe {
+.revelations-module .rev-video-player > div:first-child,
+.revelations-module .rev-video-player .sk-video,
+.revelations-module .rev-video-player__iframe {
   display: block;
   width: 100% !important;
 }
 
-.rev-video-player__iframe {
+.revelations-module .rev-video-player__iframe {
   aspect-ratio: 16 / 9;
   height: auto !important;
   min-height: 280px;
@@ -189,87 +182,88 @@ ul {
   background: #000;
 }
 
-.video-caption {
+.revelations-module .video-caption {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  max-width: 960px;
+  padding: 0.7rem 1rem;
   color: #aad4ff;
   font-size: 0.92rem;
   line-height: 1.45;
-  text-shadow: 1px 1px 2px #000;
   text-align: center;
-  padding: 0.7rem 1rem;
-  width: 100%;
-  max-width: 960px;
-  z-index: 2;
-  display: block;
+  text-shadow: 1px 1px 2px #000;
   background: rgba(4, 12, 24, 0.86);
-  box-sizing: border-box;
 }
 
-.sk-selected-label {
-  font-size: 1.25rem;
-  font-weight: 700;
+.revelations-module .sk-selected-label {
+  position: relative;
+  z-index: 2;
   margin: 1.15rem 0 0.9rem;
   color: #d9efff;
+  font-size: 1.15rem;
+  font-weight: 700;
   text-shadow: 0 0 12px #00bfff;
-  z-index: 2;
 }
 
-.rev-selected-prefix {
+.revelations-module .rev-selected-prefix {
   color: #6dc2ff;
   font-size: 0.8em;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
-.rev-selected-location {
+.revelations-module .rev-selected-location {
   color: #aee8ff;
   font-weight: 500;
 }
 
-.sk-buttons {
+.revelations-module .sk-buttons {
+  position: relative;
+  z-index: 2;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 0.75rem;
   padding-top: 0.5rem;
-  z-index: 2;
 }
 
-.sk-button {
+.revelations-module .sk-button {
   min-height: 44px;
 }
 
-/* Egg-location area cards now use the same interaction language as the timestamp controls. */
-.egg-section-cards {
+.revelations-module .egg-section-cards {
   display: grid !important;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem !important;
   width: min(100%, 1000px) !important;
 }
 
-.egg-glass-card {
+.revelations-module .egg-glass-card {
   appearance: none;
-  text-align: left;
-  font: inherit;
-  color: inherit;
-  cursor: pointer;
+  min-height: 130px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 0.35rem;
-  min-height: 130px;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
 }
 
-.egg-glass-card.active {
+.revelations-module .egg-glass-card.active {
   border-color: rgba(109, 194, 255, 0.9);
   box-shadow: 0 0 34px rgba(0, 195, 255, 0.34), inset 0 0 28px rgba(0, 195, 255, 0.08);
 }
 
-.egg-card-kicker,
-.egg-card-count {
+.revelations-module .egg-card-kicker,
+.revelations-module .egg-card-count {
   display: block;
 }
 
-.egg-card-kicker {
+.revelations-module .egg-card-kicker {
   color: #6dc2ff;
   font-size: 0.72rem;
   font-weight: 800;
@@ -277,39 +271,39 @@ ul {
   text-transform: uppercase;
 }
 
-.egg-glass-card .egg-subtitle {
+.revelations-module .egg-glass-card .egg-subtitle {
   display: block;
   margin: 0;
-  text-align: left;
   font-size: 1.25rem;
+  text-align: left;
 }
 
-.egg-card-count {
+.revelations-module .egg-card-count {
   color: #a9bfd3;
   font-size: 0.88rem;
 }
 
-.card-buttons button {
+.revelations-module .card-buttons button {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
 }
 
-.card-buttons button small {
+.revelations-module .card-buttons button small {
   color: #7ddcff;
   font-size: 0.72rem;
   opacity: 0.88;
   white-space: nowrap;
 }
 
-.spinner-controls {
+.revelations-module .spinner-controls {
   position: relative;
   z-index: 2;
   align-items: center;
 }
 
-.spinner-controls > span {
+.revelations-module .spinner-controls > span {
   min-width: 58px;
   color: #9fdfff;
   font-size: 0.85rem;
@@ -318,55 +312,55 @@ ul {
 }
 
 @media (max-width: 900px) {
-  .rev-content,
-  .rev-columns {
+  .revelations-module .rev-content,
+  .revelations-module .rev-columns {
     flex-direction: column;
     align-items: center;
   }
 
-  .rev-page {
+  .revelations-module .rev-page {
     padding: 3.5rem 1rem;
   }
 
-  .egg-section-cards {
+  .revelations-module .egg-section-cards {
     grid-template-columns: 1fr;
   }
 }
 
 @media (max-width: 640px) {
-  .rev-page {
+  .revelations-module .rev-page {
     padding: 2.5rem 0.75rem;
   }
 
-  .rev-page-heading .sk-title {
+  .revelations-module .rev-page-heading .sk-title {
     font-size: clamp(2rem, 10vw, 2.6rem);
   }
 
-  .rev-glow-box {
+  .revelations-module .rev-glow-box {
     padding: 1rem !important;
   }
 
-  .rev-video-player__iframe {
+  .revelations-module .rev-video-player__iframe {
     min-height: 210px;
   }
 
-  .sk-buttons {
+  .revelations-module .sk-buttons {
     display: grid;
     grid-template-columns: 1fr;
     width: 100%;
   }
 
-  .sk-button {
+  .revelations-module .sk-button {
     width: 100%;
   }
 
-  .sound-card.left,
-  .sound-card.right {
+  .revelations-module .sound-card.left,
+  .revelations-module .sound-card.right {
     opacity: 0;
     pointer-events: none;
   }
 
-  .sound-card.center {
+  .revelations-module .sound-card.center {
     width: min(82vw, 330px);
   }
 }
