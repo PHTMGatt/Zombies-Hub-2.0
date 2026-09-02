@@ -1,113 +1,231 @@
-/* ValveSolver.css */
+.gorod-valve-page {
+  --guide-accent: #ff704d;
+  --guide-accent-soft: rgba(183, 47, 21, 0.18);
+  --guide-panel: rgba(13, 8, 7, 0.8);
+  --guide-panel-strong: rgba(10, 6, 5, 0.95);
+  --guide-border: rgba(255, 112, 77, 0.2);
+  --guide-text: #fff4ee;
+  --guide-muted: #d5bbb1;
 
-.valve-solver-page {
-  padding: 2rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: min(100% - 2rem, 1120px);
+  margin: 0 auto;
+  padding: 3rem 0 5rem;
 }
 
-/* Glass card with matching global style */
-.glass-card.valve-solver-card {
-  max-width: 900px;
+.gorod-valve-page .zh-guide-hero {
+  background:
+    linear-gradient(135deg, rgba(161, 40, 18, 0.25), transparent 44%),
+    rgba(11, 7, 6, 0.84);
+}
+
+.gorod-valve-note {
+  width: min(100%, 940px);
+  margin: -0.6rem auto 2rem;
+  box-sizing: border-box;
+}
+
+.gorod-valve-workspace {
+  padding: 1rem;
+  border: 1px solid rgba(255, 112, 77, 0.17);
+  border-radius: 18px;
+  background:
+    linear-gradient(135deg, rgba(148, 37, 16, 0.12), transparent 45%),
+    rgba(8, 6, 5, 0.84);
+  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.34);
+}
+
+.gorod-valve-map-wrap {
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.gorod-valve-map {
+  display: block;
   width: 100%;
-  padding: 2rem;
-  background: rgba(0, 0, 0, 0.45);
-  border-radius: 1rem;
-  border: 1px solid rgba(255, 100, 50, 0.15);
-  backdrop-filter: blur(12px);
-  box-shadow: 0 0 40px rgba(255, 100, 50, 0.15);
-  text-align: center;
+  max-height: 520px;
+  object-fit: contain;
 }
 
-/* Title + Intro */
-.section-title {
-  font-size: 2rem;
-  text-align: center;
-  color: #ff5631;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-  text-shadow: 0 0 8px rgba(255, 86, 49, 0.6);
-}
-
-.section-intro {
-  text-align: center;
-  font-size: 0.95rem;
-  color: #ccc;
-  margin-bottom: 1.5rem;
-  text-shadow: 0 0 3px rgba(255, 255, 255, 0.08);
-}
-
-/* Map */
-.valve-map {
-  width: 100%;
-  border-radius: 10px;
-  margin: 1rem 0 2rem;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-}
-
-/* Dropdowns and Button */
-.valve-selectors {
+.gorod-valve-controls {
   display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  justify-content: center;
-  margin-bottom: 2rem;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.8rem;
+  margin-top: 1rem;
 }
 
-.valve-selectors label {
-  color: #fff;
-  font-weight: 600;
+.gorod-valve-fields {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.gorod-valve-fields label {
   display: flex;
   flex-direction: column;
+  gap: 0.4rem;
+  color: #dfc5bb;
+  font-size: 0.8rem;
+  font-weight: 750;
+}
+
+.gorod-valve-fields select {
+  min-height: 46px;
+  width: 100%;
+  padding: 0.55rem 0.7rem;
+  color: #fff5f0;
+  font: inherit;
   font-size: 0.9rem;
-}
-
-.valve-selectors select {
-  padding: 0.5rem;
-  border-radius: 6px;
-  border: none;
-  margin-top: 0.3rem;
-  background: #111;
-  color: #ffb896;
-  font-weight: bold;
-  outline: 2px solid #ff5631;
-}
-
-.valve-selectors button {
-  padding: 0.6rem 1.2rem;
-  background: #ff5631;
-  color: white;
-  font-weight: bold;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-  margin-top: auto;
-}
-
-.valve-selectors button:hover {
-  background: #ff7752;
-  transform: scale(1.05);
-}
-
-/* Result Box */
-.valve-solution {
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 112, 77, 0.24);
   border-radius: 10px;
-  padding: 1.2rem;
-  color: #ddd;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: inset 0 0 12px rgba(255, 86, 49, 0.1);
+  outline: none;
+  background: rgba(8, 7, 7, 0.94);
 }
 
-.valve-solution p {
-  margin: 0.3rem 0;
-  font-size: 1rem;
-  font-weight: 500;
+.gorod-valve-fields select:focus {
+  border-color: rgba(255, 133, 98, 0.65);
+  box-shadow: 0 0 0 3px rgba(255, 112, 77, 0.1);
 }
 
-.valve-solution strong {
-  color: #ffb896;
+.gorod-valve-reset {
+  min-height: 46px;
+  padding: 0.55rem 0.95rem;
+  color: #e4c6bb;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 750;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 10px;
+  background: rgba(25, 14, 11, 0.72);
+  cursor: pointer;
+}
+
+.gorod-valve-reset:hover {
+  color: #fff;
+  border-color: rgba(255, 112, 77, 0.3);
+}
+
+.gorod-valve-empty,
+.gorod-valve-solution {
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid rgba(255, 112, 77, 0.14);
+  border-radius: 14px;
+  background: rgba(5, 5, 5, 0.54);
+}
+
+.gorod-valve-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  color: #bea79e;
+  text-align: center;
+}
+
+.gorod-valve-empty strong {
+  color: #f4ded5;
+}
+
+.gorod-valve-empty.is-error {
+  border-color: rgba(255, 173, 75, 0.23);
+}
+
+.gorod-valve-solution__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.8rem;
+  color: #be9c90;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.gorod-valve-solution__header strong {
+  color: #ffae8b;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.gorod-valve-setting-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.55rem;
+}
+
+.gorod-valve-setting {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.55rem;
+  min-height: 54px;
+  padding: 0.55rem 0.65rem;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 10px;
+  background: rgba(13, 8, 7, 0.8);
+}
+
+.gorod-valve-setting__number {
+  width: 26px;
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #1c0904;
+  font-size: 0.72rem;
+  font-weight: 900;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #ffb28d, #ff6742);
+}
+
+.gorod-valve-setting__location {
+  color: #dbc6bd;
+  font-size: 0.82rem;
+}
+
+.gorod-valve-setting strong {
+  min-width: 28px;
+  color: #ffb28d;
+  font-size: 1.05rem;
+  text-align: center;
+}
+
+.gorod-valve-message {
+  margin: 0;
+  color: #ead9d2;
+  text-align: center;
+}
+
+@media (max-width: 760px) {
+  .gorod-valve-page {
+    width: min(100% - 1rem, 720px);
+    padding: 1.75rem 0 3rem;
+  }
+
+  .gorod-valve-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .gorod-valve-setting-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .gorod-valve-fields,
+  .gorod-valve-setting-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .gorod-valve-solution__header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
