@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   GuideHero,
   GuideSection,
@@ -11,9 +11,35 @@ import soeGuide from '../data/soeGuide';
 import soeLayout from '../../../../apps/hub/src/assets/images/BO3/Shadows_Of_Evil.webp';
 import '../styles/Shadows.css';
 
-function MainGuide() {
-  const [openStep, setOpenStep] = useState(0);
+const phases = [
+  {
+    title: 'Rituals + Apothicon Sword',
+    summary: 'Complete all four district rituals, record the three train symbols, unlock the sword egg, charge it at all four statues, and collect the Apothicon Sword.',
+    notes: [...soeGuide[0].notes, ...soeGuide[1].notes],
+  },
+  {
+    title: 'Open Pack-a-Punch + Upgrade the Sword',
+    summary: 'Use the four Gateworms to open Pack-a-Punch, then complete the Arch-Ovum Margwa challenges and claim the upgraded sword.',
+    notes: [...soeGuide[2].notes, ...soeGuide[3].notes],
+  },
+  {
+    title: 'Complete the Flag Step',
+    summary: soeGuide[4].summary,
+    notes: soeGuide[4].notes,
+  },
+  {
+    title: 'Defeat the Shadowman',
+    summary: soeGuide[5].summary,
+    notes: soeGuide[5].notes,
+  },
+  {
+    title: 'Four-Player Train Finale',
+    summary: soeGuide[6].summary,
+    notes: soeGuide[6].notes,
+  },
+];
 
+function MainGuide() {
   return (
     <main className="soe-page">
       <div className="soe-page__background" aria-hidden="true" />
@@ -21,68 +47,41 @@ function MainGuide() {
         <GuideHero
           kicker="Shadows of Evil"
           title="Main Easter Egg Guide"
-          description="The full Morg City quest in actual run order: rituals, sword, Pack-a-Punch, sword upgrade, flags, Shadowman, and the four-player train finale."
+          description="Five phases from rituals to the final train sequence. Open the quick notes only when you reach that phase."
         >
-          <GuideChip>Black Ops III</GuideChip>
           <GuideChip>Solo through Shadowman</GuideChip>
           <GuideChip>4 players for full ending</GuideChip>
-          <GuideChip>Transcript verified</GuideChip>
         </GuideHero>
 
         <GuideCallout label="Player requirement" tone="info" className="soe-player-note">
-          You can play the quest solo through the Shadowman boss fight. The final train / Keeper sequence, ending cutscene, and Summoning Key achievement require a four-player game.
+          Solo can reach and defeat the Shadowman. The final train/Keeper sequence and ending require four players.
         </GuideCallout>
 
-        <GuideSection
-          kicker="Run Order"
-          title="What do I do next?"
-          description="Tap a step to expand the quick notes. The first line stays short enough to scan while you are actually playing."
-        >
+        <GuideSection kicker="Main Run" title="Five phases">
           <GuideStepList>
-            {soeGuide.map((step, index) => {
-              const isOpen = openStep === index;
-              return (
-                <button
-                  type="button"
-                  key={step.title}
-                  className={`soe-step ${isOpen ? 'is-open' : ''}`}
-                  onClick={() => setOpenStep(isOpen ? -1 : index)}
-                  aria-expanded={isOpen}
-                >
-                  <GuideStepCard
-                    step={index + 1}
-                    label="Main Quest"
-                    title={step.title}
-                    summary={step.summary}
-                  >
-                    {isOpen && (
-                      <ul className="soe-step__notes">
-                        {step.notes.map((note) => <li key={note}>{note}</li>)}
-                      </ul>
-                    )}
-                  </GuideStepCard>
-                </button>
-              );
-            })}
+            {phases.map((phase, index) => (
+              <GuideStepCard
+                key={phase.title}
+                step={index + 1}
+                label="Main Quest"
+                title={phase.title}
+                summary={phase.summary}
+              >
+                <details className="soe-phase-notes">
+                  <summary>Quick notes</summary>
+                  <ul>
+                    {phase.notes.map((note) => <li key={note}>{note}</li>)}
+                  </ul>
+                </details>
+              </GuideStepCard>
+            ))}
           </GuideStepList>
         </GuideSection>
 
-        <GuideSection
-          kicker="Map Reference"
-          title="Morg City Layout"
-          description="Keep the map visible when the guide calls out a district, ritual room, tram station, or rift entrance."
-          className="soe-layout-section"
-        >
-          <button
-            type="button"
-            className="soe-layout-card"
-            onClick={(event) => event.currentTarget.classList.toggle('is-zoomed')}
-            title="Click to enlarge map"
-          >
-            <img src={soeLayout} alt="Shadows of Evil map layout" />
-            <span>Click to enlarge / collapse</span>
-          </button>
-        </GuideSection>
+        <details className="soe-map-reference">
+          <summary>Open Morg City map reference</summary>
+          <img src={soeLayout} alt="Shadows of Evil map layout" />
+        </details>
       </div>
     </main>
   );
