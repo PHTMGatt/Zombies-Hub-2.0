@@ -196,7 +196,7 @@ const mapData = [
     game: "Black Ops 2",
     dlc: "DLC 2 – Uprising",
     isEasterEgg: true,
-    renderLink: 'https://motd-guide.onrender.com',
+    internalRoute: '/maps/mob-of-the-dead',
     coverImage: motdCover,
     layoutImage: getLayout("mob of the dead"),
     hoverImage: dlcArt["uprising"]
@@ -217,7 +217,7 @@ const mapData = [
     game: "Black Ops 2",
     dlc: "DLC 4 – Apocalypse",
     isEasterEgg: true,
-    renderLink: 'https://origins-wtyd.onrender.com',
+    internalRoute: '/maps/origins',
     coverImage: getCover("origins"),
     layoutImage: getLayout("origins"),
     hoverImage: dlcArt["apocalypse"]
@@ -261,7 +261,7 @@ const mapData = [
     game: "Black Ops 3",
     dlc: "DLC 1 – Awakening",
     isEasterEgg: true,
-    renderLink: 'https://der-eisendrache-guide.onrender.com',
+    internalRoute: '/maps/der-eisendrache',
     coverImage: getCover("der eisendrache"),
     layoutImage: getLayout("der eisendrache"),
     hoverImage: dlcArt["awakening"]
@@ -272,7 +272,7 @@ const mapData = [
     game: "Black Ops 3",
     dlc: "DLC 2 – Eclipse",
     isEasterEgg: true,
-    renderLink: 'https://zetsubou-guide.onrender.com',
+    internalRoute: '/maps/zetsubou-no-shima',
     coverImage: getCover("zetsubou no shima"),
     layoutImage: getLayout("zetsubou no shima"),
     hoverImage: dlcArt["eclipse"]
@@ -283,7 +283,7 @@ const mapData = [
     game: "Black Ops 3",
     dlc: "DLC 3 – Descent",
     isEasterEgg: true,
-    renderLink: 'https://gorod-krovi-guide.onrender.com',
+    internalRoute: '/maps/gorod-krovi',
     coverImage: getCover("gorod krovi"),
     layoutImage: getLayout("gorod krovi"),
     hoverImage: dlcArt["descent"]
@@ -294,7 +294,7 @@ const mapData = [
     game: "Black Ops 3",
     dlc: "DLC 4 – Salvation",
     isEasterEgg: true,
-    renderLink: 'https://revelations-guide.onrender.com',
+    internalRoute: '/maps/revelations',
     coverImage: getCover("revelations"),
     layoutImage: getLayout("revelations"),
     hoverImage: dlcArt["salvation"]
@@ -345,7 +345,7 @@ const mapData = [
     game: "Black Ops 3",
     dlc: "Zombies Chronicles",
     isEasterEgg: true,
-    renderLink: 'https://origins-wtyd.onrender.com',
+    internalRoute: '/maps/origins',
     coverImage: getCover("origins"),
     layoutImage: getLayout("origins"),
     hoverImage: dlcArt["zombie chronicles"]
