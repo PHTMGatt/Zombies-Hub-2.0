@@ -8,8 +8,6 @@ const Footer = () => (
       <strong>Gorod Krovi</strong>
       <span aria-hidden="true">•</span>
       <span>Love and War</span>
-      <span aria-hidden="true">•</span>
-      <span>Stalingrad</span>
     </div>
   </footer>
 );
