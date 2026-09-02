@@ -9,6 +9,7 @@ import {
   GuideChip,
 } from '../../../../shared/ui/GuideLayout';
 import '../styles/Guide.css';
+import '../styles/MainGuideCompact.css';
 
 const BASE = '/maps/zetsubou-no-shima';
 
