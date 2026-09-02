@@ -8,9 +8,9 @@ export default function Footer() {
       <img className="soe-footer__image" src={soeCover} alt="" aria-hidden="true" />
       <div className="soe-footer__overlay" />
       <div className="soe-footer__content">
-        <span>Zombies Hub 2.0</span>
         <strong>Shadows of Evil</strong>
-        <span>Morg City · Main Easter Egg</span>
+        <span aria-hidden="true">•</span>
+        <span>Morg City</span>
       </div>
     </footer>
   );
