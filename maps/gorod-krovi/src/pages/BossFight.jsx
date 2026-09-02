@@ -1,25 +1,52 @@
 import React from 'react';
+import {
+  GuideHero,
+  GuideSection,
+  GuideStepList,
+  GuideStepCard,
+  GuideCallout,
+  GuideChip,
+} from '../../../../shared/ui/GuideLayout';
+import { gorodBossPhases } from '../data/gorodRun';
 import '../styles/BossFight.css';
 
 const BossFight = () => (
-  <main className="bossfight-page">
-    <section className="glass-card bossfight-card">
-      <h2 className="section-title">Step Seven: The Boss Fight</h2>
+  <main className="gorod-boss-page">
+    <GuideHero
+      kicker="Gorod Krovi"
+      title="Dragon + Nikolai Boss Fight"
+      description="A focused battle page for the final two phases of Love and War, stripped down to the actions you need once you step onto the arena grate."
+    >
+      <GuideChip>Ray Gun Mark 3 recommended</GuideChip>
+      <GuideChip>Fresh shield</GuideChip>
+      <GuideChip>In Plain Sight recommended</GuideChip>
+    </GuideHero>
 
-      <h3 className="step-title-glow">Phase 1: Dragon Encounter</h3>
-      <p className="step-text">
-        Power the core and hit the button to summon the dragon. Stay in the trenches to dodge its fire breath,
-        then lock onto each weak spot—right wing, belly, and neck—as they appear. If you need cover or fire immunity,
-        use Guard of Fafnir or Draconite Controller, and drop Monkey Bombs or Dragon Strike to clear any incoming zombies.
-      </p>
+    <GuideCallout label="Before entering" tone="info" className="gorod-boss-note">
+      The transcript’s loadout recommendation is simple: strong perks, a Pack-a-Punched Ray Gun Mark 3, a shield, and In Plain Sight. Once you enter, there is no reason to keep the rest of the quest information on screen.
+    </GuideCallout>
 
-      <h3 className="step-title-glow">Phase 2: Nikolai’s Mech</h3>
-      <p className="step-text">
-        After the dragon goes down, hustle under Nikolai’s mech to avoid its minigun and choppers.
-        Destroy its four yellow cores, then finish off the glowing center core on the torso.
-        Use debris for cover and GobbleGums like Danger Closest or Idle Eyes to keep the horde at bay while you focus fire.
-      </p>
-    </section>
+    <GuideSection
+      kicker="Final Battle"
+      title="Two phases. Keep it simple."
+      description="Use the cards in order. Phase one is about surviving dragon fire and hitting exposed weak points; phase two is about deleting Nikolai’s mech quickly."
+    >
+      <GuideStepList>
+        {gorodBossPhases.map((phase, index) => (
+          <GuideStepCard
+            key={phase.title}
+            step={index + 1}
+            label="Boss Phase"
+            title={phase.title}
+            summary={phase.summary}
+          >
+            <ul className="gorod-boss-details">
+              {phase.details.map((detail) => <li key={detail}>{detail}</li>)}
+            </ul>
+          </GuideStepCard>
+        ))}
+      </GuideStepList>
+    </GuideSection>
   </main>
 );
 
