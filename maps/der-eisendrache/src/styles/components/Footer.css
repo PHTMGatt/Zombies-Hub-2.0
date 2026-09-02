@@ -1,42 +1,85 @@
-/* 'Footer.css' */
-.footer-site {
+.de-footer {
   position: relative;
-  height: 80px;
+  min-height: 92px;
   margin-top: auto;
   overflow: hidden;
-  flex-shrink: 0;
+  border-top: 1px solid rgba(123, 207, 255, 0.14);
+  background: #030a12;
 }
 
-.footer-site__bg {
+.de-footer__art {
   position: absolute;
   inset: 0;
-  background: url('../../assets/images/DE-Header3.jpg') center/cover no-repeat;
-  filter: blur(5px) brightness(0.8);
+  background:
+    linear-gradient(90deg, rgba(2, 8, 15, 0.96), rgba(3, 10, 18, 0.72), rgba(2, 8, 15, 0.96)),
+    url('../../assets/images/DE-Header3.jpg') center 54% / cover no-repeat;
+  filter: saturate(0.75) brightness(0.58);
   transform: scale(1.02);
-  z-index: 0;
 }
 
-.footer-site__content {
+.de-footer__content {
   position: relative;
   z-index: 1;
-  height: 100%;
+  width: min(1120px, calc(100% - 2rem));
+  min-height: 92px;
+  margin: 0 auto;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  gap: 1rem;
 }
 
-.footer-site__text {
-  color: #ffffff;
-  font-size: 0.85rem;
-  margin: 0;
+.de-footer__content > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.18rem;
 }
 
-@media (max-width: 768px) {
-  .footer-site { height: 60px; }
-  .footer-site__text { font-size: 0.75rem; }
+.de-footer__content > div span {
+  color: #7bcfff;
+  font-size: 0.62rem;
+  font-weight: 850;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
 }
 
-@media (max-width: 480px) {
-  .footer-site { height: 50px; }
-  .footer-site__text { font-size: 0.7rem; }
+.de-footer__content > div strong {
+  color: #ecf7ff;
+  font-size: 0.92rem;
+}
+
+.de-footer nav {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.de-footer nav a {
+  padding: 0.45rem 0.62rem;
+  border-radius: 8px;
+  color: #aebfcd;
+  font-size: 0.72rem;
+  font-weight: 750;
+  text-decoration: none;
+}
+
+.de-footer nav a:hover {
+  color: #e9f7ff;
+  background: rgba(82, 170, 229, 0.1);
+}
+
+@media (max-width: 620px) {
+  .de-footer__content {
+    min-height: 106px;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding: 0.8rem 0;
+  }
+
+  .de-footer nav {
+    width: 100%;
+    overflow-x: auto;
+  }
 }
