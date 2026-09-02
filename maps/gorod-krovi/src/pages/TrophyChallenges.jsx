@@ -1,53 +1,93 @@
-import React from 'react';
+import React, { useState } from 'react';
+import {
+  GuideHero,
+  GuideSection,
+  GuideCallout,
+  GuideChip,
+} from '../../../../shared/ui/GuideLayout';
+import { gorodChallenges, gorodTrophies } from '../data/gorodRun';
 import '../styles/TrophyChallenges.css';
 
 const TrophyChallenges = () => {
+  const [view, setView] = useState('trophies');
+
   return (
-    <main className="rev-page">
-      <section className="glass-card trophies-card">
-        <h2 className="section-title">Trophy Challenges</h2>
-        <p className="section-intro">
-          Collect all six silver trophies to proceed with S.O.P.H.I.A.’s tasks.
-        </p>
-        <div className="trophies-list">
-          <div className="trophy-card">
-            <h3 className="trophy-title">Gersh Soul/Planet Trophy</h3>
-            <p className="trophy-description">
-              At Dragon Command entrance, face the statue and shoot its raised hand to reveal the Gersh Soul trophy on the ground.
-            </p>
+    <main className="gorod-trophies-page">
+      <GuideHero
+        kicker="Gorod Krovi"
+        title="Trophies + S.O.P.H.I.A. Challenges"
+        description="Keep the two most location-heavy parts of Love and War in one focused reference instead of burying them inside the main run."
+      >
+        <GuideChip>6 trophies</GuideChip>
+        <GuideChip>6 challenges</GuideChip>
+        <GuideChip>Randomized challenge order</GuideChip>
+      </GuideHero>
+
+      <div className="gorod-reference-toggle" role="tablist" aria-label="Gorod Krovi reference type">
+        <button
+          type="button"
+          role="tab"
+          aria-selected={view === 'trophies'}
+          className={view === 'trophies' ? 'is-active' : ''}
+          onClick={() => setView('trophies')}
+        >
+          Six Trophies
+        </button>
+        <button
+          type="button"
+          role="tab"
+          aria-selected={view === 'challenges'}
+          className={view === 'challenges' ? 'is-active' : ''}
+          onClick={() => setView('challenges')}
+        >
+          S.O.P.H.I.A. Challenges
+        </button>
+      </div>
+
+      {view === 'trophies' ? (
+        <GuideSection
+          kicker="Silver Trophies"
+          title="Collect all six"
+          description="After KRONOS, gather the full set and place the trophies into the Dragon Command challenge board."
+        >
+          <div className="gorod-trophy-grid">
+            {gorodTrophies.map((trophy, index) => (
+              <article className="gorod-reference-card" key={trophy.location}>
+                <span className="gorod-reference-number">{String(index + 1).padStart(2, '0')}</span>
+                <div>
+                  <h3>{trophy.location}</h3>
+                  <p>{trophy.method}</p>
+                </div>
+              </article>
+            ))}
           </div>
-          <div className="trophy-card">
-            <h3 className="trophy-title">Valkyrie Drone Trophy</h3>
-            <p className="trophy-description">
-              Use the Guard of Fafnir fireball attack on the exposed pipe outside Double Tap in the Tank Factory to spawn the Valkyrie Drone trophy.
-            </p>
-          </div>
-          <div className="trophy-card">
-            <h3 className="trophy-title">Mangler Trophy</h3>
-            <p className="trophy-description">
-              Activate the laser beam trap in the Supply Depot and wait for it to expire—pick up the Mangler trophy from the newly revealed safe.
-            </p>
-          </div>
-          <div className="trophy-card">
-            <h3 className="trophy-title">Group 935 Trophy</h3>
-            <p className="trophy-description">
-              In the Hatchery sewer, shoot the red light on the ceiling; later return to the Pack-a-Punch toilet to collect the Group 935 trophy.
-            </p>
-          </div>
-          <div className="trophy-card">
-            <h3 className="trophy-title">Nuke Trophy</h3>
-            <p className="trophy-description">
-              From the Supply Depot near Speed Cola, use Dragon Strike on the puddle in the corner to earn the Nuke trophy.
-            </p>
-          </div>
-          <div className="trophy-card">
-            <h3 className="trophy-title">Groph Pod Trophy</h3>
-            <p className="trophy-description">
-              In the Operations Bunker, deploy the Whelp from the Gauntlet of Siegfried, then use the 115 Punch melee attack on the safe to get the Groph Pod trophy.
-            </p>
-          </div>
-        </div>
-      </section>
+        </GuideSection>
+      ) : (
+        <>
+          <GuideCallout label="Important" tone="info" className="gorod-challenge-note">
+            The five main challenge types can appear in a different order. The motherboard lockdown is the final challenge in the walkthrough sequence.
+          </GuideCallout>
+
+          <GuideSection
+            kicker="Challenge Board"
+            title="Recognize the task, then execute"
+            description="Each card gives you the objective and the one thing most likely to make the challenge fail."
+          >
+            <div className="gorod-challenge-grid">
+              {gorodChallenges.map((challenge, index) => (
+                <article className="gorod-reference-card gorod-challenge-card" key={challenge.title}>
+                  <span className="gorod-reference-number">{String(index + 1).padStart(2, '0')}</span>
+                  <div>
+                    <h3>{challenge.title}</h3>
+                    <p>{challenge.objective}</p>
+                    <span className="gorod-reference-tip">Tip: {challenge.tip}</span>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </GuideSection>
+        </>
+      )}
     </main>
   );
 };
