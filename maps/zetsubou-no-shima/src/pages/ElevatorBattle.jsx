@@ -1,48 +1,64 @@
 import React from 'react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import BackButton from '../components/BackButton';
+import {
+  GuideHero,
+  GuideSection,
+  GuideStepList,
+  GuideStepCard,
+  GuideCallout,
+  GuideChip,
+} from '../../../../shared/ui/GuideLayout';
 
-const ElevatorBattle = () => {
-  return (
-    <>
-      <Header />
-      <main className="guide-page">
-        <BackButton />
+const ElevatorBattle = () => (
+  <main className="zets-detail-page zets-boss-page">
+    <GuideHero
+      kicker="Zetsubou No Shima"
+      title="Elevator + Giant Thrasher"
+      description="Install the three cogs, descend with a fresh Gas Mask, open the arena with the Masamune, and repeat the boss damage cycle four times."
+    >
+      <GuideChip>3 cogs</GuideChip>
+      <GuideChip>Fresh Gas Mask</GuideChip>
+      <GuideChip>Masamune</GuideChip>
+    </GuideHero>
 
-        <section className="guide-section">
-          <h2 className="guide-title">Step 3: Activate the Elevator & Fight the Giant Thrasher</h2>
+    <GuideCallout label="Before entering" tone="info" className="zets-detail-note">
+      Replace a damaged Gas Mask before the descent, bring the Masamune, and take a strong shotgun or another reliable Thrasher-killing weapon. Once you go down, play for movement and survival rather than standing still for damage.
+    </GuideCallout>
 
-          <p>
-            After collecting all three cogs, bring them to the generator room behind the elevator.
-            Hold the action button to install them and power the elevator.
-          </p>
-
-          <p>
-            <strong>Important:</strong> Every player must have a <strong>Gas Mask</strong>, or they will instantly go down when the elevator descends.
-            One player must also possess the <strong>Masamune</strong> (KT-4 upgrade).
-          </p>
-
-          <p>
-            Enter the elevator and descend to the lower chamber. Use the Masamune to clear the glowing vines and proceed into the boss area.
-          </p>
-
-          <h3 className="guide-subtitle">Boss Fight – Giant Thrasher</h3>
-          <ul className="guide-list">
-            <li>Shoot the glowing weakspot spores on its arms with the Masamune.</li>
-            <li>Spores appear one at a time and are time-gated — be patient.</li>
-            <li>Survive waves of zombies, spiders, and standard Thrashers during downtime.</li>
-            <li>Watch out for vine slam attacks down the center of the arena.</li>
+    <GuideSection kicker="Final Sequence" title="Elevator to ending">
+      <GuideStepList>
+        <GuideStepCard
+          step={1}
+          label="Elevator"
+          title="Install all three cogs"
+          summary="Return to the elevator machinery, place the three recovered cogs, and activate the descent into the lower chamber."
+        />
+        <GuideStepCard
+          step={2}
+          label="Masamune"
+          title="Clear the vines"
+          summary="After the elevator drops, use the Masamune on the glowing vine/spore growths blocking the path into the boss arena."
+        />
+        <GuideStepCard
+          step={3}
+          label="Boss Fight"
+          title="Start the Giant Thrasher encounter"
+          summary="Shoot the first active spore to start the fight, then keep rotating around the arena instead of holding one position."
+        >
+          <ul className="zets-run-details">
+            <li>Use charged Masamune shots to control the ground and keep the arena manageable.</li>
+            <li>Use a shotgun or the Skull of Nan Sapwe to delete normal Thrashers when they pressure the route.</li>
+            <li>Avoid spiders and keep moving while the next boss spore becomes available.</li>
           </ul>
-
-          <p>
-            After destroying the fourth spore, the Giant Thrasher dies, and the <strong>ending cutscene</strong> begins.
-          </p>
-        </section>
-      </main>
-      <Footer />
-    </>
-  );
-};
+        </GuideStepCard>
+        <GuideStepCard
+          step={4}
+          label="Damage Cycle"
+          title="Destroy all four boss spores"
+          summary="The boss weak-point spores become available one at a time. Repeat the same survival-and-damage cycle four times to finish Seeds of Doubt."
+        />
+      </GuideStepList>
+    </GuideSection>
+  </main>
+);
 
 export default ElevatorBattle;
