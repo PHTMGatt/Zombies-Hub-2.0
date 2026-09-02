@@ -1,14 +1,16 @@
-.ee-page-wrapper {
-  width: min(100% - 2rem, 1180px);
+.side-ee-list-page {
+  width: 100%;
+  max-width: 1240px;
   margin: 0 auto;
-  padding: 3rem 0 4rem;
+  padding: 5rem 1rem 2.5rem;
+  box-sizing: border-box;
 }
 
 .side-ee-grid {
-  width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
-  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
   margin: 0 auto;
 }
 
@@ -17,27 +19,24 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  color: #f4f7fb;
+  color: #fff;
   text-decoration: none;
+  background: rgba(20, 25, 32, 0.6);
+  backdrop-filter: blur(6px);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 14px;
-  background: rgba(12, 18, 25, 0.72);
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(8px);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  border-radius: 0.75rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .side-ee-card:hover {
-  transform: translateY(-5px);
-  border-color: rgba(109, 194, 255, 0.25);
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
+  transform: translateY(-8px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
 }
 
 .side-ee-card__header {
   position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  min-height: 150px;
+  height: 160px;
   background-size: cover;
   background-position: center;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
@@ -47,51 +46,46 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, transparent 48%, rgba(4, 8, 13, 0.48));
 }
 
 .side-ee-card__title {
-  min-height: 58px;
+  flex-grow: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0.9rem 1rem;
+  min-height: 58px;
+  padding: 1rem;
   color: #fff;
-  font-size: 1.05rem;
-  font-weight: 700;
+  font-size: 1.1rem;
+  font-weight: 600;
   line-height: 1.25;
   text-align: center;
   text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
 }
 
 @media (max-width: 640px) {
-  .ee-page-wrapper {
-    width: min(100% - 1rem, 620px);
-    padding: 1.75rem 0 3rem;
+  .side-ee-list-page {
+    padding: 2rem 0.5rem 2.5rem;
   }
 
   .side-ee-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.75rem;
+    gap: 0.8rem;
   }
 
   .side-ee-card__header {
-    min-height: 120px;
+    height: 140px;
   }
 
   .side-ee-card__title {
     min-height: 52px;
-    padding: 0.7rem 0.5rem;
-    font-size: 0.92rem;
+    padding: 0.8rem 0.5rem;
+    font-size: 1rem;
   }
 }
 
 @media (max-width: 420px) {
   .side-ee-grid {
     grid-template-columns: 1fr;
-  }
-
-  .side-ee-card__header {
-    min-height: 150px;
   }
 }
