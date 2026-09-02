@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  GuideCallout,
-  GuideChip,
-  GuideHero,
-  GuideSection,
-  GuideStepCard,
-  GuideStepList,
-} from '../../../../shared/ui/GuideLayout';
+import { GuideChip, GuideHero } from '../../../../shared/ui/GuideLayout';
 import '../styles/pages/Wisp.css';
 
 const wispLocations = [
@@ -25,101 +18,68 @@ const Wisp: React.FC = () => (
     <GuideHero
       kicker="Teleporter Puzzle"
       title="Wisp Cycles"
-      description="You do this twice during the main quest. Prime the teleporter with the base bow, then hunt four active wisps with an upgraded bow."
+      description="Prime the teleporter, find four active wisps, teleport to the past, then repeat once more later in the quest."
     >
       <GuideChip>8 possible objects</GuideChip>
       <GuideChip>4 hits per cycle</GuideChip>
-      <GuideChip>2 cycles total</GuideChip>
+      <GuideChip>2 cycles</GuideChip>
     </GuideHero>
 
-    <GuideSection kicker="Before the Hunt" title="Prime the teleporter correctly">
-      <GuideStepList>
-        <GuideStepCard
-          step={1}
-          label="Base Bow"
-          title="Shoot all six teleporter prongs"
-          summary="Use the BASE Wrath of the Ancients on the six electrical prongs above the teleporter until they glow orange/gold and the sound cue plays."
-        />
-        <GuideStepCard
-          step={2}
-          label="Upgraded Bow"
-          title="Switch bows before searching"
-          summary="The active wisp objects are shot with an upgraded elemental bow. Only one wisp is active at a time."
-        />
-        <GuideStepCard
-          step={3}
-          label="Timer"
-          title="Find four before the cycle expires"
-          summary="After every successful hit, the next wisp moves to another object. Find four total. When the fourth is hit, the teleporter turns purple."
-        />
-      </GuideStepList>
-      <GuideCallout label="Failure rule" tone="warning">
-        If the cycle times out or you break the setup, wait for the next round and prime the teleporter again. Do not keep shooting random objects hoping the puzzle is still active.
-      </GuideCallout>
-    </GuideSection>
+    <section className="de-wisp-sheet">
+      <div className="de-wisp-section">
+        <h2>How the Cycle Works</h2>
+        <ol className="de-wisp-rules">
+          <li><strong>Prime:</strong> Shoot all six teleporter prongs with the base Wrath of the Ancients until they glow orange/gold.</li>
+          <li><strong>Swap:</strong> Use an upgraded bow to shoot the active wisp object.</li>
+          <li><strong>Hunt:</strong> The wisp moves after every hit. Find four total before the timer expires.</li>
+          <li><strong>Teleport:</strong> After the fourth hit, the teleporter turns purple. Send the team through together.</li>
+        </ol>
+        <p className="de-wisp-warning">If the cycle fails, wait for the next round and prime the teleporter again.</p>
+      </div>
 
-    <GuideSection
-      kicker="Scan Route"
-      title="All 8 possible wisp objects"
-      description="Run a consistent loop instead of crisscrossing the castle. The object glows / crackles when it is the current active wisp."
-    >
-      <div className="de-wisp-grid">
-        {wispLocations.map(([area, detail], index) => (
-          <article key={area} className="de-wisp-card">
-            <span>{index + 1}</span>
-            <div>
-              <strong>{area}</strong>
-              <p>{detail}</p>
+      <div className="de-wisp-section">
+        <h2>8 Possible Wisp Objects</h2>
+        <div className="de-wisp-grid">
+          {wispLocations.map(([area, detail], index) => (
+            <div key={area} className="de-wisp-location">
+              <span>{index + 1}</span>
+              <div><strong>{area}</strong><small>{detail}</small></div>
             </div>
-          </article>
-        ))}
+          ))}
+        </div>
       </div>
-    </GuideSection>
 
-    <GuideSection kicker="First Cycle" title="What to grab in the past">
       <div className="de-wisp-trip-grid">
-        <div><strong>Blue Soul Canister</strong><span>Needed later for the Moon Pyramid Device.</span></div>
-        <div><strong>Small Fuses</strong><span>Used at the Death Ray before entering the safe code.</span></div>
-        <div><strong>3 Safe Symbols</strong><span>Memorize them top-to-bottom. They change every game.</span></div>
+        <section>
+          <h2>First Trip</h2>
+          <ul>
+            <li>Collect the blue soul canister.</li>
+            <li>Collect the small fuses.</li>
+            <li>Memorize the three safe symbols top-to-bottom.</li>
+          </ul>
+        </section>
+        <section>
+          <h2>Second Trip</h2>
+          <ul>
+            <li>Repeat the six-prong + four-wisp cycle.</li>
+            <li>Use the past-lab interaction to open the Keeper Stone case.</li>
+            <li>Collect the Keeper Stone before you are returned.</li>
+          </ul>
+        </section>
       </div>
-      <GuideCallout label="All players">
-        When the teleporter turns purple, send the whole team through together. Treat the time-travel room like a timed loot stop, not a sightseeing break.
-      </GuideCallout>
-    </GuideSection>
 
-    <GuideSection kicker="Second Cycle" title="What changes the second time">
-      <GuideStepList>
-        <GuideStepCard
-          step={1}
-          label="Repeat"
-          title="Prime six prongs and hit four wisps again"
-          summary="The object pool is the same. Complete another successful four-wisp cycle and enter the purple teleporter with the team."
-        />
-        <GuideStepCard
-          step={2}
-          label="Past Lab"
-          title="Open the Keeper Stone case"
-          summary="Use the quest computer / key-card interaction in the past laboratory to open the case, then collect the Keeper Stone / tablet before you are returned."
-        />
-        <GuideStepCard
-          step={3}
-          label="Next"
-          title="Move straight into the Keeper ritual"
-          summary="Back in the present, the Vril Generator and Keeper Stone feed directly into the ghost Keeper sequence on the Main Quest page."
-        />
-      </GuideStepList>
-    </GuideSection>
-
-    <GuideSection kicker="Video Reference" title="Wisp section in context">
-      <div className="de-wisp-video">
-        <iframe
-          src="https://www.youtube.com/embed/NhDv6R5YPEs?start=121&rel=0&modestbranding=1"
-          title="Der Eisendrache wisp step reference"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        />
-      </div>
-    </GuideSection>
+      <details className="de-wisp-video-reference">
+        <summary>Open video reference</summary>
+        <div className="de-wisp-video">
+          <iframe
+            src="https://www.youtube.com/embed/NhDv6R5YPEs?start=121&rel=0&modestbranding=1"
+            title="Der Eisendrache wisp step reference"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
+        </div>
+      </details>
+    </section>
   </main>
 );
 
