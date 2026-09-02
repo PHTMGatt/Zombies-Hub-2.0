@@ -3,11 +3,9 @@ import {
   GuideCallout,
   GuideChip,
   GuideHero,
-  GuideSection,
-  GuideStepCard,
-  GuideStepList,
 } from '../../../../shared/ui/GuideLayout';
 import '../styles/pages/Bows.css';
+import '../styles/pages/BowGuideCompact.css';
 
 type BowStep = {
   title: string;
@@ -44,7 +42,6 @@ const BowGuide: React.FC<BowGuideProps> = ({ guide }) => {
   return (
     <article className={`de-bow-guide de-bow-guide--${guide.accent}`}>
       <GuideHero kicker={guide.kicker} title={guide.shortName} description={guide.intro}>
-        <GuideChip>{guide.name}</GuideChip>
         <GuideChip>{guide.difficulty}</GuideChip>
         <GuideChip>Start: {guide.start}</GuideChip>
       </GuideHero>
@@ -55,39 +52,36 @@ const BowGuide: React.FC<BowGuideProps> = ({ guide }) => {
         </GuideCallout>
       )}
 
-      <GuideSection
-        kicker="Upgrade Route"
-        title={`${guide.shortName} — Step by Step`}
-        description="Built for a live run: read the objective, finish it in game, then move straight to the next card."
-      >
-        <GuideStepList>
-          {guide.steps.map((step, index) => (
-            <GuideStepCard
-              key={`${guide.id}-${step.title}`}
-              step={index + 1}
-              label={index === guide.steps.length - 1 ? 'Finish' : `Step ${index + 1}`}
-              title={step.title}
-              summary={step.detail}
-            />
-          ))}
-        </GuideStepList>
-      </GuideSection>
-
-      <GuideSection kicker="Run Notes" title="What usually saves the attempt">
-        <div className="de-bow-tips">
-          {guide.tips.map((tip) => (
-            <GuideCallout key={tip} label="Tip">
-              {tip}
-            </GuideCallout>
-          ))}
+      <section className="de-bow-sheet">
+        <div className="de-bow-sheet__heading">
+          <span>Upgrade Route</span>
+          <h2>{guide.shortName}</h2>
         </div>
-      </GuideSection>
 
-      <GuideSection
-        kicker="Video Reference"
-        title="Need to see the shot?"
-        description="The written route is the primary guide. Use the video only when a location, symbol, or angle is easier to recognize visually."
-      >
+        <ol className="de-bow-steps">
+          {guide.steps.map((step, index) => (
+            <li key={`${guide.id}-${step.title}`}>
+              <span className="de-bow-step-number">{index + 1}</span>
+              <div>
+                <h3>{step.title}</h3>
+                <p>{step.detail}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      {guide.tips.length > 0 && (
+        <section className="de-bow-notes">
+          <h2>Quick Notes</h2>
+          <ul>
+            {guide.tips.map((tip) => <li key={tip}>{tip}</li>)}
+          </ul>
+        </section>
+      )}
+
+      <details className="de-bow-video-reference">
+        <summary>Need to see the shot? Open video reference</summary>
         <div className="de-bow-video">
           <iframe
             src={embedUrl}
@@ -102,7 +96,7 @@ const BowGuide: React.FC<BowGuideProps> = ({ guide }) => {
             {guide.video.author}
           </a>
         </p>
-      </GuideSection>
+      </details>
     </article>
   );
 };
