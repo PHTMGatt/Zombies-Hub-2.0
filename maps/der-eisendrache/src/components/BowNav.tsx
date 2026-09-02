@@ -1,6 +1,3 @@
-// 'BowNav.tsx'
-// -------------
-
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import '../styles/components/BowNav.css';
@@ -12,6 +9,7 @@ const bows = [
   { path: 'wolf', label: 'Wolf Bow' },
   { path: 'void', label: 'Void Bow' },
 ];
+const BASE = '/maps/der-eisendrache/bows';
 
 const BowNav: React.FC = () => (
   <nav className="bow-nav" aria-label="Bow selection">
@@ -20,7 +18,7 @@ const BowNav: React.FC = () => (
       {bows.map(({ path, label }) => (
         <li key={path} className="bow-nav__item">
           <NavLink
-            to={`/bows/${path}`}
+            to={`${BASE}/${path}`}
             className={({ isActive }) =>
               `bow-nav__link${isActive ? ' bow-nav__link--active' : ''}`
             }
