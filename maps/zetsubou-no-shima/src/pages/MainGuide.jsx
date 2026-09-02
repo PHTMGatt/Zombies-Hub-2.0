@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import {
   GuideHero,
@@ -8,81 +8,75 @@ import {
   GuideCallout,
   GuideChip,
 } from '../../../../shared/ui/GuideLayout';
-import { zetsRun } from '../data/zetsRun';
 import '../styles/Guide.css';
 
 const BASE = '/maps/zetsubou-no-shima';
 
-const MainGuide = () => {
-  const [openStep, setOpenStep] = useState(0);
+const phases = [
+  {
+    title: 'Setup the Map',
+    summary: 'Finish your three Trials, clean all four skulls, open the bunker/Pack-a-Punch, build the gas mask and Shield, then build the KT-4.',
+    to: `${BASE}/prerequisites`,
+    link: 'Open Setup Checklist',
+  },
+  {
+    title: 'Skull + Masamune + Elevator',
+    summary: 'Use the Skull of Nan Sapwe to reveal the hidden elevator machinery, then finish the KT-4 upgrade into the Masamune.',
+    to: `${BASE}/reveal-blueprint`,
+    link: 'Open Elevator Setup',
+  },
+  {
+    title: 'Collect the Three Cogs',
+    summary: 'Get the Anywhere But Here! cog, shoot down the plane with the AA cannon, then use the electrified zipline for the final cog.',
+    to: `${BASE}/cogs`,
+    link: 'Open Cog Guide',
+  },
+  {
+    title: 'Descend + Kill the Giant Thrasher',
+    summary: 'Install all three cogs, take a fresh gas mask and the Masamune into the elevator, then complete the Thrasher boss fight.',
+    to: `${BASE}/elevator-battle`,
+    link: 'Open Boss Guide',
+  },
+];
 
-  return (
-    <main className="zets-main-guide">
-      <GuideHero
-        kicker="Zetsubou No Shima"
-        title="Seeds of Doubt"
-        description="A run-first guide rebuilt from the full transcript: setup, Skull of Nan Sapwe, KT-4 / Masamune, all three cogs, elevator descent, and the Giant Thrasher fight in one clean progression."
-      >
-        <GuideChip>Black Ops III</GuideChip>
-        <GuideChip>Trials required</GuideChip>
-        <GuideChip>Anywhere But Here! required</GuideChip>
-      </GuideHero>
+const MainGuide = () => (
+  <main className="zets-main-guide">
+    <GuideHero
+      kicker="Zetsubou No Shima"
+      title="Seeds of Doubt"
+      description="The whole quest in four phases. Use the detailed tabs only when you reach that part of the run."
+    >
+      <GuideChip>Trials required</GuideChip>
+      <GuideChip>Anywhere But Here! required</GuideChip>
+    </GuideHero>
 
-      <GuideCallout label="Before you commit" tone="info" className="zets-guide-note">
-        Complete all three Trials, keep a bucket for the colored-water steps, and make sure you have Anywhere But Here! available for the hidden cog room.
-      </GuideCallout>
+    <GuideCallout label="Before you commit" tone="info" className="zets-guide-note">
+      Keep a bucket, finish all three Trials, and have Anywhere But Here! available before the cog phase.
+    </GuideCallout>
 
-      <GuideSection
-        kicker="Run Order"
-        title="What do I do next?"
-        description="Use the short line while playing. Expand only the step you are currently on when you need the extra detail."
-      >
-        <GuideStepList>
-          {zetsRun.map((step, index) => {
-            const isOpen = openStep === index;
-            return (
-              <button
-                key={step.title}
-                type="button"
-                className={`zets-run-step ${isOpen ? 'is-open' : ''}`}
-                onClick={() => setOpenStep(isOpen ? -1 : index)}
-                aria-expanded={isOpen}
-              >
-                <GuideStepCard
-                  step={index + 1}
-                  label={index === zetsRun.length - 1 ? 'Boss Fight' : 'Main Quest'}
-                  title={step.title}
-                  summary={step.summary}
-                >
-                  {isOpen && (
-                    <ul className="zets-run-details">
-                      {step.details.map((detail) => <li key={detail}>{detail}</li>)}
-                    </ul>
-                  )}
-                </GuideStepCard>
-              </button>
-            );
-          })}
-        </GuideStepList>
-      </GuideSection>
+    <GuideSection kicker="Main Run" title="Four phases">
+      <GuideStepList>
+        {phases.map((phase, index) => (
+          <GuideStepCard
+            key={phase.title}
+            step={index + 1}
+            label="Main Quest"
+            title={phase.title}
+            summary={phase.summary}
+          >
+            <Link className="zets-phase-link" to={phase.to}>{phase.link} →</Link>
+          </GuideStepCard>
+        ))}
+      </GuideStepList>
+    </GuideSection>
 
-      <GuideSection
-        kicker="Deep Dives"
-        title="Open only what you need"
-        description="The detailed pages stay available as focused references instead of interrupting the main run with walls of text."
-        className="zets-reference-section"
-      >
-        <div className="zets-reference-grid">
-          <Link to={`${BASE}/prerequisites`}>Setup Checklist</Link>
-          <Link to={`${BASE}/reveal-blueprint`}>Blueprint + Elevator</Link>
-          <Link to={`${BASE}/cogs`}>Three Cogs</Link>
-          <Link to={`${BASE}/buildables`}>Buildables + KT-4</Link>
-          <Link to={`${BASE}/elevator-battle`}>Boss Fight</Link>
-          <Link to={`${BASE}/extras`}>Rewards + Extras</Link>
-        </div>
-      </GuideSection>
-    </main>
-  );
-};
+    <GuideSection kicker="Reference" title="Extra pages">
+      <div className="zets-reference-grid">
+        <Link to={`${BASE}/buildables`}>Buildables + KT-4</Link>
+        <Link to={`${BASE}/extras`}>Rewards + Extras</Link>
+      </div>
+    </GuideSection>
+  </main>
+);
 
 export default MainGuide;
