@@ -65,8 +65,8 @@
 }
 
 .de-module .header-spacer {
-  flex: 0 0 104px;
-  height: 104px;
+  flex: 0 0 88px;
+  height: 88px;
 }
 
 .de-page-shell {
@@ -100,7 +100,7 @@
 }
 
 .de-phase-anchor {
-  scroll-margin-top: calc(var(--hub-nav-height) + 116px);
+  scroll-margin-top: calc(var(--hub-nav-height) + 100px);
 }
 
 @media (max-width: 720px) {
@@ -109,12 +109,12 @@
   }
 
   .de-module .header-spacer {
-    flex-basis: 118px;
-    height: 118px;
+    flex-basis: 104px;
+    height: 104px;
   }
 
   .de-phase-anchor {
-    scroll-margin-top: calc(var(--hub-nav-height) + 128px);
+    scroll-margin-top: calc(var(--hub-nav-height) + 114px);
   }
 }
 
