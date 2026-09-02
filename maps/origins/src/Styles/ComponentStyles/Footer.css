@@ -4,26 +4,26 @@
   position: relative;
   margin: 0;
   padding: 0;
-  min-height: 112px;
+  min-height: 64px;
   overflow: hidden;
   border-radius: 0;
-  border-top: 1px solid rgba(190, 231, 255, 0.28);
+  border-top: 1px solid rgba(190, 231, 255, 0.18);
   background: #071726;
   color: #eef9ff;
   font-family: 'Rajdhani', sans-serif;
-  box-shadow: 0 -10px 32px rgba(20, 123, 194, 0.16);
+  box-shadow: 0 -8px 24px rgba(20, 123, 194, 0.12);
   isolation: isolate;
 }
 
 .origins-module .origins-footer__backdrop {
   position: absolute;
-  inset: -18px;
+  inset: -16px;
   z-index: -2;
   background:
-    linear-gradient(90deg, rgba(3, 18, 31, 0.95), rgba(14, 91, 146, 0.58), rgba(3, 18, 31, 0.95)),
+    linear-gradient(90deg, rgba(3, 18, 31, 0.95), rgba(14, 91, 146, 0.46), rgba(3, 18, 31, 0.95)),
     url('../../../public/images/Robot.webp') center 43% / cover no-repeat;
-  filter: blur(5px) saturate(0.85) brightness(0.64);
-  transform: scale(1.04);
+  filter: blur(4px) saturate(0.8) brightness(0.6);
+  transform: scale(1.03);
 }
 
 .origins-module .origins-footer::after {
@@ -31,87 +31,27 @@
   position: absolute;
   inset: 0;
   z-index: -1;
-  background:
-    linear-gradient(to bottom, rgba(7, 23, 38, 0.18), rgba(7, 23, 38, 0.82)),
-    radial-gradient(circle at 50% 0%, rgba(93, 196, 255, 0.2), transparent 48%);
+  background: linear-gradient(to bottom, rgba(7, 23, 38, 0.12), rgba(7, 23, 38, 0.78));
   pointer-events: none;
 }
 
 .origins-module .origins-footer__content {
-  width: min(1180px, calc(100% - 48px));
-  min-height: 112px;
+  width: min(1180px, calc(100% - 36px));
+  min-height: 64px;
   margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1.3rem;
+  gap: 0.55rem;
+  color: #d7ebf7;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.025em;
   text-align: center;
 }
 
-.origins-module .origins-footer__identity,
-.origins-module .origins-footer__meta {
-  display: flex;
-  align-items: center;
-  gap: 0.65rem;
-}
-
-.origins-module .origins-footer__identity {
-  flex-direction: column;
-  gap: 0.1rem;
-  line-height: 1;
-}
-
-.origins-module .origins-footer__identity strong {
-  font-size: 1.35rem;
-  letter-spacing: 0.04em;
-  text-shadow: 0 0 12px rgba(109, 194, 255, 0.55);
-}
-
-.origins-module .origins-footer__kicker {
-  color: #8ed7ff;
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-}
-
-.origins-module .origins-footer__divider {
-  width: 1px;
-  height: 38px;
-  background: linear-gradient(to bottom, transparent, rgba(173, 224, 255, 0.62), transparent);
-}
-
-.origins-module .origins-footer__meta {
-  color: #d7ebf7;
-  font-size: 0.94rem;
-  font-weight: 600;
-  letter-spacing: 0.025em;
-}
-
-.origins-module .origins-footer__dot {
-  color: #6dc2ff;
-  text-shadow: 0 0 8px rgba(109, 194, 255, 0.8);
-}
-
-@media (max-width: 720px) {
-  .origins-module .origins-footer__content {
-    width: min(100% - 28px, 640px);
-    min-height: 126px;
-    flex-direction: column;
-    gap: 0.6rem;
-    padding: 1.1rem 0;
-  }
-
-  .origins-module .origins-footer__divider {
-    width: 90px;
-    height: 1px;
-    background: linear-gradient(to right, transparent, rgba(173, 224, 255, 0.55), transparent);
-  }
-
-  .origins-module .origins-footer__meta {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.45rem;
-    font-size: 0.86rem;
-  }
+.origins-module .origins-footer__content strong {
+  color: #f0f9ff;
+  font-size: 1rem;
+  text-shadow: 0 0 10px rgba(109, 194, 255, 0.4);
 }
