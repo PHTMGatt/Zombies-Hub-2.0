@@ -11,8 +11,6 @@ function scopeSelector(selector, scope) {
 
   if (!trimmed || trimmed.includes(scope)) return trimmed;
 
-  // Legacy apps often target the document root. Inside 2.0 those rules should
-  // apply to the map feature root instead of html/body/#root globally.
   if (trimmed === ':root' || trimmed === 'html' || trimmed === 'body' || trimmed === '#root') {
     return scope;
   }
@@ -39,7 +37,6 @@ const zombiesMapScope = {
     const match = mapScopes.find(([fragment]) => file.includes(fragment));
     if (!match) return;
 
-    // Never prefix keyframe step selectors such as from/to/0%.
     let parent = rule.parent;
     while (parent) {
       if (parent.type === 'atrule' && /keyframes$/i.test(parent.name)) return;
@@ -50,8 +47,6 @@ const zombiesMapScope = {
     rule.selectors = rule.selectors.map(selector => scopeSelector(selector, scope));
   },
 };
-
-zombiesMapScope.postcss = true;
 
 export default {
   plugins: [zombiesMapScope],
