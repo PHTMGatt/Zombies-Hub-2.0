@@ -4,17 +4,30 @@ import AppRoutes from './AppRoutes';
 import HubHeader from '../components/HubHeader';
 import HubFooter from '../components/HubFooter';
 
+const dedicatedMapPrefixes = [
+  '/maps/origins',
+  '/maps/mob-of-the-dead',
+  '/maps/der-eisendrache',
+  '/maps/zetsubou-no-shima',
+  '/maps/gorod-krovi',
+  '/maps/revelations',
+];
+
 function RootLayout() {
   const { pathname } = useLocation();
-  const isMapRoute = pathname.startsWith('/maps/');
+  const isDedicatedMapRoute = dedicatedMapPrefixes.some(prefix =>
+    pathname === prefix || pathname.startsWith(`${prefix}/`),
+  );
 
   return (
     <div className="zh-app">
       <HubHeader />
       <main className="zh-main">
-        <Outlet />
+        <div className={isDedicatedMapRoute ? 'map-route-host' : 'hub-content'}>
+          <Outlet />
+        </div>
       </main>
-      {!isMapRoute && <HubFooter />}
+      {!isDedicatedMapRoute && <HubFooter />}
     </div>
   );
 }
