@@ -1,91 +1,138 @@
-/* Der Eisendrache header. PostCSS scopes this file to .de-module. */
-.header-site {
+.de-header {
   position: fixed;
   top: var(--hub-nav-height);
   left: 0;
-  width: 100%;
-  height: 150px;
+  right: 0;
   z-index: 9000;
-  background: rgba(0, 0, 0, 0.85);
+  height: 126px;
   overflow: hidden;
+  border-bottom: 1px solid rgba(126, 205, 255, 0.22);
+  background: #06101a;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.46);
 }
 
-.header-site__bg {
+.de-header__art,
+.de-header__veil {
   position: absolute;
   inset: 0;
-  background: url('../../assets/images/DE-Header1.jpg') center/cover no-repeat;
-  filter: blur(5px) brightness(0.8);
-  transform: scale(1.05);
-  z-index: 0;
+  pointer-events: none;
 }
 
-.header-site__content {
+.de-header__art {
+  background: url('../../assets/images/DE-Header1.jpg') center 44% / cover no-repeat;
+  filter: saturate(0.78) contrast(1.08) brightness(0.62);
+  transform: scale(1.025);
+}
+
+.de-header__veil {
+  background:
+    radial-gradient(circle at 23% 42%, rgba(80, 177, 246, 0.19), transparent 28%),
+    linear-gradient(90deg, rgba(2, 8, 15, 0.95) 0%, rgba(3, 10, 18, 0.76) 38%, rgba(3, 9, 16, 0.52) 67%, rgba(2, 7, 13, 0.88) 100%),
+    linear-gradient(180deg, rgba(255,255,255,0.025), rgba(0,0,0,0.4));
+}
+
+.de-header__content {
   position: relative;
   z-index: 2;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  width: min(1460px, calc(100% - 3rem));
   height: 100%;
-  padding: 0 2rem;
-  background: rgba(0, 0, 0, 0.2);
-}
-
-.header-site__title {
-  margin: 0;
-  font-size: 2rem;
-  font-weight: 700;
-  color: #e0f0ff;
-  letter-spacing: 0.5px;
-  text-shadow: 0 0 6px #4da6ff, 0 0 12px #4da6ff, 0 0 20px #4da6ff;
-  animation: subtleGlowPulse 5s ease-in-out infinite;
-  transition: text-shadow 0.3s ease-in-out;
-  cursor: default;
-}
-
-.header-site__title:hover {
-  text-shadow: 0 0 10px #90d4ff, 0 0 18px #90d4ff, 0 0 28px #90d4ff;
-}
-
-.header-site__content nav {
+  margin: 0 auto;
   display: flex;
-  gap: 1.5rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
 }
 
-.header-site__content nav a {
-  color: #a8d1ff;
-  text-decoration: none;
-  font-weight: 500;
-  transition: color 0.2s ease-in-out;
+.de-header__identity {
+  min-width: 0;
+  flex: 1 1 auto;
 }
 
-.header-site__content nav a:hover,
-.header-site__content nav a.active { color: #ffffff; }
-
-@keyframes subtleGlowPulse {
-  0%, 100% { text-shadow: 0 0 6px #4da6ff, 0 0 12px #4da6ff, 0 0 20px #4da6ff; }
-  50% { text-shadow: 0 0 10px #6dbaff, 0 0 16px #6dbaff, 0 0 24px #6dbaff; }
+.de-header__eyebrow {
+  display: block;
+  margin-bottom: 0.28rem;
+  color: #85d1ff;
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-shadow: 0 0 18px rgba(92, 190, 255, 0.42);
 }
 
-@media (max-width: 768px) {
-  .header-site { height: auto; }
+.de-header__title-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.85rem;
+  min-width: 0;
+}
 
-  .header-site__content {
+.de-header__title-row h1 {
+  margin: 0;
+  color: #f4faff;
+  font-size: clamp(1.65rem, 2.6vw, 2.45rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  text-shadow: 0 0 22px rgba(94, 187, 255, 0.42), 0 3px 12px rgba(0,0,0,0.7);
+  white-space: nowrap;
+}
+
+.de-header__title-row > span {
+  color: #b9cad8;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+@media (max-width: 940px) {
+  .de-header__content {
+    width: min(100% - 1.5rem, 920px);
+    gap: 1rem;
+  }
+
+  .de-header__title-row {
+    display: block;
+  }
+
+  .de-header__title-row > span {
+    display: block;
+    margin-top: 0.3rem;
+    font-size: 0.65rem;
+  }
+}
+
+@media (max-width: 720px) {
+  .de-header {
+    height: 136px;
+  }
+
+  .de-header__content {
+    width: calc(100% - 1rem);
+    padding: 0.68rem 0 0.62rem;
+    align-items: stretch;
+    justify-content: center;
     flex-direction: column;
-    align-items: center;
-    padding: 0.5rem 1rem;
-    gap: 0.5rem;
+    gap: 0.62rem;
+  }
+
+  .de-header__identity {
+    flex: 0 0 auto;
     text-align: center;
   }
 
-  .header-site__title {
-    font-size: 1.6rem;
-    animation: none;
-    line-height: 1.2;
+  .de-header__eyebrow {
+    margin-bottom: 0.18rem;
+    font-size: 0.58rem;
   }
 
-  .header-site__content nav {
-    flex-direction: row;
-    justify-content: center;
-    flex-wrap: wrap;
+  .de-header__title-row h1 {
+    font-size: 1.55rem;
+    white-space: normal;
+  }
+
+  .de-header__title-row > span {
+    display: none;
   }
 }
