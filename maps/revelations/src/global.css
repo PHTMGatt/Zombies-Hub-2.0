@@ -103,7 +103,6 @@ ul {
   text-shadow: 0 0 4px #000;
 }
 
-/* Flex layout for side-by-side cards */
 .rev-content,
 .rev-columns {
   display: flex;
@@ -124,12 +123,37 @@ ul {
   color: var(--text-secondary);
 }
 
-@media (max-width: 900px) {
-  .rev-content,
-  .rev-columns {
-    flex-direction: column;
-    align-items: center;
-  }
+/* === Unified guide-page heading === */
+.rev-page-heading {
+  position: relative;
+  z-index: 2;
+  width: min(100%, 920px);
+  margin: 0 auto 1.5rem;
+  text-align: center;
+}
+
+.rev-page-kicker {
+  display: inline-block;
+  margin-bottom: 0.55rem;
+  color: #6dc2ff;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-shadow: 0 0 12px rgba(0, 191, 255, 0.7);
+}
+
+.rev-page-heading .sk-title {
+  margin-bottom: 0.65rem;
+}
+
+.rev-page-intro {
+  max-width: 760px;
+  margin: 0 auto;
+  color: #c9d9ea;
+  font-size: 1rem;
+  line-height: 1.65;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
 }
 
 /* === Universal Video Card Styling === */
@@ -142,44 +166,207 @@ ul {
   border: 4px solid rgba(109, 194, 255, 0.7);
   margin-bottom: 1rem;
   z-index: 2;
-  transition: all 0.3s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .video-card:hover {
-  box-shadow: 0 0 40px rgba(109, 194, 255, 1);
-  transform: scale(1.03);
+  box-shadow: 0 0 42px rgba(109, 194, 255, 0.95);
+  transform: translateY(-2px);
+}
+
+.rev-video-player > div:first-child,
+.rev-video-player .sk-video,
+.rev-video-player__iframe {
+  display: block;
+  width: 100% !important;
+}
+
+.rev-video-player__iframe {
+  aspect-ratio: 16 / 9;
+  height: auto !important;
+  min-height: 280px;
+  border: 0;
+  background: #000;
 }
 
 .video-caption {
   color: #aad4ff;
-  font-size: 1rem;
+  font-size: 0.92rem;
+  line-height: 1.45;
   text-shadow: 1px 1px 2px #000;
   text-align: center;
-  margin: 0 0 0.3rem;
-  padding: 0;
+  padding: 0.7rem 1rem;
   width: 100%;
   max-width: 960px;
   z-index: 2;
-  display: inline-block;
-  background: transparent;
+  display: block;
+  background: rgba(4, 12, 24, 0.86);
+  box-sizing: border-box;
 }
 
 .sk-selected-label {
-  font-size: 1.4rem;
+  font-size: 1.25rem;
   font-weight: 700;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-  color: #6dc2ff;
+  margin: 1.15rem 0 0.9rem;
+  color: #d9efff;
   text-shadow: 0 0 12px #00bfff;
   z-index: 2;
+}
+
+.rev-selected-prefix {
+  color: #6dc2ff;
+  font-size: 0.8em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.rev-selected-location {
+  color: #aee8ff;
+  font-weight: 500;
 }
 
 .sk-buttons {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 1rem;
+  gap: 0.75rem;
   padding-top: 0.5rem;
   z-index: 2;
 }
 
+.sk-button {
+  min-height: 44px;
+}
+
+/* Egg-location area cards now use the same interaction language as the timestamp controls. */
+.egg-section-cards {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem !important;
+  width: min(100%, 1000px) !important;
+}
+
+.egg-glass-card {
+  appearance: none;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.35rem;
+  min-height: 130px;
+}
+
+.egg-glass-card.active {
+  border-color: rgba(109, 194, 255, 0.9);
+  box-shadow: 0 0 34px rgba(0, 195, 255, 0.34), inset 0 0 28px rgba(0, 195, 255, 0.08);
+}
+
+.egg-card-kicker,
+.egg-card-count {
+  display: block;
+}
+
+.egg-card-kicker {
+  color: #6dc2ff;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.egg-glass-card .egg-subtitle {
+  display: block;
+  margin: 0;
+  text-align: left;
+  font-size: 1.25rem;
+}
+
+.egg-card-count {
+  color: #a9bfd3;
+  font-size: 0.88rem;
+}
+
+.card-buttons button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.card-buttons button small {
+  color: #7ddcff;
+  font-size: 0.72rem;
+  opacity: 0.88;
+  white-space: nowrap;
+}
+
+.spinner-controls {
+  position: relative;
+  z-index: 2;
+  align-items: center;
+}
+
+.spinner-controls > span {
+  min-width: 58px;
+  color: #9fdfff;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+@media (max-width: 900px) {
+  .rev-content,
+  .rev-columns {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .rev-page {
+    padding: 3.5rem 1rem;
+  }
+
+  .egg-section-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .rev-page {
+    padding: 2.5rem 0.75rem;
+  }
+
+  .rev-page-heading .sk-title {
+    font-size: clamp(2rem, 10vw, 2.6rem);
+  }
+
+  .rev-glow-box {
+    padding: 1rem !important;
+  }
+
+  .rev-video-player__iframe {
+    min-height: 210px;
+  }
+
+  .sk-buttons {
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+
+  .sk-button {
+    width: 100%;
+  }
+
+  .sound-card.left,
+  .sound-card.right {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .sound-card.center {
+    width: min(82vw, 330px);
+  }
+}
