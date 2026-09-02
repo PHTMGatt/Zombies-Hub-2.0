@@ -13,22 +13,20 @@ function SummoningKey() {
   };
 
   return (
-    <div className="rev-page">
+    <div className="rev-page summoning-key-page">
       <div className="rev-background" />
       <div className="sk-container">
         <div className="rev-page-heading">
           <span className="rev-page-kicker">Quick Reference</span>
           <h1 className="sk-title">Summoning Key Throws</h1>
-          <p className="rev-page-intro">
-            Each button jumps to the exact throw in the full guide so you can identify the target immediately.
-          </p>
+          <p className="rev-page-intro">Tap the target you need and jump straight to that throw.</p>
         </div>
 
         <div className="rev-glow-box">
           <GuideVideoPlayer
             ref={videoRef}
             title="Revelations Summoning Key throws"
-            caption="Choose a throw below to play only that target segment."
+            caption="Choose a target below to play only that throw."
           />
 
           <div className="sk-selected-label">
