@@ -1,0 +1,19 @@
+.origins-module {
+  --origins-bg: none;
+  min-height: calc(100vh - var(--hub-nav-height));
+  width: 100%;
+  color: #fff;
+  font-family: 'Rajdhani', 'Segoe UI', sans-serif;
+  background: #06192a;
+  isolation: isolate;
+}
+
+.origins-module,
+.origins-module * {
+  box-sizing: border-box;
+}
+
+.origins-module .origins-route-content {
+  min-height: 60vh;
+  width: 100%;
+}
