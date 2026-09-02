@@ -87,4 +87,5 @@ jobs:
             exit 0
           fi
           git commit -m 'Import legacy Hub and map source assets'
-          git push
+          git pull --rebase origin main
+          git push origin main
