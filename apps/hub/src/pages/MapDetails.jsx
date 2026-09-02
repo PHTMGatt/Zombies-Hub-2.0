@@ -1,24 +1,16 @@
 import React from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import mapData from '../data/mapData';
+import { getDedicatedGuideRoute } from '../data/dedicatedGuides';
 import MapCard from '../components/MapCard';
 import '../styles/pageStyles/MapDetails.css';
 
-const dedicatedGuides = new Set([
-  'origins',
-  'mob-of-the-dead',
-  'shadows-of-evil',
-  'der-eisendrache',
-  'zetsubou-no-shima',
-  'gorod-krovi',
-  'revelations',
-]);
-
 export default function MapDetails() {
   const { slug } = useParams();
+  const dedicatedRoute = getDedicatedGuideRoute(slug);
 
-  if (dedicatedGuides.has(slug)) {
-    return <Navigate to={`/maps/${slug}`} replace />;
+  if (dedicatedRoute) {
+    return <Navigate to={dedicatedRoute} replace />;
   }
 
   const map = mapData.find(m => m.slug === slug);
