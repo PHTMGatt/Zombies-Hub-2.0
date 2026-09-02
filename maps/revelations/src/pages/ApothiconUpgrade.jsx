@@ -13,15 +13,13 @@ const ApothiconUpgrade = () => {
   };
 
   return (
-    <div className="rev-page">
+    <div className="rev-page apothicon-upgrade-page">
       <div className="rev-background" />
       <div className="sk-container">
         <div className="rev-page-heading">
           <span className="rev-page-kicker">Quick Reference</span>
           <h1 className="sk-title">Apothicon Servant Upgrade</h1>
-          <p className="rev-page-intro">
-            Pick the area you need and the guide jumps directly to that short location segment.
-          </p>
+          <p className="rev-page-intro">Choose the area you need and jump directly to that short location segment.</p>
         </div>
 
         <div className="rev-glow-box">
