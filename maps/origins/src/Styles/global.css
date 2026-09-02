@@ -1,49 +1,58 @@
-@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&display=swap');
 
-:root {
-  --background: #0068bd;
-  --text-color: white;
-  --font-family: 'Rajdhani', sans-serif;
-  --font-size-base: 16px;
+.origins-module {
+  --origins-background: #0068bd;
+  --origins-text-color: #f4fbff;
+  --origins-font-family: 'Rajdhani', sans-serif;
+  --origins-font-size-base: 16px;
+
+  position: relative;
+  width: 100%;
+  min-height: calc(100vh - var(--hub-nav-height));
+  display: flex;
+  flex-direction: column;
+  color: var(--origins-text-color);
+  font-family: var(--origins-font-family);
+  font-size: var(--origins-font-size-base);
+  background:
+    linear-gradient(rgba(3, 17, 30, 0.48), rgba(3, 17, 30, 0.67)),
+    url('../../public/images/Robot.webp') center / cover fixed no-repeat;
+  overflow-x: hidden;
+  isolation: isolate;
 }
 
-* {
-  margin: 0;
-  padding: 0;
+.origins-module,
+.origins-module *,
+.origins-module *::before,
+.origins-module *::after {
   box-sizing: border-box;
 }
 
-html,
-body {
-  font-family: var(--font-family);
-  font-size: var(--font-size-base);
-  color: var(--text-color);
-  background-image: url('../../public/images/Robot.webp');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+.origins-module .layout-container {
   width: 100%;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-/* Full-height page container */
-.layout-container {
+  min-height: calc(100vh - var(--hub-nav-height));
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  width: 100%;
 }
 
-main {
+.origins-module main {
   flex: 1;
   display: block;
   width: 100%;
 }
 
-/* Utility to add space between edges of screen */
-.edge-padding {
+.origins-module .edge-padding {
   padding-left: 2rem;
   padding-right: 2rem;
+}
+
+@media (max-width: 720px) {
+  .origins-module {
+    background-attachment: scroll;
+  }
+
+  .origins-module .edge-padding {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 }
