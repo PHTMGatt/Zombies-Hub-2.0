@@ -78,9 +78,10 @@ export const mobRun = [
   },
   {
     title: 'Enter the Afterlife Codes',
-    summary: 'In Afterlife, enter the four code sets in order: 101, 386, 872, 481.',
+    summary: 'In Afterlife, enter all four prisoner numbers: 101, 386, 872, and 481. They do not need to be entered in a specific order.',
     details: [
-      'After the final code, revive yourself and the screen turns black and white.',
+      'You may split the four numbers across more than one Afterlife session if needed.',
+      'After all four have been accepted, revive yourself and the screen turns black and white.',
       'The story audio sequence now begins.',
     ],
   },
