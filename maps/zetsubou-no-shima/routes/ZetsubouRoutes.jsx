@@ -13,6 +13,7 @@ import CogOne from '../src/components/CogSteps/CogOne';
 import CogTwo from '../src/components/CogSteps/CogTwo';
 import CogThree from '../src/components/CogSteps/CogThree';
 import '../src/styles/Global.css';
+import '../src/styles/DetailCompact.css';
 
 export default function ZetsubouRoutes() {
   return (
