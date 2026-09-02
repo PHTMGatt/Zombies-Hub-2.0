@@ -1,0 +1,165 @@
+.rev-page {
+  position: relative;
+  padding: 5rem 1rem;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 1;
+}
+
+.rev-background {
+  position: absolute;
+  inset: 0;
+  background: url('/src/assets/rev-guide/Main/Revelations.webp') no-repeat center center/cover;
+  filter: blur(10px) brightness(0.3);
+  z-index: 0;
+  animation: bgFloat 40s ease-in-out infinite alternate;
+}
+
+@keyframes bgFloat {
+  0% {
+    transform: scale(1) translate(0px, 0px);
+  }
+  100% {
+    transform: scale(1.05) translate(10px, 10px);
+  }
+}
+
+.sk-container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1200px;
+  text-align: center;
+  color: #aad4ff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sk-title {
+  font-size: 2.8rem;
+  font-weight: 800;
+  margin-bottom: 2rem;
+  color: #cce6ff;
+  text-shadow: 2px 2px 6px #000;
+  cursor: pointer;
+}
+
+.rev-glow-box {
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 16px;
+  border: 2px solid rgba(109, 194, 255, 0.5);
+  box-shadow: 0 0 40px rgba(109, 194, 255, 0.35), 0 0 80px rgba(0, 255, 255, 0.15) inset;
+  padding: 2rem 1.5rem;
+  max-width: 1000px;
+  width: 100%;
+  margin-bottom: 2rem;
+  backdrop-filter: blur(10px);
+  z-index: 2;
+}
+
+.video-card {
+  width: 100%;
+  max-width: 960px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 0 40px rgba(0, 255, 255, 0.6);
+  border: 4px solid rgba(109, 194, 255, 0.8);
+  background: rgba(0, 0, 0, 0.5);
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+}
+
+.video-caption {
+  font-size: 0.95rem;
+  color: #aad4ff;
+  padding: 0.5rem 0;
+  text-shadow: 1px 1px 2px #000;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.sk-selected-label {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 1.2rem 0 1.6rem;
+  color: #6dc2ff;
+  text-shadow: 0 0 10px #00bfff;
+}
+
+.sk-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  padding-bottom: 0.5rem;
+}
+
+.sk-button {
+  background: transparent;
+  border: 2px solid #00c3ff;
+  color: #aad4ff;
+  padding: 0.7rem 1.3rem;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.95rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: inset 0 0 12px rgba(0, 191, 255, 0.25), 0 0 10px rgba(0, 191, 255, 0.3);
+}
+
+.sk-button:hover {
+  background: rgba(0, 255, 255, 0.15);
+  transform: scale(1.04);
+}
+
+.egg-section-cards {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+}
+
+.egg-glass-card {
+  background: rgba(0, 0, 0, 0.55);
+  border-radius: 16px;
+  padding: 2rem;
+  width: 90%;
+  max-width: 1000px;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 10px 30px rgba(0, 200, 255, 0.3);
+  border: 1px solid rgba(173, 216, 230, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.egg-glass-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 40px rgba(0, 255, 255, 0.2);
+}
+
+.egg-subtitle {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 1.2rem;
+  color: #aad4ff;
+  text-align: center;
+  text-shadow: 1px 1px 3px #000;
+}
+
+
+.egg-text {
+  font-size: 1.15rem;
+  line-height: 1.8;
+  color: #d0e7ff;
+  margin: 0.4rem 0;
+  text-align: center;
+  text-shadow: 0 0 4px #000;
+}
+
+.featured-card .egg-text {
+  text-shadow: 0 0 6px #00f7ff, 0 0 3px #0088ff;
+}

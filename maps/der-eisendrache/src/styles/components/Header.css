@@ -1,0 +1,120 @@
+/* src/styles/components/Header.css */
+
+/* 1. BASE STYLES */
+.header-site {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 150px;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.85);
+  overflow: hidden;
+}
+
+/* 2. BACKGROUND IMAGE */
+.header-site__bg {
+  position: absolute;
+  inset: 0;
+  background: url('/src/assets/images/DE-Header1.jpg') center/cover no-repeat;
+  filter: blur(5px) brightness(0.8);
+  transform: scale(1.05);
+  z-index: 0;
+}
+
+/* 3. CONTENT (TITLE + NAV) */
+.header-site__content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  padding: 0 2rem;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* 4. TITLE STYLING */
+.header-site__title {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #e0f0ff;
+  letter-spacing: 0.5px;
+  text-shadow:
+    0 0 6px #4da6ff,
+    0 0 12px #4da6ff,
+    0 0 20px #4da6ff;
+  animation: subtleGlowPulse 5s ease-in-out infinite;
+  transition: text-shadow 0.3s ease-in-out;
+  cursor: default;
+}
+
+.header-site__title:hover {
+  text-shadow:
+    0 0 10px #90d4ff,
+    0 0 18px #90d4ff,
+    0 0 28px #90d4ff;
+}
+
+/* 5. NAV INSIDE HEADER (fallback style only) */
+.header-site__content nav {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.header-site__content nav a {
+  color: #a8d1ff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease-in-out;
+}
+
+.header-site__content nav a:hover,
+.header-site__content nav a.active {
+  color: #ffffff;
+}
+
+/* 6. ANIMATION */
+@keyframes subtleGlowPulse {
+  0%, 100% {
+    text-shadow:
+      0 0 6px #4da6ff,
+      0 0 12px #4da6ff,
+      0 0 20px #4da6ff;
+  }
+  50% {
+    text-shadow:
+      0 0 10px #6dbaff,
+      0 0 16px #6dbaff,
+      0 0 24px #6dbaff;
+  }
+}
+
+/* 7. RESPONSIVE */
+/* 7. RESPONSIVE */
+@media (max-width: 768px) {
+  .header-site {
+    height: auto;
+  }
+
+  .header-site__content {
+    flex-direction: column;
+    align-items: center; /* ⬅️ center on mobile */
+    padding: 0.5rem 1rem; /* ⬅️ top/bottom spacing */
+    gap: 0.5rem;          /* ⬅️ spacing between title and nav */
+    text-align: center;
+  }
+
+  .header-site__title {
+    font-size: 1.6rem;
+    animation: none;
+    line-height: 1.2;
+  }
+
+  .header-site__content nav {
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}

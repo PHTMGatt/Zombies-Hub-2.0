@@ -1,0 +1,45 @@
+/* src/styles/Footer.css */
+
+/* Full-width footer container, fixed at bottom */
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  z-index: 1000;
+  background: transparent;
+  padding: 0; /* no extra padding—panel itself is full height */
+}
+
+/* Glass-style panel spanning full width */
+.footer-panel {
+  width: 100%;
+  padding: 1rem 0;                 /* vertical padding */
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  border-radius: 0 0 0 0;          /* square corners */
+  box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.7);
+  text-align: center;
+  color: #ccc;
+  font-size: 0.9rem;
+}
+
+/* Push content up so nothing hides behind footer */
+#root {
+  /* Note; increased bottom padding to ensure everything sits above the footer */
+  padding-bottom: 6rem;
+}
+
+/* Mobile tweaks */
+@media (max-width: 600px) {
+  .footer-panel {
+    padding: 0.75rem 0;
+    font-size: 0.8rem;
+    box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.6);
+  }
+  #root {
+    /* Note; match mobile padding */
+    padding-bottom: 5rem;
+  }
+}

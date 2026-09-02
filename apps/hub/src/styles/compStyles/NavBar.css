@@ -1,0 +1,179 @@
+/* File: NavBar.css */
+
+/* Root-level variables */
+:root {
+  --nav-height: 70px;
+
+  /* Dark theme colors */
+  --gradient-dark-1: #1f2937;
+  --gradient-dark-2: #111827;
+  --shadow-dark: rgba(0, 0, 0, 0.4);
+  --link-dark: #e5e7eb;
+  --hover-dark: #60a5fa;
+
+  /* Light theme colors */
+  --gradient-light-1: #d8eafb;
+  --gradient-light-2: #b2d1fa;
+  --shadow-light: rgba(0, 0, 0, 0.15);
+  --link-light: #1e293b;
+  --hover-light: #3b82f6;
+
+  /* Animated text gradient */
+  --title-gradient: linear-gradient(90deg, #6dc2ff, #3b82f6);
+}
+
+/* Main navbar container */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--nav-height);
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(135deg, var(--gradient-dark-1), var(--gradient-dark-2));
+  box-shadow: 0 8px 32px var(--shadow-dark);
+  z-index: 1000;
+}
+
+/* Title with animated gradient */
+.navbar-title {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 700;
+  background: var(--title-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% auto;
+  animation: shine 4s linear infinite;
+}
+
+@keyframes shine {
+  to {
+    background-position: -200% center;
+  }
+}
+
+/* Navigation links */
+.nav-links {
+  display: flex;
+  gap: 1.75rem;
+  margin-left: auto;
+}
+
+.nav-links a {
+  position: relative;
+  color: var(--link-dark);
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.5rem 0;
+  transition: color 0.2s, transform 0.2s;
+}
+
+.nav-links a:hover {
+  color: var(--hover-dark);
+  transform: translateY(-2px);
+}
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 100%;
+  height: 2px;
+  background: var(--hover-dark);
+  transform: scaleX(0);
+  transition: transform 0.25s ease;
+}
+
+.nav-links a:hover::after {
+  transform: scaleX(1);
+}
+
+/* Active link */
+.nav-links a.active {
+  color: var(--hover-dark);
+}
+
+.nav-links a.active::after {
+  transform: scaleX(1);
+}
+
+/* Theme toggle wrapper */
+.toggle-wrapper {
+  margin-left: 1rem;
+}
+
+/* Light mode overrides */
+body.light .navbar {
+  background: linear-gradient(135deg, var(--gradient-light-1), var(--gradient-light-2));
+  box-shadow: 0 8px 32px var(--shadow-light);
+}
+
+body.light .nav-links a {
+  color: var(--link-light);
+}
+
+body.light .nav-links a:hover {
+  color: var(--hover-light);
+}
+
+body.light .nav-links a::after {
+  background: var(--hover-light);
+}
+
+/* Mobile layout */
+@media (max-width: 480px) {
+  .navbar {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    row-gap: 0.25rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .navbar-title {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+    font-size: 1.3rem;
+  }
+
+  .toggle-wrapper {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+    justify-self: end;
+  }
+
+  .nav-links {
+    grid-column: 1 / 3;
+    grid-row: 2 / 3;
+    width: 100%;
+    justify-content: center;
+    gap: 0.75rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 0.25rem 0;
+    margin: 0;
+  }
+
+  .nav-links::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav-links a {
+    flex: 0 0 auto;
+    white-space: nowrap;
+    font-size: 0.9rem;
+    padding: 0.25rem 0;
+  }
+
+  .nav-links a.active {
+    color: var(--hover-dark);
+  }
+
+  .nav-links a.active::after {
+    transform: scaleX(1);
+  }
+}

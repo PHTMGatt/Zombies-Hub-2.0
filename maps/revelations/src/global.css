@@ -1,0 +1,185 @@
+:root {
+  --text-primary: #e0d7ff;
+  --text-secondary: #bbb0d9;
+  --accent-hover: rgba(157, 117, 203, 0.2);
+  --text-glow: #b783ff;
+  --background-primary: #0c0c1b;
+  --background-secondary: #181830;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, var(--background-primary), var(--background-secondary));
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* === Shared Revelations Page Wrapper === */
+.rev-page {
+  position: relative;
+  padding: 5rem 2rem;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  z-index: 1;
+}
+
+/* === Blurred, Glowing, Darkened Background === */
+.rev-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('../src/assets/rev-guide/Main/Revelations.webp') no-repeat center center/cover;
+  filter: blur(12px) brightness(0.5);
+  z-index: 0;
+  border: 20px solid rgba(109, 194, 255, 0.2);
+  box-shadow: 0 0 60px rgba(109, 194, 255, 0.5) inset;
+}
+
+/* === Standard Card Layout === */
+.rev-card {
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(14px);
+  border: 2px solid rgba(109, 194, 255, 0.4);
+  box-shadow: 0 0 30px rgba(109, 194, 255, 0.3);
+  border-radius: 20px;
+  padding: 2.5rem;
+  max-width: 1200px;
+  width: 100%;
+  margin-bottom: 2.5rem;
+  position: relative;
+  z-index: 2;
+  transition: all 0.3s ease;
+}
+
+.rev-card:hover {
+  transform: translateY(-5px) scale(1.01);
+  box-shadow: 0 0 40px rgba(109, 194, 255, 0.6);
+}
+
+.rev-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #cce6ff;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 0 12px var(--text-glow);
+}
+
+.rev-list li {
+  font-size: 1.25rem;
+  line-height: 1.8;
+  color: #d0e7ff;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 4px #000;
+}
+
+/* Flex layout for side-by-side cards */
+.rev-content,
+.rev-columns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  width: 100%;
+  z-index: 2;
+}
+
+.rev-intro {
+  max-width: 900px;
+  margin-bottom: 3rem;
+  z-index: 2;
+  text-align: center;
+  font-size: 1.25rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 900px) {
+  .rev-content,
+  .rev-columns {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* === Universal Video Card Styling === */
+.video-card {
+  width: 100%;
+  max-width: 960px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.7);
+  border: 4px solid rgba(109, 194, 255, 0.7);
+  margin-bottom: 1rem;
+  z-index: 2;
+  transition: all 0.3s ease;
+}
+
+.video-card:hover {
+  box-shadow: 0 0 40px rgba(109, 194, 255, 1);
+  transform: scale(1.03);
+}
+
+.video-caption {
+  color: #aad4ff;
+  font-size: 1rem;
+  text-shadow: 1px 1px 2px #000;
+  text-align: center;
+  margin: 0 0 0.3rem;
+  padding: 0;
+  width: 100%;
+  max-width: 960px;
+  z-index: 2;
+  display: inline-block;
+  background: transparent;
+}
+
+.sk-selected-label {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  color: #6dc2ff;
+  text-shadow: 0 0 12px #00bfff;
+  z-index: 2;
+}
+
+.sk-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  padding-top: 0.5rem;
+  z-index: 2;
+}
+

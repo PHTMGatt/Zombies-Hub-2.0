@@ -1,0 +1,118 @@
+.header {
+  position: relative;
+  width: 100%;
+  height: 165px;
+  overflow: hidden;
+  background-color: #0b0f1a;
+  box-shadow: 0 8px 16px -6px rgba(0, 0, 0, 0.8);
+}
+
+.header-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(0.5px);
+  transform: scale(1.02);
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+.header-content {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 1rem;
+}
+
+.header-content h1 {
+  margin: 0;
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
+  color: #ffd700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.header-content small {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: clamp(1rem, 3vw, 1.25rem);
+  color: #aad4ff;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+/* Nav UL: now wraps into 3x3 grid on mobile */
+.header-content nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem 2rem;
+  list-style: none;
+  padding: 0;
+  margin: 0.75rem 0 0;
+  max-width: 600px;
+}
+
+/* Nav Links */
+.header-content nav a {
+  color: #fff;
+  font-size: clamp(0.9rem, 2vw, 1rem);
+  font-weight: 500;
+  text-decoration: none;
+  position: relative;
+  padding-bottom: 2px;
+  transition: color 0.2s;
+  white-space: nowrap;
+}
+
+.header-content nav a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #ffd700;
+  transition: width 0.2s;
+}
+
+.header-content nav a:hover,
+.header-content nav a.active {
+  color: #ffd700;
+}
+
+.header-content nav a:hover::after,
+.header-content nav a.active::after {
+  width: 100%;
+}
+
+/* Mobile (3x3 nav grid) */
+@media (max-width: 600px) {
+  .header {
+    height: auto;
+    padding-bottom: 1rem;
+  }
+
+  .header-bg {
+    filter: blur(0.3px);
+  }
+
+  .header-content nav ul {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    justify-content: center;
+    gap: 0.75rem 1rem;
+    margin-top: 0.5rem;
+  }
+
+  .header-content nav a {
+    font-size: clamp(0.85rem, 3vw, 0.95rem);
+  }
+}

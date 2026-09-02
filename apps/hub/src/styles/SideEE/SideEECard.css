@@ -1,0 +1,48 @@
+/* File: SideEECard.css */
+
+/* Card container */
+.side-ee-card {
+  background: rgba(20, 25, 32, 0.6);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Hover lift effect */
+.side-ee-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+}
+
+/* Title styling */
+.side-ee-card__title {
+  margin: 0 0 0.5rem;
+  font-size: 1.125rem;
+  color: #fff;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
+}
+
+/* Description text */
+.side-ee-card__desc {
+  margin: 0;
+  line-height: 1.5;
+  color: var(--text-secondary, #cbd5e1); /* fallback if var is missing */
+}
+
+/* Mobile tweaks */
+@media (max-width: 600px) {
+  .side-ee-card {
+    padding: 0.75rem;
+  }
+
+  .side-ee-card__title {
+    font-size: 1rem;
+  }
+
+  .side-ee-card__desc {
+    font-size: 0.9rem;
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "name": "revelations-guide",
+  "version": "1.0.0",
+  "description": "A cosmic-themed Revelations Easter Egg guide built in React + Vite.",
+  "main": "src/main.jsx",
+  "scripts": {
+    "start": "serve -s dist",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "render-build": "npm install && npm run build"
+  },
+  "keywords": [
+    "react",
+    "vite",
+    "zombies",
+    "revelations",
+    "easter egg"
+  ],
+  "author": "BryGuy",
+  "license": "ISC",
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-icons": "^5.5.0",
+    "react-router-dom": "^6.22.2",
+    "react-youtube": "^10.1.0",
+    "revelations-guide": "file:",
+    "serve": "^14.2.4"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.21",
+    "@types/react-dom": "^18.2.7",
+    "@vitejs/plugin-react": "^4.3.4",
+    "typescript": "^5.3.3",
+    "vite": "^4.4.9"
+  }
+}

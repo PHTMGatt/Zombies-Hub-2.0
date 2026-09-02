@@ -1,0 +1,18 @@
+/* DO I MAKE 1 CSS FOR THE IMAGES OR ONE FOR EACH STAFF? */
+
+
+img {
+    width: 65rem;
+}
+
+h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    padding: 1%;
+    margin-top: auto;
+}

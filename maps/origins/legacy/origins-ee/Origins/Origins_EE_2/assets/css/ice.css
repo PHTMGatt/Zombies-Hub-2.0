@@ -1,0 +1,59 @@
+
+main {
+    display: flex;
+    flex: 1 1 0;
+    max-width: 1200px;
+    margin: 2% auto;
+    color: #ffffff;
+    text-shadow: 2px 1px 1px #000000;
+}
+
+section {
+    flex: 1 1 0;
+    padding-right: 5%;
+}
+
+input, button {
+    width: 100%;
+    margin: 2% 0;
+    padding: 1%;
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    padding: 1%;
+    margin-top: auto; /* This ensures that the footer is pushed to the bottom */
+}
+
+#Ice_Staff {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 50rem;
+}
+
+#ice_text h2 {
+    font: larger;
+}
+
+h2, #ice_text {
+    font-size: larger;
+}
+
+
+@media screen and (max-width: 769px) {
+    header, main {
+        flex-direction: column;
+    }
+
+    section {
+        padding-right: 0%;
+    }
+
+    aside {
+        width: 100%;
+        text-align: center;
+    }
+}

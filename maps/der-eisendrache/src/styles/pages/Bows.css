@@ -1,0 +1,176 @@
+/* 1. PAGE LAYOUT */
+.bows-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem 1rem;
+  margin-top: 3rem;
+}
+
+/* 2. TOP NAV (unchanged except for spacing) */
+.bow-nav {
+  width: 100%;
+  max-width: 720px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(4px);
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  padding: 0.75rem 1rem;
+}
+
+.bow-nav__list {
+  display: flex;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+}
+
+.bow-nav__item {
+  margin: 0;
+}
+
+/* 3. NAV LINK STYLING */
+.bow-nav__link {
+  color: #4da6ff;
+  font-weight: 500;
+  text-decoration: none;
+  position: relative;
+  padding: 0.25rem;
+  transition: color 0.2s ease;
+}
+
+.bow-nav__link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 2px;
+  background: #4da6ff;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.2s ease;
+}
+
+.bow-nav__link:hover,
+.bow-nav__link--active {
+  color: #ffffff;
+}
+
+.bow-nav__link:hover::after,
+.bow-nav__link--active::after {
+  transform: scaleX(1);
+}
+
+/* 4. CONTENT PANEL */
+.bows-page__outlet {
+  width: 100%;
+  max-width: 720px;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(4px);
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.4);
+  padding: 2rem;
+  color: #efefef;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  box-sizing: border-box;
+}
+
+.bows-page__outlet h1,
+.bows-page__outlet h2,
+.bows-page__outlet p,
+.bows-page__outlet li {
+  color: #eee;
+}
+
+.bows-page__outlet p {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.bows-page__outlet ol,
+.bows-page__outlet ul {
+  margin: 0 0 1rem;
+  padding-left: 1.5rem;
+}
+
+.bows-page__outlet ol li,
+.bows-page__outlet ul li {
+  margin-bottom: 0.75rem;
+  line-height: 1.5;
+}
+
+/* 5. EMBEDDED VIDEO STYLING */
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
+  max-width: 100%;
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 0.75rem;
+}
+
+/* 6. RESPONSIVE BREAKPOINTS */
+@media (max-width: 768px) {
+  .bows-page {
+    padding: 1.5rem;
+  }
+
+  .bow-nav {
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .bows-page__outlet {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .bows-page {
+    padding: 1rem;
+  }
+
+  .bow-nav__list {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .bows-page__outlet {
+    padding: 1rem;
+  }
+
+  .bows-page__link,
+  .bows-page__item {
+    font-size: 0.95rem;
+  }
+}
+
+/* 7. BOWS PAGE SPECIFIC STYLES */
+
+.bows-page {
+  padding-top: 12rem; /* adjust to match your header height */
+}
+@media (max-width: 600px) {
+  .bows-page {
+    padding-top: 5rem; /* smaller header space on mobile if needed */
+  }
+}

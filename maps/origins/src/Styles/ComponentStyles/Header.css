@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@700&display=swap');
+
+.site-header {
+  font-family: 'Rajdhani', sans-serif;
+  background: linear-gradient(to right, #0a4b78, #1c7ed6, #0a4b78);
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  padding: 20px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+}
+
+.header-left,
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+.title-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: nowrap;
+}
+
+.header-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin: 0;
+  text-shadow: 0 0 6px #6dc2ff, 0 0 10px #ffffff;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  line-height: 1.2;
+}
+
+.black-text {
+  color: black;
+}
+
+.white-text {
+  color: white;
+}
+
+.revive-header-icon {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+}
+
+/* ======= Medium: Tablet (stacked 2-line layout) ======= */
+@media (max-width: 1024px) {
+  .site-header {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 20px 16px;
+  }
+
+  .header-left, .header-right {
+    justify-content: center;
+  }
+
+  .title-box {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .header-title {
+    font-size: 1.8rem;
+    text-align: center;
+  }
+}
+
+/* ======= Mobile (tight 2-line layout) ======= */
+@media (max-width: 768px) {
+  .header-title {
+    font-size: 1.4rem;
+  }
+
+  .revive-header-icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .site-header {
+    padding: 16px 12px;
+    gap: 8px;
+  }
+
+  .title-box {
+    gap: 6px;
+  }
+}
+
+/* Hide the revive-header-icon on mobile */
+@media (max-width: 768px) {
+  .revive-header-icon {
+    display: none;
+  }
+}
+

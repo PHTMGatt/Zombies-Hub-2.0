@@ -1,0 +1,34 @@
+main {
+    align-items: baseline;
+}
+
+aside {
+    padding: 1rem;
+    margin: 1rem;
+    font-size: larger;
+}
+
+
+/* Footer */
+footer {
+ position: relative;  /* Ensures it stays at the bottom */
+    bottom: -19.5rem;  /* Ensures it stays at the bottom */
+    margin-top: auto;  /* Ensures it pushes to the bottom */
+}
+
+.staff-section {
+    display: flex;
+    flex-direction: column;  /* Stack elements vertically */
+    align-items: flex-start; /* Align text to the left */
+    padding: 1rem;  /* Add padding if needed */
+}
+
+.fire-staff-heading {
+    font-size: 1.8rem;  /* Adjust size if needed */
+    margin-bottom: 0.5rem;  /* Space between text and image */
+    color: white;  /* Adjust color as needed */
+}
+
+.fire-staff-image {
+   width: 60rem;
+}

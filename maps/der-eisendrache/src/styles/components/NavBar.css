@@ -1,0 +1,47 @@
+/* 'NavBar.css' */
+/* ------------- */
+
+/* 1. BASE STYLES */
+.nav-bar {
+  display: flex;
+  gap: 1rem;
+}
+
+.nav-bar__btn {
+  display: block;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  border-radius: 0.375rem;
+  font-weight: 500;
+  color: #e0e0e0;
+  text-decoration: none;
+  transition: 
+    background 0.2s ease, 
+    transform 0.2s ease, 
+    color 0.2s ease;
+}
+
+.nav-bar__btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+  color: #ffffff;
+}
+
+/* ACTIVE STATE */
+.nav-bar__btn--active {
+  background: rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+}
+
+/* 2. RESPONSIVE ADJUSTMENTS */
+@media (max-width: 480px) {
+  .nav-bar {
+    gap: 0.5rem;
+  }
+
+  .nav-bar__btn {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+  }
+}

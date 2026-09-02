@@ -1,0 +1,56 @@
+/* 'Footer.css' */
+/* ------------- */
+
+/* 1. BASE STYLES */
+.footer-site {
+  position: relative;
+  height: 80px;
+  margin-top: auto;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+/* 2. BACKGROUND IMAGE */
+.footer-site__bg {
+  position: absolute;
+  inset: 0;
+  background: url('/src/assets/images/DE-Header3.jpg') center/cover no-repeat;
+  filter: blur(5px) brightness(0.8);
+  transform: scale(1.02);
+  z-index: 0;
+}
+
+/* 3. CONTENT LAYER */
+.footer-site__content {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer-site__text {
+  color: #ffffff;
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+/* 4. RESPONSIVE ADJUSTMENTS */
+@media (max-width: 768px) {
+  .footer-site {
+    height: 60px;
+  }
+  .footer-site__text {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-site {
+    height: 50px;
+  }
+  .footer-site__text {
+    font-size: 0.7rem;
+  }
+}

@@ -1,0 +1,80 @@
+/* TrophyChallenges.css */
+
+/* ── Page wrapper ── */
+.trophies-page {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 1rem;
+  background: var(--background-gradient);
+}
+
+/* ── Outer glass card ── */
+.trophies-card {
+  width: 100%;
+  max-width: 900px;
+  padding: 2rem;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 0, 0, 0.2);
+  border-radius: 1rem;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 0 40px rgba(255, 0, 0, 0.15);
+  text-align: center;
+}
+
+/* ── Section title ── */
+.section-title {
+  font-size: 2.25rem;
+  margin-bottom: 0.75rem;
+  color: #ff4e4e;
+  text-shadow: 0 0 8px rgba(255, 0, 0, 0.6);
+}
+
+/* ── Section intro ── */
+.section-intro {
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  color: var(--text-color);
+  text-shadow: 0 0 3px rgba(255, 255, 255, 0.08);
+}
+
+/* ── Grid layout for trophies ── */
+.trophies-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+  justify-items: center;
+}
+
+/* ── Trophy card ── */
+.trophy-card {
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 0, 0, 0.1);
+  border-radius: 0.75rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 12px rgba(255, 0, 0, 0.05);
+}
+
+/* ── Hover glow ── */
+.trophy-card:hover {
+  transform: translateY(-6px);
+  background: rgba(0, 0, 0, 0.5);
+  border-color: rgba(255, 0, 0, 0.3);
+  box-shadow: 0 0 18px rgba(255, 0, 0, 0.2);
+}
+
+/* ── Card title ── */
+.trophy-title {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: #ff4e4e;
+  text-shadow: 0 0 5px rgba(255, 0, 0, 0.4);
+}
+
+/* ── Card description ── */
+.trophy-description {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--text-color);
+}

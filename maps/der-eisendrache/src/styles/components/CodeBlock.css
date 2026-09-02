@@ -1,0 +1,11 @@
+/* styles/components/CodeBlock.css */
+
+.code-block {
+  background-color: #1e1e1e;
+  padding: 1rem;
+  font-family: monospace;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 1rem 0;
+  color: #00e0ff;
+}

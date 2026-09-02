@@ -1,0 +1,101 @@
+/* File: EggGuideCard.css */
+
+.egg-card {
+  background: #1f2a37;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+}
+
+.egg-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.75);
+}
+
+.egg-card__media {
+  background: #000;
+}
+
+.egg-card__thumbnail {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+  border-radius: 8px;
+}
+
+.egg-card__placeholder {
+  width: 100%;
+  height: 220px;
+  background: #2c3e50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #aaa;
+  font-size: 1rem;
+}
+
+.egg-card__body {
+  padding: 16px;
+  color: #fff;
+}
+
+.egg-card__body h2,
+.egg-card__body h1 {
+  margin: 0 0 6px;
+  font-size: 1.25rem;
+}
+
+.egg-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 0.9rem;
+  margin: 8px 0;
+  opacity: 0.8;
+}
+
+.egg-card__link {
+  display: inline-block;
+  margin-top: 12px;
+  color: #38a6ff;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.2s ease;
+}
+
+.egg-card__link:hover {
+  color: #60c4ff;
+}
+
+/* Layout override for full video guide view */
+.egg-card.guide-page {
+  margin-top: 7rem;
+  margin-bottom: 3rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Responsive tweaks for mobile */
+@media (max-width: 768px) {
+  .egg-card__body {
+    padding: 12px;
+  }
+
+  .egg-card__meta {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .egg-card.guide-page {
+    margin-top: 5rem;
+    padding: 0 1rem;
+  }
+}

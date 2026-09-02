@@ -1,0 +1,21 @@
+/* src/styles/NotFound.css */
+
+.notfound-page {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.notfound-page h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.notfound-page p {
+  margin-bottom: 1rem;
+}
+
+.notfound-page a {
+  color: #aad4ff;
+  text-decoration: none;
+  font-weight: bold;
+}

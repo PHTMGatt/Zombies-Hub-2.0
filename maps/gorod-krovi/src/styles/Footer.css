@@ -1,0 +1,27 @@
+.footer-container {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 10;
+}
+
+.footer-card {
+  width: 100%;
+  margin: 0;
+  padding: 0.75rem 1.5rem;
+  background: rgba(0, 0, 0, 0.75); /* black glass */
+  border-top: 1px solid rgba(255, 0, 0, 0.15);
+  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 -4px 10px rgba(255, 0, 0, 0.15);
+  border-radius: 0; /* remove round corners */
+}
+
+.footer-text {
+  color: #ff4d4d; /* strong red */
+  font-size: 0.95rem;
+  font-weight: bold;
+  text-shadow: 0 0 6px rgba(255, 50, 50, 0.25);
+}

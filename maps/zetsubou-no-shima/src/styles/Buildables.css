@@ -1,0 +1,85 @@
+.buildables-wrapper {
+  padding: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.buildables-title {
+  text-align: center;
+  font-size: 2.5rem;
+  color: #00ffaa;
+  text-shadow: 0 0 12px #00ffaa;
+  margin-bottom: 1rem;
+}
+
+.buildables-intro {
+  text-align: center;
+  color: #ccc;
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.buildable-section {
+  background: rgba(0, 0, 0, 0.55);
+  margin: 2rem 0;
+  padding: 1.5rem;
+  border-left: 4px solid #00ffcc;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0, 255, 204, 0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.buildable-section:hover {
+  transform: scale(1.015);
+  box-shadow: 0 0 18px rgba(0, 255, 204, 0.5);
+}
+
+.buildable-section h2 {
+  font-size: 1.6rem;
+  margin-bottom: 0.75rem;
+  color: #00ffcc;
+  text-shadow: 0 0 6px rgba(0, 255, 204, 0.3);
+}
+
+.buildable-section ul {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+  color: #ddd;
+}
+
+.buildable-section li {
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+}
+
+.buildable-section p {
+  color: #ccc;
+  margin-top: 0.75rem;
+  line-height: 1.6;
+}
+
+/* ✅ Responsive Improvements */
+@media (max-width: 640px) {
+  .buildables-wrapper {
+    padding: 1rem;
+  }
+
+  .buildables-title {
+    font-size: 2rem;
+  }
+
+  .buildable-section {
+    padding: 1rem;
+  }
+
+  .buildables-intro {
+    font-size: 0.95rem;
+  }
+
+  .buildable-section h2 {
+    font-size: 1.4rem;
+  }
+}

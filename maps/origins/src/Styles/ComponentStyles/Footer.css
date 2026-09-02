@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@700&display=swap');
+
+.footer {
+  position: relative;
+  background: linear-gradient(to right, #0a4b78, #1c7ed6, #0a4b78);
+  padding: 1rem 2rem;
+  color: white;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  text-align: center;
+  font-size: 1.1rem;
+  border-radius: 12px;
+  margin: 20px;
+  backdrop-filter: blur(6px);
+  overflow: hidden;
+  box-shadow: 0 0 12px rgba(109, 194, 255, 0.2);
+}

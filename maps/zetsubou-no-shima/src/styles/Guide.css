@@ -1,0 +1,100 @@
+.guide-page {
+  padding: 2rem 1rem 5rem;
+  padding-top: 3rem;
+  max-width: 960px;
+  margin: 0 auto;
+  color: #e4fdf0;
+  font-family: 'Segoe UI', sans-serif;
+  line-height: 1.75;
+  position: relative;
+  z-index: 2;
+}
+
+/* Backdrop behind guide content */
+.guide-page::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(2px);
+  z-index: -1;
+}
+
+/* Section spacing under header */
+.guide-section {
+  margin-top: 2rem;
+}
+
+/* Headings */
+.guide-page h2 {
+  font-size: 2rem;
+  color: #a0ffd6;
+  margin-bottom: 1.2rem;
+  text-shadow: 0 0 6px #00ffaa;
+}
+
+.guide-page h3 {
+  margin-top: 2rem;
+  font-size: 1.4rem;
+  color: #6ef0b2;
+  text-shadow: 0 0 5px #33ffaa;
+}
+
+/* Paragraphs */
+.guide-page p {
+  margin-bottom: 1rem;
+  color: #d1f8e6;
+}
+
+/* Lists */
+.guide-page ul {
+  margin: 1rem 0 1rem 1rem;
+  padding-left: 1.2rem;
+  list-style: none;
+}
+
+.guide-page ul li {
+  margin-bottom: 0.75rem;
+  padding-left: 1.5rem;
+  position: relative;
+  color: #dcffee;
+}
+
+.guide-page ul li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.4rem;
+  width: 10px;
+  height: 10px;
+  background: #00ffaa;
+  border-radius: 50%;
+  box-shadow: 0 0 6px #00ffaa;
+}
+
+/* Highlighted text */
+strong {
+  color: #6effb7;
+  font-weight: 600;
+  text-shadow: 0 0 3px #33ffaa;
+}
+
+/* 🔥 Glowing Link Button */
+.guide-glow-button {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.6rem 1.4rem;
+  background: linear-gradient(135deg, #00ffaa, #007755);
+  color: #001f13;
+  font-weight: bold;
+  border-radius: 8px;
+  text-shadow: none;
+  box-shadow: 0 0 12px rgba(0, 255, 170, 0.5);
+  transition: all 0.25s ease-in-out;
+}
+
+.guide-glow-button:hover {
+  background: linear-gradient(135deg, #00ffc6, #00aa66);
+  box-shadow: 0 0 18px rgba(0, 255, 170, 0.8);
+  transform: scale(1.05);
+}

@@ -1,0 +1,146 @@
+/* === MapInfo Page Styles === */
+
+/* Center the detail‐card */
+.map-info-container {
+  display: flex;
+  justify-content: center;
+  padding: 7rem 1rem 3rem;
+}
+
+/* Card Shell */
+.map-info-card {
+  background: #1e1e1e;
+  max-width: 700px;
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+  color: #eee;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Banner Wrapper */
+.map-info-banner-container {
+  position: relative;
+}
+
+.map-info-banner {
+  width: 100%;
+  max-height: 350px;
+  object-fit: cover;
+  display: block;
+}
+
+/* Banner Label */
+.map-info-banner-overlay {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  background: #fff;
+  color: #000;
+  padding: 0.35rem 0.7rem;
+  border-radius: 4px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  z-index: 3;
+}
+
+/* Mask effect: horizontal fade */
+.map-info-banner-container::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: linear-gradient(to right,
+    rgba(0, 0, 0, 1) 20%,
+    rgba(0, 0, 0, 0) 100%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Details Box */
+.map-info-details {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.info-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 2rem;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+/* Lore Description */
+.description {
+  line-height: 1.6;
+  color: #ddd;
+}
+
+/* Badges */
+.badge {
+  background: #ffcc00;
+  color: #1e1e1e;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-weight: bold;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.no-egg {
+  background: #444;
+  color: #bbb;
+}
+
+/* Back Link */
+.back-link {
+  display: inline-block;
+  margin-top: 1rem;
+  color: #77aaff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.back-link:hover {
+  color: #a3cfff;
+}
+
+/* Empty-card fallback */
+.map-info-card.no-info {
+  padding: 2rem;
+  text-align: center;
+}
+
+/* === Responsive === */
+@media (max-width: 480px) {
+  .map-info-details {
+    padding: 1.5rem 1rem;
+  }
+
+  .map-info-banner-overlay {
+    font-size: 1rem;
+    padding: 0.25rem 0.5rem;
+  }
+
+  .info-row {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .map-info-card {
+    border-radius: 6px;
+  }
+
+  .badge {
+    font-size: 0.9rem;
+    padding: 0.4rem 0.75rem;
+  }
+}

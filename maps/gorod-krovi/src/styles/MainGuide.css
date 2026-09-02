@@ -1,0 +1,117 @@
+.main-guide-page {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.main-guide-card {
+  position: relative;
+  max-width: 960px;
+  width: 100%;
+  padding: 2rem 2.5rem;
+  backdrop-filter: blur(8px);
+  border-radius: 16px;
+  box-shadow: 0 0 22px rgba(255, 150, 80, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #eee;
+  font-size: 1rem;
+  line-height: 1.6;
+  overflow: hidden;
+  z-index: 0; /* base */
+}
+
+.main-guide-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4); /* Soft black tint */
+  z-index: -1; /* <--- fixes the issue: places tint behind content */
+  pointer-events: none;
+  border-radius: 16px;
+}
+
+/* Title with shadow glow */
+.main-guide-title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  text-align: center;
+  color: #ff5f40;
+  margin-bottom: 1.2rem;
+  text-shadow:
+    0 0 10px rgba(0, 0, 0, 0.9),
+    0 0 16px rgba(255, 95, 64, 0.4),
+    0 0 26px rgba(255, 95, 64, 0.3);
+}
+
+/* Subtitle below title */
+.main-guide-subtext {
+  font-size: 1.05rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #ccc;
+}
+
+/* Subheaders like "Step 1" */
+.main-guide-card h3 {
+  font-size: 1.4rem;
+  margin-top: 1.5rem;
+  color: #f9bb77;
+  text-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
+}
+
+/* Bolded text */
+.main-guide-card strong {
+  color: #fbdba0;
+  font-weight: 700;
+}
+
+/* Ordered list tweaks */
+.main-guide-card ol {
+  margin-left: 1.8rem;
+  padding-left: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.main-guide-card li {
+  margin-bottom: 0.4rem;
+}
+
+.main-guide-card ul {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.main-guide-card li {
+  margin-bottom: 0.4rem;
+  line-height: 1.6;
+}
+
+/* Optional links (like S.O.P.H.I.A) */
+.main-guide-card a {
+  color: #78e4ff;
+  text-decoration: underline;
+}
+@media (max-width: 768px) {
+  .main-guide-page {
+    padding: 1rem;
+  }
+
+  .main-guide-card {
+    padding: 1.2rem 1rem;
+    font-size: 0.95rem;
+  }
+
+  .main-guide-title {
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+  }
+
+  .main-guide-subtext {
+    font-size: 0.95rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .main-guide-card h3 {
+    font-size: 1.15rem;
+  }
+}

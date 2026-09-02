@@ -1,0 +1,91 @@
+/* src/styles/pageStyles/ComingSoon.css */
+
+/* Full-screen wrapper with a soft radial gradient background */
+.coming-soon {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  background: radial-gradient(circle at top left,
+    rgba(10, 15, 25, 0.8),
+    rgba(0, 0, 0, 1)) fixed;
+}
+
+/* Card with fade-in and slight scale-up */
+.coming-soon__card {
+  background: rgba(20, 25, 32, 0.95);
+  backdrop-filter: blur(8px);
+  padding: 2.5rem 2rem;
+  border-radius: 0.75rem;
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5);
+
+  /* Entrance animation */
+  opacity: 0;
+  transform: scale(0.95);
+  animation: fadeInScale 0.5s ease-out forwards;
+}
+
+@keyframes fadeInScale {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Title */
+.coming-soon__card h1 {
+  margin-bottom: 1rem;
+  color: var(--text-primary, #fff);
+  font-size: 2.25rem;
+  letter-spacing: 0.5px;
+}
+
+/* Description */
+.coming-soon__card p {
+  margin-bottom: 2rem;
+  color: var(--text-secondary, #ccc);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Styled link */
+.coming-soon__link {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  border: 2px solid var(--link-color, #38a6ff);
+  border-radius: 0.5rem;
+  color: var(--link-color, #38a6ff);
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.coming-soon__link:hover {
+  background: var(--link-color, #38a6ff);
+  color: var(--bg-page, #0f0f0f);
+  text-decoration: none;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 480px) {
+  .coming-soon__card {
+    padding: 2rem 1.25rem;
+  }
+
+  .coming-soon__card h1 {
+    font-size: 1.75rem;
+  }
+
+  .coming-soon__card p {
+    font-size: 0.95rem;
+  }
+
+  .coming-soon__link {
+    padding: 0.5rem 1rem;
+    font-size: 0.95rem;
+  }
+}

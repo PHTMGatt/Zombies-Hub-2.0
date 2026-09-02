@@ -1,0 +1,86 @@
+/* File: Global.css */
+
+/* 1) Reset & Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+  font-family: 'Segoe UI', sans-serif;
+  overflow-x: hidden;
+  transition: background 0.4s ease;
+}
+
+/* 2) Theme Colors */
+body.dark {
+  background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+  color: white;
+}
+
+body.light {
+  background: linear-gradient(to bottom, #cce6ff, #e6f0ff);
+  color: #111;
+}
+
+/* 3) Global Utility Elements */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* 4) Breakpoint Tokens */
+:root {
+  --bp-sm: 640px;
+  --bp-md: 768px;
+  --bp-lg: 1024px;
+  --bp-xl: 1280px;
+}
+
+/* 5) Responsive Media Queries (Mobile First) */
+@media (min-width: var(--bp-sm)) {
+  body {
+    font-size: 1rem;
+  }
+
+  .home {
+    padding: 3rem 2rem;
+  }
+}
+
+@media (min-width: var(--bp-md)) {
+  .home-grid {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 1000px;
+  }
+
+  .navbar {
+    padding: 0 3rem;
+  }
+}
+
+@media (min-width: var(--bp-lg)) {
+  .home-title {
+    font-size: 2.5rem;
+  }
+}
+
+@media (min-width: var(--bp-xl)) {
+  .home-grid {
+    gap: 2rem;
+  }
+}
+
+/* 6) Map Iframe Mode — Disable Scrolling Globally */
+html.map-page,
+html.map-page body,
+html.map-page #root,
+html.map-page .app-container,
+html.map-page .main-content {
+  overflow: hidden !important;
+}

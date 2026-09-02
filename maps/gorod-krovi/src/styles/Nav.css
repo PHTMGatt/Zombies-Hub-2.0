@@ -1,0 +1,76 @@
+/* Nav.css */
+
+.main-nav {
+  position: sticky;
+  top: 1rem;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin: 0 auto 1.5rem;
+  padding: 0.75rem 1rem;
+  max-width: 95%;
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(8px);
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.main-nav a {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  color: var(--accent-color);
+  font-weight: 600;
+  font-size: 1rem;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.main-nav a:hover,
+.main-nav a:focus {
+  color: var(--text-color);
+  transform: scale(1.05);
+}
+
+.main-nav a.active {
+  position: relative;
+}
+
+.main-nav a.active::after {
+  content: '';
+  position: absolute;
+  bottom: -0.25rem;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--accent-color);
+  border-radius: 2px;
+}
+
+@media (max-width: 768px) {
+  .main-nav {
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 0.6rem 0.8rem;
+    max-width: 100%;
+    top: 0.5rem;
+  }
+
+  .main-nav a {
+    font-size: 0.9rem;
+    padding: 0.2rem 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-nav {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.5rem 0.6rem;
+  }
+
+  .main-nav a {
+    font-size: 0.85rem;
+  }
+}

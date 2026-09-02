@@ -1,0 +1,10 @@
+# Imported source revisions
+
+hub: be96b240183eca374887b5a3258faf76eaccc926
+origins: 9e2807edc3444d529edfc6b7f018309661ab415e
+mob: cd4aa5453a799730d9f0b33b49d9decf6fb08135
+der-eisendrache: d53298fc15caab189904ae380a526d73a2486975
+zetsubou: 040b12ba82ec7ac38b532246f89b4114fe27a10b
+gorod: 2d5f00b7455fd5a1b5689bdc200da489005f6339
+revelations: d37a3c1c01b21743eea936b9b4a5fc364f476a8e
+origins-ee: e97b8f4074dc47dac4af425c3bb1c87dbf57e01f

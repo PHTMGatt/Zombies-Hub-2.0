@@ -1,21 +1,28 @@
+/* -------------------------
+   Home Page & Card Styles
+   ------------------------- */
+
+/* 1) Variables */
 :root {
-  --accent: #6dc2ff;
-  --gap: 1rem;
-  --card-height: 140px;
+  --nav-height:      70px;
+  --accent:          #6dc2ff;
+  --gap:             1rem;
+  --card-height:     140px;
   --featured-height: 240px;
 }
 
+/* 2) Page & Headings */
 .home {
-  padding: 2rem 1rem 4rem;
+  margin-top: var(--nav-height);
+  padding: 2rem 1rem;
   background: #1f3a4b;
   color: #fff;
   text-align: center;
-  min-height: calc(100vh - var(--hub-nav-height));
 }
 
 .home-title {
   font-size: 2.5rem;
-  margin: 0 0 0.25rem;
+  margin-bottom: 0.25rem;
 }
 
 .home-subtitle {
@@ -24,6 +31,7 @@
   margin-bottom: 2rem;
 }
 
+/* 3) Grid Layout */
 .home-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -32,20 +40,27 @@
   margin: 0 auto;
 }
 
+/* 4) Base Card */
 .card {
   position: relative;
   height: var(--card-height);
   border-radius: 8px;
-  background-size: cover;
-  background-position: center;
+  background-size: cover !important;
+  background-position: center !important;
   overflow: hidden;
+  text-decoration: none;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  /* sketchy border + shadow */
   border: 3px solid rgba(255,255,255,0.2);
-  box-shadow: 4px 4px 0 rgba(0,0,0,0.3), -2px -2px 0 rgba(255,255,255,0.1);
+  box-shadow:
+    4px 4px 0 rgba(0,0,0,0.3),
+   -2px -2px 0 rgba(255,255,255,0.1);
 }
 
+/* dashed “hand-drawn” overlay */
 .card::after {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   border: 2px dashed rgba(255,255,255,0.3);
@@ -53,9 +68,12 @@
   transform: rotate(-1deg);
 }
 
+/* 5) Featured Card (spans both columns) */
 .card.featured {
   grid-column: 1 / -1;
   height: var(--featured-height);
+
+  /* accent border */
   border-color: var(--accent);
 }
 
@@ -64,12 +82,14 @@
   transform: rotate(1deg);
 }
 
+/* 6) Dark Overlay for Readability */
 .overlay {
   position: absolute;
   inset: 0;
   background: rgba(0,0,0,0.3);
 }
 
+/* 7) Title Text */
 .card-title {
   position: absolute;
   bottom: 12px;
@@ -82,25 +102,64 @@
   z-index: 2;
 }
 
+/* 8) Hover “Pop” Effect */
 .card:hover {
   transform: translateY(-6px) scale(1.04);
-  box-shadow: 8px 8px 0 rgba(0,0,0,0.4), -3px -3px 0 rgba(255,255,255,0.15);
+  box-shadow:
+    8px 8px 0 rgba(0,0,0,0.4),
+   -3px -3px 0 rgba(255,255,255,0.15);
   z-index: 5;
 }
 
+/* --------------------------
+   📱 Mobile Responsiveness
+   -------------------------- */
 @media (max-width: 768px) {
-  .home-title { font-size: 2rem; }
-  .home-subtitle { font-size: 0.95rem; margin-bottom: 1.5rem; }
-  .home-grid { grid-template-columns: 1fr; gap: 0.75rem; }
-  .card { height: 160px; }
-  .card.featured { height: 200px; }
-  .card-title { font-size: 1rem; }
+  .home-title {
+    font-size: 2rem;
+  }
+
+  .home-subtitle {
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .home-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .card {
+    height: 160px;
+  }
+
+  .card.featured {
+    height: 200px;
+  }
+
+  .card-title {
+    font-size: 1rem;
+  }
 }
 
 @media (max-width: 480px) {
-  .home { padding: 1.5rem 1rem 3rem; }
-  .home-title { font-size: 1.6rem; }
-  .card { height: 140px; }
-  .card.featured { height: 180px; }
-  .card-title { font-size: 0.95rem; }
+  .home {
+    padding: 1.5rem 1rem;
+  }
+
+  .home-title {
+    font-size: 1.6rem;
+  }
+
+  .card {
+    height: 140px;
+  }
+
+  .card.featured {
+    height: 180px;
+  }
+
+  .card-title {
+    font-size: 0.95rem;
+  }
 }

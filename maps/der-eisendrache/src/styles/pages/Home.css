@@ -1,0 +1,107 @@
+/* src/styles/pages/Home.css */
+
+/* 1. WRAPPER & RESET */
+.home-page-container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  padding-top: 5rem;
+  box-sizing: border-box;
+}
+
+
+/* 2. INNER CARD */
+.home-page {
+  margin: 2rem 0;
+  padding: 2rem;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 1rem;
+  box-shadow: 0 0 1.5rem rgba(0, 0, 0, 0.5);
+  color: #e3f0ff;
+  margin-top: 6rem; /* ~80px */
+}
+
+/* 3. TYPOGRAPHY */
+.home-page__title {
+  margin: 0 0 1rem;
+  font-size: 2.4rem;
+  font-weight: 900;
+  color: #d6eaff;
+  text-shadow: 0 0 6px #4da6ff;
+}
+
+.home-page__intro {
+  margin: 0 0 2rem;
+  font-size: 1.1rem;
+  color: #bbbbbb;
+}
+
+/* 4. VIDEO */
+.video-wrapper {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  margin-bottom: 2rem;
+}
+
+.youtube-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 0.5rem;
+}
+
+/* 5. SECTION HEADER */
+.home-page__section {
+  margin: 2rem 0 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #4da6ff;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+/* 6. STEP GRID & ITEMS */
+.step-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem 2rem;
+}
+
+.step-item {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: none;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  color: #d4eaff;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out, background 0.2s;
+}
+
+.step-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateX(4px);
+  color: #fff;
+}
+
+.step-index {
+  margin-right: 0.5rem;
+  font-weight: bold;
+  color: #4da6ff;
+}
+
+/* 7. MOBILE */
+@media (max-width: 768px) {
+  .home-page-container {
+    padding: 0 0.5rem;
+    padding-top: 1rem;
+  }
+
+  .home-page__title {
+    font-size: 1.9rem;
+  }
+}

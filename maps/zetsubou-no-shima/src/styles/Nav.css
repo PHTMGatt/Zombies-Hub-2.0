@@ -1,0 +1,57 @@
+.zets-nav {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  background: rgba(0, 30, 15, 0.55);
+  backdrop-filter: blur(4px);
+  padding: 0.6rem 1.2rem;
+  border: 1px solid rgba(0, 255, 170, 0.08);
+  border-radius: 10px;
+  box-shadow: 0 0 12px rgba(0, 255, 170, 0.12);
+  margin-top: 0.5rem;
+}
+
+.zets-nav a {
+  color: var(--zets-text, #bfffea);
+  font-weight: bold;
+  padding: 6px 14px;
+  border-radius: 6px;
+  transition: all 0.2s ease-in-out;
+  text-decoration: none;
+}
+
+.zets-nav a:hover,
+.zets-nav a.active {
+  background: var(--zets-highlight, #00ffaa);
+  color: #000;
+  box-shadow:
+    0 0 14px var(--zets-highlight, #00ffaa),
+    0 0 4px #33ffaa;
+  transform: translateY(-1px);
+}
+
+/* === Mobile Dropdown === */
+@media (max-width: 768px) {
+  .zets-nav {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .zets-nav.open {
+    display: flex;
+  }
+
+  .zets-nav a {
+    width: 100%;
+    text-align: center;
+    font-size: 1rem;
+    padding: 6px 12px;
+  }
+}

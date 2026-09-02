@@ -1,0 +1,116 @@
+/* File: MapCard.css */
+
+/* Main container */
+.map-card {
+  position: relative;
+  width: 100%;
+  max-width: 260px;
+  aspect-ratio: 260 / 160;
+  overflow: hidden;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Hover effect: lift and shadow */
+.map-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35);
+  z-index: 2;
+}
+
+/* Blurred background for layered depth */
+.bg-blur {
+  position: absolute;
+  inset: 0;
+  background-image: inherit;
+  background-size: cover;
+  background-position: center;
+  filter: blur(15px);
+  transform: scale(1.2);
+  transition: transform 0.6s ease-out;
+  z-index: 0;
+}
+
+.map-card:hover .bg-blur {
+  transform: scale(1.25);
+}
+
+/* Foreground crisp image layer */
+.bg-main {
+  position: absolute;
+  inset: 0;
+  background-image: inherit;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  transform: scale(1);
+  transition: transform 0.6s ease-out;
+  z-index: 1;
+}
+
+.map-card:hover .bg-main {
+  transform: scale(1.05);
+}
+
+/* Dark fade for text visibility */
+.map-card::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 50%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Text overlay (title + DLC) */
+.map-info {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  text-align: center;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+  pointer-events: none;
+}
+
+.map-info h3 {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.map-info .map-dlc {
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  color: var(--accent);
+  pointer-events: all;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.map-info .map-dlc:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+/* Responsive layout adjustments */
+@media (max-width: 600px) {
+  .map-card {
+    max-width: 100%;
+    aspect-ratio: 5 / 3;
+  }
+
+  .map-info h3 {
+    font-size: 1rem;
+  }
+
+  .map-info .map-dlc {
+    font-size: 0.8rem;
+  }
+}

@@ -1,0 +1,86 @@
+/* Buildables.css */
+
+/* ── Page wrapper to center content ── */
+.buildables-page {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+/* ── Outer glass card container ── */
+.buildables-card {
+  width: 100%;
+  max-width: 900px;
+  padding: 2rem;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 0, 0, 0.2);
+  border-radius: 1rem;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 0 40px rgba(255, 0, 0, 0.15);
+  text-align: center;
+}
+
+/* ── Section title ── */
+.section-title {
+  font-size: 2.25rem;
+  margin-bottom: 0.75rem;
+  color: #ff4e4e;
+  text-shadow: 0 0 8px rgba(255, 0, 0, 0.6);
+}
+
+/* ── Subtitle text ── */
+.buildables-card .section-subtitle {
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  color: var(--text-color);
+  text-shadow: 0 0 3px rgba(255, 255, 255, 0.08);
+}
+
+/* ── Grid layout for buildable items ── */
+.buildables-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+  justify-items: center;
+}
+
+/* ── Step card ── */
+.step-card {
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 0, 0, 0.1);
+  border-radius: 0.75rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 12px rgba(255, 0, 0, 0.05);
+}
+
+/* ── Step card hover effect ── */
+.step-card:hover {
+  transform: translateY(-6px);
+  background: rgba(0, 0, 0, 0.5);
+  border-color: rgba(255, 0, 0, 0.3);
+  box-shadow: 0 0 18px rgba(255, 0, 0, 0.2);
+}
+
+/* ── Step title ── */
+.step-card .step-title {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: #ff4e4e;
+  text-shadow: 0 0 5px rgba(255, 0, 0, 0.4);
+}
+
+/* ── Bullet list ── */
+.step-list {
+  list-style: disc inside;
+  margin: 0.5rem 0 0;
+  padding: 0;
+}
+
+.step-list li {
+  margin-bottom: 0.75rem;
+  font-size: 0.95rem;
+  color: var(--text-color);
+  line-height: 1.5;
+}

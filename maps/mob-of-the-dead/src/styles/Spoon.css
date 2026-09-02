@@ -1,0 +1,86 @@
+/* src/styles/Spoon.css */
+
+.spoon-page {
+  max-width: 720px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(8px);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7);
+  color: #fff;
+  line-height: 1.6;
+}
+
+/* Page title */
+.spoon-page h2 {
+  margin: 0 0 1.5rem;
+  font-size: 2rem;
+  text-align: center;
+  color: #ffd700;                 /* yellow accent */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+/* Ordered list */
+.spoon-page ol {
+  list-style: decimal inside;
+  padding: 0;
+  margin-bottom: 2rem;
+}
+
+/* List items */
+.spoon-page li {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+/* Nested lists (if any) */
+.spoon-page ul {
+  list-style: disc inside;
+  margin: 0.5rem 0 1rem;
+  padding-left: 1.5rem;
+}
+.spoon-page ul li {
+  margin-bottom: 0.6rem;
+  font-size: 1rem;
+}
+
+/* Emphasis styling */
+.spoon-page strong {
+  color: #aad4ff;                 /* blue accent */
+}
+
+/* Tablet & down */
+@media (max-width: 768px) {
+  .spoon-page {
+    padding: 1.5rem;
+    margin: 1.5rem auto;
+  }
+
+  .spoon-page h2 {
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .spoon-page li {
+    font-size: 1rem;
+    margin-bottom: 0.8rem;
+  }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+  .spoon-page {
+    padding: 1rem;
+    margin: 1rem;
+  }
+
+  .spoon-page h2 {
+    font-size: 1.5rem;
+  }
+
+  .spoon-page li {
+    font-size: 0.95rem;
+    margin-bottom: 0.6rem;
+  }
+}

@@ -1,0 +1,105 @@
+/* 'Parts.css' */
+/* ------------- */
+
+/* 1. PAGE CONTAINER */
+.parts-page {
+  max-width: 800px;
+  margin: 12rem auto 2rem auto;
+  padding: 1.5rem;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(4px);
+  border-radius: 0.75rem;
+  color: #efefef;
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.4);
+  box-sizing: border-box;
+}
+
+/* 2. TYPOGRAPHY */
+.parts-page__title {
+  margin: 0 0 1.5rem;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.parts-page__section {
+  margin-bottom: 1.5rem;
+}
+
+.parts-page__subtitle {
+  margin: 0 0 0.75rem;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #ffffff;
+}
+
+/* LIST STYLES */
+.parts-page__list {
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+.parts-page__list--ordered {
+  list-style: decimal inside;
+}
+
+.parts-page__list:not(.parts-page__list--ordered) {
+  list-style: disc inside;
+}
+
+.parts-page__item {
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+}
+
+/* 3. RESPONSIVE BREAKPOINTS */
+@media (max-width: 768px) {
+  .parts-page {
+    margin: 1rem;
+    padding: 1rem;
+  }
+  .parts-page__title {
+    font-size: 1.75rem;
+  }
+  .parts-page__subtitle {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .parts-page {
+    padding: 0.75rem;
+    margin: 8rem 1rem 1rem;
+  }
+  .parts-page__title {
+    font-size: 1.5rem;
+  }
+  .parts-page__subtitle {
+    font-size: 1rem;
+  }
+  .parts-page__item {
+    font-size: 0.95rem;
+  }
+}
+
+/* 4. VIDEO LINK STYLING */
+.parts-page__video-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  color: #4da6ff;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.parts-page__video-link:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+.parts-page__video-link::before {
+  content: '🔗';
+  font-size: 1rem;
+  display: inline-block;
+}

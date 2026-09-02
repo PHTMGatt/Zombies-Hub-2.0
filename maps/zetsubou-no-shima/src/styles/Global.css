@@ -1,0 +1,68 @@
+:root {
+  --zets-bg-start: #061a0f;
+  --zets-bg-end: #0e2d23;
+  --zets-text: #d9fbe3;
+  --zets-accent: #6effb7;
+  --zets-highlight: #33ffaa;
+}
+
+/* Reset + Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  font-family: 'Segoe UI', sans-serif;
+  background: url('../assets/images/Zetsubou.jpg') no-repeat center center fixed;
+  background-size: cover;
+  color: var(--zets-text);
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  position: relative;
+  z-index: 0;
+}
+
+/* Dark blurred overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(2px);
+  z-index: -1;
+}
+
+/* Typography */
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+}
+
+a:hover {
+  color: var(--zets-highlight);
+}
+
+/* Layout wrapper for main content */
+main.guide-page {
+  margin-top: 1.5rem;
+  padding: 2rem 1rem 5rem;
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.75;
+}
+
+/* Lists */
+ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+}
+
+ul li {
+  margin-bottom: 0.5rem;
+}

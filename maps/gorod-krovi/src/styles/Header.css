@@ -1,0 +1,143 @@
+:root {
+  --accent-color: #ff5f3c;
+  --text-color: #ffffff;
+  --text-muted: #cccccc;
+}
+
+.header-container {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 50;
+  background-image: url('../assets/GK_Banner.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+  height: auto;
+  min-height: 90px;
+}
+
+.header-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(12px);
+  z-index: 1;
+}
+
+.header-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 2rem;
+  flex-wrap: wrap;
+}
+
+.header-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.3rem;
+  text-align: left;
+}
+
+.header-title {
+  font-size: 1.8rem;
+  color: var(--accent-color);
+  margin: 0;
+  text-shadow: 0 0 5px var(--accent-color), 0 0 20px var(--accent-color);
+}
+
+.header-subtitle {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.header-nav {
+  display: flex;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.nav-link {
+  color: var(--accent-color);
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.nav-link:hover,
+.nav-link:focus {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-color);
+}
+
+.nav-link.active {
+  background: var(--accent-color);
+  color: #000;
+}
+
+/* Tablet screens */
+@media (max-width: 900px) {
+  .header-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+    padding: 1.2rem 1.5rem;
+  }
+
+  .header-left {
+    align-items: center;
+  }
+
+  .header-title {
+    font-size: 1.5rem;
+  }
+
+  .header-subtitle {
+    font-size: 0.85rem;
+  }
+
+  .header-nav {
+    justify-content: center;
+    gap: 0.8rem;
+  }
+
+  .nav-link {
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
+  }
+}
+
+/* Mobile screens */
+@media (max-width: 600px) {
+  .header-title {
+    font-size: 1.25rem;
+  }
+
+  .header-subtitle {
+    font-size: 0.8rem;
+  }
+
+  .nav-link {
+    font-size: 0.85rem;
+    padding: 0.3rem 0.7rem;
+  }
+
+  .header-content {
+    padding: 1rem;
+    gap: 0.6rem;
+  }
+
+  .header-container {
+    min-height: 80px;
+  }
+}

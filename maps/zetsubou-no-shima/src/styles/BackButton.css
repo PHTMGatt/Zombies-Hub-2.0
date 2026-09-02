@@ -1,0 +1,18 @@
+.back-button {
+  background: linear-gradient(to right, #4aff93, #1de6c1);
+  color: #001;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 8px 18px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-bottom: 1.75rem;
+  box-shadow: 0 0 10px rgba(51, 255, 170, 0.25);
+  transition: all 0.2s ease-in-out;
+}
+
+.back-button:hover {
+  transform: translateY(-1.5px);
+  box-shadow: 0 0 20px rgba(51, 255, 170, 0.5);
+}

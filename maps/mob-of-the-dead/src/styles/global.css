@@ -1,0 +1,112 @@
+/* ==== global.css ==== */
+
+/* Reset & Base */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Full-height & Flex container */
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app-main {
+  flex: 1;
+  position: relative;
+  z-index: 2;
+
+  backdrop-filter: blur(8px);
+  background: rgba(0, 0, 0, 0.5);
+  max-width: 800px;
+
+  /* Content padding (top/side) */
+  padding: 2rem;
+
+  /* Reveal the real background under your cards */
+  margin: 2rem auto 6rem;
+
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7);
+
+  /* Note; allow everything—including tooltips—to overflow */
+  overflow: visible;
+}
+
+/* Background blur & tint */
+.bg-blur {
+  position: fixed;
+  inset: 0;
+  background: url('../assets/images/mob-bg.png') center/cover no-repeat fixed;
+  filter: blur(1px);
+  z-index: -2;
+}
+.bg-tint {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(170, 68, 34, 0.2),
+    rgba(11, 15, 26, 0.4)
+  );
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Typography */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: transparent;
+  color: #fff;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+h1,
+h2,
+h3,
+h4 {
+  color: #fff;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+}
+a {
+  color: #aad4ff;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+a:hover {
+  color: #ffd700;
+  text-decoration: underline;
+}
+
+/* Utilities */
+.text-center { text-align: center; }
+.mb-sm       { margin-bottom: 0.5rem; }
+.mb-md       { margin-bottom: 1rem; }
+.mb-lg       { margin-bottom: 2rem; }
+
+@media (max-width: 768px) {
+  .app-main {
+    padding: 1.5rem;
+    margin: 1.5rem auto 5.5rem;
+  }
+}
+@media (max-width: 480px) {
+  .app-main {
+    padding: 1rem;
+    margin: 1rem auto 5rem;
+  }
+}

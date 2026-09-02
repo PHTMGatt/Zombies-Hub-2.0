@@ -1,0 +1,78 @@
+/* src/styles/SideEE/SideEasterEggList.css */
+
+/* Page Wrapper */
+.ee-page-wrapper {
+  padding-top: 5rem;
+  padding-bottom: 2rem;
+}
+
+/* Responsive Grid Layout */
+.side-ee-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem 1rem;
+  margin: 0 auto;
+  width: 100%;
+  max-width: auto; /* keep your flexible intent */
+}
+
+/* Card Base */
+.side-ee-card {
+  display: flex;
+  flex-direction: column;
+  background: rgba(20, 25, 32, 0.6);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0.75rem;
+  overflow: hidden;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.side-ee-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+}
+
+/* Header Image */
+.side-ee-card__header {
+  position: relative;
+  height: 160px;
+  background-size: cover;
+  background-position: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.side-ee-card__header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+/* Card Title */
+.side-ee-card__title {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
+  text-align: center;
+}
+
+/* Responsive Text Sizing */
+@media (max-width: 480px) {
+  .side-ee-card__title {
+    font-size: 1rem;
+    padding: 0.85rem;
+  }
+
+  .side-ee-card__header {
+    height: 140px;
+  }
+}

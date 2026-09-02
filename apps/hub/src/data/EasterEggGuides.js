@@ -1,0 +1,38 @@
+export default [
+  {
+    slug: 'ascension',
+    title: 'Ascension',
+    game: 'Black Ops 1',
+    dlc: 'First Strike',
+    released: 'November 6, 1963',
+    description: 'Guide the Ascension Group rocket into orbit and cleanse the land of the Casimir Mechanism. Classic four-step EE featuring Gersh’s liberation and a launch sequence finale.',
+    videoUrl: 'https://www.youtube.com/watch?v=P6RzrxQ6yNg',
+  },
+  {
+    slug: 'call-of-the-dead',
+    title: 'Call of the Dead',
+    game: 'Black Ops 1',
+    dlc: 'Escalation',
+    released: 'March 28, 2011',
+    description: 'Team up with George Romero’s trapped cast to complete puzzles, overload generators, and send them back to reality. One of the most unique EEs in the series.',
+    videoUrl: 'https://www.youtube.com/watch?v=8kI2w4NgUCQ',
+  },
+  {
+    slug: 'shangri-la',
+    title: 'Shangri-La',
+    game: 'Black Ops 1',
+    dlc: 'Annihilation',
+    released: 'May 3, 2011',
+    description: 'Traverse ancient traps, align the eclipse, and rescue time-lost explorers Brock and Gary. A dense and puzzle-heavy EE deep in the jungle. (Video guide coming soon.)',
+    videoUrl: '',
+  },
+  {
+    slug: 'moon',
+    title: 'Moon',
+    game: 'Black Ops 1',
+    dlc: 'Rezurrection',
+    released: 'August 23, 2011',
+    description: 'Hack terminals, collect Vril, and fire the moon base’s deadly weapon to destroy Earth. The climax of the original Aether story arc — this one ends with a bang.',
+    videoUrl: 'https://www.youtube.com/watch?v=2k6L3wBsEyA',
+  },
+];

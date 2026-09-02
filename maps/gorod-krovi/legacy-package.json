@@ -1,0 +1,22 @@
+{
+  "name": "gorod-guide-scaffold",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "serve -s dist",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "render-build": "npm install && npm run build"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.14.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.6.0",
+    "serve": "^14.2.4",
+    "vite": "^5.2.0"
+  }
+}

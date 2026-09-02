@@ -1,0 +1,117 @@
+/* src/styles/pageStyles/AllMaps.css */
+
+/* ========================================================
+   Global Variables & Base Resets
+======================================================== */
+:root {
+  --nav-height:     70px;
+  --text-color:     #fff;
+  --subtext-color:  #ccc;
+  --accent:         #00bfff;
+  --card-width:     280px;
+  --card-height:    180px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #1a2a36;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* ========================================================
+   Main Wrapper
+======================================================== */
+.maps-wrapper {
+  margin-top: var(--nav-height);
+  padding: 2rem;
+  text-align: center;
+  color: var(--text-color);
+}
+
+/* ========================================================
+   Title + Subtitle
+======================================================== */
+.page-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.page-subtitle {
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--subtext-color);
+  margin-bottom: 2rem;
+}
+
+/* ========================================================
+   Section Headers by Game (BO1–BO3)
+======================================================== */
+.game-section {
+  margin-bottom: 4rem;
+}
+
+.game-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.game-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.3);
+  object-fit: cover;
+  transition: transform 0.2s ease;
+}
+
+.game-header:hover .game-icon {
+  transform: scale(1.15);
+}
+
+.game-title {
+  line-height: 1;
+}
+
+/* ========================================================
+   Grid of Map Cards
+======================================================== */
+.maps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--card-width), 1fr));
+  gap: 1.5rem;
+  max-width: calc(var(--card-width) * 4 + 1.5rem * 3);
+  margin: 0 auto;
+  justify-items: center;
+}
+
+/* ========================================================
+   Responsive Adjustments
+======================================================== */
+@media (max-width: 768px) {
+  .maps-wrapper {
+    padding: 1rem;
+  }
+
+  .page-title {
+    font-size: 2rem;
+  }
+
+  .game-header {
+    font-size: 1.25rem;
+  }
+
+  .maps-grid {
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+}

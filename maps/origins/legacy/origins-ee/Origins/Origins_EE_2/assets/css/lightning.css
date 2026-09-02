@@ -1,0 +1,21 @@
+img {
+ width: 60rem;
+}
+
+aside {
+ width: 30rem;
+}
+
+img, aside {
+ padding: 2rem;
+}
+
+#lightning_text {
+display: flex;
+margin-top: 1rem;
+}
+
+h2 {
+ font-size: 2rem;
+}
+

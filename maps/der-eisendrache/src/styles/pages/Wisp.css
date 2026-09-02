@@ -1,0 +1,93 @@
+/* 'Wisp.css' */
+/* ------------- */
+
+.wisp-page {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(4px);
+  border-radius: 0.75rem;
+  color: #efefef;
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.4);
+  margin-top: 12rem;
+}
+
+/* Headings */
+.wisp-page__title {
+  margin-bottom: 1rem;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.wisp-page__subtitle {
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #ffffff;
+}
+
+/* Intro paragraph */
+.wisp-page__intro {
+  margin-bottom: 1.25rem;
+  line-height: 1.6;
+}
+
+/* List styling */
+.wisp-page__list {
+  list-style: decimal inside;
+  margin: 0;
+  padding: 0;
+}
+
+.wisp-page__item {
+  margin-bottom: 0.75rem;
+  line-height: 1.5;
+}
+
+/* Video container */
+.wisp-page__video-embed {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  margin-bottom: 1.5rem;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
+}
+
+.wisp-page__video-embed iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 0.75rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .wisp-page {
+    margin: 1rem;
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .wisp-page {
+    margin: 0.5rem;
+    padding: 0.75rem;
+    margin-top: 7rem;
+  }
+
+  .wisp-page__title {
+    font-size: 1.75rem;
+  }
+
+  .wisp-page__subtitle {
+    font-size: 1.25rem;
+  }
+}
