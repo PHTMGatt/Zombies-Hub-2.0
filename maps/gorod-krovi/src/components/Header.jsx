@@ -10,7 +10,7 @@ const Header = () => (
     <div className="gorod-header__overlay" />
     <div className="gorod-header__content">
       <div className="gorod-header__identity">
-        <span className="gorod-header__kicker">Stalingrad · Zombies Hub 2.0</span>
+        <span className="gorod-header__kicker">Stalingrad</span>
         <h1 className="gorod-header__title">Gorod Krovi</h1>
         <p className="gorod-header__subtitle">Love and War</p>
       </div>
