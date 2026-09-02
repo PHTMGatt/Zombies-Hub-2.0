@@ -1,100 +1,85 @@
-import React, { useState } from 'react';
-import apothiconSteps from '../data/ApothiconSteps';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import {
+  GuideHero,
+  GuideSection,
+  GuideStepList,
+  GuideStepCard,
+  GuideCallout,
+  GuideChip,
+} from '../../../../shared/ui/GuideLayout';
 import '../styles/MainGuide.css';
 
-const MainGuide = () => {
-  const [currentStep, setCurrentStep] = useState(0);
-  const current = apothiconSteps[currentStep];
+const BASE = '/maps/revelations';
 
-  const renderDetail = (step) => {
-    if (step.title.startsWith('Tombstones')) {
-      const [before, after] = step.detail.split('(2-3-1-4)');
-      return (
-        <>
-          {before}
-          <span className="rev-code">(2–3–1–4)</span>
-          {after}
-        </>
-      );
-    }
-    return step.detail;
-  };
+const phases = [
+  {
+    title: 'Open Pack-a-Punch + Prepare the Run',
+    summary: 'Shoot the tombstones in 2 → 3 → 1 → 4 order, activate all four Corruption Engines, open the Giant Apothicon, build the Keeper Protector, and secure the required weapons.',
+    to: `${BASE}/apothicon-upgrade`,
+    link: 'Open Apothicon Upgrade',
+  },
+  {
+    title: 'Collect the Three Audio Reels',
+    summary: 'Complete the Keeper ritual, throw Little Arnies into all nine Apothicon holes, and finish the six-bone sequence to collect and place all three reels.',
+  },
+  {
+    title: 'S.O.P.H.I.A. + Eggs + Runes',
+    summary: 'Hit all four turret rocks, activate S.O.P.H.I.A., collect the Kronorium, charge the four eggs into Gateworms, then locate all four Runes of Creation.',
+    to: `${BASE}/egg-locations`,
+    link: 'Open Egg Locations',
+  },
+  {
+    title: 'Symbol Room + Summoning Key',
+    summary: 'Enter the random four-symbol order, clear the Margwa waves, collect the Summoning Key, then hit all seven required objects around the map.',
+    to: `${BASE}/summoning-key`,
+    link: 'Open Summoning Key Guide',
+  },
+  {
+    title: 'Final Shadowman Fight',
+    summary: 'Charge an altar, throw the Summoning Key through ghost S.O.P.H.I.A., damage the Shadowman until he is pushed into the Apothicon mouth, then interact with the book to finish.',
+  },
+];
 
-  return (
-    <main className="rev-page rev-main-guide">
-      <div className="rev-background" />
+const MainGuide = () => (
+  <main className="rev-page rev-main-guide">
+    <div className="rev-background" />
+    <div className="rev-main-content">
+      <GuideHero
+        kicker="Revelations"
+        title="For The Good Of All"
+        description="Five phases for the whole quest. Use the dedicated pages for the location-heavy parts instead of scrolling through every interaction here."
+      >
+        <GuideChip>Apothicon Servant</GuideChip>
+        <GuideChip>Little Arnies</GuideChip>
+        <GuideChip>Keeper Protector</GuideChip>
+      </GuideHero>
 
-      <div className="rev-intro-section">
-        <span className="rev-main-kicker">Revelations · Black Ops III</span>
-        <h1 className="rev-title">For The Good Of All</h1>
-        <p className="rev-description">
-          A run-first version of the full Revelations quest. Use the left side as your progression checklist,
-          then open only the step you are currently doing for the details that matter in-game.
-        </p>
-        <div className="rev-main-chips" aria-label="Guide requirements">
-          <span>Apothicon Servant</span>
-          <span>Little Arnies</span>
-          <span>Keeper Protector</span>
-          <span>4 Runes</span>
-        </div>
-      </div>
+      <GuideCallout label="Random step" tone="info" className="rev-main-note">
+        The four-symbol order in the boss room changes every game. Copy the order shown by the book; do not memorize a fixed code.
+      </GuideCallout>
 
-      <div className="rev-grid-split">
-        <nav className="rev-step-list" aria-label="Revelations Easter Egg progression">
-          <span className="rev-step-list__label">Quest Progression</span>
-          {apothiconSteps.map((step, index) => (
-            <button
-              key={step.title}
-              type="button"
-              className={`rev-step-button ${index === currentStep ? 'active' : ''}`}
-              onClick={() => setCurrentStep(index)}
-              aria-current={index === currentStep ? 'step' : undefined}
+      <GuideSection kicker="Main Run" title="Five phases">
+        <GuideStepList>
+          {phases.map((phase, index) => (
+            <GuideStepCard
+              key={phase.title}
+              step={index + 1}
+              label="Main Quest"
+              title={phase.title}
+              summary={phase.summary}
             >
-              <span className="rev-step-number">{String(index + 1).padStart(2, '0')}</span>
-              <span>{step.title}</span>
-            </button>
+              {phase.to && <Link className="rev-phase-link" to={phase.to}>{phase.link} →</Link>}
+            </GuideStepCard>
           ))}
-        </nav>
+        </GuideStepList>
+      </GuideSection>
 
-        <section className="rev-step-panel" aria-live="polite">
-          <article className="rev-step-detail">
-            <div className="rev-step-heading-row">
-              <span className="rev-step-current">Step {currentStep + 1} of {apothiconSteps.length}</span>
-              <span className="rev-step-status">Main Quest</span>
-            </div>
-            <h2 className="rev-step-title">{current.title}</h2>
-            <p className="rev-step-text">{renderDetail(current)}</p>
-
-            {Array.isArray(current.bullets) && current.bullets.length > 0 && (
-              <ul className="rev-step-checklist">
-                {current.bullets.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            )}
-          </article>
-
-          <aside className="rev-step-extra">
-            <h3 className="tip-header">Run Notes</h3>
-            <ul className="tip-list">
-              <li>
-                The <span className="rev-keyword">Thunder Gun</span> is optional, but the walkthrough specifically recommends it for making the Margwa phases much easier.
-              </li>
-              <li>
-                For the nine Little Arnie holes, a <span className="rev-keyword">bug round</span> plus Raindrops can make the ammo-heavy step substantially faster.
-              </li>
-              <li>
-                A <span className="rev-keyword">Pack-a-Punched bullet weapon</span> is required to reveal the six bone rocks before the upgraded Apothicon Servant absorbs them.
-              </li>
-              <li>
-                The four-symbol order in the boss room is <span className="rev-code">random every game</span>; copy the order shown by the book instead of memorizing a fixed solution.
-              </li>
-            </ul>
-          </aside>
-        </section>
-      </div>
-    </main>
-  );
-};
+      <GuideSection kicker="Rune Placement" title="Need the sound-step locations?">
+        <Link className="rev-sound-link" to={`${BASE}/sound-step`}>Open the compact Sound Step reference →</Link>
+      </GuideSection>
+    </div>
+  </main>
+);
 
 export default MainGuide;
