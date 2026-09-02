@@ -1,85 +1,106 @@
-.buildables-wrapper {
-  padding: 2rem;
-  max-width: 900px;
+.zets-buildables-page {
+  --guide-accent: #69e6ad;
+  --guide-accent-soft: rgba(31, 150, 99, 0.17);
+  --guide-panel: rgba(5, 18, 13, 0.8);
+  --guide-panel-strong: rgba(4, 14, 10, 0.95);
+  --guide-border: rgba(105, 230, 173, 0.19);
+  --guide-text: #effff7;
+  --guide-muted: #b7d9c8;
+
+  width: min(100% - 2rem, 1120px);
   margin: 0 auto;
+  padding: 3rem 0 5rem;
 }
 
-.buildables-title {
-  text-align: center;
-  font-size: 2.5rem;
-  color: #00ffaa;
-  text-shadow: 0 0 12px #00ffaa;
-  margin-bottom: 1rem;
+.zets-buildables-page .zh-guide-hero {
+  background:
+    linear-gradient(135deg, rgba(30, 131, 85, 0.21), transparent 44%),
+    rgba(4, 16, 11, 0.84);
 }
 
-.buildables-intro {
-  text-align: center;
-  color: #ccc;
-  font-size: 1rem;
-  margin-bottom: 2rem;
-  max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
+.zets-gear-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.9rem;
 }
 
-.buildable-section {
-  background: rgba(0, 0, 0, 0.55);
-  margin: 2rem 0;
-  padding: 1.5rem;
-  border-left: 4px solid #00ffcc;
-  border-radius: 12px;
-  box-shadow: 0 0 12px rgba(0, 255, 204, 0.25);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+.zets-gear-card {
+  min-height: 100%;
+  padding: 1rem;
+  border: 1px solid rgba(105, 230, 173, 0.17);
+  border-radius: 14px;
+  background:
+    linear-gradient(135deg, rgba(29, 125, 82, 0.14), transparent 60%),
+    rgba(4, 15, 10, 0.84);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.3);
 }
 
-.buildable-section:hover {
-  transform: scale(1.015);
-  box-shadow: 0 0 18px rgba(0, 255, 204, 0.5);
+.zets-gear-card__header {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.75rem;
+  align-items: center;
+  margin-bottom: 0.8rem;
 }
 
-.buildable-section h2 {
-  font-size: 1.6rem;
-  margin-bottom: 0.75rem;
-  color: #00ffcc;
-  text-shadow: 0 0 6px rgba(0, 255, 204, 0.3);
+.zets-gear-card__type {
+  display: block;
+  margin-bottom: 0.15rem;
+  color: #78b99a;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
 }
 
-.buildable-section ul {
-  padding-left: 1.5rem;
-  margin-bottom: 1rem;
-  color: #ddd;
+.zets-gear-card h3 {
+  margin: 0;
+  color: #a9f1ce;
+  font-size: 1.04rem;
+  line-height: 1.2;
 }
 
-.buildable-section li {
-  margin-bottom: 0.5rem;
-  line-height: 1.6;
+.zets-gear-parts {
+  margin: 0;
+  padding-left: 1.2rem;
+  color: #d2e9dd;
 }
 
-.buildable-section p {
-  color: #ccc;
-  margin-top: 0.75rem;
-  line-height: 1.6;
+.zets-gear-parts li {
+  margin: 0.48rem 0;
+  line-height: 1.55;
 }
 
-/* ✅ Responsive Improvements */
-@media (max-width: 640px) {
-  .buildables-wrapper {
-    padding: 1rem;
+.zets-gear-build,
+.zets-gear-note {
+  margin: 0.85rem 0 0;
+  padding-top: 0.75rem;
+  line-height: 1.52;
+  border-top: 1px solid rgba(105, 230, 173, 0.1);
+}
+
+.zets-gear-build {
+  color: #cfe8dc;
+}
+
+.zets-gear-build strong {
+  color: #8de4b8;
+}
+
+.zets-gear-note {
+  color: #92b9a5;
+  font-size: 0.84rem;
+}
+
+@media (max-width: 820px) {
+  .zets-gear-grid {
+    grid-template-columns: 1fr;
   }
+}
 
-  .buildables-title {
-    font-size: 2rem;
-  }
-
-  .buildable-section {
-    padding: 1rem;
-  }
-
-  .buildables-intro {
-    font-size: 0.95rem;
-  }
-
-  .buildable-section h2 {
-    font-size: 1.4rem;
+@media (max-width: 720px) {
+  .zets-buildables-page {
+    width: min(100% - 1rem, 680px);
+    padding: 1.75rem 0 3rem;
   }
 }
