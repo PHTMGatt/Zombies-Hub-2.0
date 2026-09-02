@@ -1,12 +1,11 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import Header from '../src/components/Header';
 import Footer from '../src/components/Footer';
 import MobMain from '../src/pages/MobMain';
-import FreeBlundergat from '../src/pages/FreeBlundergat';
-import Spoon from '../src/pages/Spoon';
-import Redeemer from '../src/pages/Redeemer';
-import Logs from '../src/pages/Logs';
+import Plane from '../src/pages/Plane';
+import RetrieverSkulls from '../src/pages/RetrieverSkulls';
+import Codes from '../src/pages/Codes';
 import FinalStep from '../src/pages/FinalStep';
 import NotFound from '../src/pages/NotFound';
 import '../src/styles/global.css';
@@ -21,11 +20,16 @@ export default function MobRoutes() {
       <main className="app-main">
         <Routes>
           <Route index element={<MobMain />} />
-          <Route path="free-blundergat" element={<FreeBlundergat />} />
-          <Route path="spoon" element={<Spoon />} />
-          <Route path="redeemer" element={<Redeemer />} />
-          <Route path="logs" element={<Logs />} />
+          <Route path="plane" element={<Plane />} />
+          <Route path="retriever-skulls" element={<RetrieverSkulls />} />
+          <Route path="codes" element={<Codes />} />
           <Route path="final-step" element={<FinalStep />} />
+
+          {/* Preserve old 1.0 links while routing them into the corrected 2.0 flow. */}
+          <Route path="free-blundergat" element={<Navigate to="../retriever-skulls" replace />} />
+          <Route path="spoon" element={<Navigate to="../retriever-skulls" replace />} />
+          <Route path="redeemer" element={<Navigate to="../retriever-skulls" replace />} />
+          <Route path="logs" element={<Navigate to="../codes" replace />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
