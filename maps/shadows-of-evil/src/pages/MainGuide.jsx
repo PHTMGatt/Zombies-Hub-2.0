@@ -1,12 +1,4 @@
 import React from 'react';
-import {
-  GuideHero,
-  GuideSection,
-  GuideStepList,
-  GuideStepCard,
-  GuideCallout,
-  GuideChip,
-} from '../../../../shared/ui/GuideLayout';
 import soeGuide from '../data/soeGuide';
 import soeLayout from '../../../../apps/hub/src/assets/images/BO3/Shadows_Of_Evil.webp';
 import '../styles/Shadows.css';
@@ -14,7 +6,7 @@ import '../styles/Shadows.css';
 const phases = [
   {
     title: 'Rituals + Apothicon Sword',
-    summary: 'Complete all four district rituals, record the three train symbols, unlock the sword egg, charge it at all four statues, and collect the Apothicon Sword.',
+    summary: 'Complete all four district rituals, record the train symbols, unlock and charge the sword egg, then collect the Apothicon Sword.',
     notes: [...soeGuide[0].notes, ...soeGuide[1].notes],
   },
   {
@@ -28,7 +20,7 @@ const phases = [
     notes: soeGuide[4].notes,
   },
   {
-    title: 'Shadowman Fight',
+    title: 'Defeat the Shadowman',
     summary: soeGuide[5].summary,
     notes: soeGuide[5].notes,
   },
@@ -43,40 +35,37 @@ function MainGuide() {
   return (
     <main className="soe-page">
       <div className="soe-page__background" aria-hidden="true" />
-      <div className="soe-page__content">
-        <GuideHero
-          kicker="Shadows of Evil"
-          title="Main Easter Egg Guide"
-          description="Five phases from rituals to the train finale. Open the notes only when you reach that part of the run."
-        >
-          <GuideChip>Solo through Shadowman</GuideChip>
-          <GuideChip>4 players for full ending</GuideChip>
-        </GuideHero>
+      <div className="soe-page__content soe-run-sheet">
+        <header className="soe-run-header">
+          <div>
+            <span>MAIN EASTER EGG</span>
+            <h2>Shadows of Evil</h2>
+          </div>
+          <p>Five phases from the rituals to the train finale. Expand notes only when you need the exact mechanic.</p>
+        </header>
 
-        <GuideCallout label="Player requirement" tone="info" className="soe-player-note">
-          Solo can reach and defeat the Shadowman. The final train/Keeper sequence and ending require four players.
-        </GuideCallout>
+        <div className="soe-run-alert">
+          <strong>Player requirement:</strong>
+          <span>solo can defeat the Shadowman; the final train/Keeper sequence and full ending require four players.</span>
+        </div>
 
-        <GuideSection kicker="Main Run" title="Five phases">
-          <GuideStepList className="zh-guide-step-list--roadmap">
-            {phases.map((phase, index) => (
-              <GuideStepCard
-                key={phase.title}
-                step={index + 1}
-                label="Main Quest"
-                title={phase.title}
-                summary={phase.summary}
-              >
+        <ol className="soe-run-flow">
+          {phases.map((phase, index) => (
+            <li key={phase.title}>
+              <span className="soe-run-number">{String(index + 1).padStart(2, '0')}</span>
+              <div className="soe-run-copy">
+                <h3>{phase.title}</h3>
+                <p>{phase.summary}</p>
                 <details className="soe-phase-notes">
                   <summary>Quick notes</summary>
                   <ul>
                     {phase.notes.map((note) => <li key={note}>{note}</li>)}
                   </ul>
                 </details>
-              </GuideStepCard>
-            ))}
-          </GuideStepList>
-        </GuideSection>
+              </div>
+            </li>
+          ))}
+        </ol>
 
         <details className="soe-map-reference">
           <summary>Open Morg City map reference</summary>
