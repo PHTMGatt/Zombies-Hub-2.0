@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams, Link, Navigate } from 'react-router-dom';
+import { useParams, useSearchParams, Link, Navigate } from 'react-router-dom';
 import mapInfo from '../data/mapInfo';
 import mapData from '../data/mapData';
 import { getDedicatedGuideRoute } from '../data/dedicatedGuides';
@@ -7,16 +7,27 @@ import '../styles/pageStyles/MapInfo.css';
 
 export default function MapInfo() {
   const { slug } = useParams();
+  const [searchParams] = useSearchParams();
+  const requestedGame = searchParams.get('game');
   const info = mapInfo[slug];
 
   if (!info) {
     return <Navigate to="/allmaps" replace />;
   }
 
-  const meta = mapData.find(m => m.slug === slug) || mapData.find(m => m.name === info.name) || {};
+  const variants = mapData.filter(m => m.slug === slug);
+  const meta = variants.find(m => m.game === requestedGame)
+    || variants[0]
+    || mapData.find(m => m.name === info.name)
+    || {};
+
   const banner = meta.coverImage || meta.layoutImage;
   const dedicatedRoute = getDedicatedGuideRoute(slug);
   const guideRoute = dedicatedRoute || `/easter-eggs/${slug}`;
+  const hasMainQuest = Boolean(meta.isEasterEgg);
+  const releasedLabel = meta.dlc === 'Zombies Chronicles'
+    ? 'Black Ops III Zombies Chronicles (2017)'
+    : info.releasedIn;
 
   return (
     <div className="map-info-container">
@@ -39,13 +50,13 @@ export default function MapInfo() {
           </div>
 
           <div className="info-row">
-            {info.releasedIn && <span><strong>Released:</strong> {info.releasedIn}</span>}
-            {info.hasEasterEgg ? (
+            {releasedLabel && <span><strong>Released:</strong> {releasedLabel}</span>}
+            {hasMainQuest ? (
               <Link to={guideRoute} className="badge">
-                {dedicatedRoute ? '📖 Open Easter Egg Guide' : '🎁 Easter-Egg Inside'}
+                {dedicatedRoute ? '📖 Open Easter Egg Guide' : '🎁 Main Easter Egg'}
               </Link>
             ) : (
-              <span className="badge no-egg">No Easter-Egg</span>
+              <span className="badge no-egg">No Main Easter Egg</span>
             )}
           </div>
 
