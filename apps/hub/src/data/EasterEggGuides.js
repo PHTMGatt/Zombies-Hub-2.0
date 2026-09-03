@@ -4,8 +4,8 @@ export default [
     title: 'Ascension',
     game: 'Black Ops 1',
     dlc: 'First Strike',
-    released: 'November 6, 1963',
-    description: 'Guide the Ascension Group rocket into orbit and cleanse the land of the Casimir Mechanism. Classic four-step EE featuring Gersh’s liberation and a launch sequence finale.',
+    released: 'February 1, 2011',
+    description: 'Repair the Casimir Mechanism and free Dr. Anton Gersh. The original Black Ops quest requires four players and combines Lunar Lander routing, synchronized Space Monkey buttons, and a final weapon-powered portal sequence.',
     videoUrl: 'https://www.youtube.com/watch?v=P6RzrxQ6yNg',
   },
   {
@@ -13,8 +13,8 @@ export default [
     title: 'Call of the Dead',
     game: 'Black Ops 1',
     dlc: 'Escalation',
-    released: 'March 28, 2011',
-    description: 'Team up with George Romero’s trapped cast to complete puzzles, overload generators, and send them back to reality. One of the most unique EEs in the series.',
+    released: 'May 3, 2011',
+    description: 'Help the trapped Ultimis crew obtain the Golden Rod while the celebrity cast survives George Romero outside the vault. The quest has a solo path, Stand-in, and an expanded co-op version, Ensemble Cast.',
     videoUrl: 'https://www.youtube.com/watch?v=8kI2w4NgUCQ',
   },
   {
@@ -22,8 +22,8 @@ export default [
     title: 'Shangri-La',
     game: 'Black Ops 1',
     dlc: 'Annihilation',
-    released: 'May 3, 2011',
-    description: 'Traverse ancient traps, align the eclipse, and rescue time-lost explorers Brock and Gary. A dense and puzzle-heavy EE deep in the jungle. (Video guide coming soon.)',
+    released: 'June 28, 2011',
+    description: 'Enter Eclipse Mode, work through the temple puzzles, and help Brock and Gary reach the Focusing Stone. Time Travel Will Tell is one of Black Ops’ densest four-player main quests.',
     videoUrl: '',
   },
   {
@@ -32,7 +32,7 @@ export default [
     game: 'Black Ops 1',
     dlc: 'Rezurrection',
     released: 'August 23, 2011',
-    description: 'Hack terminals, collect Vril, and fire the moon base’s deadly weapon to destroy Earth. The climax of the original Aether story arc — this one ends with a bang.',
+    description: 'Complete the Moon quest chain through the Vril Device, Focusing Stone, MPD, and Maxis’ final rocket sequence. It closes the original Black Ops Easter Egg arc with one of Zombies’ biggest story turns.',
     videoUrl: 'https://www.youtube.com/watch?v=2k6L3wBsEyA',
   },
 ];
