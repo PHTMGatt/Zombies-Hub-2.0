@@ -1,8 +1,5 @@
 import imageData from '../data/imageData';
-import { SlUserFollowing } from 'react-icons/sl';
 import motdCover from '../assets/images/BO2/Mob_Of_The_Dead.webp';
-import TranzitCoverMap from '../assets/images/Maps/Tranzit.avif';
-import TranzitLayout from '../assets/images/BO2/Tranzit.webp';
 
 const layoutModules = import.meta.glob(
   '../assets/images/BO*/*.{webp,jpg,png,avif}',
@@ -160,15 +157,16 @@ const mapData = [
   // Black Ops 2 --------------------
 
   {
-    name:        "Tranzit",
-    slug:        "tranzit",
-    game:        "Black Ops 2",
-    dlc:         "Base Game",
-    released:    "2012-11-01",
-    description: "Traverse the ruined Pacific Northwest aboard an upgradable bus and …",
-    hasEasterEgg: true,
-    coverImage:  imageData.TranzitCoverMap,
-    layoutImage: imageData.TranzitLayout
+    name: "TranZit",
+    slug: "tranzit",
+    game: "Black Ops 2",
+    dlc: "Base Game",
+    released: "2012-11-13",
+    description: "Travel across Green Run by bus, build key equipment, and complete Tower of Babble by powering the pylon for either Maxis or Richtofen.",
+    isEasterEgg: true,
+    coverImage: imageData.TranzitCoverMap,
+    layoutImage: imageData.TranzitLayout,
+    hoverImage: null
   },
   {
     name: "Nuketown Zombies",
