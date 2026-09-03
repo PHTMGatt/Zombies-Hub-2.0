@@ -1,47 +1,148 @@
 .gorod-main-guide {
-  --guide-accent: #ff704d;
-  --guide-accent-soft: rgba(183, 47, 21, 0.14);
-  --guide-panel: rgba(13, 8, 7, 0.74);
-  --guide-panel-strong: rgba(11, 6, 5, 0.92);
-  --guide-border: rgba(255, 112, 77, 0.18);
-  --guide-text: #fff4ee;
-  --guide-muted: #d5bbb1;
-
   width: min(100% - 1.5rem, 1080px);
   margin: 0 auto;
-  padding: 1.35rem 0 2.4rem;
+  padding: 0.95rem 0 1.8rem;
+  color: #fff4ee;
 }
 
-.gorod-main-guide .zh-guide-hero {
-  background: linear-gradient(90deg, rgba(157, 39, 18, 0.18), transparent 48%);
+.gorod-run-header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.5rem 0 0.65rem;
+  border-bottom: 1px solid rgba(255, 112, 77, 0.15);
 }
 
-.gorod-main-guide .zh-guide-step-card {
-  border-left: 3px solid rgba(255, 112, 77, 0.56);
+.gorod-run-header span {
+  display: block;
+  margin-bottom: 0.08rem;
+  color: #ff704d;
+  font-size: 0.58rem;
+  font-weight: 850;
+  letter-spacing: 0.15em;
 }
 
-.gorod-guide-note {
-  width: min(100%, 980px);
-  margin: 0 auto 1.1rem;
-  box-sizing: border-box;
+.gorod-run-header h2 {
+  margin: 0;
+  color: #fff1ea;
+  font-size: clamp(1.65rem, 3vw, 2.2rem);
+  line-height: 1;
 }
 
-.gorod-phase-link {
-  display: inline-flex;
-  margin-top: 0.38rem;
+.gorod-run-header > p {
+  max-width: 430px;
+  margin: 0;
+  color: #d5bbb1;
+  font-size: 0.78rem;
+  line-height: 1.35;
+  text-align: right;
+}
+
+.gorod-run-alert {
+  display: flex;
+  gap: 0.45rem;
+  align-items: baseline;
+  margin: 0.55rem 0;
+  padding: 0.42rem 0.55rem;
+  border-left: 3px solid #ff704d;
+  background: rgba(72, 20, 10, 0.46);
+  color: #dbc5bb;
+  font-size: 0.72rem;
+  line-height: 1.35;
+}
+
+.gorod-run-alert strong {
+  flex: 0 0 auto;
   color: #ffb08f;
-  font-size: 0.82rem;
-  font-weight: 700;
+}
+
+.gorod-run-flow {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.gorod-run-flow li {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  gap: 0.55rem;
+  align-items: start;
+  padding: 0.72rem 0;
+  border-bottom: 1px solid rgba(255, 112, 77, 0.09);
+}
+
+.gorod-run-number {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #1b0904;
+  background: linear-gradient(145deg, #ffb28c, #ff6843);
+  font-size: 0.62rem;
+  font-weight: 900;
+}
+
+.gorod-run-flow h3 {
+  margin: 0;
+  color: #fff4ee;
+  font-size: 0.9rem;
+  line-height: 1.2;
+}
+
+.gorod-run-flow p {
+  margin: 0.2rem 0 0;
+  color: #d0b8ae;
+  font-size: 0.74rem;
+  line-height: 1.4;
+}
+
+.gorod-run-flow a {
+  display: inline-flex;
+  margin-top: 0.28rem;
+  color: #ffb08f;
+  font-size: 0.7rem;
+  font-weight: 800;
   text-decoration: none;
 }
 
-.gorod-phase-link:hover {
+.gorod-run-flow a:hover {
+  color: #ffe0d2;
   text-decoration: underline;
 }
 
 @media (max-width: 720px) {
   .gorod-main-guide {
     width: min(100% - 1rem, 680px);
-    padding-top: 1rem;
+    padding: 0.7rem 0 1.4rem;
+  }
+
+  .gorod-run-header {
+    display: block;
+  }
+
+  .gorod-run-header > p {
+    margin-top: 0.25rem;
+    text-align: left;
+  }
+
+  .gorod-run-flow {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .gorod-run-alert {
+    display: block;
+  }
+
+  .gorod-run-alert strong {
+    display: block;
+    margin-bottom: 0.12rem;
   }
 }
