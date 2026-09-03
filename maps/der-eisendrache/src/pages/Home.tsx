@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/pages/Home.css';
+import '../styles/pages/HomeCompact.css';
 
 const BASE = '/maps/der-eisendrache';
 
