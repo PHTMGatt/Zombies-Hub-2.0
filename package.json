@@ -6,10 +6,10 @@
   "scripts": {
     "dev": "vite",
     "check": "node scripts/verify.mjs",
-    "build": "vite build",
+    "build": "npm run check && vite build",
     "preview": "vite preview",
     "start": "serve -s dist",
-    "render": "npm install && npm run check && npm run build",
+    "render": "npm install && npm run build",
     "render-build": "npm run render"
   },
   "dependencies": {
