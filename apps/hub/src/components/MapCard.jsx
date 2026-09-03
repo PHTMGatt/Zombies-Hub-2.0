@@ -6,11 +6,12 @@ import '../styles/compStyles/MapCard.css';
 
 export default function MapCard({
   map,
-  isPreview = true,       // controls grid style
-  disableLink = false,     // disables routing wrapper
+  isPreview = true,
+  disableLink = false,
 }) {
   const {
     name,
+    game,
     dlc,
     coverImage,
     layoutImage,
@@ -18,18 +19,16 @@ export default function MapCard({
     slug,
   } = map;
 
-  // Hover state to control image background behavior
   const [cardHover, setCardHover] = useState(false);
   const [dlcHover, setDlcHover] = useState(false);
 
-  // Determine which background image to show
   let bg = coverImage;
   if (cardHover && layoutImage) bg = layoutImage;
-  if (dlcHover && hoverImage)   bg = hoverImage;
+  if (dlcHover && hoverImage) bg = hoverImage;
 
-  // If disableLink is true, wrap with <div>, otherwise use <Link>
   const Wrapper = disableLink ? 'div' : Link;
-  const wrapperProps = disableLink ? {} : { to: `/info/${slug}` };
+  const search = game ? `?game=${encodeURIComponent(game)}` : '';
+  const wrapperProps = disableLink ? {} : { to: `/info/${slug}${search}` };
 
   return (
     <Wrapper
