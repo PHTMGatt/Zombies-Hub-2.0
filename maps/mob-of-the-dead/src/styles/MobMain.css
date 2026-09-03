@@ -1,52 +1,148 @@
 .mobmain-page {
-  --guide-accent: #f0b321;
-  --guide-accent-soft: rgba(186, 68, 22, 0.16);
-  --guide-panel: rgba(7, 8, 10, 0.72);
-  --guide-panel-strong: rgba(5, 6, 8, 0.9);
-  --guide-border: rgba(240, 179, 33, 0.18);
-  --guide-text: #f5f1e8;
-  --guide-muted: #c6beb0;
-
   width: min(100% - 1.5rem, 1080px);
   margin: 0 auto;
-  padding: 1.35rem 0 2.25rem;
+  padding: 0.95rem 0 1.8rem;
+  color: #f5f1e8;
 }
 
-.mobmain-page .zh-guide-hero {
-  background: linear-gradient(90deg, rgba(177, 52, 17, 0.18), transparent 48%);
+.mob-run-header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.5rem 0 0.65rem;
+  border-bottom: 1px solid rgba(240, 179, 33, 0.15);
 }
 
-.mobmain-page .zh-guide-step-card {
-  border-left: 3px solid rgba(240, 179, 33, 0.62);
+.mob-run-header span {
+  display: block;
+  margin-bottom: 0.08rem;
+  color: #f0b321;
+  font-size: 0.58rem;
+  font-weight: 850;
+  letter-spacing: 0.15em;
 }
 
-.mobmain-page .zh-guide-step-marker {
+.mob-run-header h2 {
+  margin: 0;
+  color: #fff4df;
+  font-size: clamp(1.65rem, 3vw, 2.2rem);
+  line-height: 1;
+}
+
+.mob-run-header > p {
+  max-width: 430px;
+  margin: 0;
+  color: #c6beb0;
+  font-size: 0.78rem;
+  line-height: 1.35;
+  text-align: right;
+}
+
+.mob-run-alert {
+  display: flex;
+  gap: 0.45rem;
+  align-items: baseline;
+  margin: 0.55rem 0;
+  padding: 0.42rem 0.55rem;
+  border-left: 3px solid #f0b321;
+  background: rgba(48, 20, 7, 0.5);
+  color: #cfc6b7;
+  font-size: 0.72rem;
+  line-height: 1.35;
+}
+
+.mob-run-alert strong {
+  flex: 0 0 auto;
+  color: #ffd15c;
+}
+
+.mob-run-flow {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mob-run-flow li {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  gap: 0.55rem;
+  align-items: start;
+  padding: 0.72rem 0;
+  border-bottom: 1px solid rgba(240, 179, 33, 0.09);
+}
+
+.mob-run-number {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
   color: #1c1202;
   background: linear-gradient(145deg, #ffd75a, #e1910f);
+  font-size: 0.62rem;
+  font-weight: 900;
 }
 
-.mob-prereq-callout {
-  width: min(100%, 980px);
-  margin: 0 auto 1.1rem;
-  box-sizing: border-box;
+.mob-run-flow h3 {
+  margin: 0;
+  color: #fff6e9;
+  font-size: 0.9rem;
+  line-height: 1.2;
 }
 
-.mob-phase-link {
+.mob-run-flow p {
+  margin: 0.2rem 0 0;
+  color: #c7bdad;
+  font-size: 0.74rem;
+  line-height: 1.4;
+}
+
+.mob-run-flow a {
   display: inline-flex;
-  margin-top: 0.38rem;
+  margin-top: 0.28rem;
   color: #ffd15c;
-  font-size: 0.82rem;
-  font-weight: 700;
+  font-size: 0.7rem;
+  font-weight: 800;
   text-decoration: none;
 }
 
-.mob-phase-link:hover {
+.mob-run-flow a:hover {
+  color: #fff1b1;
   text-decoration: underline;
 }
 
 @media (max-width: 720px) {
   .mobmain-page {
     width: min(100% - 1rem, 680px);
-    padding-top: 1rem;
+    padding: 0.7rem 0 1.4rem;
+  }
+
+  .mob-run-header {
+    display: block;
+  }
+
+  .mob-run-header > p {
+    margin-top: 0.25rem;
+    text-align: left;
+  }
+
+  .mob-run-flow {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .mob-run-alert {
+    display: block;
+  }
+
+  .mob-run-alert strong {
+    display: block;
+    margin-bottom: 0.12rem;
   }
 }
