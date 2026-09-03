@@ -19,38 +19,49 @@ export default function EasterEggGuide() {
   }
 
   const match = guide.videoUrl?.match(/(?:\?v=|\/embed\/|\.be\/)([a-zA-Z0-9_-]{11})/);
-  const embedUrl = match ? `https://www.youtube.com/embed/${match[1]}` : null;
+  const embedUrl = match ? `https://www.youtube.com/embed/${match[1]}?rel=0` : null;
 
   if (!embedUrl) {
     return <ComingSoon />;
   }
 
   return (
-    <div className="egg-card guide-page">
-      <div className="egg-card__media">
-        <iframe
-          src={embedUrl}
-          title={guide.title}
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-          frameBorder="0"
-          width="100%"
-          height="400"
-          style={{ borderRadius: '8px' }}
-        />
-      </div>
-      <div className="egg-card__body">
+    <main className="egg-card guide-page">
+      <header className="egg-guide__header">
+        <span>VIDEO GUIDE</span>
         <h1>{guide.title}</h1>
-        <div className="egg-card__meta">
-          <span><strong>Game:</strong> {guide.game}</span>
-          <span><strong>DLC:</strong> {guide.dlc}</span>
-          <span><strong>Released:</strong> {guide.released}</span>
-        </div>
         <p>{guide.description}</p>
-        <Link to="/easter-eggs" className="egg-card__link">
-          ← Back to Easter Egg Maps
-        </Link>
+      </header>
+
+      <div className="egg-guide__layout">
+        <div className="egg-card__media egg-guide__video">
+          <iframe
+            src={embedUrl}
+            title={`${guide.title} Easter Egg guide`}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
+        </div>
+
+        <aside className="egg-guide__sidebar">
+          <div className="egg-guide__meta-row">
+            <span>Game</span>
+            <strong>{guide.game}</strong>
+          </div>
+          <div className="egg-guide__meta-row">
+            <span>DLC</span>
+            <strong>{guide.dlc}</strong>
+          </div>
+          <div className="egg-guide__meta-row">
+            <span>Released</span>
+            <strong>{guide.released}</strong>
+          </div>
+
+          <Link to="/easter-eggs" className="egg-card__link">
+            ← Easter Egg Maps
+          </Link>
+        </aside>
       </div>
-    </div>
+    </main>
   );
 }
