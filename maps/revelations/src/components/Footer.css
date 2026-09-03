@@ -13,23 +13,26 @@
     linear-gradient(rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.2)),
     url('../assets/images/Rev3.png') center 72% / cover no-repeat;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
-  box-shadow: 0 -2px 10px rgba(0, 153, 255, 0.22);
+  box-shadow: 0 -2px 14px rgba(0, 153, 255, 0.28);
   isolation: isolate;
 }
 
 .revelations-module .rev-footer::before {
   content: '';
   position: absolute;
-  left: 0;
-  right: 0;
-  top: -58px;
-  height: 60px;
+  left: -2%;
+  right: -2%;
+  top: -72px;
+  height: 78px;
   z-index: -1;
   pointer-events: none;
   background:
-    linear-gradient(to top, rgba(5, 8, 20, 0.92), rgba(5, 8, 20, 0.45) 42%, transparent 100%),
-    radial-gradient(ellipse at 50% 100%, rgba(109, 194, 255, 0.18), transparent 64%);
-  filter: blur(1px);
+    linear-gradient(to top, rgba(5, 8, 20, 0.9), rgba(5, 8, 20, 0.34) 48%, transparent 100%),
+    url('../assets/images/Rev3.png') center 72% / cover no-repeat;
+  filter: blur(10px) saturate(1.08);
+  opacity: 0.8;
+  -webkit-mask-image: linear-gradient(to top, #000 0%, #000 34%, transparent 100%);
+  mask-image: linear-gradient(to top, #000 0%, #000 34%, transparent 100%);
 }
 
 .revelations-module .rev-footer p {
@@ -44,6 +47,11 @@
   .revelations-module .rev-footer {
     min-height: 58px;
     padding: 0.65rem 0.75rem;
+  }
+
+  .revelations-module .rev-footer::before {
+    top: -54px;
+    height: 58px;
   }
 
   .revelations-module .rev-footer p {
