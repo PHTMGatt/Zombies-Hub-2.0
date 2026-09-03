@@ -1,54 +1,176 @@
 .zets-module .zets-main-guide {
   width: min(100% - 1.5rem, 1080px);
-  padding: 1.35rem 0 2.4rem;
+  margin: 0 auto;
+  padding: 0.95rem 0 1.8rem;
+  color: #effff7;
 }
 
-.zets-module .zets-main-guide .zh-guide-hero {
-  background: linear-gradient(90deg, rgba(28, 128, 82, 0.16), transparent 48%);
-  box-shadow: none;
+.zets-module .zets-run-header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.5rem 0 0.65rem;
+  border-bottom: 1px solid rgba(105, 230, 173, 0.15);
 }
 
-.zets-module .zets-guide-note {
-  width: min(100%, 980px);
-  margin: 0 auto 1rem;
+.zets-module .zets-run-header span {
+  display: block;
+  margin-bottom: 0.08rem;
+  color: #69e6ad;
+  font-size: 0.58rem;
+  font-weight: 850;
+  letter-spacing: 0.15em;
 }
 
-.zets-module .zets-main-guide .zh-guide-step-card {
-  border-left: 3px solid rgba(105, 230, 173, 0.54);
+.zets-module .zets-run-header h2 {
+  margin: 0;
+  color: #effff7;
+  font-size: clamp(1.65rem, 3vw, 2.2rem);
+  line-height: 1;
 }
 
-.zets-module .zets-phase-link {
+.zets-module .zets-run-header > p {
+  max-width: 440px;
+  margin: 0;
+  color: #b7d9c8;
+  font-size: 0.78rem;
+  line-height: 1.35;
+  text-align: right;
+}
+
+.zets-module .zets-run-alert {
+  display: flex;
+  gap: 0.45rem;
+  align-items: baseline;
+  margin: 0.55rem 0;
+  padding: 0.42rem 0.55rem;
+  border-left: 3px solid #69e6ad;
+  background: rgba(7, 45, 28, 0.46);
+  color: #c5dfd2;
+  font-size: 0.72rem;
+  line-height: 1.35;
+}
+
+.zets-module .zets-run-alert strong {
+  flex: 0 0 auto;
+  color: #91efc1;
+}
+
+.zets-module .zets-run-flow {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.zets-module .zets-run-flow li {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  gap: 0.55rem;
+  align-items: start;
+  padding: 0.72rem 0;
+  border-bottom: 1px solid rgba(105, 230, 173, 0.09);
+}
+
+.zets-module .zets-run-number {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #032116;
+  background: linear-gradient(145deg, #a7f7cf, #4bd69a);
+  font-size: 0.62rem;
+  font-weight: 900;
+}
+
+.zets-module .zets-run-flow h3 {
+  margin: 0;
+  color: #eafff4;
+  font-size: 0.9rem;
+  line-height: 1.2;
+}
+
+.zets-module .zets-run-flow p {
+  margin: 0.2rem 0 0;
+  color: #c5ddcf;
+  font-size: 0.74rem;
+  line-height: 1.4;
+}
+
+.zets-module .zets-run-flow a {
   display: inline-flex;
-  margin-top: 0.38rem;
+  margin-top: 0.28rem;
   color: #83e9b6;
-  font-size: 0.82rem;
-  font-weight: 700;
+  font-size: 0.7rem;
+  font-weight: 800;
   text-decoration: none;
 }
 
-.zets-module .zets-phase-link:hover {
+.zets-module .zets-run-flow a:hover {
+  color: #dfffee;
   text-decoration: underline;
 }
 
-.zets-module .zets-main-guide .zets-reference-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.55rem;
+.zets-module .zets-run-shortcuts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.65rem;
 }
 
-.zets-module .zets-main-guide .zets-reference-grid a {
-  min-height: 48px;
-  padding: 0.55rem 0.7rem;
-  border-radius: 8px;
-  box-shadow: none;
+.zets-module .zets-run-shortcuts a {
+  min-height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.28rem 0.58rem;
+  color: #d7f5e6;
+  font-size: 0.7rem;
+  font-weight: 750;
+  text-decoration: none;
+  border: 1px solid rgba(105, 230, 173, 0.16);
+  border-radius: 999px;
+  background: rgba(4, 15, 10, 0.52);
 }
 
-@media (max-width: 520px) {
+.zets-module .zets-run-shortcuts a:hover {
+  color: #fff;
+  border-color: rgba(105, 230, 173, 0.38);
+  background: rgba(10, 45, 30, 0.64);
+}
+
+@media (max-width: 720px) {
   .zets-module .zets-main-guide {
     width: min(100% - 1rem, 680px);
-    padding-top: 1rem;
+    padding: 0.7rem 0 1.4rem;
   }
 
-  .zets-module .zets-main-guide .zets-reference-grid {
+  .zets-module .zets-run-header {
+    display: block;
+  }
+
+  .zets-module .zets-run-header > p {
+    margin-top: 0.25rem;
+    text-align: left;
+  }
+
+  .zets-module .zets-run-flow {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .zets-module .zets-run-alert {
+    display: block;
+  }
+
+  .zets-module .zets-run-alert strong {
+    display: block;
+    margin-bottom: 0.12rem;
   }
 }
