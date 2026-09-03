@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: zombies-hub-2-0
+    runtime: static
+    buildCommand: npm run render
+    staticPublishPath: ./dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
