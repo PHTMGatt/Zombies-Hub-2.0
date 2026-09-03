@@ -5,10 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "check": "node scripts/verify.mjs",
     "build": "vite build",
     "preview": "vite preview",
     "start": "serve -s dist",
-    "render-build": "npm install && npm run build"
+    "render": "npm install && npm run check && npm run build",
+    "render-build": "npm run render"
   },
   "dependencies": {
     "react": "^19.1.0",
