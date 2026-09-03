@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams, Link, Navigate } from 'react-router-dom';
+import { useParams, useSearchParams, Link, Navigate } from 'react-router-dom';
 import mapData from '../data/mapData';
 import { getDedicatedGuideRoute } from '../data/dedicatedGuides';
 import MapCard from '../components/MapCard';
@@ -7,13 +7,17 @@ import '../styles/pageStyles/MapDetails.css';
 
 export default function MapDetails() {
   const { slug } = useParams();
+  const [searchParams] = useSearchParams();
+  const requestedGame = searchParams.get('game');
   const dedicatedRoute = getDedicatedGuideRoute(slug);
 
   if (dedicatedRoute) {
     return <Navigate to={dedicatedRoute} replace />;
   }
 
-  const map = mapData.find(m => m.slug === slug);
+  const variants = mapData.filter(m => m.slug === slug);
+  const map = variants.find(m => m.game === requestedGame) || variants[0];
+
   if (!map) {
     return <Navigate to="/allmaps" replace />;
   }
