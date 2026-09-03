@@ -8,6 +8,7 @@ import EggLocations from '../src/pages/EggLocations';
 import SummoningKey from '../src/pages/SummoningKey';
 import SoundStep from '../src/pages/SoundStep';
 import '../src/global.css';
+import '../src/styles/GlassPolish.css';
 
 export default function RevelationsRoutes() {
   return (
