@@ -1,0 +1,162 @@
+.shadows-module .soe-run-sheet {
+  padding-top: 0.85rem;
+}
+
+.shadows-module .soe-run-header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.5rem 0 0.65rem;
+  border-bottom: 1px solid rgba(170, 121, 223, 0.16);
+}
+
+.shadows-module .soe-run-header span {
+  display: block;
+  margin-bottom: 0.08rem;
+  color: var(--soe-gold);
+  font-size: 0.58rem;
+  font-weight: 850;
+  letter-spacing: 0.15em;
+}
+
+.shadows-module .soe-run-header h2 {
+  margin: 0;
+  color: #f5effa;
+  font-size: clamp(1.65rem, 3vw, 2.2rem);
+  line-height: 1;
+}
+
+.shadows-module .soe-run-header > p {
+  max-width: 450px;
+  margin: 0;
+  color: #c3b9ca;
+  font-size: 0.78rem;
+  line-height: 1.35;
+  text-align: right;
+}
+
+.shadows-module .soe-run-alert {
+  display: flex;
+  gap: 0.45rem;
+  align-items: baseline;
+  margin: 0.55rem 0;
+  padding: 0.42rem 0.55rem;
+  border-left: 3px solid var(--soe-gold);
+  background: rgba(39, 27, 46, 0.5);
+  color: #cbbfd2;
+  font-size: 0.72rem;
+  line-height: 1.35;
+}
+
+.shadows-module .soe-run-alert strong {
+  flex: 0 0 auto;
+  color: #e7cd87;
+}
+
+.shadows-module .soe-run-flow {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.shadows-module .soe-run-flow > li {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  gap: 0.55rem;
+  align-items: start;
+  padding: 0.72rem 0;
+  border-bottom: 1px solid rgba(170, 121, 223, 0.09);
+}
+
+.shadows-module .soe-run-flow > li:last-child {
+  grid-column: 1 / -1;
+}
+
+.shadows-module .soe-run-number {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #160d1e;
+  background: linear-gradient(145deg, #d5b1f3, #9a65ce);
+  font-size: 0.62rem;
+  font-weight: 900;
+}
+
+.shadows-module .soe-run-copy h3 {
+  margin: 0;
+  color: #f7f1fb;
+  font-size: 0.9rem;
+  line-height: 1.2;
+}
+
+.shadows-module .soe-run-copy > p {
+  margin: 0.2rem 0 0;
+  color: #c7bacd;
+  font-size: 0.74rem;
+  line-height: 1.4;
+}
+
+.shadows-module .soe-run-flow .soe-phase-notes {
+  margin-top: 0.28rem;
+  color: #c8bbd0;
+  font-size: 0.7rem;
+}
+
+.shadows-module .soe-run-flow .soe-phase-notes summary {
+  display: inline-flex;
+  color: #e1c878;
+  font-size: 0.68rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.shadows-module .soe-run-flow .soe-phase-notes ul {
+  margin: 0.35rem 0 0;
+  padding-left: 1rem;
+}
+
+.shadows-module .soe-run-flow .soe-phase-notes li {
+  margin: 0.2rem 0;
+  line-height: 1.35;
+}
+
+.shadows-module .soe-run-sheet .soe-map-reference {
+  margin-top: 0.65rem;
+}
+
+@media (max-width: 720px) {
+  .shadows-module .soe-run-header {
+    display: block;
+  }
+
+  .shadows-module .soe-run-header > p {
+    margin-top: 0.25rem;
+    text-align: left;
+  }
+
+  .shadows-module .soe-run-flow {
+    grid-template-columns: 1fr;
+  }
+
+  .shadows-module .soe-run-flow > li:last-child {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .shadows-module .soe-run-alert {
+    display: block;
+  }
+
+  .shadows-module .soe-run-alert strong {
+    display: block;
+    margin-bottom: 0.12rem;
+  }
+}
