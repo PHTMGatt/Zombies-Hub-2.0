@@ -6,6 +6,14 @@ const ROOT = process.cwd();
 const SOURCE_ROOTS = ['apps', 'maps', 'shared'];
 const CODE_EXTENSIONS = new Set(['.js', '.jsx', '.ts', '.tsx']);
 const TEXT_EXTENSIONS = new Set([...CODE_EXTENSIONS, '.css']);
+const LEGACY_RENDER_HOSTS = [
+  'origins-wtyd.onrender.com',
+  'motd-guide.onrender.com',
+  'der-eisendrache-guide.onrender.com',
+  'zetsubou-guide.onrender.com',
+  'gorod-krovi-guide.onrender.com',
+  'revelations-guide.onrender.com',
+];
 const failures = [];
 
 async function walk(directory) {
@@ -20,6 +28,12 @@ async function walk(directory) {
   }
 
   return files;
+}
+
+function isRuntimeSource(rel) {
+  return rel.startsWith('apps/hub/src/')
+    || /^maps\/[^/]+\/(src|routes)\//.test(rel)
+    || rel.startsWith('shared/');
 }
 
 for (const rootName of SOURCE_ROOTS) {
@@ -39,6 +53,14 @@ for (const rootName of SOURCE_ROOTS) {
     const isMapChrome = /^maps\/[^/]+\/src\/components\/(Header|Footer)\.(jsx?|tsx?)$/.test(rel);
     if (isMapChrome && /Zombies Hub 2\.0/i.test(source)) {
       failures.push(`${rel}: repeated \"Zombies Hub 2.0\" branding in map chrome`);
+    }
+
+    if (isRuntimeSource(rel)) {
+      for (const host of LEGACY_RENDER_HOSTS) {
+        if (source.includes(host)) {
+          failures.push(`${rel}: runtime code still references legacy Render host ${host}`);
+        }
+      }
     }
   }
 }
