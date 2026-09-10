@@ -3,9 +3,11 @@ import { useParams, Link, Navigate } from 'react-router-dom';
 import imageData from '../data/imageData';
 import sideEEs from '../data/sideEE';
 import SideEECard from '../components/SideEECard';
+import OriginsSpeedRunGuide from '../components/OriginsSpeedRunGuide';
 import '../styles/SideEE/SideEEInfo.css';
 
 const SIDE_EE_META = {
+  'origins-speedrun': { label: 'Origins Speed Run', cover: imageData.OriginsCover },
   kino: {
     label: 'Kino der Toten',
     cover: imageData.Kino_Der_TotenCover,
@@ -36,6 +38,14 @@ export default function SideEEInfo() {
       <div className="side-ee-info-page">
         <p>Map not found.</p>
         <Link to="/side-easter-eggs" className="side-ee-info__back-link">← Back to Side Easter Eggs</Link>
+      </div>
+    );
+  }
+
+  if (mapKey === 'origins-speedrun') {
+    return (
+      <div className="side-ee-info-page side-ee-info-page--origins-speedrun">
+        <OriginsSpeedRunGuide cover={meta.cover} />
       </div>
     );
   }
