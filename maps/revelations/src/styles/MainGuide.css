@@ -66,29 +66,26 @@
 .revelations-module .rev-step-list {
   display: flex;
   flex-direction: column;
-  gap: 0.38rem;
-  max-height: 470px;
-  overflow-y: auto;
-  padding: 0.7rem;
+  gap: 0.22rem;
+  padding: 0.55rem;
   border: 1px solid rgba(109, 194, 255, 0.2);
   border-radius: 14px;
   background: rgba(1, 6, 16, 0.58);
   box-shadow: inset 0 0 22px rgba(0, 0, 0, 0.34);
   backdrop-filter: blur(12px);
-  scrollbar-width: thin;
 }
 
 .revelations-module .rev-step-button {
   appearance: none;
   width: 100%;
-  min-height: 39px;
+  min-height: 32px;
   display: grid;
-  grid-template-columns: 30px minmax(0, 1fr);
-  gap: 0.55rem;
+  grid-template-columns: 26px minmax(0, 1fr);
+  gap: 0.45rem;
   align-items: center;
-  padding: 0.42rem 0.55rem;
+  padding: 0.28rem 0.45rem;
   border: 1px solid transparent;
-  border-radius: 9px;
+  border-radius: 8px;
   background: rgba(255, 255, 255, 0.025);
   color: #cfe9ff;
   text-align: left;
@@ -108,14 +105,14 @@
 }
 
 .revelations-module .rev-step-button > span {
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
   display: grid;
   place-items: center;
   border-radius: 50%;
   background: rgba(109, 194, 255, 0.12);
   color: #8edcff;
-  font-size: 0.61rem;
+  font-size: 0.56rem;
   font-weight: 900;
 }
 
@@ -126,13 +123,13 @@
 
 .revelations-module .rev-step-button strong {
   min-width: 0;
-  font-size: 0.76rem;
-  line-height: 1.2;
+  font-size: 0.71rem;
+  line-height: 1.16;
 }
 
 .revelations-module .rev-step-panel {
   min-width: 0;
-  min-height: 470px;
+  min-height: 450px;
   display: flex;
   flex-direction: column;
   padding: 1.1rem 1.2rem;
@@ -267,7 +264,6 @@
   }
 
   .revelations-module .rev-step-list {
-    max-height: none;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
