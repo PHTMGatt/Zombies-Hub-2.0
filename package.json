@@ -6,10 +6,13 @@
   "scripts": {
     "dev": "vite",
     "check": "node scripts/verify.mjs",
-    "build": "npm run check && vite build",
+    "compile": "vite build && node scripts/write-build-info.mjs",
+    "build": "npm run check && npm run compile",
+    "ci": "npm run build",
     "preview": "vite preview",
     "start": "serve -s dist",
-    "render": "npm install && npm run build",
+    "smoke": "node scripts/smoke-live.mjs",
+    "render": "npm ci --no-audit --no-fund && npm run ci",
     "render-build": "npm run render"
   },
   "dependencies": {
