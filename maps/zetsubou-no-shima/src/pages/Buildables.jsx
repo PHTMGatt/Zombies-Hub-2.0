@@ -12,7 +12,7 @@ const Buildables = () => (
     <GuideHero
       kicker="Zetsubou No Shima"
       title="Buildables + Wonder Weapon"
-      description="The four pieces of gear that matter to the Seeds of Doubt run: Zombie Shield, Gas Mask, KT-4, and the Masamune upgrade."
+      description="Open only the piece you need: Zombie Shield, Gas Mask, KT-4, or the Masamune upgrade."
     >
       <GuideChip>Shield</GuideChip>
       <GuideChip>Gas Mask</GuideChip>
@@ -22,26 +22,29 @@ const Buildables = () => (
     <GuideSection
       kicker="Gear Reference"
       title="Find the missing piece and get back to the run"
-      description="Each card separates spawn regions, build/upgrade action, and the reason the item matters later."
+      description="Each section keeps spawn regions, the build action, and the important run note together."
     >
       <div className="zets-gear-grid">
         {zetsGear.map((item, index) => (
-          <article className="zets-gear-card" key={item.name}>
-            <div className="zets-gear-card__header">
+          <details className="zets-gear-card" key={item.name} open={index === 0}>
+            <summary className="zets-gear-card__header">
               <span className="zets-detail-number">{String(index + 1).padStart(2, '0')}</span>
-              <div>
+              <div className="zets-gear-card__identity">
                 <span className="zets-gear-card__type">{item.type}</span>
                 <h3>{item.name}</h3>
               </div>
+              <span className="zets-gear-card__toggle" aria-hidden="true">+</span>
+            </summary>
+
+            <div className="zets-gear-card__body">
+              <ol className="zets-gear-parts">
+                {item.parts.map((part) => <li key={part}>{part}</li>)}
+              </ol>
+
+              <p className="zets-gear-build"><strong>Build / Upgrade:</strong> {item.build}</p>
+              <p className="zets-gear-note">{item.note}</p>
             </div>
-
-            <ol className="zets-gear-parts">
-              {item.parts.map((part) => <li key={part}>{part}</li>)}
-            </ol>
-
-            <p className="zets-gear-build"><strong>Build / Upgrade:</strong> {item.build}</p>
-            <p className="zets-gear-note">{item.note}</p>
-          </article>
+          </details>
         ))}
       </div>
     </GuideSection>
