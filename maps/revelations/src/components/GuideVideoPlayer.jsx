@@ -11,6 +11,7 @@ const GuideVideoPlayer = forwardRef(function GuideVideoPlayer(
 ) {
   const playerRef = useRef(null);
   const stopTimerRef = useRef(null);
+  const pendingSegmentRef = useRef(null);
 
   const clearStopTimer = () => {
     if (stopTimerRef.current) {
@@ -19,10 +20,7 @@ const GuideVideoPlayer = forwardRef(function GuideVideoPlayer(
     }
   };
 
-  const playSegment = (start, end) => {
-    const player = playerRef.current;
-    if (!player) return false;
-
+  const runSegment = (player, start, end) => {
     clearStopTimer();
     player.seekTo(start, true);
     player.playVideo();
@@ -36,7 +34,19 @@ const GuideVideoPlayer = forwardRef(function GuideVideoPlayer(
         }
       }, 250);
     }
+  };
 
+  const playSegment = (start, end) => {
+    const segment = { start, end };
+    const player = playerRef.current;
+
+    if (!player) {
+      pendingSegmentRef.current = segment;
+      return true;
+    }
+
+    pendingSegmentRef.current = null;
+    runSegment(player, start, end);
     return true;
   };
 
@@ -47,7 +57,11 @@ const GuideVideoPlayer = forwardRef(function GuideVideoPlayer(
     },
   }));
 
-  useEffect(() => clearStopTimer, []);
+  useEffect(() => () => {
+    clearStopTimer();
+    playerRef.current = null;
+    pendingSegmentRef.current = null;
+  }, []);
 
   const opts = {
     width: '100%',
@@ -69,6 +83,12 @@ const GuideVideoPlayer = forwardRef(function GuideVideoPlayer(
         title={title}
         onReady={(event) => {
           playerRef.current = event.target;
+
+          const pending = pendingSegmentRef.current;
+          if (pending) {
+            pendingSegmentRef.current = null;
+            runSegment(event.target, pending.start, pending.end);
+          }
         }}
         className="sk-video"
         iframeClassName="rev-video-player__iframe"
