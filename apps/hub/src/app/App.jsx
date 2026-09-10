@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useLayoutEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import AppRoutes from './AppRoutes';
 import HubHeader from '../components/HubHeader';
@@ -9,12 +9,10 @@ function RootLayout() {
   const { pathname, hash } = useLocation();
   const isDedicatedMapRoute = isDedicatedMapPath(pathname);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (hash) {
-      requestAnimationFrame(() => {
-        const target = document.getElementById(hash.slice(1));
-        if (target) target.scrollIntoView({ block: 'start' });
-      });
+      const target = document.getElementById(hash.slice(1));
+      if (target) target.scrollIntoView({ block: 'start' });
       return;
     }
 
