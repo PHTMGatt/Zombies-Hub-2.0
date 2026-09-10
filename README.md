@@ -1,5 +1,7 @@
 # Zombies Hub 2.0
 
+[![Build Zombies Hub 2.0](https://github.com/PHTMGatt/Zombies-Hub-2.0/actions/workflows/build.yml/badge.svg)](https://github.com/PHTMGatt/Zombies-Hub-2.0/actions/workflows/build.yml)
+
 A unified **Call of Duty Zombies guide hub** built with React and Vite.
 
 **Live 2.0:** https://zombies-hub-2-0.onrender.com/
