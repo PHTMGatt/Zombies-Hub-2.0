@@ -1,0 +1,71 @@
+.origins-speedrun-hildaless {
+  margin-top: 0.7rem;
+  overflow: hidden;
+  border: 1px solid rgba(89, 199, 255, 0.2);
+  border-radius: 9px;
+  background: rgba(3, 11, 19, 0.82);
+}
+
+.origins-speedrun-hildaless summary {
+  display: grid;
+  gap: 0.12rem;
+  padding: 0.72rem 0.8rem;
+  cursor: pointer;
+  list-style: none;
+  background: linear-gradient(90deg, rgba(41, 139, 197, 0.13), transparent 72%);
+}
+
+.origins-speedrun-hildaless summary::-webkit-details-marker {
+  display: none;
+}
+
+.origins-speedrun-hildaless summary > span {
+  color: #73d6ff;
+  font-size: 0.62rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.origins-speedrun-hildaless summary > strong {
+  color: #f2faff;
+  font-size: 0.9rem;
+}
+
+.origins-speedrun-hildaless summary > small {
+  color: #aebfcd;
+  font-size: 0.72rem;
+  line-height: 1.4;
+}
+
+.origins-speedrun-hildaless ol {
+  margin: 0;
+  padding: 0.65rem 1rem 0.25rem 2.2rem;
+  color: #c7d5df;
+  font-size: 0.75rem;
+  line-height: 1.45;
+}
+
+.origins-speedrun-hildaless li {
+  margin: 0.3rem 0;
+}
+
+.origins-speedrun-hildaless > p {
+  margin: 0.45rem 0.8rem 0.8rem;
+  padding: 0.55rem 0.65rem;
+  color: #ffd9a3;
+  font-size: 0.72rem;
+  line-height: 1.4;
+  border-left: 2px solid rgba(255, 178, 72, 0.72);
+  background: rgba(103, 58, 7, 0.14);
+}
+
+@media (max-width: 640px) {
+  .origins-speedrun-hildaless summary {
+    padding: 0.65rem 0.7rem;
+  }
+
+  .origins-speedrun-hildaless ol {
+    padding-left: 2rem;
+  }
+}
