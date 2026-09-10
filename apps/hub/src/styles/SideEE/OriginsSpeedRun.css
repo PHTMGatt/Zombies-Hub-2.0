@@ -1,0 +1,404 @@
+.side-ee-info-page--origins-speedrun {
+  width: min(100% - 1rem, 1180px);
+  padding: 1.25rem 0 2.5rem;
+}
+
+.origins-speedrun-guide {
+  --osr-blue: #59c7ff;
+  --osr-blue-soft: rgba(89, 199, 255, 0.14);
+  --osr-line: rgba(126, 208, 255, 0.2);
+  --osr-panel: rgba(5, 14, 24, 0.82);
+  color: #edf8ff;
+}
+
+.origins-speedrun-hero {
+  min-height: 190px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding: 1.45rem 1.55rem;
+  overflow: hidden;
+  border: 1px solid var(--osr-line);
+  border-radius: 14px;
+  background-position: center 42%;
+  background-size: cover;
+  box-shadow: 0 14px 38px rgba(0, 0, 0, 0.34);
+}
+
+.origins-speedrun-kicker,
+.origins-speedrun-section-heading > span {
+  display: block;
+  color: #8addff;
+  font-size: 0.68rem;
+  font-weight: 850;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.origins-speedrun-hero h1 {
+  margin: 0.15rem 0 0.35rem;
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  line-height: 0.98;
+  text-shadow: 0 2px 10px #000, 0 0 22px rgba(89, 199, 255, 0.22);
+}
+
+.origins-speedrun-hero p {
+  max-width: 720px;
+  margin: 0;
+  color: #c8d7e2;
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.origins-speedrun-actions {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.origins-speedrun-actions a,
+.origins-speedrun-footer-actions a {
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem 0.75rem;
+  color: #dff5ff;
+  font-size: 0.78rem;
+  font-weight: 750;
+  text-decoration: none;
+  border: 1px solid rgba(89, 199, 255, 0.3);
+  border-radius: 8px;
+  background: rgba(4, 16, 28, 0.82);
+}
+
+.origins-speedrun-actions a:first-child {
+  color: #06111c;
+  border-color: transparent;
+  background: linear-gradient(135deg, #78dcff, #42b9f4);
+}
+
+.origins-speedrun-strip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  margin: 0.75rem 0;
+  overflow: hidden;
+  border: 1px solid var(--osr-line);
+  border-radius: 10px;
+  background: var(--osr-line);
+}
+
+.origins-speedrun-strip > div {
+  min-height: 66px;
+  display: flex;
+  align-items: center;
+  padding: 0.7rem;
+  color: #c8d8e5;
+  font-size: 0.76rem;
+  line-height: 1.35;
+  background: rgba(5, 14, 24, 0.92);
+}
+
+.origins-speedrun-rules {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.55rem;
+  margin-bottom: 1.15rem;
+}
+
+.origins-speedrun-rules > div {
+  min-height: 92px;
+  padding: 0.75rem;
+  border: 1px solid rgba(126, 208, 255, 0.14);
+  border-radius: 9px;
+  background: linear-gradient(145deg, rgba(54, 135, 190, 0.1), rgba(4, 12, 21, 0.8));
+}
+
+.origins-speedrun-rules strong,
+.origins-speedrun-rules span {
+  display: block;
+}
+
+.origins-speedrun-rules strong {
+  margin-bottom: 0.22rem;
+  color: #87ddff;
+  font-size: 0.8rem;
+}
+
+.origins-speedrun-rules span {
+  color: #b9c9d6;
+  font-size: 0.74rem;
+  line-height: 1.4;
+}
+
+.origins-speedrun-lightning,
+.origins-speedrun-route {
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--osr-line);
+  border-radius: 12px;
+  background: linear-gradient(145deg, rgba(15, 57, 84, 0.14), rgba(3, 10, 18, 0.86));
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
+}
+
+.origins-speedrun-section-heading {
+  margin-bottom: 0.75rem;
+}
+
+.origins-speedrun-section-heading h2 {
+  margin: 0.12rem 0 0.25rem;
+  color: #f4fbff;
+  font-size: 1.35rem;
+  line-height: 1.05;
+}
+
+.origins-speedrun-section-heading p {
+  margin: 0;
+  color: #afc1cf;
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+.origins-speedrun-lightning-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.8fr) minmax(250px, 1fr);
+  gap: 0.65rem;
+  align-items: stretch;
+}
+
+.origins-speedrun-reference {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  color: #cfeeff;
+  text-decoration: none;
+  border: 1px solid rgba(89, 199, 255, 0.18);
+  border-radius: 9px;
+  background: #02070c;
+}
+
+.origins-speedrun-reference img {
+  display: block;
+  width: 100%;
+  flex: 1 1 auto;
+  object-fit: contain;
+  background: #02070c;
+}
+
+.origins-speedrun-reference--map img {
+  aspect-ratio: 4 / 3;
+}
+
+.origins-speedrun-reference--switch img {
+  aspect-ratio: 2 / 1;
+}
+
+.origins-speedrun-reference span {
+  padding: 0.45rem 0.6rem;
+  color: #a7c9dd;
+  font-size: 0.72rem;
+  text-align: center;
+  background: rgba(6, 18, 29, 0.94);
+}
+
+.origins-speedrun-jumps {
+  display: flex;
+  gap: 0.4rem;
+  padding-bottom: 0.72rem;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.origins-speedrun-jumps a {
+  flex: 0 0 auto;
+  padding: 0.35rem 0.58rem;
+  color: #bfe9ff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-decoration: none;
+  border: 1px solid rgba(89, 199, 255, 0.18);
+  border-radius: 999px;
+  background: rgba(5, 16, 27, 0.78);
+}
+
+.origins-speedrun-phases {
+  overflow: hidden;
+  border: 1px solid rgba(126, 208, 255, 0.14);
+  border-radius: 9px;
+  background: rgba(3, 10, 18, 0.7);
+}
+
+.origins-speedrun-phase {
+  border-bottom: 1px solid rgba(126, 208, 255, 0.11);
+}
+
+.origins-speedrun-phase:last-child {
+  border-bottom: 0;
+}
+
+.origins-speedrun-phase summary {
+  min-height: 66px;
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr) auto;
+  gap: 0.7rem;
+  align-items: center;
+  padding: 0.62rem 0.72rem;
+  cursor: pointer;
+  list-style: none;
+}
+
+.origins-speedrun-phase summary::-webkit-details-marker {
+  display: none;
+}
+
+.origins-speedrun-phase[open] summary {
+  background: linear-gradient(90deg, rgba(44, 138, 198, 0.13), transparent 62%);
+}
+
+.origins-speedrun-phase-number {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  color: #07131c;
+  font-size: 0.72rem;
+  font-weight: 900;
+  border-radius: 50%;
+  background: #66d2ff;
+}
+
+.origins-speedrun-phase-copy {
+  min-width: 0;
+}
+
+.origins-speedrun-phase-copy strong,
+.origins-speedrun-phase-copy small {
+  display: block;
+}
+
+.origins-speedrun-phase-copy strong {
+  color: #f1f9ff;
+  font-size: 0.9rem;
+}
+
+.origins-speedrun-phase-copy small {
+  margin-top: 0.16rem;
+  color: #aebfcd;
+  font-size: 0.72rem;
+  line-height: 1.35;
+}
+
+.origins-speedrun-time {
+  padding: 0.25rem 0.42rem;
+  color: #7fdbff;
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-decoration: none;
+  border-radius: 6px;
+  background: rgba(39, 142, 203, 0.1);
+}
+
+.origins-speedrun-phase ol {
+  margin: 0;
+  padding: 0.2rem 1.1rem 0.78rem 3.25rem;
+  color: #c4d3de;
+  font-size: 0.76rem;
+  line-height: 1.45;
+}
+
+.origins-speedrun-phase li {
+  margin: 0.3rem 0;
+  padding-left: 0.15rem;
+}
+
+.origins-speedrun-footer-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.65rem;
+  margin-top: 0.85rem;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .origins-speedrun-actions a:hover,
+  .origins-speedrun-footer-actions a:hover,
+  .origins-speedrun-jumps a:hover,
+  .origins-speedrun-reference:hover {
+    border-color: rgba(89, 199, 255, 0.5);
+    filter: brightness(1.08);
+  }
+}
+
+@media (max-width: 900px) {
+  .origins-speedrun-strip,
+  .origins-speedrun-rules {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .origins-speedrun-lightning-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .origins-speedrun-reference--switch {
+    width: min(100%, 560px);
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .side-ee-info-page--origins-speedrun {
+    width: calc(100% - 0.75rem);
+    padding-top: 0.75rem;
+  }
+
+  .origins-speedrun-hero {
+    min-height: 0;
+    display: block;
+    padding: 1rem;
+  }
+
+  .origins-speedrun-hero p {
+    font-size: 0.8rem;
+  }
+
+  .origins-speedrun-actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 0.75rem;
+  }
+
+  .origins-speedrun-strip,
+  .origins-speedrun-rules {
+    grid-template-columns: 1fr;
+  }
+
+  .origins-speedrun-strip > div,
+  .origins-speedrun-rules > div {
+    min-height: 0;
+  }
+
+  .origins-speedrun-lightning,
+  .origins-speedrun-route {
+    padding: 0.75rem;
+  }
+
+  .origins-speedrun-phase summary {
+    grid-template-columns: 30px minmax(0, 1fr);
+  }
+
+  .origins-speedrun-time {
+    grid-column: 2;
+    justify-self: start;
+  }
+
+  .origins-speedrun-phase ol {
+    padding-left: 2.75rem;
+  }
+
+  .origins-speedrun-footer-actions {
+    flex-direction: column;
+  }
+}
