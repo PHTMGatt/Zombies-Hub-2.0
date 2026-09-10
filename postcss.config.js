@@ -4,7 +4,6 @@ const featureScopes = [
   ['apps/hub/src/styles/compStyles/', '.hub-content'],
   ['apps/hub/src/styles/pageStyles/', '.hub-content'],
   ['apps/hub/src/styles/SideEE/', '.hub-content'],
-  ['apps/hub/src/styles/Global.css', '.hub-content'],
 
   // Dedicated map applications keep their original CSS, automatically scoped
   // to their feature root at build time.
