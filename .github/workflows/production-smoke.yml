@@ -1,0 +1,43 @@
+name: Production Smoke
+
+on:
+  schedule:
+    - cron: '17 11 * * *'
+  workflow_dispatch:
+    inputs:
+      base_url:
+        description: Production URL to verify
+        required: true
+        default: https://zombies-hub-2-0.onrender.com
+        type: string
+      expected_sha:
+        description: Optional commit SHA that should be live
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: production-smoke
+  cancel-in-progress: true
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Verify critical production routes
+        env:
+          ZH_SMOKE_BASE_URL: ${{ inputs.base_url || 'https://zombies-hub-2-0.onrender.com' }}
+          ZH_EXPECTED_SHA: ${{ inputs.expected_sha }}
+        run: node scripts/smoke-live.mjs
