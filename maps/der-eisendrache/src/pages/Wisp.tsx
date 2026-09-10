@@ -2,6 +2,8 @@ import React from 'react';
 import { GuideChip, GuideHero } from '../../../../shared/ui/GuideLayout';
 import '../styles/pages/Wisp.css';
 
+const WISP_VIDEO_URL = 'https://www.youtube.com/watch?v=NhDv6R5YPEs&t=109s';
+
 const wispLocations = [
   ['Spawn / Quick Revive', 'Phone on the table in front of the Quick Revive side of spawn.'],
   ['Spawn → Double Tap', 'Front wheel / tire of the broken car on the route toward Double Tap.'],
@@ -35,6 +37,10 @@ const Wisp: React.FC = () => (
           <li><strong>Teleport:</strong> After the fourth hit, the teleporter turns purple. Send the team through together.</li>
         </ol>
         <p className="de-wisp-warning">If the cycle fails, wait for the next round and prime the teleporter again.</p>
+        <a className="de-wisp-timestamp" href={WISP_VIDEO_URL} target="_blank" rel="noreferrer">
+          <span>Video quick find</span>
+          <strong>1:49–2:30 · Wisp locations ↗</strong>
+        </a>
       </div>
 
       <div className="de-wisp-section">
@@ -69,11 +75,11 @@ const Wisp: React.FC = () => (
       </div>
 
       <details className="de-wisp-video-reference">
-        <summary>Open video reference</summary>
+        <summary>Watch the 1:49–2:30 wisp clip</summary>
         <div className="de-wisp-video">
           <iframe
-            src="https://www.youtube.com/embed/NhDv6R5YPEs?start=121&rel=0&modestbranding=1"
-            title="Der Eisendrache wisp step reference"
+            src="https://www.youtube.com/embed/NhDv6R5YPEs?start=109&end=150&rel=0&modestbranding=1"
+            title="Der Eisendrache wisp location reference"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
           />
