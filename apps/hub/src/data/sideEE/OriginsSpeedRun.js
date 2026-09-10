@@ -36,6 +36,23 @@ export const originsSpeedRun = {
     },
   ],
 
+  hildalessLightning: {
+    title: 'Hildaless First Lightning Piece',
+    summary:
+      'Optional advanced first-piece route that uses movement and death-barrier timing instead of the tank or Boomhilda.',
+    steps: [
+      'Set max FPS below 110; the demonstrated setup uses about 100 FPS and notes that lower values can make the movement easier.',
+      'Run straight at the wall near the first Lightning-piece area. Near the corner, jump and hold the movement input to climb onto the edge.',
+      'Aim roughly toward the wooden platform and hold forward briefly along the edge.',
+      'Face the final wall, run, and jump as late as possible to get onto the piece area.',
+      'Use a consistent timer reference for the death barrier. In the demonstrated setup, checks repeat on roughly three-second intervals; begin the final run just before the next check to maximize the safe window.',
+      'Reach the wooden stairs before the following check and favor the left side, where the death barrier disables sooner.',
+      'Grab the Lightning Staff piece and rejoin the normal route.',
+    ],
+    warning:
+      'Practice this separately before using it in a run. If the timing is inconsistent, use the normal tank route or the Boomhilda skip instead.',
+  },
+
   route: [
     {
       id: 'opening',
@@ -67,11 +84,12 @@ export const originsSpeedRun = {
       id: 'lightning',
       title: 'Lightning Staff Route',
       timestamp: 873,
-      summary: 'Choose the fast Boomhilda tank-skip route or the safer normal tank route, then leave with all three Lightning pieces and Self-Medication ready.',
+      summary: 'Choose the fast Boomhilda tank-skip route, the safer normal tank route, or the hildaless first-piece route, then leave with all three Lightning pieces and Self-Medication ready.',
       details: [
         'Tank-skip route: use controlled Boomhilda boosts to reach the Lightning-part ledges, disable the death barrier, and collect the parts without riding the full tank route.',
         'Self-Medication protects the skip route if the death barrier downs you and a nearby zombie triggers the revive condition.',
         'Safe route: use the Fire portal, exit through Ice, send the tank, do Gen 4 while it moves, and board only when needed to reduce cooldown time.',
+        'Hildaless alternate: the first Lightning piece can be reached with movement + FPS/death-barrier timing instead of the tank or Boomhilda. Use the dedicated hildaless box below for the sequence.',
         'Use the Lightning switch reference below for the seven dial directions instead of stopping the run to remember them.',
       ],
     },
