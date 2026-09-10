@@ -4,6 +4,7 @@ import originsSpeedRun, { originsSpeedRunVideo } from '../data/sideEE/OriginsSpe
 import lightningSwitches from '../assets/images/SideEE/origins-lightning-switches.webp';
 import lightningSwitchReference from '../assets/images/SideEE/origins-lightning-switch-reference.webp';
 import '../styles/SideEE/OriginsSpeedRun.css';
+import '../styles/SideEE/OriginsSpeedRunHildaless.css';
 
 const formatTimestamp = (seconds) => {
   const minutes = Math.floor(seconds / 60);
