@@ -67,6 +67,40 @@
   background: rgba(94, 42, 9, 0.2);
 }
 
+.de-wisp-timestamp {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 0.6rem;
+  padding: 0.48rem 0.62rem;
+  border: 1px solid rgba(123, 207, 255, 0.25);
+  border-radius: 8px;
+  color: #dff4ff;
+  background: rgba(63, 159, 216, 0.08);
+  text-decoration: none;
+}
+
+.de-wisp-timestamp span {
+  color: #8fb0c3;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 800;
+}
+
+.de-wisp-timestamp strong {
+  color: #8bd7ff;
+  font-size: 0.8rem;
+  text-align: right;
+}
+
+.de-wisp-timestamp:hover,
+.de-wisp-timestamp:focus-visible {
+  border-color: rgba(123, 207, 255, 0.55);
+  background: rgba(63, 159, 216, 0.14);
+}
+
 .de-wisp-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -175,5 +209,15 @@
 
   .de-wisp-location:nth-child(2) {
     border-top: 1px solid rgba(123, 207, 255, 0.08);
+  }
+
+  .de-wisp-timestamp {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .de-wisp-timestamp strong {
+    text-align: left;
   }
 }
