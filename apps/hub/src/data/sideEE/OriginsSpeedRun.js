@@ -115,7 +115,7 @@ export const originsSpeedRun = {
     {
       id: 'ending',
       title: 'Soul Boxes + Ending Setup',
-      timestamp: 1920,
+      timestamp: null,
       summary: 'Build Maxis, fill the early soul boxes, prepare the useful Rain Fire cycle, and make sure Self-Medication is ready for the final exploit.',
       details: [
         'A common route fills three soul boxes before the first useful Rain Fire cycle.',
@@ -126,7 +126,7 @@ export const originsSpeedRun = {
     {
       id: 'afd-skip',
       title: 'Fire Staff / Ascend From Darkness Skip',
-      timestamp: 2100,
+      timestamp: null,
       summary: 'Use the duplicated Fire/Ice weapon state and repeated revive windows to count all four staff placements without running the full intended AFD sequence.',
       details: [
         'Place Fire in the AFD pedestal, then collect the visually hidden duplicate Fire Staff from its original holder.',
