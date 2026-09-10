@@ -38,6 +38,7 @@ export const originsSpeedRun = {
 
   hildalessLightning: {
     title: 'Hildaless First Lightning Piece',
+    videoUrl: 'https://youtu.be/zUwv9CWpNck',
     summary:
       'Optional advanced first-piece route that uses movement and death-barrier timing instead of the tank or Boomhilda.',
     steps: [
