@@ -64,6 +64,18 @@ export default function OriginsSpeedRunGuide({ cover }) {
             <span>Open switch-shape reference ↗</span>
           </a>
         </div>
+
+        <details className="origins-speedrun-hildaless">
+          <summary>
+            <span>Advanced alternate</span>
+            <strong>{originsSpeedRun.hildalessLightning.title}</strong>
+            <small>{originsSpeedRun.hildalessLightning.summary}</small>
+          </summary>
+          <ol>
+            {originsSpeedRun.hildalessLightning.steps.map((step) => <li key={step}>{step}</li>)}
+          </ol>
+          <p>{originsSpeedRun.hildalessLightning.warning}</p>
+        </details>
       </section>
 
       <section className="origins-speedrun-route">
