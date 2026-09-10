@@ -75,6 +75,14 @@ export default function OriginsSpeedRunGuide({ cover }) {
           <ol>
             {originsSpeedRun.hildalessLightning.steps.map((step) => <li key={step}>{step}</li>)}
           </ol>
+          <a
+            href={originsSpeedRun.hildalessLightning.videoUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="origins-speedrun-hildaless-video"
+          >
+            Watch hildaless demo ↗
+          </a>
           <p>{originsSpeedRun.hildalessLightning.warning}</p>
         </details>
       </section>
