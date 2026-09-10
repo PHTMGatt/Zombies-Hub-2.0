@@ -100,12 +100,38 @@ try {
 
       let status = null;
       let failure = null;
+      let diagnostics = {
+        brokenImages: [],
+        horizontalOverflow: false,
+        overflowPixels: 0,
+      };
 
       try {
         const response = await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 45_000 });
         status = response?.status() ?? null;
         await page.waitForLoadState('networkidle', { timeout: 5_000 }).catch(() => {});
         await page.waitForTimeout(800);
+
+        diagnostics = await page.evaluate(() => {
+          const root = document.documentElement;
+          const body = document.body;
+          const scrollWidth = Math.max(root?.scrollWidth || 0, body?.scrollWidth || 0);
+          const clientWidth = root?.clientWidth || window.innerWidth;
+
+          const brokenImages = Array.from(document.images)
+            .filter((img) => img.complete && img.naturalWidth === 0)
+            .map((img) => ({
+              src: img.currentSrc || img.src,
+              alt: img.alt || '',
+            }));
+
+          return {
+            brokenImages,
+            horizontalOverflow: scrollWidth > clientWidth + 2,
+            overflowPixels: Math.max(0, scrollWidth - clientWidth),
+          };
+        });
+
         await page.screenshot({
           path: filePath,
           fullPage: true,
@@ -125,10 +151,15 @@ try {
         failure,
         consoleErrors,
         pageErrors,
+        ...diagnostics,
       });
 
+      const warning = diagnostics.brokenImages.length > 0 || diagnostics.horizontalOverflow
+        ? ` | QA: ${diagnostics.brokenImages.length} broken images, ${diagnostics.overflowPixels}px overflow`
+        : '';
+
       await page.close();
-      console.log(`${viewport.name.padEnd(7)} ${route} -> ${failure ? 'FAILED' : fileName}`);
+      console.log(`${viewport.name.padEnd(7)} ${route} -> ${failure ? 'FAILED' : fileName}${warning}`);
     }
 
     await context.close();
@@ -145,8 +176,15 @@ await writeFile(
 
 const failed = report.filter((entry) => entry.failure || (entry.status && entry.status >= 400));
 const runtimeErrors = report.filter((entry) => entry.pageErrors.length > 0);
+const brokenAssets = report.filter((entry) => entry.brokenImages.length > 0);
+const overflowPages = report.filter((entry) => entry.horizontalOverflow);
 
 console.log(`Captured ${report.length - failed.length}/${report.length} pages.`);
-console.log(`Navigation failures: ${failed.length}; page runtime errors: ${runtimeErrors.length}.`);
+console.log(
+  `Navigation failures: ${failed.length}; page runtime errors: ${runtimeErrors.length}; ` +
+  `broken-image pages: ${brokenAssets.length}; overflow pages: ${overflowPages.length}.`,
+);
 
-if (failed.length > 0) process.exitCode = 1;
+if (failed.length > 0 || runtimeErrors.length > 0 || brokenAssets.length > 0 || overflowPages.length > 0) {
+  process.exitCode = 1;
+}
