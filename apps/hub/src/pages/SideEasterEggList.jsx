@@ -6,6 +6,7 @@ import imageData from '../data/imageData';
 import '../styles/SideEE/SideEasterEggList.css';
 
 const MAPS = [
+  { key: 'origins-speedrun', label: 'Origins Speed Run', cover: imageData.OriginsCover },
   { key: 'kino', label: 'Kino der Toten', cover: imageData.Kino_Der_TotenCover },
   { key: 'gk', label: 'Gorod Krovi', cover: imageData.Gorod_KroviCover },
   { key: 'de', label: 'Der Eisendrache', cover: imageData.Der_EisendracheCover },
