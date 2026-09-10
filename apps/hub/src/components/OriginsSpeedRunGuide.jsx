@@ -93,15 +93,17 @@ export default function OriginsSpeedRunGuide({ cover }) {
                   <strong>{phase.title}</strong>
                   <small>{phase.summary}</small>
                 </span>
-                <a
-                  href={originsSpeedRunVideo.timestampUrl(phase.timestamp)}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="origins-speedrun-time"
-                  onClick={(event) => event.stopPropagation()}
-                >
-                  {formatTimestamp(phase.timestamp)} ↗
-                </a>
+                {Number.isFinite(phase.timestamp) && (
+                  <a
+                    href={originsSpeedRunVideo.timestampUrl(phase.timestamp)}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="origins-speedrun-time"
+                    onClick={(event) => event.stopPropagation()}
+                  >
+                    {formatTimestamp(phase.timestamp)} ↗
+                  </a>
+                )}
               </summary>
 
               <ol>
