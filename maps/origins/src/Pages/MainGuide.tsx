@@ -55,7 +55,7 @@ const MainGuide = () => {
               <li>Save a zombie when you need uninterrupted time for staff puzzles or map setup.</li>
               <li>Have the Maxis Drone built and ready before you attempt Rain Fire.</li>
               <li>Use the dedicated staff pages for puzzle images instead of trying to memorize every code from the main guide.</li>
-              <li>The future Interactive / Speedrun Guide will keep optimized routing separate from this standard quest guide.</li>
+              <li>For optimized routing, skips, staff dupes, and Lightning quick references, open <strong>Side EEs → Origins Speed Run</strong>.</li>
             </ul>
             <p className="credits">
               <em>MrRoflWaffles – Staff Images</em>
