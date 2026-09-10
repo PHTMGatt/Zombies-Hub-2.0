@@ -14,30 +14,21 @@ The goal is simple: open a map and quickly answer **“what do I do next?”** w
 
 ### Zombies Hub 1.0
 
-The original version used a **separate React application and a separate Render service for each dedicated map guide**.
-
-The Hub, Origins, Mob of the Dead, Der Eisendrache, Revelations, and the other dedicated guides all ran as independent programs. Moving between them meant moving between separate deployments, with duplicated app code and the possibility of Render cold-start/loading delays.
-
-It proved the idea, but the system was slower, more fragmented, and harder to maintain.
+The original version used a **separate React application and a separate Render service for each dedicated map guide**. Moving between maps meant moving between independent deployments with duplicated app code and more chances for cold-start/loading delays.
 
 ### Zombies Hub 2.0
 
-2.0 rebuilds the project as **one React application, one router, one codebase, and one Render service**.
-
-Every dedicated guide now loads as an internal route inside the Hub. The result is much faster and more seamless map-to-map navigation, less duplicated code, simpler maintenance, and one consistent application shell while each map still keeps its own visual identity.
+2.0 is **one React application, one router, one codebase, and one Render service**. Dedicated guides load as internal routes, making map-to-map navigation faster and more seamless while each map keeps its own visual identity.
 
 | Zombies Hub 1.0 | Zombies Hub 2.0 |
 | --- | --- |
 | Separate React app for each guide | **One React application** |
 | Separate Render service for each guide | **One Render service** |
 | Guide-to-guide website jumps | **Internal React routing** |
-| More duplicated code and dependencies | **Shared architecture** |
+| Duplicated app code/dependencies | **Shared architecture** |
 | More chances for cold-start delays | **Faster, smoother navigation** |
-| Independent app shells | **One Hub shell + map-specific guide navigation** |
 
 ## Dedicated Guides
-
-Zombies Hub 2.0 currently includes full internal guides for:
 
 - Origins
 - Mob of the Dead
@@ -47,17 +38,11 @@ Zombies Hub 2.0 currently includes full internal guides for:
 - Gorod Krovi
 - Revelations
 
-Each map keeps its own colors, artwork, guide sections, tools, and personality while running inside the same React application.
+**Origins** is the usability reference: short, visual, and easy to follow while playing. **Revelations** is the visual reference, especially for atmosphere and header/footer integration.
 
-**Origins** is the main usability reference: short, visual, and easy to follow while playing. **Revelations** is the main visual reference, especially for map atmosphere and header/footer integration.
+The guides include main Easter Egg routes, Staff/Bow/weapon guides, puzzle references, map-specific solvers, boss-fight references, Side Easter Eggs, and video/timestamp references when seeing a location is faster than reading about it.
 
-## Guide Features
-
-The project includes main Easter Egg routes, Staff/Bow/weapon guides, puzzle references, map-specific solvers, boss-fight references, Side Easter Eggs, and video/timestamp references when they actually make a step easier to understand.
-
-The Side Easter Egg section also includes an advanced **Origins Speed Run** guide with robot/snow routing, cycle strategy, tank and Lightning skips, staff duplication, ending setup, and Lightning Staff switch reference images.
-
-Accuracy matters as much as presentation. Dedicated maps are being checked against full walkthroughs so the guide remains useful while somebody is actually running the Easter Egg.
+Side EEs also includes an advanced **Origins Speed Run** companion with robot/snow routing, cycle strategy, tank and Lightning skips, staff duplication, ending setup, and Lightning Staff switch reference images.
 
 ## Project Structure
 
@@ -65,21 +50,14 @@ Accuracy matters as much as presentation. Dedicated maps are being checked again
 Zombies-Hub-2.0/
 ├── apps/hub/              # Main Hub application
 ├── maps/                  # Dedicated map modules
-│   ├── origins/
-│   ├── mob-of-the-dead/
-│   ├── shadows-of-evil/
-│   ├── der-eisendrache/
-│   ├── zetsubou-no-shima/
-│   ├── gorod-krovi/
-│   └── revelations/
-├── shared/
-├── docs/
-└── scripts/
+├── shared/                # Shared UI
+├── docs/                  # Architecture / deployment notes
+└── scripts/               # Verification, build metadata, smoke + visual QA
 ```
 
 The app uses one BrowserRouter. Map CSS is scoped by module so one guide cannot accidentally restyle another guide or the main Hub.
 
-## Local Development
+## Development
 
 ```bash
 npm install
@@ -98,14 +76,39 @@ Render build:
 npm run render
 ```
 
-Render publishes the generated `dist` directory. SPA rewriting keeps direct routes such as `/maps/origins` working after a refresh.
+Live production smoke check:
 
-## Visual QA Screenshots
+```bash
+npm run smoke
+```
 
-During development, a temporary `screenshots/` folder can be used to capture the live Render pages at desktop and mobile sizes. These screenshots are only for visual QA and can be deleted once the polish pass is complete.
+## CI / Render Pipeline
+
+Production follows a small quality gate:
+
+```text
+push / pull request
+        ↓
+source verification
+        ↓
+production compile
+        ↓
+GitHub CI passes
+        ↓
+Render deploys main
+        ↓
+production smoke + optional 100-page visual QA
+```
+
+`render.yaml` defines the static site, SPA rewrite, Node version, production asset caching, and **deploy-after-CI-passes** behavior. Every build also writes `dist/build-info.json` so the live Render deployment can be matched to its exact Git commit.
+
+The heavy desktop/mobile screenshot pass is an **on-demand GitHub Action**. Screenshots are uploaded as short-lived Actions artifacts instead of being permanently stored in the repository.
+
+See [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) for the production pipeline and Render settings.
 
 ## Documentation
 
+- [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) — CI, Render and live QA
 - [`docs/architecture.md`](docs/architecture.md) — application architecture
 - [`docs/migration-inventory.md`](docs/migration-inventory.md) — migration notes
 - [`docs/polish-roadmap.md`](docs/polish-roadmap.md) — polish and QA roadmap
