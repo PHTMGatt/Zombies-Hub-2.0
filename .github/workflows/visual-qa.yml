@@ -1,0 +1,53 @@
+name: Visual QA Screenshots
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/**'
+      - 'maps/**'
+      - 'shared/**'
+      - 'scripts/capture-live-screenshots.mjs'
+      - '.github/workflows/visual-qa.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: visual-qa-main
+  cancel-in-progress: true
+
+jobs:
+  capture-live-site:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Playwright temporarily
+        run: |
+          npm install --no-save playwright@1.55.0
+          npx playwright install --with-deps chromium
+
+      - name: Give Render a moment to deploy
+        run: sleep 45
+
+      - name: Capture desktop and mobile pages
+        env:
+          ZH_SCREENSHOT_BASE_URL: https://zombies-hub-2-0.onrender.com
+          ZH_SCREENSHOT_DIR: screenshots
+        run: node scripts/capture-live-screenshots.mjs
+
+      - name: Upload visual QA artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: zombies-hub-visual-qa
+          path: screenshots/
+          if-no-files-found: warn
+          retention-days: 3
