@@ -15,6 +15,9 @@ services:
         source: /*
         destination: /index.html
     headers:
+      - path: /build-info.json
+        name: Cache-Control
+        value: no-store, no-cache, must-revalidate
       - path: /assets/*
         name: Cache-Control
         value: public, max-age=31536000, immutable
