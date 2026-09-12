@@ -11,14 +11,13 @@ export default function Home() {
 
       {featuredMaps.length > 0 && (
         <div className="home-grid">
-          {featuredMaps.map(({ name, slug, renderLink, image }) => {
-            const to = slug ? `/maps/${slug}` : renderLink;
+          {featuredMaps.map(({ name, route, image }) => {
             const isFeatured = name === 'All Maps';
 
             return (
               <Link
                 key={name}
-                to={to}
+                to={route}
                 className={`card neon${isFeatured ? ' featured' : ''}`}
                 style={{ backgroundImage: `url(${image})` }}
               >
