@@ -44,7 +44,7 @@ The original version used a **separate React application and a separate Render s
 
 The guides include main Easter Egg routes, Staff/Bow/weapon guides, puzzle references, map-specific solvers, boss-fight references, Side Easter Eggs, and video/timestamp references when seeing a location is faster than reading about it.
 
-Side EEs also includes an advanced **Origins Speed Run** companion with robot/snow routing, cycle strategy, tank and Lightning skips, staff duplication, ending setup, and Lightning Staff switch reference images.
+Side EEs also includes an advanced **Origins Speed Run** companion with robot/snow routing, cycle strategy, tank and Lightning skips, staff duplication, ending setup, and a verified Lightning dial cheat sheet with untouched-switch turn counts.
 
 ## Project Structure
 
@@ -99,7 +99,9 @@ GitHub CI passes
         ↓
 Render deploys main
         ↓
-production smoke + optional 100-page visual QA
+scheduled / manual production smoke
+        ↓
+optional 100-page visual QA
 ```
 
 `render.yaml` defines the static site, SPA rewrite, Node version, production asset caching, and **deploy-after-CI-passes** behavior. Every build also writes `dist/build-info.json` so the live Render deployment can be matched to its exact Git commit.
