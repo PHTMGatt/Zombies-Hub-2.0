@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import originsSpeedRun, { originsSpeedRunVideo } from '../data/sideEE/OriginsSpeedRun';
-import lightningSwitches from '../assets/images/SideEE/origins-lightning-switches.webp';
-import lightningSwitchReference from '../assets/images/SideEE/origins-lightning-switch-reference.webp';
+import {
+  originsLightningSwitchRoute,
+  originsLightningSwitchVerification,
+} from '../../../../shared/data/originsLightning';
 import '../styles/SideEE/OriginsSpeedRun.css';
 import '../styles/SideEE/OriginsSpeedRunHildaless.css';
 
@@ -50,21 +52,49 @@ export default function OriginsSpeedRunGuide({ cover }) {
 
       <section className="origins-speedrun-lightning" id="lightning-reference">
         <div className="origins-speedrun-section-heading">
-          <span>Quick Reference</span>
+          <span>Verified Quick Reference</span>
           <h2>Lightning Staff Switches</h2>
-          <p>Use the red arrows in the reference as the target switch positions. The close-up image is there purely as a fast shape/orientation check mid-run.</p>
+          <p>
+            Final BO3 Zombies Chronicles positions. <strong>Arrow = the direction the protruding switch handle points</strong>,
+            not the opposite face of the switch.
+          </p>
         </div>
 
-        <div className="origins-speedrun-lightning-grid">
-          <a href={lightningSwitches} target="_blank" rel="noreferrer" className="origins-speedrun-reference origins-speedrun-reference--map">
-            <img src={lightningSwitches} alt="Origins Lightning Staff switch locations and target directions" loading="lazy" />
-            <span>Open full Lightning switch map ↗</span>
-          </a>
-          <a href={lightningSwitchReference} target="_blank" rel="noreferrer" className="origins-speedrun-reference origins-speedrun-reference--switch">
-            <img src={lightningSwitchReference} alt="Close-up reference for the Origins Lightning Staff switch shape" loading="lazy" />
-            <span>Open switch-shape reference ↗</span>
-          </a>
+        <div className="origins-speedrun-switch-status">
+          <span>⚡ VERIFIED BO3</span>
+          <strong>Spawn ← · Gen 2 ↓ · Gen 5 ↓ · Gen 4 ↑ · Church ↓ → · Church ↑ ↑ · Excavation ↑</strong>
         </div>
+
+        <div className="origins-speedrun-switch-grid" aria-label="Verified Lightning Staff dial positions">
+          {originsLightningSwitchRoute.map((item) => (
+            <article className="origins-speedrun-switch" key={item.id}>
+              <div className="origins-speedrun-switch-arrow" aria-hidden="true">{item.arrow}</div>
+              <div className="origins-speedrun-switch-copy">
+                <strong>{item.shortLabel}</strong>
+                <span>{item.direction} · {item.clock}</span>
+                <small>{item.location}</small>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <div className="origins-speedrun-switch-rule">
+          <strong>Speedrun rule:</strong>
+          <span>{originsLightningSwitchVerification.note}</span>
+          <Link to="/maps/origins/lightning-staff">Open normal Lightning Staff guide →</Link>
+        </div>
+
+        <details className="origins-speedrun-switch-route">
+          <summary>Open route notes for all 7 switches</summary>
+          <ol>
+            {originsLightningSwitchRoute.map((item) => (
+              <li key={item.id}>
+                <strong>{item.shortLabel} {item.arrow}</strong>
+                <span>{item.speedrunNote}</span>
+              </li>
+            ))}
+          </ol>
+        </details>
 
         <details className="origins-speedrun-hildaless">
           <summary>
