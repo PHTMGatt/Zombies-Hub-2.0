@@ -61,8 +61,8 @@ async function warmProduction() {
 }
 
 async function waitForBuildInfo() {
-  const attempts = expectedSha ? 12 : 4;
-  const retryDelay = expectedSha ? 8_000 : 3_000;
+  const attempts = expectedSha ? 24 : 4;
+  const retryDelay = expectedSha ? 10_000 : 3_000;
 
   for (let attempt = 1; attempt <= attempts; attempt += 1) {
     try {
@@ -99,7 +99,7 @@ async function waitForBuildInfo() {
 
   throw new Error(
     expectedSha
-      ? `Render did not reach expected commit ${expectedSha.slice(0, 12)} in time.`
+      ? `Render did not reach expected commit ${expectedSha.slice(0, 12)} within the deploy window.`
       : 'Could not read live build-info.json after retries.',
   );
 }
