@@ -93,14 +93,12 @@ A beautiful guide with incorrect or missing information is not acceptable.
 
 ### Origins
 
-**Status:** strongest overall guide; preserve structure.
+**Status:** strongest overall guide; preserve structure. Lightning Staff data and the advanced Speed Run companion are now verified and share one source of truth.
 
-Work:
-- Improve footer so it visually matches the quality of the page/header.
-- Keep existing guide structure essentially untouched.
-- Verify Lightning Staff switch reference / switch orientations.
-- Add the existing Lightning Staff speedrun switch-reference image as an optional quick-reference card.
-- Do not clutter the primary guide.
+Current rule:
+- Keep the main Origins guide short and beginner-friendly.
+- Keep advanced routing, staff dupes, skips, robot/snow logic, and speedrun turn counts under **Side EEs → Origins Speed Run**.
+- Lightning dial directions and untouched-switch turn counts must come from the shared verified data module so the normal guide and Speed Run page cannot drift.
 
 Future feature:
 - Add an **Interactive Guide / Speedrun Trainer** entry to the map navigation.
@@ -221,25 +219,22 @@ The goal is graceful reflow, not simply shrinking desktop layouts until they fit
 
 ### P0 — correctness and broken behavior
 
-1. Revelations video loading / black-screen / timestamp behavior.
-2. Verify Mob of the Dead Easter Egg information.
-3. Verify Der Eisendrache Easter Egg + bows.
-4. Verify Gorod Krovi Easter Egg progression.
-5. Verify questionable Origins Lightning Staff switch information.
+1. Run live desktop/mobile visual QA after meaningful Render deployments.
+2. Spot-check Revelations timestamp seeking and DE wisp timestamps against the live build.
+3. Finish metadata / lore / release-date audit for non-dedicated Hub maps.
+4. Fix any broken images, route errors, or horizontal overflow reported by the QA capture.
 
 ### P1 — visual / structural polish
 
-1. Origins footer.
-2. Revelations internal media / timestamp UI consistency.
-3. Mob of the Dead header + guide hierarchy overhaul.
-4. Der Eisendrache full UI / guide overhaul.
-5. Gorod Krovi conversion from wiki-like prose to actionable guide steps.
-6. Mobile spacing / card responsiveness.
+1. Finish small mobile spacing / wrapping issues exposed by live screenshots.
+2. Keep headers and footers compact and map-specific without repeated Hub branding.
+3. Keep main quest pages run-first; move deep reference material to dedicated tabs / expandable sections.
+4. Continue reducing any remaining wiki-like long-form pages.
 
 ### P2 — expansion
 
 1. Expand Side Easter Eggs / music Easter Eggs.
-2. Add additional useful quick references.
+2. Add additional useful quick references only where they improve play speed.
 3. Improve map-specific artwork where current source art limits quality.
 
 ### Later phase — interactive training
