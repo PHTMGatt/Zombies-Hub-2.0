@@ -62,7 +62,7 @@ export default function OriginsSpeedRunGuide({ cover }) {
 
         <div className="origins-speedrun-switch-status">
           <span>⚡ VERIFIED BO3</span>
-          <strong>Spawn ← · Gen 2 ↓ · Gen 5 ↓ · Gen 4 ↑ · Church ↓ → · Church ↑ ↑ · Excavation ↑</strong>
+          <strong>Spawn ×2 ← · Gen 2 ×3 ↓ · Gen 5 ×3 ↓ · Gen 4 ×2 ↑ · Church Lower ×2 → · Church Upper ×1 ↑ · Excavation ×3 ↑</strong>
         </div>
 
         <div className="origins-speedrun-switch-grid" aria-label="Verified Lightning Staff dial positions">
@@ -71,7 +71,7 @@ export default function OriginsSpeedRunGuide({ cover }) {
               <div className="origins-speedrun-switch-arrow" aria-hidden="true">{item.arrow}</div>
               <div className="origins-speedrun-switch-copy">
                 <strong>{item.shortLabel}</strong>
-                <span>{item.direction} · {item.clock}</span>
+                <span>×{item.turnsFromUntouched} · {item.arrow} {item.direction} · {item.clock}</span>
                 <small>{item.location}</small>
               </div>
             </article>
@@ -80,6 +80,7 @@ export default function OriginsSpeedRunGuide({ cover }) {
 
         <div className="origins-speedrun-switch-rule">
           <strong>Speedrun rule:</strong>
+          <span>{originsLightningSwitchVerification.clickRule}</span>
           <span>{originsLightningSwitchVerification.note}</span>
           <Link to="/maps/origins/lightning-staff">Open normal Lightning Staff guide →</Link>
         </div>
