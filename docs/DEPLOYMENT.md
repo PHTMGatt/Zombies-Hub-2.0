@@ -19,7 +19,7 @@ CI success
         ↓
 Render: deploy main
         ↓
-Production smoke checks
+Scheduled / manual production smoke
         ↓
 On-demand desktop/mobile visual QA
 ```
@@ -34,7 +34,7 @@ It uses Node 22, `npm ci`, the custom source verifier, and a production Vite com
 
 ### Production Smoke
 
-Runs daily and can also be started manually. It checks the live Render site plus the critical Hub and dedicated-guide routes.
+Runs daily and can also be started manually. It checks the live Render site plus the critical Hub and dedicated-guide routes. It is intentionally independent from the blocking CI check so Render's **After CI Checks Pass** deploy mode cannot deadlock waiting on a smoke test that is itself waiting for Render.
 
 ### Visual QA Screenshots
 
