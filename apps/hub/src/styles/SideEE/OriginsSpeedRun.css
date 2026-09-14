@@ -1,23 +1,23 @@
 .side-ee-info-page--origins-speedrun {
   width: min(100% - 1rem, 1180px);
-  padding: 1.25rem 0 2.5rem;
+  padding: 1.1rem 0 2.5rem;
 }
 
 .origins-speedrun-guide {
   --osr-blue: #59c7ff;
-  --osr-blue-soft: rgba(89, 199, 255, 0.14);
+  --osr-blue-bright: #8ce4ff;
   --osr-line: rgba(126, 208, 255, 0.2);
   --osr-panel: rgba(5, 14, 24, 0.82);
   color: #edf8ff;
 }
 
 .origins-speedrun-hero {
-  min-height: 190px;
+  min-height: 180px;
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
   gap: 1.25rem;
-  padding: 1.45rem 1.55rem;
+  padding: 1.3rem 1.45rem;
   overflow: hidden;
   border: 1px solid var(--osr-line);
   border-radius: 14px;
@@ -30,7 +30,7 @@
 .origins-speedrun-section-heading > span {
   display: block;
   color: #8addff;
-  font-size: 0.68rem;
+  font-size: 0.66rem;
   font-weight: 850;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -38,7 +38,7 @@
 
 .origins-speedrun-hero h1 {
   margin: 0.15rem 0 0.35rem;
-  font-size: clamp(2rem, 5vw, 3.25rem);
+  font-size: clamp(2rem, 5vw, 3.15rem);
   line-height: 0.98;
   text-shadow: 0 2px 10px #000, 0 0 22px rgba(89, 199, 255, 0.22);
 }
@@ -47,15 +47,15 @@
   max-width: 720px;
   margin: 0;
   color: #c8d7e2;
-  font-size: 0.88rem;
-  line-height: 1.5;
+  font-size: 0.86rem;
+  line-height: 1.48;
 }
 
 .origins-speedrun-actions {
   flex: 0 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 0.45rem;
+  gap: 0.42rem;
 }
 
 .origins-speedrun-actions a,
@@ -64,9 +64,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.4rem 0.75rem;
+  padding: 0.4rem 0.72rem;
   color: #dff5ff;
-  font-size: 0.78rem;
+  font-size: 0.77rem;
   font-weight: 750;
   text-decoration: none;
   border: 1px solid rgba(89, 199, 255, 0.3);
@@ -84,7 +84,7 @@
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 1px;
-  margin: 0.75rem 0;
+  margin: 0.7rem 0;
   overflow: hidden;
   border: 1px solid var(--osr-line);
   border-radius: 10px;
@@ -92,26 +92,26 @@
 }
 
 .origins-speedrun-strip > div {
-  min-height: 66px;
+  min-height: 62px;
   display: flex;
   align-items: center;
-  padding: 0.7rem;
+  padding: 0.66rem;
   color: #c8d8e5;
-  font-size: 0.76rem;
-  line-height: 1.35;
+  font-size: 0.74rem;
+  line-height: 1.34;
   background: rgba(5, 14, 24, 0.92);
 }
 
 .origins-speedrun-rules {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0.55rem;
-  margin-bottom: 1.15rem;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 .origins-speedrun-rules > div {
-  min-height: 92px;
-  padding: 0.75rem;
+  min-height: 86px;
+  padding: 0.7rem;
   border: 1px solid rgba(126, 208, 255, 0.14);
   border-radius: 9px;
   background: linear-gradient(145deg, rgba(54, 135, 190, 0.1), rgba(4, 12, 21, 0.8));
@@ -123,101 +123,245 @@
 }
 
 .origins-speedrun-rules strong {
-  margin-bottom: 0.22rem;
+  margin-bottom: 0.2rem;
   color: #87ddff;
-  font-size: 0.8rem;
+  font-size: 0.79rem;
 }
 
 .origins-speedrun-rules span {
   color: #b9c9d6;
-  font-size: 0.74rem;
-  line-height: 1.4;
+  font-size: 0.72rem;
+  line-height: 1.38;
 }
 
 .origins-speedrun-lightning,
 .origins-speedrun-route {
-  margin-top: 1rem;
-  padding: 1rem;
+  margin-top: 0.9rem;
+  padding: 0.95rem;
   border: 1px solid var(--osr-line);
   border-radius: 12px;
   background: linear-gradient(145deg, rgba(15, 57, 84, 0.14), rgba(3, 10, 18, 0.86));
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
 }
 
+.origins-speedrun-lightning {
+  position: relative;
+  overflow: hidden;
+  border-color: rgba(89, 199, 255, 0.28);
+}
+
+.origins-speedrun-lightning::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 8% 0%, rgba(68, 196, 255, 0.14), transparent 27%),
+    radial-gradient(circle at 94% 100%, rgba(81, 92, 255, 0.1), transparent 25%);
+}
+
+.origins-speedrun-lightning > * {
+  position: relative;
+  z-index: 1;
+}
+
 .origins-speedrun-section-heading {
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.72rem;
 }
 
 .origins-speedrun-section-heading h2 {
-  margin: 0.12rem 0 0.25rem;
+  margin: 0.12rem 0 0.24rem;
   color: #f4fbff;
-  font-size: 1.35rem;
+  font-size: 1.34rem;
   line-height: 1.05;
 }
 
 .origins-speedrun-section-heading p {
   margin: 0;
   color: #afc1cf;
-  font-size: 0.78rem;
-  line-height: 1.45;
+  font-size: 0.77rem;
+  line-height: 1.43;
 }
 
-.origins-speedrun-lightning-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.8fr) minmax(250px, 1fr);
-  gap: 0.65rem;
-  align-items: stretch;
+.origins-speedrun-section-heading p strong {
+  color: #e1f8ff;
 }
 
-.origins-speedrun-reference {
-  min-width: 0;
+.origins-speedrun-switch-status {
   display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  color: #cfeeff;
-  text-decoration: none;
-  border: 1px solid rgba(89, 199, 255, 0.18);
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: 0.62rem;
+  padding: 0.6rem 0.7rem;
+  border: 1px solid rgba(89, 199, 255, 0.2);
   border-radius: 9px;
-  background: #02070c;
+  background: linear-gradient(90deg, rgba(30, 137, 201, 0.16), rgba(4, 12, 22, 0.8));
 }
 
-.origins-speedrun-reference img {
+.origins-speedrun-switch-status span {
+  flex: 0 0 auto;
+  padding: 0.2rem 0.4rem;
+  color: #03131e;
+  border-radius: 999px;
+  background: #69d6ff;
+  font-size: 0.6rem;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+}
+
+.origins-speedrun-switch-status strong {
+  color: #dff7ff;
+  font-size: 0.76rem;
+  line-height: 1.34;
+}
+
+.origins-speedrun-switch-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.48rem;
+}
+
+.origins-speedrun-switch {
+  min-width: 0;
+  min-height: 94px;
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  gap: 0.62rem;
+  align-items: center;
+  padding: 0.68rem;
+  border: 1px solid rgba(89, 199, 255, 0.16);
+  border-radius: 10px;
+  background:
+    linear-gradient(145deg, rgba(40, 127, 184, 0.12), transparent 58%),
+    rgba(2, 9, 16, 0.82);
+}
+
+.origins-speedrun-switch:last-child {
+  grid-column: span 2;
+}
+
+.origins-speedrun-switch-arrow {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  color: #72dbff;
+  border: 1px solid rgba(89, 199, 255, 0.28);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(51, 157, 217, 0.2), rgba(3, 12, 21, 0.95) 66%);
+  box-shadow:
+    inset 0 0 12px rgba(67, 194, 255, 0.12),
+    0 0 15px rgba(67, 194, 255, 0.08);
+  font-size: 1.7rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.origins-speedrun-switch-copy strong,
+.origins-speedrun-switch-copy span,
+.origins-speedrun-switch-copy small {
   display: block;
-  width: 100%;
-  flex: 1 1 auto;
-  object-fit: contain;
-  background: #02070c;
 }
 
-.origins-speedrun-reference--map img {
-  aspect-ratio: 4 / 3;
+.origins-speedrun-switch-copy strong {
+  color: #f1fbff;
+  font-size: 0.82rem;
 }
 
-.origins-speedrun-reference--switch img {
-  aspect-ratio: 2 / 1;
-}
-
-.origins-speedrun-reference span {
-  padding: 0.45rem 0.6rem;
-  color: #a7c9dd;
+.origins-speedrun-switch-copy span {
+  margin-top: 0.06rem;
+  color: #80dcff;
   font-size: 0.72rem;
-  text-align: center;
-  background: rgba(6, 18, 29, 0.94);
+  font-weight: 800;
+}
+
+.origins-speedrun-switch-copy small {
+  margin-top: 0.16rem;
+  color: #9eb6c6;
+  font-size: 0.64rem;
+  line-height: 1.28;
+}
+
+.origins-speedrun-switch-rule {
+  display: flex;
+  gap: 0.4rem 0.62rem;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 0.62rem;
+  padding: 0.52rem 0.66rem;
+  color: #aebfcc;
+  border-left: 3px solid #59c7ff;
+  background: rgba(18, 67, 97, 0.13);
+  font-size: 0.7rem;
+  line-height: 1.38;
+}
+
+.origins-speedrun-switch-rule strong {
+  color: #8bdfff;
+}
+
+.origins-speedrun-switch-rule a {
+  margin-left: auto;
+  color: #8bdfff;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.origins-speedrun-switch-route {
+  margin-top: 0.58rem;
+  overflow: hidden;
+  border: 1px solid rgba(89, 199, 255, 0.13);
+  border-radius: 8px;
+  background: rgba(2, 9, 16, 0.68);
+}
+
+.origins-speedrun-switch-route > summary {
+  padding: 0.52rem 0.68rem;
+  color: #bfeaff;
+  cursor: pointer;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.origins-speedrun-switch-route ol {
+  margin: 0;
+  padding: 0.1rem 1rem 0.62rem 2rem;
+  color: #b9cad6;
+  font-size: 0.7rem;
+}
+
+.origins-speedrun-switch-route li {
+  margin: 0.38rem 0;
+  line-height: 1.38;
+}
+
+.origins-speedrun-switch-route li strong,
+.origins-speedrun-switch-route li span {
+  display: block;
+}
+
+.origins-speedrun-switch-route li strong {
+  color: #e8f8ff;
+}
+
+.origins-speedrun-switch-route li span {
+  margin-top: 0.06rem;
+  color: #9db2c0;
 }
 
 .origins-speedrun-jumps {
   display: flex;
-  gap: 0.4rem;
-  padding-bottom: 0.72rem;
+  gap: 0.38rem;
+  padding-bottom: 0.68rem;
   overflow-x: auto;
   scrollbar-width: thin;
 }
 
 .origins-speedrun-jumps a {
   flex: 0 0 auto;
-  padding: 0.35rem 0.58rem;
+  padding: 0.34rem 0.56rem;
   color: #bfe9ff;
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   font-weight: 700;
   text-decoration: none;
   border: 1px solid rgba(89, 199, 255, 0.18);
@@ -241,12 +385,12 @@
 }
 
 .origins-speedrun-phase summary {
-  min-height: 66px;
+  min-height: 64px;
   display: grid;
   grid-template-columns: 34px minmax(0, 1fr) auto;
-  gap: 0.7rem;
+  gap: 0.66rem;
   align-items: center;
-  padding: 0.62rem 0.72rem;
+  padding: 0.6rem 0.7rem;
   cursor: pointer;
   list-style: none;
 }
@@ -265,7 +409,7 @@
   display: grid;
   place-items: center;
   color: #07131c;
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 900;
   border-radius: 50%;
   background: #66d2ff;
@@ -282,20 +426,20 @@
 
 .origins-speedrun-phase-copy strong {
   color: #f1f9ff;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
 }
 
 .origins-speedrun-phase-copy small {
-  margin-top: 0.16rem;
+  margin-top: 0.14rem;
   color: #aebfcd;
-  font-size: 0.72rem;
-  line-height: 1.35;
+  font-size: 0.7rem;
+  line-height: 1.33;
 }
 
 .origins-speedrun-time {
-  padding: 0.25rem 0.42rem;
+  padding: 0.24rem 0.4rem;
   color: #7fdbff;
-  font-size: 0.68rem;
+  font-size: 0.66rem;
   font-weight: 800;
   text-decoration: none;
   border-radius: 6px;
@@ -304,31 +448,36 @@
 
 .origins-speedrun-phase ol {
   margin: 0;
-  padding: 0.2rem 1.1rem 0.78rem 3.25rem;
+  padding: 0.16rem 1.05rem 0.74rem 3.15rem;
   color: #c4d3de;
-  font-size: 0.76rem;
-  line-height: 1.45;
+  font-size: 0.74rem;
+  line-height: 1.43;
 }
 
 .origins-speedrun-phase li {
-  margin: 0.3rem 0;
-  padding-left: 0.15rem;
+  margin: 0.28rem 0;
+  padding-left: 0.12rem;
 }
 
 .origins-speedrun-footer-actions {
   display: flex;
   justify-content: space-between;
-  gap: 0.65rem;
-  margin-top: 0.85rem;
+  gap: 0.62rem;
+  margin-top: 0.8rem;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .origins-speedrun-actions a:hover,
   .origins-speedrun-footer-actions a:hover,
   .origins-speedrun-jumps a:hover,
-  .origins-speedrun-reference:hover {
+  .origins-speedrun-switch-rule a:hover {
     border-color: rgba(89, 199, 255, 0.5);
     filter: brightness(1.08);
+  }
+
+  .origins-speedrun-switch:hover {
+    border-color: rgba(89, 199, 255, 0.34);
+    transform: translateY(-1px);
   }
 }
 
@@ -338,36 +487,35 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .origins-speedrun-lightning-grid {
-    grid-template-columns: 1fr;
+  .origins-speedrun-switch-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .origins-speedrun-reference--switch {
-    width: min(100%, 560px);
-    margin: 0 auto;
+  .origins-speedrun-switch:last-child {
+    grid-column: auto;
   }
 }
 
 @media (max-width: 640px) {
   .side-ee-info-page--origins-speedrun {
     width: calc(100% - 0.75rem);
-    padding-top: 0.75rem;
+    padding-top: 0.7rem;
   }
 
   .origins-speedrun-hero {
     min-height: 0;
     display: block;
-    padding: 1rem;
+    padding: 0.95rem;
   }
 
   .origins-speedrun-hero p {
-    font-size: 0.8rem;
+    font-size: 0.78rem;
   }
 
   .origins-speedrun-actions {
     flex-direction: row;
     flex-wrap: wrap;
-    margin-top: 0.75rem;
+    margin-top: 0.7rem;
   }
 
   .origins-speedrun-strip,
@@ -382,7 +530,34 @@
 
   .origins-speedrun-lightning,
   .origins-speedrun-route {
-    padding: 0.75rem;
+    padding: 0.72rem;
+  }
+
+  .origins-speedrun-switch-status {
+    display: block;
+  }
+
+  .origins-speedrun-switch-status strong {
+    display: block;
+    margin-top: 0.45rem;
+  }
+
+  .origins-speedrun-switch-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .origins-speedrun-switch {
+    min-height: 0;
+  }
+
+  .origins-speedrun-switch-rule {
+    display: block;
+  }
+
+  .origins-speedrun-switch-rule span,
+  .origins-speedrun-switch-rule a {
+    display: block;
+    margin: 0.25rem 0 0;
   }
 
   .origins-speedrun-phase summary {
@@ -395,7 +570,7 @@
   }
 
   .origins-speedrun-phase ol {
-    padding-left: 2.75rem;
+    padding-left: 2.65rem;
   }
 
   .origins-speedrun-footer-actions {
