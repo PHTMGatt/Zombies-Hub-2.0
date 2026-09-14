@@ -1,6 +1,9 @@
 name: Production Smoke
 
 on:
+  workflow_run:
+    workflows: ['Build Zombies Hub 2.0']
+    types: [completed]
   schedule:
     - cron: '17 11 * * *'
   workflow_dispatch:
@@ -24,20 +27,23 @@ concurrency:
 
 jobs:
   smoke:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 10
 
     steps:
-      - name: Checkout
+      - name: Checkout tested revision
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
 
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 22
 
-      - name: Verify critical production routes
+      - name: Wait for Render and verify critical production routes
         env:
           ZH_SMOKE_BASE_URL: ${{ inputs.base_url || 'https://zombies-hub-2-0.onrender.com' }}
-          ZH_EXPECTED_SHA: ${{ inputs.expected_sha }}
+          ZH_EXPECTED_SHA: ${{ github.event.workflow_run.head_sha || inputs.expected_sha }}
         run: node scripts/smoke-live.mjs
