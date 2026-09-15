@@ -91,11 +91,8 @@ Zombies-Hub-2.0/
 │   ├── gorod-krovi/
 │   └── revelations/
 ├── shared/
-│   ├── assets/
 │   ├── data/
-│   ├── hooks/
-│   ├── ui/
-│   └── utilities/
+│   └── ui/
 ├── scripts/
 └── docs/
 ```
