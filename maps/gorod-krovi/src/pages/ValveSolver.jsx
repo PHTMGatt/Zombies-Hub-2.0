@@ -14,7 +14,7 @@ const locations = [
   'Armory',
   'Department Store',
   'Supply Depot',
-  'Tank Station',
+  'Tank Factory',
 ];
 
 const ValveSolver = () => {
@@ -39,10 +39,10 @@ const ValveSolver = () => {
       <GuideHero
         kicker="Gorod Krovi"
         title="Valve Solver"
-        description="Choose where the green light starts and where the Master Code Cylinder is located. The solver returns the six valve settings for that game."
+        description="Choose the green starting valve and the valve holding the Master Code Cylinder. The solver gives the five dial settings that route airflow through all six valves; the cylinder valve is the endpoint."
       >
         <GuideChip>Randomized puzzle</GuideChip>
-        <GuideChip>6 valves</GuideChip>
+        <GuideChip>6-valve path</GuideChip>
         <GuideChip>S.O.P.H.I.A. setup</GuideChip>
       </GuideHero>
 
@@ -86,7 +86,7 @@ const ValveSolver = () => {
         {!greenValve || !cylinderLocation ? (
           <div className="gorod-valve-empty">
             <strong>Select both locations.</strong>
-            <span>Your six settings will appear here immediately.</span>
+            <span>Your five dial settings and final cylinder endpoint will appear here immediately.</span>
           </div>
         ) : solution ? (
           <div className="gorod-valve-solution" aria-live="polite">
@@ -106,6 +106,11 @@ const ValveSolver = () => {
                     <strong>{setting}</strong>
                   </div>
                 ))}
+                <div className="gorod-valve-setting is-end">
+                  <span className="gorod-valve-setting__number">6</span>
+                  <span className="gorod-valve-setting__location">{cylinderLocation}</span>
+                  <strong>END</strong>
+                </div>
               </div>
             )}
           </div>
