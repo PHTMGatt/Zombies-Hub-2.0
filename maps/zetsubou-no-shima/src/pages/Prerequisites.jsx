@@ -12,7 +12,7 @@ const setup = [
   ['Skull of Nan Sapwe', 'Clean all four skulls and finish the Keeper encounter so Mesmerize is available for hidden quest objects.'],
   ['KT-4 → Masamune', 'Build the KT-4, then complete the upgrade ingredients before the elevator/boss stretch.'],
   ['Zombie Shield', 'Build it during setup and keep a usable shield for the electrified zipline cog.'],
-  ['Gas Mask', 'Build one during setup and replace it with a fresh mask before the elevator descent.'],
+  ['Gas Mask', 'Every player needs one for the endgame corridor. Build them during setup and replace damaged masks before the elevator.'],
   ['Bucket + Seeds', 'Keep the bucket and seeds moving through the colored-water plant steps instead of leaving them until the end.'],
 ];
 
