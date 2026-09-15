@@ -1,6 +1,6 @@
 export const mobPrerequisites = [
-  'You can complete the quest up to the final step solo, but the full Easter Egg requires at least two players.',
-  'In a two- or three-player game, one player must be Weasel for the final bridge showdown.',
+  'Play on Original difficulty; the main quest does not run on Easy.',
+  'You can complete the setup solo, but the full ending requires at least two players and one player must be Weasel.',
 ];
 
 export const mobRun = [
@@ -26,10 +26,10 @@ export const mobRun = [
   },
   {
     title: 'First Bridge Trip',
-    summary: 'Take the completed plane to the bridge, kill the Warden, clear the round, then return on the electric chairs.',
+    summary: 'Take the completed plane to the bridge, use Pack-a-Punch if needed, then return to Alcatraz on the electric chairs.',
     details: [
-      'Wait until the round number turns white before taking the electric chairs back.',
-      'Returning at the round transition lets the fuel cans repopulate immediately.',
+      'Use the bridge trip for Pack-a-Punch and weapon setup while the plane cycle is progressing.',
+      'Return on the electric chairs. Fuel cans repopulate back at Alcatraz for the next normal flight.',
     ],
   },
   {
@@ -43,7 +43,7 @@ export const mobRun = [
   },
   {
     title: 'Second Bridge Trip',
-    summary: 'Refuel the plane, return to the bridge, clear the round, and come back to Alcatraz for the skull/spoon setup.',
+    summary: 'Refuel the plane, make the second bridge trip, then return to Alcatraz and keep the skull/Spoon setup moving.',
     details: [
       'After returning, refuel the plane one more time for the third trip.',
       "Keep Hell's Retriever equipped because the next step requires it.",
@@ -54,19 +54,20 @@ export const mobRun = [
     summary: "Use Hell's Retriever to collect all five hidden skulls and spawn the free Blundergat in the Warden's Office.",
     details: [
       'Jail cell just outside spawn.',
-      'Podium in the docks.',
+      'Docks: the wooden pier / piling visible from the lower dock area.',
       'Lamp post outside Juggernog.',
       'Rooftop near the plane.',
       "Pylon outside the Warden's Office window near Speed Cola.",
     ],
   },
   {
-    title: 'Complete the Spoon / Spork Step',
-    summary: "Throw Hell's Retriever at the poster outside the Warden's Office, shock the spoon in Afterlife, then collect the golden spork in the cafeteria.",
+    title: 'Collect the Spoon',
+    summary: "Use Hell's Retriever on the blue-green poster by the Warden's Office, shock the hidden spoon in Afterlife, then retrieve the silver Spoon through the Cafeteria window.",
     details: [
       'The poster opens an Afterlife-only passage.',
-      'Shock the spoon until it disappears and you hear the laugh.',
-      "Throw Hell's Retriever at the golden spork in the cafeteria window to collect it.",
+      'Enter Afterlife and shock the hidden spoon until it disappears and the audio cue plays.',
+      "Revive, go to the Cafeteria, and throw Hell's Retriever through the serving window at the silver Spoon to collect it.",
+      'The Golden Spork upgrade is optional and is not required for Pop Goes the Weasel.',
     ],
   },
   {
