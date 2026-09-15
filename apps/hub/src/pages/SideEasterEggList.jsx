@@ -16,6 +16,12 @@ const MAPS = [
 export default function SideEasterEggList() {
   return (
     <div className="ee-page-wrapper side-ee-list-page">
+      <header className="side-ee-list-heading">
+        <span>OPTIONAL + ADVANCED</span>
+        <h1>Side Easter Eggs</h1>
+        <p>Quick references, music eggs, and advanced routes that stay separate from the main quest flow.</p>
+      </header>
+
       <section className="side-ee-grid">
         {MAPS.map(({ key, label, cover }) => (
           <Link
