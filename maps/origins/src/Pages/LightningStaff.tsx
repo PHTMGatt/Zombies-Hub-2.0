@@ -2,7 +2,6 @@ import React from "react";
 import ReviveIcon from "../assets/images/Skull.png";
 import LightningCode from "../assets/images/lightning_staff_code.png";
 import {
-  originsExcavationRingReference,
   originsLightningPianoCode,
   originsLightningSwitchRoute,
   originsLightningSwitchVerification,
@@ -23,24 +22,21 @@ const LightningStaff = () => {
             <h3>3 Tank Parts</h3>
             <ol className="lightning-list">
               <li>
-                <strong>Church → Gen 2:</strong> jump right after passing Generator 4 to land by the wooden
-                staircase / robot footprint.
+                <strong>Church → Gen 2:</strong> jump right after Generator 4.
               </li>
               <li>
-                <strong>Gen 2 → Church:</strong> jump left onto the Excavation scaffolding and follow the path
-                into the mound.
+                <strong>Gen 2 → Church:</strong> jump left onto Excavation scaffolding.
               </li>
               <li>
-                <strong>Gen 2 → Church:</strong> jump right just before the Church and follow the upper path
-                into the Church wall.
+                <strong>Gen 2 → Church:</strong> jump right just before Church.
               </li>
             </ol>
 
             <h3>Record + Crystal</h3>
             <ul className="lightning-list">
-              <li>Purple record: one of three spawns around Generator 4 / Jug / Wind Tunnel.</li>
-              <li>Take the Gramophone and purple record to the Lightning Tunnel beside Generator 5.</li>
-              <li>Grab the purple crystal in the Crazy Place, then build the staff beneath Excavation.</li>
+              <li>Purple record: Generator 4 / Jug / Wind Tunnel area.</li>
+              <li>Open the Lightning Tunnel beside Generator 5.</li>
+              <li>Grab the purple crystal, then build the staff under Excavation.</li>
             </ul>
           </section>
 
@@ -61,55 +57,55 @@ const LightningStaff = () => {
                 <strong key={sequence.join("-")}>{sequence.join(" - ")}</strong>
               ))}
             </div>
+
             <p className="lightning-help">
-              Enter each group separately and wait for the electrical effect to clear before starting the next one.
+              Wait for the electrical effect to clear between each group.
             </p>
           </section>
         </div>
 
         <div className="lightning-column">
-          <section className="lightning-section">
+          <section className="lightning-section lightning-switch-section">
             <h2>
               <img src={ReviveIcon} className="lightning-revive-icon" alt="" />
               Switch Positions
             </h2>
 
-            <div className="lightning-switch-list">
+            <div className="lightning-switch-list" aria-label="Lightning Staff switch positions">
               {originsLightningSwitchRoute.map((item) => (
                 <div className="lightning-switch-row" key={item.id}>
-                  <div>
-                    <strong>{item.shortLabel}</strong>
-                    <small>{item.location}</small>
-                  </div>
+                  <strong>{item.shortLabel}</strong>
                   <span>{item.arrow} {item.direction}</span>
                 </div>
               ))}
             </div>
 
-            <p className="lightning-help lightning-help--switches">
-              <strong>Direction shown:</strong> {originsLightningSwitchVerification.rule}
-            </p>
+            <details className="lightning-details">
+              <summary>Need exact switch locations?</summary>
+              <div className="lightning-location-list">
+                {originsLightningSwitchRoute.map((item) => (
+                  <p key={item.id}>
+                    <strong>{item.shortLabel}:</strong> {item.location}
+                  </p>
+                ))}
+              </div>
+              <p className="lightning-arrow-note">
+                {originsLightningSwitchVerification.rule}
+              </p>
+            </details>
           </section>
 
-          <section className="lightning-section">
+          <section className="lightning-section lightning-finish-section">
             <h2>
               <img src={ReviveIcon} className="lightning-revive-icon" alt="" />
               Finish the Upgrade
             </h2>
 
-            <ol className="lightning-list">
-              {originsExcavationRingReference.levers.map((lever) => (
-                <li key={lever}>{lever}</li>
-              ))}
+            <ol className="lightning-finish-steps">
+              <li>Under Excavation, line up all 4 rings <strong>purple</strong>.</li>
+              <li>Shoot the purple orb underneath with the Lightning Staff.</li>
+              <li>Return it to the purple Crazy Place pedestal and feed souls.</li>
             </ol>
-
-            <p className="lightning-finish">
-              <strong>Then:</strong> {originsExcavationRingReference.goal}
-            </p>
-            <p className="lightning-finish">
-              Return to the Crazy Place, place the staff on the purple pedestal, and feed souls until the
-              upgraded Lightning Staff is ready.
-            </p>
           </section>
         </div>
       </div>
