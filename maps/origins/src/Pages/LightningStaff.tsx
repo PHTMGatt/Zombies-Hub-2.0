@@ -1,18 +1,10 @@
 import React from "react";
 import ReviveIcon from "../assets/images/Skull.png";
 import LightningCode from "../assets/images/lightning_staff_code.png";
-import {
-  originsLightningPianoCode,
-  originsLightningSwitchRoute,
-  originsLightningSwitchVerification,
-} from "../../../../shared/data/originsLightning";
+import { originsLightningSwitchRoute } from "../../../../shared/data/originsLightning";
 import "../Styles/PageStyles/LightningStaff.css";
 
 const LightningStaff = () => {
-  const switchSummary = originsLightningSwitchRoute
-    .map((item) => `${item.shortLabel} ${item.arrow} ${item.direction}`)
-    .join(" · ");
-
   return (
     <div className="lightning-staff">
       <div className="staff-grid">
@@ -26,7 +18,7 @@ const LightningStaff = () => {
               <li><strong>Part 2:</strong> Gen 2 → Church, jump left onto Excavation scaffolding.</li>
               <li><strong>Part 3:</strong> Gen 2 → Church, jump right just before Church.</li>
               <li><strong>Purple Record:</strong> Generator 4 / Jug / Wind Tunnel area.</li>
-              <li><strong>Crystal:</strong> Lightning Tunnel beside Generator 5 → Crazy Place.</li>
+              <li><strong>Gramophone:</strong> Inside Excavation Site.</li>
             </ul>
           </section>
 
@@ -44,28 +36,25 @@ const LightningStaff = () => {
               <img src={ReviveIcon} className="revive-icon" alt="" /> Puzzle Notes
             </h2>
             <ul>
-              <li>
-                Play the piano code:{" "}
-                <strong>{originsLightningPianoCode.map((sequence) => sequence.join("-")).join(" / ")}</strong>.
-              </li>
-              <li><strong>Switches:</strong> {switchSummary}.</li>
-              <li>Under Excavation, line all four rings up <strong>purple</strong>.</li>
-              <li>Shoot the purple orb underneath with the Lightning Staff.</li>
-              <li>Return the staff to the purple Crazy Place pedestal and feed souls.</li>
+              <li>Go through the Lightning Tunnel with the Gramophone.</li>
+              <li>Enter the Crazy Place and solve the piano note puzzle.</li>
+              <li>Use code: <strong>1-3-6 / 3-5-7 / 2-4-6</strong>.</li>
+              <li>Line all four rings up <strong>purple</strong> under Excavation.</li>
+              <li>Shoot the orb underneath with the Lightning Staff.</li>
+              <li>Place the staff on the purple Crazy Place pedestal and feed souls.</li>
             </ul>
-
-            <details className="switch-location-details">
-              <summary>Exact switch locations</summary>
-              <div className="switch-location-list">
-                {originsLightningSwitchRoute.map((item) => (
-                  <p key={item.id}>
-                    <strong>{item.shortLabel}:</strong> {item.location}
-                  </p>
-                ))}
-              </div>
-              <p className="switch-direction-note">{originsLightningSwitchVerification.rule}</p>
-            </details>
           </section>
+
+          <aside className="switch-speedrun">
+            <h3>⚡ Switch Positions</h3>
+            <ul>
+              {originsLightningSwitchRoute.map((item) => (
+                <li key={item.id}>
+                  <strong>{item.shortLabel}</strong> — {item.arrow} {item.direction}
+                </li>
+              ))}
+            </ul>
+          </aside>
         </div>
       </div>
     </div>
