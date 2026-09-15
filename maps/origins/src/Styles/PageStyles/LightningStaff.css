@@ -17,7 +17,7 @@
   width: min(1180px, 100%);
   margin: 0 auto;
   display: grid;
-  grid-template-columns: minmax(0, 1.5fr) minmax(320px, 0.9fr);
+  grid-template-columns: minmax(0, 1.5fr) minmax(340px, 0.9fr);
   gap: 1.25rem;
   align-items: start;
 }
@@ -28,7 +28,7 @@
 }
 
 .origins-module .lightning-section {
-  padding: 1.35rem 1.45rem;
+  padding: 1.25rem 1.35rem;
   border: 1px solid rgba(187, 134, 252, 0.42);
   border-radius: 12px;
   background: rgba(4, 8, 15, 0.82);
@@ -42,18 +42,18 @@
   display: flex;
   align-items: center;
   gap: 0.55rem;
-  margin: 0 0 1rem;
-  padding-bottom: 0.65rem;
+  margin: 0 0 0.9rem;
+  padding-bottom: 0.6rem;
   color: #efd9ff;
-  font-size: 1.45rem;
+  font-size: 1.4rem;
   line-height: 1.1;
   border-bottom: 2px solid rgba(187, 134, 252, 0.7);
 }
 
 .origins-module .lightning-section h3 {
-  margin: 1rem 0 0.45rem;
+  margin: 0.9rem 0 0.4rem;
   color: #cfa8ff;
-  font-size: 1.05rem;
+  font-size: 1.02rem;
 }
 
 .origins-module .lightning-section h3:first-of-type {
@@ -68,22 +68,18 @@
 
 .origins-module .lightning-list {
   margin: 0;
-  padding-left: 1.35rem;
+  padding-left: 1.25rem;
 }
 
 .origins-module .lightning-list li {
-  margin: 0.48rem 0;
+  margin: 0.38rem 0;
   color: #e7def3;
-  font-size: 1rem;
-  line-height: 1.5;
+  font-size: 0.96rem;
+  line-height: 1.42;
 }
 
 .origins-module .lightning-list strong {
-  color: #ffffff;
-}
-
-.origins-module .lightning-code-section {
-  text-align: left;
+  color: #fff;
 }
 
 .origins-module .lightning-code {
@@ -100,78 +96,110 @@
 .origins-module .lightning-code-lines {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.55rem;
-  margin-top: 0.8rem;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
 }
 
 .origins-module .lightning-code-lines strong {
-  padding: 0.55rem;
+  padding: 0.5rem;
   color: #170926;
   text-align: center;
   border-radius: 7px;
   background: #d8b6ff;
-  font-size: 1rem;
+  font-size: 0.98rem;
   letter-spacing: 0.05em;
 }
 
 .origins-module .lightning-switch-list {
   display: grid;
-  gap: 0.5rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.45rem;
 }
 
 .origins-module .lightning-switch-row {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 0.8rem;
+  min-width: 0;
+  display: flex;
   align-items: center;
-  padding: 0.68rem 0.75rem;
-  border: 1px solid rgba(187, 134, 252, 0.2);
+  justify-content: space-between;
+  gap: 0.55rem;
+  padding: 0.55rem 0.65rem;
+  border: 1px solid rgba(187, 134, 252, 0.22);
   border-radius: 8px;
   background: rgba(17, 9, 28, 0.56);
 }
 
-.origins-module .lightning-switch-row strong,
-.origins-module .lightning-switch-row small {
-  display: block;
-}
-
 .origins-module .lightning-switch-row strong {
+  min-width: 0;
   color: #f4eaff;
-  font-size: 1rem;
-}
-
-.origins-module .lightning-switch-row small {
-  margin-top: 0.08rem;
-  color: #bbaec9;
-  font-size: 0.8rem;
-  line-height: 1.25;
-}
-
-.origins-module .lightning-switch-row > span {
-  min-width: 82px;
-  color: #cfabff;
-  font-size: 1rem;
-  font-weight: 700;
-  text-align: right;
+  font-size: 0.94rem;
   white-space: nowrap;
 }
 
-.origins-module .lightning-help,
-.origins-module .lightning-finish {
-  margin: 0.75rem 0 0;
-  color: #c7bad3;
-  font-size: 0.9rem;
-  line-height: 1.45;
+.origins-module .lightning-switch-row > span {
+  color: #cfabff;
+  font-size: 0.94rem;
+  font-weight: 700;
+  white-space: nowrap;
 }
 
-.origins-module .lightning-help--switches {
-  padding-top: 0.7rem;
+.origins-module .lightning-details {
+  margin-top: 0.7rem;
+  padding-top: 0.65rem;
   border-top: 1px solid rgba(187, 134, 252, 0.18);
 }
 
-.origins-module .lightning-help strong,
-.origins-module .lightning-finish strong {
+.origins-module .lightning-details summary {
+  color: #cfa8ff;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.origins-module .lightning-location-list {
+  display: grid;
+  gap: 0.25rem;
+  margin-top: 0.55rem;
+}
+
+.origins-module .lightning-location-list p,
+.origins-module .lightning-arrow-note {
+  margin: 0;
+  color: #bfb2ca;
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
+.origins-module .lightning-location-list strong {
+  color: #e6d8f5;
+}
+
+.origins-module .lightning-arrow-note {
+  margin-top: 0.55rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(187, 134, 252, 0.12);
+}
+
+.origins-module .lightning-finish-steps {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.origins-module .lightning-finish-steps li {
+  margin: 0.45rem 0;
+  color: #e7def3;
+  font-size: 0.98rem;
+  line-height: 1.4;
+}
+
+.origins-module .lightning-finish-steps strong {
   color: #d9b9ff;
+}
+
+.origins-module .lightning-help {
+  margin: 0.65rem 0 0;
+  color: #c7bad3;
+  font-size: 0.86rem;
+  line-height: 1.4;
 }
 
 @media (max-width: 920px) {
@@ -182,6 +210,10 @@
   .origins-module .lightning-column {
     gap: 1rem;
   }
+
+  .origins-module .lightning-switch-list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 640px) {
@@ -191,22 +223,38 @@
   }
 
   .origins-module .lightning-section {
-    padding: 1rem;
+    padding: 0.95rem;
   }
 
   .origins-module .lightning-section h2 {
-    font-size: 1.25rem;
+    font-size: 1.22rem;
   }
 
-  .origins-module .lightning-list li {
-    font-size: 0.94rem;
+  .origins-module .lightning-list li,
+  .origins-module .lightning-finish-steps li {
+    font-size: 0.92rem;
   }
 
   .origins-module .lightning-code-lines {
     grid-template-columns: 1fr;
   }
 
+  .origins-module .lightning-switch-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .origins-module .lightning-switch-row {
-    grid-template-columns: 1fr auto;
+    padding: 0.5rem 0.55rem;
+  }
+
+  .origins-module .lightning-switch-row strong,
+  .origins-module .lightning-switch-row > span {
+    font-size: 0.88rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .origins-module .lightning-switch-list {
+    grid-template-columns: 1fr;
   }
 }
