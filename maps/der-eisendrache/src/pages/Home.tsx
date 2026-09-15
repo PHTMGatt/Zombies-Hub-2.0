@@ -8,31 +8,31 @@ const BASE = '/maps/der-eisendrache';
 const phases = [
   {
     title: 'Wrath of the Ancients + Bow',
-    summary: 'Feed all three dragons, collect the base bow, then finish the elemental upgrade your lobby needs.',
+    summary: 'Feed 3 dragons → get the base bow → finish the elemental upgrade your lobby needs.',
     to: `${BASE}/bows`,
     link: 'Bow Guides',
   },
   {
     title: 'First Wisps + Safe Sequence',
-    summary: 'Prime the teleporter, complete the first four-wisp cycle, time travel for the canister/fuses/safe code, then finish the Death Ray safe and both Simon Says terminals.',
+    summary: 'Prime the teleporter → hit 4 wisps → time travel → grab the canister, fuses, and safe code → finish Simon Says.',
     to: `${BASE}/wisp`,
     link: 'Wisp Reference',
   },
   {
     title: 'Second Wisps + Keeper Stone',
-    summary: 'Repeat the teleporter/wisp cycle, return to the past, and collect the Keeper Stone for the ritual.',
+    summary: 'Repeat the wisp cycle → time travel again → collect the Keeper Stone.',
     to: `${BASE}/wisp`,
     link: 'Second Wisp Cycle',
   },
   {
     title: 'Keeper Ritual + MPD',
-    summary: 'Summon the ghost Keeper, charge all four ritual circles with the requested bows, insert the Soul Canister, finish every Ragnarok, and prepare the Pyramid tiles.',
+    summary: 'Summon the Keeper → charge all 4 circles → insert the Soul Canister → finish Ragnaroks → prep the Pyramid.',
     to: `${BASE}/parts`,
     link: 'Gear + Ragnaroks',
   },
   {
     title: 'Keeper Boss + Ending',
-    summary: 'Enter the arena, use Ragnarok stuns for the three Keeper damage windows, clear the Panzer waves, then take the Summoning Key to the Clock Tower terminal.',
+    summary: 'Enter the arena → stun the Keeper with Ragnaroks → clear the Panzer waves → finish at the Clock Tower terminal.',
     to: `${BASE}/boss`,
     link: 'Boss Fight',
   },
