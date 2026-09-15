@@ -81,6 +81,7 @@ const LightningStaff = () => {
           <div className="lightning-switch-note">
             <strong>Visual rule:</strong>
             <span>{originsLightningSwitchVerification.rule}</span>
+            <span>{originsLightningSwitchVerification.guideConvention}</span>
             <span>{originsLightningSwitchVerification.note}</span>
           </div>
         </section>
