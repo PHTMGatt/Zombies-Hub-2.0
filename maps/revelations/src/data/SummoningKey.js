@@ -12,7 +12,7 @@ const SummoningKeyData = [
       end: 605,
     },
     {
-      name: "Throw 3: Shangri-La Crystal",
+      name: "Throw 3: Shangri-La Focusing Stone",
       start: 605,
       end: 608,
     },
@@ -22,12 +22,12 @@ const SummoningKeyData = [
       end: 612,
     },
     {
-      name: "Throw 5: Mob Cell",
+      name: "Throw 5: Mob Cell Poster",
       start: 613,
       end: 615,
     },
     {
-      name: "Throw 6: Verruckt Fountain",
+      name: "Throw 6: Verrückt MG42",
       start: 615,
       end: 618,
     },
