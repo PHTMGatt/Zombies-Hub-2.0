@@ -8,25 +8,25 @@ const BASE = '/maps/zetsubou-no-shima';
 const phases = [
   {
     title: 'Setup the Map',
-    summary: 'Finish your three Trials, clean all four skulls, open the bunker/Pack-a-Punch, build the gas mask and Shield, then build the KT-4.',
+    summary: '3 Trials → 4 skulls → bunker / Pack-a-Punch → Gas Mask + Shield → KT-4.',
     to: `${BASE}/prerequisites`,
     link: 'Setup Checklist',
   },
   {
     title: 'Skull + Masamune + Elevator',
-    summary: 'Use the Skull of Nan Sapwe to reveal the hidden elevator machinery, then finish the KT-4 upgrade into the Masamune.',
+    summary: 'Use the Skull to reveal the elevator machinery → upgrade KT-4 into the Masamune.',
     to: `${BASE}/reveal-blueprint`,
     link: 'Elevator Setup',
   },
   {
     title: 'Collect the Three Cogs',
-    summary: 'Get the Anywhere But Here! cog, shoot down the plane with the AA cannon, then use the electrified zipline for the final cog.',
+    summary: 'Anywhere But Here! cog → AA-cannon plane cog → electrified-zipline cog.',
     to: `${BASE}/cogs`,
     link: 'Cog Guide',
   },
   {
     title: 'Descend + Kill the Giant Thrasher',
-    summary: 'Install all three cogs, take a fresh gas mask and the Masamune into the elevator, then complete the Thrasher boss fight.',
+    summary: 'Install 3 cogs → take a fresh Gas Mask + Masamune → descend → kill the Giant Thrasher.',
     to: `${BASE}/elevator-battle`,
     link: 'Boss Fight',
   },
