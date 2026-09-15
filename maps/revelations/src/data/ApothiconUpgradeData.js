@@ -10,7 +10,7 @@ const ApothiconUpgradeData = [
     end: 141,
   },
   {
-    name: 'Verrückt / Shangri-La Stairs',
+    name: 'Verrückt — Mob Jump Pad',
     start: 141,
     end: 144,
   },
