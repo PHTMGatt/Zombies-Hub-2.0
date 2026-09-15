@@ -36,8 +36,7 @@ const LightningStaff = () => {
               <img src={ReviveIcon} className="revive-icon" alt="" /> Puzzle Notes
             </h2>
             <ul>
-              <li>Go through the Lightning Tunnel with the Gramophone.</li>
-              <li>Enter the Crazy Place and solve the piano note puzzle.</li>
+              <li>Lightning Tunnel + Gramophone → Crazy Place.</li>
               <li className="piano-code-step">
                 <span className="piano-code-label">Piano code</span>
                 <span className="piano-code-values" aria-label="1 3 6, 3 5 7, 2 4 6">
@@ -48,9 +47,8 @@ const LightningStaff = () => {
                   <strong>2-4-6</strong>
                 </span>
               </li>
-              <li>Line all four rings up <strong>purple</strong> under Excavation.</li>
-              <li>Shoot the orb underneath with the Lightning Staff.</li>
-              <li>Place the staff on the purple Crazy Place pedestal and feed souls.</li>
+              <li><strong>Excavation:</strong> rings purple → shoot the orb with the Lightning Staff.</li>
+              <li>Purple Crazy Place pedestal → feed souls.</li>
             </ul>
           </section>
 
