@@ -4,7 +4,7 @@ import './Footer.css';
 function Footer() {
   return (
     <footer className="rev-footer">
-      <p>Revelations Guide © 2025 | Built from the Shadows</p>
+      <p>Revelations Guide · Built from the Shadows</p>
     </footer>
   );
 }
