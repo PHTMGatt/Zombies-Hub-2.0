@@ -11,6 +11,8 @@ const failures = [];
 const legacyRenderHosts = /(?:motd-guide|origins-wtyd|der-eisendrache-guide|zetsubou-guide|gorod-krovi-guide|revelations-guide)\.onrender\.com/i;
 const legacyRouteFields = /\b(?:renderLink|renderUrl)\b/;
 const rootRelativeCssAsset = /url\(\s*['"]?\/(?:src|images)\//i;
+const rootRelativeCodeAsset = /['"`]\/(?:src|images)\//i;
+const migrationDebris = /(?:\/\/\s*test push\b|placeholder content for)/i;
 
 async function walk(directory) {
   const entries = await readdir(directory, { withFileTypes: true });
@@ -34,6 +36,10 @@ for (const rootName of SOURCE_ROOTS) {
     const rel = relative(ROOT, file).replaceAll('\\', '/');
     const source = await readFile(file, 'utf8');
 
+    if (migrationDebris.test(source)) {
+      failures.push(`${rel}: migration/test placeholder text still present`);
+    }
+
     if (CODE_EXTENSIONS.has(extname(file))) {
       const defaultExports = source.match(/\bexport\s+default\b/g) ?? [];
       if (defaultExports.length > 1) {
@@ -46,6 +52,10 @@ for (const rootName of SOURCE_ROOTS) {
 
       if (legacyRenderHosts.test(source)) {
         failures.push(`${rel}: legacy standalone Render URL still present`);
+      }
+
+      if (rootRelativeCodeAsset.test(source)) {
+        failures.push(`${rel}: root-relative migrated code asset path still present`);
       }
     }
 
