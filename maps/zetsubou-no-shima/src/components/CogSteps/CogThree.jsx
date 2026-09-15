@@ -22,9 +22,9 @@ const CogThree = () => (
       },
       {
         title: 'Drop onto the hidden dock',
-        summary: 'Ride from the Docks side toward Lab A and trigger the drop when you are over the hidden pier.',
+        summary: 'Ride the zipline over the hidden dock and trigger the release while directly above it. Lab A → Docks is the easiest setup, but either direction can work.',
         details: [
-          'Solo: use the electrified setup, ride the zipline, then melee at the correct point to release onto the dock.',
+          'Solo: electrify the Lab A control panel with the charged shield, ride toward the Docks, then melee directly over the hidden platform to release.'
           'Co-op: one player rides while another activates/electrifies the panel at the correct moment to drop the rider.',
         ],
       },
