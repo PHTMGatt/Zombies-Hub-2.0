@@ -34,7 +34,7 @@ const LightningStaff = () => {
         <div className="right-column">
           <section className="staff-section">
             <h2>
-              <img src={ReviveIcon} className="revive-icon" alt="" /> Puzzle Notes
+              <img src={ReviveIcon} className="revive-icon" alt="" /> Lightning Staff Upgrade
             </h2>
             <ul>
               <li className="piano-code-step">
