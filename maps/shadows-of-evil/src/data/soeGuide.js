@@ -8,7 +8,8 @@ const soeGuide = [
       'Ride Canals → Waterfront and record the first two train symbols; they change every game.',
       'Waterfront / Boxing Gym: expose the championship belt, open the gym, complete the ritual, and collect the Gateworm.',
       'Ride Waterfront → Footlight and record the third symbol.',
-      'Footlight / Black Lace: expose the ritual item and room, complete the fourth ritual, collect the Gateworm, and kill the Margwa that spawns.',
+      'The 2nd and 4th completed rituals spawn a Margwa as soon as they finish — be ready before taking the Gateworm.',
+      'Footlight / Black Lace: expose the ritual item and room, complete the ritual, and collect the Gateworm.',
     ],
   },
   {
