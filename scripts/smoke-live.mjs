@@ -2,19 +2,68 @@ import process from 'node:process';
 
 const baseUrl = process.env.ZH_SMOKE_BASE_URL || 'https://zombies-hub-2-0.onrender.com';
 const expectedSha = process.env.ZH_EXPECTED_SHA?.trim();
+
+// Keep this list aligned with the routes exercised by visual QA. The HTTP smoke
+// check catches broken production rewrites/deploys; Playwright visual QA catches
+// client-side rendering, broken images, runtime errors, and mobile overflow.
 const routes = [
   '/',
   '/allmaps',
   '/easter-eggs',
   '/side-easter-eggs',
   '/side-easter-eggs/origins-speedrun',
+  '/side-easter-eggs/kino',
+  '/side-easter-eggs/gk',
+  '/side-easter-eggs/de',
+  '/side-easter-eggs/soe',
+
   '/maps/origins',
+  '/maps/origins/fire-staff',
+  '/maps/origins/ice-staff',
+  '/maps/origins/wind-staff',
+  '/maps/origins/lightning-staff',
+
   '/maps/mob-of-the-dead',
+  '/maps/mob-of-the-dead/plane',
+  '/maps/mob-of-the-dead/retriever-skulls',
+  '/maps/mob-of-the-dead/codes',
+  '/maps/mob-of-the-dead/final-step',
+
   '/maps/shadows-of-evil',
+
   '/maps/der-eisendrache',
+  '/maps/der-eisendrache/parts',
+  '/maps/der-eisendrache/wisps',
+  '/maps/der-eisendrache/boss',
+  '/maps/der-eisendrache/bows',
+  '/maps/der-eisendrache/bows/base',
+  '/maps/der-eisendrache/bows/electric',
+  '/maps/der-eisendrache/bows/fire',
+  '/maps/der-eisendrache/bows/wolf',
+  '/maps/der-eisendrache/bows/void',
+
   '/maps/zetsubou-no-shima',
+  '/maps/zetsubou-no-shima/prerequisites',
+  '/maps/zetsubou-no-shima/reveal-blueprint',
+  '/maps/zetsubou-no-shima/cogs',
+  '/maps/zetsubou-no-shima/cogs/1',
+  '/maps/zetsubou-no-shima/cogs/2',
+  '/maps/zetsubou-no-shima/cogs/3',
+  '/maps/zetsubou-no-shima/buildables',
+  '/maps/zetsubou-no-shima/elevator-battle',
+  '/maps/zetsubou-no-shima/extras',
+
   '/maps/gorod-krovi',
+  '/maps/gorod-krovi/trophies',
+  '/maps/gorod-krovi/valves',
+  '/maps/gorod-krovi/buildables',
+  '/maps/gorod-krovi/boss',
+
   '/maps/revelations',
+  '/maps/revelations/apothicon-upgrade',
+  '/maps/revelations/egg-locations',
+  '/maps/revelations/summoning-key',
+  '/maps/revelations/sound-step',
 ];
 
 const failures = [];
