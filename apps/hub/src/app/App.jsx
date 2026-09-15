@@ -21,8 +21,9 @@ function RootLayout() {
 
   return (
     <div className="zh-app">
+      <a className="zh-skip-link" href="#zh-main">Skip to guide</a>
       <HubHeader />
-      <main className="zh-main">
+      <main className="zh-main" id="zh-main" tabIndex="-1">
         <div className={isDedicatedMapRoute ? 'map-route-host' : 'hub-content'}>
           <Outlet />
         </div>
