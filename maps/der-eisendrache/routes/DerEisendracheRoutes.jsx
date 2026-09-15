@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import Header from '../src/components/Header';
 import Footer from '../src/components/Footer';
 import Home from '../src/pages/Home';
@@ -33,7 +33,9 @@ export default function DerEisendracheRoutes() {
             <Route path="fire" element={<FireBow />} />
             <Route path="wolf" element={<WolfBow />} />
             <Route path="void" element={<VoidBow />} />
+            <Route path="*" element={<Navigate to="/maps/der-eisendrache/bows" replace />} />
           </Route>
+          <Route path="*" element={<Navigate to="/maps/der-eisendrache" replace />} />
         </Routes>
       </div>
       <Footer />
