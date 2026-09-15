@@ -1,9 +1,7 @@
-// src/data/sideEE/index.js
-
 import kino from './Kino';
-import gk   from './GK';
-import de   from './DE';
-import soe  from './SOE';   // ← import your new file
+import gk from './GK';
+import de from './DE';
+import soe from './SOE';
 
 export default {
   kino,
@@ -11,5 +9,3 @@ export default {
   de,
   soe,
 };
-
-//Test Push
