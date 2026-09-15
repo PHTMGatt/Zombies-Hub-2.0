@@ -1,36 +1,35 @@
 # Zombies Hub 2.0 Architecture
 
-## Core decision
+## Current architecture
 
-Zombies Hub 2.0 will be one React application, not multiple independently bootstrapped React apps embedded together.
-
-The application will have:
+Zombies Hub 2.0 is one integrated React application:
 
 - one React root
 - one `BrowserRouter`
 - one Hub shell
 - one persistent Hub header/navigation
 - map-specific sub-layouts and headers
-- one production deployment
+- one production Render deployment
 
-Dedicated map guides will still remain isolated in their own folders so they behave like self-contained feature modules.
+Dedicated map guides remain isolated in their own folders so each map behaves like a feature module without becoming a separate application.
 
-## Why this is needed
+## Why 2.0 is different
 
-The current Hub loads dedicated map guides through external Render URLs inside iframes. The Hub itself also renders a fixed global navbar and some map routes add `MapsHubHeader` above the iframe. Each dedicated guide then renders its own header and router inside the iframe.
+Zombies Hub 1.0 treated the dedicated guides as separate React applications and separate Render services. The Hub linked or embedded those applications, so navigation crossed application boundaries and each guide carried its own runtime, router, root CSS, and deployment lifecycle.
 
-That creates multiple independent layout systems and multiple navigation layers. It also means each map depends on a separate Render service waking up before the guide is usable.
-
-In 2.0, dedicated guides will be imported and mounted directly under namespaced routes such as:
+Zombies Hub 2.0 mounts the dedicated guides directly inside the Hub under namespaced routes:
 
 ```text
 /maps/origins/*
 /maps/mob-of-the-dead/*
+/maps/shadows-of-evil/*
 /maps/der-eisendrache/*
 /maps/zetsubou-no-shima/*
 /maps/gorod-krovi/*
 /maps/revelations/*
 ```
+
+There are no dedicated-map iframe or standalone Render dependencies in the 2.0 runtime.
 
 ## Layout ownership
 
@@ -39,31 +38,28 @@ In 2.0, dedicated guides will be imported and mounted directly under namespaced 
 The Hub owns:
 
 - global site header/navigation
-- global routing
+- top-level routing
 - global footer behavior
-- site-wide theme controls
-- top-level page spacing
-- shared tokens/utilities
+- site-wide page spacing
+- shared tokens and utilities
 
 ### Map module
 
 Each dedicated map owns:
 
 - its map-specific header/sub-navigation
-- its pages
-- its map-specific components
-- its data
-- its media/assets
-- its visual theme
+- pages and focused guide routes
+- map-specific components and data
+- media/assets
+- visual identity
 
-A map must not redefine Hub shell classes or global `body`, `html`, `#root`, `main`, `a`, `button`, or generic `.header` selectors without scoping them under that map's root class.
+Map styles must stay scoped beneath the map root class. A map should not redefine Hub shell classes or generic `body`, `html`, `#root`, `main`, `a`, or `button` selectors without map scoping.
 
 Example:
 
 ```css
-.origins-map { ... }
-.origins-map .origins-header { ... }
-.origins-map .origins-nav { ... }
+.origins-module .origins-header { ... }
+.origins-module .origins-nav { ... }
 ```
 
 rather than:
@@ -74,9 +70,7 @@ body { ... }
 .nav-links { ... }
 ```
 
-This is the main protection against map CSS changing the Hub header.
-
-## Recommended structure
+## Repository structure
 
 ```text
 Zombies-Hub-2.0/
@@ -84,70 +78,74 @@ Zombies-Hub-2.0/
 │   └── hub/
 │       └── src/
 │           ├── app/
-│           │   ├── App.jsx
-│           │   ├── AppRoutes.jsx
-│           │   └── HubLayout.jsx
 │           ├── components/
 │           ├── data/
 │           ├── pages/
 │           └── styles/
 ├── maps/
 │   ├── origins/
-│   │   └── src/
-│   │       ├── components/
-│   │       ├── data/
-│   │       ├── pages/
-│   │       ├── styles/
-│   │       └── OriginsRoutes.jsx
 │   ├── mob-of-the-dead/
+│   ├── shadows-of-evil/
 │   ├── der-eisendrache/
 │   ├── zetsubou-no-shima/
 │   ├── gorod-krovi/
 │   └── revelations/
 ├── shared/
 │   ├── assets/
+│   ├── data/
 │   ├── hooks/
-│   ├── styles/
 │   ├── ui/
 │   └── utilities/
+├── scripts/
 └── docs/
 ```
 
-The exact internal file names may evolve during migration, but the ownership boundaries should remain stable.
-
 ## Router pattern
 
-The Hub router will mount map modules beneath their route namespace.
+`apps/hub/src/app/AppRoutes.jsx` owns top-level routing and mounts each map router below the Hub layout.
 
 Conceptually:
 
 ```jsx
 <Route element={<HubLayout />}>
-  <Route path="/" element={<Home />} />
-  <Route path="/allmaps" element={<AllMaps />} />
-  <Route path="/maps/origins/*" element={<OriginsRoutes />} />
-  <Route path="/maps/mob-of-the-dead/*" element={<MobRoutes />} />
+  <Route index element={<Home />} />
+  <Route path="allmaps" element={<AllMaps />} />
+  <Route path="maps/origins/*" element={<OriginsRoutes />} />
+  <Route path="maps/mob-of-the-dead/*" element={<MobRoutes />} />
 </Route>
 ```
 
-Inside Origins, old routes like `/FireStaff` become relative routes such as `fire-staff`, producing a final URL like:
+A map router then owns relative routes such as `fire-staff`, producing URLs like:
 
 ```text
 /maps/origins/fire-staff
 ```
 
-This keeps the Hub header mounted while the Origins header/nav renders directly beneath it.
+Dedicated map routers should include a safe fallback so stale or mistyped sub-routes return to the map guide instead of rendering blank map chrome.
 
-## Migration philosophy
+## Guide design rule
 
-This is an integration project, not a redesign-from-scratch project.
+Zombies Hub is a guide, not a wiki. Page hierarchy should answer:
 
-Existing UI, content, components, tools, map data, and assets should be preserved unless a change is required for:
+> What does the player need to do next?
 
-- route namespacing
-- dependency compatibility
-- CSS isolation
-- removal of iframe/Render dependencies
-- accessibility/responsiveness fixes discovered during migration
+Main quest pages should stay scan-friendly. Detailed mechanics, locations, puzzle images, timestamps, videos, and solvers belong on focused reference pages that are linked at the point the player needs them.
 
-The old repositories remain untouched.
+Origins is the usability/structure benchmark. Revelations is the visual benchmark. Maps should keep their own identity rather than receiving one identical theme.
+
+## Production verification
+
+The repository uses one shared critical-route manifest at `scripts/critical-routes.mjs` for production smoke checks and visual QA. This keeps HTTP route coverage and Playwright desktop/mobile coverage aligned.
+
+Visual QA checks critical routes for:
+
+- navigation failures
+- page runtime errors
+- broken images
+- horizontal overflow on desktop and mobile
+
+The source verifier also protects against legacy standalone Render URLs, obsolete route fields, unsafe migrated asset paths, and map CSS/branding regressions.
+
+## Source repositories
+
+The original repositories remain read-only migration/reference sources. All 2.0 changes belong in `PHTMGatt/Zombies-Hub-2.0` only.
