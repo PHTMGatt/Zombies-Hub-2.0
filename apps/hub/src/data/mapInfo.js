@@ -3,217 +3,217 @@ const mapInfo = {
     name: "Nacht der Untoten",
     releasedIn: "World at War (2008)",
     description:
-      "Where it all began: an abandoned Allied airfield in German-occupied Europe, overrun by endless hordes of the undead. Originally hidden as a bonus mode in World at War, Nacht der Untoten spawned the entire Treyarch Zombies saga—introducing the Ray Gun, mystery box, and boarded-window defense mechanics. Its simple three-room layout was remastered for Black Ops 1 and again in the Zombies Chronicles pack for Black Ops III, and even fragments of its map reappear in later levels like Green Run, Revelations, and Cold War’s Die Maschine. Survive as long as you can—this is the blueprint for everything that followed.",
+      "The original Treyarch Zombies survival map: three rooms, boarded windows, the Mystery Box, and the Ray Gun. Nacht is pure survival with no main quest, making it the simplest place to experience the mode's core loop.",
     hasEasterEgg: false
   },
   "kino-der-toten": {
     name: "Kino der Toten",
     releasedIn: "Black Ops (2010)",
     description:
-      "Stranded in Group 935’s abandoned Berlin cinema in October 1963, you face relentless waves of undead across dusty theater seats and back-stage corridors. Kino der Toten ushers in the Thundergun wonder-weapon, crawler zombies, and the deadly Fire Pit trap, while its projector room hides a collectible film reel Easter-egg featuring Ludwig Maxis’ voice. Remastered for BO3’s Zombies Chronicles and even fractured into Revelations, this iconic map launched the classic Ultimis crew on their tragic, globe-spanning journey.",
+      "A classic Berlin theater map built around a simple power-and-teleporter loop. Kino introduces the Thundergun and Nova Crawlers, with Pack-a-Punch reached through the stage teleporter and several small audio/music Easter Eggs to find.",
     hasEasterEgg: true
   },
   "five": {
     name: "Five",
     releasedIn: "Black Ops (2010)",
     description:
-      "Set within the hallowed halls of the Pentagon on November 6, 1963, Five pits the Ultimis crew—Kennedy, Nixon, McNamara, and Castro—against endless zombie hordes amid DEFCON switches and teleporter puzzles. This map debuts the Winter’s Howl wonder-weapon and the infamous Pentagon Thief, whose loot-stealing antics trigger Bonfire Sales or Fire Sales depending on how you deal with him. Master the DEFCON system to unlock the Panic Room’s Pack-A-Punch, dial red phones for the 'Won’t Back Down' musical Easter-egg, and survive waves in this high-stakes, Cold War–themed showdown.",
+      "Fight through the Pentagon as John F. Kennedy, Richard Nixon, Robert McNamara, and Fidel Castro. DEFCON switches open the Pack-a-Punch room, while the Winter's Howl and Pentagon Thief give the map its distinctive high-pressure style.",
     hasEasterEgg: true
   },
   "dead-ops-arcade": {
     name: "Dead Ops Arcade",
     releasedIn: "Black Ops (2010)",
     description:
-      "Dive into a retro, top-down twin-stick shooter hidden within Black Ops’ CIA terminal—Dead Ops Arcade. Swap the rail-gun perspective for endless gauntlet waves across 50+ pixelated levels, collect gems for score multipliers, and dodge bulls, electric spikes, and the fearsome Cosmic Silverback boss. With unlimited ammo, treasure-filled rooms, and power-ups like tanks, helicopters, and the Ray Gun, it’s a nostalgic yet frantic spin on the classic Zombies formula.",
+      "A hidden top-down twin-stick Zombies mode focused on score, power-ups, treasure, and increasingly chaotic arenas. It plays very differently from round-based Zombies and culminates in the Cosmic Silverback encounter.",
     hasEasterEgg: false
   },
   "ascension": {
     name: "Ascension",
-    releasedIn: "Black Ops (2010) DLC 1 – First Strike",
+    releasedIn: "Black Ops: First Strike DLC (2011)",
     description:
-      "Strap in at Baikonur Cosmodrome in November 1963, where Group 935’s Lunar Lander hurled the Ultimis crew into a Soviet rocket silo swarming with undead—and lethal Space Monkeys. Ascension debuts the Gersh Device wonder-weapon, Matryoshka Doll traps, and the multi-step Casimir Mechanism Easter-egg to free Dr. Gersh. Dodge lunar landers and master new perks like PhD Flopper before this cosmodrome blast-off was remastered in BO3’s Zombies Chronicles.",
+      "A Soviet cosmodrome map built around Lunar Landers, a launch sequence, and wide training areas. Ascension introduces PhD Flopper, Stamin-Up, the Gersh Device, Matryoshka Dolls, Space Monkeys, and the Casimir Mechanism quest.",
     hasEasterEgg: true
   },
   "call-of-the-dead": {
     name: "Call of the Dead",
-    releasedIn: "Black Ops (2011) DLC 2 – Escalation",
+    releasedIn: "Black Ops: Escalation DLC (2011)",
     description:
-      "Shipwrecked on a frozen Siberian coast in March 2011, the Ultimis crew join a celebrity roster—including George A. Romero himself—to battle through an abandoned Group 935 outpost. From icy waters to a perilous zip-line, you’ll fight electrified zombies, trigger the V-R11 wonder-weapon quest, and free trapped original characters in the Stand-in/Ensemble Cast Easter-eggs. Hunt red phones for “Not Ready to Die,” fend off George’s electric stage lights, and survive this chilling, star-studded horror show.",
+      "A frozen Siberian film set starring Sarah Michelle Gellar, Robert Englund, Danny Trejo, and Michael Rooker, with George A. Romero roaming the map as a persistent boss. The V-R11, Scavenger, icy water, lighthouse, and zipline define the map, while the main quest helps the trapped Ultimis crew.",
     hasEasterEgg: true
   },
   "shangri-la": {
     name: "Shangri-La",
-    releasedIn: "Black Ops (2011) DLC 3 – Annihilation",
+    releasedIn: "Black Ops: Annihilation DLC (2011)",
     description:
-      "Lost deep in a Himalayan jungle in April 1956, Shangri-La pits the Ultimis crew against new threats: Napalm Zombies, shrieking sound-wave horrors, and mischievous zombie monkeys that swipe your perks. Navigate treacherous underground caverns, power ancient water levers, and ride mine-carts and water slides to uncover the Eclipse Easter-egg and claim the Focusing Stone. With new traps like punji stakes and the shrinking 31-79 JGb215 wonder-weapon, it’s a deadly labyrinth of time loops and hidden secrets.",
+      "A tight jungle map packed with traps, tunnels, mine-cart and water-slide travel, Napalm Zombies, Shrieker Zombies, and zombie monkeys. Its main quest uses the Eclipse mechanic and ultimately rewards the Focusing Stone.",
     hasEasterEgg: true
   },
   "moon": {
     name: "Moon",
-    releasedIn: "Black Ops (2011) DLC 4 – Rezurrection",
+    releasedIn: "Black Ops: Rezurrection DLC (2011)",
     description:
-      "Suit up in low-gravity at Griffin Station and Area 51 in October 2025, where the Ultimis crew faces their most epic showdown against Richtofen’s Grand Scheme. Moon debuts the Wave Gun and Quantum Entanglement Device wonder-weapons, the Mule Kick perk, and environmental challenges like oxygen shortages and excavator breaches. Battle Astronaut Zombies, hellhounds, and mechanized defenses across lunar corridors, then trigger the Big Bang Easter-egg to shatter Earth itself in this zero-g finale.",
+      "Travel between Area 51 and Griffin Station on the Moon, managing low gravity, PES suits, excavators, and teleportation. The Wave Gun, QED, Hacker, and Big Bang Theory quest make Moon one of the most system-heavy maps in the original Black Ops.",
     hasEasterEgg: true
   },
   "verrückt": {
     name: "Verrückt",
-    releasedIn: "World at War (2008) DLC 1 – Map Pack 1",
+    releasedIn: "World at War: Map Pack 1 (2009)",
     description:
-      "Descending into the Wittenau Sanatorium’s dark halls in September 1945, Verrückt doubles down on the undead mayhem with narrow corridors, dual spawn rooms, and the power-controlled electric door that unites them. This asylum introduces zombie-chomping power drinks—Juggernog, Speed Cola, Quick Revive, and Double Tap—as well as the first electric trap: the deadly Electro-Shock Defenses. With mystery box relocations, wall-buy weapons ranging from the MP40 to the BAR, and frantic, smarter zombies that strike through barriers, Verrückt set the template for every Treyarch map that followed.",
+      "A cramped asylum survival map with two separated spawn sides that reconnect after power is turned on. Verrückt introduced the original perk machines and electric traps and is remembered for its fast, aggressive zombies and narrow escape routes.",
     hasEasterEgg: false
   },
   "shi-no-numa": {
     name: "Shi No Numa",
-    releasedIn: "World at War (2009) DLC 2 – Map Pack 2",
+    releasedIn: "World at War: Map Pack 2 (2009)",
     description:
-      "Venturing into the mist-shrouded Swamp of Death in October 1945, Shi No Numa sees the Ultimis crew battle through a jungle-bound research facility built on Element 115. Amid four stilted huts linked by muddy piers and ziplines, players unlock randomized perks, deploy electrified traps and the lethal Flogger, and brave ravenous Imperial zombies and explosive hellhounds. The map also debuts the Wunderwaffe DG-2 wonder-weapon and shifting Mystery Box spawns, setting a high bar for every Zombies chapter that followed.",
+      "A swamp survival map built around a central building and four outer huts with randomized perks. Shi No Numa introduces the Wunderwaffe DG-2, the Flogger, Hellhounds, and the first playable appearance of the classic Ultimis crew lineup.",
     hasEasterEgg: true
   },
   "der-riese": {
     name: "Der Riese",
-    releasedIn: "World at War (2009) DLC 3 – Map Pack 3",
+    releasedIn: "World at War: Map Pack 3 (2009)",
     description:
-      "Journey into the heart of Group 935’s top-secret Der Riese weapons factory in October 1945. As the fourth installment of the Zombies saga, it introduced the iconic teleporters and the Pack-a-Punch machine, allowing you to upgrade firepower for 5000 points. Scavenge for parts to activate explosive ‘Fly Trap’ contraptions, unleash the Wunderwaffe DG-2 lightning gun, and fight through hallways, courtyards, and labs overrun by ravenous Undead and snarling Hellhounds.",
+      "Group 935's factory map introduced Pack-a-Punch and the three-teleporter linking system that became a Zombies staple. The Wunderwaffe DG-2 returns, while the Fly Trap provides the map's signature hidden-object Easter Egg.",
     hasEasterEgg: true
   },
   "tranzit": {
     name: "TranZit",
     releasedIn: "Black Ops II (2012)",
     description:
-      "Traverse the ruined Pacific Northwest aboard an upgradable bus and traverse five interconnected zones—Bus Depot, Diner, Farm, Power Station, and Town—while fending off Denizens, Avogadros, Napalm Zombies, and the Undead horde. Scavenge buildable parts to construct vital utilities like the Jet Gun, Electric Trap, Turret, Zombie Shield, and Pack-a-Punch machine. Team up to keep the bus rolling, share points, and uncover the Tower of Babble Easter-egg.",
+      "Travel between Bus Depot, Diner, Farm, Power Station, and Town on the bus while Denizens punish long trips through the fog. TranZit introduces buildables on a large scale, including the Jet Gun, Turbine, Zombie Shield, Electric Trap, and Turret, with the Tower of Babble as its main quest.",
     hasEasterEgg: true
   },
   "nuketown-zombies": {
     name: "Nuketown Zombies",
     releasedIn: "Black Ops II (2012)",
     description:
-      "Survive wave after wave in the iconic post-nuclear test site of Nuketown Nevada. Navigate the shattered yellow and green houses, unlock secret bunkers, and contend with Element 115–spawned undead as you hunt for randomized Perks and the Pack-a-Punch machine. Hear Richtofen’s voiceover tie into Moon’s events and uncover hidden audio and musical Easter-eggs.",
+      "A compact survival version of Nuketown set alongside the events of Moon. Perk machines and Pack-a-Punch drop into the map at unpredictable round milestones, forcing players to adapt their setup each game.",
     hasEasterEgg: true
   },
   "die-rise": {
     name: "Die Rise",
     releasedIn: "Black Ops II: Revolution DLC (2013)",
     description:
-      "Battle the undead across two collapsing Shanghai skyscrapers and an inverted tower wedged between them. Navigate broken elevators, jump across gaps onto mattresses, and ride up and down freight lifts carrying randomized Perks and the Pack-a-Punch Machine. Build the steam-powered TrampleSteam, assemble the Sliquifier wonder-weapon, and contend with teleporting Jumping Jacks as you fight for survival above the abyss.",
+      "A vertical skyscraper map where elevators, one-way drops, and dangerous jumps are as important as the zombies. Build the Sliquifier and Trample Steam, manage moving perk elevators, and complete the High Maintenance quest with Victis.",
     hasEasterEgg: true
   },
   "mob-of-the-dead": {
     name: "Mob of the Dead",
     releasedIn: "Black Ops II: Uprising DLC (2013)",
     description:
-      "Play as four mobsters trapped on a zombified Alcatraz Island during Prohibition. Use Afterlife Mode to traverse forbidden passages, build the escape aircraft Icarus or the Acid Gat wonder-weapon, deploy the Zombie Shield and new traps, confront the boss zombie Brutus, and ultimately attempt to break—or continue—the island's eternal cycle.",
+      "Four mobsters are trapped in a supernatural version of Alcatraz and must use Afterlife to power the prison and build the Icarus plane. Hell's Retriever, the Blundergat, Brutus, and the repeating bridge cycle all feed into Pop Goes the Weasel and the choice to break or continue the cycle.",
     hasEasterEgg: true
   },
   "buried": {
     name: "Buried",
     releasedIn: "Black Ops II: Vengeance DLC (2013)",
     description:
-      "Descend into an underground Wild West ghost town in Angola’s Livingstone Mine. Team up with Victis and NPC Arthur to feed him candy or booze to fortify barricades, craft buildables like the Subsurface Resonator and Paralyzer wonder-weapon, bank or stash gear, evade vengeful ghosts, trigger the Time Bomb to rewind time, and survive until you outwit—or become a pawn of—the Aether’s masters.",
+      "Victis explores an underground Old West town filled with buildables, chalk weapon drawings, the bank, and the NPC Arthur. The Paralyzer, Time Bomb, haunted mansion, and Resolution 1295 quest give Buried a slower, setup-heavy style with lots of player-controlled shortcuts.",
     hasEasterEgg: true
   },
   "origins": {
     name: "Origins",
     releasedIn: "Black Ops II: Apocalypse DLC (2013)",
     description:
-      "Travel back to 1918’s Excavation Site 64 in Northern France with Primis—Dempsey, Nikolai, Takeo, and Richtofen—to power six Element 115 generators, battle Panzer Soldats and giant robots Odin, Thor, and Freya, pilot the Mark IV tank, assemble and wield four elemental staffs, and ultimately rescue Samantha from Agharta amid the chaos of the Great War trenches and The Crazy Place.",
+      "Primis fights through Great War trenches around Excavation Site 64 while giant robots cross the battlefield. Six generators power the map, and the four elemental staffs, Crazy Place, Panzer Soldats, Mark IV tank, and Little Lost Girl quest make Origins one of Zombies' deepest setup maps.",
     hasEasterEgg: true
   },
   "shadows-of-evil": {
     name: "Shadows of Evil",
     releasedIn: "Black Ops III (2015)",
     description:
-      "Traverse 1940s Morg City as four cursed heroes—Floyd, Jessica, Nero, and Jack—unlock the Pack-a-Punch by performing Gateworm rituals in each district, battle new horrors like Margwas, Parasites, and Insanity Elementals, build and upgrade the Rocket Shield, wield Apothicon Servant wonder-weapons, use GobbleGum and Beast Mode to power Perks, and confront the Shadowman’s scheme to unleash the apocalypse.",
+      "Explore Morg City using Beast Mode to open routes, power utilities, and complete four rituals. Margwas, the Apothicon Servant, Apothicon Sword, Rocket Shield, Gateworms, and the Shadowman drive a quest whose full ending requires four players.",
     hasEasterEgg: true
   },
   "the-giant": {
     name: "The Giant",
     releasedIn: "Black Ops III (2015)",
     description:
-      "A reimagining of Der Riese where Primis—Dempsey, Nikolai, Takeo, and Richtofen—return to the iconic Nazi factory. Link all three teleporters to power the Pack-a-Punch, arm yourself with Pack-a-Punched wonder-weapons like the Annihilator, collect GobbleGum in randomized wall-buy locations, and relive the Fly Trap Easter-egg (Paradoxical Prologue) to light the beacon for Maxis.",
+      "A Black Ops III reimagining of Der Riese starring Primis. Link the three teleporters to Pack-a-Punch, use the Wunderwaffe DG-2, and complete the Fly Trap-style hidden-object quest to unlock the Annihilator specialist weapon.",
     hasEasterEgg: true
   },
   "dead-ops-arcade-ii": {
     name: "Dead Ops Arcade II",
     releasedIn: "Black Ops III (2015)",
     description:
-      "Sequel to Dead Ops Arcade, this top-down twin-stick shooter hidden in BO3’s bonus menu drops you into a cyber-net arcade grid. Face waves in arcade-style arenas, unlock perks, vehicles, and the Cyber Silverback boss while retaining the frantic gem-collecting, score-multiplier chaos of the original.",
+      "The second Dead Ops Arcade keeps the twin-stick score-chasing format while adding new arenas, enemies, power-ups, vehicles, and first-person bonuses. It remains an arcade survival mode rather than a traditional round-based quest map.",
     hasEasterEgg: false
   },
   "der-eisendrache": {
     name: "Der Eisendrache",
-    releasedIn: "Black Ops III (2016) DLC 1 – Awakening",
+    releasedIn: "Black Ops III: Awakening DLC (2016)",
     description:
-      "Set atop a snow-clad Griffin Castle in Austria (November 5, 1945), Der Eisendrache reunites Primis with new buildables and ancient power. Activate Wunderspheres to fling across the map, trap undead with the Death Ray and Gate Trap, and forge the Ragnarok DG-4 and Wrath of the Ancients—four elemental bows of devastating might. Navigate dragon-fired courtyards, rescue Richtofen’s test subject, and purge Group 935’s last remnants.",
+      "Primis assaults Griffin Castle, feeding three dragons to obtain the Wrath of the Ancients before upgrading it into elemental bows. Wunderspheres, the Death Ray, Ragnarok DG-4, wisp cycles, Keeper ritual, and a dedicated boss fight form the My Brother's Keeper quest.",
     hasEasterEgg: true
   },
   "zetsubou-no-shima": {
     name: "Zetsubou No Shima",
-    releasedIn: "Black Ops III (2016) DLC 2 – Eclipse",
+    releasedIn: "Black Ops III: Eclipse DLC (2016)",
     description:
-      "On a toxic Pohnpei island lab (October 18, 1945), Zetsubou No Shima forces Primis underwater and into vine-choked facilities. Craft the Gas Mask to survive spore clouds, grow Element-115 seeds for perks and gear, and assemble the KT-4 wonder-weapon or Skull of Nan Sapwe to turn the tide. Battle Thrashers, giant spiders, and reclaim Takeo’s soul in this tropical nightmare.",
+      "A Division 9 island laboratory built around plants, colored water, spores, and underwater routes. The Skull of Nan Sapwe, KT-4/Masamune, Gas Mask, three elevator cogs, and Giant Thrasher fight drive the Seeds of Doubt quest.",
     hasEasterEgg: true
   },
   "gorod-krovi": {
     name: "Gorod Krovi",
-    releasedIn: "Black Ops III (2016) DLC 3 – Descent",
+    releasedIn: "Black Ops III: Descent DLC (2016)",
     description:
-      "Set amidst the bombed-out ruins of Stalingrad on November 6, 1945, Gorod Krovi forces Primis to battle armored Mangler Soldiers, electrified drones, and fire-breathing dragons. Wield the Guard of Fafnir shield, call down Dragon Strike, and pilot Valkyrie Drones to liberate Nikolai’s soul and activate the Pack-a-Punch in this hellish Soviet battlefield.",
+      "Primis enters a war-torn Stalingrad filled with dragons, Manglers, and Valkyrie Drones. Dragon Network travel, Dragon Strike, the Gauntlet of Siegfried, randomized valve/challenge steps, and the dragon/Nikolai boss fight define Love and War.",
     hasEasterEgg: true
   },
   "revelations": {
     name: "Revelations",
-    releasedIn: "Black Ops III (2016) DLC 4 – Salvation",
+    releasedIn: "Black Ops III: Salvation DLC (2016)",
     description:
-      "The final chapter of Black Ops III Zombies, Revelations thrusts Primis into Agartha’s cosmic ‘House’, weaving together fragments of Nacht der Untoten, Kino der Toten, Der Eisendrache, Shangri-La, Verrückt, Origins, Mob of the Dead, Buried, and Zetsubou No Shima. Battle Margwas, Panzersoldats, Spiders, Furies, and the Shadowman, wield Guard of Fafnir and Ragnarok DG-4s, power Corruption Engines—and unlock the Summoning Key to complete the cycle once and for all.",
+      "A fractured endgame map combining pieces of earlier Aether locations into one connected space. Corruption Engines, the Giant Apothicon, Keeper Protector, upgraded Apothicon Servant, Runes of Creation, Summoning Key throws, and the Shadowman finale make its main quest highly reference-heavy.",
     hasEasterEgg: true
   },
   "nacht-der-untoten-chronicles": {
     name: "Nacht der Untoten (Chronicles)",
-    releasedIn: "Black Ops III Zombies Chronicles",
+    releasedIn: "Black Ops III: Zombies Chronicles (2017)",
     description:
-      "A high-fidelity remaster of the original Nacht der Untoten using the BO3 engine—better AI, modern Mystery Box and GobbleGum additions, plus added Perk machines and updated aesthetics. Preserves the classic layout, now playable alongside seven other remade legends.",
+      "The BO3 remaster of Nacht keeps the original three-room survival layout while adding the modern weapon pool, GobbleGum, and updated presentation. It remains a straightforward survival map without a main quest.",
     hasEasterEgg: false
   },
   "kino-der-toten-chronicles": {
     name: "Kino der Toten (Chronicles)",
-    releasedIn: "Black Ops III Zombies Chronicles",
+    releasedIn: "Black Ops III: Zombies Chronicles (2017)",
     description:
-      "Remastered Kino der Toten on the BO3 engine: upgraded visuals, BO3-era weapons in the Mystery Box, GobbleGum machines, and improved zombie behavior—while maintaining the iconic theater ambiance and film-reel / radio Easter-egg.",
+      "Kino rebuilt in the BO3 engine with the original theater, teleporter/Pack-a-Punch loop, Thundergun, and small Easter Eggs intact. BO3 weapons and GobbleGum modernize the setup without changing the map's basic flow.",
     hasEasterEgg: true
   },
   "shangri-la-chronicles": {
     name: "Shangri-La (Chronicles)",
-    releasedIn: "Black Ops III Zombies Chronicles",
+    releasedIn: "Black Ops III: Zombies Chronicles (2017)",
     description:
-      "The BO3-engine remaster of Shangri-La: lush HD jungle, modern Mystery Box spawns, GobbleGum integration, and all original traps and wonder-weapons preserved in stunning detail.",
+      "The BO3 remaster preserves Shangri-La's tight jungle layout, Napalm and Shrieker Zombies, 31-79 JGb215, traps, and Eclipse quest. Modern weapons and GobbleGum are layered onto the original mechanics.",
     hasEasterEgg: true
   },
   "moon-chronicles": {
     name: "Moon (Chronicles)",
-    releasedIn: "Black Ops III Zombies Chronicles",
+    releasedIn: "Black Ops III: Zombies Chronicles (2017)",
     description:
-      "A remaster of Moon with upgraded visuals, BO3 perks and GobbleGum, plus the original low-gravity, excavator breaches, and lunar wonder-weapons—now with better AI and modern conveniences.",
+      "Moon remastered with BO3 visuals, weapons, GobbleGum, and the original Area 51/Griffin Station systems. Low gravity, excavators, PES suits, the Hacker, Wave Gun, and Big Bang Theory quest remain central.",
     hasEasterEgg: true
   },
   "origins-chronicles": {
     name: "Origins (Chronicles)",
-    releasedIn: "Black Ops III Zombies Chronicles",
+    releasedIn: "Black Ops III: Zombies Chronicles (2017)",
     description:
-      "Full-map remaster of Origins—greatly enhanced textures, BO3 weapon pool, GobbleGum, and refined mechanics, but still the same trench warfare, giant robots, tank ride, and four Staff quest that defined classic Zombies.",
+      "The BO3 remaster of Origins keeps the generators, giant robots, Panzer Soldats, Mark IV tank, four elemental staffs, Crazy Place, and Little Lost Girl quest. The weapon pool and GobbleGum change the setup options, but the core route is still Origins.",
     hasEasterEgg: true
   },
   "shi-no-numa-chronicles": {
     name: "Shi No Numa (Chronicles)",
-    releasedIn: "Black Ops III Zombies Chronicles",
+    releasedIn: "Black Ops III: Zombies Chronicles (2017)",
     description:
-      "Remastered swamp mayhem: Shi No Numa with better visuals, modern Mystery Box, GobbleGum, and updated zombie AI, while preserving the original huts, Wunderwaffe DG-2, and electrified traps.",
+      "Shi No Numa rebuilt in the BO3 engine with its central swamp layout, four huts, randomized perks, Flogger, and Wunderwaffe DG-2 intact. BO3 weapons and GobbleGum update the survival experience.",
     hasEasterEgg: true
   },
   "verrückt-chronicles": {
     name: "Verrückt (Chronicles)",
-    releasedIn: "Black Ops III Zombies Chronicles",
+    releasedIn: "Black Ops III: Zombies Chronicles (2017)",
     description:
-      "A high-fidelity remake of Verrückt—featuring BO3-era weapons, GobbleGum, updated Perk machines, and AI improvements, yet still the two-room asylum with electric-door traps that started it all.",
+      "The BO3 remaster keeps Verrückt's split spawn, narrow asylum routes, perk layout, and electric traps while adding BO3 weapons and GobbleGum. It remains a compact survival map without a main quest.",
     hasEasterEgg: false
   }
 };

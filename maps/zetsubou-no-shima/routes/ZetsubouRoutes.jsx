@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import Header from '../src/components/Header';
 import Footer from '../src/components/Footer';
 import MainGuide from '../src/pages/MainGuide';
@@ -30,6 +30,7 @@ export default function ZetsubouRoutes() {
         <Route path="buildables" element={<Buildables />} />
         <Route path="elevator-battle" element={<ElevatorBattle />} />
         <Route path="extras" element={<Extras />} />
+        <Route path="*" element={<Navigate to="/maps/zetsubou-no-shima" replace />} />
       </Routes>
       <Footer />
     </section>

@@ -1,22 +1,8 @@
 import process from 'node:process';
+import { criticalRoutePaths as routes } from './critical-routes.mjs';
 
 const baseUrl = process.env.ZH_SMOKE_BASE_URL || 'https://zombies-hub-2-0.onrender.com';
 const expectedSha = process.env.ZH_EXPECTED_SHA?.trim();
-const routes = [
-  '/',
-  '/allmaps',
-  '/easter-eggs',
-  '/side-easter-eggs',
-  '/side-easter-eggs/origins-speedrun',
-  '/maps/origins',
-  '/maps/mob-of-the-dead',
-  '/maps/shadows-of-evil',
-  '/maps/der-eisendrache',
-  '/maps/zetsubou-no-shima',
-  '/maps/gorod-krovi',
-  '/maps/revelations',
-];
-
 const failures = [];
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -139,6 +125,7 @@ for (const route of routes) {
 if (failures.length) {
   console.error('\nLive smoke test failed:\n');
   for (const failure of failures) console.error(`- ${failure}`);
+  console.error('');
   process.exit(1);
 }
 

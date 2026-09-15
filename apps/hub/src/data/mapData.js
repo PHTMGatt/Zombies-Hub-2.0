@@ -47,11 +47,11 @@ const mapData = [
     name: "Nacht der Untoten",
     slug: "nacht-der-untoten",
     game: "Black Ops 1",
-    dlc: "Base Game",
+    dlc: "DLC 4 – Rezurrection",
     isEasterEgg: false,
     coverImage: getCover("nacht der untoten"),
     layoutImage: getLayout("nacht der untoten"),
-    hoverImage: null
+    hoverImage: dlcArt["rezurrection"]
   },
   {
     name: "Kino der Toten",

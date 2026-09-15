@@ -1,8 +1,12 @@
 # Migration Inventory
 
-## Source repositories
+## Status
 
-Read-only sources currently identified:
+The primary Zombies Hub 2.0 migration is complete. This file now records the source repositories and the integrated 2.0 destinations instead of describing the old iframe architecture as current behavior.
+
+## Read-only source repositories
+
+These repositories remain untouched and serve only as migration/reference sources:
 
 - `PHTMGatt/Zombies-Hub`
 - `PHTMGatt/Origins-Guide`
@@ -17,17 +21,11 @@ Target repository:
 
 - `PHTMGatt/Zombies-Hub-2.0`
 
-## Main Hub
+## Integrated runtime
 
-Stack observed:
+Zombies Hub 2.0 uses one repository-level React/Vite runtime, one Hub router, and one Render deployment. Dedicated guides mount directly below `/maps/...` routes; they are not loaded from the old standalone Render services.
 
-- React 19
-- React Router DOM 7.5.x
-- Vite 6.x
-- react-icons
-- Render-oriented `serve -s dist` production script
-
-Important current routes:
+Top-level Hub routes include:
 
 - `/`
 - `/allmaps`
@@ -38,209 +36,109 @@ Important current routes:
 - `/side-easter-eggs`
 - `/side-easter-eggs/:mapKey`
 
-Current Hub layout behavior:
+Dedicated modules:
 
-- `Navbar` is rendered globally from `App.jsx`.
-- `/maps/*` toggles an `html.map-page` class and hides the Hub footer.
-- Dedicated map pages with `renderLink` render `MapsHubHeader` plus an iframe.
-- `MapDetails.css` positions the iframe from `top: var(--nav-height)`.
-
-## Dedicated Render-backed guides referenced by Hub
-
-Current `mapData.js` explicitly links these map routes to external Render services:
-
-- Mob of the Dead
-- Origins
-- Der Eisendrache
-- Zetsubou No Shima
-- Gorod Krovi
-- Revelations
-
-These are the first dedicated modules that must replace iframe behavior in 2.0.
+- `/maps/origins/*`
+- `/maps/mob-of-the-dead/*`
+- `/maps/shadows-of-evil/*`
+- `/maps/der-eisendrache/*`
+- `/maps/zetsubou-no-shima/*`
+- `/maps/gorod-krovi/*`
+- `/maps/revelations/*`
 
 ## Origins
 
-`Origins-Guide` is the current React/Vite application to use as the primary migration source.
+Integrated features:
 
-Observed pages:
-
-- Main Guide
+- main Easter Egg guide
 - Fire Staff
 - Ice Staff
 - Wind Staff
 - Lightning Staff
+- Origins Speed Run under Side Easter Eggs
 
-Observed map shell:
-
-- Origins-specific header
-- Origins-specific nav
-- Origins-specific footer
-- map audio/media assets
-- separate page styles for each staff
-
-Compatibility issues for integration:
-
-- uses absolute routes (`/`, `/FireStaff`, etc.) that must become nested/relative routes
-- uses global `html`, `body`, `main`, and universal selectors
-- uses generic class names like `.nav-links`
-- applies its own page background directly to `body`
-
-`Origins-EE` appears to be an older/non-React asset and guide source containing legacy staff HTML/CSS/media and images. It should be treated as supplemental source material, not blindly merged over the newer `Origins-Guide` app.
+The current module uses namespaced routes and map-scoped styling. Legacy standalone route names are retained only as compatibility routes where useful.
 
 ## Mob of the Dead
 
-Observed pages:
+Integrated guide flow:
 
-- main guide
-- free Blundergat
-- spoon
-- Redeemer
-- logs
-- final step
-- not found
+- main `Pop Goes the Weasel` roadmap
+- Plane + bridge trips
+- Retriever + skulls / spoon progression
+- Afterlife codes + audio trail
+- final Afterlife flight / bridge showdown
 
-Observed shell:
+Old standalone page URLs such as `free-blundergat`, `spoon`, `redeemer`, and `logs` redirect into the corrected consolidated 2.0 flow instead of maintaining duplicate guide content.
 
-- map header with banner
-- internal map nav
-- footer
-- fixed full-page background/tint layers
+## Shadows of Evil
 
-Integration concerns:
+Integrated sequence:
 
-- React 18 + Router 6.x source
-- owns its own `BrowserRouter`
-- global styles target `html`, `body`, `#root`, `a`, headings, and generic `.app-container`
+1. Four rituals
+2. Apothicon Sword
+3. Pack-a-Punch
+4. Sword upgrade
+5. Flag step
+6. Shadowman
+7. Four-player train/Keeper finale
+
+Solo can reach and defeat the Shadowman; the full ending requires four players.
 
 ## Der Eisendrache
 
-Observed pages/features:
+Integrated features:
 
-- home/main guide
-- parts
-- wisps
-- bow section
+- main `My Brother’s Keeper` roadmap
+- Shield + Ragnarok gear
+- both wisp cycles and timestamp reference
 - base bow
-- electric/storm bow
-- fire bow
-- wolf bow
-- void bow
-
-Observed shell:
-
-- Der Eisendrache-specific header
-- navbar
-- footer
-- header spacer for fixed header
-
-Integration concerns:
-
-- React 18 source with Router 7.x dependency
-- TypeScript/TSX mixed into application
-- owns its own `BrowserRouter`
-- global styles modify `html`, `body`, `#root`, headings, links, and background pseudo-element
+- Storm / Fire / Wolf / Void bow upgrades
+- dedicated Keeper boss guide
 
 ## Zetsubou No Shima
 
-Observed pages/features:
+Integrated features:
 
-- main guide
-- prerequisites
-- reveal blueprint
-- cogs
-- individual cog steps
+- main `Seeds of Doubt` roadmap
+- setup/prerequisites
+- Skull / blueprint / Masamune progression
+- three individual cog references
 - buildables
-- elevator battle
-- extras
-
-Observed shell:
-
-- Zetsubou header
-- collapsible map nav
-- footer usage within map pages/components
-
-Integration concerns:
-
-- React 18 + Router 6.x source
-- owns its own `BrowserRouter`
-- global styles target `html`, `body`, `#root`, `a`, `ul`
-- body background and body pseudo-element must become map-root scoped
+- elevator / Giant Thrasher ending
+- extras/rewards
 
 ## Gorod Krovi
 
-Observed pages/features:
+Integrated features:
 
-- main guide
-- buildables
-- trophy challenges
-- valve solver
-- boss fight
-
-Observed shell:
-
-- banner header
-- map-specific internal nav
-- footer
-
-Integration concerns:
-
-- React 18 + Router 6.x source
-- owns its own `BrowserRouter`
-- global stylesheet sets `html/body/#root` to flex and applies background
-- generic `main`, `a`, and `button` selectors would affect the Hub if imported unchanged
+- main `Love and War` roadmap
+- buildables / quest gear
+- trophies and S.O.P.H.I.A. challenges
+- randomized Valve Solver
+- dragon + Nikolai boss guide
 
 ## Revelations
 
-Observed pages/features:
+Integrated features:
 
-- main guide
-- Apothicon upgrade
-- egg locations
-- summoning key
-- sound step
-- large map-specific image library
+- main `For The Good Of All` step selector
+- Apothicon Servant upgrade
+- egg/Gateworm locations
+- rune/sound reference
+- Summoning Key throws
+- transcript-verified final sequence
 
-Observed shell:
+Focused reference pages retain direct timestamp/video behavior so players can jump to the exact mechanic they need.
 
-- Revelations header/nav
-- footer
+## Migration cleanup rules
 
-Integration concerns:
+The 2.0 repository should not retain duplicate implementations from the standalone apps once a feature has a verified integrated replacement. Compatibility URLs may remain, but they should route into the current source of truth rather than duplicate stale content.
 
-- React 18 + Router 6.x source
-- Vite 4.x source
-- owns its own `BrowserRouter`
-- global stylesheet targets `body`, all headings, `a`, `ul`
-- generic `.header`, `.header-left`, `.header-nav`, `.nav-link` naming can collide with other map modules
+Map CSS must stay scoped beneath each map module root. The Hub owns global layout and routing; map modules own their internal guide UI and visual identity.
 
-## Header/layout root cause
+## Verification
 
-The current broken/inconsistent header behavior comes from layering separate applications rather than one shared application shell:
+`scripts/critical-routes.mjs` is the shared route inventory for production smoke and visual QA. Current QA covers the Hub, Side Easter Eggs, every dedicated map landing page, and the important focused guide/tool routes on both desktop and mobile.
 
-1. The Hub always mounts its fixed `Navbar`.
-2. Dedicated map pages additionally mount `MapsHubHeader`.
-3. The external guide application inside the iframe mounts its own header/nav.
-4. The iframe positioning only accounts for the Hub navbar height.
-5. Each external guide is a different React document with its own router, CSS root, body, and responsive behavior.
-
-This creates the visual double/triple-header effect and makes unified navigation impossible.
-
-## 2.0 correction
-
-- Keep one global Hub header.
-- Remove `renderLink` iframe behavior as each dedicated map is migrated.
-- Mount the map's existing header directly beneath the Hub header as a map sub-header.
-- Convert absolute map routes to nested routes.
-- Scope each map's global CSS beneath a unique map root class.
-- Normalize the dependency/runtime layer at the repository root while preserving map components.
-
-## Migration order
-
-1. Scaffold shared app/runtime.
-2. Move/copy current Hub into `apps/hub` and get original Hub behavior running locally in the new structure.
-3. Integrate Origins first.
-4. Verify `/maps/origins/*` navigation, Hub header persistence, Origins sub-header, styling, media, and responsive behavior.
-5. Repeat the same pattern for Mob, Der Eisendrache, Zetsubou, Gorod, and Revelations.
-6. Validate all non-dedicated maps/video-guide routes from the original Hub.
-7. Remove obsolete iframe and Render-link code from 2.0 only.
-8. Build/deploy the unified app after parity checks.
+The original repositories and old deployments remain untouched for reference and rollback history.
