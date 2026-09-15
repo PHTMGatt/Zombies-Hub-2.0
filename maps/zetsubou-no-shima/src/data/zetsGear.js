@@ -19,7 +19,7 @@ export const zetsGear = [
       'Docks / lower zipline area: collect the filtration/respirator piece in the lower bunker-docks section near the zipline and challenge pedestal.',
     ],
     build: 'Take all three pieces to a buildable workbench and craft the Gas Mask.',
-    note: 'Replace it with a fresh mask before the elevator descent. The mask also makes the long underwater Masamune plant step much safer.',
+    note: 'Every player should replace a damaged mask before the elevator descent. The mask also makes the long underwater Masamune plant step much safer.',
   },
   {
     name: 'KT-4',
@@ -37,7 +37,7 @@ export const zetsGear = [
     type: 'KT-4 upgrade',
     parts: [
       'Rainbow-water plant: Mesmerize the hidden underwater wall/rock, plant a seed, and water it with rainbow water across the required growth cycles before collecting the upgraded plant ingredient.',
-      'Giant Spider pincer: use the KT-4 to clear the webbed entrance, defeat the giant spider, and collect its pincer before leaving.',
+      'Giant Spider fang: use the KT-4 to clear the webbed entrance, defeat the giant spider, and collect the fang from its mouth before leaving.',
       'Electrified-shield vial: after all Trials are complete, electrify the shield and use it on the Lab B cage/control setup to obtain the Divinium vial.',
     ],
     build: 'Return the upgrade ingredients to the KT-4 workbench and collect the Masamune.',
