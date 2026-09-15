@@ -8,25 +8,25 @@ const BASE = '/maps/mob-of-the-dead';
 const phases = [
   {
     title: 'Build Icarus + Reach the Bridge',
-    summary: `${mobRun[0].summary} ${mobRun[1].summary} ${mobRun[2].summary}`,
+    summary: 'Get the Warden’s Key, build Icarus, fly to the bridge, then return to Alcatraz.',
     to: `${BASE}/plane`,
     link: 'Plane + Bridge',
   },
   {
     title: "Hell's Retriever + Skulls",
-    summary: 'Refuel while feeding the three Hellhounds, collect Hell’s Retriever, grab the five blue skulls, and finish the spoon/spork setup.',
+    summary: 'Refuel, feed all three Hellhounds, grab Hell’s Retriever, then finish the skull and spoon setup.',
     to: `${BASE}/retriever-skulls`,
     link: 'Retriever + Skulls',
   },
   {
     title: 'Third Trip + Afterlife Codes',
-    summary: 'Make the third bridge trip, enter all four prisoner numbers—101, 386, 872, 481—in any order, then follow the black-and-white audio trail through Alcatraz.',
+    summary: 'Make the third bridge trip, enter 101 / 386 / 872 / 481, then follow the black-and-white audio trail.',
     to: `${BASE}/codes`,
     link: 'Codes + Audio',
   },
   {
     title: 'Final Afterlife Flight',
-    summary: 'Take the unfueled rooftop plane in Afterlife, revive on the bridge, then complete the Weasel-versus-mobsters showdown.',
+    summary: 'Take the rooftop plane in Afterlife, revive on the bridge, then finish the Weasel showdown.',
     to: `${BASE}/final-step`,
     link: 'Final Fight',
   },
