@@ -26,8 +26,10 @@ export default function MapInfo() {
   const guideRoute = dedicatedRoute || `/easter-eggs/${slug}`;
   const hasMainQuest = Boolean(meta.isEasterEgg);
   const releasedLabel = meta.dlc === 'Zombies Chronicles'
-    ? 'Black Ops III Zombies Chronicles (2017)'
-    : info.releasedIn;
+    ? 'Black Ops III: Zombies Chronicles (2017)'
+    : meta.dlc === 'DLC 4 – Rezurrection'
+      ? 'Black Ops: Rezurrection DLC (2011)'
+      : info.releasedIn;
 
   return (
     <div className="map-info-container">
