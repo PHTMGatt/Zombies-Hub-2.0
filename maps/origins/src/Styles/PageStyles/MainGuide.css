@@ -7,7 +7,7 @@
   background-repeat: no-repeat;
   background-attachment: fixed;
   min-height: 100vh;
-  padding: 1.5rem 1rem 2rem;
+  padding: 3rem 1rem;
   font-family: 'Rajdhani', sans-serif;
   color: #ffffff;
   display: flex;
@@ -18,7 +18,7 @@
 .origins-module .guide-grid {
   display: grid;
   grid-template-columns: 2fr 1fr;
-  gap: 1rem;
+  gap: 2rem;
   max-width: 1200px;
   width: 100%;
 }
@@ -27,13 +27,13 @@
 .origins-module .right-column {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 2rem;
 }
 
 .origins-module .guide-section {
   background: rgba(0, 0, 0, 0.65);
   border-radius: 12px;
-  padding: 1.15rem 1.2rem;
+  padding: 2rem;
   box-shadow: 0 0 15px rgba(100, 200, 255, 0.25);
   border-top: 3px solid #6dc2ff;
   border-bottom: 3px solid #6dc2ff;
@@ -48,7 +48,7 @@
   color: #cce6ff;
   border-bottom: 2px solid #6dc2ff;
   padding-bottom: 0.5rem;
-  margin-bottom: 0.75rem;
+  margin-bottom: 1.2rem;
 }
 
 .origins-module .revive-icon {
@@ -65,9 +65,9 @@
 
 .origins-module li {
   margin-bottom: 0.6rem;
-  line-height: 1.45;
+  line-height: 1.7;
   color: #e0eaff;
-  font-size: 0.92rem;
+  font-size: 1rem;
 }
 
 .origins-module .audio-players {
@@ -115,84 +115,4 @@
   .origins-module audio { width: 90%; }
   .origins-module .guide-section h2 { font-size: 1.3rem; }
   .origins-module li { font-size: 0.95rem; }
-}
-
-
-.origins-module .origins-main-steps {
-  counter-reset: origins-step;
-  display: grid;
-  gap: 0.28rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.origins-module .origins-main-steps li {
-  counter-increment: origins-step;
-  display: grid;
-  grid-template-columns: 28px minmax(0, 1fr);
-  column-gap: 0.55rem;
-  align-items: start;
-  margin: 0;
-  padding: 0.46rem 0;
-  border-bottom: 1px solid rgba(109, 194, 255, 0.14);
-}
-
-.origins-module .origins-main-steps li::before {
-  content: counter(origins-step, decimal-leading-zero);
-  width: 26px;
-  height: 26px;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  background: rgba(109, 194, 255, 0.92);
-  color: #06111a;
-  font-size: 0.64rem;
-  font-weight: 900;
-}
-
-.origins-module .origins-main-steps strong,
-.origins-module .origins-main-steps span {
-  grid-column: 2;
-}
-
-.origins-module .origins-main-steps strong {
-  color: #f1f8ff;
-  line-height: 1.2;
-}
-
-.origins-module .origins-main-steps span {
-  margin-top: 0.08rem;
-  color: #c7d8e7;
-  font-size: 0.84rem;
-  line-height: 1.35;
-}
-
-.origins-module .origins-reference-section li,
-.origins-module .origins-tips-section li {
-  margin-bottom: 0.42rem;
-}
-
-.origins-module .origins-audio-reference {
-  margin-top: 0.85rem;
-  padding-top: 0.65rem;
-  border-top: 1px solid rgba(79, 170, 255, 0.28);
-}
-
-.origins-module .origins-audio-reference summary {
-  color: #8fd4ff;
-  font-size: 0.78rem;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-@media screen and (max-width: 900px) {
-  .origins-module .main-guide {
-    padding: 0.8rem 0.55rem 1.3rem;
-    background-attachment: scroll;
-  }
-
-  .origins-module .guide-section {
-    padding: 0.9rem;
-  }
 }
