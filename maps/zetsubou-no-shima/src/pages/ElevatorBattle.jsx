@@ -13,7 +13,7 @@ const ElevatorBattle = () => (
     <GuideHero
       kicker="Zetsubou No Shima"
       title="Elevator + Giant Thrasher"
-      description="Install the three cogs, descend with a fresh Gas Mask, open the arena with the Masamune, and repeat the boss damage cycle four times."
+      description="Install the three cogs, descend with Gas Masks, clear the vines with the Masamune, then destroy all four Giant Thrasher spores with Masamune shots."
     >
       <GuideChip>3 cogs</GuideChip>
       <GuideChip>Fresh Gas Mask</GuideChip>
@@ -21,7 +21,7 @@ const ElevatorBattle = () => (
     </GuideHero>
 
     <GuideCallout label="Before entering" tone="info" className="zets-detail-note">
-      Replace a damaged Gas Mask before the descent, bring the Masamune, and take a strong shotgun or another reliable Thrasher-killing weapon. Once you go down, play for movement and survival rather than standing still for damage.
+      In co-op, every player should enter with a fresh Gas Mask. Bring the Masamune and a strong close-range weapon; the Masamune is mandatory for the boss spores. Once you go down, play for movement and survival rather than standing still for damage.
     </GuideCallout>
 
     <GuideSection kicker="Final Sequence" title="Elevator to ending">
@@ -42,7 +42,7 @@ const ElevatorBattle = () => (
           step={3}
           label="Boss Fight"
           title="Start the Giant Thrasher encounter"
-          summary="Shoot the first active spore to start the fight, then keep rotating around the arena instead of holding one position."
+          summary="Shoot the first glowing orange spore with the Masamune to start the fight, then keep rotating around the arena while you wait for the next spore."
         >
           <ul className="zets-run-details">
             <li>Use charged Masamune shots to control the ground and keep the arena manageable.</li>
@@ -54,7 +54,7 @@ const ElevatorBattle = () => (
           step={4}
           label="Damage Cycle"
           title="Destroy all four boss spores"
-          summary="The boss weak-point spores become available one at a time. Repeat the same survival-and-damage cycle four times to finish Seeds of Doubt."
+          summary="Four spores appear one at a time. Hit each glowing spore with the Masamune; after the fourth successful hit, the Giant Thrasher dies and Seeds of Doubt completes."
         />
       </GuideStepList>
     </GuideSection>
