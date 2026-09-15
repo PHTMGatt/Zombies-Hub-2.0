@@ -38,7 +38,16 @@ const LightningStaff = () => {
             <ul>
               <li>Go through the Lightning Tunnel with the Gramophone.</li>
               <li>Enter the Crazy Place and solve the piano note puzzle.</li>
-              <li>Use code: <strong>1-3-6 / 3-5-7 / 2-4-6</strong>.</li>
+              <li className="piano-code-step">
+                <span className="piano-code-label">Piano code</span>
+                <span className="piano-code-values" aria-label="1 3 6, 3 5 7, 2 4 6">
+                  <strong>1-3-6</strong>
+                  <span className="piano-code-dot" aria-hidden="true">•</span>
+                  <strong>3-5-7</strong>
+                  <span className="piano-code-dot" aria-hidden="true">•</span>
+                  <strong>2-4-6</strong>
+                </span>
+              </li>
               <li>Line all four rings up <strong>purple</strong> under Excavation.</li>
               <li>Shoot the orb underneath with the Lightning Staff.</li>
               <li>Place the staff on the purple Crazy Place pedestal and feed souls.</li>

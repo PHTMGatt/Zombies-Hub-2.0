@@ -174,3 +174,63 @@
     grid-template-columns: 1fr;
   }
 }
+
+
+.origins-module .lightning-staff .piano-code-step {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin: 0.2rem 0 0.8rem -0.2rem;
+  padding: 0.55rem 0.65rem;
+  border: 1px solid rgba(187, 134, 252, 0.24);
+  border-radius: 8px;
+  background: rgba(20, 10, 31, 0.42);
+}
+
+.origins-module .lightning-staff .piano-code-label {
+  flex: 0 0 auto;
+  color: #cfa8ff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.origins-module .lightning-staff .piano-code-values {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  color: #ffffff;
+  font-size: 1rem;
+  white-space: nowrap;
+}
+
+.origins-module .lightning-staff .piano-code-values strong {
+  color: #ffffff;
+  letter-spacing: 0.04em;
+}
+
+.origins-module .lightning-staff .piano-code-dot {
+  color: #bb86fc;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+@media screen and (max-width: 520px) {
+  .origins-module .lightning-staff .piano-code-step {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-left: 0;
+  }
+
+  .origins-module .lightning-staff .piano-code-values {
+    width: 100%;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    white-space: normal;
+  }
+}
