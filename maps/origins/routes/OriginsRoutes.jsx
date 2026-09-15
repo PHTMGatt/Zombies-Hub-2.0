@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import Header from '../src/components/Header';
 import Footer from '../src/components/Footer';
 import MainGuide from '../src/Pages/MainGuide';
@@ -30,6 +30,7 @@ export default function OriginsRoutes() {
           <Route path="IceStaff" element={<IceStaff />} />
           <Route path="WindStaff" element={<WindStaff />} />
           <Route path="LightningStaff" element={<LightningStaff />} />
+          <Route path="*" element={<Navigate to="/maps/origins" replace />} />
         </Routes>
       </div>
       <Footer />
