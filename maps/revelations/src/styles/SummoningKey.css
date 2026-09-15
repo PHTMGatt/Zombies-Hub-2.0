@@ -1,9 +1,8 @@
 .revelations-module .summoning-key-page {
   position: relative;
   min-height: 0;
-  padding: 1rem 1rem 1.5rem;
+  padding: 1.5rem 1rem 2.25rem;
   display: flex;
-  align-items: flex-start;
   justify-content: center;
   z-index: 1;
 }
@@ -11,7 +10,7 @@
 .revelations-module .summoning-key-page .rev-background {
   position: absolute;
   inset: 0;
-  background: url('../assets/rev-guide/Main/Revelations.webp') no-repeat center center / cover;
+  background: url('../assets/rev-guide/Main/Revelations.webp') center / cover no-repeat;
   filter: blur(8px) brightness(0.32);
   z-index: 0;
 }
@@ -19,116 +18,94 @@
 .revelations-module .summoning-key-page .sk-container {
   position: relative;
   z-index: 2;
-  width: min(100%, 960px);
+  width: min(100%, 860px);
   margin: 0 auto;
   text-align: center;
-  color: #aad4ff;
 }
 
 .revelations-module .summoning-key-page .rev-page-heading {
-  margin-bottom: 0.55rem;
+  margin-bottom: 0.9rem;
 }
 
 .revelations-module .summoning-key-page .sk-title {
-  margin: 0.05rem 0 0.25rem;
-  color: #cce6ff;
-  font-size: clamp(1.65rem, 2.8vw, 2.15rem);
-  font-weight: 800;
-  text-shadow: 0 0 10px rgba(109, 194, 255, 0.55);
-}
-
-.revelations-module .summoning-key-page .rev-page-intro {
-  margin: 0 auto;
-  color: #bdcbe2;
-  font-size: 0.84rem;
-  line-height: 1.4;
+  margin: 0.08rem 0 0.35rem;
+  color: #d7edff;
+  font-size: clamp(1.9rem, 3.2vw, 2.5rem);
+  text-shadow: 0 0 12px rgba(109, 194, 255, 0.5);
 }
 
 .revelations-module .summoning-key-page .rev-glow-box {
   width: 100%;
   margin: 0;
-  padding: 0.65rem;
-  border: 1px solid rgba(109, 194, 255, 0.3);
-  border-radius: 11px;
-  background: rgba(0, 0, 0, 0.34);
-  box-shadow: 0 0 22px rgba(109, 194, 255, 0.16);
+  padding: 0.9rem;
+  border: 1px solid rgba(109, 194, 255, 0.34);
+  border-radius: 12px;
+  background: rgba(2, 8, 18, 0.72);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(8px);
 }
 
 .revelations-module .summoning-key-page .video-card {
-  width: min(100%, 760px);
-  margin: 0 auto 0.35rem;
-  border: 1px solid rgba(109, 194, 255, 0.46);
+  width: min(100%, 720px);
+  margin: 0 auto 0.7rem;
+  border: 1px solid rgba(109, 194, 255, 0.52);
   border-radius: 9px;
   overflow: hidden;
-  background: rgba(0, 0, 0, 0.45);
-  box-shadow: 0 0 16px rgba(0, 191, 255, 0.18);
+  background: #02060b;
+  box-shadow: 0 0 18px rgba(0, 191, 255, 0.18);
 }
 
 .revelations-module .summoning-key-page .rev-video-player__iframe {
   width: 100% !important;
-  height: 280px !important;
+  aspect-ratio: 16 / 9;
+  height: auto !important;
   display: block;
 }
 
 .revelations-module .summoning-key-page .video-caption {
-  padding: 0.28rem 0.5rem;
-  color: #aacbe4;
-  font-size: 0.72rem;
-  background: rgba(0, 0, 0, 0.28);
+  padding: 0.35rem 0.55rem;
+  color: #accde4;
+  font-size: 0.76rem;
 }
 
 .revelations-module .summoning-key-page .sk-selected-label {
-  margin: 0.3rem 0 0.38rem;
-  color: #d4ecff;
-  font-size: 0.82rem;
+  margin: 0.35rem 0 0.55rem;
+  color: #e0f2ff;
+  font-size: 0.92rem;
   font-weight: 700;
 }
 
 .revelations-module .summoning-key-page .sk-buttons {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0.35rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.45rem;
+  width: min(100%, 720px);
+  margin: 0 auto;
   padding: 0;
 }
 
 .revelations-module .summoning-key-page .sk-button {
-  min-height: 34px;
-  padding: 0.32rem 0.42rem;
-  border: 1px solid rgba(0, 195, 255, 0.75);
-  border-radius: 6px;
-  background: rgba(0, 25, 40, 0.5);
-  color: #cceaff;
-  font-size: 0.7rem;
+  min-height: 42px;
+  padding: 0.5rem 0.65rem;
+  color: #d5efff;
+  font-size: 0.8rem;
   font-weight: 700;
+  border: 1px solid rgba(0, 195, 255, 0.68);
+  border-radius: 7px;
+  background: rgba(0, 26, 42, 0.58);
   cursor: pointer;
-  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
 .revelations-module .summoning-key-page .sk-button:hover,
 .revelations-module .summoning-key-page .sk-button.active {
   color: #fff;
-  border-color: rgba(109, 220, 255, 0.95);
-  background: rgba(0, 195, 255, 0.16);
+  border-color: rgba(109, 220, 255, 0.96);
+  background: rgba(0, 195, 255, 0.2);
 }
 
-@media (max-width: 760px) {
+@media (max-width: 560px) {
   .revelations-module .summoning-key-page {
-    padding: 0.8rem 0.6rem 1.25rem;
-  }
-
-  .revelations-module .summoning-key-page .rev-video-player__iframe {
-    height: 220px !important;
-  }
-
-  .revelations-module .summoning-key-page .sk-buttons {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 480px) {
-  .revelations-module .summoning-key-page .rev-video-player__iframe {
-    height: 190px !important;
+    padding: 1rem 0.6rem 1.5rem;
   }
 
   .revelations-module .summoning-key-page .sk-buttons {

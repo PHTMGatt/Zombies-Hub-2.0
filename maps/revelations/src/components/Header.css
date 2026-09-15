@@ -1,111 +1,125 @@
 .revelations-module .rev-header {
   position: relative;
+  width: 100%;
+  min-width: 0;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  padding: 1.5rem 2rem;
-  background-image: url('../assets/images/Rev3.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  flex-wrap: wrap;
+  gap: 0.9rem;
+  padding: 1.4rem 1rem 1.1rem;
   overflow: hidden;
+  text-align: center;
+  background:
+    linear-gradient(to bottom, rgba(3, 5, 14, 0.1), rgba(4, 6, 18, 0.68)),
+    url('../assets/images/Rev3.png') center / cover no-repeat;
+  border-bottom: 1px solid rgba(109, 194, 255, 0.22);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.34);
+  isolation: isolate;
 }
 
 .revelations-module .rev-header::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.1);
-  z-index: 0;
   pointer-events: none;
+  background:
+    radial-gradient(circle at 25% 25%, rgba(109, 194, 255, 0.12), transparent 38%),
+    radial-gradient(circle at 75% 20%, rgba(183, 131, 255, 0.1), transparent 34%);
+  z-index: 0;
 }
 
 .revelations-module .rev-header__left,
 .revelations-module .rev-header__nav {
   position: relative;
   z-index: 1;
+  min-width: 0;
+}
+
+.revelations-module .rev-header__left {
+  width: min(100%, 900px);
 }
 
 .revelations-module .rev-header__title {
-  font-size: 2.5rem;
-  font-weight: 800;
-  color: #d0e7ff;
-  text-shadow: 0 0 10px #6dc2ff, 0 0 20px #6dc2ff, 0 0 30px #6dc2ff;
   margin: 0;
+  color: #e8f4ff;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  line-height: 1;
+  text-shadow:
+    0 0 10px rgba(109, 194, 255, 0.7),
+    0 0 22px rgba(109, 194, 255, 0.35),
+    0 2px 7px rgba(0, 0, 0, 0.9);
 }
 
 .revelations-module .rev-header__subtitle {
-  font-size: 1.1rem;
-  font-weight: 400;
-  color: #cce6ff;
-  text-shadow: 0 0 6px #6dc2ff;
-  margin: 0.5rem 0 0;
+  margin: 0.45rem 0 0;
+  color: #d7e6f8;
+  font-size: 0.95rem;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
 }
 
 .revelations-module .rev-header__nav {
+  width: min(100%, 1050px);
   display: flex;
-  gap: 1.2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.45rem;
 }
 
 .revelations-module .rev-nav-link {
-  font-size: 1rem;
-  color: #fff;
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.45rem 0.8rem;
+  color: #f4f7ff;
+  font-size: 0.82rem;
+  font-weight: 700;
   text-decoration: none;
-  padding: 0.6rem 1.2rem;
+  white-space: nowrap;
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 8px;
-  background-color: rgba(0, 0, 0, 0.3);
-  transition: background-color 0.3s ease, color 0.3s ease;
+  background: rgba(2, 7, 16, 0.58);
+  backdrop-filter: blur(8px);
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
 }
 
 .revelations-module .rev-nav-link:hover,
 .revelations-module .rev-nav-link.active {
-  background-color: rgba(255, 255, 255, 0.2);
-  color: var(--text-glow);
+  color: #e6f8ff;
+  border-color: rgba(109, 194, 255, 0.62);
+  background: rgba(30, 75, 105, 0.68);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 640px) {
   .revelations-module .rev-header {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: 1rem 1rem 1.5rem;
-    gap: 0.5rem;
-  }
-
-  .revelations-module .rev-header__left {
-    margin-bottom: 0.4rem;
+    padding: 1rem 0.6rem 0.9rem;
+    gap: 0.7rem;
   }
 
   .revelations-module .rev-header__title {
-    font-size: 1.8rem;
-    line-height: 2.2rem;
-    margin-bottom: 0.3rem;
+    font-size: clamp(1.7rem, 8vw, 2.25rem);
   }
 
   .revelations-module .rev-header__subtitle {
-    font-size: 0.95rem;
-    line-height: 1.3rem;
-    margin-bottom: 1rem;
+    font-size: 0.82rem;
   }
 
   .revelations-module .rev-header__nav {
     display: grid;
-    grid-template-columns: repeat(2, auto);
-    gap: 0.5rem 0.75rem;
-    justify-content: center;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.4rem;
   }
 
   .revelations-module .rev-nav-link {
-    padding: 0.5rem 1rem;
-    font-size: 0.95rem;
-    min-width: 110px;
-    white-space: nowrap;
+    width: 100%;
+    min-width: 0;
+    padding-inline: 0.45rem;
+    white-space: normal;
+    line-height: 1.2;
   }
 
-  .revelations-module .rev-nav-link:nth-child(1) {
-    grid-column: span 2;
-    justify-self: center;
-    margin-bottom: 0.4rem;
+  .revelations-module .rev-nav-link:first-child {
+    grid-column: 1 / -1;
   }
 }

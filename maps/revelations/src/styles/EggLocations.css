@@ -1,9 +1,8 @@
 .revelations-module .egg-locations-page {
   position: relative;
   min-height: 0;
-  padding: 1rem 1rem 1.5rem;
+  padding: 1.5rem 1rem 2.25rem;
   display: flex;
-  align-items: flex-start;
   justify-content: center;
   z-index: 1;
 }
@@ -11,183 +10,134 @@
 .revelations-module .egg-locations-page .rev-background {
   position: absolute;
   inset: 0;
-  background: url('../assets/rev-guide/Main/Revelations.webp') no-repeat center center / cover;
+  background: url('../assets/rev-guide/Main/Revelations.webp') center / cover no-repeat;
   filter: blur(8px) brightness(0.32);
   z-index: 0;
 }
 
-.revelations-module .egg-locations-page .sk-container {
+.revelations-module .egg-reference {
   position: relative;
   z-index: 2;
-  width: min(100%, 1080px);
+  width: min(100%, 900px);
   margin: 0 auto;
-  text-align: center;
-  color: #aad4ff;
 }
 
 .revelations-module .egg-locations-page .rev-page-heading {
-  margin-bottom: 0.55rem;
+  margin-bottom: 0.9rem;
 }
 
 .revelations-module .egg-locations-page .sk-title {
-  margin: 0.05rem 0 0.25rem;
-  color: #cce6ff;
-  font-size: clamp(1.65rem, 2.8vw, 2.15rem);
-  font-weight: 800;
-  text-shadow: 0 0 10px rgba(109, 194, 255, 0.55);
+  margin: 0.08rem 0 0.35rem;
+  color: #d7edff;
+  font-size: clamp(1.9rem, 3.2vw, 2.5rem);
+  text-shadow: 0 0 12px rgba(109, 194, 255, 0.5);
 }
 
-.revelations-module .egg-locations-page .rev-page-intro {
-  margin: 0 auto;
-  color: #bdcbe2;
-  font-size: 0.84rem;
-  line-height: 1.4;
-}
-
-.revelations-module .egg-workspace {
+.revelations-module .egg-area-tabs {
   display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(300px, 0.8fr);
-  gap: 0.7rem;
-  align-items: stretch;
-  width: 100%;
-  padding: 0.65rem;
-  border: 1px solid rgba(109, 194, 255, 0.3);
-  border-radius: 11px;
-  background: rgba(0, 0, 0, 0.34);
-  box-shadow: 0 0 22px rgba(109, 194, 255, 0.16);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.45rem;
+  margin-bottom: 0.75rem;
+}
+
+.revelations-module .egg-area-tabs button {
+  min-height: 42px;
+  padding: 0.5rem 0.6rem;
+  color: #d5eaff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  border: 1px solid rgba(109, 194, 255, 0.22);
+  border-radius: 8px;
+  background: rgba(4, 11, 22, 0.72);
+  cursor: pointer;
+}
+
+.revelations-module .egg-area-tabs button:hover,
+.revelations-module .egg-area-tabs button.active {
+  border-color: rgba(109, 194, 255, 0.72);
+  background: rgba(29, 78, 111, 0.72);
+}
+
+.revelations-module .rev-reference-card {
+  padding: 0.9rem;
+  border: 1px solid rgba(109, 194, 255, 0.34);
+  border-radius: 12px;
+  background: rgba(2, 8, 18, 0.72);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(8px);
 }
 
-.revelations-module .egg-workspace .video-card {
-  width: 100%;
-  margin: 0;
-  border: 1px solid rgba(109, 194, 255, 0.46);
+.revelations-module .rev-reference-card .video-card {
+  width: min(100%, 720px);
+  margin: 0 auto 0.7rem;
+  border: 1px solid rgba(109, 194, 255, 0.52);
   border-radius: 9px;
   overflow: hidden;
-  background: rgba(0, 0, 0, 0.45);
-  box-shadow: 0 0 16px rgba(0, 191, 255, 0.18);
+  background: #02060b;
+  box-shadow: 0 0 18px rgba(0, 191, 255, 0.18);
 }
 
-.revelations-module .egg-workspace .rev-video-player__iframe {
+.revelations-module .rev-reference-card .rev-video-player__iframe {
   width: 100% !important;
-  height: 248px !important;
+  aspect-ratio: 16 / 9;
+  height: auto !important;
   display: block;
 }
 
-.revelations-module .egg-workspace .video-caption {
-  padding: 0.28rem 0.5rem;
-  color: #aacbe4;
-  font-size: 0.72rem;
-  background: rgba(0, 0, 0, 0.28);
-}
-
-.revelations-module .egg-location-panel {
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 0.25rem;
+.revelations-module .rev-reference-card .video-caption {
+  padding: 0.35rem 0.55rem;
+  color: #accde4;
+  font-size: 0.76rem;
 }
 
 .revelations-module .egg-locations-page .sk-selected-label {
-  margin: 0 0 0.45rem;
-  color: #d4ecff;
-  font-size: 0.82rem;
+  margin: 0.4rem 0 0.55rem;
+  color: #e0f2ff;
+  font-size: 0.92rem;
   font-weight: 700;
+  text-align: center;
 }
 
 .revelations-module .egg-locations-page .sk-buttons {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.35rem;
+  gap: 0.45rem;
+  width: min(100%, 720px);
+  margin: 0 auto;
   padding: 0;
 }
 
 .revelations-module .egg-locations-page .sk-button {
-  min-height: 36px;
-  padding: 0.34rem 0.42rem;
-  border: 1px solid rgba(0, 195, 255, 0.7);
-  border-radius: 6px;
-  background: rgba(0, 25, 40, 0.5);
-  color: #cceaff;
-  font-size: 0.7rem;
+  min-height: 42px;
+  padding: 0.5rem 0.65rem;
+  color: #d5efff;
+  font-size: 0.8rem;
   font-weight: 700;
+  border: 1px solid rgba(0, 195, 255, 0.68);
+  border-radius: 7px;
+  background: rgba(0, 26, 42, 0.58);
   cursor: pointer;
-  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
 .revelations-module .egg-locations-page .sk-button:hover,
 .revelations-module .egg-locations-page .sk-button.active {
   color: #fff;
-  border-color: rgba(109, 220, 255, 0.95);
-  background: rgba(0, 195, 255, 0.16);
+  border-color: rgba(109, 220, 255, 0.96);
+  background: rgba(0, 195, 255, 0.2);
 }
 
-.revelations-module .egg-area-tabs {
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0.4rem;
-  margin-top: 0.55rem;
-}
-
-.revelations-module .egg-area-tabs button {
-  min-width: 0;
-  padding: 0.48rem 0.55rem;
-  border: 1px solid rgba(109, 194, 255, 0.15);
-  border-radius: 8px;
-  background: rgba(3, 8, 18, 0.68);
-  color: #d3e9f8;
-  text-align: left;
-  cursor: pointer;
-}
-
-.revelations-module .egg-area-tabs button strong,
-.revelations-module .egg-area-tabs button span {
-  display: block;
-}
-
-.revelations-module .egg-area-tabs button strong {
-  font-size: 0.75rem;
-}
-
-.revelations-module .egg-area-tabs button span {
-  margin-top: 0.1rem;
-  color: #8fb4cd;
-  font-size: 0.64rem;
-}
-
-.revelations-module .egg-area-tabs button:hover,
-.revelations-module .egg-area-tabs button.active {
-  border-color: rgba(109, 194, 255, 0.42);
-  background: rgba(20, 57, 86, 0.64);
-}
-
-@media (max-width: 900px) {
-  .revelations-module .egg-workspace {
-    grid-template-columns: 1fr;
-  }
-
-  .revelations-module .egg-workspace .rev-video-player__iframe {
-    height: 220px !important;
-  }
-
+@media (max-width: 700px) {
   .revelations-module .egg-area-tabs {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-@media (max-width: 560px) {
+@media (max-width: 520px) {
   .revelations-module .egg-locations-page {
-    padding: 0.8rem 0.6rem 1.25rem;
+    padding: 1rem 0.6rem 1.5rem;
   }
 
-  .revelations-module .egg-workspace .rev-video-player__iframe {
-    height: 190px !important;
-  }
-
-  .revelations-module .egg-locations-page .sk-buttons,
-  .revelations-module .egg-area-tabs {
+  .revelations-module .egg-locations-page .sk-buttons {
     grid-template-columns: 1fr;
   }
 }
