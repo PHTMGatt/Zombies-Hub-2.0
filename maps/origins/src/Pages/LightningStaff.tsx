@@ -9,6 +9,10 @@ import {
 import "../Styles/PageStyles/LightningStaff.css";
 
 const LightningStaff = () => {
+  const switchSummary = originsLightningSwitchRoute
+    .map((item) => `${item.shortLabel} ${item.arrow} ${item.direction}`)
+    .join(" · ");
+
   return (
     <div className="lightning-staff">
       <div className="staff-grid">
@@ -44,24 +48,11 @@ const LightningStaff = () => {
                 Play the piano code:{" "}
                 <strong>{originsLightningPianoCode.map((sequence) => sequence.join("-")).join(" / ")}</strong>.
               </li>
-              <li>Set the seven switches to the directions below.</li>
+              <li><strong>Switches:</strong> {switchSummary}.</li>
               <li>Under Excavation, line all four rings up <strong>purple</strong>.</li>
               <li>Shoot the purple orb underneath with the Lightning Staff.</li>
               <li>Return the staff to the purple Crazy Place pedestal and feed souls.</li>
             </ul>
-          </section>
-
-          <aside className="switch-speedrun">
-            <h3>⚡ Switch Positions</h3>
-
-            <div className="switch-quick-grid" aria-label="Lightning Staff switch positions">
-              {originsLightningSwitchRoute.map((item) => (
-                <div className="switch-quick-row" key={item.id}>
-                  <strong>{item.shortLabel}</strong>
-                  <span>{item.arrow} {item.direction}</span>
-                </div>
-              ))}
-            </div>
 
             <details className="switch-location-details">
               <summary>Exact switch locations</summary>
@@ -74,7 +65,7 @@ const LightningStaff = () => {
               </div>
               <p className="switch-direction-note">{originsLightningSwitchVerification.rule}</p>
             </details>
-          </aside>
+          </section>
         </div>
       </div>
     </div>
