@@ -10,43 +10,51 @@ const IceStaff = () => {
         <div className="left-column">
           <section className="staff-section">
             <h2>
-              <img src={ReviveIcon} className="revive-icon" alt="Revive Icon" /> Ice Staff Parts
+              <img src={ReviveIcon} className="revive-icon" alt="" /> Build the Ice Staff
             </h2>
-            <ul>
-              <li>1st Part: Random dig spot while it’s snowing (Starting Room)</li>
-              <li>2nd Part: Random dig spot while it’s snowing (Middle Area)</li>
-              <li>3rd Part: Random dig spot while it’s snowing (Church Area)</li>
-              <li>Gramophone: Inside the middle excavation site</li>
-              <li>Blue Record: In the Ice Tunnel (Right of Church, Gen 6)</li>
-            </ul>
+            <ol className="staff-step-list">
+              <li><strong>Blue record:</strong> check the three shelves/tables inside the Generator 2 Tank Station.</li>
+              <li><strong>Three parts:</strong> dig while it is snowing. You need one part from the Spawn side, one from No Man&apos;s Land / the middle, and one from the Church side.</li>
+              <li><strong>Crystal:</strong> take the Gramophone + blue record to the Ice Tunnel behind the church near Generator 6, then grab the blue crystal in the Crazy Place.</li>
+              <li><strong>Build:</strong> assemble the staff on the blue pedestal at the bottom of Excavation.</li>
+            </ol>
           </section>
 
           <section className="staff-section">
             <h2>
-              <img src={ReviveIcon} className="revive-icon" alt="Revive Icon" /> Crazy Place & Code
+              <img src={ReviveIcon} className="revive-icon" alt="" /> Upgrade 1 — Ice Code
             </h2>
-            <ul>
-              <li>Place the Gramophone at the Ice Tunnel (Right of Church, Gen 6)</li>
-              <li>Enter The Crazy Place</li>
-              <li>Shoot the Ice Code with Ice Staff</li>
-            </ul>
-            <img src={IceIcon} alt="Ice Code" className="ice-icon" />
+            <ol className="staff-step-list">
+              <li>Enter the Crazy Place through the Ice portal.</li>
+              <li>Read the dot symbol on the wall and shoot the matching symbol on the ceiling.</li>
+              <li>Repeat until the ceiling puzzle completes.</li>
+            </ol>
+            <img src={IceIcon} alt="Origins Ice Staff dot-to-symbol code" className="ice-icon" />
           </section>
         </div>
 
         <div className="right-column">
           <section className="staff-section">
             <h2>
-              <img src={ReviveIcon} className="revive-icon" alt="Revive Icon" /> Ice Staff Upgrade
+              <img src={ReviveIcon} className="revive-icon" alt="" /> Upgrade 2 — Tombstones
             </h2>
-            <ul>
-              <li>Go back to the main map</li>
-              <li>Enter the bottom of the Excavation Site</li>
-              <li>Rotate the rings using levers until they are all BLUE</li>
-              <li>Use the Ice Staff to shoot the blue orb at the bottom</li>
-              <li>Go back to the Crazy Place and place the Ice Staff on the blue pedestal</li>
-              <li>Kill zombies near the pedestal until the staff is upgraded</li>
-            </ul>
+            <ol className="staff-step-list">
+              <li><strong>Generator 4:</strong> freeze the gravestone outside the map near the Gen 4 / Jug footprint area, then break it with a bullet weapon.</li>
+              <li><strong>Excavation footprint:</strong> freeze the gravestone beside the footprint/soul-box area near the mound, then break it with a bullet weapon.</li>
+              <li><strong>Behind Generator 2:</strong> find the gravestone by the downed robot hand on the muddy tank path, freeze it, then break it with a bullet weapon.</li>
+            </ol>
+          </section>
+
+          <section className="staff-section">
+            <h2>
+              <img src={ReviveIcon} className="revive-icon" alt="" /> Upgrade 3 — Finish
+            </h2>
+            <ol className="staff-step-list">
+              <li>At the bottom of Excavation, turn every ring light <strong>blue</strong>.</li>
+              <li>Shoot the blue orb beneath the rings with the Ice Staff.</li>
+              <li>Place the staff on the blue Crazy Place pedestal and kill zombies until it is charged.</li>
+              <li>Pick up <strong>Ull&apos;s Arrow</strong>.</li>
+            </ol>
           </section>
         </div>
       </div>
