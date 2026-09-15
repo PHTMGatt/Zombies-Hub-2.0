@@ -9,103 +9,62 @@ import {
 import "../Styles/PageStyles/LightningStaff.css";
 
 const LightningStaff = () => {
+  const switchSummary = originsLightningSwitchRoute
+    .map((item) => `${item.shortLabel} ${item.arrow} ${item.direction}`)
+    .join(" · ");
+
   return (
     <div className="lightning-staff">
-      <div className="lightning-layout">
-        <div className="lightning-column">
-          <section className="lightning-section">
+      <div className="staff-grid">
+        <div className="left-column">
+          <section className="staff-section">
             <h2>
-              <img src={ReviveIcon} className="lightning-revive-icon" alt="" />
-              Build the Lightning Staff
+              <img src={ReviveIcon} className="revive-icon" alt="" /> Lightning Staff Parts
             </h2>
-
-            <h3>3 Tank Parts</h3>
-            <ol className="lightning-list">
-              <li>
-                <strong>Church → Gen 2:</strong> jump right after Generator 4.
-              </li>
-              <li>
-                <strong>Gen 2 → Church:</strong> jump left onto Excavation scaffolding.
-              </li>
-              <li>
-                <strong>Gen 2 → Church:</strong> jump right just before Church.
-              </li>
-            </ol>
-
-            <h3>Record + Crystal</h3>
-            <ul className="lightning-list">
-              <li>Purple record: Generator 4 / Jug / Wind Tunnel area.</li>
-              <li>Open the Lightning Tunnel beside Generator 5.</li>
-              <li>Grab the purple crystal, then build the staff under Excavation.</li>
+            <ul>
+              <li><strong>Part 1:</strong> Church → Gen 2, jump right after Generator 4.</li>
+              <li><strong>Part 2:</strong> Gen 2 → Church, jump left onto Excavation scaffolding.</li>
+              <li><strong>Part 3:</strong> Gen 2 → Church, jump right just before Church.</li>
+              <li><strong>Purple Record:</strong> Generator 4 / Jug / Wind Tunnel area.</li>
+              <li><strong>Crystal:</strong> Lightning Tunnel beside Generator 5 → Crazy Place.</li>
             </ul>
           </section>
 
-          <section className="lightning-section lightning-code-section">
+          <section className="staff-section image-section">
             <h2>
-              <img src={ReviveIcon} className="lightning-revive-icon" alt="" />
-              Piano Code
+              <img src={ReviveIcon} className="revive-icon" alt="" /> Piano Code Chart
             </h2>
-
-            <img
-              src={LightningCode}
-              alt="Origins Lightning Staff piano code"
-              className="lightning-code"
-            />
-
-            <div className="lightning-code-lines" aria-label="Lightning Staff piano code">
-              {originsLightningPianoCode.map((sequence) => (
-                <strong key={sequence.join("-")}>{sequence.join(" - ")}</strong>
-              ))}
-            </div>
-
-            <p className="lightning-help">
-              Wait for the electrical effect to clear between each group.
-            </p>
+            <img src={LightningCode} alt="Lightning Staff piano code" className="lightning-code" />
           </section>
         </div>
 
-        <div className="lightning-column">
-          <section className="lightning-section lightning-switch-section">
+        <div className="right-column">
+          <section className="staff-section">
             <h2>
-              <img src={ReviveIcon} className="lightning-revive-icon" alt="" />
-              Switch Positions
+              <img src={ReviveIcon} className="revive-icon" alt="" /> Puzzle Notes
             </h2>
+            <ul>
+              <li>
+                Play the piano code:{" "}
+                <strong>{originsLightningPianoCode.map((sequence) => sequence.join("-")).join(" / ")}</strong>.
+              </li>
+              <li><strong>Switches:</strong> {switchSummary}.</li>
+              <li>Under Excavation, line all four rings up <strong>purple</strong>.</li>
+              <li>Shoot the purple orb underneath with the Lightning Staff.</li>
+              <li>Return the staff to the purple Crazy Place pedestal and feed souls.</li>
+            </ul>
 
-            <div className="lightning-switch-list" aria-label="Lightning Staff switch positions">
-              {originsLightningSwitchRoute.map((item) => (
-                <div className="lightning-switch-row" key={item.id}>
-                  <strong>{item.shortLabel}</strong>
-                  <span>{item.arrow} {item.direction}</span>
-                </div>
-              ))}
-            </div>
-
-            <details className="lightning-details">
-              <summary>Need exact switch locations?</summary>
-              <div className="lightning-location-list">
+            <details className="switch-location-details">
+              <summary>Exact switch locations</summary>
+              <div className="switch-location-list">
                 {originsLightningSwitchRoute.map((item) => (
                   <p key={item.id}>
                     <strong>{item.shortLabel}:</strong> {item.location}
                   </p>
                 ))}
               </div>
-              <p className="lightning-arrow-note">
-                {originsLightningSwitchVerification.rule}
-              </p>
+              <p className="switch-direction-note">{originsLightningSwitchVerification.rule}</p>
             </details>
-          </section>
-
-          <section className="lightning-section lightning-finish-section">
-            <h2>
-              <img src={ReviveIcon} className="lightning-revive-icon" alt="" />
-              Finish the Upgrade
-            </h2>
-
-            <ol className="lightning-finish-steps">
-              <li>Under Excavation, line up all 4 rings <strong>purple</strong>.</li>
-              <li>Shoot the purple orb underneath with the Lightning Staff.</li>
-              <li>Return it to the purple Crazy Place pedestal and feed souls.</li>
-            </ol>
           </section>
         </div>
       </div>
