@@ -32,7 +32,7 @@ const WindStaff = () => {
         <div className="right-column">
           <section className="staff-section">
             <h2>
-              <img src={ReviveIcon} className="revive-icon" alt="Revive Icon" /> Puzzle Notes
+              <img src={ReviveIcon} className="revive-icon" alt="Revive Icon" /> Wind Staff Upgrade
             </h2>
             <ul>
               <li>Open the Wind Tunnel with the Gramophone</li>
