@@ -49,8 +49,8 @@ const Home: React.FC = () => (
     </header>
 
     <div className="de-run-alert">
-      <strong>Setup:</strong>
-      <span>build the Shield/Ragnarok pieces as they become available and finish the bow requirement for your lobby before the Keeper ritual.</span>
+      <strong>Bow requirement:</strong>
+      <span>Ranked/public games need one upgraded bow per player. Unranked/local games require all four. Build the Shield and Ragnarok parts alongside the quest.</span>
     </div>
 
     <ol className="de-run-flow">
