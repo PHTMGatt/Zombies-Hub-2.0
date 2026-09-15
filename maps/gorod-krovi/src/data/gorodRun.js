@@ -28,10 +28,12 @@ export const gorodRun = [
   },
   {
     title: 'Solve the Valve Network',
-    summary: 'Find the green-lit valve and the Master Code Cylinder, use the valve solution to set the six dials, then take the released cylinder to S.O.P.H.I.A.',
+    summary: 'Power the valve generator with a disabled Valkyrie, then route airflow from the green valve through all six locations to the Master Code Cylinder.',
     details: [
-      'The green-light/cylinder combination changes, so use the dedicated Valve Solver rather than memorizing one arrangement.',
-      'Once the dials are set correctly, the cylinder releases and can be inserted at Dragon Command.',
+      'Hatchery basement: stand by the generator/radiator under the green tarp and shoot both arms off a Valkyrie so it crashes into the unit. The valve timer starts when the generator powers on.',
+      'Find the green-lit starting valve and the valve containing the Master Code Cylinder, then use the dedicated Valve Solver.',
+      'Set the five routing valves shown by the solver; the cylinder valve is the sixth/end valve and does not need a routing setting.',
+      'When the airflow reaches the cylinder, collect it and insert it at S.O.P.H.I.A. in Dragon Command.',
     ],
   },
   {
@@ -45,12 +47,12 @@ export const gorodRun = [
     title: 'Collect the Six Trophies',
     summary: 'Gather all six silver trophies around Stalingrad, including the final safe trophy unlocked with the Gauntlet of Siegfried, then place the set at Dragon Command.',
     details: [
-      'Tank Factory: use the shield blast on the trophy window.',
-      'Dragon Command exterior: shoot the trophy down onto the rock.',
-      'Supply Depot exterior: Dragon Strike the puddle.',
-      'Supply Depot: activate the trap and collect the trophy after the trap ends.',
-      'Pack-a-Punch/Hatchery: collect the toilet trophy.',
-      'Mule Kick room: use the Gauntlet melee on the safe for the sixth trophy.',
+      'Gersh trophy: shoot the raised statue hand across from Dragon Command; collect the trophy where it falls below.',
+      'Valkyrie trophy: fire the Guard of Fafnir at the left window beside Double Tap so the trophy ejects next to the perk.',
+      'Bomb trophy: use Dragon Strike on the puddle outside Supply Depot.',
+      'Mangler trophy: activate the giant laser trap inside Supply Depot; collect the trophy after the trap exposes it.',
+      'Group 935 trophy: shoot the red light during the sewer ride from the Hatchery, then collect the trophy from the Hatchery toilet.',
+      'Groph Pod trophy: send the Gauntlet whelp at the Operations Bunker safe, then heavy-melee the safe with the Gauntlet to open it.',
     ],
   },
   {
@@ -97,28 +99,28 @@ export const gorodPrerequisites = [
 
 export const gorodTrophies = [
   {
-    location: 'Tank Factory',
-    method: 'Use the Dragon Shield blast on the trophy window to knock the trophy loose.',
+    location: 'Gersh — Dragon Command exterior',
+    method: 'Shoot the raised statue hand on the building across from Dragon Command. The trophy falls to the ground below.',
   },
   {
-    location: 'Outside Dragon Command',
-    method: 'Shoot the trophy down so it lands on the rock below.',
+    location: 'Valkyrie — Double Tap',
+    method: 'Use the Guard of Fafnir fireball on the left window beside Double Tap. The shot hits the pipe behind it and ejects the trophy beside the perk.',
   },
   {
-    location: 'Outside Supply Depot',
-    method: 'Place a Dragon Strike on the puddle to reveal the trophy.',
+    location: 'Bomb — Outside Supply Depot',
+    method: 'Place a Dragon Strike on the puddle below the overhead Armory / Supply Depot walkway to reveal the trophy.',
   },
   {
-    location: 'Supply Depot',
-    method: 'Activate the laser trap and collect the trophy after the trap finishes.',
+    location: 'Mangler — Supply Depot',
+    method: 'Activate the giant laser trap and collect the trophy from the floor/wall opening after the trap finishes.',
   },
   {
-    location: 'Pack-a-Punch / Hatchery',
-    method: 'Collect the trophy from the toilet after the sewer-light setup has been completed.',
+    location: 'Group 935 — Hatchery',
+    method: 'During the sewer ride back from the Hatchery, shoot the red ceiling light. Return to the Hatchery and collect the trophy from the toilet.',
   },
   {
-    location: 'Mule Kick room safe',
-    method: 'After earning the Gauntlet of Siegfried, use its melee attack on the safe to reveal the sixth trophy.',
+    location: 'Groph Pod — Operations Bunker safe',
+    method: 'Send the Gauntlet of Siegfried whelp at the safe, then heavy-melee the safe with the Gauntlet to open it.',
   },
 ];
 
@@ -158,19 +160,19 @@ export const gorodChallenges = [
 export const gorodBossPhases = [
   {
     title: 'Dragon Phase',
-    summary: 'Activate the arena and survive until Nikolai fires on the dragon. When a wounded weak point opens, focus the Ray Gun Mark 3 on that exposed area.',
+    summary: 'Activate the arena and wait for Nikolai to harpoon the dragon. Damage each of the three exposed wounds — wing, belly, and neck — when it glows orange.'
     details: [
       'Keep the shield between you and incoming dragon fire when repositioning.',
-      'Repeat the exposed-weak-point cycle as the dragon lands at its different positions.',
+      'Repeat the harpoon → exposed orange wound → damage cycle until all three dragon weak points are destroyed.',
       'After the final weak point is destroyed, the dragon dies and the Nikolai phase begins.',
     ],
   },
   {
     title: 'Nikolai Phase',
-    summary: 'Use In Plain Sight as the phase begins, destroy the exposed mech weak points, then shoot the center when it opens.',
+    summary: 'Use In Plain Sight if available, destroy Nikolai’s four glowing power cores, then damage the center core beneath the pilot seat when it opens.'
     details: [
-      'The walkthrough focuses the lit mech sections and the upper left/right weak points first.',
-      'Once those are destroyed, the middle opens for the finishing damage.',
+      'Keep moving around the arena and target the four yellow power cores whenever you have a clean angle.',
+      'After all four are destroyed, the center core beneath Nikolai opens for the finishing damage.',
     ],
   },
 ];
