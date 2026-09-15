@@ -23,7 +23,7 @@ const apothiconSteps = [
     title: 'Upgrade the Apothicon Servant',
     detail: 'Shoot all five blue rocks in the sky with the Apothicon Servant, then Pack-a-Punch it inside the Giant Apothicon for 5,000 points.',
     bullets: [
-      'The transcript demonstrates shots from Spawn, Der Eisendrache, Shangri-La/Verrückt, Mob of the Dead, and Nacht.',
+      'The five sky rocks are grouped here as Spawn, Der Eisendrache/Shangri-La sky, Verrückt near the Mob jump pad, Mob/Origins sky, and Nacht. They can be visible from more than one standing position.',
       'All five rocks must be hit with the Apothicon Servant before the weapon can be upgraded.',
       'The Thunder Gun is optional but strongly recommended for the later Margwa phases.',
     ],
@@ -102,10 +102,10 @@ const apothiconSteps = [
     bullets: [
       'Kino: chandelier.',
       'Der Eisendrache: clock near the Corruption Engine.',
-      'Shangri-La: crystal at the top of the stairs.',
+      'Shangri-La: Focusing Stone / blue crystal at the top of the stairs.',
       'Origins: tombstone at the top of the mound.',
-      'Mob of the Dead: back of the cell.',
-      'Verrückt: fountain.',
+      'Mob of the Dead: poster inside the open cell across from the catwalk.',
+      'Verrückt: mounted MG42 on top of the fountain.',
       'Nacht der Untoten: red barrel.',
       'When taking the teleporter toward Nacht, melee during the transition to avoid the Summoning Key-loss glitch described in the walkthrough.',
     ],
