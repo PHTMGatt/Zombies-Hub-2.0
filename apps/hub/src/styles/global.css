@@ -28,6 +28,34 @@ a {
   text-decoration: none;
 }
 
+a:focus-visible,
+button:focus-visible,
+select:focus-visible,
+summary:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid #8dd8ff;
+  outline-offset: 3px;
+}
+
+.zh-skip-link {
+  position: fixed;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 20000;
+  padding: 0.55rem 0.8rem;
+  border-radius: 7px;
+  background: #eaf7ff;
+  color: #07131d;
+  font-size: 0.85rem;
+  font-weight: 800;
+  transform: translateY(-160%);
+  transition: transform 0.15s ease;
+}
+
+.zh-skip-link:focus {
+  transform: translateY(0);
+}
+
 .zh-app {
   min-height: 100vh;
   display: flex;
@@ -56,6 +84,17 @@ a {
   width: min(900px, calc(100% - 2rem));
   margin: 0 auto;
   padding: 2rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
 }
 
 @media (max-width: 600px) {
