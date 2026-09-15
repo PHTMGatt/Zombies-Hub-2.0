@@ -9,10 +9,10 @@ const wispLocations = [
   ['Spawn → Double Tap', 'Front wheel / tire of the broken car on the route toward Double Tap.'],
   ['Above Double Tap', 'Cabinet / box in the room above Double Tap.'],
   ['Samantha / Richtofen Rooms', 'Globe in the bedroom / study area past Samantha’s room.'],
-  ['Power Room', 'Phone in the Power Switch room.'],
-  ['Mission Control', 'Clock above / near the dragon in Mission Control.'],
-  ['Lower Mission Control', 'Radio / machinery object on the lower floor of Mission Control.'],
-  ['Courtyard / Clock Tower Route', 'Clock on the upstairs route out of the courtyard toward the Clock Tower.'],
+  ['Power Room', 'Phone on the pillar beside the Power Switch / Bowie Knife pillar.'],
+  ['Barracks', 'Clock in the hallway between the Clock Tower and the Church.'],
+  ['Church / Speed Cola', 'Radio in the Church corner beside Speed Cola, nearer the entrance.'],
+  ['Church Fireplace', 'Clock mounted above the fireplace inside the Church.'],
 ];
 
 const Wisp: React.FC = () => (
