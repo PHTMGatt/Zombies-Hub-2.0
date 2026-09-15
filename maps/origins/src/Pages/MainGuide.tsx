@@ -13,50 +13,49 @@ const MainGuide = () => {
         <div className="left-column">
           <section className="guide-section">
             <h2>
-              <img src={SkullIcon} alt="Icon" className="revive-icon" /> Main Steps
+              <img src={SkullIcon} alt="" className="revive-icon" /> Main Steps
             </h2>
-            <ul>
-              <li><strong>Build + Upgrade:</strong> Craft and fully upgrade Ice, Fire, Wind, and Lightning.</li>
-              <li><strong>Secure the Keys:</strong> Place Wind in Odin (middle robot), Ice in Freya (church / Gen 6 robot), Lightning in Thor (spawn / Gen 1–3 robot), and Fire in the pedestal at the bottom of the mound.</li>
-              <li><strong>Thunder Fists:</strong> Fill all four soul chests in the giant robot footprints, then collect the One Inch Punch / Thunder Fists from the reward chest.</li>
-              <li><strong>G-Strike:</strong> Complete the stone-tablet melee purification step and obtain the G-Strike grenades before Rain Fire.</li>
-              <li><strong>Rain Fire:</strong> Enter the middle robot through an open foot, press the red button, then immediately throw a G-Strike onto the seal by Generator 5.</li>
-              <li><strong>Unleash the Horde:</strong> As soon as the seal opens, send the Maxis Drone into the hole and defeat the Panzer Soldiers that spawn.</li>
-              <li><strong>Skewer the Winged Beast:</strong> Enter Zombie Blood, shoot down the glowing red plane, then locate and kill the invisible clockwise-running pilot in Zombie Blood.</li>
-              <li><strong>Wield a Fist of Iron:</strong> In the mound, use the One Inch Punch on the glowing/white-fist Templar zombies until the upgrade is complete, then collect the upgraded elemental fist.</li>
-              <li><strong>Raise Hell:</strong> Return all four upgraded staffs to their Crazy Place holders and earn the required 100 kills without removing the staffs.</li>
-              <li><strong>Freedom:</strong> Pick up the Maxis Drone, release it into the beam in the Crazy Place, and trigger the ending.</li>
-            </ul>
+
+            <ol className="origins-main-steps">
+              <li><strong>Upgrade all 4 staffs.</strong><span>Finish Ice, Fire, Wind, and Lightning.</span></li>
+              <li><strong>Secure the Keys.</strong><span>Wind → Odin, Ice → Freya, Lightning → Thor, Fire → the mound pedestal.</span></li>
+              <li><strong>Get the Thunder Fists.</strong><span>Fill the four footprint soul chests, then claim the One Inch Punch reward.</span></li>
+              <li><strong>Get G-Strikes.</strong><span>Purify the stone tablet with melee kills and return it clean.</span></li>
+              <li><strong>Rain Fire.</strong><span>Press the red button inside the middle robot, then immediately G-Strike the Generator 5 seal.</span></li>
+              <li><strong>Unleash the Horde.</strong><span>Send the Maxis Drone into the opened seal and kill the Panzers.</span></li>
+              <li><strong>Skewer the Winged Beast.</strong><span>In Zombie Blood, shoot the glowing red plane and kill the invisible pilot.</span></li>
+              <li><strong>Wield a Fist of Iron.</strong><span>Punch the glowing Templars in the mound, then collect the upgraded elemental fist.</span></li>
+              <li><strong>Raise Hell.</strong><span>Return all four upgraded staffs to the Crazy Place and earn 100 kills.</span></li>
+              <li><strong>Freedom.</strong><span>Pick up the Maxis Drone, release it into the Crazy Place beam, and trigger the ending.</span></li>
+            </ol>
           </section>
 
-          <section className="guide-section">
+          <section className="guide-section origins-reference-section">
             <h2>
-              <img src={SkullIcon} alt="Icon" className="revive-icon" /> Setup Reference
+              <img src={SkullIcon} alt="" className="revive-icon" /> Quick Reference
             </h2>
             <ul>
-              <li><strong>Soul Chests:</strong> Generator 5 footprint, mound footprint, Generator 6 footprint, and the footprint behind Juggernog.</li>
-              <li><strong>G-Strike Tablet:</strong> Purify the tablet with melee kills in the church, then return it without stepping in mud to finish the G-Strike setup.</li>
-              <li><strong>Rain Fire Timing:</strong> Be ready at Generator 5 immediately after pressing the robot button so the G-Strike lands on the seal while it is active.</li>
-              <li><strong>Zombie Blood:</strong> If the Panzers do not give you one naturally, the Ice Staff bonfire method can produce a free Zombie Blood near Pack-a-Punch.</li>
-              <li><strong>Final 100 Kills:</strong> Make sure the Fire Staff is back in its Crazy Place holder before starting the final kill step.</li>
-              <li><strong>Ending Check:</strong> Keep all generators active when you recover the upgraded Maxis Drone from the pilot sequence if you are going for the ending cutscene.</li>
+              <li><strong>Soul Chests:</strong> Gen 5 footprint, mound footprint, Gen 6 footprint, and behind Jug.</li>
+              <li><strong>Rain Fire:</strong> Be at Gen 5 before pressing the robot button; the timing window is short.</li>
+              <li><strong>Zombie Blood:</strong> The Ice Staff bonfire method can create a free one near Pack-a-Punch.</li>
+              <li><strong>Final kills:</strong> Put the Fire Staff back in its Crazy Place holder before starting the 100-kill step.</li>
+              <li><strong>Ending:</strong> Keep all generators active when recovering the upgraded Maxis Drone.</li>
             </ul>
           </section>
         </div>
 
         <div className="right-column">
-          <section className="guide-section">
+          <section className="guide-section origins-tips-section">
             <h2>
-              <img src={SkullIcon} alt="Icon" className="revive-icon" /> Tips
+              <img src={SkullIcon} alt="" className="revive-icon" /> Run Tips
             </h2>
             <ul>
-              <li>Build and upgrade the staffs as early as the run allows.</li>
-              <li>Fill the soul chests during setup instead of leaving all four until the end.</li>
-              <li>Save a zombie when you need uninterrupted time for staff puzzles or map setup.</li>
-              <li>Have the Maxis Drone built and ready before you attempt Rain Fire.</li>
-              <li>Use the dedicated staff pages for puzzle images instead of trying to memorize every code from the main guide.</li>
-              <li>For optimized routing, skips, staff dupes, and Lightning quick references, open <strong>Side EEs → Origins Speed Run</strong>.</li>
+              <li>Upgrade staffs and fill soul chests during setup instead of saving everything for late game.</li>
+              <li>Save a zombie when you need uninterrupted staff-puzzle or map-setup time.</li>
+              <li>Have the Maxis Drone built before Rain Fire.</li>
+              <li>Use the staff pages for puzzle images and <strong>Side EEs → Origins Speed Run</strong> for optimized routing.</li>
             </ul>
+
             <p className="credits">
               <em>MrRoflWaffles – Staff Images</em>
               <br />
@@ -64,10 +63,14 @@ const MainGuide = () => {
                 Kronorium.com
               </a>
             </p>
-            <div className="audio-players">
-              <audio controls src={Audio1}></audio>
-              <audio controls src={Audio2}></audio>
-            </div>
+
+            <details className="origins-audio-reference">
+              <summary>Atmosphere audio</summary>
+              <div className="audio-players">
+                <audio controls src={Audio1}></audio>
+                <audio controls src={Audio2}></audio>
+              </div>
+            </details>
           </section>
         </div>
       </div>
