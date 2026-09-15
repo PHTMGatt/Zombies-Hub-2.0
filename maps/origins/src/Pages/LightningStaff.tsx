@@ -50,7 +50,8 @@ const LightningStaff = () => {
             <ul>
               {originsLightningSwitchRoute.map((item) => (
                 <li key={item.id}>
-                  <strong>{item.shortLabel}</strong> — {item.arrow} {item.direction}
+                  <strong>{item.shortLabel}</strong>
+                  <span>{item.arrow} {item.direction}</span>
                 </li>
               ))}
             </ul>
