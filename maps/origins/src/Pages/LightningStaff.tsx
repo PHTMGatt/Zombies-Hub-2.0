@@ -18,7 +18,8 @@ const LightningStaff = () => {
               <li><strong>Part 2:</strong> Gen 2 → Church, jump left onto Excavation scaffolding.</li>
               <li><strong>Part 3:</strong> Gen 2 → Church, jump right just before Church.</li>
               <li><strong>Purple Record:</strong> Generator 4 / Jug / Wind Tunnel area.</li>
-              <li><strong>Gramophone:</strong> Inside Excavation Site.</li>
+              <li><strong>Crystal:</strong> Open the Lightning Tunnel beside Generator 5 with the Gramophone + purple record, then grab the purple crystal in the Crazy Place.</li>
+              <li><strong>Build:</strong> Under Excavation.</li>
             </ul>
           </section>
 
@@ -36,7 +37,6 @@ const LightningStaff = () => {
               <img src={ReviveIcon} className="revive-icon" alt="" /> Puzzle Notes
             </h2>
             <ul>
-              <li>Lightning Tunnel + Gramophone → Crazy Place.</li>
               <li className="piano-code-step">
                 <span className="piano-code-label">Piano code</span>
                 <span className="piano-code-values" aria-label="1 3 6, 3 5 7, 2 4 6">
@@ -47,6 +47,7 @@ const LightningStaff = () => {
                   <strong>2-4-6</strong>
                 </span>
               </li>
+              <li>Set the seven switches using the card below.</li>
               <li><strong>Excavation:</strong> rings purple → shoot the orb with the Lightning Staff.</li>
               <li>Purple Crazy Place pedestal → feed souls.</li>
             </ul>
