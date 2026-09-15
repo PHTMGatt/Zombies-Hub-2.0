@@ -8,25 +8,25 @@ const BASE = '/maps/gorod-krovi';
 const phases = [
   {
     title: 'Open the Dragon Network',
-    summary: 'Turn on power, finish the three Groph Modules, install the Dragon Network parts, ride the dragon, earn Dragon Strike, and complete the dragon-egg/Gauntlet setup.',
+    summary: 'Power → 3 Groph Modules → Dragon Network → ride the dragon → Dragon Strike → egg / Gauntlet setup.',
     to: `${BASE}/buildables`,
     link: 'Gear + Buildables',
   },
   {
     title: 'Solve Valves + Spell KRONOS',
-    summary: 'Use the randomized valve solution to release the Master Code Cylinder, insert it at S.O.P.H.I.A., then rotate the letter wheels to spell KRONOS.',
+    summary: 'Solve the valves → release the Master Code Cylinder → insert it at S.O.P.H.I.A. → spell KRONOS.',
     to: `${BASE}/valves`,
     link: 'Valve Solver',
   },
   {
     title: 'Trophies + S.O.P.H.I.A. Challenges',
-    summary: 'Collect all six trophies, place them at Dragon Command, then complete the randomized challenge set and final motherboard lockdown.',
+    summary: 'Collect 6 trophies → place them at Dragon Command → finish S.O.P.H.I.A.’s challenges → motherboard lockdown.',
     to: `${BASE}/trophies`,
     link: 'Trophies + Challenges',
   },
   {
     title: 'Power Core + Boss Fight',
-    summary: 'Take S.O.P.H.I.A.’s Power Core, open the boss route, kill the dragon, then destroy Nikolai’s mech weak points to finish Love and War.',
+    summary: 'Take the Power Core → open the boss route → kill the dragon → destroy Nikolai’s mech weak points.',
     to: `${BASE}/boss`,
     link: 'Boss Fight',
   },
