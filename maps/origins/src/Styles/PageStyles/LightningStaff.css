@@ -77,35 +77,52 @@
 }
 
 .origins-module .lightning-staff .switch-speedrun {
-  background-color: rgba(0, 0, 0, 0.75);
-  border: 2px solid #bb86fc;
-  border-radius: 10px;
-  padding: 1.2rem 1.5rem;
+  background-color: rgba(0, 0, 0, 0.66);
+  border-radius: 12px;
+  padding: 1.15rem 1.25rem;
   color: #ffffff;
-  box-shadow: 0 0 10px rgba(187, 134, 252, 0.3);
 }
 
 .origins-module .lightning-staff .switch-speedrun h3 {
-  margin: 0 0 0.6rem;
-  font-size: 1.15rem;
-  color: #bb86fc;
-  text-shadow: 0 0 6px #bb86fc88;
+  margin: 0 0 0.7rem;
+  padding-bottom: 0.55rem;
+  font-size: 1.12rem;
+  color: #efd9ff;
+  border-bottom: 2px solid rgba(187, 134, 252, 0.78);
 }
 
 .origins-module .lightning-staff .switch-speedrun ul {
   list-style: none;
-  padding-left: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 1rem;
+  padding: 0;
   margin: 0;
-  columns: 2;
-  column-gap: 1.25rem;
 }
 
 .origins-module .lightning-staff .switch-speedrun li {
-  margin-bottom: 0.4rem;
-  break-inside: avoid;
-  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  min-width: 0;
+  margin: 0;
+  padding: 0.52rem 0.1rem;
   color: #f1e7ff;
-  line-height: 1.45;
+  line-height: 1.25;
+  border-bottom: 1px solid rgba(187, 134, 252, 0.16);
+}
+
+.origins-module .lightning-staff .switch-speedrun li strong {
+  min-width: 0;
+  color: #ffffff;
+  white-space: nowrap;
+}
+
+.origins-module .lightning-staff .switch-speedrun li span {
+  color: #d8b5ff;
+  font-weight: 700;
+  white-space: nowrap;
 }
 
 .origins-module .lightning-staff ul {
@@ -148,6 +165,6 @@
   }
 
   .origins-module .lightning-staff .switch-speedrun ul {
-    columns: 1;
+    grid-template-columns: 1fr;
   }
 }
