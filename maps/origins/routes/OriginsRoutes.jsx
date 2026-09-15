@@ -9,6 +9,7 @@ import WindStaff from '../src/Pages/WindStaff';
 import LightningStaff from '../src/Pages/LightningStaff';
 import RobotBg from '../public/images/Robot.webp?url';
 import '../styles/origins-shell.css';
+import '../src/Styles/PageStyles/StaffGuideShared.css';
 
 export default function OriginsRoutes() {
   return (
