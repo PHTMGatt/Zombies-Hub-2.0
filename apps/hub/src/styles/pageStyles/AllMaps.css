@@ -1,61 +1,40 @@
 /* src/styles/pageStyles/AllMaps.css */
 
-/* ========================================================
-   Global Variables & Base Resets
-======================================================== */
-:root {
-  --nav-height:     70px;
-  --text-color:     #fff;
-  --subtext-color:  #ccc;
-  --accent:         #00bfff;
-  --card-width:     280px;
-  --card-height:    180px;
-}
+.maps-wrapper {
+  --nav-height: 70px;
+  --text-color: #fff;
+  --subtext-color: #ccc;
+  --accent: #00bfff;
+  --card-width: 280px;
+  --card-height: 180px;
 
-*, *::before, *::after {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
+  margin-top: var(--nav-height);
+  min-height: calc(100vh - var(--nav-height));
+  padding: 2rem;
+  text-align: center;
+  color: var(--text-color);
   background: #1a2a36;
   font-family: 'Segoe UI', sans-serif;
 }
 
-/* ========================================================
-   Main Wrapper
-======================================================== */
-.maps-wrapper {
-  margin-top: var(--nav-height);
-  padding: 2rem;
-  text-align: center;
-  color: var(--text-color);
-}
-
-/* ========================================================
-   Title + Subtitle
-======================================================== */
-.page-title {
+.maps-wrapper .page-title {
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 0.25rem;
 }
 
-.page-subtitle {
+.maps-wrapper .page-subtitle {
   font-size: 1rem;
   font-style: italic;
   color: var(--subtext-color);
   margin-bottom: 2rem;
 }
 
-/* ========================================================
-   Section Headers by Game (BO1–BO3)
-======================================================== */
-.game-section {
+.maps-wrapper .game-section {
   margin-bottom: 4rem;
 }
 
-.game-header {
+.maps-wrapper .game-header {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -65,27 +44,24 @@ body {
   margin-bottom: 1rem;
 }
 
-.game-icon {
+.maps-wrapper .game-icon {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  border: 2px solid rgba(255,255,255,0.3);
+  border: 2px solid rgba(255, 255, 255, 0.3);
   object-fit: cover;
   transition: transform 0.2s ease;
 }
 
-.game-header:hover .game-icon {
+.maps-wrapper .game-header:hover .game-icon {
   transform: scale(1.15);
 }
 
-.game-title {
+.maps-wrapper .game-title {
   line-height: 1;
 }
 
-/* ========================================================
-   Grid of Map Cards
-======================================================== */
-.maps-grid {
+.maps-wrapper .maps-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(var(--card-width), 1fr));
   gap: 1.5rem;
@@ -94,24 +70,21 @@ body {
   justify-items: center;
 }
 
-/* ========================================================
-   Responsive Adjustments
-======================================================== */
 @media (max-width: 768px) {
   .maps-wrapper {
     padding: 1rem;
   }
 
-  .page-title {
+  .maps-wrapper .page-title {
     font-size: 2rem;
   }
 
-  .game-header {
+  .maps-wrapper .game-header {
     font-size: 1.25rem;
   }
 
-  .maps-grid {
+  .maps-wrapper .maps-grid {
     gap: 1rem;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
   }
 }

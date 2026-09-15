@@ -1,4 +1,4 @@
-.spinner-container {
+.revelations-module .spinner-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -10,14 +10,14 @@
   overflow: hidden;
 }
 
-.spinner-title {
+.revelations-module .spinner-title {
   font-size: 3rem;
   font-family: 'Orbitron', sans-serif;
   margin-bottom: 2rem;
   text-shadow: 2px 2px 6px #000;
 }
 
-.spinner-carousel {
+.revelations-module .spinner-carousel {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -28,7 +28,7 @@
   position: relative;
 }
 
-.card {
+.revelations-module .card {
   width: 250px;
   min-height: 180px;
   background: rgba(0, 0, 0, 0.6);
@@ -45,20 +45,20 @@
   cursor: pointer;
 }
 
-.card h2 {
+.revelations-module .card h2 {
   font-family: 'Orbitron', sans-serif;
   font-size: 1.25rem;
   margin-bottom: 0.75rem;
   text-shadow: 1px 1px 3px #000;
 }
 
-.card-buttons {
+.revelations-module .card-buttons {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
 
-.card-buttons button {
+.revelations-module .card-buttons button {
   background: rgba(0, 255, 255, 0.15);
   border: 1px solid #00d0ff;
   border-radius: 8px;
@@ -70,41 +70,41 @@
   box-shadow: 0 0 10px #00eaff33;
 }
 
-.card-buttons button:hover {
+.revelations-module .card-buttons button:hover {
   background: rgba(0, 255, 255, 0.25);
   transform: scale(1.05);
   box-shadow: 0 0 15px #00f7ff66;
 }
 
-.card.active {
+.revelations-module .card.active {
   transform: scale(1.2);
   opacity: 1;
   z-index: 3;
 }
 
-.card.left {
+.revelations-module .card.left {
   transform: rotateY(30deg) scale(0.85) translateX(-100px);
   opacity: 0.7;
   z-index: 2;
 }
 
-.card.right {
+.revelations-module .card.right {
   transform: rotateY(-30deg) scale(0.85) translateX(100px);
   opacity: 0.7;
   z-index: 2;
 }
 
-.card.hidden {
+.revelations-module .card.hidden {
   display: none;
 }
 
-.spinner-controls {
+.revelations-module .spinner-controls {
   margin-top: 2rem;
   display: flex;
   gap: 2rem;
 }
 
-.spinner-controls button {
+.revelations-module .spinner-controls button {
   background: #00c3ff;
   border: none;
   color: black;
@@ -117,6 +117,27 @@
   transition: background 0.3s ease;
 }
 
-.spinner-controls button:hover {
+.revelations-module .spinner-controls button:hover {
   background: #00e6ff;
+}
+
+@media (max-width: 640px) {
+  .revelations-module .spinner-container {
+    padding: 1rem;
+  }
+
+  .revelations-module .spinner-title {
+    font-size: clamp(1.8rem, 9vw, 2.4rem);
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .revelations-module .card {
+    width: min(250px, calc(100vw - 3rem));
+    margin-inline: 0.5rem;
+  }
+
+  .revelations-module .spinner-controls {
+    gap: 1rem;
+  }
 }

@@ -55,14 +55,13 @@ export default function OriginsSpeedRunGuide({ cover }) {
           <span>Verified Quick Reference</span>
           <h2>Lightning Staff Switches</h2>
           <p>
-            Final BO3 Zombies Chronicles positions. <strong>Arrow = the direction the protruding switch handle points</strong>,
-            not the opposite face of the switch.
+            Final BO3 Zombies Chronicles positions. <strong>Arrow = the rounded inner end inside the switch ring.</strong> The protruding handle points 180° opposite.
           </p>
         </div>
 
         <div className="origins-speedrun-switch-status">
           <span>⚡ VERIFIED BO3</span>
-          <strong>Spawn ×2 ← · Gen 2 ×3 ↓ · Gen 5 ×3 ↓ · Gen 4 ×2 ↑ · Church Lower ×2 → · Church Upper ×1 ↑ · Excavation ×3 ↑</strong>
+          <strong>Spawn ×2 → · Gen 2 ×3 ↑ · Gen 5 ×3 ↑ · Gen 4 ×2 ↓ · Church Lower ×2 ← · Church Upper ×1 ↓ · Excavation ×3 ↓</strong>
         </div>
 
         <div className="origins-speedrun-switch-grid" aria-label="Verified Lightning Staff dial positions">
@@ -81,6 +80,7 @@ export default function OriginsSpeedRunGuide({ cover }) {
         <div className="origins-speedrun-switch-rule">
           <strong>Speedrun rule:</strong>
           <span>{originsLightningSwitchVerification.clickRule}</span>
+          <span>{originsLightningSwitchVerification.guideConvention}</span>
           <span>{originsLightningSwitchVerification.note}</span>
           <Link to="/maps/origins/lightning-staff">Open normal Lightning Staff guide →</Link>
         </div>

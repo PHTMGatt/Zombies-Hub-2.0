@@ -89,3 +89,38 @@
     grid-template-columns: 1fr;
   }
 }
+
+
+.side-ee-list-heading {
+  margin-bottom: 1rem;
+}
+
+.side-ee-list-heading > span {
+  display: block;
+  margin-bottom: 0.15rem;
+  color: #6dc2ff;
+  font-size: 0.62rem;
+  font-weight: 850;
+  letter-spacing: 0.14em;
+}
+
+.side-ee-list-heading h1 {
+  margin: 0;
+  color: #f3f7fb;
+  font-size: clamp(1.65rem, 3vw, 2.2rem);
+}
+
+.side-ee-list-heading p {
+  max-width: 680px;
+  margin: 0.35rem 0 0;
+  color: #bfcbd5;
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+
+@media (max-width: 640px) {
+  .side-ee-list-heading {
+    margin-bottom: 0.75rem;
+    padding: 0 0.25rem;
+  }
+}
