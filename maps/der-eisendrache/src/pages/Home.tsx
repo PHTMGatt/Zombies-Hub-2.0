@@ -15,13 +15,13 @@ const phases = [
   {
     title: 'First Wisps + Safe Sequence',
     summary: 'Prime the teleporter → hit 4 wisps → time travel → grab the canister, fuses, and safe code → finish Simon Says.',
-    to: `${BASE}/wisp`,
+    to: `${BASE}/wisps`,
     link: 'Wisp Reference',
   },
   {
     title: 'Second Wisps + Keeper Stone',
     summary: 'Repeat the wisp cycle → time travel again → collect the Keeper Stone.',
-    to: `${BASE}/wisp`,
+    to: `${BASE}/wisps`,
     link: 'Second Wisp Cycle',
   },
   {
@@ -68,7 +68,7 @@ const Home: React.FC = () => (
 
     <nav className="de-quick-links" aria-label="Der Eisendrache focused guides">
       <Link to={`${BASE}/bows`}>Bows <span>Base + four upgrades</span></Link>
-      <Link to={`${BASE}/wisp`}>Wisps <span>Both cycles + locations</span></Link>
+      <Link to={`${BASE}/wisps`}>Wisps <span>Both cycles + locations</span></Link>
       <Link to={`${BASE}/parts`}>Gear <span>Shield + Ragnarok DG-4</span></Link>
       <Link to={`${BASE}/boss`}>Boss <span>Keeper fight + ending</span></Link>
     </nav>
