@@ -1,6 +1,7 @@
 import { readdir, readFile } from 'node:fs/promises';
 import { extname, join, relative } from 'node:path';
 import process from 'node:process';
+import { pathToFileURL } from 'node:url';
 
 const ROOT = process.cwd();
 const SOURCE_ROOTS = ['apps', 'maps', 'shared'];
@@ -59,6 +60,78 @@ for (const rootName of SOURCE_ROOTS) {
     }
   }
 }
+
+
+async function verifyGorodValveSolutions() {
+  const valveFile = join(ROOT, 'maps/gorod-krovi/src/data/valveSolutions.js');
+  const { default: solutions } = await import(pathToFileURL(valveFile).href);
+
+  const connections = {
+    'Armory': { 1: 'Supply Depot', 2: 'Tank Factory', 3: 'Department Store' },
+    'Department Store': { 1: 'Armory', 2: 'Infirmary', 3: 'Dragon Command' },
+    'Dragon Command': { 1: 'Supply Depot', 2: 'Department Store', 3: 'Infirmary' },
+    'Supply Depot': { 1: 'Dragon Command', 2: 'Armory', 3: 'Tank Factory' },
+    'Infirmary': { 1: 'Department Store', 2: 'Tank Factory', 3: 'Dragon Command' },
+    'Tank Factory': { 1: 'Infirmary', 2: 'Supply Depot', 3: 'Armory' },
+  };
+
+  const locations = Object.keys(connections);
+  const expectedPairs = locations.length * (locations.length - 1);
+
+  if (solutions.length !== expectedPairs) {
+    failures.push(`Gorod valve solver: expected ${expectedPairs} start/end combinations, found ${solutions.length}`);
+  }
+
+  const seenPairs = new Set();
+
+  for (const solution of solutions) {
+    const pairKey = `${solution.start} -> ${solution.end}`;
+    if (seenPairs.has(pairKey)) failures.push(`Gorod valve solver: duplicate combination ${pairKey}`);
+    seenPairs.add(pairKey);
+
+    if (!connections[solution.start] || !connections[solution.end] || solution.start === solution.end) {
+      failures.push(`Gorod valve solver: invalid endpoints ${pairKey}`);
+      continue;
+    }
+
+    const settings = solution.valves ?? {};
+    if (Object.keys(settings).length !== 5) {
+      failures.push(`Gorod valve solver: ${pairKey} should have five routing settings before the endpoint`);
+      continue;
+    }
+
+    const visited = [solution.start];
+    let current = solution.start;
+
+    for (let hop = 0; hop < 5; hop += 1) {
+      const setting = settings[current];
+      const next = connections[current]?.[setting];
+
+      if (!next) {
+        failures.push(`Gorod valve solver: ${pairKey} has invalid setting ${String(setting)} at ${current}`);
+        break;
+      }
+
+      if (visited.includes(next)) {
+        failures.push(`Gorod valve solver: ${pairKey} repeats ${next} before reaching the cylinder`);
+        break;
+      }
+
+      visited.push(next);
+      current = next;
+    }
+
+    if (visited.length === 6 && current !== solution.end) {
+      failures.push(`Gorod valve solver: ${pairKey} ends at ${current}, not the cylinder`);
+    }
+
+    if (visited.length === 6 && new Set(visited).size !== 6) {
+      failures.push(`Gorod valve solver: ${pairKey} does not visit all six valves exactly once`);
+    }
+  }
+}
+
+await verifyGorodValveSolutions();
 
 if (failures.length) {
   console.error('\nZombies Hub verification failed:\n');
