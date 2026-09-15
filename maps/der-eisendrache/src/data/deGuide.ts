@@ -8,7 +8,7 @@ export const deGuide = {
     'Turn on power and open the route through the castle.',
     'Feed all three dragon heads and collect the Wrath of the Ancients.',
     'Build the Rocket Shield when convenient and start collecting Ragnarok DG-4 parts early.',
-    'Upgrade the bow or bows required for your game. Solo normally needs one upgraded bow; co-op normally needs one per player.',
+    'Upgrade the bow or bows required for your game. Ranked/public games need one upgraded bow per player; unranked or local games require all four.',
     'Activate the Death Ray at least once before the quest reaches the fuse and safe sequence.',
   ],
   phases: [
