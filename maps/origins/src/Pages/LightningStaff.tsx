@@ -48,8 +48,8 @@ const LightningStaff = () => {
                 </span>
               </li>
               <li>Set the seven switches using the card below.</li>
-              <li><strong>Excavation:</strong> rings purple → shoot the orb with the Lightning Staff.</li>
-              <li>Purple Crazy Place pedestal → feed souls.</li>
+              <li><strong>Excavation:</strong> line all four rings purple → shoot the orb with the Lightning Staff.</li>
+              <li>Place the staff on the purple Crazy Place pedestal → kill zombies to fill it with souls.</li>
             </ul>
           </section>
 
