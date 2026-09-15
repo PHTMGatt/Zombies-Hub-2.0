@@ -1,2 +1,0 @@
-Render deploy heartbeat 2
-Purpose: harmless deployment activity marker.
