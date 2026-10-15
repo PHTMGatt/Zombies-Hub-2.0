@@ -2,6 +2,8 @@
 
 This branch improves the existing app without replacing its map guides or artwork. It is a review candidate, not a production release.
 
+For subfolder-hosted review previews only, build with `VITE_REVIEW_HASH_ROUTER=true npx vite build --base=./`. The normal build retains production history routing.
+
 ## Implemented
 - Lazy-loaded map modules and secondary pages; route loading/error states.
 - Per-route browser titles; explicit not-found pages instead of silent redirects.
