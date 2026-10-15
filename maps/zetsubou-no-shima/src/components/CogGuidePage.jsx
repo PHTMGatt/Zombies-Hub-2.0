@@ -20,7 +20,7 @@ export default function CogGuidePage({
   steps,
 }) {
   return (
-    <main className="zets-detail-page zets-cog-detail-page">
+    <div className="zets-detail-page zets-cog-detail-page">
       <GuideHero kicker={`Zetsubou No Shima · Cog ${number}`} title={title} description={description}>
         {chips.map((chip) => <GuideChip key={chip}>{chip}</GuideChip>)}
       </GuideHero>
@@ -54,6 +54,6 @@ export default function CogGuidePage({
       <div className="zets-back-row">
         <Link to={`${BASE}/cogs`}>← Back to all three cogs</Link>
       </div>
-    </main>
+    </div>
   );
 }

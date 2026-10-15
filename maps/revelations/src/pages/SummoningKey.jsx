@@ -18,7 +18,7 @@ function SummoningKey() {
       <div className="sk-container">
         <div className="rev-page-heading">
           <span className="rev-page-kicker">Quick Reference</span>
-          <h1 className="sk-title">Summoning Key Throws</h1>
+          <h2 className="sk-title">Summoning Key Throws</h2>
           <p className="rev-page-intro">Tap the target you need and jump straight to that throw.</p>
         </div>
 

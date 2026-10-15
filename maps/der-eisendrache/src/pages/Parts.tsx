@@ -24,7 +24,7 @@ const ragnarokSteps = [
 ];
 
 const Parts: React.FC = () => (
-  <main className="de-parts-page">
+  <div className="de-parts-page">
     <header className="de-sheet-header">
       <span>Gear & Buildables</span>
       <h2>Shield + Ragnarok DG-4</h2>
@@ -71,7 +71,7 @@ const Parts: React.FC = () => (
       <a href="https://www.youtube.com/watch?v=jGSTfe_yc0M" target="_blank" rel="noopener noreferrer">Panzer Helmet ↗</a>
       <a href="https://www.youtube.com/watch?v=00sYn4Bj1hM" target="_blank" rel="noopener noreferrer">Golden Plunger ↗</a>
     </section>
-  </main>
+  </div>
 );
 
 export default Parts;

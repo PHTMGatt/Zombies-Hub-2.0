@@ -4,7 +4,7 @@ import { deGuide } from '../data/deGuide';
 import '../styles/pages/BossFight.css';
 
 const BossFight: React.FC = () => (
-  <main className="de-boss-page">
+  <div className="de-boss-page">
     <header className="de-boss-sheet-header">
       <span>Keeper Boss · No Return</span>
       <h2>Boss Fight Survival Sheet</h2>
@@ -60,7 +60,7 @@ const BossFight: React.FC = () => (
     </section>
 
     <div className="de-boss-backlink"><Link to="/maps/der-eisendrache">← Main Quest</Link></div>
-  </main>
+  </div>
 );
 
 export default BossFight;

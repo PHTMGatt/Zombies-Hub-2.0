@@ -4,6 +4,7 @@ import imageData from '../data/imageData';
 import sideEEs from '../data/sideEE';
 import SideEECard from '../components/SideEECard';
 import OriginsSpeedRunGuide from '../components/OriginsSpeedRunGuide';
+import NotFound from '../../../../shared/ui/NotFound';
 import '../styles/SideEE/SideEEInfo.css';
 
 const SIDE_EE_META = {
@@ -35,10 +36,7 @@ export default function SideEEInfo() {
 
   if (!meta) {
     return (
-      <div className="side-ee-info-page">
-        <p>Map not found.</p>
-        <Link to="/side-easter-eggs" className="side-ee-info__back-link">← Back to Side Easter Eggs</Link>
-      </div>
+      <NotFound />
     );
   }
 
@@ -83,14 +81,19 @@ export default function SideEEInfo() {
           ) : (
             entries.map((ee) => (
               ee.videoUrl ? (
-                <div key={ee.id} className="side-ee-info__video-wrapper">
+                <section key={ee.id} className="side-ee-info__section">
+                  <h2 className="side-ee-info__section-title">{ee.title}</h2>
+                  {ee.description && <p>{ee.description}</p>}
+                  <div className="side-ee-info__video-wrapper">
                   <iframe
                     src={ee.videoUrl}
                     title={ee.title}
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
                   />
-                </div>
+                  </div>
+                  <p><a href={ee.videoUrl.replace('/embed/', '/watch?v=')} target="_blank" rel="noopener noreferrer">Open the walkthrough on YouTube</a> if the embedded video is unavailable.</p>
+                </section>
               ) : (
                 <SideEECard key={ee.id} title={ee.title} description={ee.description} />
               )

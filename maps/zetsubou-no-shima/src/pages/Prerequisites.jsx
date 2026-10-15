@@ -17,7 +17,7 @@ const setup = [
 ];
 
 const Prerequisites = () => (
-  <main className="zets-detail-page">
+  <div className="zets-detail-page">
     <GuideHero
       kicker="Zetsubou No Shima"
       title="Setup Checklist"
@@ -45,7 +45,7 @@ const Prerequisites = () => (
         ))}
       </div>
     </GuideSection>
-  </main>
+  </div>
 );
 
 export default Prerequisites;

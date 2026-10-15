@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
+import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import YouTube from 'react-youtube';
 
 const GuideVideoPlayer = forwardRef(function GuideVideoPlayer(
@@ -12,6 +12,8 @@ const GuideVideoPlayer = forwardRef(function GuideVideoPlayer(
   const playerRef = useRef(null);
   const stopTimerRef = useRef(null);
   const pendingSegmentRef = useRef(null);
+  const [failed, setFailed] = useState(false);
+  const [selectedStart, setSelectedStart] = useState(0);
 
   const clearStopTimer = () => {
     if (stopTimerRef.current) {
@@ -37,6 +39,8 @@ const GuideVideoPlayer = forwardRef(function GuideVideoPlayer(
   };
 
   const playSegment = (start, end) => {
+    if (!Number.isFinite(start) || start < 0) return false;
+    setSelectedStart(start);
     const segment = { start, end };
     const player = playerRef.current;
 
@@ -81,7 +85,12 @@ const GuideVideoPlayer = forwardRef(function GuideVideoPlayer(
         videoId={videoId}
         opts={opts}
         title={title}
+        onError={() => {
+          setFailed(true);
+          clearStopTimer();
+        }}
         onReady={(event) => {
+          setFailed(false);
           playerRef.current = event.target;
 
           const pending = pendingSegmentRef.current;
@@ -94,6 +103,12 @@ const GuideVideoPlayer = forwardRef(function GuideVideoPlayer(
         iframeClassName="rev-video-player__iframe"
       />
       <div className="video-caption">{caption}</div>
+      <p className="video-caption">
+        {failed && <span role="status">The embedded player is unavailable. </span>}
+        <a href={`https://www.youtube.com/watch?v=${encodeURIComponent(videoId)}&t=${Math.floor(selectedStart)}s`} target="_blank" rel="noopener noreferrer">
+          Watch {selectedStart ? 'the selected timestamp' : 'the guide'} on YouTube
+        </a>
+      </p>
     </div>
   );
 });

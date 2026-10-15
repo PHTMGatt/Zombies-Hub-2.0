@@ -3,7 +3,7 @@ import { gorodBossPhases } from '../data/gorodRun';
 import '../styles/BossFight.css';
 
 const BossFight = () => (
-  <main className="gorod-boss-page">
+  <div className="gorod-boss-page">
     <header className="gorod-boss-header">
       <span>Final Battle</span>
       <h2>Dragon + Nikolai</h2>
@@ -31,7 +31,7 @@ const BossFight = () => (
         </section>
       ))}
     </div>
-  </main>
+  </div>
 );
 
 export default BossFight;

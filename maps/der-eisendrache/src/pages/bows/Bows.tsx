@@ -4,10 +4,10 @@ import BowNav from '../../components/BowNav';
 import '../../styles/pages/Bows.css';
 
 const Bows: React.FC = () => (
-  <main className="bows-page">
+  <div className="bows-page">
     <BowNav />
     <Outlet />
-  </main>
+  </div>
 );
 
 export default Bows;

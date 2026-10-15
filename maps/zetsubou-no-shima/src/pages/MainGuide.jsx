@@ -33,7 +33,7 @@ const phases = [
 ];
 
 const MainGuide = () => (
-  <main className="zets-main-guide">
+  <div className="zets-main-guide">
     <header className="zets-run-header">
       <div>
         <span>MAIN EASTER EGG</span>
@@ -64,7 +64,7 @@ const MainGuide = () => (
       <Link to={`${BASE}/buildables`}>Buildables + KT-4</Link>
       <Link to={`${BASE}/extras`}>Rewards + Extras</Link>
     </nav>
-  </main>
+  </div>
 );
 
 export default MainGuide;

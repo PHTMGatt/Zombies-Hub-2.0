@@ -31,7 +31,7 @@ const cogs = [
 ];
 
 const Cogs = () => (
-  <main className="zets-detail-page">
+  <div className="zets-detail-page">
     <GuideHero
       kicker="Zetsubou No Shima"
       title="The Three Cogs"
@@ -60,7 +60,7 @@ const Cogs = () => (
         ))}
       </div>
     </GuideSection>
-  </main>
+  </div>
 );
 
 export default Cogs;

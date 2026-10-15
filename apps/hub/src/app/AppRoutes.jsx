@@ -1,21 +1,23 @@
-import React from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import React, { lazy } from 'react';
+import { Route, Routes } from 'react-router-dom';
 import Home from '../pages/Home';
-import AllMaps from '../pages/AllMaps';
-import EasterEggs from '../pages/EasterEggs';
-import EasterEggGuide from '../pages/EasterEggGuide';
-import MapDetails from '../pages/MapDetails';
-import MapInfo from '../pages/MapInfo';
-import SideEasterEggList from '../pages/SideEasterEggList';
-import SideEEInfo from '../pages/SideEEInfo';
-import ComingSoon from '../pages/ComingSoon';
-import OriginsRoutes from '../../../../maps/origins/routes/OriginsRoutes';
-import MobRoutes from '../../../../maps/mob-of-the-dead/routes/MobRoutes';
-import ShadowsRoutes from '../../../../maps/shadows-of-evil/routes/ShadowsRoutes';
-import DerEisendracheRoutes from '../../../../maps/der-eisendrache/routes/DerEisendracheRoutes';
-import ZetsubouRoutes from '../../../../maps/zetsubou-no-shima/routes/ZetsubouRoutes';
-import GorodRoutes from '../../../../maps/gorod-krovi/routes/GorodRoutes';
-import RevelationsRoutes from '../../../../maps/revelations/routes/RevelationsRoutes';
+import NotFound from '../../../../shared/ui/NotFound';
+
+const AllMaps = lazy(() => import('../pages/AllMaps'));
+const EasterEggs = lazy(() => import('../pages/EasterEggs'));
+const EasterEggGuide = lazy(() => import('../pages/EasterEggGuide'));
+const MapDetails = lazy(() => import('../pages/MapDetails'));
+const MapInfo = lazy(() => import('../pages/MapInfo'));
+const SideEasterEggList = lazy(() => import('../pages/SideEasterEggList'));
+const SideEEInfo = lazy(() => import('../pages/SideEEInfo'));
+const ComingSoon = lazy(() => import('../pages/ComingSoon'));
+const OriginsRoutes = lazy(() => import('../../../../maps/origins/routes/OriginsRoutes'));
+const MobRoutes = lazy(() => import('../../../../maps/mob-of-the-dead/routes/MobRoutes'));
+const ShadowsRoutes = lazy(() => import('../../../../maps/shadows-of-evil/routes/ShadowsRoutes'));
+const DerEisendracheRoutes = lazy(() => import('../../../../maps/der-eisendrache/routes/DerEisendracheRoutes'));
+const ZetsubouRoutes = lazy(() => import('../../../../maps/zetsubou-no-shima/routes/ZetsubouRoutes'));
+const GorodRoutes = lazy(() => import('../../../../maps/gorod-krovi/routes/GorodRoutes'));
+const RevelationsRoutes = lazy(() => import('../../../../maps/revelations/routes/RevelationsRoutes'));
 
 export default function AppRoutes({ RootLayout }) {
   return (
@@ -42,7 +44,7 @@ export default function AppRoutes({ RootLayout }) {
         {/* Non-dedicated maps keep the original Hub details behavior. */}
         <Route path="maps/:slug" element={<MapDetails />} />
 
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
   );

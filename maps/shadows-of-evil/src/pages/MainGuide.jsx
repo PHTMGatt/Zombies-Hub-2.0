@@ -34,7 +34,7 @@ const phases = [
 
 function MainGuide() {
   return (
-    <main className="soe-page">
+    <div className="soe-page">
       <div className="soe-page__background" aria-hidden="true" />
       <div className="soe-page__content soe-run-sheet">
         <header className="soe-run-header">
@@ -73,7 +73,7 @@ function MainGuide() {
           <img src={soeLayout} alt="Shadows of Evil map layout" />
         </details>
       </div>
-    </main>
+    </div>
   );
 }
 

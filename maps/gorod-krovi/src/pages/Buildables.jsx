@@ -3,7 +3,7 @@ import buildables from '../data/buildables';
 import '../styles/Buildables.css';
 
 const Buildables = () => (
-  <main className="gorod-buildables-page">
+  <div className="gorod-buildables-page">
     <header className="gorod-sheet-header">
       <span>Quest Gear</span>
       <h2>Buildables + Gear</h2>
@@ -29,7 +29,7 @@ const Buildables = () => (
         </section>
       ))}
     </div>
-  </main>
+  </div>
 );
 
 export default Buildables;

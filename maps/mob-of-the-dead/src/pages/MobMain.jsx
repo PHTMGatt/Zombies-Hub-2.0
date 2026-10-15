@@ -33,7 +33,7 @@ const phases = [
 ];
 
 const MobMain = () => (
-  <main className="mobmain-page">
+  <div className="mobmain-page">
     <header className="mob-run-header">
       <div>
         <span>MAIN EASTER EGG</span>
@@ -59,7 +59,7 @@ const MobMain = () => (
         </li>
       ))}
     </ol>
-  </main>
+  </div>
 );
 
 export default MobMain;

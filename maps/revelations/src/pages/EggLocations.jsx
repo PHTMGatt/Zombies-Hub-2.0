@@ -20,13 +20,13 @@ const EggLocations = () => {
   };
 
   return (
-    <main className="rev-page egg-locations-page">
+    <div className="rev-page egg-locations-page">
       <div className="rev-background" />
 
       <div className="egg-reference">
         <div className="rev-page-heading">
           <span className="rev-page-kicker">Location Reference</span>
-          <h1 className="sk-title">Egg Locations</h1>
+          <h2 className="sk-title">Egg Locations</h2>
           <p className="rev-page-intro">Choose the map area, then pick the spawn location you need.</p>
         </div>
 
@@ -69,7 +69,7 @@ const EggLocations = () => {
           </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 };
 

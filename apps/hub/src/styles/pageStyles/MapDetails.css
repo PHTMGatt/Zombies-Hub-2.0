@@ -9,7 +9,7 @@
   margin-bottom: 1.5rem;
 }
 
-.map-details-header h2 {
+.map-details-header h1 {
   margin: 0;
   font-size: clamp(1.8rem, 4vw, 2.6rem);
 }

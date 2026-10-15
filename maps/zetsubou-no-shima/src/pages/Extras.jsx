@@ -19,7 +19,7 @@ const perks = [
 ];
 
 const Extras = () => (
-  <main className="zets-detail-page">
+  <div className="zets-detail-page">
     <GuideHero
       kicker="Zetsubou No Shima"
       title="Rewards + Completion"
@@ -73,7 +73,7 @@ const Extras = () => (
         <p>The ending resolves Takeo's Zetsubou No Shima story beat and marks this map complete for the Black Ops III Gateworm tracking system.</p>
       </div>
     </GuideSection>
-  </main>
+  </div>
 );
 
 export default Extras;

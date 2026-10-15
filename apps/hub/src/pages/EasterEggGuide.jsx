@@ -3,10 +3,13 @@ import { useParams, Navigate, Link } from 'react-router-dom';
 import guides from '../data/EasterEggGuides';
 import { getDedicatedGuideRoute } from '../data/dedicatedGuides';
 import ComingSoon from './ComingSoon';
+import NotFound from '../../../../shared/ui/NotFound';
+import mapData from '../data/mapData';
 import '../styles/compStyles/EggGuideCard.css';
 
 export default function EasterEggGuide() {
-  const { slug } = useParams();
+  const { slug: requestedSlug } = useParams();
+  const slug = requestedSlug.replace(/-chronicles$/, '');
   const dedicatedRoute = getDedicatedGuideRoute(slug);
 
   if (dedicatedRoute) {
@@ -15,7 +18,7 @@ export default function EasterEggGuide() {
 
   const guide = guides.find(g => g.slug === slug);
   if (!guide) {
-    return <ComingSoon />;
+    return mapData.some(map => map.slug === slug) ? <ComingSoon /> : <NotFound />;
   }
 
   const match = guide.videoUrl?.match(/(?:\?v=|\/embed\/|\.be\/)([a-zA-Z0-9_-]{11})/);
@@ -26,7 +29,7 @@ export default function EasterEggGuide() {
   }
 
   return (
-    <main className="egg-card guide-page">
+    <div className="egg-card guide-page">
       <header className="egg-guide__header">
         <span>VIDEO GUIDE</span>
         <h1>{guide.title}</h1>
@@ -62,6 +65,6 @@ export default function EasterEggGuide() {
           </Link>
         </aside>
       </div>
-    </main>
+    </div>
   );
 }

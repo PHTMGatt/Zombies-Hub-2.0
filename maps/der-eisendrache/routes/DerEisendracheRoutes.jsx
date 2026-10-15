@@ -1,5 +1,6 @@
 import React from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import NotFound from '../../../shared/ui/NotFound';
+import { Route, Routes } from 'react-router-dom';
 import Header from '../src/components/Header';
 import Footer from '../src/components/Footer';
 import Home from '../src/pages/Home';
@@ -33,9 +34,9 @@ export default function DerEisendracheRoutes() {
             <Route path="fire" element={<FireBow />} />
             <Route path="wolf" element={<WolfBow />} />
             <Route path="void" element={<VoidBow />} />
-            <Route path="*" element={<Navigate to="/maps/der-eisendrache/bows" replace />} />
+            <Route path="*" element={<NotFound />} />
           </Route>
-          <Route path="*" element={<Navigate to="/maps/der-eisendrache" replace />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
       <Footer />

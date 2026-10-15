@@ -168,7 +168,7 @@
 .shadows-module .soe-footer {
   position: relative;
   min-height: 58px;
-  overflow: visible;
+  overflow: clip;
   isolation: isolate;
   border-top: 0;
   background: #08070d;

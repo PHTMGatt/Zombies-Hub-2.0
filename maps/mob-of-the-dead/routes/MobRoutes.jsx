@@ -1,4 +1,5 @@
 import React from 'react';
+import NotFound from '../../../shared/ui/NotFound';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import Header from '../src/components/Header';
 import Footer from '../src/components/Footer';
@@ -7,7 +8,6 @@ import Plane from '../src/pages/Plane';
 import RetrieverSkulls from '../src/pages/RetrieverSkulls';
 import Codes from '../src/pages/Codes';
 import FinalStep from '../src/pages/FinalStep';
-import NotFound from '../src/pages/NotFound';
 import '../src/styles/global.css';
 import '../src/styles/components.css';
 
@@ -17,7 +17,7 @@ export default function MobRoutes() {
       <div className="bg-blur" />
       <div className="bg-tint" />
       <Header />
-      <main className="app-main">
+      <div className="app-main">
         <Routes>
           <Route index element={<MobMain />} />
           <Route path="plane" element={<Plane />} />
@@ -32,7 +32,7 @@ export default function MobRoutes() {
           <Route path="logs" element={<Navigate to="../codes" replace />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
-      </main>
+      </div>
       <Footer />
     </section>
   );

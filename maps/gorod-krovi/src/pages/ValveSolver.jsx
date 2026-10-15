@@ -35,7 +35,7 @@ const ValveSolver = () => {
   };
 
   return (
-    <main className="gorod-valve-page">
+    <div className="gorod-valve-page">
       <GuideHero
         kicker="Gorod Krovi"
         title="Valve Solver"
@@ -116,7 +116,7 @@ const ValveSolver = () => {
           </div>
         )}
       </section>
-    </main>
+    </div>
   );
 };
 

@@ -16,7 +16,7 @@ const wispLocations = [
 ];
 
 const Wisp: React.FC = () => (
-  <main className="de-wisp-page">
+  <div className="de-wisp-page">
     <GuideHero
       kicker="Teleporter Puzzle"
       title="Wisp Cycles"
@@ -86,7 +86,7 @@ const Wisp: React.FC = () => (
         </div>
       </details>
     </section>
-  </main>
+  </div>
 );
 
 export default Wisp;

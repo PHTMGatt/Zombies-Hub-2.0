@@ -1,5 +1,6 @@
 import React from 'react';
-import { useParams, useSearchParams, Link, Navigate } from 'react-router-dom';
+import { useParams, useSearchParams, Link } from 'react-router-dom';
+import NotFound from '../../../../shared/ui/NotFound';
 import mapInfo from '../data/mapInfo';
 import mapData from '../data/mapData';
 import { getDedicatedGuideRoute } from '../data/dedicatedGuides';
@@ -8,22 +9,23 @@ import '../styles/pageStyles/MapInfo.css';
 export default function MapInfo() {
   const { slug } = useParams();
   const [searchParams] = useSearchParams();
-  const requestedGame = searchParams.get('game');
+  const canonicalSlug = slug.replace(/-chronicles$/, '');
+  const requestedGame = searchParams.get('game') || (slug.endsWith('-chronicles') ? 'Black Ops 3' : null);
   const info = mapInfo[slug];
 
   if (!info) {
-    return <Navigate to="/allmaps" replace />;
+    return <NotFound />;
   }
 
-  const variants = mapData.filter(m => m.slug === slug);
+  const variants = mapData.filter(m => m.slug === canonicalSlug);
   const meta = variants.find(m => m.game === requestedGame)
     || variants[0]
     || mapData.find(m => m.name === info.name)
     || {};
 
   const banner = meta.coverImage || meta.layoutImage;
-  const dedicatedRoute = getDedicatedGuideRoute(slug);
-  const guideRoute = dedicatedRoute || `/easter-eggs/${slug}`;
+  const dedicatedRoute = getDedicatedGuideRoute(canonicalSlug);
+  const guideRoute = dedicatedRoute || `/easter-eggs/${canonicalSlug}`;
   const hasMainQuest = Boolean(meta.isEasterEgg);
   const releasedLabel = meta.dlc === 'Zombies Chronicles'
     ? 'Black Ops III: Zombies Chronicles (2017)'
@@ -46,6 +48,7 @@ export default function MapInfo() {
         )}
 
         <div className="map-info-details">
+          <h1>{info.name}</h1>
           <div className="info-row">
             {meta.game && <span><strong>Game:</strong> {meta.game}</span>}
             {meta.dlc && <span><strong>DLC:</strong> {meta.dlc}</span>}

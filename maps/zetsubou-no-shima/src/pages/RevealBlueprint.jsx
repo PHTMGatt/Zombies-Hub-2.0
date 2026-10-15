@@ -9,7 +9,7 @@ import {
 } from '../../../../shared/ui/GuideLayout';
 
 const RevealBlueprint = () => (
-  <main className="zets-detail-page">
+  <div className="zets-detail-page">
     <GuideHero
       kicker="Zetsubou No Shima"
       title="Reveal the Elevator Quest"
@@ -40,7 +40,7 @@ const RevealBlueprint = () => (
         />
       </GuideStepList>
     </GuideSection>
-  </main>
+  </div>
 );
 
 export default RevealBlueprint;
