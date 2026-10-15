@@ -19,8 +19,9 @@ if (process.env.SMOKE_SCREENSHOTS) await fs.mkdir('artifacts/screenshots', { rec
 try {
   for (const width of [375, 1440]) {
     const context = await browser.newContext({ viewport: { width, height: 900 }, reducedMotion: 'reduce' });
-    // Check our app, not availability of third-party video/ad servers.
-    await context.route(/youtube\.com|youtube-nocookie\.com|googlevideo\.com|doubleclick\.net/, r => r.abort());
+    // Route regression tests must not wait on external fonts, videos, ads or telemetry.
+    // All application bundles and guide images are served by the tested origin.
+    await context.route('**/*', r => new URL(r.request().url()).origin === new URL(base).origin ? r.continue() : r.abort());
     const page = await context.newPage();
     for (const route of routes) {
       const errors = [];

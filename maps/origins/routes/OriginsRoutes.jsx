@@ -1,4 +1,6 @@
 import React from 'react';
+import '@fontsource/rajdhani/latin-600.css';
+import '@fontsource/rajdhani/latin-700.css';
 import NotFound from '../../../shared/ui/NotFound';
 import { Route, Routes } from 'react-router-dom';
 import Header from '../src/components/Header';
