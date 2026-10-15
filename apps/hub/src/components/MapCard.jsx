@@ -1,7 +1,6 @@
-// File: MapCard.jsx
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { IoArrowForward } from 'react-icons/io5';
 import '../styles/compStyles/MapCard.css';
 
 export default function MapCard({
@@ -17,6 +16,8 @@ export default function MapCard({
     layoutImage,
     hoverImage,
     slug,
+    hasEasterEgg,
+    isEasterEgg,
   } = map;
 
   const [cardHover, setCardHover] = useState(false);
@@ -28,7 +29,13 @@ export default function MapCard({
 
   const Wrapper = disableLink ? 'div' : Link;
   const search = game ? `?game=${encodeURIComponent(game)}` : '';
-  const wrapperProps = disableLink ? {} : { to: `/info/${slug}${search}` };
+  const wrapperProps = disableLink
+    ? {}
+    : {
+        to: `/info/${slug}${search}`,
+        'aria-label': `Open ${name} map guide`,
+      };
+  const eeAvailable = Boolean(hasEasterEgg ?? isEasterEgg);
 
   return (
     <Wrapper
@@ -39,19 +46,38 @@ export default function MapCard({
         setCardHover(false);
         setDlcHover(false);
       }}
+      onFocus={() => setCardHover(true)}
+      onBlur={() => {
+        setCardHover(false);
+        setDlcHover(false);
+      }}
     >
-      <div className="bg-blur" style={{ backgroundImage: `url(${bg})` }} />
-      <div className="bg-main" style={{ backgroundImage: `url(${bg})` }} />
+      <div className="bg-blur" style={{ backgroundImage: `url(${bg})` }} aria-hidden="true" />
+      <div className="bg-main" style={{ backgroundImage: `url(${bg})` }} aria-hidden="true" />
+
+      <div className="map-card__meta" aria-hidden="true">
+        {game && <span className="map-game-chip">{game.replace('Black Ops ', 'BO')}</span>}
+        {eeAvailable && <span className="map-ee-chip">Main EE</span>}
+      </div>
 
       <div className="map-info">
-        <h3>{name}</h3>
-        <p
-          className="map-dlc"
-          onMouseEnter={e => { e.stopPropagation(); setDlcHover(true); }}
-          onMouseLeave={e => { e.stopPropagation(); setDlcHover(false); }}
-        >
-          {dlc}
-        </p>
+        <div>
+          <h3>{name}</h3>
+          <p
+            className="map-dlc"
+            onMouseEnter={event => {
+              event.stopPropagation();
+              setDlcHover(true);
+            }}
+            onMouseLeave={event => {
+              event.stopPropagation();
+              setDlcHover(false);
+            }}
+          >
+            {dlc}
+          </p>
+        </div>
+        {!disableLink && <IoArrowForward className="map-card__arrow" aria-hidden="true" />}
       </div>
     </Wrapper>
   );
