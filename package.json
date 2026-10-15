@@ -1,9 +1,14 @@
 {
   "name": "zombies-hub-2.0",
   "private": true,
+  "overrides": {
+    "compression": "^1.8.2"
+  },
   "version": "2.0.0",
   "type": "module",
   "scripts": {
+    "test": "node --test scripts/*.test.mjs",
+    "test:browser": "node scripts/browser-smoke.mjs",
     "dev": "vite",
     "check": "node scripts/verify.mjs",
     "compile": "vite build && node scripts/write-build-info.mjs",
@@ -16,6 +21,7 @@
     "render-build": "npm run render"
   },
   "dependencies": {
+    "@fontsource/rajdhani": "^5.3.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-icons": "^5.5.0",
@@ -27,6 +33,7 @@
     "@types/react": "^19.1.0",
     "@types/react-dom": "^19.1.1",
     "@vitejs/plugin-react": "^4.3.4",
+    "playwright": "1.59.0",
     "typescript": "^5.8.3",
     "vite": "^6.2.5"
   }

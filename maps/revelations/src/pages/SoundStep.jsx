@@ -42,13 +42,13 @@ function SoundStep() {
   };
 
   return (
-    <main className="rev-page sound-step-page">
+    <div className="rev-page sound-step-page">
       <div className="rev-background" />
 
       <div className="sound-reference">
         <div className="rev-page-heading">
           <span className="rev-page-kicker">Rune Placement Reference</span>
-          <h1 className="sk-title">Sound Step</h1>
+          <h2 className="sk-title">Sound Step</h2>
           <p className="rev-page-intro">
             Pick the region you are checking, then choose the exact location to hear that reference segment.
           </p>
@@ -89,7 +89,7 @@ function SoundStep() {
           )}
         </div>
       </div>
-    </main>
+    </div>
   );
 }
 

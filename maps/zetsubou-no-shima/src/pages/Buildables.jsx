@@ -8,7 +8,7 @@ import { zetsGear } from '../data/zetsGear';
 import '../styles/Buildables.css';
 
 const Buildables = () => (
-  <main className="zets-buildables-page">
+  <div className="zets-buildables-page">
     <GuideHero
       kicker="Zetsubou No Shima"
       title="Buildables + Wonder Weapon"
@@ -48,7 +48,7 @@ const Buildables = () => (
         ))}
       </div>
     </GuideSection>
-  </main>
+  </div>
 );
 
 export default Buildables;

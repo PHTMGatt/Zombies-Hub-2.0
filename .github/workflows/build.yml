@@ -15,8 +15,8 @@ concurrency:
 
 jobs:
   quality-gate:
+    timeout-minutes: 10
     runs-on: ubuntu-latest
-    timeout-minutes: 12
 
     steps:
       - name: Checkout
@@ -34,8 +34,25 @@ jobs:
       - name: Source verification
         run: npm run check
 
+      - name: Unit tests
+        run: npm test
+
       - name: Production compile
         run: npm run compile
+
+      - run: npx playwright install --with-deps chromium
+
+      - name: Browser route regression checks
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 4173 &
+          for i in $(seq 1 30); do curl -fsS http://127.0.0.1:4173 >/dev/null && break; sleep 1; done
+          npm run test:browser
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: browser-route-report
+          path: artifacts/browser-smoke.json
 
       - name: Upload production bundle
         if: success()

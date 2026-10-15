@@ -10,7 +10,7 @@ export default function MobSectionPage({
   steps,
 }) {
   return (
-    <main className="mob-section-page">
+    <div className="mob-section-page">
       <header className="mob-sheet-header">
         {kicker && <span>{kicker}</span>}
         <h2>{title}</h2>
@@ -45,6 +45,6 @@ export default function MobSectionPage({
           </section>
         ))}
       </div>
-    </main>
+    </div>
   );
 }

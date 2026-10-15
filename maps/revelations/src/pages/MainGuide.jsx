@@ -23,7 +23,7 @@ const MainGuide = () => {
   };
 
   return (
-    <main className="rev-page rev-main-guide">
+    <div className="rev-page rev-main-guide">
       <div className="rev-background" />
 
       <section className="rev-main-shell">
@@ -83,7 +83,7 @@ const MainGuide = () => {
           <Link to={`${BASE}/sound-step`}>Rune / Sound Reference</Link>
         </nav>
       </section>
-    </main>
+    </div>
   );
 };
 

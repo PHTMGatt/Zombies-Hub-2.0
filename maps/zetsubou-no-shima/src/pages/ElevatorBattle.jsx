@@ -9,7 +9,7 @@ import {
 } from '../../../../shared/ui/GuideLayout';
 
 const ElevatorBattle = () => (
-  <main className="zets-detail-page zets-boss-page">
+  <div className="zets-detail-page zets-boss-page">
     <GuideHero
       kicker="Zetsubou No Shima"
       title="Elevator + Giant Thrasher"
@@ -58,7 +58,7 @@ const ElevatorBattle = () => (
         />
       </GuideStepList>
     </GuideSection>
-  </main>
+  </div>
 );
 
 export default ElevatorBattle;

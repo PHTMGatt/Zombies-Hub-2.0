@@ -39,7 +39,7 @@ const phases = [
 ];
 
 const Home: React.FC = () => (
-  <main className="de-home-page">
+  <div className="de-home-page">
     <header className="de-run-header">
       <div>
         <span>MAIN EASTER EGG</span>
@@ -72,7 +72,7 @@ const Home: React.FC = () => (
       <Link to={`${BASE}/parts`}>Gear <span>Shield + Ragnarok DG-4</span></Link>
       <Link to={`${BASE}/boss`}>Boss <span>Keeper fight + ending</span></Link>
     </nav>
-  </main>
+  </div>
 );
 
 export default Home;

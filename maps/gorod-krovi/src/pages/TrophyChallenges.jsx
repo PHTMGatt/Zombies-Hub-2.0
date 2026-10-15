@@ -12,7 +12,7 @@ const TrophyChallenges = () => {
   const [view, setView] = useState('trophies');
 
   return (
-    <main className="gorod-trophies-page">
+    <div className="gorod-trophies-page">
       <GuideHero
         kicker="Gorod Krovi"
         title="Trophies + S.O.P.H.I.A. Challenges"
@@ -88,7 +88,7 @@ const TrophyChallenges = () => {
           </GuideSection>
         </>
       )}
-    </main>
+    </div>
   );
 };
 

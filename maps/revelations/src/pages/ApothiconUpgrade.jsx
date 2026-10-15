@@ -18,7 +18,7 @@ const ApothiconUpgrade = () => {
       <div className="sk-container">
         <div className="rev-page-heading">
           <span className="rev-page-kicker">Quick Reference</span>
-          <h1 className="sk-title">Apothicon Servant Upgrade</h1>
+          <h2 className="sk-title">Apothicon Servant Upgrade</h2>
           <p className="rev-page-intro">Choose the area you need and jump directly to that short location segment.</p>
         </div>
 

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import NotFound from '../../../shared/ui/NotFound';
+import { Route, Routes } from 'react-router-dom';
 import Header from '../src/components/Header';
 import Footer from '../src/components/Footer';
 import MainGuide from '../src/pages/MainGuide';
@@ -20,7 +21,7 @@ export default function RevelationsRoutes() {
         <Route path="egg-locations" element={<EggLocations />} />
         <Route path="summoning-key" element={<SummoningKey />} />
         <Route path="sound-step" element={<SoundStep />} />
-        <Route path="*" element={<Navigate to="/maps/revelations" replace />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
     </section>

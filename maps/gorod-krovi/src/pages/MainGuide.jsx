@@ -33,7 +33,7 @@ const phases = [
 ];
 
 const MainGuide = () => (
-  <main className="gorod-main-guide">
+  <div className="gorod-main-guide">
     <header className="gorod-run-header">
       <div>
         <span>MAIN EASTER EGG</span>
@@ -59,7 +59,7 @@ const MainGuide = () => (
         </li>
       ))}
     </ol>
-  </main>
+  </div>
 );
 
 export default MainGuide;

@@ -1,15 +1,18 @@
-import React, { useLayoutEffect } from 'react';
+import React, { Suspense, useLayoutEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import AppRoutes from './AppRoutes';
 import HubHeader from '../components/HubHeader';
 import HubFooter from '../components/HubFooter';
 import { isDedicatedMapPath } from '../data/dedicatedGuides';
+import { routeTitle } from './routeMetadata';
+import RouteBoundary from '../../../../shared/ui/RouteBoundary';
 
 function RootLayout() {
   const { pathname, hash } = useLocation();
   const isDedicatedMapRoute = isDedicatedMapPath(pathname);
 
   useLayoutEffect(() => {
+    document.title = routeTitle(pathname);
     if (hash) {
       const target = document.getElementById(hash.slice(1));
       if (target) target.scrollIntoView({ block: 'start' });
@@ -25,7 +28,11 @@ function RootLayout() {
       <HubHeader />
       <main className="zh-main" id="zh-main" tabIndex="-1">
         <div className={isDedicatedMapRoute ? 'map-route-host' : 'hub-content'}>
-          <Outlet />
+          <RouteBoundary key={pathname}>
+            <Suspense fallback={<div className="zh-status-page" role="status" aria-live="polite">Loading your guide…</div>}>
+              <Outlet />
+            </Suspense>
+          </RouteBoundary>
         </div>
       </main>
       {!isDedicatedMapRoute && <HubFooter />}

@@ -16,7 +16,7 @@ const BowLanding: React.FC = () => (
     <div className="bow-landing__heading">
       <div>
         <span className="bow-landing__kicker">Wrath of the Ancients</span>
-        <h1>Choose Your Bow</h1>
+        <h2>Choose Your Bow</h2>
       </div>
       <p>Get the base bow, then open only the upgrade you are building.</p>
     </div>
