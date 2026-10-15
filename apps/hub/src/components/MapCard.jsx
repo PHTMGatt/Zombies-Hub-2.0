@@ -7,6 +7,7 @@ export default function MapCard({
   map,
   isPreview = true,
   disableLink = false,
+  to,
 }) {
   const {
     name,
@@ -29,10 +30,11 @@ export default function MapCard({
 
   const Wrapper = disableLink ? 'div' : Link;
   const search = game ? `?game=${encodeURIComponent(game)}` : '';
+  const destination = to || `/info/${slug}${search}`;
   const wrapperProps = disableLink
     ? {}
     : {
-        to: `/info/${slug}${search}`,
+        to: destination,
         'aria-label': `Open ${name} map guide`,
       };
   const eeAvailable = Boolean(hasEasterEgg ?? isEasterEgg);
