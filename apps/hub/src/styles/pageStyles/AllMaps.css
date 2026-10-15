@@ -1,90 +1,217 @@
-/* src/styles/pageStyles/AllMaps.css */
-
 .maps-wrapper {
-  --nav-height: 70px;
-  --text-color: #fff;
-  --subtext-color: #ccc;
-  --accent: #00bfff;
-  --card-width: 280px;
-  --card-height: 180px;
+  min-height: calc(100vh - var(--hub-nav-height));
+  color: var(--zh-text);
+}
 
-  margin-top: var(--nav-height);
-  min-height: calc(100vh - var(--nav-height));
-  padding: 2rem;
+.maps-hero {
+  width: min(980px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 3.75rem 0 2.25rem;
   text-align: center;
-  color: var(--text-color);
-  background: #1a2a36;
-  font-family: 'Segoe UI', sans-serif;
+}
+
+.maps-kicker {
+  color: var(--zh-accent);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
 }
 
 .maps-wrapper .page-title {
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin-bottom: 0.25rem;
+  margin: 0.55rem 0 0;
+  font-size: clamp(2.75rem, 6vw, 4.8rem);
+  line-height: 0.98;
+  font-weight: 900;
+  letter-spacing: -0.055em;
 }
 
 .maps-wrapper .page-subtitle {
+  max-width: 700px;
+  margin: 1rem auto 0;
+  color: var(--zh-muted);
   font-size: 1rem;
-  font-style: italic;
-  color: var(--subtext-color);
-  margin-bottom: 2rem;
+  line-height: 1.65;
 }
 
-.maps-wrapper .game-section {
-  margin-bottom: 4rem;
+.map-search {
+  width: min(720px, 100%);
+  min-height: 54px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 1.7rem auto 0;
+  padding: 0.6rem 0.75rem 0.6rem 0.9rem;
+  color: var(--zh-muted);
+  border: 1px solid var(--zh-border);
+  border-radius: 14px;
+  background: rgba(7, 19, 29, 0.78);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.16);
+  backdrop-filter: blur(14px);
 }
 
-.maps-wrapper .game-header {
+.map-search:focus-within {
+  border-color: var(--zh-border-strong);
+  box-shadow: 0 0 0 4px rgba(109, 194, 255, 0.07), 0 14px 36px rgba(0, 0, 0, 0.18);
+}
+
+.map-search svg {
+  color: var(--zh-accent);
+  font-size: 1.1rem;
+}
+
+.map-search input {
+  min-width: 0;
+  padding: 0.35rem 0;
+  border: 0;
+  outline: 0;
+  color: var(--zh-text);
+  background: transparent;
+  font-size: 0.95rem;
+}
+
+.map-search input::placeholder {
+  color: #718798;
+}
+
+.map-search span {
+  padding: 0.35rem 0.5rem;
+  border-radius: 8px;
+  color: var(--zh-accent);
+  background: var(--zh-accent-soft);
+  font-size: 0.7rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.maps-content {
+  width: min(1240px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding-bottom: 4.5rem;
+}
+
+.game-section {
+  margin-top: 2.7rem;
+}
+
+.game-header {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  font-size: 1.5rem;
-  font-weight: 600;
+  justify-content: space-between;
   margin-bottom: 1rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.1);
 }
 
-.maps-wrapper .game-icon {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  object-fit: cover;
-  transition: transform 0.2s ease;
+.game-header > div {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
 }
 
-.maps-wrapper .game-header:hover .game-icon {
-  transform: scale(1.15);
-}
-
-.maps-wrapper .game-title {
+.game-title {
+  font-size: clamp(1.25rem, 2.2vw, 1.65rem);
   line-height: 1;
+  font-weight: 850;
+  letter-spacing: -0.025em;
 }
 
-.maps-wrapper .maps-grid {
+.game-count {
+  color: var(--zh-muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.maps-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(var(--card-width), 1fr));
-  gap: 1.5rem;
-  max-width: calc(var(--card-width) * 4 + 1.5rem * 3);
-  margin: 0 auto;
-  justify-items: center;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
 }
 
-@media (max-width: 768px) {
-  .maps-wrapper {
-    padding: 1rem;
+.maps-empty-state {
+  width: min(620px, 100%);
+  margin: 4rem auto 0;
+  padding: 2rem;
+  display: grid;
+  justify-items: center;
+  gap: 0.55rem;
+  text-align: center;
+  border: 1px solid var(--zh-border);
+  border-radius: 18px;
+  background: rgba(11, 24, 36, 0.7);
+}
+
+.maps-empty-state strong {
+  font-size: 1.1rem;
+}
+
+.maps-empty-state span {
+  color: var(--zh-muted);
+  font-size: 0.9rem;
+}
+
+.maps-empty-state button {
+  margin-top: 0.45rem;
+  padding: 0.62rem 0.85rem;
+  border: 1px solid var(--zh-border-strong);
+  border-radius: 9px;
+  color: var(--zh-accent);
+  background: var(--zh-accent-soft);
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.maps-empty-state button:hover {
+  color: var(--zh-text);
+  background: rgba(109, 194, 255, 0.2);
+}
+
+@media (max-width: 1100px) {
+  .maps-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 800px) {
+  .maps-hero {
+    padding-top: 2.6rem;
+  }
+
+  .maps-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .maps-hero,
+  .maps-content {
+    width: min(100% - 1rem, 1240px);
+  }
+
+  .maps-hero {
+    padding: 2rem 0 1.3rem;
   }
 
   .maps-wrapper .page-title {
-    font-size: 2rem;
+    font-size: clamp(2.6rem, 14vw, 3.6rem);
   }
 
-  .maps-wrapper .game-header {
-    font-size: 1.25rem;
+  .map-search {
+    grid-template-columns: auto minmax(0, 1fr);
   }
 
-  .maps-wrapper .maps-grid {
-    gap: 1rem;
-    grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
+  .map-search span {
+    display: none;
+  }
+
+  .game-section {
+    margin-top: 2rem;
+  }
+
+  .maps-grid {
+    grid-template-columns: 1fr;
   }
 }
