@@ -6,13 +6,13 @@ const BASE = '/maps/revelations';
 
 function Header() {
   return (
-    <header className="rev-header">
-      <div className="rev-header__left">
+    <header className="rev-header zh-map-header zh-map-header__inner">
+      <div className="rev-header__left zh-map-header__id">
         <h1 className="rev-header__title">Revelations Easter Egg Guide</h1>
         <p className="rev-header__subtitle">For The Good Of All — and A Better Tomorrow</p>
       </div>
 
-      <nav className="rev-header__nav" aria-label="Revelations guide navigation">
+      <nav className="rev-header__nav zh-map-tabs" aria-label="Revelations guide navigation">
         <NavLink to={BASE} end className="rev-nav-link">Main Guide</NavLink>
         <NavLink to={`${BASE}/apothicon-upgrade`} className="rev-nav-link">Apothicon Upgrade</NavLink>
         <NavLink to={`${BASE}/egg-locations`} className="rev-nav-link">Egg Locations</NavLink>

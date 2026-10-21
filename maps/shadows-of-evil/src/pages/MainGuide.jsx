@@ -1,4 +1,5 @@
 import React from 'react';
+import { GuideRun } from '../../../../shared/ui/GuideRun';
 import soeGuide from '../data/soeGuide';
 import soeLayout from '../../../../apps/hub/src/assets/images/BO3/Shadows_Of_Evil.webp';
 import '../styles/Shadows.css';
@@ -30,49 +31,38 @@ const phases = [
     summary: soeGuide[6].summary,
     notes: soeGuide[6].notes,
   },
-];
+].map((phase) => ({ ...phase, notesLabel: 'Quick notes' }));
+
+const theme = {
+  accent: '#c79cf2',
+  'accent-2': '#9a65ce',
+  'on-accent': '#160d1e',
+  text: '#f7f1fc',
+  muted: '#d6cbdd',
+  panel: 'rgba(12, 9, 19, 0.88)',
+  line: 'rgba(190, 152, 223, 0.2)',
+};
 
 function MainGuide() {
   return (
     <main className="soe-page">
       <div className="soe-page__background" aria-hidden="true" />
-      <div className="soe-page__content soe-run-sheet">
-        <header className="soe-run-header">
-          <div>
-            <span>MAIN EASTER EGG</span>
-            <h2>Shadows of Evil</h2>
-          </div>
-          <p>Five phases from the rituals to the train finale. Expand notes only when you need the exact mechanic.</p>
-        </header>
-
-        <div className="soe-run-alert">
-          <strong>Player requirement:</strong>
-          <span>solo can defeat the Shadowman; the final train/Keeper sequence and full ending require four players.</span>
-        </div>
-
-        <ol className="soe-run-flow">
-          {phases.map((phase, index) => (
-            <li key={phase.title}>
-              <span className="soe-run-number">{String(index + 1).padStart(2, '0')}</span>
-              <div className="soe-run-copy">
-                <h3>{phase.title}</h3>
-                <p>{phase.summary}</p>
-                <details className="soe-phase-notes">
-                  <summary>Quick notes</summary>
-                  <ul>
-                    {phase.notes.map((note) => <li key={note}>{note}</li>)}
-                  </ul>
-                </details>
-              </div>
-            </li>
-          ))}
-        </ol>
-
+      <GuideRun
+        runId="shadows-of-evil"
+        title="Shadows of Evil"
+        intro="Five phases from the rituals to the train finale. Expand notes only when you need the exact mechanic."
+        alert={{
+          label: 'Player requirement',
+          text: 'Solo can defeat the Shadowman; the final train/Keeper sequence and full ending require four players.',
+        }}
+        phases={phases}
+        theme={theme}
+      >
         <details className="soe-map-reference">
           <summary>Open Morg City map reference</summary>
-          <img src={soeLayout} alt="Shadows of Evil map layout" />
+          <img src={soeLayout} alt="Shadows of Evil map layout" loading="lazy" />
         </details>
-      </div>
+      </GuideRun>
     </main>
   );
 }

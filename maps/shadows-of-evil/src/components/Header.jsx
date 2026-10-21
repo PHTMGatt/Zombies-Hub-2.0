@@ -4,11 +4,11 @@ import '../styles/Shadows.css';
 
 export default function Header() {
   return (
-    <header className="soe-header">
+    <header className="soe-header zh-map-header zh-map-header--static">
       <img className="soe-header__image" src={soeCover} alt="" aria-hidden="true" />
       <div className="soe-header__overlay" />
-      <div className="soe-header__content">
-        <div className="soe-header__identity">
+      <div className="soe-header__content zh-map-header__inner">
+        <div className="soe-header__identity zh-map-header__id">
           <h1>Shadows of Evil</h1>
           <p>Main Easter Egg</p>
         </div>

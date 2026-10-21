@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { GuideRun } from '../../../../shared/ui/GuideRun';
 import '../styles/Guide.css';
 import '../styles/MainGuideCompact.css';
 
@@ -32,38 +33,35 @@ const phases = [
   },
 ];
 
+const theme = {
+  accent: '#7cebb8',
+  'accent-2': '#3fcf8f',
+  'on-accent': '#032116',
+  text: '#effff7',
+  muted: '#c9e6d8',
+  panel: 'rgba(4, 16, 11, 0.86)',
+  line: 'rgba(105, 230, 173, 0.2)',
+};
+
 const MainGuide = () => (
-  <main className="zets-main-guide">
-    <header className="zets-run-header">
-      <div>
-        <span>MAIN EASTER EGG</span>
-        <h2>Seeds of Doubt</h2>
-      </div>
-      <p>Four phases. Keep the buildables and cog pages as quick references, not extra reading.</p>
-    </header>
-
-    <div className="zets-run-alert">
-      <strong>Do early:</strong>
-      <span>finish all three Trials, keep a bucket moving, and have Anywhere But Here! available before the cog phase.</span>
-    </div>
-
-    <ol className="zets-run-flow">
-      {phases.map((phase, index) => (
-        <li key={phase.title}>
-          <span className="zets-run-number">{String(index + 1).padStart(2, '0')}</span>
-          <div>
-            <h3>{phase.title}</h3>
-            <p>{phase.summary}</p>
-            <Link to={phase.to}>{phase.link} →</Link>
-          </div>
-        </li>
-      ))}
-    </ol>
-
-    <nav className="zets-run-shortcuts" aria-label="Zetsubou quick references">
-      <Link to={`${BASE}/buildables`}>Buildables + KT-4</Link>
-      <Link to={`${BASE}/extras`}>Rewards + Extras</Link>
-    </nav>
+  <main className="zets-run-page">
+    <GuideRun
+      runId="zetsubou-no-shima"
+      title="Seeds of Doubt"
+      intro="Four phases. Keep the buildables and cog pages as quick references, not extra reading."
+      alert={{
+        label: 'Do early',
+        text: 'Finish all three Trials, keep a bucket moving, and have Anywhere But Here! available before the cog phase.',
+      }}
+      phases={phases}
+      theme={theme}
+    >
+      <h3 className="zh-run__extras-title">Quick references</h3>
+      <nav className="zh-run__shortcuts" aria-label="Zetsubou quick references">
+        <Link to={`${BASE}/buildables`}>Buildables + KT-4</Link>
+        <Link to={`${BASE}/extras`}>Rewards + Extras</Link>
+      </nav>
+    </GuideRun>
   </main>
 );
 

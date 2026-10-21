@@ -13,7 +13,7 @@
   color: var(--text-primary);
   font-family: 'Poppins', 'Segoe UI', sans-serif;
   background: linear-gradient(135deg, var(--background-primary), var(--background-secondary));
-  overflow-x: hidden;
+  overflow-x: clip; /* clip keeps sticky headers + run dock working; hidden would not */
   isolation: isolate;
 }
 
@@ -329,4 +329,44 @@
   .revelations-module .sound-card.center {
     width: min(86vw, 330px);
   }
+}
+
+/* Readability + touch floor for the reference pages (loaded after the page
+   stylesheets, so equal-specificity rules here win). */
+.revelations-module .rev-page .rev-page-kicker {
+  font-size: 0.74rem;
+}
+
+.revelations-module .rev-page .rev-page-intro {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.revelations-module .rev-page .sk-button {
+  min-height: 44px;
+  padding: 0.45rem 0.6rem;
+  font-size: 0.88rem;
+}
+
+.revelations-module .rev-page .card-buttons button {
+  min-height: 44px;
+  font-size: 0.8rem;
+}
+
+.revelations-module .rev-page .card-buttons button small {
+  font-size: 0.72rem;
+}
+
+.revelations-module .rev-page .spinner-controls button {
+  min-width: 44px;
+  min-height: 44px;
+}
+
+.revelations-module .rev-page .video-caption,
+.revelations-module .rev-page .egg-card-count {
+  font-size: 0.85rem;
+}
+
+.revelations-module .rev-page .egg-card-kicker {
+  font-size: 0.72rem;
 }

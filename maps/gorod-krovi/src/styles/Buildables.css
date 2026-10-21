@@ -120,3 +120,24 @@
     padding-top: 0.8rem;
   }
 }
+
+/* Readability floor: these sheets are read mid-match, often on a phone. */
+.gorod-module .gorod-sheet-header > span,
+.gorod-module .gorod-buildable-card__type {
+  font-size: 0.74rem;
+}
+
+.gorod-module .gorod-buildable-card__number {
+  font-size: 0.8rem;
+}
+
+.gorod-module .gorod-sheet-header p {
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+.gorod-module .gorod-buildable-card ol,
+.gorod-module .gorod-buildable-card__note {
+  font-size: 0.95rem;
+  line-height: 1.55;
+}

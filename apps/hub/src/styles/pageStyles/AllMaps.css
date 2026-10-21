@@ -26,7 +26,8 @@ body {
    Main Wrapper
 ======================================================== */
 .maps-wrapper {
-  margin-top: var(--nav-height);
+  /* The hub shell already offsets content below its fixed header. */
+  margin-top: 0;
   padding: 2rem;
   text-align: center;
   color: var(--text-color);

@@ -1,4 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&display=swap');
+
+/* The run sheet itself lives in shared/ui/GuideRun.css; this file keeps the
+   Origins backdrop and styles the folded Tips / audio extras. */
 
 .origins-module .main-guide {
   background-image: var(--origins-bg);
@@ -7,74 +10,57 @@
   background-repeat: no-repeat;
   background-attachment: fixed;
   min-height: 100vh;
-  padding: 3rem 1rem;
-  font-family: 'Rajdhani', sans-serif;
+  padding: 0.5rem 0 1.5rem;
   color: #ffffff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
-.origins-module .guide-grid {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 2rem;
-  max-width: 1200px;
-  width: 100%;
-}
-
-.origins-module .left-column,
-.origins-module .right-column {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-.origins-module .guide-section {
-  background: rgba(0, 0, 0, 0.65);
-  border-radius: 12px;
-  padding: 2rem;
-  box-shadow: 0 0 15px rgba(100, 200, 255, 0.25);
-  border-top: 3px solid #6dc2ff;
-  border-bottom: 3px solid #6dc2ff;
-  position: relative;
-}
-
-.origins-module .guide-section h2 {
-  display: flex;
-  align-items: center;
-  font-size: 1.6rem;
+.origins-module .main-guide .zh-run__title,
+.origins-module .main-guide .zh-run-phase h3 {
+  font-family: 'Rajdhani', sans-serif;
   font-weight: 700;
-  color: #cce6ff;
-  border-bottom: 2px solid #6dc2ff;
-  padding-bottom: 0.5rem;
-  margin-bottom: 1.2rem;
+  letter-spacing: 0.01em;
 }
 
-.origins-module .revive-icon {
-  width: 28px;
-  height: 28px;
-  margin-right: 0.6rem;
+.origins-module .main-guide .zh-run-phase h3 {
+  font-size: 1.32rem;
 }
 
-.origins-module ul {
-  list-style-type: disc;
-  padding-left: 1.5rem;
+.origins-module .origins-extra {
+  margin-top: 0.6rem;
+  border: 1px solid rgba(109, 194, 255, 0.2);
+  border-radius: 12px;
+  background: rgba(3, 9, 16, 0.86);
+  backdrop-filter: blur(6px);
+}
+
+.origins-module .origins-extra summary {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  color: #a8d8ff;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.origins-module .origins-extra ul {
   margin: 0;
+  padding: 0 1rem 1rem 2.2rem;
+  list-style: disc;
 }
 
-.origins-module li {
-  margin-bottom: 0.6rem;
-  line-height: 1.7;
+.origins-module .origins-extra li {
+  margin-bottom: 0.45rem;
   color: #e0eaff;
-  font-size: 1rem;
+  font-size: 0.98rem;
+  line-height: 1.55;
 }
 
 .origins-module .audio-players {
   display: flex;
   justify-content: center;
   gap: 1rem;
-  margin-top: 1.5rem;
+  padding: 0 1rem;
   flex-wrap: wrap;
 }
 
@@ -82,37 +68,25 @@
   width: 100%;
   max-width: 280px;
   border-radius: 8px;
-  outline: none;
 }
 
 .origins-module .credits {
-  font-size: 0.95rem;
-  margin-top: 1.8rem;
+  margin: 1rem 1rem 0;
+  padding: 0.8rem 0 1rem;
+  border-top: 1px solid rgba(79, 170, 255, 0.35);
   color: #a8cfff;
+  font-size: 0.95rem;
   text-align: center;
-  border-top: 1px solid #4faaff;
-  padding-top: 0.8rem;
 }
 
 .origins-module .credits em {
   display: block;
   margin-bottom: 0.3rem;
-  font-style: italic;
   color: #b8e0ff;
 }
 
 .origins-module .credits a {
-  color: #4faaff;
+  color: #7cc8ff;
   text-decoration: underline;
   font-weight: 600;
-}
-
-.origins-module .credits a:hover { color: #82cfff; }
-
-@media screen and (max-width: 900px) {
-  .origins-module .guide-grid { grid-template-columns: 1fr; }
-  .origins-module .audio-players { flex-direction: column; align-items: center; }
-  .origins-module audio { width: 90%; }
-  .origins-module .guide-section h2 { font-size: 1.3rem; }
-  .origins-module li { font-size: 0.95rem; }
 }

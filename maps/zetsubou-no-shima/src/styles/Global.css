@@ -14,7 +14,7 @@
   background:
     linear-gradient(rgba(2, 9, 6, 0.48), rgba(2, 12, 8, 0.66)),
     url('../assets/images/Zetsubou.jpg') center / cover fixed no-repeat;
-  overflow-x: hidden;
+  overflow-x: clip; /* clip keeps sticky headers + run dock working; hidden would not */
   isolation: isolate;
 }
 

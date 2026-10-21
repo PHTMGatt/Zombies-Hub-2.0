@@ -235,3 +235,37 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Readability floor: these sheets are read mid-match, often on a phone. */
+.de-module .de-sheet-header > span,
+.de-module .de-gear-section__title span,
+.de-module .de-ragnarok-step > span,
+.de-module .de-setup-strip span {
+  font-size: 0.74rem;
+}
+
+.de-module .de-parts-zone-card__number {
+  font-size: 0.8rem;
+}
+
+.de-module .de-sheet-header p {
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+.de-module .de-parts-zone-card h4,
+.de-module .de-ragnarok-step h4 {
+  font-size: 1.02rem;
+}
+
+.de-module .de-parts-zone-card li,
+.de-module .de-ragnarok-step p,
+.de-module .de-inline-note {
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.de-module .de-setup-strip strong,
+.de-module .de-setup-strip > a {
+  font-size: 0.9rem;
+}

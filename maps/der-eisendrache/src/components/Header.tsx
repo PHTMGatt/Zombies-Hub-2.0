@@ -3,11 +3,11 @@ import NavBar from './NavBar';
 import '../styles/components/Header.css';
 
 const Header: React.FC = () => (
-  <header className="de-header">
+  <header className="de-header zh-map-header">
     <div className="de-header__art" aria-hidden="true" />
     <div className="de-header__veil" aria-hidden="true" />
-    <div className="de-header__content">
-      <div className="de-header__identity">
+    <div className="de-header__content zh-map-header__inner">
+      <div className="de-header__identity zh-map-header__id">
         <div className="de-header__title-row">
           <h1>Der Eisendrache</h1>
           <span>My Brother’s Keeper</span>

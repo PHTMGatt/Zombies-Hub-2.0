@@ -7,7 +7,7 @@ import "../Styles/ComponentStyles/Nav.css";
 const Nav = () => {
   return (
     <nav className="origins-nav">
-      <div className="origins-nav-links">
+      <div className="origins-nav-links zh-map-tabs">
         <NavLink
           to="/maps/origins"
           end

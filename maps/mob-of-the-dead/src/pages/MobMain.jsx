@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { GuideRun } from '../../../../shared/ui/GuideRun';
 import { mobPrerequisites, mobRun } from '../data/mobGuide';
 import '../styles/MobMain.css';
 
@@ -32,33 +32,26 @@ const phases = [
   },
 ];
 
+const theme = {
+  accent: '#ffc940',
+  'accent-2': '#e1910f',
+  'on-accent': '#1c1202',
+  text: '#fff8ea',
+  muted: '#e4dccb',
+  panel: 'rgba(14, 11, 6, 0.86)',
+  line: 'rgba(240, 179, 33, 0.2)',
+};
+
 const MobMain = () => (
   <main className="mobmain-page">
-    <header className="mob-run-header">
-      <div>
-        <span>MAIN EASTER EGG</span>
-        <h2>Pop Goes the Weasel</h2>
-      </div>
-      <p>Four phases. Open the focused page only when you reach that part of the run.</p>
-    </header>
-
-    <div className="mob-run-alert">
-      <strong>Player requirement:</strong>
-      <span>{mobPrerequisites.join(' ')}</span>
-    </div>
-
-    <ol className="mob-run-flow">
-      {phases.map((phase, index) => (
-        <li key={phase.title}>
-          <span className="mob-run-number">{String(index + 1).padStart(2, '0')}</span>
-          <div>
-            <h3>{phase.title}</h3>
-            <p>{phase.summary}</p>
-            <Link to={phase.to}>{phase.link} →</Link>
-          </div>
-        </li>
-      ))}
-    </ol>
+    <GuideRun
+      runId="mob-of-the-dead"
+      title="Pop Goes the Weasel"
+      intro="Four phases. Open the focused page only when you reach that part of the run."
+      alert={{ label: 'Player requirement', text: mobPrerequisites.join(' ') }}
+      phases={phases}
+      theme={theme}
+    />
   </main>
 );
 

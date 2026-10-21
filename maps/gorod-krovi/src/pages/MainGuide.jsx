@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { GuideRun } from '../../../../shared/ui/GuideRun';
 import { gorodPrerequisites } from '../data/gorodRun';
 import '../styles/MainGuide.css';
 
@@ -32,33 +32,26 @@ const phases = [
   },
 ];
 
+const theme = {
+  accent: '#ff8a63',
+  'accent-2': '#ff5a32',
+  'on-accent': '#1b0904',
+  text: '#fff4ee',
+  muted: '#e6d0c6',
+  panel: 'rgba(22, 8, 5, 0.86)',
+  line: 'rgba(255, 112, 77, 0.22)',
+};
+
 const MainGuide = () => (
   <main className="gorod-main-guide">
-    <header className="gorod-run-header">
-      <div>
-        <span>MAIN EASTER EGG</span>
-        <h2>Love and War</h2>
-      </div>
-      <p>Four phases. Use the solver and reference tabs only when the run reaches them.</p>
-    </header>
-
-    <div className="gorod-run-alert">
-      <strong>Before you start:</strong>
-      <span>{gorodPrerequisites.join(' ')}</span>
-    </div>
-
-    <ol className="gorod-run-flow">
-      {phases.map((phase, index) => (
-        <li key={phase.title}>
-          <span className="gorod-run-number">{String(index + 1).padStart(2, '0')}</span>
-          <div>
-            <h3>{phase.title}</h3>
-            <p>{phase.summary}</p>
-            <Link to={phase.to}>{phase.link} →</Link>
-          </div>
-        </li>
-      ))}
-    </ol>
+    <GuideRun
+      runId="gorod-krovi"
+      title="Love and War"
+      intro="Four phases. Use the solver and reference tabs only when the run reaches them."
+      alert={{ label: 'Before you start', text: gorodPrerequisites.join(' ') }}
+      phases={phases}
+      theme={theme}
+    />
   </main>
 );
 

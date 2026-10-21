@@ -5,7 +5,7 @@ const BASE = '/maps/mob-of-the-dead';
 
 const Nav = () => (
   <nav className="nav" aria-label="Mob of the Dead guide navigation">
-    <ul>
+    <ul className="zh-map-tabs">
       <li><NavLink to={BASE} end>Guide</NavLink></li>
       <li><NavLink to={`${BASE}/plane`}>Plane</NavLink></li>
       <li><NavLink to={`${BASE}/retriever-skulls`}>Retriever + Skulls</NavLink></li>

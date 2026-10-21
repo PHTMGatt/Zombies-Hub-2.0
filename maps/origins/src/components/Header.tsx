@@ -5,11 +5,11 @@ import "../Styles/ComponentStyles/Header.css";
 
 const Header = () => {
   return (
-    <header className="site-header origins-map-header">
+    <header className="site-header origins-map-header zh-map-header">
       <div className="origins-header__backdrop" aria-hidden="true" />
 
-      <div className="origins-header__content">
-        <div className="header-left">
+      <div className="origins-header__content zh-map-header__inner">
+        <div className="header-left zh-map-header__id">
           <div className="title-box">
             <img src={ReviveIcon} alt="Revive Icon" className="revive-header-icon" />
             <h1 className="header-title">

@@ -6,8 +6,8 @@ const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="zets-header">
-      <div className="zets-header-content">
+    <header className="zets-header zh-map-header zh-map-header__inner">
+      <div className="zets-header-content zh-map-header__id">
         <div className="zets-header-identity">
           <h1 className="zets-header-title">Zetsubou No Shima</h1>
           <p className="zets-header-subtitle">Seeds of Doubt</p>
@@ -15,7 +15,7 @@ const Header = () => {
 
         <button
           type="button"
-          className="zets-nav-toggle"
+          className="zets-nav-toggle zh-map-menu-toggle"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-expanded={menuOpen}
           aria-label="Toggle Zetsubou guide navigation"

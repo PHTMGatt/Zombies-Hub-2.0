@@ -1,0 +1,161 @@
+/* Shared phone behaviour for dedicated-map headers.
+   Each map keeps its own header look; these hooks only change layout on small
+   screens:
+     .zh-map-header         the header root (sticky)
+     .zh-map-header__inner  the element holding identity + tabs, stacked
+     .zh-map-header__id     the title row, a fixed height that scrolls away
+     .zh-map-tabs           the element whose children are the tab links
+   The header sticks with its title row tucked under the hub header, so only
+   the tab strip stays on screen. */
+
+@media (max-width: 720px) {
+  .map-module {
+    --zh-map-id-h: 46px;
+    --zh-map-tabs-h: 56px;
+  }
+
+  /* header + doubled class: outranks map rules such as .origins-module .site-header.origins-map-header */
+  .map-module header.zh-map-header.zh-map-header {
+    position: sticky;
+    top: calc(var(--hub-nav-height) - var(--zh-map-id-h));
+    z-index: 60;
+    min-height: 0;
+    height: auto;
+    padding: 0;
+    margin: 0;
+  }
+
+  .map-module .zh-map-header .zh-map-header__inner,
+  .map-module .zh-map-header.zh-map-header__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    width: 100%;
+    min-height: 0;
+    padding: 0;
+    margin: 0;
+  }
+
+  .map-module .zh-map-header .zh-map-header__id {
+    height: var(--zh-map-id-h);
+    min-height: 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    margin: 0;
+    padding: 0 1rem;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .map-module .zh-map-header .zh-map-header__id :is(h1, .zh-map-header__title) {
+    margin: 0;
+    overflow: hidden;
+    font-size: 1.2rem;
+    line-height: 1.1;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .map-module .zh-map-header .zh-map-header__id :is(h1, .zh-map-header__title) {
+    flex: 0 1 auto;
+  }
+
+  /* Subtitle gives way first so the map name is never the part that's cut. */
+  .map-module .zh-map-header .zh-map-header__id :is(small, p, span:not(h1 span)) {
+    flex: 0 100 auto;
+    min-width: 0;
+    margin: 0;
+    overflow: hidden;
+    font-size: 0.78rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .map-module .zh-map-header .zh-map-header__id img {
+    width: 22px;
+    height: 22px;
+  }
+
+  .map-module .zh-map-header nav {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  .map-module .zh-map-header .zh-map-tabs {
+    height: var(--zh-map-tabs-h);
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.4rem;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0 0.6rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    list-style: none;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
+  }
+
+  .map-module .zh-map-header .zh-map-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .map-module .zh-map-header .zh-map-tabs > li {
+    flex: 0 0 auto;
+    margin: 0;
+    padding: 0;
+  }
+
+  .map-module .zh-map-header .zh-map-tabs a {
+    flex: 0 0 auto;
+    width: auto;
+    min-width: 0;
+    min-height: 44px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin: 0;
+    padding: 0 0.9rem;
+    font-size: 0.92rem;
+    line-height: 1;
+    white-space: nowrap;
+    scroll-snap-align: start;
+    touch-action: manipulation;
+  }
+}
+
+/* Short single-page maps (no tabs) just get a compact, non-sticky title. */
+@media (max-width: 720px) {
+  .map-module header.zh-map-header.zh-map-header--static.zh-map-header--static {
+    position: relative;
+    top: auto;
+  }
+}
+
+.map-module .zh-map-header .zh-map-tabs a:focus-visible {
+  outline: 3px solid currentColor;
+  outline-offset: -3px;
+}
+
+/* Maps that hid their tabs behind a menu button on phones show the strip
+   instead, so the button is redundant there. */
+@media (max-width: 720px) {
+  .map-module .zh-map-header .zh-map-menu-toggle {
+    display: none;
+  }
+}

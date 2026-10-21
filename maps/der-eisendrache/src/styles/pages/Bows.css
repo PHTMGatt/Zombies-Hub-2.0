@@ -283,3 +283,21 @@
     min-height: 62px;
   }
 }
+
+/* Readability floor for the bow chooser and landing copy. */
+.de-module .bow-choice-card__label,
+.de-module .bow-landing__kicker,
+.de-module .bow-choice-card__meta {
+  font-size: 0.74rem;
+}
+
+.de-module .bow-landing__heading p,
+.de-module .bow-landing__rule,
+.de-module .bow-choice-card__copy strong {
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.de-module .de-bow-credit {
+  font-size: 0.82rem;
+}

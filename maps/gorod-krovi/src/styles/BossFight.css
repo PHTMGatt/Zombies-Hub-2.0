@@ -125,3 +125,21 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Readability floor: these sheets are read mid-match, often on a phone. */
+.gorod-module .gorod-boss-header > span,
+.gorod-module .gorod-boss-phase__title > span {
+  font-size: 0.74rem;
+}
+
+.gorod-module .gorod-boss-header p,
+.gorod-module .gorod-boss-phase > p {
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+.gorod-module .gorod-boss-phase ul,
+.gorod-module .gorod-boss-loadout {
+  font-size: 0.95rem;
+  line-height: 1.55;
+}

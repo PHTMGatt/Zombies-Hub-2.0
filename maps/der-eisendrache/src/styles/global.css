@@ -29,7 +29,7 @@
   background:
     linear-gradient(180deg, rgba(2, 7, 13, 0.48), rgba(2, 8, 15, 0.75)),
     url('../assets/images/Der_Eisendrache.webp') center / cover fixed no-repeat;
-  overflow-x: hidden;
+  overflow-x: clip; /* clip keeps sticky headers + run dock working; hidden would not */
   isolation: isolate;
 }
 
@@ -108,13 +108,14 @@
     background-attachment: scroll;
   }
 
+  /* On phones the header is sticky and in flow (shared/ui/MapChrome.css),
+     so the spacer for the fixed desktop header is not needed. */
   .de-module .header-spacer {
-    flex-basis: 104px;
-    height: 104px;
+    display: none;
   }
 
   .de-phase-anchor {
-    scroll-margin-top: calc(var(--hub-nav-height) + 114px);
+    scroll-margin-top: calc(var(--hub-nav-height) + 72px);
   }
 }
 

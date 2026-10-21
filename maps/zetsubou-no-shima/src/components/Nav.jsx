@@ -6,7 +6,7 @@ const BASE = '/maps/zetsubou-no-shima';
 
 const Nav = ({ isOpen }) => {
   return (
-    <nav className={`zets-nav ${isOpen ? 'open' : ''}`}>
+    <nav className={`zets-nav zh-map-tabs ${isOpen ? 'open' : ''}`}>
       <NavLink to={BASE} end>Overview</NavLink>
       <NavLink to={`${BASE}/prerequisites`}>Prerequisites</NavLink>
       <NavLink to={`${BASE}/reveal-blueprint`}>Reveal Blueprint</NavLink>

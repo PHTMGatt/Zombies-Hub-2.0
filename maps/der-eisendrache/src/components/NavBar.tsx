@@ -13,7 +13,7 @@ const tabs = [
 const BASE = '/maps/der-eisendrache';
 
 const NavBar: React.FC = () => (
-  <nav className="de-nav" aria-label="Der Eisendrache guide navigation">
+  <nav className="de-nav zh-map-tabs" aria-label="Der Eisendrache guide navigation">
     {tabs.map(({ label, short, path }) => (
       <NavLink
         key={label}

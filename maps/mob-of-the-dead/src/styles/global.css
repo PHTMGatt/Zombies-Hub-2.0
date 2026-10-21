@@ -15,7 +15,7 @@
   color: #fff;
   font-family: 'Segoe UI', sans-serif;
   line-height: 1.6;
-  overflow-x: hidden;
+  overflow-x: clip; /* clip keeps sticky headers + run dock working; hidden would not */
   isolation: isolate;
 }
 

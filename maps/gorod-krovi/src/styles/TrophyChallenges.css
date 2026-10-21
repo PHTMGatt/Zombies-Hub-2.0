@@ -133,3 +133,8 @@
     border-radius: 8px;
   }
 }
+
+/* Touch floor for the trophy/challenge toggle. */
+.gorod-module .gorod-reference-toggle button {
+  min-height: 44px;
+}

@@ -4,11 +4,11 @@ import bannerSrc from '../assets/images/mob-banner.png';
 import '../styles/Header.css';
 
 const Header = () => (
-  <header className="mob-header">
+  <header className="mob-header zh-map-header">
     <img src={bannerSrc} alt="" aria-hidden="true" className="header-bg" />
 
-    <div className="header-content">
-      <div className="mob-header__identity">
+    <div className="header-content zh-map-header__inner">
+      <div className="mob-header__identity zh-map-header__id">
         <h1>Mob of the Dead</h1>
         <small>Pop Goes the Weasel</small>
       </div>

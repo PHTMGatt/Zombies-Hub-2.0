@@ -1,4 +1,7 @@
 .shadows-module {
+  /* The header/footer art bleeds past the edges on purpose; clip it here so
+     phones can't scroll sideways (clip, unlike hidden, keeps sticky working). */
+  overflow-x: clip;
   --soe-purple: #aa79df;
   --soe-gold: #d9b461;
   --soe-ink: #08070d;
@@ -66,7 +69,9 @@
 
 .shadows-module .soe-page {
   position: relative;
-  overflow: hidden;
+  /* clip, not hidden: hidden would make this a scroll container and stop the
+     run progress dock from sticking to the viewport. */
+  overflow: clip;
   isolation: isolate;
   background: #08070d;
 }

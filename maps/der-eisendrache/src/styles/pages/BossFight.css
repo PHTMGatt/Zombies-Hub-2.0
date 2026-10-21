@@ -237,3 +237,45 @@
     margin-top: 0.15rem;
   }
 }
+
+/* Readability + touch floor: these sheets are read mid-match, often on a phone. */
+.de-module .de-boss-sheet-header > span,
+.de-module .de-boss-phase-grid article > span,
+.de-module .de-boss-mechanic-grid span {
+  font-size: 0.74rem;
+}
+
+.de-module .de-boss-sheet-header p {
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+.de-module .de-boss-phase-grid h4 {
+  font-size: 1.02rem;
+}
+
+.de-module .de-boss-phase-grid p,
+.de-module .de-boss-mechanic-grid p,
+.de-module .de-boss-ending ol,
+.de-module .de-boss-warning {
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.de-module .de-boss-mechanic-grid strong {
+  font-size: 0.95rem;
+}
+
+.de-module .de-boss-ending summary {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  font-size: 0.95rem;
+}
+
+.de-module .de-boss-backlink a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.95rem;
+}

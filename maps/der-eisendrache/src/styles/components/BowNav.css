@@ -86,3 +86,10 @@
     width: 100%;
   }
 }
+
+/* Touch + readability floor for the bow sub-tabs. */
+.de-module .de-bow-nav__links .de-bow-nav__link {
+  min-height: 44px;
+  padding: 0 0.85rem;
+  font-size: 0.86rem;
+}

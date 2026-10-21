@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../styles/pages/Home.css';
+import { GuideRun } from '../../../../shared/ui/GuideRun';
 import '../styles/pages/HomeCompact.css';
 
 const BASE = '/maps/der-eisendrache';
@@ -15,13 +15,13 @@ const phases = [
   {
     title: 'First Wisps + Safe Sequence',
     summary: 'Prime the teleporter, complete the first four-wisp cycle, time travel for the canister/fuses/safe code, then finish the Death Ray safe and both Simon Says terminals.',
-    to: `${BASE}/wisp`,
+    to: `${BASE}/wisps`,
     link: 'Wisp Reference',
   },
   {
     title: 'Second Wisps + Keeper Stone',
     summary: 'Repeat the teleporter/wisp cycle, return to the past, and collect the Keeper Stone for the ritual.',
-    to: `${BASE}/wisp`,
+    to: `${BASE}/wisps`,
     link: 'Second Wisp Cycle',
   },
   {
@@ -38,40 +38,37 @@ const phases = [
   },
 ];
 
+const theme = {
+  accent: '#8fd6ff',
+  'accent-2': '#4fb3f0',
+  'on-accent': '#06111a',
+  text: '#f1f8ff',
+  muted: '#cddbe6',
+  panel: 'rgba(3, 10, 18, 0.86)',
+  line: 'rgba(123, 207, 255, 0.2)',
+};
+
 const Home: React.FC = () => (
-  <main className="de-home-page">
-    <header className="de-run-header">
-      <div>
-        <span>MAIN EASTER EGG</span>
-        <h2>My Brother’s Keeper</h2>
-      </div>
-      <p>Five phases. The detailed bow, wisp, gear, and boss pages stay separate so the main run stays readable.</p>
-    </header>
-
-    <div className="de-run-alert">
-      <strong>Setup:</strong>
-      <span>build the Shield/Ragnarok pieces as they become available and finish the bow requirement for your lobby before the Keeper ritual.</span>
-    </div>
-
-    <ol className="de-run-flow">
-      {phases.map((phase, index) => (
-        <li key={phase.title}>
-          <span className="de-run-number">{String(index + 1).padStart(2, '0')}</span>
-          <div>
-            <h3>{phase.title}</h3>
-            <p>{phase.summary}</p>
-            <Link to={phase.to}>{phase.link} →</Link>
-          </div>
-        </li>
-      ))}
-    </ol>
-
-    <nav className="de-quick-links" aria-label="Der Eisendrache focused guides">
-      <Link to={`${BASE}/bows`}>Bows <span>Base + four upgrades</span></Link>
-      <Link to={`${BASE}/wisp`}>Wisps <span>Both cycles + locations</span></Link>
-      <Link to={`${BASE}/parts`}>Gear <span>Shield + Ragnarok DG-4</span></Link>
-      <Link to={`${BASE}/boss`}>Boss <span>Keeper fight + ending</span></Link>
-    </nav>
+  <main className="de-run-page">
+    <GuideRun
+      runId="der-eisendrache"
+      title="My Brother’s Keeper"
+      intro="Five phases. The detailed bow, wisp, gear, and boss pages stay separate so the main run stays readable."
+      alert={{
+        label: 'Setup',
+        text: 'Build the Shield/Ragnarok pieces as they become available and finish the bow requirement for your lobby before the Keeper ritual.',
+      }}
+      phases={phases}
+      theme={theme}
+    >
+      <h3 className="zh-run__extras-title">Quick references</h3>
+      <nav className="zh-run__shortcuts" aria-label="Der Eisendrache focused guides">
+        <Link to={`${BASE}/bows`}>Bows <span>Base + four upgrades</span></Link>
+        <Link to={`${BASE}/wisps`}>Wisps <span>Both cycles + locations</span></Link>
+        <Link to={`${BASE}/parts`}>Gear <span>Shield + Ragnarok DG-4</span></Link>
+        <Link to={`${BASE}/boss`}>Boss <span>Keeper fight + ending</span></Link>
+      </nav>
+    </GuideRun>
   </main>
 );
 

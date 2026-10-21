@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { GuideRun } from '../../../../shared/ui/GuideRun';
 import '../styles/MainGuide.css';
 
 const BASE = '/maps/revelations';
@@ -33,43 +34,38 @@ const phases = [
   },
 ];
 
+const theme = {
+  accent: '#8fd2ff',
+  'accent-2': '#5aa9f5',
+  'on-accent': '#06111f',
+  text: '#f2f8ff',
+  muted: '#cfdcea',
+  panel: 'rgba(5, 10, 22, 0.86)',
+  line: 'rgba(109, 194, 255, 0.22)',
+};
+
 const MainGuide = () => (
   <main className="rev-page rev-main-guide">
     <div className="rev-background" />
-    <div className="rev-main-content">
-      <header className="rev-run-header">
-        <div>
-          <span>MAIN EASTER EGG</span>
-          <h2>For The Good Of All</h2>
-        </div>
-        <p>Five phases. Open the location tools only when you need them.</p>
-      </header>
-
-      <div className="rev-run-alert">
-        <strong>Random symbol step:</strong>
-        <span>copy the four symbols shown by the book each game—there is no fixed code.</span>
-      </div>
-
-      <ol className="rev-run-flow">
-        {phases.map((phase, index) => (
-          <li key={phase.title}>
-            <span className="rev-run-number">{String(index + 1).padStart(2, '0')}</span>
-            <div className="rev-run-copy">
-              <h3>{phase.title}</h3>
-              <p>{phase.summary}</p>
-              {phase.to && <Link to={phase.to}>{phase.link} →</Link>}
-            </div>
-          </li>
-        ))}
-      </ol>
-
-      <nav className="rev-main-shortcuts" aria-label="Revelations quick references">
+    <GuideRun
+      runId="revelations"
+      title="For The Good Of All"
+      intro="Five phases. Open the location tools only when you need them."
+      alert={{
+        label: 'Random symbol step',
+        text: 'Copy the four symbols shown by the book each game—there is no fixed code.',
+      }}
+      phases={phases}
+      theme={theme}
+    >
+      <h3 className="zh-run__extras-title">Quick references</h3>
+      <nav className="zh-run__shortcuts" aria-label="Revelations quick references">
         <Link to={`${BASE}/sound-step`}>Sound Step</Link>
         <Link to={`${BASE}/egg-locations`}>Egg Locations</Link>
         <Link to={`${BASE}/summoning-key`}>Summoning Key</Link>
         <Link to={`${BASE}/apothicon-upgrade`}>Apothicon Upgrade</Link>
       </nav>
-    </div>
+    </GuideRun>
   </main>
 );
 

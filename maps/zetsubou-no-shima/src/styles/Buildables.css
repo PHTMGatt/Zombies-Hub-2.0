@@ -104,3 +104,12 @@
     padding: 1.75rem 0 3rem;
   }
 }
+
+/* Readability floor. */
+.zets-module .zets-gear-card__type {
+  font-size: 0.74rem;
+}
+
+.zets-module .zets-gear-note {
+  font-size: 0.95rem;
+}
