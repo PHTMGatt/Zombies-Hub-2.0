@@ -32,6 +32,31 @@
   background: rgba(92, 48, 8, 0.48);
 }
 
+@media (max-width: 560px) {
+  .mob-module .nav ul.zh-map-tabs {
+    width: min(100%, 26rem);
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.4rem;
+    margin-inline: auto;
+  }
+
+  .mob-module .nav ul.zh-map-tabs > li {
+    min-width: 0;
+  }
+
+  .mob-module .nav ul.zh-map-tabs > li:first-child {
+    grid-column: 1 / -1;
+  }
+
+  .mob-module .nav ul.zh-map-tabs a {
+    width: 100%;
+    min-height: 40px;
+    justify-content: center;
+    text-align: center;
+  }
+}
+
 .mob-module .trivia-hover {
   position: relative;
   display: inline-block;
