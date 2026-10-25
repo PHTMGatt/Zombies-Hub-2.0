@@ -8,3 +8,4 @@ artifacts/
 *.log
 .vscode/
 screenshots/
+!docs/screenshots/

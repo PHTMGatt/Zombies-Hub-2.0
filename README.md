@@ -12,6 +12,15 @@ Zombies Hub 2.0 brings the Hub, full Easter Egg guides, Side Easter Eggs, refere
 
 The goal is simple: open a map and quickly answer **“what do I do next?”** without digging through a huge wiki page or waiting for another guide site to load.
 
+## Screenshots
+
+Captured from the live site on 2026-10-25.
+
+| | Desktop (1440 × 900) | Phone (390 × 844) |
+|---|---|---|
+| Landing | ![Zombies Hub landing page on desktop](docs/screenshots/landing-desktop.webp) | ![Zombies Hub landing page on a phone](docs/screenshots/landing-phone.webp) |
+| Map guide (Gorod Krovi) | ![Gorod Krovi main Easter Egg guide on desktop](docs/screenshots/map-gorod-krovi-desktop.webp) | ![Gorod Krovi main Easter Egg guide on a phone](docs/screenshots/map-gorod-krovi-phone.webp) |
+
 ## 1.0 vs 2.0
 
 ### Zombies Hub 1.0
