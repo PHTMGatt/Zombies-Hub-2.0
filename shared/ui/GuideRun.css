@@ -1,0 +1,539 @@
+/* Shared main-Easter-Egg run sheet. Maps theme it through --run-* tokens
+   (passed as GuideRun's `theme` prop); everything else stays shared. */
+
+.zh-run {
+  --run-accent: #6dc2ff;
+  --run-accent-2: #3b9ae0;
+  --run-on-accent: #04101c;
+  --run-text: #f4f7fb;
+  --run-muted: #c4cdd6;
+  --run-panel: rgba(5, 9, 15, 0.86);
+  --run-line: rgba(255, 255, 255, 0.12);
+  --run-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  width: min(100% - 1.5rem, 820px);
+  margin: 0 auto;
+  padding: 1.25rem 0 0;
+  color: var(--run-text);
+  font-size: 1rem;
+}
+
+.zh-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Header ---------------------------------------------------------------- */
+
+.zh-run .zh-run__header {
+  padding: 0.25rem 0 0.9rem;
+}
+
+.zh-run .zh-run__eyebrow {
+  display: block;
+  margin-bottom: 0.3rem;
+  color: var(--run-accent);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.zh-run .zh-run__title {
+  margin: 0;
+  color: var(--run-text);
+  font-size: clamp(1.9rem, 4.5vw, 2.6rem);
+  line-height: 1.05;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.7);
+}
+
+.zh-run .zh-run__intro {
+  max-width: 62ch;
+  margin: 0.5rem 0 0;
+  color: var(--run-muted);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.zh-run .zh-run__alert {
+  display: grid;
+  gap: 0.2rem;
+  margin: 0 0 1rem;
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--run-line);
+  border-left: 4px solid var(--run-accent);
+  border-radius: 10px;
+  background: var(--run-panel);
+  color: var(--run-text);
+  font-size: 0.98rem;
+  line-height: 1.5;
+  backdrop-filter: blur(6px);
+}
+
+.zh-run .zh-run__alert strong {
+  color: var(--run-accent);
+}
+
+/* Phase cards ----------------------------------------------------------- */
+
+.zh-run .zh-run__phases {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.zh-run .zh-run-phase {
+  position: relative;
+  padding: 1rem 1rem 1.05rem;
+  border: 1px solid var(--run-line);
+  border-radius: 14px;
+  background: var(--run-panel);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(6px);
+  scroll-margin: 7rem 0 9rem;
+  transition: border-color 220ms var(--run-ease), box-shadow 220ms var(--run-ease), opacity 220ms var(--run-ease);
+}
+
+/* Map modules style bare ul/li/a broadly; keep the run sheet independent. */
+.zh-run .zh-run__phases > li,
+.zh-run .zh-run-phase__notes li {
+  margin: 0;
+  color: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.zh-run .zh-run-phase__notes li {
+  line-height: 1.5;
+}
+
+.zh-run .zh-run-phase.is-next {
+  border-color: color-mix(in srgb, var(--run-accent) 70%, transparent);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--run-accent) 35%, transparent),
+    0 12px 34px color-mix(in srgb, var(--run-accent) 18%, rgba(0, 0, 0, 0.4));
+}
+
+.zh-run .zh-run-phase.is-done {
+  padding-block: 0.6rem;
+  opacity: 0.72;
+  box-shadow: none;
+}
+
+.zh-run .zh-run-phase__head {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) auto;
+  gap: 0.8rem;
+  align-items: center;
+}
+
+.zh-run .zh-run-phase__num {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--run-on-accent);
+  background: linear-gradient(145deg, var(--run-accent), var(--run-accent-2));
+  font-size: 0.95rem;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+}
+
+.zh-run .zh-run-phase.is-done .zh-run-phase__num {
+  color: var(--run-accent);
+  background: color-mix(in srgb, var(--run-accent) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--run-accent) 45%, transparent);
+}
+
+.zh-run .zh-run-phase__heading {
+  min-width: 0;
+}
+
+.zh-run .zh-run-phase__flag {
+  display: block;
+  margin-bottom: 0.15rem;
+  color: var(--run-accent);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.zh-run .zh-run-phase h3 {
+  margin: 0;
+  color: var(--run-text);
+  font-size: 1.2rem;
+  line-height: 1.25;
+  text-wrap: balance;
+}
+
+.zh-run .zh-run-phase.is-done h3 {
+  font-size: 1.02rem;
+  font-weight: 650;
+  text-decoration: line-through;
+  text-decoration-color: color-mix(in srgb, var(--run-accent) 60%, transparent);
+}
+
+.zh-run .zh-run-phase__toggle {
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0 0.85rem;
+  border: 1px solid var(--run-line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--run-muted);
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: background 160ms ease, color 160ms ease, border-color 160ms ease, transform 120ms ease;
+}
+
+.zh-run .zh-run-phase__toggle:hover {
+  border-color: color-mix(in srgb, var(--run-accent) 55%, transparent);
+  color: var(--run-text);
+}
+
+.zh-run .zh-run-phase__toggle:active,
+.zh-run .zh-run-dock button:active,
+.zh-run .zh-run-phase__link:active {
+  transform: scale(0.97);
+}
+
+.zh-run .zh-run-phase__body {
+  padding-left: calc(44px + 0.8rem);
+  animation: zh-run-reveal 240ms var(--run-ease);
+}
+
+.zh-run .zh-run-phase__summary {
+  margin: 0.55rem 0 0;
+  color: var(--run-muted);
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+.zh-run .zh-run-phase__link {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  padding: 0 1rem;
+  border-radius: 10px;
+  background: linear-gradient(145deg, var(--run-accent), var(--run-accent-2));
+  color: var(--run-on-accent);
+  font-size: 0.95rem;
+  font-weight: 800;
+  text-decoration: none;
+  touch-action: manipulation;
+  transition: filter 160ms ease, transform 120ms ease;
+}
+
+.zh-run .zh-run-phase__link:hover {
+  color: var(--run-on-accent);
+  filter: brightness(1.08);
+}
+
+.zh-run .zh-run-phase:not(.is-next) .zh-run-phase__link:hover {
+  color: var(--run-text);
+  border-color: var(--run-accent);
+}
+
+.zh-run .zh-run-phase:not(.is-next) .zh-run-phase__link {
+  background: transparent;
+  border: 1px solid color-mix(in srgb, var(--run-accent) 55%, transparent);
+  color: var(--run-accent);
+}
+
+.zh-run .zh-run-phase__notes {
+  margin-top: 0.6rem;
+}
+
+.zh-run .zh-run-phase__notes summary {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--run-accent);
+  font-size: 0.95rem;
+  font-weight: 750;
+  cursor: pointer;
+  list-style: none;
+  touch-action: manipulation;
+}
+
+.zh-run .zh-run-phase__notes summary::-webkit-details-marker {
+  display: none;
+}
+
+.zh-run .zh-run-phase__notes summary::before {
+  content: '';
+  width: 0.5rem;
+  height: 0.5rem;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(-45deg);
+  transition: transform 180ms var(--run-ease);
+}
+
+.zh-run .zh-run-phase__notes[open] summary::before {
+  transform: rotate(45deg);
+}
+
+.zh-run .zh-run-phase__notes summary span {
+  min-width: 1.5rem;
+  padding: 0 0.4rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--run-accent) 16%, transparent);
+  font-size: 0.78rem;
+  text-align: center;
+}
+
+.zh-run .zh-run-phase__notes ul {
+  display: grid;
+  gap: 0.45rem;
+  margin: 0.15rem 0 0;
+  padding: 0.75rem 0.9rem 0.75rem 1.9rem;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.3);
+  color: var(--run-text);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  animation: zh-run-reveal 200ms var(--run-ease);
+}
+
+.zh-run .zh-run__extras {
+  margin-top: 1.25rem;
+}
+
+.zh-run .zh-run__extras-title {
+  margin: 0 0 0.5rem;
+  color: var(--run-muted);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Reference shortcuts passed as children: <nav className="zh-run__shortcuts"> */
+.zh-run .zh-run__shortcuts {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 180px), 1fr));
+  gap: 0.5rem;
+}
+
+.zh-run .zh-run__shortcuts a {
+  min-height: 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.1rem;
+  padding: 0.55rem 0.85rem;
+  border: 1px solid var(--run-line);
+  border-radius: 12px;
+  background: var(--run-panel);
+  color: var(--run-text);
+  font-size: 0.98rem;
+  font-weight: 750;
+  text-decoration: none;
+  backdrop-filter: blur(6px);
+  touch-action: manipulation;
+  transition: border-color 160ms ease, background 160ms ease;
+}
+
+.zh-run .zh-run__shortcuts a:hover {
+  color: var(--run-text);
+  border-color: color-mix(in srgb, var(--run-accent) 60%, transparent);
+  background: color-mix(in srgb, var(--run-accent) 10%, var(--run-panel));
+}
+
+.zh-run .zh-run__shortcuts a > span {
+  color: var(--run-muted);
+  font-size: 0.85rem;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+/* Progress dock: sticks to the bottom of the viewport while the run is on
+   screen, then parks at the end of the run instead of covering the footer. */
+
+.zh-run .zh-run-dock {
+  position: sticky;
+  bottom: 0;
+  z-index: 40;
+  margin: 1.25rem -0.25rem 0;
+  padding: 0 0.25rem calc(0.6rem + env(safe-area-inset-bottom, 0px));
+}
+
+.zh-run .zh-run-dock__meter {
+  height: 4px;
+  overflow: hidden;
+  border-radius: 999px 999px 0 0;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.zh-run .zh-run-dock__meter span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--run-accent-2), var(--run-accent));
+  transition: width 320ms var(--run-ease);
+}
+
+.zh-run .zh-run-dock__row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border: 1px solid var(--run-line);
+  border-top: 0;
+  border-radius: 0 0 14px 14px;
+  background: color-mix(in srgb, var(--run-panel) 92%, black);
+  box-shadow: 0 -8px 28px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(10px);
+}
+
+.zh-run .zh-run-dock__next {
+  flex: 1;
+  min-width: 0;
+  min-height: 48px;
+  display: grid;
+  align-content: center;
+  padding: 0.2rem 0.5rem;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--run-text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.zh-run div.zh-run-dock__next {
+  cursor: default;
+}
+
+.zh-run .zh-run-dock__next small {
+  color: var(--run-accent);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.zh-run .zh-run-dock__next strong {
+  overflow: hidden;
+  font-size: 1rem;
+  line-height: 1.3;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.zh-run .zh-run-dock__done,
+.zh-run .zh-run-dock__reset {
+  flex: 0 0 auto;
+  min-width: 48px;
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  border-radius: 12px;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: filter 160ms ease, transform 120ms ease;
+}
+
+.zh-run .zh-run-dock__done {
+  padding: 0 1.1rem;
+  border: 0;
+  background: linear-gradient(145deg, var(--run-accent), var(--run-accent-2));
+  color: var(--run-on-accent);
+}
+
+.zh-run .zh-run-dock__reset {
+  border: 1px solid var(--run-line);
+  background: transparent;
+  color: var(--run-muted);
+}
+
+.zh-run .zh-run-dock__done:hover,
+.zh-run .zh-run-dock__next:hover {
+  filter: brightness(1.1);
+}
+
+/* Focus ------------------------------------------------------------------ */
+
+.zh-run :is(a, button, summary):focus-visible {
+  outline: 3px solid var(--run-accent);
+  outline-offset: 2px;
+}
+
+@keyframes zh-run-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+@media (max-width: 600px) {
+  .zh-run {
+    width: min(100% - 1.25rem, 680px);
+    padding-top: 0.9rem;
+  }
+
+  .zh-run .zh-run-phase {
+    padding: 0.85rem 0.8rem 0.95rem;
+  }
+
+  .zh-run .zh-run-phase__head {
+    grid-template-columns: 40px minmax(0, 1fr) auto;
+    gap: 0.65rem;
+  }
+
+  .zh-run .zh-run-phase__num {
+    width: 40px;
+    height: 40px;
+  }
+
+  .zh-run .zh-run-phase__toggle span {
+    display: none;
+  }
+
+  .zh-run .zh-run-phase__toggle {
+    padding: 0;
+  }
+
+  .zh-run .zh-run-phase__body {
+    padding-left: 0;
+  }
+
+  .zh-run .zh-run-phase__link {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zh-run *,
+  .zh-run *::before {
+    animation: none !important;
+    transition: none !important;
+  }
+}
