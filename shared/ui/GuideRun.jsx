@@ -1,30 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaCheck, FaUndoAlt } from 'react-icons/fa';
+import { readProgress, writeProgress } from './runProgress';
 import './GuideRun.css';
 
 // Main Easter Egg run sheet: one phase per card, action first, details folded away.
-// Progress is per-browser convenience only, so every storage call is allowed to fail.
-
-const storageKey = (runId) => `zh-run-progress:${runId}`;
-
-function readProgress(runId, total) {
-  try {
-    const parsed = JSON.parse(window.localStorage.getItem(storageKey(runId)) || '[]');
-    return Array.isArray(parsed) ? parsed.filter((i) => Number.isInteger(i) && i >= 0 && i < total) : [];
-  } catch {
-    return [];
-  }
-}
-
-function writeProgress(runId, done) {
-  try {
-    if (done.length) window.localStorage.setItem(storageKey(runId), JSON.stringify(done));
-    else window.localStorage.removeItem(storageKey(runId));
-  } catch {
-    // Private mode or blocked storage: progress just won't survive a reload.
-  }
-}
 
 export function useRunProgress(runId, total) {
   const [done, setDone] = useState(() => readProgress(runId, total));
