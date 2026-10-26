@@ -1,5 +1,7 @@
 # Zombies Hub 2.0
 
+![Zombies Hub 2.0 portfolio artwork](https://raw.githubusercontent.com/PHTMGatt/12-React-Portfolio/a2c43d8301679dbda14ad06dc225d61e5515e431/src/assets/project-images/Zombies%20Hub.png)
+
 [![Build Zombies Hub 2.0](https://github.com/PHTMGatt/Zombies-Hub-2.0/actions/workflows/build.yml/badge.svg)](https://github.com/PHTMGatt/Zombies-Hub-2.0/actions/workflows/build.yml)
 
 A unified **Call of Duty Zombies guide hub** built with React and Vite.
