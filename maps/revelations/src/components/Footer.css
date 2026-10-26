@@ -1,57 +1,61 @@
 .revelations-module .rev-footer {
   position: relative;
   width: 100%;
-  min-height: 66px;
+  min-height: 72px;
   margin-top: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0.75rem 1rem;
+  padding: 0.85rem 1rem;
   overflow: visible;
-  color: #ccccff;
+  color: #d8d4ff;
   background:
-    linear-gradient(rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.2)),
+    linear-gradient(rgba(2, 5, 15, 0.16), rgba(2, 5, 15, 0.28)),
     url('../assets/images/Rev3.png') center 72% / cover no-repeat;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  box-shadow: 0 -2px 14px rgba(0, 153, 255, 0.28);
+  border-top: 1px solid rgba(109, 194, 255, 0.13);
+  box-shadow:
+    0 -10px 32px rgba(0, 0, 0, 0.28),
+    0 -2px 18px rgba(0, 153, 255, 0.22);
   isolation: isolate;
 }
 
 .revelations-module .rev-footer::before {
   content: '';
   position: absolute;
-  left: -2%;
-  right: -2%;
-  top: -72px;
-  height: 78px;
+  left: -3%;
+  right: -3%;
+  top: -92px;
+  height: 98px;
   z-index: -1;
   pointer-events: none;
   background:
-    linear-gradient(to top, rgba(5, 8, 20, 0.9), rgba(5, 8, 20, 0.34) 48%, transparent 100%),
+    linear-gradient(to top, rgba(4, 7, 18, 0.94), rgba(4, 7, 18, 0.38) 46%, transparent 100%),
     url('../assets/images/Rev3.png') center 72% / cover no-repeat;
-  filter: blur(10px) saturate(1.08);
-  opacity: 0.8;
-  -webkit-mask-image: linear-gradient(to top, #000 0%, #000 34%, transparent 100%);
-  mask-image: linear-gradient(to top, #000 0%, #000 34%, transparent 100%);
+  filter: blur(13px) saturate(1.14);
+  opacity: 0.86;
+  -webkit-mask-image: linear-gradient(to top, #000 0%, #000 36%, transparent 100%);
+  mask-image: linear-gradient(to top, #000 0%, #000 36%, transparent 100%);
 }
 
 .revelations-module .rev-footer p {
   margin: 0;
   font-size: 0.82rem;
-  letter-spacing: 0.02em;
-  opacity: 0.88;
-  text-shadow: 0 1px 4px #000;
+  letter-spacing: 0.025em;
+  opacity: 0.9;
+  text-shadow:
+    0 0 8px rgba(109, 194, 255, 0.22),
+    0 1px 5px #000;
 }
 
 @media (max-width: 768px) {
   .revelations-module .rev-footer {
-    min-height: 58px;
-    padding: 0.65rem 0.75rem;
+    min-height: 62px;
+    padding: 0.7rem 0.75rem;
   }
 
   .revelations-module .rev-footer::before {
-    top: -54px;
-    height: 58px;
+    top: -62px;
+    height: 68px;
   }
 
   .revelations-module .rev-footer p {
