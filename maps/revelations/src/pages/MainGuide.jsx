@@ -23,7 +23,7 @@ const MainGuide = () => {
   };
 
   return (
-    <div className="rev-page rev-main-guide">
+    <main className="rev-page rev-main-guide">
       <div className="rev-background" />
 
       <section className="rev-main-shell">
@@ -43,6 +43,7 @@ const MainGuide = () => {
                 type="button"
                 className={`rev-step-button${index === currentStep ? ' active' : ''}`}
                 onClick={() => setCurrentStep(index)}
+                aria-current={index === currentStep ? 'step' : undefined}
               >
                 <span>{String(index + 1).padStart(2, '0')}</span>
                 <strong>{step.title}</strong>
@@ -50,7 +51,7 @@ const MainGuide = () => {
             ))}
           </nav>
 
-          <article className="rev-step-panel">
+          <article className="rev-step-panel" aria-live="polite">
             <div className="rev-step-meta">
               <span>STEP {String(currentStep + 1).padStart(2, '0')}</span>
               <span>{currentStep + 1} / {apothiconSteps.length}</span>
@@ -75,15 +76,8 @@ const MainGuide = () => {
             </div>
           </article>
         </div>
-
-        <nav className="rev-main-shortcuts" aria-label="Revelations quick references">
-          <Link to={`${BASE}/apothicon-upgrade`}>Apothicon Upgrade</Link>
-          <Link to={`${BASE}/egg-locations`}>Egg Locations</Link>
-          <Link to={`${BASE}/summoning-key`}>Summoning Key</Link>
-          <Link to={`${BASE}/sound-step`}>Rune / Sound Reference</Link>
-        </nav>
       </section>
-    </div>
+    </main>
   );
 };
 
