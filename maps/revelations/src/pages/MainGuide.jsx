@@ -23,7 +23,7 @@ const MainGuide = () => {
   };
 
   return (
-    <main className="rev-page rev-main-guide">
+    <div className="rev-page rev-main-guide">
       <div className="rev-background" />
 
       <section className="rev-main-shell">
@@ -77,7 +77,7 @@ const MainGuide = () => {
           </article>
         </div>
       </section>
-    </main>
+    </div>
   );
 };
 
