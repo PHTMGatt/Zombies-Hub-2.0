@@ -8,6 +8,10 @@ A unified **Call of Duty Zombies guide hub** built with React and Vite.
 
 **Original 1.0 Hub:** https://zombies-hub.onrender.com/
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/PHTMGatt/12-React-Portfolio/main/src/assets/photos/Zombies%20Hub.png" alt="Zombies Hub project artwork" width="900" />
+</p>
+
 Zombies Hub 2.0 brings the Hub, full Easter Egg guides, Side Easter Eggs, reference images, videos, and map-specific tools into **one application**.
 
 The goal is simple: open a map and quickly answer **“what do I do next?”** without digging through a huge wiki page or waiting for another guide site to load.
