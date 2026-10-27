@@ -79,7 +79,24 @@ try {
     await page.locator('.sk-button').nth(1).click();
     const fallback = page.getByRole('link', { name: 'Watch the selected timestamp on YouTube' });
     assert.match(await fallback.getAttribute('href'), /&t=[1-9]\d*s$/);
-    results.push({ width, interactions: 'map search, empty state, video timestamp fallback', passed: true });
+
+    // Gorod's valve solver is a gameplay-critical interactive tool. Keep its
+    // randomized-puzzle flow covered at both mobile and desktop widths.
+    await page.goto(`${base}/maps/gorod-krovi/valve-solver`);
+    const selects = page.locator('.gorod-valve-fields select');
+    assert.equal(await selects.count(), 2, 'valve solver exposes both required inputs');
+    await selects.nth(0).selectOption({ label: 'Armory' });
+    await selects.nth(1).selectOption({ label: 'Department Store' });
+    const solution = page.locator('.gorod-valve-solution');
+    await solution.waitFor();
+    assert.match(await solution.textContent(), /Armory\s*→\s*Department Store/);
+    assert.equal(await page.locator('.gorod-valve-setting').count(), 5, 'known valve route renders all stored settings');
+    await page.getByRole('button', { name: 'Reset' }).click();
+    await page.getByText('Select both locations.').waitFor();
+    assert.equal(await selects.nth(0).inputValue(), '');
+    assert.equal(await selects.nth(1).inputValue(), '');
+
+    results.push({ width, interactions: 'map search, empty state, video timestamp fallback, Gorod valve solver solution/reset', passed: true });
     await context.close();
   }
 } finally {
