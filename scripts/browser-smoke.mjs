@@ -36,6 +36,17 @@ try {
     assert((await page.locator('.map-card').allTextContents()).every(text => text.includes('Origins')));
     await page.getByRole('searchbox').fill('no-map-can-match-this');
     await page.getByText(/No maps matched/).waitFor();
+
+    // Origins is a core guide and should retain working map-specific navigation.
+    await page.goto(`${base}/maps/origins`, { waitUntil: 'networkidle' });
+    const originsLinks = page.locator('a[href^="/maps/origins/"]');
+    assert((await originsLinks.count()) > 0, 'Origins exposes at least one guide navigation link');
+    const originsTarget = await originsLinks.first().getAttribute('href');
+    assert(originsTarget, 'Origins guide link has a destination');
+    await originsLinks.first().click();
+    await page.waitForLoadState('networkidle');
+    assert.equal(new URL(page.url()).pathname, originsTarget, 'Origins guide navigation reaches its intended route');
+
     await page.goto(`${base}/maps/revelations/apothicon-upgrade`);
     await page.locator('.sk-button').nth(1).click();
     const fallback = page.getByRole('link', { name: 'Watch the selected timestamp on YouTube' });
@@ -58,7 +69,7 @@ try {
     assert.equal(await selects.nth(0).inputValue(), '');
     assert.equal(await selects.nth(1).inputValue(), '');
 
-    results.push({ width, interactions: 'map search, empty state, video timestamp fallback, Gorod valve solver solution/reset', passed: true });
+    results.push({ width, interactions: 'map search, empty state, Origins guide navigation, video timestamp fallback, Gorod valve solver solution/reset', passed: true });
     await context.close();
   }
 } finally {
