@@ -47,6 +47,17 @@ try {
     await page.waitForLoadState('networkidle');
     assert.equal(new URL(page.url()).pathname, originsTarget, 'Origins guide navigation reaches its intended route');
 
+    // Mob of the Dead should retain its own guide navigation rather than
+    // silently regressing while other map-specific shells evolve.
+    await page.goto(`${base}/maps/mob-of-the-dead`, { waitUntil: 'networkidle' });
+    const mobLinks = page.locator('a[href^="/maps/mob-of-the-dead/"]');
+    assert((await mobLinks.count()) > 0, 'Mob of the Dead exposes at least one guide navigation link');
+    const mobTarget = await mobLinks.first().getAttribute('href');
+    assert(mobTarget, 'Mob of the Dead guide link has a destination');
+    await mobLinks.first().click();
+    await page.waitForLoadState('networkidle');
+    assert.equal(new URL(page.url()).pathname, mobTarget, 'Mob of the Dead guide navigation reaches its intended route');
+
     await page.goto(`${base}/maps/revelations/apothicon-upgrade`);
     await page.locator('.sk-button').nth(1).click();
     const fallback = page.getByRole('link', { name: 'Watch the selected timestamp on YouTube' });
@@ -69,7 +80,7 @@ try {
     assert.equal(await selects.nth(0).inputValue(), '');
     assert.equal(await selects.nth(1).inputValue(), '');
 
-    results.push({ width, interactions: 'map search, empty state, Origins guide navigation, video timestamp fallback, Gorod valve solver solution/reset', passed: true });
+    results.push({ width, interactions: 'map search, empty state, Origins and Mob guide navigation, video timestamp fallback, Gorod valve solver solution/reset', passed: true });
     await context.close();
   }
 } finally {
