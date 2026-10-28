@@ -65,7 +65,7 @@ const TrophyChallenges = () => {
       ) : (
         <>
           <GuideCallout label="Important" tone="info" className="gorod-challenge-note">
-            The five main challenge types can appear in a different order. The motherboard lockdown is the final challenge in the walkthrough sequence.
+            The first five challenge types can appear in a different order. The Group 935 keycard lockdown always comes last after those five are complete.
           </GuideCallout>
 
           <GuideSection

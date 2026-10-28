@@ -18,12 +18,12 @@ export const gorodRun = [
     ],
   },
   {
-    title: 'Incubate the Dragon Egg + Earn Siegfried',
-    summary: 'Shoot down the egg in the Hatchery, place it in a nest, let the dragon breathe on it, then complete its kill requirements and the Hatchery egg lockdown.',
+    title: 'Warm the Dragon Egg + Earn Siegfried',
+    summary: 'Shoot down the green Dragon Egg in the Hatchery, warm it in the Dragon Command nest with dragon fire or Dragon Strike, wait one round, complete the three egg trials, then incubate it in the Hatchery basement.',
     details: [
-      'After incubation, fill the egg with dragon-fire zombie kills, penetration kills, and shield kills.',
-      'Place the charged egg in the Hatchery terminal and complete the lockdown.',
-      'After the required round wait, collect the egg at spawn to receive the Gauntlet of Siegfried.',
+      'After the warm-up round, complete the three egg trials: napalm/dragon-fire zombie kills, single-shot penetration multi-kills, and melee kills.',
+      'Place the trial-complete egg in the Hatchery basement Incubator and charge it with zombie souls.',
+      'When the cooled egg is ready, return it to the spawn tombstone to receive the Gauntlet of Siegfried.',
     ],
   },
   {
@@ -45,31 +45,31 @@ export const gorodRun = [
     title: 'Collect the Six Trophies',
     summary: 'Gather all six silver trophies around Stalingrad, including the final safe trophy unlocked with the Gauntlet of Siegfried, then place the set at Dragon Command.',
     details: [
-      'Tank Factory: use the shield blast on the trophy window.',
-      'Dragon Command exterior: shoot the trophy down onto the rock.',
-      'Supply Depot exterior: Dragon Strike the puddle.',
-      'Supply Depot: activate the trap and collect the trophy after the trap ends.',
-      'Pack-a-Punch/Hatchery: collect the toilet trophy.',
-      'Mule Kick room: use the Gauntlet melee on the safe for the sixth trophy.',
+      'Tank Factory / Double Tap: use the Guard of Fafnir fireball on the left window so it hits the pipe behind it and ejects the trophy.',
+      'Dragon Command exterior: shoot the trophy from the raised statue hand above the tank and collect it below.',
+      'Supply Depot exterior: place a Dragon Strike on the marked puddle.',
+      'Supply Depot: activate the giant laser trap and collect the trophy from the blasted floor after the trap ends.',
+      'Pack-a-Punch/Hatchery: while taking the sewer exit back to spawn, shoot the red light until it turns green, then return for the toilet trophy.',
+      'Operations Bunker safe: release the Gauntlet Whelp at the locked safe, then heavy-melee/punch the safe with the Gauntlet for the sixth trophy.',
     ],
   },
   {
     title: 'Complete S.O.P.H.I.A.’s Challenges',
-    summary: 'Complete the randomized challenge set shown by the lit trophies. The final motherboard lockdown challenge always comes last.',
+    summary: 'Complete the randomized challenge set shown by the lit trophies. The Group 935 keycard lockdown always comes last after the other five challenges.',
     details: [
       'Gersh: find and repeatedly shoot the floating orb until it returns to Dragon Command.',
       'Bombs: memorize the flashed location order and disable the terminals in that same order.',
       'Mangler escort: break the green-eyed Mangler’s shoulder armor and walk him onto the Dragon Command circle without killing him.',
       'Valkyrie escort: stay with the injured drone and escort it from spawn toward Dragon Command without damaging it.',
       'Groph drop: defend the called-out module, then use the Gauntlet dragon to retrieve the drop and return it to S.O.P.H.I.A.',
-      'Final lockdown: take the motherboard to the Hatchery computer, survive the Manglers, retrieve it, and return it to S.O.P.H.I.A.',
+      'Group 935: take the keycard to the Hatchery computer, survive the Mangler lockdown while the download completes, retrieve the keycard, and return it to S.O.P.H.I.A.',
     ],
   },
   {
     title: 'Take the Power Core + Open the Boss Fight',
-    summary: 'After the final challenge, collect S.O.P.H.I.A.’s Power Core, complete the Gauntlet interaction at spawn, return to S.O.P.H.I.A., and enter the newly opened boss-fight route.',
+    summary: 'After the Group 935 challenge, collect S.O.P.H.I.A.’s Power Core, use the Gauntlet Whelp at spawn to deliver the core to Nikolai, return to S.O.P.H.I.A., and enter the newly opened boss-fight route.',
     details: [
-      'Before entering, the transcript recommends strong perks, a Pack-a-Punched Ray Gun Mark 3, a fresh shield, and In Plain Sight.',
+      'Before entering, bring strong perks, a Pack-a-Punched Ray Gun Mark 3 if available, a fresh shield, and In Plain Sight if you have it.',
     ],
   },
   {
@@ -84,41 +84,42 @@ export const gorodRun = [
     title: 'Defeat Nikolai',
     summary: 'Trigger In Plain Sight, destroy Nikolai’s exposed mech weak points with the Ray Gun Mark 3, then finish the center once it opens.',
     details: [
-      'The walkthrough targets the lit weak points and upper left/right sections before the center opens for the finish.',
+      'Focus the lit mech sections and upper left/right weak points first.',
+      'Once those are destroyed, the middle opens for the finishing damage.',
     ],
   },
 ];
 
 export const gorodPrerequisites = [
   'Solo or co-op compatible.',
-  'Keep the shield available throughout the run; it is required for the egg and trophy progression.',
+  'Keep the Guard of Fafnir / Dragon Shield available throughout the run; it is required for the egg and trophy progression.',
   'Ray Gun Mark 3 is strongly recommended for the S.O.P.H.I.A. challenges and boss fight.',
 ];
 
 export const gorodTrophies = [
   {
-    location: 'Tank Factory',
-    method: 'Use the Dragon Shield blast on the trophy window to knock the trophy loose.',
+    location: 'Tank Factory / Double Tap',
+    method: 'Fire the Guard of Fafnir at the left of the two windows beside Double Tap so the blast hits the pipe behind it and ejects the trophy.',
   },
   {
     location: 'Outside Dragon Command',
-    method: 'Shoot the trophy down so it lands on the rock below.',
+    method: 'Shoot the trophy from the raised statue hand above the tank, then collect it where it falls below.',
   },
   {
     location: 'Outside Supply Depot',
-    method: 'Place a Dragon Strike on the puddle to reveal the trophy.',
+    method: 'Place a Dragon Strike on the marked puddle to reveal the trophy.',
   },
   {
     location: 'Supply Depot',
-    method: 'Activate the laser trap and collect the trophy after the trap finishes.',
+    method: 'Activate the giant laser trap and collect the trophy from the blasted floor after the trap finishes.',
   },
   {
     location: 'Pack-a-Punch / Hatchery',
-    method: 'Collect the trophy from the toilet after the sewer-light setup has been completed.',
+    method: 'During the sewer ejection back toward spawn, shoot the red light until it turns green, then return to the Hatchery and collect the trophy from the toilet.',
   },
   {
-    location: 'Mule Kick room safe',
-    method: 'After earning the Gauntlet of Siegfried, use its melee attack on the safe to reveal the sixth trophy.',
+    location: 'Operations Bunker safe',
+    method: 'After earning the Gauntlet of Siegfried, release the Whelp at the locked safe, then heavy-melee/punch the safe with the Gauntlet to reveal the sixth trophy.',
   },
 ];
 
@@ -145,13 +146,13 @@ export const gorodChallenges = [
   },
   {
     title: 'Groph Module Drop',
-    objective: 'Go to the location called out on screen, defend the Groph Module, then use the Gauntlet dragon to collect its drop and return it to S.O.P.H.I.A.',
+    objective: 'Go to the location called out on screen, defend the Groph Module, then use the Gauntlet Whelp to collect its drop and return it to S.O.P.H.I.A.',
     tip: 'The called-out module can be at Dragon Command, Tank Factory, or Supply Depot.',
   },
   {
-    title: 'Motherboard Lockdown',
-    objective: 'Take the motherboard to the Hatchery computer, survive the Mangler lockdown, retrieve the motherboard, and return it to S.O.P.H.I.A.',
-    tip: 'This is always the final challenge in the walkthrough sequence.',
+    title: 'Group 935 Challenge',
+    objective: 'Take the keycard to the Hatchery computer, survive the Mangler lockdown while the download completes, retrieve the keycard, and return it to S.O.P.H.I.A.',
+    tip: 'This challenge always comes last after the other five are complete.',
   },
 ];
 
@@ -169,7 +170,7 @@ export const gorodBossPhases = [
     title: 'Nikolai Phase',
     summary: 'Use In Plain Sight as the phase begins, destroy the exposed mech weak points, then shoot the center when it opens.',
     details: [
-      'The walkthrough focuses the lit mech sections and the upper left/right weak points first.',
+      'Focus the lit mech sections and the upper left/right weak points first.',
       'Once those are destroyed, the middle opens for the finishing damage.',
     ],
   },

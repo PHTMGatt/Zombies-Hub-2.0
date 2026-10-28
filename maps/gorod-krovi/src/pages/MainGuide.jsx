@@ -20,13 +20,13 @@ const phases = [
   },
   {
     title: 'Trophies + S.O.P.H.I.A. Challenges',
-    summary: 'Collect 6 trophies → place them at Dragon Command → finish S.O.P.H.I.A.’s challenges → motherboard lockdown.',
+    summary: 'Collect 6 trophies → place them at Dragon Command → finish the five randomized challenges → complete the always-last Group 935 keycard lockdown.',
     to: `${BASE}/trophies`,
     link: 'Trophies + Challenges',
   },
   {
     title: 'Power Core + Boss Fight',
-    summary: 'Take the Power Core → open the boss route → kill the dragon → destroy Nikolai’s mech weak points.',
+    summary: 'Take the Power Core → use the Gauntlet Whelp at spawn → open the boss route → kill the dragon → destroy Nikolai’s mech weak points.',
     to: `${BASE}/boss`,
     link: 'Boss Fight',
   },
