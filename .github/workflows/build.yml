@@ -55,6 +55,7 @@ jobs:
           path: |
             artifacts/browser-smoke.json
             artifacts/revelations-*.png
+            artifacts/side-easter-eggs-*.png
 
       - name: Upload production bundle
         if: success()
