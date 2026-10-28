@@ -167,7 +167,7 @@ export default function OriginsSpeedRunGuide({ cover }) {
       </section>
 
       <div className="origins-speedrun-footer-actions">
-        <Link to="/side-easter-eggs">← Side Easter Eggs</Link>
+        <Link to="/side-easter-eggs">← Back to Side Easter Eggs</Link>
         <a href={originsSpeedRunVideo.url} target="_blank" rel="noreferrer">Full speedrun video ↗</a>
       </div>
     </article>
