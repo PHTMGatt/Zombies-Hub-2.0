@@ -8,7 +8,7 @@ const BASE = '/maps/zetsubou-no-shima';
 const phases = [
   {
     title: 'Setup the Map',
-    summary: '3 Trials → 4 skulls → bunker / Pack-a-Punch → Gas Mask + Shield → KT-4.',
+    summary: '3 Trials per player → 4 skulls → bunker / Pack-a-Punch → Gas Mask + Shield → KT-4.',
     to: `${BASE}/prerequisites`,
     link: 'Setup Checklist',
   },
@@ -44,7 +44,7 @@ const MainGuide = () => (
 
     <div className="zets-run-alert">
       <strong>Do early:</strong>
-      <span>finish all three Trials, keep a bucket moving, and have Anywhere But Here! available before the cog phase.</span>
+      <span>have every player finish all three of their Trials, keep a bucket moving, and have Anywhere But Here! available before the cog phase.</span>
     </div>
 
     <ol className="zets-run-flow">

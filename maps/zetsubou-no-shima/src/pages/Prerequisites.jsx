@@ -8,7 +8,7 @@ import {
 
 const setup = [
   ['Anywhere But Here!', 'Bring this GobbleGum into the game. It is required for the hidden-room cog.'],
-  ['All three Trials', 'Complete your three challenge tablets during setup; the completed trials also feed into the electrified-shield cog step.'],
+  ['All three Trials — every player', 'Each player must complete their own three challenge tablets during setup; everyone finishing their Trials also unlocks the lightning used for the electrified-shield cog step.'],
   ['Skull of Nan Sapwe', 'Clean all four skulls and finish the Keeper encounter so Mesmerize is available for hidden quest objects.'],
   ['KT-4 → Masamune', 'Build the KT-4, then complete the upgrade ingredients before the elevator/boss stretch.'],
   ['Zombie Shield', 'Build it during setup and keep a usable shield for the electrified zipline cog.'],
@@ -24,12 +24,12 @@ const Prerequisites = () => (
       description="The things that can stall Seeds of Doubt later if you ignore them during the early rounds."
     >
       <GuideChip>Anywhere But Here!</GuideChip>
-      <GuideChip>3 Trials</GuideChip>
+      <GuideChip>3 Trials / player</GuideChip>
       <GuideChip>KT-4 / Masamune</GuideChip>
     </GuideHero>
 
     <GuideCallout label="Run philosophy" tone="info" className="zets-detail-note">
-      Do these alongside power, Pack-a-Punch, and skull setup. The goal is to arrive at the three-cog stage with the specialist, shield, gas mask, and Masamune progression already handled.
+      Do these alongside power, Pack-a-Punch, and skull setup. The goal is to arrive at the three-cog stage with every player’s Trials complete and the specialist, shield, gas mask, and Masamune progression already handled.
     </GuideCallout>
 
     <GuideSection kicker="Checklist" title="Have these covered before the endgame">

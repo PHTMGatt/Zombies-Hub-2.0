@@ -19,13 +19,13 @@ const cogs = [
   {
     number: '02',
     title: 'AA Cannon Plane',
-    summary: 'Create the artillery shell, fire the AA cannon at the cargo plane, then recover the cog where it lands.',
+    summary: 'Grow the three-round Blue Water + KT-4/Masamune artillery-shell plant, fire the AA cannon at the cargo plane, then recover the cog where it lands.',
     to: `${BASE}/cogs/2`,
   },
   {
     number: '03',
     title: 'Electrified Zipline Drop',
-    summary: 'Charge the shield from the completed Trials and use the electrified zipline setup to drop onto the hidden dock.',
+    summary: 'After every player completes all three Trials, charge the shield with the challenge lightning and use the electrified zipline setup to drop onto the hidden dock.',
     to: `${BASE}/cogs/3`,
   },
 ];

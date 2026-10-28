@@ -8,7 +8,7 @@ export const zetsGear = [
       'Bunker AA Platform: the final piece spawns in the Anti-Aircraft room immediately to the right after entering the bunker.',
     ],
     build: 'Craft the shield at any available buildable workbench. The walkthrough routes the build during the Green Water side setup.',
-    note: 'Keep a usable shield. After all three Trials are complete, the shield is electrified for the zipline cog step.',
+    note: 'Keep a usable shield. After every player completes all three of their Trials, use the challenge lightning to electrify the shield for the zipline cog step.',
   },
   {
     name: 'Gas Mask',
@@ -37,8 +37,8 @@ export const zetsGear = [
     type: 'KT-4 upgrade',
     parts: [
       'Rainbow-water plant: Mesmerize the hidden underwater wall/rock, plant a seed, and water it with rainbow water across the required growth cycles before collecting the upgraded plant ingredient.',
-      'Giant Spider pincer: use the KT-4 to clear the webbed entrance, defeat the giant spider, and collect its pincer before leaving.',
-      'Electrified-shield vial: after all Trials are complete, electrify the shield and use it on the Lab B cage/control setup to obtain the Divinium vial.',
+      'Giant Spider fang: use the KT-4 to clear the webbed entrance, defeat the giant spider, and collect the fang from its mouth before leaving.',
+      'Electrified-shield vial: after every player completes all three Trials, electrify the shield and use it on the Lab B cage/control setup to obtain the Divinium vial.',
     ],
     build: 'Return the upgrade ingredients to the KT-4 workbench and collect the Masamune.',
     note: 'The Masamune is required for the final elevator/boss sequence and helps produce the artillery-shell plant for Cog 2.',

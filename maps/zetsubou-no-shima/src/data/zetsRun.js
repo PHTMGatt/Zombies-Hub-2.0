@@ -1,7 +1,7 @@
 export const zetsRun = [
   {
     title: 'Complete all three Trials',
-    summary: 'Check your three challenge tablets near spawn and complete every trial during the setup. All three are required for the quest.',
+    summary: 'Check the challenge tablets near spawn and have every player complete all three of their own Trials during setup. Every player must finish their three Trials for the quest.',
     details: [
       'Grab a bucket early because the colored-water plant steps are part of the setup.',
       'Anywhere But Here! is required later for one of the three elevator cogs.',
@@ -43,10 +43,10 @@ export const zetsRun = [
   },
   {
     title: 'Upgrade the KT-4 to the Masamune',
-    summary: 'Complete the upgraded-weapon ingredient steps, including the rainbow-water plant and spider-boss pincer, then build the Masamune.',
+    summary: 'Complete the upgraded-weapon ingredient steps, including the rainbow-water plant and giant-spider fang, then build the Masamune.',
     details: [
       'Water the hidden underwater plant with rainbow water across the required rounds.',
-      'Kill the giant spider and collect its pincer before leaving the boss area.',
+      'Kill the giant spider and collect the fang from its mouth before leaving the boss area.',
       'The upgraded Masamune is used for the later plant and boss-fight steps.',
     ],
   },
@@ -59,14 +59,15 @@ export const zetsRun = [
   },
   {
     title: 'Collect Cog 2 — AA Cannon',
-    summary: 'Grow the blue-water plant used for the artillery shell, load the AA cannon, shoot down the cargo plane, and collect the dropped cog.',
+    summary: 'Plant a seed, water it with Blue Water and shoot it once with the KT-4 or Masamune each round for three rounds, then collect the artillery shell, load the AA cannon, shoot down the cargo plane, and recover the dropped cog.',
     details: [
+      'The fertilized plant can produce the artillery shell needed for the AA cannon; if it does not, repeat the three-round plant cycle.',
       'The plane cog can land in one of several locations, so watch where it falls.',
     ],
   },
   {
     title: 'Collect Cog 3 — Electrified Zipline',
-    summary: 'Charge the Zombie Shield with the completed-trials lightning, electrify the zipline panel, and drop onto the hidden dock to collect the third cog.',
+    summary: 'After every player completes all three of their Trials, charge the Zombie Shield with the challenge lightning, electrify the zipline panel, and drop onto the hidden dock to collect the third cog.',
     details: [
       'Solo: ride the zipline and melee at the correct point to drop.',
       'Co-op: another player can activate the electrified panel for the rider.',
