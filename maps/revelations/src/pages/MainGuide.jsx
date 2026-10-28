@@ -75,13 +75,6 @@ const MainGuide = () => {
             </div>
           </article>
         </div>
-
-        <nav className="rev-main-shortcuts" aria-label="Revelations quick references">
-          <Link to={`${BASE}/apothicon-upgrade`}>Apothicon Upgrade</Link>
-          <Link to={`${BASE}/egg-locations`}>Egg Locations</Link>
-          <Link to={`${BASE}/summoning-key`}>Summoning Key</Link>
-          <Link to={`${BASE}/sound-step`}>Rune / Sound Reference</Link>
-        </nav>
       </section>
     </div>
   );
