@@ -16,6 +16,27 @@ const routes = [
   '/maps/revelations',
 ];
 const results = [];
+
+const assertNoHorizontalOverflow = async (page, route) => {
+  const dimensions = await page.evaluate(() => ({
+    scrollWidth: document.documentElement.scrollWidth,
+    clientWidth: document.documentElement.clientWidth,
+  }));
+  assert(
+    dimensions.scrollWidth <= dimensions.clientWidth + 1,
+    `${route} overflows horizontally: ${dimensions.scrollWidth}px > ${dimensions.clientWidth}px`,
+  );
+};
+
+const assertImagesLoaded = async (page, route, selector) => {
+  const brokenImages = await page.locator(selector).evaluateAll(images =>
+    images
+      .filter(image => !image.complete || image.naturalWidth === 0)
+      .map(image => image.getAttribute('alt') || image.getAttribute('src') || 'unnamed image'),
+  );
+  assert.deepEqual(brokenImages, [], `${route} has broken images: ${brokenImages.join(', ')}`);
+};
+
 const browser = await chromium.launch({ headless: true });
 try {
   for (const width of widths) {
@@ -46,6 +67,51 @@ try {
     await originsLinks.first().click();
     await page.waitForLoadState('networkidle');
     assert.equal(new URL(page.url()).pathname, originsTarget, 'Origins guide navigation reaches its intended route');
+
+    // Origins guide health must cover the actual staff pages, not only the shell.
+    await page.goto(`${base}/maps/origins`, { waitUntil: 'networkidle' });
+    const originsAudio = page.locator('.audio-players audio');
+    assert.equal(await originsAudio.count(), 2, 'Origins main guide keeps both audio controls');
+    assert(
+      await originsAudio.evaluateAll(players => players.every(player => (player.getAttribute('aria-label') || '').trim().length > 0)),
+      'Origins audio controls expose accessible names',
+    );
+    await assertImagesLoaded(page, '/maps/origins', '.origins-route-content img');
+    await assertNoHorizontalOverflow(page, '/maps/origins');
+
+    const originsStaffGuides = [
+      {
+        route: '/maps/origins/fire-staff',
+        heading: 'Fire Staff Parts',
+        required: [/Generator 6/i, /glowing plane/i, /torch/i],
+      },
+      {
+        route: '/maps/origins/ice-staff',
+        heading: 'Ice Staff Parts',
+        required: [/(Tank Station|Generator 2)/i, /gravestone/i],
+      },
+      {
+        route: '/maps/origins/wind-staff',
+        heading: 'Wind Staff Parts',
+        required: [/Wind Tunnel/i, /Generator 4/i, /smoking chimneys/i],
+      },
+      {
+        route: '/maps/origins/lightning-staff',
+        heading: 'Lightning Staff Parts',
+        required: [/Purple Record/i, /Lightning Tunnel/i, /Generator 5/i],
+      },
+    ];
+
+    for (const guide of originsStaffGuides) {
+      await page.goto(`${base}${guide.route}`, { waitUntil: 'networkidle' });
+      await page.getByRole('heading', { name: guide.heading }).waitFor();
+      const guideText = await page.locator('.origins-route-content').innerText();
+      for (const requiredText of guide.required) {
+        assert.match(guideText, requiredText, `${guide.route} is missing ${requiredText}`);
+      }
+      await assertImagesLoaded(page, guide.route, '.origins-route-content img');
+      await assertNoHorizontalOverflow(page, guide.route);
+    }
 
     // Mob of the Dead should retain its own guide navigation rather than
     // silently regressing while other map-specific shells evolve.
@@ -80,7 +146,7 @@ try {
     assert.equal(await selects.nth(0).inputValue(), '');
     assert.equal(await selects.nth(1).inputValue(), '');
 
-    results.push({ width, interactions: 'map search, empty state, Origins and Mob guide navigation, video timestamp fallback, Gorod valve solver solution/reset', passed: true });
+    results.push({ width, interactions: 'map search, empty state, Origins staff guide content/images/overflow and navigation, Mob guide navigation, video timestamp fallback, Gorod valve solver solution/reset', passed: true });
     await context.close();
   }
 } finally {

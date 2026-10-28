@@ -13,11 +13,12 @@ const IceStaff = () => {
               <img src={ReviveIcon} className="revive-icon" alt="Revive Icon" /> Ice Staff Parts
             </h2>
             <ul>
-              <li>1st Part: Random dig spot while it’s snowing (Starting Room)</li>
-              <li>2nd Part: Random dig spot while it’s snowing (Middle Area)</li>
-              <li>3rd Part: Random dig spot while it’s snowing (Church Area)</li>
-              <li>Gramophone: Inside the middle excavation site</li>
-              <li>Blue Record: In the Ice Tunnel (Right of Church, Gen 6)</li>
+              <li><strong>Part 1:</strong> Dig snowy dig sites in the spawn / starting trenches.</li>
+              <li><strong>Part 2:</strong> Dig snowy dig sites around the middle / Excavation area.</li>
+              <li><strong>Part 3:</strong> Dig snowy dig sites around the Church area.</li>
+              <li><strong>Blue Record:</strong> Check the three spawn points inside the Tank Station by Generator 2.</li>
+              <li><strong>Crystal:</strong> Take the blue record and Gramophone to the Ice Tunnel by Generator 6, enter the Crazy Place, and collect the blue crystal.</li>
+              <li><strong>Build:</strong> Use the blue pedestal beneath the Excavation Site.</li>
             </ul>
           </section>
 
@@ -26,9 +27,9 @@ const IceStaff = () => {
               <img src={ReviveIcon} className="revive-icon" alt="Revive Icon" /> Crazy Place & Code
             </h2>
             <ul>
-              <li>Place the Gramophone at the Ice Tunnel (Right of Church, Gen 6)</li>
-              <li>Enter The Crazy Place</li>
-              <li>Shoot the Ice Code with Ice Staff</li>
+              <li>Return through the Ice Tunnel and enter the Crazy Place with the Ice Staff.</li>
+              <li>Use the code chart to match the blue-dot pillar symbol to the correct ceiling stone.</li>
+              <li>Shoot each matching ceiling stone with the Ice Staff until the puzzle completes.</li>
             </ul>
             <img src={IceIcon} alt="Ice Code" className="ice-icon" />
           </section>
@@ -40,12 +41,11 @@ const IceStaff = () => {
               <img src={ReviveIcon} className="revive-icon" alt="Revive Icon" /> Ice Staff Upgrade
             </h2>
             <ul>
-              <li>Go back to the main map</li>
-              <li>Enter the bottom of the Excavation Site</li>
-              <li>Rotate the rings using levers until they are all BLUE</li>
-              <li>Use the Ice Staff to shoot the blue orb at the bottom</li>
-              <li>Go back to the Crazy Place and place the Ice Staff on the blue pedestal</li>
-              <li>Kill zombies near the pedestal until the staff is upgraded</li>
+              <li>Find all three gravestones on the main map, freeze each one with the Ice Staff, then shoot the frozen stone with a normal bullet weapon to break it.</li>
+              <li>At the Excavation Site, use the four levers to align every ring to BLUE.</li>
+              <li>Go below the rings and shoot the blue orb with the Ice Staff.</li>
+              <li>Return to the Crazy Place and place the Ice Staff on the blue pedestal.</li>
+              <li>Kill zombies around the pedestal until the staff is fully charged, then pick it up.</li>
             </ul>
           </section>
         </div>

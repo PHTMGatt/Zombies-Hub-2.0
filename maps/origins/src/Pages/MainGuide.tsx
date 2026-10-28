@@ -65,8 +65,8 @@ const MainGuide = () => {
               </a>
             </p>
             <div className="audio-players">
-              <audio controls src={Audio1}></audio>
-              <audio controls src={Audio2}></audio>
+              <audio controls aria-label="Origins robot radio message" src={Audio1}></audio>
+              <audio controls aria-label="Origins zombie intro" src={Audio2}></audio>
             </div>
           </section>
         </div>
