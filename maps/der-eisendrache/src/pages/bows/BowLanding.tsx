@@ -39,7 +39,7 @@ const BowLanding: React.FC = () => (
     </div>
 
     <p className="bow-landing__rule">
-      <strong>Quest rule:</strong> standard solo needs one upgraded bow; normal co-op needs one per player. Non-ranked private games can require all four.
+      <strong>Quest rule:</strong> ranked/online needs one upgraded bow per player (solo one). Local/offline or unranked private games require all four bows.
     </p>
   </section>
 );

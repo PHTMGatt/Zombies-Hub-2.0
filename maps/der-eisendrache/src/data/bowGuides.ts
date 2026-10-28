@@ -55,11 +55,11 @@ export const bowGuides = {
       { title: 'Hit three circles while airborne', detail: 'Use the Wunderspheres and shoot each faded ritual circle while you are in the air: Clock Tower area, Death Ray area, and the route between spawn and Double Tap.' },
       { title: 'Charge every ritual circle', detail: 'Stand inside each lit circle and kill zombies until that circle erupts and finishes charging.' },
       { title: 'Read the fireplace symbol', detail: 'Return to the Clock Tower clockwork and interact to reveal the symbol that identifies the fireplace you must hit.' },
-      { title: 'Route the flame to the fireplace', detail: 'From the active ritual circle, chain ground shots toward the matching fireplace. You only have a small number of shots, so make each landing point useful. Interact with the fireplace when the flame reaches it.' },
+      { title: 'Route the flame to the fireplace', detail: 'From the active ritual circle, you have four total shots to move the volcanic rock to the matching fireplace. The first shot spawns the rock; make each later shot from the red-aura landing point and put the final shot into the fireplace. Interact with the fireplace when it lights.' },
       { title: 'Collect the reforged arrow', detail: 'Return to the Death Ray / floating fire interaction and complete the final fire step to receive the reforged arrow.' },
       { title: 'Finish at the Pyramid', detail: 'Place the forged arrow into the Fire altar, feed zombie souls, insert the base bow, and collect the upgraded Fire Bow.' },
     ],
-    tips: ['Practice the Wundersphere circle shots before attempting a speed run.', 'Do not waste fireplace shots — the route has a strict shot allowance.'],
+    tips: ['Practice the Wundersphere circle shots before attempting a speed run.', 'The fireplace route allows four total shots — plan the landing points before firing.'],
   },
   wolf: {
     id: 'wolf',
@@ -72,7 +72,7 @@ export const bowGuides = {
     video: { id: '9xBsUQrpDag', start: 127, author: 'MrTLexify', link: 'https://www.youtube.com/@MrTLexify' },
     intro: 'A route-heavy upgrade with a fixed painting story order, a ghost-wolf escort, and one anti-gravity wall shot.',
     steps: [
-      { title: 'Activate the paintings in story order', detail: 'Interact with the four paintings in this order: King on throne with wolves → King on horseback → Battlefield/war → Cowering or dying king.' },
+      { title: 'Activate the paintings in story order', detail: 'Interact with the four paintings in this order: King on throne with wolves → King on horseback holding a flag → mountain castle struck by lightning → slain king with his servant mourning him.' },
       { title: 'Take the broken arrow', detail: 'The wall / crypt in the Undercroft opens after the painting sequence. Collect the broken Wolf arrow inside.' },
       { title: 'Drop the wolf skull', detail: 'At the Rocket Test site, shoot the red flag high on the mountain to make the wolf skull fall.' },
       { title: 'Summon the ghost wolf', detail: 'Place the skull on the wolf skeleton near the Pyramid. Follow the ghost wolf when it begins moving.' },
