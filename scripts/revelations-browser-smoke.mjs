@@ -72,11 +72,20 @@ try {
     assert(await page.getByRole('link', { name: /Open Summoning Key Throws/ }).isVisible());
 
     await page.locator('.rev-step-button').first().click();
+    await page.evaluate(() => {
+      document.activeElement?.blur();
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    });
+    await page.waitForFunction(() => window.scrollY === 0);
+    const heroTitle = page.getByRole('heading', { name: 'Revelations Easter Egg Guide', level: 1 });
+    assert(await heroTitle.isVisible(), 'Revelations hero title remains visible at the top of the page');
+    const heroBox = await heroTitle.boundingBox();
+    assert(heroBox && heroBox.y >= 0, `Revelations hero title is clipped above the viewport: y=${heroBox?.y}`);
     await page.screenshot({
       path: fileURLToPath(new URL(`revelations-${width}.png`, artifactDir)),
       fullPage: true,
     });
-    results.push({ width, route: mainRoute, interactions: 'step selection + contextual references + screenshot', passed: true });
+    results.push({ width, route: mainRoute, interactions: 'step selection + contextual references + top-aligned screenshot', passed: true });
 
     errors.length = 0;
     const upgradeRoute = '/maps/revelations/apothicon-upgrade';
