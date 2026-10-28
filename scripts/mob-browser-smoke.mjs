@@ -72,7 +72,7 @@ try {
       const response = await page.goto(`${base}${guide.route}`, { waitUntil: 'networkidle' });
       assert(response?.ok(), `${guide.route} returned ${response?.status()}`);
       assert.equal(errors.length, 0, `${guide.route} page errors: ${errors.join('; ')}`);
-      await page.getByRole('heading', { name: guide.heading }).waitFor();
+      await page.getByRole('heading', { name: guide.heading, level: 2 }).waitFor();
       const text = await page.locator('.mob-section-page').innerText();
       for (const required of guide.required) assert.match(text, required, `${guide.route} is missing ${required}`);
       await assertImagesLoaded(page, guide.route);
