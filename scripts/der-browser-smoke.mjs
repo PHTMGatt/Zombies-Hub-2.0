@@ -74,7 +74,7 @@ try {
       errors.length = 0;
       response = await page.goto(`${base}${guide.route}`, { waitUntil: 'domcontentloaded' });
       assert(response?.ok(), `${guide.route} returned ${response?.status()}`);
-      await page.getByRole('heading', { name: guide.heading, level: 2 }).waitFor();
+      await page.locator('.zh-guide-title', { hasText: guide.heading }).first().waitFor();
       assert.equal(errors.length, 0, `${guide.route} page errors: ${errors.join('; ')}`);
       const text = await page.locator('.de-bow-guide').innerText();
       for (const required of guide.required) assert.match(text, required, `${guide.route} is missing ${required}`);
