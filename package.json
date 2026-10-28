@@ -8,7 +8,7 @@
   "type": "module",
   "scripts": {
     "test": "node --test scripts/*.test.mjs",
-    "test:browser": "node scripts/browser-smoke.mjs && node scripts/mob-browser-smoke.mjs",
+    "test:browser": "node scripts/browser-smoke.mjs && node scripts/mob-browser-smoke.mjs && node scripts/shadows-browser-smoke.mjs",
     "dev": "vite",
     "check": "node scripts/verify.mjs",
     "compile": "vite build && node scripts/write-build-info.mjs",
