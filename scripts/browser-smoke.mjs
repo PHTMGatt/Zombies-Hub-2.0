@@ -3,11 +3,14 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 
 const base = process.env.SMOKE_BASE_URL || 'http://127.0.0.1:4173';
+const artifactsDir = new URL('../artifacts/', import.meta.url);
 const out = new URL('../artifacts/browser-smoke.json', import.meta.url);
 const widths = [390, 1440];
 const routes = [
   '/',
   '/allmaps',
+  '/easter-eggs',
+  '/side-easter-eggs',
   '/maps/origins',
   '/maps/mob-of-the-dead',
   '/maps/der-eisendrache',
@@ -37,6 +40,7 @@ const assertImagesLoaded = async (page, route, selector) => {
   assert.deepEqual(brokenImages, [], `${route} has broken images: ${brokenImages.join(', ')}`);
 };
 
+await fs.mkdir(artifactsDir, { recursive: true });
 const browser = await chromium.launch({ headless: true });
 try {
   for (const width of widths) {
@@ -50,13 +54,37 @@ try {
       assert.equal(errors.length, 0, `${route} page errors: ${errors.join('; ')}`);
       results.push({ width, route, passed: true });
     }
-    // Interactions use app state, not live third-party video playback.
+
     await page.goto(`${base}/allmaps`);
     await page.getByRole('searchbox').fill('Origins');
     assert((await page.locator('.map-card').count()) > 0);
     assert((await page.locator('.map-card').allTextContents()).every(text => text.includes('Origins')));
     await page.getByRole('searchbox').fill('no-map-can-match-this');
     await page.getByText(/No maps matched/).waitFor();
+
+    // Side Easter Eggs is a visually sensitive hub page. Protect its card count,
+    // responsive grid, navigation, overflow, and capture both target viewports.
+    await page.goto(`${base}/side-easter-eggs`, { waitUntil: 'networkidle' });
+    await page.getByRole('heading', { name: 'Side Easter Eggs' }).waitFor();
+    const sideCards = page.locator('.side-ee-card');
+    assert.equal(await sideCards.count(), 5, 'Side Easter Eggs keeps all five guide cards');
+    const sideColumns = await page.locator('.side-ee-grid').evaluate(element =>
+      getComputedStyle(element).gridTemplateColumns.split(' ').filter(Boolean).length,
+    );
+    assert.equal(sideColumns, width === 390 ? 1 : 3, `Side Easter Eggs uses the expected ${width}px grid`);
+    await assertNoHorizontalOverflow(page, '/side-easter-eggs');
+    await page.screenshot({
+      path: new URL(`../artifacts/side-easter-eggs-${width}.png`, import.meta.url).pathname,
+      fullPage: true,
+    });
+    const firstSideTarget = await sideCards.first().getAttribute('href');
+    assert(firstSideTarget, 'Side Easter Egg card has a destination');
+    await sideCards.first().click();
+    await page.waitForLoadState('networkidle');
+    assert.equal(new URL(page.url()).pathname, firstSideTarget, 'Side Easter Egg card reaches its intended route');
+    await page.getByRole('link', { name: /Back to Side Easter Eggs/i }).click();
+    await page.waitForLoadState('networkidle');
+    assert.equal(new URL(page.url()).pathname, '/side-easter-eggs', 'Side Easter Egg detail returns to the list');
 
     // Origins is a core guide and should retain working map-specific navigation.
     await page.goto(`${base}/maps/origins`, { waitUntil: 'networkidle' });
@@ -146,13 +174,12 @@ try {
     assert.equal(await selects.nth(0).inputValue(), '');
     assert.equal(await selects.nth(1).inputValue(), '');
 
-    results.push({ width, interactions: 'map search, empty state, Origins staff guide content/images/overflow and navigation, Mob guide navigation, video timestamp fallback, Gorod valve solver solution/reset', passed: true });
+    results.push({ width, interactions: 'map search, empty state, Side Easter Egg layout/navigation, Origins staff guide content/images/overflow and navigation, Mob guide navigation, video timestamp fallback, Gorod valve solver solution/reset', passed: true });
     await context.close();
   }
 } finally {
   await browser.close();
 }
-await fs.mkdir(new URL('../artifacts/', import.meta.url), { recursive: true });
 await fs.writeFile(out, JSON.stringify(results, null, 2));
 const failed = results.filter(r => !r.passed);
 console.log(`${results.length - failed.length}/${results.length} browser route checks passed.`);
