@@ -3,7 +3,6 @@ import { useParams, Link, Navigate } from 'react-router-dom';
 import sideEEArtwork from '../data/sideEEArtwork';
 import sideEEs from '../data/sideEE';
 import SideEECard from '../components/SideEECard';
-import OriginsSpeedRunGuide from '../components/OriginsSpeedRunGuide';
 import NotFound from '../../../../shared/ui/NotFound';
 import '../styles/SideEE/SideEEInfo.css';
 
@@ -40,12 +39,9 @@ export default function SideEEInfo() {
     );
   }
 
+  // The speed run moved into the Origins guide; keep the old address working.
   if (mapKey === 'origins-speedrun') {
-    return (
-      <div className="side-ee-info-page side-ee-info-page--origins-speedrun">
-        <OriginsSpeedRunGuide cover={meta.artwork.src} />
-      </div>
-    );
+    return <Navigate to="/maps/origins/speed-run" replace />;
   }
 
   if (entries.length === 0) {

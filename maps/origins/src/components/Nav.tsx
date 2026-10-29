@@ -1,11 +1,13 @@
 import React, { useEffect, useRef } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { FaRegSnowflake } from "react-icons/fa";
-import { GiWhirlwind, GiFireTail, GiLightningHelix, GiCrownedSkull } from "react-icons/gi";
+import { GiWhirlwind, GiFireTail, GiLightningHelix, GiCrownedSkull, GiStopwatch } from "react-icons/gi";
+import { useSpeedrunUnlock } from "./speedrunUnlock";
 import "../Styles/ComponentStyles/Nav.css";
 
 const Nav = () => {
   const { pathname } = useLocation();
+  const { unlocked } = useSpeedrunUnlock();
   const linksRef = useRef<HTMLDivElement>(null);
 
   // On phones the staff tabs are a swipeable row; keep the current staff in view.
@@ -67,6 +69,17 @@ const Nav = () => {
         >
           <GiLightningHelix /> <span>Lightning Staff</span>
         </NavLink>
+
+        {unlocked && (
+          <NavLink
+            to="/maps/origins/speed-run"
+            className={({ isActive }) =>
+              `origins-nav-link speedrun ${isActive ? "active speedrun-active" : ""}`
+            }
+          >
+            <GiStopwatch /> <span>Speed Run</span>
+          </NavLink>
+        )}
       </div>
     </nav>
   );

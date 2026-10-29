@@ -61,6 +61,11 @@
   --origin-link-soft: rgba(216, 168, 255, 0.11);
 }
 
+.origins-module .origins-nav-link.speedrun {
+  --origin-link-accent: #f0c56b;
+  --origin-link-soft: rgba(240, 197, 107, 0.12);
+}
+
 .origins-module .origins-nav-link:hover,
 .origins-module .origins-nav-link.active {
   transform: translateY(-1px);
@@ -91,6 +96,7 @@
 .origins-module .fire-active { color: #ff7844; }
 .origins-module .wind-active { color: #ffe657; }
 .origins-module .lightning-active { color: #d8a8ff; }
+.origins-module .speedrun-active { color: #f0c56b; }
 
 @media (max-width: 1040px) {
   .origins-module .origins-nav-links {

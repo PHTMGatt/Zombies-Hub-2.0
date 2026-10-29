@@ -1,6 +1,6 @@
 import React from "react";
 import ReviveIcon from "../assets/images/Skull2.png";
-import WindCode from "../assets/images/wind_staff_code.png";
+import WindCode from "../assets/images/wind_staff_code.webp";
 import "../Styles/PageStyles/WindStaff.css";
 
 const WindStaff = () => {

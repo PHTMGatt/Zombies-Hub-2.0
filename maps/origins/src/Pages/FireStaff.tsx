@@ -1,6 +1,6 @@
 import React from "react";
 import ReviveIcon from "../assets/images/Skull2.png";
-import FireCode from "../assets/images/fire_staff_code.png";
+import FireCode from "../assets/images/fire_staff_code.webp";
 import "../Styles/PageStyles/FireStaff.css";
 
 const FireStaff = () => {

@@ -1,7 +1,9 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import ReviveIcon from "../assets/images/Skull.png";
-import LightningCode from "../assets/images/lightning_staff_code.png";
-import { originsLightningSwitchRoute } from "../../../../shared/data/originsLightning";
+import LightningCode from "../assets/images/lightning_staff_code.webp";
+import LightningSwitchBoard from "../components/LightningSwitchBoard";
+import ElectricalPanel from "../components/ElectricalPanel";
 import "../Styles/PageStyles/LightningStaff.css";
 
 const LightningStaff = () => {
@@ -47,23 +49,23 @@ const LightningStaff = () => {
                   <strong>2-4-6</strong>
                 </span>
               </li>
-              <li>Set the seven switches using the card below.</li>
+              <li>Set the seven switches using the dials below.</li>
               <li><strong>Excavation:</strong> line all four rings purple → shoot the orb with the Lightning Staff.</li>
               <li>Place the staff on the purple Crazy Place pedestal → kill zombies to fill it with souls.</li>
             </ul>
           </section>
 
-          <aside className="switch-speedrun">
-            <h3>⚡ Switch Positions</h3>
-            <ul>
-              {originsLightningSwitchRoute.map((item) => (
-                <li key={item.id}>
-                  <strong>{item.shortLabel}</strong>
-                  <span>{item.arrow} {item.direction}</span>
-                </li>
-              ))}
-            </ul>
-          </aside>
+          <LightningSwitchBoard
+            showLocations
+            extraSlot={(
+              <Link to="/maps/origins/speed-run/lightning">
+                <strong>Speed Run route →</strong>
+                <small>Switch order, turn counts, and skips</small>
+              </Link>
+            )}
+          />
+
+          <ElectricalPanel />
         </div>
       </div>
     </div>

@@ -6,6 +6,11 @@
   font-family: 'Rajdhani', 'Segoe UI', sans-serif;
   background: #06192a;
   isolation: isolate;
+  /* Column layout so the content area can grow and keep the footer pinned on short pages. */
+  display: flex;
+  flex-direction: column;
+  /* clip, not hidden: hidden would make this a scroll container and break sticky headers/rails. */
+  overflow-x: clip;
 }
 
 .origins-module,
@@ -14,6 +19,8 @@
 }
 
 .origins-module .origins-route-content {
+  /* Fill the module column so short pages still pin the footer to the bottom. */
+  flex: 1 0 auto;
   min-height: 60vh;
   width: 100%;
 }

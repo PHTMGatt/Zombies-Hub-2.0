@@ -1,0 +1,249 @@
+/* The Origins secret: a quiet, in-universe panel under the Lightning switch reference. */
+.origins-module .electrical-panel {
+  overflow: hidden;
+  border: 1px dashed rgba(187, 134, 252, 0.32);
+  border-radius: 12px;
+  background:
+    repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.015) 0 6px, transparent 6px 12px),
+    rgba(6, 4, 10, 0.78);
+  color: #d9c8f0;
+}
+
+.origins-module .electrical-panel.is-open,
+.origins-module .electrical-panel.is-complete {
+  border-style: solid;
+}
+
+.origins-module .electrical-panel.is-complete {
+  border-color: rgba(125, 255, 191, 0.4);
+}
+
+.origins-module .electrical-panel__toggle {
+  width: 100%;
+  min-height: 60px;
+  display: grid;
+  grid-template-columns: 2.2rem minmax(0, 1fr) 1.5rem;
+  gap: 0.7rem;
+  align-items: center;
+  padding: 0.6rem 0.9rem;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.origins-module .electrical-panel__bolt {
+  width: 2.2rem;
+  height: 2.2rem;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(187, 134, 252, 0.4);
+  border-radius: 6px;
+  background: rgba(187, 134, 252, 0.08);
+  filter: grayscale(0.7);
+  opacity: 0.75;
+}
+
+.origins-module .electrical-panel.is-complete .electrical-panel__bolt {
+  filter: none;
+  opacity: 1;
+  box-shadow: 0 0 12px rgba(125, 255, 191, 0.4);
+}
+
+.origins-module .electrical-panel__copy {
+  display: grid;
+  gap: 0.1rem;
+}
+
+.origins-module .electrical-panel__copy strong {
+  color: #efe4ff;
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+}
+
+.origins-module .electrical-panel__copy small {
+  color: #9c88b8;
+  font-size: 0.88rem;
+  font-style: italic;
+}
+
+.origins-module .electrical-panel__chevron {
+  color: #9c88b8;
+  font-size: 1.3rem;
+  text-align: center;
+}
+
+.origins-module .electrical-panel__board {
+  padding: 0.25rem 0.9rem 1rem;
+  border-top: 1px solid rgba(187, 134, 252, 0.18);
+}
+
+.origins-module .electrical-panel__status {
+  margin: 0.7rem 0;
+  color: #b9a5d4;
+  font-size: 0.95rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.origins-module .electrical-panel__status span {
+  color: #7dffbf;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.origins-module .electrical-panel .electrical-panel__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.origins-module .electrical-panel .electrical-panel__grid li {
+  margin: 0;
+  line-height: 1.2;
+  list-style: none;
+}
+
+.origins-module .electrical-switch {
+  width: 100%;
+  min-height: 104px;
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 0.35rem;
+  padding: 0.5rem 0.25rem;
+  border: 1px solid rgba(187, 134, 252, 0.22);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.45);
+  color: #d9c8f0;
+  font: inherit;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.origins-module .electrical-switch:hover {
+  border-color: rgba(187, 134, 252, 0.6);
+}
+
+.origins-module .electrical-switch.is-live {
+  border-color: rgba(125, 255, 191, 0.35);
+  background: rgba(20, 50, 38, 0.35);
+}
+
+.origins-module .electrical-switch__dial {
+  position: relative;
+  display: grid;
+}
+
+/* Sparks: wrong switches crackle, like the real panel. */
+.origins-module .electrical-switch__spark {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 20% 25%, #fff 0 1.5px, transparent 2.5px),
+    radial-gradient(circle at 80% 30%, #d8a8ff 0 1.5px, transparent 2.5px),
+    radial-gradient(circle at 70% 85%, #fff 0 1px, transparent 2px),
+    radial-gradient(circle at 15% 75%, #d8a8ff 0 1px, transparent 2px);
+  filter: drop-shadow(0 0 4px #bb86fc);
+  animation: electrical-spark 0.9s steps(3) infinite;
+}
+
+@keyframes electrical-spark {
+  0% { opacity: 0.9; transform: rotate(0deg); }
+  33% { opacity: 0.2; transform: rotate(80deg); }
+  66% { opacity: 1; transform: rotate(200deg); }
+  100% { opacity: 0.4; transform: rotate(300deg); }
+}
+
+.origins-module .electrical-switch.is-live .switch-dial {
+  filter: drop-shadow(0 0 6px rgba(125, 255, 191, 0.6));
+}
+
+.origins-module .electrical-switch__label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  line-height: 1.15;
+  text-align: center;
+}
+
+.origins-module .electrical-panel__reward {
+  display: grid;
+  gap: 0.35rem;
+  margin-top: 0.75rem;
+  padding: 1rem;
+  border-radius: 10px;
+  background:
+    radial-gradient(ellipse 80% 120% at 50% 0%, rgba(125, 255, 191, 0.16), transparent 70%),
+    rgba(0, 0, 0, 0.4);
+  text-align: center;
+  animation: electrical-reveal 0.6s ease-out;
+}
+
+@keyframes electrical-reveal {
+  from { opacity: 0; transform: scale(0.96); filter: brightness(2); }
+}
+
+.origins-module .electrical-panel__reward-kicker {
+  color: #7dffbf;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.origins-module .electrical-panel__reward strong {
+  color: #fff;
+  font-size: 1.45rem;
+  text-shadow: 0 0 16px rgba(125, 255, 191, 0.5);
+}
+
+.origins-module .electrical-panel__reward p {
+  margin: 0;
+  color: #cbd9e6;
+  font-size: 0.98rem;
+}
+
+.origins-module .electrical-panel__reward-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.origins-module .electrical-panel__reward-links a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 1rem;
+  border: 1px solid rgba(240, 197, 107, 0.55);
+  border-radius: 999px;
+  background: rgba(240, 197, 107, 0.12);
+  color: #ffe4a8;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+@media (max-width: 420px) {
+  .origins-module .electrical-panel .electrical-panel__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .origins-module .electrical-switch__spark {
+    animation: none;
+    opacity: 0.7;
+  }
+
+  .origins-module .electrical-panel__reward {
+    animation: none;
+  }
+}

@@ -1,117 +1,190 @@
-
 .origins-module .main-guide {
   background-image: var(--origins-bg);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  min-height: 100vh;
-  padding: 3rem 1rem;
+  padding: 1.75rem 1rem 3rem;
   font-family: 'Rajdhani', sans-serif;
   color: #ffffff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
-.origins-module .guide-grid {
+/* Origins theme for the shared step guide: the blue revive palette, Rajdhani, dark glass. */
+.origins-module .origins-guide .guide {
+  --guide-accent: #6dc2ff;
+  --guide-accent-ink: #04121e;
+  --guide-ink: #ffffff;
+  --guide-text: #e0eaff;
+  --guide-muted: #a8c3dc;
+  --guide-surface: rgba(0, 0, 0, 0.68);
+  --guide-surface-2: rgba(109, 194, 255, 0.06);
+  --guide-line: rgba(109, 194, 255, 0.2);
+  --guide-sticky-top: calc(var(--hub-nav-height) + 84px + 0.75rem);
+}
+
+.origins-module .origins-guide .guide-step {
+  box-shadow: 0 0 15px rgba(100, 200, 255, 0.2);
+}
+
+.origins-module .origins-guide__inner {
+  width: min(100%, 1240px);
+  margin: 0 auto;
   display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 2rem;
-  max-width: 1200px;
-  width: 100%;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.25rem;
 }
 
-.origins-module .left-column,
-.origins-module .right-column {
+.origins-module .origins-guide__credits {
   display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-.origins-module .guide-section {
-  background: rgba(0, 0, 0, 0.65);
-  border-radius: 12px;
-  padding: 2rem;
-  box-shadow: 0 0 15px rgba(100, 200, 255, 0.25);
-  border-top: 3px solid #6dc2ff;
-  border-bottom: 3px solid #6dc2ff;
-  position: relative;
-}
-
-.origins-module .guide-section h2 {
-  display: flex;
-  align-items: center;
-  font-size: 1.6rem;
-  font-weight: 700;
-  color: #cce6ff;
-  border-bottom: 2px solid #6dc2ff;
-  padding-bottom: 0.5rem;
-  margin-bottom: 1.2rem;
-}
-
-.origins-module .revive-icon {
-  width: 28px;
-  height: 28px;
-  margin-right: 0.6rem;
-}
-
-.origins-module ul {
-  list-style-type: disc;
-  padding-left: 1.5rem;
-  margin: 0;
-}
-
-.origins-module li {
-  margin-bottom: 0.6rem;
-  line-height: 1.7;
-  color: #e0eaff;
-  font-size: 1rem;
-}
-
-.origins-module .audio-players {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin-top: 1.5rem;
   flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid rgba(109, 194, 255, 0.2);
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.62);
 }
 
-.origins-module audio {
-  width: 100%;
-  max-width: 280px;
-  border-radius: 8px;
-  outline: none;
-}
-
-.origins-module .credits {
-  font-size: 0.95rem;
-  margin-top: 1.8rem;
+.origins-module .origins-guide .credits {
+  display: grid;
+  gap: 0.2rem;
+  margin: 0;
   color: #a8cfff;
-  text-align: center;
-  border-top: 1px solid #4faaff;
-  padding-top: 0.8rem;
+  font-size: 0.95rem;
 }
 
-.origins-module .credits em {
-  display: block;
-  margin-bottom: 0.3rem;
-  font-style: italic;
+.origins-module .origins-guide .credits em {
   color: #b8e0ff;
 }
 
-.origins-module .credits a {
-  color: #4faaff;
-  text-decoration: underline;
+.origins-module .origins-guide .credits a {
+  color: #6dc2ff;
   font-weight: 600;
 }
 
-.origins-module .credits a:hover { color: #82cfff; }
+.origins-module .origins-guide .audio-players {
+  display: grid;
+  gap: 0.5rem;
+}
 
-@media screen and (max-width: 900px) {
-  .origins-module .guide-grid { grid-template-columns: 1fr; }
-  .origins-module .audio-players { flex-direction: column; align-items: center; }
-  .origins-module audio { width: 90%; }
-  .origins-module .guide-section h2 { font-size: 1.3rem; }
-  .origins-module li { font-size: 0.95rem; }
+.origins-module .origins-guide audio {
+  width: 260px;
+  max-width: 100%;
+  height: 40px;
+  color-scheme: dark;
+}
+
+/* Speedrun mode button: hidden reward in the depth switch. */
+.origins-module .origins-guide .guide-mode__secret {
+  min-width: 52px;
+  justify-content: center;
+  color: #6f8293;
+  font-style: italic;
+  opacity: 0.75;
+}
+
+.origins-module .origins-guide .guide-mode__secret-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.origins-module .origins-guide .guide-mode__secret.is-unlocked {
+  font-style: normal;
+  opacity: 1;
+}
+
+.origins-module .origins-guide .guide-mode__secret.is-unlocked {
+  color: #f0c56b;
+}
+
+.origins-module .origins-guide .guide-mode__secret[aria-pressed='true'] {
+  background: #f0c56b;
+  color: #1c1203;
+}
+
+.origins-module .origins-guide__toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(1.25rem + env(safe-area-inset-bottom));
+  z-index: 20;
+  margin: 0;
+  padding: 0.75rem 1.2rem;
+  border: 1px solid #f0c56b;
+  border-radius: 12px;
+  background: rgba(10, 8, 2, 0.94);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 24px rgba(240, 197, 107, 0.35);
+  color: #ffe4a8;
+  font-size: 1.05rem;
+  font-weight: 700;
+  transform: translateX(-50%);
+  animation: origins-toast 0.35s ease-out;
+}
+
+@keyframes origins-toast {
+  from { opacity: 0; transform: translate(-50%, 12px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .origins-module .origins-guide__toast {
+    animation: none;
+  }
+}
+
+@media (max-width: 980px) {
+  .origins-module .origins-guide .guide {
+    --guide-sticky-top: calc(var(--hub-nav-height) + 96px + 0.75rem);
+  }
+}
+
+@media (max-width: 760px) {
+  .origins-module .main-guide {
+    padding: 0.85rem 0.6rem 2rem;
+    background-attachment: scroll;
+  }
+
+  .origins-module .origins-guide audio {
+    width: 100%;
+  }
+
+  .origins-module .origins-guide .audio-players {
+    width: 100%;
+  }
+
+  /* Four depth buttons share one row; the sub-labels go so each stays a big target. */
+  .origins-module .origins-guide .guide-mode button {
+    flex: 1 1 0;
+    min-width: 0;
+    padding-inline: 0.3rem;
+    justify-content: center;
+  }
+
+  .origins-module .origins-guide .guide-mode button small {
+    display: none;
+  }
+
+  .origins-module .origins-guide .guide-mode__secret {
+    flex: 0 0 52px !important;
+  }
+
+  .origins-module .origins-guide .guide-mode__secret-label {
+    display: none;
+  }
+
+  .origins-module .origins-guide__toast {
+    bottom: calc(5.5rem + env(safe-area-inset-bottom));
+    width: max-content;
+    max-width: calc(100vw - 1.5rem);
+    text-align: center;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .origins-module .main-guide {
+    padding: 0.7rem 0.75rem 1.5rem;
+  }
+
+  .origins-module .origins-guide .guide {
+    --guide-sticky-top: calc(var(--hub-nav-height) + 58px + 0.5rem);
+  }
 }
