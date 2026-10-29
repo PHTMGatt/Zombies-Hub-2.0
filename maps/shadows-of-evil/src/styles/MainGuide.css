@@ -179,3 +179,13 @@
     margin-bottom: 0.12rem;
   }
 }
+
+/* Touch: the per-phase link is the main way into each focused page, so give it a real tap target. */
+@media (pointer: coarse), (max-width: 720px) {
+  .shadows-module .soe-run-flow .soe-phase-notes summary {
+    min-height: 36px;
+    align-items: center;
+    margin-top: 0.1rem;
+    font-size: 0.78rem;
+  }
+}

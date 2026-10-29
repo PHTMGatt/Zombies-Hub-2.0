@@ -10,8 +10,9 @@
   overflow: visible;
   color: #ccccff;
   background:
+    radial-gradient(ellipse 34% 95% at 50% 50%, rgba(3, 6, 16, 0.78), rgba(3, 6, 16, 0.36) 70%, transparent 100%),
     linear-gradient(rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.2)),
-    url('../assets/images/Rev3.png') center 72% / cover no-repeat;
+    url('../assets/images/Rev3.webp') center 72% / cover no-repeat;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
   box-shadow: 0 -2px 14px rgba(0, 153, 255, 0.28);
   isolation: isolate;
@@ -22,36 +23,41 @@
   position: absolute;
   left: -2%;
   right: -2%;
-  top: -72px;
-  height: 78px;
+  top: -40px;
+  height: 46px;
   z-index: -1;
   pointer-events: none;
   background:
     linear-gradient(to top, rgba(5, 8, 20, 0.9), rgba(5, 8, 20, 0.34) 48%, transparent 100%),
-    url('../assets/images/Rev3.png') center 72% / cover no-repeat;
+    url('../assets/images/Rev3.webp') center 72% / cover no-repeat;
   filter: blur(10px) saturate(1.08);
-  opacity: 0.8;
+  opacity: 0.65;
   -webkit-mask-image: linear-gradient(to top, #000 0%, #000 34%, transparent 100%);
   mask-image: linear-gradient(to top, #000 0%, #000 34%, transparent 100%);
 }
 
 .revelations-module .rev-footer p {
   margin: 0;
+  color: #e6ecff;
   font-size: 0.82rem;
+  font-weight: 600;
   letter-spacing: 0.02em;
-  opacity: 0.88;
-  text-shadow: 0 1px 4px #000;
+  text-shadow: 0 1px 4px #000, 0 0 12px rgba(0, 0, 0, 0.85);
 }
 
 @media (max-width: 768px) {
   .revelations-module .rev-footer {
+    background:
+      radial-gradient(ellipse 70% 95% at 50% 50%, rgba(3, 6, 16, 0.78), rgba(3, 6, 16, 0.36) 70%, transparent 100%),
+      linear-gradient(rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.2)),
+      url('../assets/images/Rev3.webp') center 72% / cover no-repeat;
     min-height: 58px;
     padding: 0.65rem 0.75rem;
   }
 
   .revelations-module .rev-footer::before {
-    top: -54px;
-    height: 58px;
+    top: -30px;
+    height: 34px;
   }
 
   .revelations-module .rev-footer p {

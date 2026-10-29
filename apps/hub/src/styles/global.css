@@ -175,11 +175,17 @@ summary:focus-visible,
 
 @media (max-width: 700px) {
   :root {
-    --hub-nav-height: 112px;
+    --hub-nav-height: 90px;
   }
 
   .hub-page {
     width: min(100% - 1.25rem, 1240px);
     padding-top: 1.5rem;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  :root {
+    --hub-nav-height: 52px;
   }
 }

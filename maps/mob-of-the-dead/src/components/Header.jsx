@@ -1,6 +1,6 @@
 import React from 'react';
 import Nav from './Nav';
-import bannerSrc from '../assets/images/mob-banner.png';
+import bannerSrc from '../assets/images/mob-banner.webp';
 import '../styles/Header.css';
 
 const Header = () => (

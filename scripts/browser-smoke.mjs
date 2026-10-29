@@ -3,19 +3,45 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 
 const base = process.env.SMOKE_BASE_URL || 'http://127.0.0.1:4173';
+const artifactsDir = new URL('../artifacts/', import.meta.url);
 const out = new URL('../artifacts/browser-smoke.json', import.meta.url);
 const widths = [390, 1440];
 const routes = [
   '/',
   '/allmaps',
+  '/easter-eggs',
+  '/side-easter-eggs',
   '/maps/origins',
   '/maps/mob-of-the-dead',
+  '/maps/shadows-of-evil',
   '/maps/der-eisendrache',
   '/maps/zetsubou-no-shima',
   '/maps/gorod-krovi',
   '/maps/revelations',
 ];
 const results = [];
+
+const assertNoHorizontalOverflow = async (page, route) => {
+  const dimensions = await page.evaluate(() => ({
+    scrollWidth: document.documentElement.scrollWidth,
+    clientWidth: document.documentElement.clientWidth,
+  }));
+  assert(
+    dimensions.scrollWidth <= dimensions.clientWidth + 1,
+    `${route} overflows horizontally: ${dimensions.scrollWidth}px > ${dimensions.clientWidth}px`,
+  );
+};
+
+const assertImagesLoaded = async (page, route, selector) => {
+  const brokenImages = await page.locator(selector).evaluateAll(images =>
+    images
+      .filter(image => !image.complete || image.naturalWidth === 0)
+      .map(image => image.getAttribute('alt') || image.getAttribute('src') || 'unnamed image'),
+  );
+  assert.deepEqual(brokenImages, [], `${route} has broken images: ${brokenImages.join(', ')}`);
+};
+
+await fs.mkdir(artifactsDir, { recursive: true });
 const browser = await chromium.launch({ headless: true });
 try {
   for (const width of widths) {
@@ -27,15 +53,74 @@ try {
       const response = await page.goto(`${base}${route}`, { waitUntil: 'networkidle' });
       assert(response?.ok(), `${route} returned ${response?.status()}`);
       assert.equal(errors.length, 0, `${route} page errors: ${errors.join('; ')}`);
+      if (route.startsWith('/maps/')) {
+        // Short guides must still pin the map footer to the bottom edge, with no dead band beneath it.
+        const gapBelowFooter = await page.evaluate(() => {
+          const footer = document.querySelector('.map-module footer');
+          if (!footer) return null;
+          return Math.round(document.documentElement.scrollHeight - (footer.getBoundingClientRect().bottom + window.scrollY));
+        });
+        assert(gapBelowFooter !== null, `${route} renders no map footer`);
+        assert(gapBelowFooter <= 1, `${route} leaves ${gapBelowFooter}px of dead space below the map footer`);
+        // Pinned map headers must not swallow a phone screen.
+        const pinnedHeader = await page.evaluate(() => {
+          const header = document.querySelector('.map-module header');
+          if (!header || !['sticky', 'fixed'].includes(getComputedStyle(header).position)) return 0;
+          return header.offsetHeight;
+        });
+        assert(pinnedHeader <= (width === 390 ? 130 : 110), `${route} pins a ${pinnedHeader}px map header at ${width}px`);
+      }
       results.push({ width, route, passed: true });
     }
-    // Interactions use app state, not live third-party video playback.
+
     await page.goto(`${base}/allmaps`);
     await page.getByRole('searchbox').fill('Origins');
     assert((await page.locator('.map-card').count()) > 0);
     assert((await page.locator('.map-card').allTextContents()).every(text => text.includes('Origins')));
     await page.getByRole('searchbox').fill('no-map-can-match-this');
     await page.getByText(/No maps matched/).waitFor();
+
+    // Side Easter Eggs is a visually sensitive hub page. Protect its card count,
+    // responsive grid, navigation, overflow, and capture both target viewports.
+    await page.goto(`${base}/side-easter-eggs`, { waitUntil: 'networkidle' });
+    await page.getByRole('heading', { name: 'Side Easter Eggs' }).waitFor();
+    const sideCards = page.locator('.side-ee-card');
+    assert.equal(await sideCards.count(), 5, 'Side Easter Eggs keeps all five guide cards');
+    const sideArtworkRatios = await sideCards.evaluateAll(cards => Promise.all(cards.map(async card => {
+      const image = card.querySelector('.side-ee-card__art');
+      if (!image?.currentSrc) throw new Error('Side Easter Egg card has no rendered artwork source');
+      await image.decode();
+      return image.naturalWidth / image.naturalHeight;
+    })));
+    assert(
+      sideArtworkRatios.every(ratio => ratio >= 1.6 && ratio <= 1.9),
+      `Side Easter Egg cards use clean widescreen artwork instead of catalog strips: ${sideArtworkRatios.join(', ')}`,
+    );
+    // Count cards in the first visual row (the grid uses extra tracks to center a short last row).
+    const sideColumns = await sideCards.evaluateAll(cards => {
+      const firstTop = Math.round(cards[0].getBoundingClientRect().top);
+      return cards.filter(card => Math.round(card.getBoundingClientRect().top) === firstTop).length;
+    });
+    assert.equal(sideColumns, width === 390 ? 1 : 3, `Side Easter Eggs uses the expected ${width}px grid`);
+    await assertNoHorizontalOverflow(page, '/side-easter-eggs');
+    await page.screenshot({
+      path: new URL(`../artifacts/side-easter-eggs-${width}.png`, import.meta.url).pathname,
+      fullPage: true,
+    });
+    const firstSideTarget = await sideCards.first().getAttribute('href');
+    assert(firstSideTarget, 'Side Easter Egg card has a destination');
+    await sideCards.first().click();
+    await page.waitForLoadState('networkidle');
+    assert.equal(new URL(page.url()).pathname, firstSideTarget, 'Side Easter Egg card reaches its intended route');
+    await page.waitForFunction(() => document.activeElement?.id === 'zh-main');
+    assert.equal(
+      await page.evaluate(() => document.activeElement?.id),
+      'zh-main',
+      'client-side route navigation moves focus to the new guide landmark',
+    );
+    await page.getByRole('link', { name: /Back to Side Easter Eggs/i }).click();
+    await page.waitForLoadState('networkidle');
+    assert.equal(new URL(page.url()).pathname, '/side-easter-eggs', 'Side Easter Egg detail returns to the list');
 
     // Origins is a core guide and should retain working map-specific navigation.
     await page.goto(`${base}/maps/origins`, { waitUntil: 'networkidle' });
@@ -46,6 +131,66 @@ try {
     await originsLinks.first().click();
     await page.waitForLoadState('networkidle');
     assert.equal(new URL(page.url()).pathname, originsTarget, 'Origins guide navigation reaches its intended route');
+
+    // The sticky Origins header must stay compact on phones, with an unclipped title and the active staff in view.
+    await page.goto(`${base}/maps/origins/lightning-staff`, { waitUntil: 'networkidle' });
+    const originsHeader = await page.evaluate(() => {
+      const active = document.querySelector('.origins-nav-link.active').getBoundingClientRect();
+      const title = document.querySelector('.origins-map-header .header-title').getBoundingClientRect();
+      return {
+        height: document.querySelector('.origins-map-header').offsetHeight,
+        activeInView: active.left >= 0 && active.right <= window.innerWidth,
+        titleInView: title.left >= 0 && title.right <= window.innerWidth,
+      };
+    });
+    assert(originsHeader.height <= (width === 390 ? 130 : 100), `Origins sticky header is ${originsHeader.height}px tall at ${width}px`);
+    assert(originsHeader.activeInView, 'Origins keeps the active staff tab in view');
+    assert(originsHeader.titleInView, 'Origins header title is not clipped');
+
+    // Origins guide health must cover the actual staff pages, not only the shell.
+    await page.goto(`${base}/maps/origins`, { waitUntil: 'networkidle' });
+    const originsAudio = page.locator('.audio-players audio');
+    assert.equal(await originsAudio.count(), 2, 'Origins main guide keeps both audio controls');
+    assert(
+      await originsAudio.evaluateAll(players => players.every(player => (player.getAttribute('aria-label') || '').trim().length > 0)),
+      'Origins audio controls expose accessible names',
+    );
+    await assertImagesLoaded(page, '/maps/origins', '.origins-route-content img');
+    await assertNoHorizontalOverflow(page, '/maps/origins');
+
+    const originsStaffGuides = [
+      {
+        route: '/maps/origins/fire-staff',
+        heading: 'Fire Staff Parts',
+        required: [/Generator 6/i, /glowing plane/i, /torch/i],
+      },
+      {
+        route: '/maps/origins/ice-staff',
+        heading: 'Ice Staff Parts',
+        required: [/(Tank Station|Generator 2)/i, /gravestone/i],
+      },
+      {
+        route: '/maps/origins/wind-staff',
+        heading: 'Wind Staff Parts',
+        required: [/Wind Tunnel/i, /Generator 4/i, /smoking chimneys/i],
+      },
+      {
+        route: '/maps/origins/lightning-staff',
+        heading: 'Lightning Staff Parts',
+        required: [/Purple Record/i, /Lightning Tunnel/i, /Generator 5/i],
+      },
+    ];
+
+    for (const guide of originsStaffGuides) {
+      await page.goto(`${base}${guide.route}`, { waitUntil: 'networkidle' });
+      await page.getByRole('heading', { name: guide.heading }).waitFor();
+      const guideText = await page.locator('.origins-route-content').innerText();
+      for (const requiredText of guide.required) {
+        assert.match(guideText, requiredText, `${guide.route} is missing ${requiredText}`);
+      }
+      await assertImagesLoaded(page, guide.route, '.origins-route-content img');
+      await assertNoHorizontalOverflow(page, guide.route);
+    }
 
     // Mob of the Dead should retain its own guide navigation rather than
     // silently regressing while other map-specific shells evolve.
@@ -59,7 +204,7 @@ try {
     assert.equal(new URL(page.url()).pathname, mobTarget, 'Mob of the Dead guide navigation reaches its intended route');
 
     await page.goto(`${base}/maps/revelations/apothicon-upgrade`);
-    await page.locator('.sk-button').nth(1).click();
+    await page.locator('.rev-option').nth(1).click();
     const fallback = page.getByRole('link', { name: 'Watch the selected timestamp on YouTube' });
     assert.match(await fallback.getAttribute('href'), /&t=[1-9]\d*s$/);
 
@@ -80,13 +225,12 @@ try {
     assert.equal(await selects.nth(0).inputValue(), '');
     assert.equal(await selects.nth(1).inputValue(), '');
 
-    results.push({ width, interactions: 'map search, empty state, Origins and Mob guide navigation, video timestamp fallback, Gorod valve solver solution/reset', passed: true });
+    results.push({ width, interactions: 'map search, empty state, Side Easter Egg layout/navigation, Origins staff guide content/images/overflow and navigation, Mob guide navigation, video timestamp fallback, Gorod valve solver solution/reset', passed: true });
     await context.close();
   }
 } finally {
   await browser.close();
 }
-await fs.mkdir(new URL('../artifacts/', import.meta.url), { recursive: true });
 await fs.writeFile(out, JSON.stringify(results, null, 2));
 const failed = results.filter(r => !r.passed);
 console.log(`${results.length - failed.length}/${results.length} browser route checks passed.`);

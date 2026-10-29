@@ -1,13 +1,27 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React, { useEffect, useRef } from "react";
+import { NavLink, useLocation } from "react-router-dom";
 import { FaRegSnowflake } from "react-icons/fa";
 import { GiWhirlwind, GiFireTail, GiLightningHelix, GiCrownedSkull } from "react-icons/gi";
 import "../Styles/ComponentStyles/Nav.css";
 
 const Nav = () => {
+  const { pathname } = useLocation();
+  const linksRef = useRef<HTMLDivElement>(null);
+
+  // On phones the staff tabs are a swipeable row; keep the current staff in view.
+  // Only the row scrolls (never the page), and nothing happens when every tab already fits.
+  useEffect(() => {
+    const row = linksRef.current;
+    const active = row?.querySelector<HTMLElement>(".origins-nav-link.active");
+    if (!row || !active || row.scrollWidth <= row.clientWidth) return;
+    const rowBox = row.getBoundingClientRect();
+    const activeBox = active.getBoundingClientRect();
+    row.scrollLeft += activeBox.left - rowBox.left - (rowBox.width - activeBox.width) / 2;
+  }, [pathname]);
+
   return (
-    <nav className="origins-nav">
-      <div className="origins-nav-links">
+    <nav className="origins-nav" aria-label="Origins guide navigation">
+      <div className="origins-nav-links" ref={linksRef}>
         <NavLink
           to="/maps/origins"
           end

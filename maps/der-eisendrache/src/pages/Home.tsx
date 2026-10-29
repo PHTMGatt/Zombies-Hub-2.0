@@ -50,7 +50,7 @@ const Home: React.FC = () => (
 
     <div className="de-run-alert">
       <strong>Setup:</strong>
-      <span>build the Shield/Ragnarok pieces as they become available and finish the bow requirement for your lobby before the Keeper ritual.</span>
+      <span>build the Shield/Ragnarok pieces as they become available and finish the bow requirement for your lobby — ranked/online: one upgraded bow per player; local/offline or unranked: all four bows — before the Keeper ritual.</span>
     </div>
 
     <ol className="de-run-flow">
@@ -65,13 +65,6 @@ const Home: React.FC = () => (
         </li>
       ))}
     </ol>
-
-    <nav className="de-quick-links" aria-label="Der Eisendrache focused guides">
-      <Link to={`${BASE}/bows`}>Bows <span>Base + four upgrades</span></Link>
-      <Link to={`${BASE}/wisps`}>Wisps <span>Both cycles + locations</span></Link>
-      <Link to={`${BASE}/parts`}>Gear <span>Shield + Ragnarok DG-4</span></Link>
-      <Link to={`${BASE}/boss`}>Boss <span>Keeper fight + ending</span></Link>
-    </nav>
   </div>
 );
 

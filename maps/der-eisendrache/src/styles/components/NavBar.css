@@ -71,9 +71,9 @@
   .de-nav__link {
     flex: 1 0 auto;
     min-width: 58px;
-    min-height: 30px;
+    min-height: 38px;
     padding: 0.35rem 0.52rem;
-    font-size: 0.65rem;
+    font-size: 0.72rem;
   }
 
   .de-nav__full {

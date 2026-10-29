@@ -72,9 +72,9 @@ const apothiconSteps = [
     detail: 'Follow S.O.P.H.I.A. to the Kino teleporter, enter Samantha’s room, collect the book from the bed, and place it on the Kino altar. Four eggs now spawn around the map.',
     bullets: [
       'One egg belongs to each major map region.',
-      'Take an egg into the center of the Giant Apothicon and collect about 10 zombie souls.',
-      'A charged egg becomes a Gateworm.',
-      'Repeat until all four eggs have been charged.',
+      'Take each egg into the Giant Apothicon and place it in one of the yellow incubation nests / pustules.',
+      'Kill about 10 zombies nearby to feed 10 zombie souls into the egg until it hatches into a Gateworm.',
+      'Repeat until all four eggs have become Gateworms.',
     ],
   },
   {
@@ -83,14 +83,15 @@ const apothiconSteps = [
     bullets: [
       'Each major region has three possible rune-placement spots.',
       'Listen for the beeping rather than guessing the placement.',
-      'After all four runes are collected, head to Kino and stand on the symbols in the Widow’s Wine room.',
+      'After all four runes are collected, head to Kino and prepare to enter the boss arena through the projector-room rift.',
     ],
   },
   {
     title: 'Symbol Room + Summoning Key',
-    detail: 'Activate the book in the boss room, memorize the four-symbol order it shows, enter that same order at the back of the room, then survive four sets of two Margwas.',
+    detail: 'Have all players stand on the purple rift / circle in the Kino projector room to enter the boss arena. Interact with the Kronorium, memorize the randomized four-symbol order it shows, enter that same order at the back of the room, then survive four sets of two Margwas.',
     bullets: [
-      'The symbol order changes every game.',
+      'Every player must enter through the Kino projector-room purple rift / circle together.',
+      'The symbol order changes every game; read the Kronorium after entering the arena.',
       'Use the four symbols shown in your inventory/menu as the reference set.',
       'After entering the correct sequence, drop to the center arena.',
       'Clear four Margwa waves with two Margwas per wave to spawn the Summoning Key.',
@@ -98,14 +99,14 @@ const apothiconSteps = [
   },
   {
     title: 'Seven Summoning Key Throws',
-    detail: 'Return to the map and hit all seven required objects with the Summoning Key.',
+    detail: 'Return to the map and hit all seven exact targets with the Summoning Key.',
     bullets: [
       'Kino: chandelier.',
-      'Der Eisendrache: clock near the Corruption Engine.',
-      'Shangri-La: crystal at the top of the stairs.',
+      'Der Eisendrache: clocktower face near the Corruption Engine.',
+      'Shangri-La: Focusing Stone / blue orb on the staff at the top of the stairs.',
       'Origins: tombstone at the top of the mound.',
-      'Mob of the Dead: back of the cell.',
-      'Verrückt: fountain.',
+      'Mob of the Dead: poster inside the open cell.',
+      'Verrückt: MG42 mounted on the fountain.',
       'Nacht der Untoten: red barrel.',
       'When taking the teleporter toward Nacht, melee during the transition to avoid the Summoning Key-loss glitch described in the walkthrough.',
     ],

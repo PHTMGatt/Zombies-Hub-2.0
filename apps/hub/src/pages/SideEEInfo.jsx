@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
-import imageData from '../data/imageData';
+import sideEEArtwork from '../data/sideEEArtwork';
 import sideEEs from '../data/sideEE';
 import SideEECard from '../components/SideEECard';
 import OriginsSpeedRunGuide from '../components/OriginsSpeedRunGuide';
@@ -8,10 +8,10 @@ import NotFound from '../../../../shared/ui/NotFound';
 import '../styles/SideEE/SideEEInfo.css';
 
 const SIDE_EE_META = {
-  'origins-speedrun': { label: 'Origins Speed Run', cover: imageData.OriginsCover },
+  'origins-speedrun': { label: 'Origins Speed Run', artwork: sideEEArtwork['origins-speedrun'] },
   kino: {
     label: 'Kino der Toten',
-    cover: imageData.Kino_Der_TotenCover,
+    artwork: sideEEArtwork.kino,
     reelsIntro: 'Three film reels spawn randomly in these rooms after you teleport to Pack-a-Punch:',
     reels: [
       'Samantha’s Room – on the table, bed, or leaning against the rocking chair.',
@@ -24,9 +24,9 @@ const SIDE_EE_META = {
       'Radio 2 – atop the tower visible from the alley by the Double Tap Root Beer perk machine.',
     ],
   },
-  gk: { label: 'Gorod Krovi', cover: imageData.Gorod_KroviCover },
-  de: { label: 'Der Eisendrache', cover: imageData.Der_EisendracheCover },
-  soe: { label: 'Shadows of Evil', cover: imageData.Shadows_Of_EvilCover },
+  gk: { label: 'Gorod Krovi', artwork: sideEEArtwork.gk },
+  de: { label: 'Der Eisendrache', artwork: sideEEArtwork.de },
+  soe: { label: 'Shadows of Evil', artwork: sideEEArtwork.soe },
 };
 
 export default function SideEEInfo() {
@@ -43,7 +43,7 @@ export default function SideEEInfo() {
   if (mapKey === 'origins-speedrun') {
     return (
       <div className="side-ee-info-page side-ee-info-page--origins-speedrun">
-        <OriginsSpeedRunGuide cover={meta.cover} />
+        <OriginsSpeedRunGuide cover={meta.artwork.src} />
       </div>
     );
   }
@@ -55,7 +55,7 @@ export default function SideEEInfo() {
   return (
     <div className="side-ee-info-page">
       <div className="side-ee-info">
-        <div className="side-ee-info__header" style={{ backgroundImage: `url(${meta.cover})` }}>
+        <div className="side-ee-info__header" style={{ backgroundImage: `url(${meta.artwork.src})`, backgroundPosition: meta.artwork.focus }}>
           <h1 className="side-ee-info__title">{meta.label}</h1>
         </div>
 

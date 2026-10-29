@@ -5,16 +5,16 @@ const CogTwo = () => (
   <CogGuidePage
     number="2"
     title="AA Cannon Plane"
-    description="Grow the artillery-shell plant, load the AA cannon, shoot down the cargo plane, and watch where the cog lands."
-    chips={['Plant step', 'Artillery shell', 'AA cannon']}
+    description="Grow the artillery-shell plant with the full three-round Blue Water + KT-4/Masamune cycle, load the AA cannon, shoot down the cargo plane, and watch where the cog lands."
+    chips={['Blue Water x3 rounds', 'KT-4 / Masamune', 'AA cannon']}
     note={{
       label: 'Important',
-      body: 'If you miss the cargo plane shot, you need another artillery shell. Watch the plane and the falling cog carefully so you do not waste time searching the wrong area.',
+      body: 'The artillery-shell plant is not just a Blue Water plant: water it and shoot it once with the KT-4 or Masamune each round for three rounds. If the finished pod does not contain the shell, repeat the plant cycle.',
     }}
     steps={[
       {
         title: 'Grow the artillery-shell plant',
-        summary: 'Use the required plant setup and KT-4 / Masamune progression to produce the artillery shell for the AA cannon.',
+        summary: 'Plant a seed, water it with Blue Water and shoot it once with the KT-4 or Masamune each round for three rounds. Open the finished pod and collect the artillery shell if it spawned.',
       },
       {
         title: 'Load the AA cannon',

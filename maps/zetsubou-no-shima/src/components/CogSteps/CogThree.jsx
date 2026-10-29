@@ -5,8 +5,8 @@ const CogThree = () => (
   <CogGuidePage
     number="3"
     title="Electrified Zipline Drop"
-    description="Charge the Zombie Shield from the completed Trials, electrify the zipline setup, and drop onto the hidden dock for the third cog."
-    chips={['All Trials complete', 'Zombie Shield', 'Zipline drop']}
+    description="After every player completes all three Trials, charge the Zombie Shield with the challenge lightning, electrify the zipline setup, and drop onto the hidden dock for the third cog."
+    chips={['3 Trials / player', 'Zombie Shield', 'Zipline drop']}
     note={{
       label: 'Failure point',
       body: 'The dangerous part is the drop timing. Missing the hidden dock can down or kill you, so clear the area and set the attempt up before riding.',
@@ -14,7 +14,7 @@ const CogThree = () => (
     steps={[
       {
         title: 'Charge the shield',
-        summary: 'After completing all three Trials, use the challenge lightning/electric reward to charge the Zombie Shield for this step.',
+        summary: 'Once every player has completed all three of their Trials, use the challenge lightning/electric reward to charge the Zombie Shield for this step.',
       },
       {
         title: 'Set the zipline',
