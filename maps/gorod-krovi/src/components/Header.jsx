@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import '../styles/Header.css';
-import banner from '../assets/GK_Banner.png';
+import banner from '../assets/GK_Banner.webp';
 
 const BASE = '/maps/gorod-krovi';
 

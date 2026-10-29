@@ -11,7 +11,7 @@
   text-align: center;
   background:
     linear-gradient(to bottom, rgba(3, 5, 14, 0.1), rgba(4, 6, 18, 0.68)),
-    url('../assets/images/Rev3.png') center / cover no-repeat;
+    url('../assets/images/Rev3.webp') center / cover no-repeat;
   border-bottom: 1px solid rgba(109, 194, 255, 0.22);
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.34);
   isolation: isolate;

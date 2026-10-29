@@ -33,7 +33,7 @@
 .mob-module .bg-blur {
   position: fixed;
   inset: var(--hub-nav-height) 0 0;
-  background: url('../assets/images/mob-bg.png') center/cover no-repeat fixed;
+  background: url('../assets/images/mob-bg.webp') center/cover no-repeat fixed;
   filter: blur(1px);
   transform: scale(1.005);
   pointer-events: none;

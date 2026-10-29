@@ -12,7 +12,7 @@
   background:
     radial-gradient(ellipse 34% 95% at 50% 50%, rgba(3, 6, 16, 0.78), rgba(3, 6, 16, 0.36) 70%, transparent 100%),
     linear-gradient(rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.2)),
-    url('../assets/images/Rev3.png') center 72% / cover no-repeat;
+    url('../assets/images/Rev3.webp') center 72% / cover no-repeat;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
   box-shadow: 0 -2px 14px rgba(0, 153, 255, 0.28);
   isolation: isolate;
@@ -29,7 +29,7 @@
   pointer-events: none;
   background:
     linear-gradient(to top, rgba(5, 8, 20, 0.9), rgba(5, 8, 20, 0.34) 48%, transparent 100%),
-    url('../assets/images/Rev3.png') center 72% / cover no-repeat;
+    url('../assets/images/Rev3.webp') center 72% / cover no-repeat;
   filter: blur(10px) saturate(1.08);
   opacity: 0.8;
   -webkit-mask-image: linear-gradient(to top, #000 0%, #000 34%, transparent 100%);
@@ -50,7 +50,7 @@
     background:
       radial-gradient(ellipse 70% 95% at 50% 50%, rgba(3, 6, 16, 0.78), rgba(3, 6, 16, 0.36) 70%, transparent 100%),
       linear-gradient(rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.2)),
-      url('../assets/images/Rev3.png') center 72% / cover no-repeat;
+      url('../assets/images/Rev3.webp') center 72% / cover no-repeat;
     min-height: 58px;
     padding: 0.65rem 0.75rem;
   }
