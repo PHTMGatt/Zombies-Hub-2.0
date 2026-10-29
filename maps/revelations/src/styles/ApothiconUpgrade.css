@@ -4,7 +4,7 @@
   padding: 1rem 1rem 1.5rem;
   display: flex;
   align-items: flex-start;
-  justify-content: center;
+  justify-content: flex-start;
   z-index: 1;
 }
 
@@ -87,7 +87,7 @@
 
 .revelations-module .apothicon-upgrade-page .sk-buttons {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 0.35rem;
   padding: 0;
 }
@@ -123,6 +123,10 @@
 
   .revelations-module .apothicon-upgrade-page .sk-buttons {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .revelations-module .apothicon-upgrade-page .sk-button:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
   }
 }
 

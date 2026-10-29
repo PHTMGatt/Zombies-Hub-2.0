@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import apothiconSteps from '../data/ApothiconSteps';
 import '../styles/MainGuide.css';
@@ -16,6 +16,22 @@ const MainGuide = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const current = apothiconSteps[currentStep];
   const reference = useMemo(() => referenceLinks[currentStep], [currentStep]);
+  const listRef = useRef(null);
+  const panelRef = useRef(null);
+
+  // When the selector stacks above the step panel (phones), bring the chosen step into view.
+  const selectStep = (index) => {
+    setCurrentStep(index);
+    const list = listRef.current;
+    const panel = panelRef.current;
+    if (!list || !panel) return;
+    const panelTop = panel.getBoundingClientRect().top;
+    const stacked = panelTop >= list.getBoundingClientRect().bottom;
+    if (stacked && panelTop > window.innerHeight * 0.55) {
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      panel.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+    }
+  };
 
   const goTo = (next) => {
     const max = apothiconSteps.length - 1;
@@ -36,13 +52,13 @@ const MainGuide = () => {
         </header>
 
         <div className="rev-main-grid">
-          <nav className="rev-step-list" aria-label="Revelations Easter Egg steps">
+          <nav className="rev-step-list" ref={listRef} aria-label="Revelations Easter Egg steps">
             {apothiconSteps.map((step, index) => (
               <button
                 key={step.title}
                 type="button"
                 className={`rev-step-button${index === currentStep ? ' active' : ''}`}
-                onClick={() => setCurrentStep(index)}
+                onClick={() => selectStep(index)}
               >
                 <span>{String(index + 1).padStart(2, '0')}</span>
                 <strong>{step.title}</strong>
@@ -50,7 +66,7 @@ const MainGuide = () => {
             ))}
           </nav>
 
-          <article className="rev-step-panel">
+          <article className="rev-step-panel" ref={panelRef}>
             <div className="rev-step-meta">
               <span>STEP {String(currentStep + 1).padStart(2, '0')}</span>
               <span>{currentStep + 1} / {apothiconSteps.length}</span>

@@ -10,6 +10,7 @@
   overflow: visible;
   color: #ccccff;
   background:
+    radial-gradient(ellipse 34% 95% at 50% 50%, rgba(3, 6, 16, 0.78), rgba(3, 6, 16, 0.36) 70%, transparent 100%),
     linear-gradient(rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.2)),
     url('../assets/images/Rev3.png') center 72% / cover no-repeat;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
@@ -37,14 +38,19 @@
 
 .revelations-module .rev-footer p {
   margin: 0;
+  color: #e6ecff;
   font-size: 0.82rem;
+  font-weight: 600;
   letter-spacing: 0.02em;
-  opacity: 0.88;
-  text-shadow: 0 1px 4px #000;
+  text-shadow: 0 1px 4px #000, 0 0 12px rgba(0, 0, 0, 0.85);
 }
 
 @media (max-width: 768px) {
   .revelations-module .rev-footer {
+    background:
+      radial-gradient(ellipse 70% 95% at 50% 50%, rgba(3, 6, 16, 0.78), rgba(3, 6, 16, 0.36) 70%, transparent 100%),
+      linear-gradient(rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.2)),
+      url('../assets/images/Rev3.png') center 72% / cover no-repeat;
     min-height: 58px;
     padding: 0.65rem 0.75rem;
   }

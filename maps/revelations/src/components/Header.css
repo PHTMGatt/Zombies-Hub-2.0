@@ -123,3 +123,32 @@
     grid-column: 1 / -1;
   }
 }
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .revelations-module .rev-header {
+    padding: 0.6rem 0.75rem 0.65rem;
+    gap: 0.5rem;
+  }
+
+  .revelations-module .rev-header__title {
+    font-size: 1.55rem;
+  }
+
+  .revelations-module .rev-header__subtitle {
+    margin-top: 0.25rem;
+    font-size: 0.75rem;
+  }
+
+  .revelations-module .rev-header__nav {
+    display: flex;
+    gap: 0.35rem;
+  }
+
+  .revelations-module .rev-nav-link {
+    width: auto;
+    min-height: 32px;
+    padding: 0.3rem 0.65rem;
+    font-size: 0.76rem;
+    white-space: nowrap;
+  }
+}

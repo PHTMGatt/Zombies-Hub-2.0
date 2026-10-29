@@ -158,6 +158,29 @@ try {
 
     await context.close();
   }
+
+  // Tall viewports: the map backdrop must reach a bottom-pinned footer, and short subpages stay top-aligned.
+  const tall = await browser.newContext({ viewport: { width: 820, height: 1180 } });
+  const tallPage = await tall.newPage();
+  for (const route of ['/maps/revelations', '/maps/revelations/apothicon-upgrade']) {
+    await tallPage.goto(`${base}${route}`, { waitUntil: 'networkidle' });
+    const layout = await tallPage.evaluate(() => {
+      const footer = document.querySelector('.rev-footer').getBoundingClientRect();
+      const page = document.querySelector('.rev-page').getBoundingClientRect();
+      const header = document.querySelector('.rev-header').getBoundingClientRect();
+      const firstPanel = document.querySelector('.rev-page > :not(.rev-background)').getBoundingClientRect();
+      return {
+        gapBelowFooter: document.documentElement.scrollHeight - (footer.bottom + window.scrollY),
+        pageToFooter: footer.top - page.bottom,
+        panelOffset: firstPanel.top - header.bottom,
+      };
+    });
+    assert(layout.gapBelowFooter <= 1, `${route} leaves ${layout.gapBelowFooter}px of dead space below the footer`);
+    assert(Math.abs(layout.pageToFooter) <= 1, `${route} backdrop stops ${layout.pageToFooter}px above the footer`);
+    assert(layout.panelOffset < 60, `${route} content floats ${layout.panelOffset}px below the map header`);
+    results.push({ width: 820, route, check: 'footer boundary + top-aligned content', passed: true });
+  }
+  await tall.close();
 } finally {
   await browser.close();
 }

@@ -140,3 +140,33 @@
     font-size: 0.8rem;
   }
 }
+
+/* Landscape phones: keep the hub bar on one compact row so map content stays above the fold. */
+@media (max-height: 500px) and (orientation: landscape) {
+  .hub-header {
+    padding: 0 1rem;
+    align-items: center;
+    flex-direction: row;
+    gap: 1rem;
+  }
+
+  .hub-header__mark {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+  }
+
+  .hub-header__nav {
+    width: auto;
+    margin-left: auto;
+  }
+
+  .hub-header__nav a {
+    padding: 0.42rem 0.6rem;
+    font-size: 0.8rem;
+  }
+
+  .hub-header__nav a.active::after {
+    bottom: 0.2rem;
+  }
+}

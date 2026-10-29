@@ -129,6 +129,7 @@
 
 .revelations-module .rev-step-panel {
   min-width: 0;
+  scroll-margin-top: calc(var(--hub-nav-height) + 0.75rem);
   min-height: 450px;
   display: flex;
   flex-direction: column;
@@ -232,32 +233,6 @@
   cursor: default;
 }
 
-.revelations-module .rev-main-shortcuts {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0.45rem;
-  margin-top: 0.75rem;
-}
-
-.revelations-module .rev-main-shortcuts a {
-  min-height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.35rem 0.5rem;
-  border: 1px solid rgba(109, 194, 255, 0.2);
-  border-radius: 9px;
-  background: rgba(3, 8, 18, 0.62);
-  color: #cfe9ff;
-  font-size: 0.72rem;
-  font-weight: 800;
-}
-
-.revelations-module .rev-main-shortcuts a:hover {
-  border-color: rgba(109, 194, 255, 0.5);
-  background: rgba(20, 57, 86, 0.7);
-}
-
 @media (max-width: 850px) {
   .revelations-module .rev-main-grid {
     grid-template-columns: 1fr;
@@ -270,10 +245,6 @@
 
   .revelations-module .rev-step-panel {
     min-height: 0;
-  }
-
-  .revelations-module .rev-main-shortcuts {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -296,12 +267,57 @@
     text-align: left;
   }
 
-  .revelations-module .rev-step-list,
-  .revelations-module .rev-main-shortcuts {
+  .revelations-module .rev-step-list {
     grid-template-columns: 1fr;
   }
 
   .revelations-module .rev-step-panel {
     padding: 0.9rem;
+  }
+}
+
+/* Landscape phones: keep the selector beside the active step instead of stacking it above. */
+@media (max-height: 500px) and (orientation: landscape) {
+  .revelations-module .rev-main-guide {
+    padding: 0.65rem 0.65rem 1rem;
+  }
+
+  .revelations-module .rev-main-shell {
+    padding: 0.7rem;
+  }
+
+  .revelations-module .rev-main-intro {
+    display: flex;
+    margin-bottom: 0.6rem;
+    padding-bottom: 0.55rem;
+  }
+
+  .revelations-module .rev-main-intro h2 {
+    font-size: 1.45rem;
+  }
+
+  .revelations-module .rev-main-intro p {
+    margin-top: 0;
+    font-size: 0.74rem;
+    text-align: right;
+  }
+
+  .revelations-module .rev-main-grid {
+    grid-template-columns: minmax(210px, 0.8fr) minmax(0, 1.6fr);
+    gap: 0.6rem;
+  }
+
+  .revelations-module .rev-step-list {
+    display: flex;
+    padding: 0.4rem;
+  }
+
+  .revelations-module .rev-step-button {
+    min-height: 28px;
+    padding-block: 0.18rem;
+  }
+
+  .revelations-module .rev-step-panel {
+    padding: 0.85rem;
   }
 }
