@@ -1,19 +1,24 @@
 .revelations-module {
-  --text-primary: #e0d7ff;
-  --text-secondary: #bbb0d9;
-  --accent-hover: rgba(157, 117, 203, 0.2);
-  --text-glow: #b783ff;
-  --background-primary: #0c0c1b;
-  --background-secondary: #181830;
+  --rev-cyan: #6dd6ff;
+  --rev-cyan-strong: #38c4ff;
+  --rev-violet: #a98bff;
+  --rev-ink: #eaf5ff;
+  --rev-text: #d3e2f0;
+  --rev-muted: #93a9bf;
+  --rev-line: rgba(140, 200, 255, 0.12);
+  --rev-line-strong: rgba(109, 214, 255, 0.42);
+  --rev-surface: rgba(3, 8, 18, 0.56);
+  --rev-active: linear-gradient(90deg, rgba(56, 196, 255, 0.2), rgba(169, 139, 255, 0.08) 72%, transparent);
 
   position: relative;
   min-height: calc(100vh - var(--hub-nav-height));
   display: flex;
   flex-direction: column;
-  color: var(--text-primary);
+  color: var(--rev-text);
   font-family: 'Poppins', 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, var(--background-primary), var(--background-secondary));
-  overflow-x: hidden;
+  background: #070a16;
+  /* clip, not hidden: hidden makes this a scroll container and breaks sticky rails/videos inside. */
+  overflow-x: clip;
   isolation: isolate;
 }
 
@@ -26,10 +31,7 @@
 
 .revelations-module h1,
 .revelations-module h2,
-.revelations-module h3,
-.revelations-module h4,
-.revelations-module h5,
-.revelations-module h6 {
+.revelations-module h3 {
   font-family: 'Poppins', 'Segoe UI', sans-serif;
 }
 
@@ -38,123 +40,123 @@
   text-decoration: none;
 }
 
+.revelations-module :is(a, button):focus-visible {
+  outline: 2px solid var(--rev-cyan);
+  outline-offset: 2px;
+}
+
+/* Stage: one blurred map backdrop behind every section; grows so the footer stays pinned. */
+.revelations-module .rev-stage {
+  position: relative;
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  overflow: clip;
+  isolation: isolate;
+}
+
+.revelations-module .rev-backdrop {
+  position: absolute;
+  inset: -24px;
+  z-index: -2;
+  background: url('./assets/rev-guide/Main/Revelations.webp') center 35% / cover no-repeat;
+  filter: blur(12px) brightness(0.42) saturate(1.12);
+  pointer-events: none;
+}
+
+.revelations-module .rev-stage::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 0%, rgba(56, 196, 255, 0.12), transparent 70%),
+    linear-gradient(180deg, rgba(7, 10, 22, 0.55), rgba(5, 8, 20, 0.12) 14%, rgba(5, 8, 20, 0.5) 88%);
+}
+
 .revelations-module .rev-page {
   position: relative;
   z-index: 1;
   width: 100%;
-  min-height: 0;
-  /* Fill the module column so the map backdrop reaches the footer on tall viewports. */
   flex: 1 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1.5rem 1rem 2.25rem;
+  padding: 1.75rem 1.25rem 3.25rem;
 }
 
-.revelations-module .rev-background {
+/* Shell: a single glass surface per section instead of nested bordered boxes. */
+.revelations-module .rev-shell {
+  position: relative;
+  width: min(100%, 1200px);
+  margin: 0 auto;
+  padding: 1.6rem 1.75rem 1.75rem;
+  border: 1px solid var(--rev-line);
+  border-radius: 22px;
+  background: linear-gradient(180deg, rgba(12, 20, 38, 0.74), rgba(4, 8, 18, 0.8));
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(18px) saturate(1.15);
+}
+
+.revelations-module .rev-shell::before {
+  content: '';
   position: absolute;
-  inset: 0;
-  background: url('./assets/rev-guide/Main/Revelations.webp') center / cover no-repeat;
-  filter: blur(9px) brightness(0.4);
-  transform: scale(1.02);
-  z-index: 0;
-  box-shadow: 0 0 42px rgba(109, 194, 255, 0.2) inset;
+  top: -1px;
+  left: 8%;
+  right: 8%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(109, 214, 255, 0.75), rgba(169, 139, 255, 0.6), transparent);
   pointer-events: none;
 }
 
-.revelations-module .rev-card {
-  position: relative;
-  z-index: 2;
-  width: min(100%, 1000px);
-  margin-bottom: 0.85rem;
-  padding: 1rem;
-  color: var(--text-primary);
-  border: 1px solid rgba(109, 194, 255, 0.28);
-  border-radius: 11px;
-  background: rgba(0, 0, 0, 0.52);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
-  backdrop-filter: blur(10px);
-}
-
-.revelations-module .rev-list {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.revelations-module .rev-list li {
-  margin-bottom: 0.45rem;
-  color: #d0e7ff;
-  font-size: 0.92rem;
-  line-height: 1.5;
-  text-shadow: 0 0 4px #000;
-}
-
-.revelations-module .rev-content,
-.revelations-module .rev-columns {
-  position: relative;
-  z-index: 2;
-  width: min(100%, 1000px);
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.75rem;
-}
-
-.revelations-module .rev-intro {
-  position: relative;
-  z-index: 2;
-  max-width: 820px;
-  margin-bottom: 0.9rem;
-  color: var(--text-secondary);
-  font-size: 0.92rem;
-  line-height: 1.5;
-  text-align: center;
-}
-
-.revelations-module .rev-page-heading {
-  position: relative;
-  z-index: 2;
-  width: min(100%, 900px);
-  margin: 0 auto 0.8rem;
-  text-align: center;
-}
-
-.revelations-module .rev-page-kicker {
-  display: inline-block;
-  margin-bottom: 0.2rem;
-  color: #6dc2ff;
+.revelations-module .rev-kicker {
+  display: block;
+  color: var(--rev-cyan);
   font-size: 0.66rem;
   font-weight: 800;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
 }
 
-.revelations-module .rev-page-heading .sk-title {
-  margin-bottom: 0.3rem;
+.revelations-module .rev-section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1.5rem;
+  margin-bottom: 1.35rem;
 }
 
-.revelations-module .rev-page-intro {
-  max-width: 760px;
-  margin: 0 auto;
-  color: #c9d9ea;
-  font-size: 0.88rem;
-  line-height: 1.45;
+.revelations-module .rev-section-title {
+  margin: 0.3rem 0 0;
+  color: var(--rev-ink);
+  font-size: clamp(1.75rem, 3vw, 2.55rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  text-shadow: 0 0 22px rgba(109, 214, 255, 0.25);
 }
 
-.revelations-module .video-card {
-  position: relative;
-  z-index: 2;
-  width: min(100%, 760px);
-  margin-bottom: 0.5rem;
+.revelations-module .rev-section-intro {
+  max-width: 440px;
+  margin: 0;
+  color: var(--rev-muted);
+  font-size: 0.86rem;
+  line-height: 1.55;
+  text-align: right;
+}
+
+/* Guide video: one framed player with a single status bar (what is playing + YouTube fallback). */
+.revelations-module .rev-video {
+  margin: 0;
   overflow: hidden;
-  border: 2px solid rgba(109, 194, 255, 0.48);
-  border-radius: 10px;
-  box-shadow: 0 0 20px rgba(0, 208, 255, 0.22);
+  border: 1px solid rgba(109, 214, 255, 0.22);
+  border-radius: 16px;
+  background: #02050b;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(0, 0, 0, 0.4);
 }
 
-.revelations-module .rev-video-player > div:first-child,
-.revelations-module .rev-video-player .sk-video,
+.revelations-module .rev-video__frame,
+.revelations-module .rev-video__player,
 .revelations-module .rev-video-player__iframe {
   display: block;
   width: 100% !important;
@@ -167,168 +169,144 @@
   background: #000;
 }
 
-.revelations-module .video-caption {
-  display: block;
-  width: 100%;
-  padding: 0.35rem 0.6rem;
-  color: #aad4ff;
-  font-size: 0.78rem;
-  line-height: 1.35;
-  text-align: center;
-  background: rgba(4, 12, 24, 0.84);
-}
-
-.revelations-module .sk-selected-label {
-  position: relative;
-  z-index: 2;
-  margin: 0.45rem 0;
-  color: #d9efff;
-  font-size: 0.9rem;
-  font-weight: 700;
-}
-
-.revelations-module .rev-selected-prefix {
-  color: #6dc2ff;
-  font-size: 0.76em;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.revelations-module .rev-selected-location {
-  color: #aee8ff;
-  font-weight: 500;
-}
-
-.revelations-module .sk-buttons {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.45rem;
-  padding-top: 0.3rem;
-}
-
-.revelations-module .sk-button {
-  min-height: 34px;
-}
-
-.revelations-module .egg-section-cards {
-  display: grid !important;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.55rem !important;
-  width: min(100%, 920px) !important;
-}
-
-.revelations-module .egg-glass-card {
-  appearance: none;
-  min-height: 88px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 0.2rem;
-  padding: 0.7rem 0.8rem !important;
-  color: inherit;
-  font: inherit;
-  text-align: left;
-  cursor: pointer;
-}
-
-.revelations-module .egg-glass-card.active {
-  border-color: rgba(109, 194, 255, 0.72);
-  box-shadow: 0 0 20px rgba(0, 195, 255, 0.2);
-}
-
-.revelations-module .egg-card-kicker,
-.revelations-module .egg-card-count {
-  display: block;
-}
-
-.revelations-module .egg-card-kicker {
-  color: #6dc2ff;
-  font-size: 0.62rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.revelations-module .egg-glass-card .egg-subtitle {
-  display: block;
-  margin: 0;
-  font-size: 1rem;
-  text-align: left;
-}
-
-.revelations-module .egg-card-count {
-  color: #a9bfd3;
-  font-size: 0.76rem;
-}
-
-.revelations-module .card-buttons button {
+.revelations-module .rev-video__bar {
+  min-height: 48px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.5rem;
+  gap: 0.9rem;
+  padding: 0.55rem 0.65rem 0.55rem 1rem;
+  border-top: 1px solid rgba(109, 214, 255, 0.12);
+  background: linear-gradient(90deg, rgba(8, 22, 40, 0.95), rgba(4, 9, 20, 0.95));
 }
 
-.revelations-module .card-buttons button small {
-  color: #7ddcff;
-  font-size: 0.68rem;
-  opacity: 0.88;
-  white-space: nowrap;
+.revelations-module .rev-video__now {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: -webkit-box;
+  overflow: hidden;
+  color: var(--rev-ink);
+  font-size: 0.86rem;
+  font-weight: 650;
+  line-height: 1.35;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
-.revelations-module .spinner-controls {
-  position: relative;
-  z-index: 2;
+.revelations-module .rev-video__label {
+  margin-right: 0.55rem;
+  color: var(--rev-cyan);
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.revelations-module .rev-video__hint {
+  color: var(--rev-muted);
+  font-weight: 500;
+}
+
+.revelations-module .rev-video__warning {
+  color: #ffcf8a;
+  font-weight: 600;
+}
+
+.revelations-module .rev-video__external {
+  flex: 0 0 auto;
+  min-height: 34px;
+  display: inline-flex;
   align-items: center;
-}
-
-.revelations-module .spinner-controls > span {
-  min-width: 44px;
-  color: #9fdfff;
-  font-size: 0.78rem;
+  gap: 0.35rem;
+  padding: 0.3rem 0.8rem;
+  border: 1px solid rgba(109, 214, 255, 0.25);
+  border-radius: 999px;
+  color: #bfeaff;
+  font-size: 0.76rem;
   font-weight: 700;
+  white-space: nowrap;
+  transition: background 0.18s ease, border-color 0.18s ease;
 }
 
-@media (max-width: 900px) {
-  .revelations-module .rev-content,
-  .revelations-module .rev-columns {
-    flex-direction: column;
-    align-items: center;
+.revelations-module .rev-video__external:hover {
+  border-color: rgba(109, 214, 255, 0.6);
+  background: rgba(56, 196, 255, 0.12);
+}
+
+@media (max-width: 980px) {
+  .revelations-module .rev-section-head {
+    display: block;
   }
 
-  .revelations-module .egg-section-cards {
-    grid-template-columns: 1fr;
+  .revelations-module .rev-section-intro {
+    max-width: 60ch;
+    margin-top: 0.45rem;
+    text-align: left;
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 760px) {
   .revelations-module .rev-page {
-    padding: 1rem 0.5rem 1.8rem;
+    padding: 0.85rem 0.6rem 2.6rem;
   }
 
-  .revelations-module .rev-glow-box {
-    padding: 0.7rem !important;
+  .revelations-module .rev-shell {
+    padding: 1.05rem 0.85rem 1rem;
+    border-radius: 18px;
   }
 
-  .revelations-module .sk-buttons {
-    display: grid;
-    grid-template-columns: 1fr;
-    width: 100%;
+  .revelations-module .rev-section-head {
+    display: block;
+    margin-bottom: 1rem;
   }
 
-  .revelations-module .sk-button {
-    width: 100%;
+  .revelations-module .rev-section-title {
+    font-size: 1.7rem;
   }
 
-  .revelations-module .sound-card.left,
-  .revelations-module .sound-card.right {
-    opacity: 0;
-    pointer-events: none;
+  .revelations-module .rev-section-intro {
+    max-width: none;
+    margin-top: 0.4rem;
+    font-size: 0.84rem;
+    text-align: left;
   }
 
-  .revelations-module .sound-card.center {
-    width: min(86vw, 330px);
+  .revelations-module .rev-video {
+    border-radius: 12px;
+  }
+
+  .revelations-module .rev-video__bar {
+    min-height: 44px;
+    padding-left: 0.75rem;
+  }
+
+  .revelations-module .rev-video__now {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .revelations-module .rev-page {
+    padding: 0.7rem 0.75rem 3.1rem;
+  }
+
+  .revelations-module .rev-shell {
+    padding: 0.85rem 0.95rem 0.95rem;
+    border-radius: 16px;
+  }
+
+  .revelations-module .rev-section-head {
+    display: flex;
+    margin-bottom: 0.75rem;
+  }
+
+  .revelations-module .rev-section-title {
+    font-size: 1.4rem;
+  }
+
+  .revelations-module .rev-section-intro {
+    margin-top: 0;
+    font-size: 0.74rem;
+    text-align: right;
   }
 }

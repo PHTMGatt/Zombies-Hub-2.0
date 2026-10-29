@@ -1,0 +1,271 @@
+/* Reference workspace shared by Apothicon Upgrade, Egg Locations, Summoning Key and Sound Step:
+   a large guide video beside the panel of choices that drive it. */
+.revelations-module .rev-workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1.75fr) minmax(290px, 1fr);
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.revelations-module .rev-workspace__media {
+  position: sticky;
+  top: calc(var(--hub-nav-height) + 1rem);
+  z-index: 2;
+  min-width: 0;
+}
+
+.revelations-module .rev-workspace__panel {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  padding: 1.05rem;
+  border: 1px solid var(--rev-line);
+  border-radius: 18px;
+  background: var(--rev-surface);
+}
+
+.revelations-module .rev-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0 0.15rem;
+}
+
+.revelations-module .rev-panel-head:not(:first-child) {
+  margin-top: 0.35rem;
+}
+
+.revelations-module .rev-panel-count {
+  min-width: 1.6rem;
+  padding: 0.1rem 0.45rem;
+  border-radius: 999px;
+  background: rgba(140, 200, 255, 0.1);
+  color: var(--rev-muted);
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.revelations-module .rev-options {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.revelations-module .rev-option {
+  min-height: 52px;
+  display: grid;
+  grid-template-columns: 1.75rem minmax(0, 1fr) 1.25rem;
+  gap: 0.7rem;
+  align-items: center;
+  padding: 0.5rem 0.75rem 0.5rem 0.55rem;
+  border: 1px solid var(--rev-line);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.025);
+  color: var(--rev-text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+}
+
+.revelations-module .rev-option:hover {
+  border-color: rgba(109, 214, 255, 0.36);
+  background: rgba(56, 196, 255, 0.07);
+  color: var(--rev-ink);
+}
+
+.revelations-module .rev-option__index {
+  width: 1.75rem;
+  height: 1.75rem;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(140, 200, 255, 0.28);
+  border-radius: 50%;
+  background: #08101e;
+  color: #8fcfee;
+  font-size: 0.68rem;
+  font-weight: 800;
+}
+
+.revelations-module .rev-option__body {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.12rem;
+}
+
+.revelations-module .rev-option__title {
+  font-size: 0.86rem;
+  font-weight: 650;
+  line-height: 1.3;
+}
+
+.revelations-module .rev-option__meta {
+  color: var(--rev-muted);
+  font-size: 0.72rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.revelations-module .rev-option__play {
+  color: rgba(109, 214, 255, 0.35);
+  font-size: 0.7rem;
+  text-align: center;
+  transition: color 0.18s ease, transform 0.18s ease;
+}
+
+.revelations-module .rev-option:hover .rev-option__play {
+  color: var(--rev-cyan);
+  transform: translateX(2px);
+}
+
+.revelations-module .rev-option.is-active {
+  border-color: rgba(109, 214, 255, 0.5);
+  background: var(--rev-active);
+  color: #fff;
+}
+
+.revelations-module .rev-option.is-active .rev-option__index {
+  border-color: transparent;
+  background: linear-gradient(135deg, #8fe3ff, var(--rev-cyan-strong));
+  color: #03101c;
+  box-shadow: 0 0 14px rgba(56, 196, 255, 0.5);
+}
+
+.revelations-module .rev-option.is-active .rev-option__play {
+  color: var(--rev-cyan);
+}
+
+/* Egg Locations: map areas as a segmented control. */
+.revelations-module .rev-segment {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.3rem;
+  padding: 0.3rem;
+  border: 1px solid var(--rev-line);
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.revelations-module .rev-segment button {
+  min-height: 44px;
+  padding: 0.4rem 0.55rem;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--rev-muted);
+  font: inherit;
+  font-size: 0.76rem;
+  font-weight: 700;
+  line-height: 1.25;
+  cursor: pointer;
+  transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+}
+
+.revelations-module .rev-segment button:hover {
+  color: var(--rev-ink);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.revelations-module .rev-segment button.active {
+  border-color: rgba(109, 214, 255, 0.45);
+  background: linear-gradient(180deg, rgba(56, 196, 255, 0.22), rgba(56, 196, 255, 0.1));
+  color: #fff;
+}
+
+/* Sound Step: region switcher. */
+.revelations-module .rev-area-switch {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) 44px;
+  gap: 0.6rem;
+  align-items: center;
+  padding: 0.35rem;
+  border: 1px solid var(--rev-line);
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.25);
+  text-align: center;
+}
+
+.revelations-module .rev-area-switch strong {
+  display: block;
+  margin-top: 0.15rem;
+  color: var(--rev-ink);
+  font-size: 0.92rem;
+  line-height: 1.25;
+}
+
+.revelations-module .rev-area-switch button {
+  height: 44px;
+  border: 1px solid rgba(109, 214, 255, 0.3);
+  border-radius: 10px;
+  background: rgba(56, 196, 255, 0.08);
+  color: #cdefff;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.18s ease, border-color 0.18s ease;
+}
+
+.revelations-module .rev-area-switch button:hover {
+  border-color: rgba(109, 214, 255, 0.65);
+  background: rgba(56, 196, 255, 0.2);
+}
+
+@media (max-width: 980px) {
+  .revelations-module .rev-workspace {
+    grid-template-columns: minmax(0, 1.4fr) minmax(250px, 1fr);
+    gap: 1rem;
+  }
+}
+
+/* Phones: the video pins under the hub bar while the choices scroll beneath it. */
+@media (max-width: 760px) {
+  .revelations-module .rev-workspace {
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
+  }
+
+  .revelations-module .rev-workspace__media {
+    top: var(--hub-nav-height);
+    margin: 0 -0.85rem;
+    padding: 0 0.35rem 0.5rem;
+    background: linear-gradient(180deg, rgba(5, 9, 20, 0.96) 80%, rgba(5, 9, 20, 0));
+  }
+
+  .revelations-module .rev-workspace__panel {
+    padding: 0;
+    border: 0;
+    background: transparent;
+  }
+
+  .revelations-module .rev-option {
+    min-height: 56px;
+  }
+}
+
+/* Landscape phones: video and choices side by side, both within the short viewport. */
+@media (max-height: 500px) and (orientation: landscape) {
+  .revelations-module .rev-workspace {
+    grid-template-columns: minmax(0, 1.25fr) minmax(220px, 1fr);
+    gap: 0.75rem;
+  }
+
+  .revelations-module .rev-workspace__media {
+    top: calc(var(--hub-nav-height) + 0.5rem);
+    margin: 0;
+    padding: 0;
+    background: none;
+  }
+
+  .revelations-module .rev-workspace__panel {
+    padding: 0.7rem;
+    border: 1px solid var(--rev-line);
+    background: var(--rev-surface);
+  }
+
+  .revelations-module .rev-option {
+    min-height: 44px;
+  }
+}

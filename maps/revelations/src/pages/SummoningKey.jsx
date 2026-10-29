@@ -1,11 +1,21 @@
 import React, { useRef, useState } from 'react';
 import GuideVideoPlayer from '../components/GuideVideoPlayer';
+import RevSectionHeader from '../components/RevSectionHeader';
+import RevOptionList, { formatRange } from '../components/RevOptionList';
 import SummoningKeyData from '../data/SummoningKey';
-import '../styles/SummoningKey.css';
+import '../styles/Reference.css';
+
+// Data names read "Throw 3: Shangri-La Focusing Stone"; the list already numbers each throw.
+const options = SummoningKeyData.map((entry) => ({
+  ...entry,
+  key: entry.name,
+  title: entry.name.replace(/^Throw \d+:\s*/, ''),
+  meta: formatRange(entry.start, entry.end),
+}));
 
 function SummoningKey() {
   const videoRef = useRef(null);
-  const [selected, setSelected] = useState(SummoningKeyData[0]);
+  const [selected, setSelected] = useState(null);
 
   const handleTimestampClick = (entry) => {
     setSelected(entry);
@@ -13,40 +23,38 @@ function SummoningKey() {
   };
 
   return (
-    <div className="rev-page summoning-key-page">
-      <div className="rev-background" />
-      <div className="sk-container">
-        <div className="rev-page-heading">
-          <span className="rev-page-kicker">Quick Reference</span>
-          <h2 className="sk-title">Summoning Key Throws</h2>
-          <p className="rev-page-intro">Tap the target you need and jump straight to that throw.</p>
-        </div>
+    <div className="rev-page rev-reference-page summoning-key-page">
+      <section className="rev-shell">
+        <RevSectionHeader
+          kicker="Quick Reference · Step 11"
+          title="Summoning Key Throws"
+          intro="Seven throws, in order. Tap the target you need and jump straight to that throw."
+        />
 
-        <div className="rev-glow-box">
-          <GuideVideoPlayer
-            ref={videoRef}
-            title="Revelations Summoning Key throws"
-            caption="Choose a target below to play only that throw."
-          />
-
-          <div className="sk-selected-label">
-            <span className="rev-selected-prefix">Selected:</span> {selected.name}
+        <div className="rev-workspace">
+          <div className="rev-workspace__media">
+            <GuideVideoPlayer
+              ref={videoRef}
+              title="Revelations Summoning Key throws"
+              caption="Choose a throw to play only that clip."
+              nowPlaying={selected?.name}
+            />
           </div>
 
-          <div className="sk-buttons" aria-label="Summoning Key throws">
-            {SummoningKeyData.map((entry) => (
-              <button
-                key={entry.name}
-                type="button"
-                onClick={() => handleTimestampClick(entry)}
-                className={`sk-button ${selected.name === entry.name ? 'active' : ''}`}
-              >
-                {entry.name}
-              </button>
-            ))}
-          </div>
+          <aside className="rev-workspace__panel">
+            <div className="rev-panel-head">
+              <span className="rev-kicker">Throw order</span>
+              <span className="rev-panel-count">{options.length}</span>
+            </div>
+            <RevOptionList
+              label="Summoning Key throws"
+              options={options}
+              activeKey={selected?.name}
+              onSelect={handleTimestampClick}
+            />
+          </aside>
         </div>
-      </div>
+      </section>
     </div>
   );
 }

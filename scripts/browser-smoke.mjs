@@ -204,7 +204,7 @@ try {
     assert.equal(new URL(page.url()).pathname, mobTarget, 'Mob of the Dead guide navigation reaches its intended route');
 
     await page.goto(`${base}/maps/revelations/apothicon-upgrade`);
-    await page.locator('.sk-button').nth(1).click();
+    await page.locator('.rev-option').nth(1).click();
     const fallback = page.getByRole('link', { name: 'Watch the selected timestamp on YouTube' });
     assert.match(await fallback.getAttribute('href'), /&t=[1-9]\d*s$/);
 

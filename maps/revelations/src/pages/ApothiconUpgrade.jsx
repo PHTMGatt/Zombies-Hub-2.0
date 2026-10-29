@@ -1,11 +1,20 @@
 import React, { useRef, useState } from 'react';
 import GuideVideoPlayer from '../components/GuideVideoPlayer';
+import RevSectionHeader from '../components/RevSectionHeader';
+import RevOptionList, { formatRange } from '../components/RevOptionList';
 import upgradeData from '../data/ApothiconUpgradeData';
-import '../styles/ApothiconUpgrade.css';
+import '../styles/Reference.css';
+
+const options = upgradeData.map((item) => ({
+  ...item,
+  key: item.name,
+  title: item.name,
+  meta: formatRange(item.start, item.end),
+}));
 
 const ApothiconUpgrade = () => {
   const videoRef = useRef(null);
-  const [selected, setSelected] = useState(upgradeData[0]);
+  const [selected, setSelected] = useState(null);
 
   const handlePlay = (item) => {
     setSelected(item);
@@ -13,40 +22,38 @@ const ApothiconUpgrade = () => {
   };
 
   return (
-    <div className="rev-page apothicon-upgrade-page">
-      <div className="rev-background" />
-      <div className="sk-container">
-        <div className="rev-page-heading">
-          <span className="rev-page-kicker">Quick Reference</span>
-          <h2 className="sk-title">Apothicon Servant Upgrade</h2>
-          <p className="rev-page-intro">Choose the area you need and jump directly to that short location segment.</p>
-        </div>
+    <div className="rev-page rev-reference-page apothicon-upgrade-page">
+      <section className="rev-shell">
+        <RevSectionHeader
+          kicker="Quick Reference · Step 03"
+          title="Apothicon Servant Upgrade"
+          intro="Shoot all five blue sky rocks with the Apothicon Servant. Choose a location to play only that short segment."
+        />
 
-        <div className="rev-glow-box">
-          <GuideVideoPlayer
-            ref={videoRef}
-            title="Apothicon Servant upgrade locations"
-            caption="Choose an area below to play only that location segment."
-          />
-
-          <div className="sk-selected-label">
-            <span className="rev-selected-prefix">Selected:</span> {selected.name}
+        <div className="rev-workspace">
+          <div className="rev-workspace__media">
+            <GuideVideoPlayer
+              ref={videoRef}
+              title="Apothicon Servant upgrade locations"
+              caption="Choose a location to play only that segment."
+              nowPlaying={selected?.name}
+            />
           </div>
 
-          <div className="sk-buttons" aria-label="Apothicon upgrade locations">
-            {upgradeData.map((item) => (
-              <button
-                key={item.name}
-                type="button"
-                onClick={() => handlePlay(item)}
-                className={`sk-button ${selected.name === item.name ? 'active' : ''}`}
-              >
-                {item.name}
-              </button>
-            ))}
-          </div>
+          <aside className="rev-workspace__panel">
+            <div className="rev-panel-head">
+              <span className="rev-kicker">Rock locations</span>
+              <span className="rev-panel-count">{options.length}</span>
+            </div>
+            <RevOptionList
+              label="Apothicon upgrade locations"
+              options={options}
+              activeKey={selected?.name}
+              onSelect={handlePlay}
+            />
+          </aside>
         </div>
-      </div>
+      </section>
     </div>
   );
 };

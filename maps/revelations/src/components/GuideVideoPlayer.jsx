@@ -1,11 +1,13 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import YouTube from 'react-youtube';
+import { formatTime } from './RevOptionList';
 
 const GuideVideoPlayer = forwardRef(function GuideVideoPlayer(
   {
     videoId = 'tt3mpH7Rrfo',
     title = 'Revelations guide video',
     caption = 'Choose a section to jump directly to that part of the guide.',
+    nowPlaying = null,
   },
   ref,
 ) {
@@ -79,37 +81,56 @@ const GuideVideoPlayer = forwardRef(function GuideVideoPlayer(
     },
   };
 
-  return (
-    <div className="video-card rev-video-player">
-      <YouTube
-        videoId={videoId}
-        opts={opts}
-        title={title}
-        onError={() => {
-          setFailed(true);
-          clearStopTimer();
-        }}
-        onReady={(event) => {
-          setFailed(false);
-          playerRef.current = event.target;
+  const youtubeHref = `https://www.youtube.com/watch?v=${encodeURIComponent(videoId)}&t=${Math.floor(selectedStart)}s`;
 
-          const pending = pendingSegmentRef.current;
-          if (pending) {
-            pendingSegmentRef.current = null;
-            runSegment(event.target, pending.start, pending.end);
-          }
-        }}
-        className="sk-video"
-        iframeClassName="rev-video-player__iframe"
-      />
-      <div className="video-caption">{caption}</div>
-      <p className="video-caption">
-        {failed && <span role="status">The embedded player is unavailable. </span>}
-        <a href={`https://www.youtube.com/watch?v=${encodeURIComponent(videoId)}&t=${Math.floor(selectedStart)}s`} target="_blank" rel="noopener noreferrer">
-          Watch {selectedStart ? 'the selected timestamp' : 'the guide'} on YouTube
+  return (
+    <figure className="rev-video">
+      <div className="rev-video__frame">
+        <YouTube
+          videoId={videoId}
+          opts={opts}
+          title={title}
+          onError={() => {
+            setFailed(true);
+            clearStopTimer();
+          }}
+          onReady={(event) => {
+            setFailed(false);
+            playerRef.current = event.target;
+
+            const pending = pendingSegmentRef.current;
+            if (pending) {
+              pendingSegmentRef.current = null;
+              runSegment(event.target, pending.start, pending.end);
+            }
+          }}
+          className="rev-video__player"
+          iframeClassName="rev-video-player__iframe"
+        />
+      </div>
+      <figcaption className="rev-video__bar">
+        <span className="rev-video__now" role="status">
+          {nowPlaying ? (
+            <>
+              <span className="rev-video__label">Playing</span>{' '}
+              <span className="rev-video__title">{nowPlaying}</span>
+            </>
+          ) : (
+            <span className="rev-video__hint">{caption}</span>
+          )}
+          {failed && <span className="rev-video__warning"> Player unavailable here — use YouTube.</span>}
+        </span>
+        <a
+          className="rev-video__external"
+          href={youtubeHref}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Watch ${selectedStart ? 'the selected timestamp' : 'the guide'} on YouTube`}
+        >
+          {selectedStart ? `YouTube at ${formatTime(selectedStart)}` : 'Open on YouTube'} <span aria-hidden="true">↗</span>
         </a>
-      </p>
-    </div>
+      </figcaption>
+    </figure>
   );
 });
 

@@ -1,7 +1,9 @@
 import React, { useRef, useState } from 'react';
 import GuideVideoPlayer from '../components/GuideVideoPlayer';
+import RevSectionHeader from '../components/RevSectionHeader';
+import RevOptionList from '../components/RevOptionList';
 import soundStepData from '../data/SoundStepData';
-import '../styles/SoundStep.css';
+import '../styles/Reference.css';
 
 const groupedData = soundStepData.reduce((acc, entry) => {
   if (!acc[entry.area]) acc[entry.area] = [];
@@ -41,54 +43,51 @@ function SoundStep() {
     videoRef.current?.playSegment(spot.start, getEndTime(spot));
   };
 
+  const options = groupedData[currentArea].map((spot) => ({
+    ...spot,
+    key: `${spot.area}-${spot.label}`,
+    title: spot.label,
+    meta: spot.time.replace(/\s*-\s*/, ' – '),
+  }));
+
   return (
-    <div className="rev-page sound-step-page">
-      <div className="rev-background" />
+    <div className="rev-page rev-reference-page sound-step-page">
+      <section className="rev-shell">
+        <RevSectionHeader
+          kicker="Rune Placement Reference · Step 09"
+          title="Sound Step"
+          intro="Pick the region you are checking, then the exact spot to hear that reference segment."
+        />
 
-      <div className="sound-reference">
-        <div className="rev-page-heading">
-          <span className="rev-page-kicker">Rune Placement Reference</span>
-          <h2 className="sk-title">Sound Step</h2>
-          <p className="rev-page-intro">
-            Pick the region you are checking, then choose the exact location to hear that reference segment.
-          </p>
-        </div>
-
-        <div className="rev-reference-card">
-          <GuideVideoPlayer
-            ref={videoRef}
-            title="Revelations Rune of Creation sound-step locations"
-            caption="The video only jumps when you choose a location."
-          />
-
-          <div className="sound-area-controls" aria-label="Change sound step area">
-            <button type="button" onClick={() => handleRotate('left')} aria-label="Previous area">&larr;</button>
-            <strong>{currentArea}</strong>
-            <span>{currentIndex + 1} / {areaList.length}</span>
-            <button type="button" onClick={() => handleRotate('right')} aria-label="Next area">&rarr;</button>
+        <div className="rev-workspace">
+          <div className="rev-workspace__media">
+            <GuideVideoPlayer
+              ref={videoRef}
+              title="Revelations Rune of Creation sound-step locations"
+              caption="The video only jumps when you choose a spot."
+              nowPlaying={selectedSpot ? `${currentArea} · ${selectedSpot.label}` : null}
+            />
           </div>
 
-          <div className="sound-location-list" aria-label={currentArea + ' sound step locations'}>
-            {groupedData[currentArea].map((spot) => (
-              <button
-                key={spot.area + '-' + spot.label}
-                type="button"
-                className={selectedSpot?.label === spot.label ? 'active' : ''}
-                onClick={() => handleClick(spot)}
-              >
-                <span>{spot.label}</span>
-                <small>{spot.time}</small>
-              </button>
-            ))}
-          </div>
-
-          {selectedSpot && (
-            <div className="sk-selected-label">
-              <span className="rev-selected-prefix">Selected:</span> {selectedSpot.label}
+          <aside className="rev-workspace__panel">
+            <div className="rev-area-switch" role="group" aria-label="Change sound step area">
+              <button type="button" onClick={() => handleRotate('left')} aria-label="Previous area">&larr;</button>
+              <div>
+                <span className="rev-kicker">Region {currentIndex + 1} / {areaList.length}</span>
+                <strong>{currentArea}</strong>
+              </div>
+              <button type="button" onClick={() => handleRotate('right')} aria-label="Next area">&rarr;</button>
             </div>
-          )}
+
+            <RevOptionList
+              label={`${currentArea} sound step locations`}
+              options={options}
+              activeKey={selectedSpot ? `${selectedSpot.area}-${selectedSpot.label}` : null}
+              onSelect={handleClick}
+            />
+          </aside>
         </div>
-      </div>
+      </section>
     </div>
   );
 }
