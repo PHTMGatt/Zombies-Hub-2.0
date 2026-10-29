@@ -69,6 +69,20 @@ try {
     await page.getByRole('heading', { name: 'Side Easter Eggs' }).waitFor();
     const sideCards = page.locator('.side-ee-card');
     assert.equal(await sideCards.count(), 5, 'Side Easter Eggs keeps all five guide cards');
+    const sideArtworkRatios = await sideCards.evaluateAll(cards => Promise.all(cards.map(async card => {
+      const artwork = card.querySelector('.side-ee-card__header');
+      const backgroundImage = getComputedStyle(artwork).backgroundImage;
+      const source = backgroundImage.match(/^url\(["']?(.*?)["']?\)$/)?.[1];
+      if (!source) throw new Error('Side Easter Egg card has no rendered artwork source');
+      const image = new Image();
+      image.src = source;
+      await image.decode();
+      return image.naturalWidth / image.naturalHeight;
+    })));
+    assert(
+      sideArtworkRatios.every(ratio => ratio >= 1.6 && ratio <= 1.9),
+      `Side Easter Egg cards use clean widescreen artwork instead of catalog strips: ${sideArtworkRatios.join(', ')}`,
+    );
     const sideColumns = await page.locator('.side-ee-grid').evaluate(element =>
       getComputedStyle(element).gridTemplateColumns.split(' ').filter(Boolean).length,
     );
