@@ -132,14 +132,37 @@ try {
     await page.waitForLoadState('networkidle');
     assert.equal(new URL(page.url()).pathname, originsTarget, 'Origins guide navigation reaches its intended route');
 
-    // Origins Speed Run lives inside the Origins guide: reachable from the guide, the old Side EE address
-    // redirects to it, the route steps forward, and the practice dials count turns to the final position.
+    // Origins guide: Low/Medium/High share one progression, and Speedrun mode is a locked reward.
+    await page.goto(`${base}/maps/origins`, { waitUntil: 'networkidle' });
+    await page.evaluate(() => window.localStorage.clear());
+    await page.reload({ waitUntil: 'networkidle' });
+    await page.locator('.guide-rail__step').nth(2).click();
+    await page.getByRole('button', { name: /^High/ }).click();
+    assert.equal(await page.locator('.guide-step h3').innerText(), 'Secure the keys', 'Changing depth keeps the current step');
+    assert.equal(await page.locator('.guide-how').count(), 1, 'High depth shows the how-to');
+    await page.getByRole('button', { name: /^Low/ }).click();
+    assert.equal(await page.locator('.guide-how').count(), 0, 'Low depth is reference only');
+    await page.getByRole('button', { name: 'Mark step done' }).click();
+    assert.equal(await page.locator('.guide-step h3').innerText(), 'Thunder Fists', 'Marking done advances to the next open step');
+    await page.getByRole('button', { name: /Speedrun mode \(locked\)/ }).click();
+    assert(await page.locator('.speedrun-gate.is-locked').isVisible(), 'Speedrun mode is locked before the secret');
     await page.goto(`${base}/side-easter-eggs/origins-speedrun`, { waitUntil: 'networkidle' });
     assert.equal(new URL(page.url()).pathname, '/maps/origins/speed-run', 'Old Origins Speed Run address redirects into the Origins guide');
+    assert(await page.locator('.speedrun-gate.is-locked').isVisible(), 'Speed Run pages are locked before the secret');
+
+    // The Electrical Panel secret: start at the untouched positions, turn each the in-game number of times.
+    await page.goto(`${base}/maps/origins/lightning-staff`, { waitUntil: 'networkidle' });
+    await page.getByRole('button', { name: /Electrical Panel/ }).click();
+    const panelSwitches = page.locator('.electrical-switch');
+    const turnsNeeded = [2, 3, 3, 2, 2, 1, 3];
+    for (const [index, turns] of turnsNeeded.entries()) {
+      for (let turn = 0; turn < turns; turn += 1) await panelSwitches.nth(index).click();
+    }
+    assert.equal(await page.locator('.electrical-panel__reward strong').innerText(), 'Speedrun Difficulty Unlocked');
+    await page.getByRole('link', { name: 'Straight to the route →' }).click();
+    await page.waitForLoadState('networkidle');
     await page.getByRole('button', { name: 'Next checkpoint' }).click();
     assert.match(await page.locator('.speedrun-panel h3').innerText(), /Ice \+ Wind Staff/);
-    await page.goto(`${base}/maps/origins`, { waitUntil: 'networkidle' });
-    assert(await page.locator('a[href="/maps/origins/speed-run"]').first().isVisible(), 'Origins guide links to its Speed Run');
     await page.goto(`${base}/maps/origins/speed-run/lightning`, { waitUntil: 'networkidle' });
     assert.equal(await page.locator('.switch-card .switch-dial').count(), 7, 'Speed Run shows all seven Lightning switch dials');
     await page.getByRole('button', { name: 'Practice turns' }).click();
@@ -147,8 +170,8 @@ try {
     const churchUpper = page.getByRole('button', { name: /^Church Upper:/ });
     await churchUpper.click();
     assert.match(await churchUpper.innerText(), /Set/, 'One turn sets Church Upper (needs ×1)');
-    assert.match(await page.locator('.switch-board__progress').innerText(), /1 \/ 7/);
     await assertNoHorizontalOverflow(page, '/maps/origins/speed-run/lightning');
+    await page.evaluate(() => window.localStorage.clear());
 
     // The sticky Origins header must stay compact on phones, with an unclipped title and the active staff in view.
     await page.goto(`${base}/maps/origins/lightning-staff`, { waitUntil: 'networkidle' });

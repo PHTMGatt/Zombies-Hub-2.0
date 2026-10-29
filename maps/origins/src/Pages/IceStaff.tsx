@@ -1,6 +1,6 @@
 import React from "react";
 import ReviveIcon from "../assets/images/Skull2.png";
-import IceIcon from "../assets/images/ice_staff_code.png";
+import IceIcon from "../assets/images/ice_staff_code.webp";
 import "../Styles/PageStyles/IceStaff.css";
 
 const IceStaff = () => {

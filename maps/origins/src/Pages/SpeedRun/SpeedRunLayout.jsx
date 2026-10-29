@@ -1,6 +1,10 @@
 import React from 'react';
 import { Link, NavLink, Outlet } from 'react-router-dom';
 import originsSpeedRun, { originsSpeedRunVideo } from '../../../../../shared/data/originsSpeedRun';
+import { useGuideProgress } from '../../../../../shared/guide/useGuideProgress';
+import originsGuide from '../../data/originsGuide';
+import { SpeedrunLocked } from '../../components/SpeedrunGate';
+import { useSpeedrunUnlock } from '../../components/speedrunUnlock';
 import '../../Styles/PageStyles/SpeedRun.css';
 
 const BASE = '/maps/origins/speed-run';
@@ -12,6 +16,20 @@ const SECTIONS = [
 ];
 
 export default function SpeedRunLayout() {
+  const { unlocked } = useSpeedrunUnlock();
+  const progress = useGuideProgress('origins', originsGuide);
+
+  // Speedrun is a reward for finishing the Easter Egg (or knowing the chords).
+  if (!unlocked) {
+    return (
+      <div className="speedrun-page">
+        <div className="speedrun-shell">
+          <SpeedrunLocked completed={progress.completed} total={progress.total} compact />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="speedrun-page">
       <div className="speedrun-shell">

@@ -1,8 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import ReviveIcon from "../assets/images/Skull.png";
-import LightningCode from "../assets/images/lightning_staff_code.png";
+import LightningCode from "../assets/images/lightning_staff_code.webp";
 import LightningSwitchBoard from "../components/LightningSwitchBoard";
+import ElectricalPanel from "../components/ElectricalPanel";
 import "../Styles/PageStyles/LightningStaff.css";
 
 const LightningStaff = () => {
@@ -63,6 +64,8 @@ const LightningStaff = () => {
               </Link>
             )}
           />
+
+          <ElectricalPanel />
         </div>
       </div>
     </div>
