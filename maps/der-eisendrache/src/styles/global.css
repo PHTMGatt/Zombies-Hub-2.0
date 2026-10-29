@@ -128,3 +128,14 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .de-module .header-spacer {
+    flex-basis: 58px;
+    height: 58px;
+  }
+
+  .de-phase-anchor {
+    scroll-margin-top: calc(var(--hub-nav-height) + 68px);
+  }
+}

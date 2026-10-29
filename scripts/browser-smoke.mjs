@@ -62,6 +62,13 @@ try {
         });
         assert(gapBelowFooter !== null, `${route} renders no map footer`);
         assert(gapBelowFooter <= 1, `${route} leaves ${gapBelowFooter}px of dead space below the map footer`);
+        // Pinned map headers must not swallow a phone screen.
+        const pinnedHeader = await page.evaluate(() => {
+          const header = document.querySelector('.map-module header');
+          if (!header || !['sticky', 'fixed'].includes(getComputedStyle(header).position)) return 0;
+          return header.offsetHeight;
+        });
+        assert(pinnedHeader <= (width === 390 ? 130 : 110), `${route} pins a ${pinnedHeader}px map header at ${width}px`);
       }
       results.push({ width, route, passed: true });
     }

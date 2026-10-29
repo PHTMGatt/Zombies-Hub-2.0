@@ -110,27 +110,47 @@
   }
 }
 
+/* Phones: identity on one baseline row and the ember pills in a single swipeable row,
+   instead of a stacked title plus a three-row pill grid (184px of sticky header). */
 @media (max-width: 560px) {
   .gorod-module .gorod-header__content {
-    width: min(100% - 1rem, 540px);
+    width: 100%;
+    gap: 0.5rem;
+    padding: 0.6rem 0 0.55rem;
   }
 
   .gorod-module .gorod-header__identity {
-    display: block;
+    padding-inline: 0.75rem;
   }
 
-  .gorod-module .gorod-header__subtitle {
-    margin-top: 0.18rem;
+  .gorod-module .gorod-header__title {
+    font-size: 1.65rem;
   }
 
   .gorod-module .gorod-header__nav {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
     width: 100%;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    padding: 2px 0.75rem;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-snap-type: x proximity;
+    scroll-padding-inline: 0.75rem;
+    scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 0.75rem, #000 calc(100% - 0.75rem), transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 0.75rem, #000 calc(100% - 0.75rem), transparent);
   }
 
-  .gorod-module .gorod-nav-link:first-child {
-    grid-column: 1 / -1;
+  .gorod-module .gorod-header__nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .gorod-module .gorod-nav-link {
+    flex: 0 0 auto;
+    min-height: 38px;
+    padding: 0.35rem 0.8rem;
+    font-size: 0.78rem;
+    scroll-snap-align: start;
   }
 }
 
@@ -160,7 +180,7 @@
   }
 
   .gorod-module .gorod-nav-link {
-    min-height: 30px;
-    padding: 0.25rem 0.55rem;
+    min-height: 34px;
+    padding: 0.25rem 0.6rem;
   }
 }

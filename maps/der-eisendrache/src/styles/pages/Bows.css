@@ -143,7 +143,7 @@
 
 .de-module .bow-choice-card__label {
   color: var(--bow-accent);
-  font-size: 0.55rem;
+  font-size: 0.62rem;
   font-weight: 850;
   letter-spacing: 0.09em;
   text-transform: uppercase;
@@ -159,7 +159,7 @@
 
 .de-module .bow-choice-card__meta {
   color: #91a4b2;
-  font-size: 0.62rem;
+  font-size: 0.68rem;
 }
 
 .de-module .bow-landing__rule {

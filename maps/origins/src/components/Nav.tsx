@@ -14,7 +14,9 @@ const Nav = () => {
     const row = linksRef.current;
     const active = row?.querySelector<HTMLElement>(".origins-nav-link.active");
     if (!row || !active || row.scrollWidth <= row.clientWidth) return;
-    row.scrollLeft = active.offsetLeft - (row.clientWidth - active.offsetWidth) / 2;
+    const rowBox = row.getBoundingClientRect();
+    const activeBox = active.getBoundingClientRect();
+    row.scrollLeft += activeBox.left - rowBox.left - (rowBox.width - activeBox.width) / 2;
   }, [pathname]);
 
   return (

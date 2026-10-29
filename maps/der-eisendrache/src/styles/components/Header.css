@@ -110,3 +110,33 @@
     display: none;
   }
 }
+
+/* Landscape phones: title and tabs share one row (the spacer in global.css matches this height). */
+@media (max-height: 500px) and (orientation: landscape) {
+  .de-header {
+    height: 58px;
+  }
+
+  .de-header__content {
+    width: calc(100% - 1.25rem);
+    padding: 0;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .de-header__identity {
+    flex: 0 0 auto;
+    text-align: left;
+  }
+
+  .de-header__title-row h1 {
+    font-size: 1.3rem;
+    white-space: nowrap;
+  }
+
+  .de-header .de-nav {
+    width: auto;
+    min-width: 0;
+  }
+}
