@@ -1,5 +1,5 @@
 import React, { lazy } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import Home from '../pages/Home';
 import NotFound from '../../../../shared/ui/NotFound';
 
@@ -25,6 +25,8 @@ export default function AppRoutes({ RootLayout }) {
       <Route element={<RootLayout />}>
         <Route index element={<Home />} />
         <Route path="allmaps" element={<AllMaps />} />
+        {/* Every guide lives under /maps/…; trimming the URL back to /maps should land on the index, not a 404. */}
+        <Route path="maps" element={<Navigate to="/allmaps" replace />} />
         <Route path="easter-eggs" element={<EasterEggs />} />
         <Route path="easter-eggs/:slug" element={<EasterEggGuide />} />
         <Route path="info/:slug" element={<MapInfo />} />
