@@ -1,0 +1,713 @@
+/* Origins Speed Run: Origins glass sections with the revive-gold accent. */
+.origins-module .speedrun-page {
+  --sr-gold: #f0c56b;
+  --sr-gold-soft: rgba(240, 197, 107, 0.14);
+  --sr-line: rgba(240, 197, 107, 0.22);
+  --sr-text: #e6eef8;
+  --sr-muted: #a9bccd;
+
+  padding: 2rem 1rem 3rem;
+}
+
+.origins-module .speedrun-shell {
+  width: min(100%, 1200px);
+  margin: 0 auto;
+  display: grid;
+  /* minmax(0, …): the swipeable rows inside must scroll, not widen the page. */
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.25rem;
+}
+
+.origins-module .speedrun-head,
+.origins-module .speedrun-card,
+.origins-module .speedrun-panel {
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 3px solid var(--sr-gold);
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.66);
+  box-shadow: 0 0 15px rgba(240, 197, 107, 0.12);
+}
+
+.origins-module .speedrun-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.5rem 1.75rem;
+}
+
+.origins-module .speedrun-kicker {
+  display: block;
+  color: var(--sr-gold);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.origins-module .speedrun-head h2 {
+  margin: 0.2rem 0 0.4rem;
+  color: #fff;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  line-height: 1;
+  text-shadow: 0 0 14px rgba(240, 197, 107, 0.3);
+}
+
+.origins-module .speedrun-head p {
+  max-width: 62ch;
+  margin: 0;
+  color: var(--sr-text);
+  font-size: 1.02rem;
+  line-height: 1.5;
+}
+
+.origins-module .speedrun-watch {
+  flex: 0 0 auto;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1.1rem;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #ffd98a, #e2aa45);
+  color: #1c1203;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.origins-module .speedrun-watch:hover {
+  filter: brightness(1.08);
+}
+
+/* Section tabs */
+.origins-module .speedrun-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.origins-module .speedrun-tab {
+  min-height: 58px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.1rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--sr-line);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  text-decoration: none;
+  transition: border-color 0.18s ease, background 0.18s ease;
+}
+
+.origins-module .speedrun-tab strong {
+  font-size: 1.08rem;
+}
+
+.origins-module .speedrun-tab small {
+  color: var(--sr-muted);
+  font-size: 0.82rem;
+}
+
+.origins-module .speedrun-tab:hover {
+  border-color: rgba(240, 197, 107, 0.55);
+}
+
+.origins-module .speedrun-tab.active {
+  border-color: var(--sr-gold);
+  background: linear-gradient(180deg, rgba(240, 197, 107, 0.22), rgba(240, 197, 107, 0.08));
+  box-shadow: 0 0 16px rgba(240, 197, 107, 0.18);
+}
+
+.origins-module .speedrun-tab.active small {
+  color: #f6dfa8;
+}
+
+/* Route: checkpoint rail + reading panel */
+.origins-module .speedrun-hint {
+  margin: 0 0 0.75rem;
+  color: var(--sr-muted);
+  font-size: 0.95rem;
+}
+
+.origins-module .speedrun-hint a,
+.origins-module .speedrun-foot a {
+  color: var(--sr-gold);
+  font-weight: 700;
+}
+
+.origins-module .speedrun-route__grid {
+  display: grid;
+  grid-template-columns: minmax(250px, 300px) minmax(0, 1fr);
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.origins-module .speedrun-rail {
+  position: sticky;
+  top: calc(var(--hub-nav-height) + var(--origins-header-height, 84px) + 0.75rem);
+}
+
+.origins-module .speedrun-rail ol {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.origins-module .speedrun-rail li {
+  margin: 0;
+  line-height: 1.2;
+}
+
+.origins-module .speedrun-checkpoint {
+  width: 100%;
+  min-height: 52px;
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr);
+  gap: 0.65rem;
+  align-items: center;
+  padding: 0.45rem 0.7rem 0.45rem 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.6);
+  color: var(--sr-muted);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.18s ease, background 0.18s ease, color 0.18s ease;
+}
+
+.origins-module .speedrun-checkpoint:hover {
+  border-color: rgba(240, 197, 107, 0.4);
+  color: #fff;
+}
+
+.origins-module .speedrun-checkpoint__num {
+  width: 2rem;
+  height: 2rem;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(240, 197, 107, 0.4);
+  border-radius: 50%;
+  color: var(--sr-gold);
+  font-weight: 700;
+}
+
+.origins-module .speedrun-checkpoint__copy {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.origins-module .speedrun-checkpoint__copy strong {
+  font-size: 0.98rem;
+  font-weight: 700;
+}
+
+.origins-module .speedrun-checkpoint__copy small {
+  color: #8ea3b5;
+  font-size: 0.8rem;
+}
+
+.origins-module .speedrun-checkpoint.past .speedrun-checkpoint__num {
+  background: rgba(240, 197, 107, 0.16);
+}
+
+.origins-module .speedrun-checkpoint.active {
+  border-color: rgba(240, 197, 107, 0.7);
+  background: linear-gradient(90deg, rgba(240, 197, 107, 0.2), rgba(0, 0, 0, 0.6));
+  color: #fff;
+}
+
+.origins-module .speedrun-checkpoint.active .speedrun-checkpoint__num {
+  border-color: transparent;
+  background: var(--sr-gold);
+  color: #1c1203;
+  box-shadow: 0 0 14px rgba(240, 197, 107, 0.55);
+}
+
+.origins-module .speedrun-panel {
+  min-width: 0;
+  padding: 1.5rem 1.75rem 1.4rem;
+  scroll-margin-top: calc(var(--hub-nav-height) + var(--origins-header-height, 84px) + 0.75rem);
+}
+
+.origins-module .speedrun-panel__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  color: var(--sr-gold);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.origins-module .speedrun-panel__meta a {
+  min-height: 34px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.2rem 0.75rem;
+  border: 1px solid rgba(240, 197, 107, 0.45);
+  border-radius: 999px;
+  color: #ffe4a8;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  text-transform: none;
+}
+
+.origins-module .speedrun-panel__meta a:hover {
+  background: var(--sr-gold-soft);
+}
+
+.origins-module .speedrun-panel h3,
+.origins-module .speedrun-card h3 {
+  margin: 0.6rem 0 0.4rem;
+  color: #fff;
+  font-size: clamp(1.45rem, 2.4vw, 1.9rem);
+  line-height: 1.1;
+}
+
+.origins-module .speedrun-panel__summary {
+  max-width: 70ch;
+  margin: 0;
+  color: #fff;
+  font-size: 1.08rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.origins-module .speedrun-panel__steps {
+  display: grid;
+  gap: 0.55rem;
+  max-width: 72ch;
+  margin: 1.1rem 0 0;
+  padding: 1rem 0 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  list-style: none;
+  counter-reset: sr-step;
+}
+
+.origins-module .speedrun-panel__steps li {
+  position: relative;
+  margin: 0;
+  padding-left: 2.1rem;
+  color: var(--sr-text);
+  font-size: 1rem;
+  line-height: 1.5;
+  counter-increment: sr-step;
+}
+
+.origins-module .speedrun-panel__steps li::before {
+  content: counter(sr-step);
+  position: absolute;
+  left: 0;
+  top: 0.05rem;
+  width: 1.45rem;
+  height: 1.45rem;
+  display: grid;
+  place-items: center;
+  border-radius: 6px;
+  background: var(--sr-gold-soft);
+  color: var(--sr-gold);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.origins-module .speedrun-callout {
+  display: grid;
+  gap: 0.15rem;
+  max-width: 72ch;
+  margin-top: 1.1rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(187, 134, 252, 0.5);
+  border-radius: 10px;
+  background: rgba(187, 134, 252, 0.1);
+  color: #e9dcff;
+  text-decoration: none;
+}
+
+.origins-module .speedrun-callout strong {
+  color: #fff;
+  font-size: 1.05rem;
+}
+
+.origins-module .speedrun-callout:hover {
+  background: rgba(187, 134, 252, 0.18);
+}
+
+.origins-module .speedrun-panel__nav {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.6rem;
+  margin-top: 1.4rem;
+}
+
+.origins-module .speedrun-panel__nav button {
+  min-width: 0;
+  min-height: 56px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.1rem;
+  padding: 0.5rem 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  color: #fff;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.origins-module .speedrun-panel__nav button:last-child {
+  align-items: flex-end;
+  text-align: right;
+  border-color: rgba(240, 197, 107, 0.45);
+  background: var(--sr-gold-soft);
+}
+
+.origins-module .speedrun-panel__nav button:hover:not(:disabled) {
+  border-color: var(--sr-gold);
+}
+
+.origins-module .speedrun-panel__nav button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.origins-module .speedrun-panel__nav small {
+  color: var(--sr-gold);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.origins-module .speedrun-panel__nav span {
+  max-width: 100%;
+  overflow: hidden;
+  font-size: 1rem;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Prep */
+.origins-module .speedrun-prep {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.origins-module .speedrun-card {
+  min-width: 0;
+  padding: 1.25rem 1.5rem 1.4rem;
+}
+
+.origins-module .speedrun-card h3 {
+  margin-top: 0;
+  font-size: 1.4rem;
+}
+
+.origins-module .speedrun-checklist {
+  display: grid;
+  gap: 0.55rem;
+  margin: 0.8rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.origins-module .speedrun-checklist li {
+  position: relative;
+  margin: 0;
+  padding: 0.6rem 0.8rem 0.6rem 2.3rem;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--sr-text);
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
+.origins-module .speedrun-checklist li::before {
+  content: '✓';
+  position: absolute;
+  left: 0.8rem;
+  top: 0.6rem;
+  color: var(--sr-gold);
+  font-weight: 700;
+}
+
+.origins-module .speedrun-rules {
+  display: grid;
+  gap: 0.55rem;
+  margin: 0.8rem 0 0;
+}
+
+.origins-module .speedrun-rules > div {
+  padding: 0.65rem 0.85rem;
+  border-left: 3px solid var(--sr-gold);
+  border-radius: 0 10px 10px 0;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.origins-module .speedrun-rules dt {
+  color: var(--sr-gold);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.origins-module .speedrun-rules dd {
+  margin: 0.15rem 0 0;
+  color: var(--sr-text);
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
+/* Lightning */
+.origins-module .speedrun-lightning {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.origins-module .speedrun-glance {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0;
+}
+
+.origins-module .speedrun-glance span {
+  padding: 0.35rem 0.7rem;
+  border: 1px solid rgba(187, 134, 252, 0.35);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #e9dcff;
+  font-size: 0.95rem;
+}
+
+.origins-module .speedrun-glance strong {
+  color: #fff;
+}
+
+.origins-module .speedrun-lightning__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.origins-module .speedrun-switch-order {
+  display: grid;
+  gap: 0.6rem;
+  margin: 0.8rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.origins-module .speedrun-switch-order li {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr);
+  gap: 0.65rem;
+  align-items: start;
+  margin: 0;
+  line-height: 1.35;
+}
+
+.origins-module .speedrun-switch-order strong {
+  display: block;
+  color: #fff;
+  font-size: 1rem;
+}
+
+.origins-module .speedrun-switch-order span {
+  color: var(--sr-text);
+  font-size: 0.95rem;
+}
+
+.origins-module .speedrun-fineprint {
+  margin: 1rem 0 0;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--sr-muted);
+  font-size: 0.88rem;
+  line-height: 1.4;
+}
+
+.origins-module .speedrun-card--alt {
+  border-top-color: #bb86fc;
+}
+
+.origins-module .speedrun-card--alt .speedrun-kicker {
+  color: #d3b0ff;
+}
+
+.origins-module .speedrun-alt-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  margin-top: 1rem;
+}
+
+.origins-module .speedrun-alt-foot a {
+  color: #d3b0ff;
+  font-weight: 700;
+}
+
+.origins-module .speedrun-alt-foot p {
+  margin: 0;
+  color: var(--sr-muted);
+  font-size: 0.9rem;
+}
+
+.origins-module .speedrun-foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 0.25rem;
+}
+
+@media (max-width: 900px) {
+  .origins-module .speedrun-lightning__grid,
+  .origins-module .speedrun-prep {
+    grid-template-columns: 1fr;
+  }
+
+  .origins-module .speedrun-route__grid {
+    grid-template-columns: minmax(210px, 240px) minmax(0, 1fr);
+    gap: 0.9rem;
+  }
+}
+
+/* Phones: tabs and checkpoints become swipeable rows; the reading panel takes the screen. */
+@media (max-width: 680px) {
+  .origins-module .speedrun-page {
+    padding: 1rem 0.6rem 2rem;
+  }
+
+  .origins-module .speedrun-shell {
+    gap: 0.9rem;
+  }
+
+  .origins-module .speedrun-head {
+    display: block;
+    padding: 1.1rem 1rem;
+  }
+
+  .origins-module .speedrun-head h2 {
+    font-size: 2rem;
+  }
+
+  .origins-module .speedrun-head p {
+    font-size: 0.98rem;
+  }
+
+  .origins-module .speedrun-watch {
+    margin-top: 0.85rem;
+  }
+
+  .origins-module .speedrun-tabs {
+    gap: 0.35rem;
+  }
+
+  .origins-module .speedrun-tab {
+    min-height: 50px;
+    padding: 0.4rem 0.6rem;
+  }
+
+  .origins-module .speedrun-tab strong {
+    font-size: 0.95rem;
+  }
+
+  .origins-module .speedrun-tab small {
+    display: none;
+  }
+
+  .origins-module .speedrun-route__grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.75rem;
+  }
+
+  .origins-module .speedrun-rail {
+    min-width: 0;
+  }
+
+  .origins-module .speedrun-rail {
+    position: static;
+    margin: 0 -0.6rem;
+  }
+
+  .origins-module .speedrun-rail ol {
+    display: flex;
+    gap: 0.4rem;
+    padding: 0.1rem 0.6rem 0.3rem;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-snap-type: x proximity;
+    scroll-padding-inline: 0.6rem;
+    scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 0.6rem, #000 calc(100% - 0.6rem), transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 0.6rem, #000 calc(100% - 0.6rem), transparent);
+  }
+
+  .origins-module .speedrun-rail ol::-webkit-scrollbar {
+    display: none;
+  }
+
+  .origins-module .speedrun-rail li {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+  }
+
+  .origins-module .speedrun-checkpoint {
+    width: 10.5rem;
+    min-height: 58px;
+  }
+
+  .origins-module .speedrun-checkpoint__copy strong {
+    display: -webkit-box;
+    overflow: hidden;
+    font-size: 0.9rem;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .origins-module .speedrun-checkpoint__copy small {
+    display: none;
+  }
+
+  .origins-module .speedrun-panel,
+  .origins-module .speedrun-card {
+    padding: 1.1rem 1rem 1.15rem;
+  }
+
+  .origins-module .speedrun-panel__nav span {
+    display: -webkit-box;
+    font-size: 0.92rem;
+    line-height: 1.25;
+    white-space: normal;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .origins-module .speedrun-foot {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .origins-module .speedrun-rail {
+    position: static;
+  }
+}

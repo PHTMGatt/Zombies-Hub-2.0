@@ -132,6 +132,24 @@ try {
     await page.waitForLoadState('networkidle');
     assert.equal(new URL(page.url()).pathname, originsTarget, 'Origins guide navigation reaches its intended route');
 
+    // Origins Speed Run lives inside the Origins guide: reachable from the guide, the old Side EE address
+    // redirects to it, the route steps forward, and the practice dials count turns to the final position.
+    await page.goto(`${base}/side-easter-eggs/origins-speedrun`, { waitUntil: 'networkidle' });
+    assert.equal(new URL(page.url()).pathname, '/maps/origins/speed-run', 'Old Origins Speed Run address redirects into the Origins guide');
+    await page.getByRole('button', { name: 'Next checkpoint' }).click();
+    assert.match(await page.locator('.speedrun-panel h3').innerText(), /Ice \+ Wind Staff/);
+    await page.goto(`${base}/maps/origins`, { waitUntil: 'networkidle' });
+    assert(await page.locator('a[href="/maps/origins/speed-run"]').first().isVisible(), 'Origins guide links to its Speed Run');
+    await page.goto(`${base}/maps/origins/speed-run/lightning`, { waitUntil: 'networkidle' });
+    assert.equal(await page.locator('.switch-card .switch-dial').count(), 7, 'Speed Run shows all seven Lightning switch dials');
+    await page.getByRole('button', { name: 'Practice turns' }).click();
+    await page.getByRole('button', { name: 'Sound on' }).click();
+    const churchUpper = page.getByRole('button', { name: /^Church Upper:/ });
+    await churchUpper.click();
+    assert.match(await churchUpper.innerText(), /Set/, 'One turn sets Church Upper (needs ×1)');
+    assert.match(await page.locator('.switch-board__progress').innerText(), /1 \/ 7/);
+    await assertNoHorizontalOverflow(page, '/maps/origins/speed-run/lightning');
+
     // The sticky Origins header must stay compact on phones, with an unclipped title and the active staff in view.
     await page.goto(`${base}/maps/origins/lightning-staff`, { waitUntil: 'networkidle' });
     const originsHeader = await page.evaluate(() => {

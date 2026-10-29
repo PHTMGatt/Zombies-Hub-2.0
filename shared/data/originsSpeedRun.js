@@ -8,7 +8,7 @@ export const originsSpeedRunVideo = {
 
 export const originsSpeedRun = {
   intro:
-    'A compact Black Ops 3 Origins speedrun reference built from the advanced route in the linked walkthrough. Use the normal Origins guide for puzzle solutions; this page is about routing, robot/snow timing, skips, staff dupes, and the ending setup.',
+    'Routing, robot and snow timing, staff dupes, and skips for a fast Black Ops III Origins run, built from the advanced route in the linked walkthrough. Puzzle solutions stay on the staff tabs.',
 
   loadout: [
     'GobbleGums: Raindrops, Extra Credit, Nukes, Perkaholic, Self-Medication.',
@@ -90,8 +90,8 @@ export const originsSpeedRun = {
         'Tank-skip route: use controlled Boomhilda boosts to reach the Lightning-part ledges, disable the death barrier, and collect the parts without riding the full tank route.',
         'Self-Medication protects the skip route if the death barrier downs you and a nearby zombie triggers the revive condition.',
         'Safe route: use the Fire portal, exit through Ice, send the tank, do Gen 4 while it moves, and board only when needed to reduce cooldown time.',
-        'Hildaless alternate: the first Lightning piece can be reached with movement + FPS/death-barrier timing instead of the tank or Boomhilda. Use the dedicated hildaless box below for the sequence.',
-        'Use the Lightning switch reference below for the seven dial directions instead of stopping the run to remember them.',
+        'Hildaless alternate: the first Lightning piece can be reached with movement + FPS/death-barrier timing instead of the tank or Boomhilda. The full sequence is on the Lightning Switches page.',
+        'Use the Lightning Switches page for the seven dial directions instead of stopping the run to remember them.',
       ],
     },
     {

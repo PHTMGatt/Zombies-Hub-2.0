@@ -16,7 +16,8 @@
   background:
     linear-gradient(rgba(3, 17, 30, 0.48), rgba(3, 17, 30, 0.67)),
     url('../../public/images/Robot.webp') center / cover fixed no-repeat;
-  overflow-x: hidden;
+  /* clip, not hidden: hidden makes this a scroll container and breaks sticky headers/rails inside. */
+  overflow-x: clip;
   isolation: isolate;
 }
 

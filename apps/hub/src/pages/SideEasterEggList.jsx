@@ -6,7 +6,7 @@ import sideEEArtwork from '../data/sideEEArtwork';
 import '../styles/SideEE/SideEasterEggList.css';
 
 const MAPS = [
-  { key: 'origins-speedrun', label: 'Origins Speed Run', detail: 'BO3 speedrun route' },
+  { key: 'origins-speedrun', label: 'Origins Speed Run', detail: 'BO3 speedrun route', to: '/maps/origins/speed-run' },
   { key: 'kino', label: 'Kino der Toten', detail: 'Film reels + hidden radios' },
   { key: 'gk', label: 'Gorod Krovi', detail: 'Side Easter Egg video guide' },
   { key: 'de', label: 'Der Eisendrache', detail: 'Side Easter Egg video guide' },
@@ -23,10 +23,10 @@ export default function SideEasterEggList() {
       </header>
 
       <section className="side-ee-grid">
-        {MAPS.map(({ key, label, detail, focus, cover }) => (
+        {MAPS.map(({ key, label, detail, focus, cover, to }) => (
           <Link
             key={key}
-            to={`/side-easter-eggs/${key}`}
+            to={to ?? `/side-easter-eggs/${key}`}
             className="side-ee-card"
           >
             <div className="side-ee-card__media">

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import SkullIcon from "../assets/images/Skull.png";
 import Audio1 from "../assets/audio/origins_robot.mp3";
 import Audio2 from "../assets/audio/zombie_intro.mp3";
@@ -13,9 +14,9 @@ const MainGuide = () => {
         <div className="left-column">
           <section className="guide-section">
             <h2>
-              <img src={SkullIcon} alt="Icon" className="revive-icon" /> Main Steps
+              <img src={SkullIcon} alt="" className="revive-icon" /> Main Steps
             </h2>
-            <ul>
+            <ol className="origins-steps">
               <li><strong>Build + Upgrade:</strong> Craft and fully upgrade Ice, Fire, Wind, and Lightning.</li>
               <li><strong>Secure the Keys:</strong> Place Wind in Odin (middle robot), Ice in Freya (church / Gen 6 robot), Lightning in Thor (spawn / Gen 1–3 robot), and Fire in the pedestal at the bottom of the mound.</li>
               <li><strong>Thunder Fists:</strong> Fill all four soul chests in the giant robot footprints, then collect the One Inch Punch / Thunder Fists from the reward chest.</li>
@@ -26,12 +27,12 @@ const MainGuide = () => {
               <li><strong>Wield a Fist of Iron:</strong> In the mound, use the One Inch Punch on the glowing/white-fist Templar zombies until the upgrade is complete, then collect the upgraded elemental fist.</li>
               <li><strong>Raise Hell:</strong> Return all four upgraded staffs to their Crazy Place holders and earn the required 100 kills without removing the staffs.</li>
               <li><strong>Freedom:</strong> Pick up the Maxis Drone, release it into the beam in the Crazy Place, and trigger the ending.</li>
-            </ul>
+            </ol>
           </section>
 
           <section className="guide-section">
             <h2>
-              <img src={SkullIcon} alt="Icon" className="revive-icon" /> Setup Reference
+              <img src={SkullIcon} alt="" className="revive-icon" /> Setup Reference
             </h2>
             <ul>
               <li><strong>Soul Chests:</strong> Generator 5 footprint, mound footprint, Generator 6 footprint, and the footprint behind Juggernog.</li>
@@ -45,9 +46,15 @@ const MainGuide = () => {
         </div>
 
         <div className="right-column">
+          <Link className="origins-speedrun-cta" to="/maps/origins/speed-run">
+            <span className="origins-speedrun-cta__kicker">Going for speed?</span>
+            <strong>Origins Speed Run →</strong>
+            <span>Route checkpoints, robot and snow timing, staff dupes, and interactive Lightning switches.</span>
+          </Link>
+
           <section className="guide-section">
             <h2>
-              <img src={SkullIcon} alt="Icon" className="revive-icon" /> Tips
+              <img src={SkullIcon} alt="" className="revive-icon" /> Tips
             </h2>
             <ul>
               <li>Build and upgrade the staffs as early as the run allows.</li>
@@ -55,7 +62,7 @@ const MainGuide = () => {
               <li>Save a zombie when you need uninterrupted time for staff puzzles or map setup.</li>
               <li>Have the Maxis Drone built and ready before you attempt Rain Fire.</li>
               <li>Use the dedicated staff pages for puzzle images instead of trying to memorize every code from the main guide.</li>
-              <li>For optimized routing, skips, staff dupes, and Lightning quick references, open <strong>Side EEs → Origins Speed Run</strong>.</li>
+              <li>For optimized routing, skips, staff dupes, and Lightning quick references, open the <Link to="/maps/origins/speed-run">Speed Run</Link>.</li>
             </ul>
             <p className="credits">
               <em>MrRoflWaffles – Staff Images</em>
