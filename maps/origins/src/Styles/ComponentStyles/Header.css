@@ -110,6 +110,15 @@
     min-height: 0;
   }
 
+  /* The title centers over the backdrop's dark middle here; light a blue pool behind it so the
+     dark-glow "Origins Easter Egg" keeps the contrast it has on the desktop's lit left edge. */
+  .origins-module .origins-header__backdrop {
+    background:
+      radial-gradient(ellipse 62% 78% at 50% 22%, rgba(28, 126, 214, 0.9), rgba(16, 98, 160, 0.55) 55%, transparent 100%),
+      linear-gradient(180deg, rgba(10, 75, 120, 0.7), rgba(4, 20, 34, 0.86)),
+      url('../../../public/images/Robot.webp') center 40% / cover no-repeat;
+  }
+
   .origins-module .origins-header__content {
     min-height: 0;
     flex-direction: column;
@@ -128,6 +137,12 @@
 }
 
 @media (max-width: 620px) {
+  .origins-module .origins-header__content {
+    width: 100%;
+    gap: 0.5rem;
+    padding: 0.6rem 0 0.55rem;
+  }
+
   .origins-module .header-title {
     font-size: 1.34rem;
   }
@@ -140,16 +155,62 @@
 
   .origins-module .title-box {
     gap: 6px;
+    padding-inline: 10px;
   }
 }
 
+/* Narrow phones: stack the title as eyebrow + name rather than wrapping it mid-phrase. */
 @media (max-width: 460px) {
+  .origins-module .header-title {
+    flex-direction: column;
+    gap: 0.05rem;
+    white-space: normal;
+    text-align: center;
+  }
+
+  .origins-module .black-text {
+    font-size: 0.86rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .origins-module .white-text {
+    font-size: 1.5rem;
+  }
+
+  .origins-module .revive-header-icon {
+    width: 26px;
+    height: 26px;
+    flex-basis: 26px;
+  }
+}
+
+/* Landscape phones: title and staff chips share one row. */
+@media (max-height: 500px) and (orientation: landscape) {
+  .origins-module .origins-header__content {
+    width: 100%;
+    flex-direction: row;
+    gap: 0.25rem;
+    padding: 0.4rem 0 0.4rem 12px;
+  }
+
+  .origins-module .origins-header__backdrop {
+    background:
+      radial-gradient(ellipse 48% 130% at 18% 50%, rgba(28, 126, 214, 0.92), rgba(16, 98, 160, 0.5) 60%, transparent 100%),
+      linear-gradient(90deg, rgba(10, 75, 120, 0.6), rgba(4, 20, 34, 0.86)),
+      url('../../../public/images/Robot.webp') center 40% / cover no-repeat;
+  }
+
+  .origins-module .header-title {
+    font-size: 1.2rem;
+  }
+
   .origins-module .revive-header-icon {
     display: none;
   }
 
-  .origins-module .header-title {
-    white-space: normal;
-    text-align: center;
+  .origins-module .header-right {
+    width: auto;
+    min-width: 0;
   }
 }

@@ -99,31 +99,38 @@
   }
 }
 
-@media (max-width: 620px) {
+/* Phones: one swipeable row of staff chips instead of three to five stacked rows in a sticky header. */
+@media (max-width: 620px), (max-height: 500px) and (orientation: landscape) {
   .origins-module .origins-nav-links {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    width: 100%;
+    max-width: none;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: 0.4rem;
+    padding: 2px 14px;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-snap-type: x proximity;
+    scroll-padding-inline: 14px;
+    scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 14px, #000 calc(100% - 14px), transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 14px, #000 calc(100% - 14px), transparent);
+  }
+
+  .origins-module .origins-nav-links::-webkit-scrollbar {
+    display: none;
   }
 
   .origins-module .origins-nav-link {
-    width: 100%;
-    justify-content: center;
-    padding-inline: 0.5rem;
-    font-size: 0.78rem;
+    flex: 0 0 auto;
+    min-height: 40px;
+    padding: 0.4rem 0.75rem;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    scroll-snap-align: start;
   }
 
-  .origins-module .origins-nav-link.main {
-    grid-column: 1 / -1;
-  }
-}
-
-@media (max-width: 380px) {
-  .origins-module .origins-nav-links {
-    grid-template-columns: 1fr;
-  }
-
-  .origins-module .origins-nav-link.main {
-    grid-column: auto;
+  .origins-module .origins-nav-link:hover,
+  .origins-module .origins-nav-link.active {
+    transform: none;
   }
 }

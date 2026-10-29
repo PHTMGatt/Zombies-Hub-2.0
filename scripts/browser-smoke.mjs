@@ -125,6 +125,21 @@ try {
     await page.waitForLoadState('networkidle');
     assert.equal(new URL(page.url()).pathname, originsTarget, 'Origins guide navigation reaches its intended route');
 
+    // The sticky Origins header must stay compact on phones, with an unclipped title and the active staff in view.
+    await page.goto(`${base}/maps/origins/lightning-staff`, { waitUntil: 'networkidle' });
+    const originsHeader = await page.evaluate(() => {
+      const active = document.querySelector('.origins-nav-link.active').getBoundingClientRect();
+      const title = document.querySelector('.origins-map-header .header-title').getBoundingClientRect();
+      return {
+        height: document.querySelector('.origins-map-header').offsetHeight,
+        activeInView: active.left >= 0 && active.right <= window.innerWidth,
+        titleInView: title.left >= 0 && title.right <= window.innerWidth,
+      };
+    });
+    assert(originsHeader.height <= (width === 390 ? 130 : 100), `Origins sticky header is ${originsHeader.height}px tall at ${width}px`);
+    assert(originsHeader.activeInView, 'Origins keeps the active staff tab in view');
+    assert(originsHeader.titleInView, 'Origins header title is not clipped');
+
     // Origins guide health must cover the actual staff pages, not only the shell.
     await page.goto(`${base}/maps/origins`, { waitUntil: 'networkidle' });
     const originsAudio = page.locator('.audio-players audio');
