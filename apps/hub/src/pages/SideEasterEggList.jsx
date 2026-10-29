@@ -3,14 +3,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import imageData from '../data/imageData';
+import originsArtwork from '../assets/images/Featured/Origins.webp';
+import gorodArtwork from '../assets/images/Featured/GK.jpg';
+import derEisendracheArtwork from '../assets/images/Featured/DE.webp';
 import '../styles/SideEE/SideEasterEggList.css';
 
 const MAPS = [
-  { key: 'origins-speedrun', label: 'Origins Speed Run', cover: imageData.OriginsCover },
-  { key: 'kino', label: 'Kino der Toten', cover: imageData.Kino_Der_TotenCover },
-  { key: 'gk', label: 'Gorod Krovi', cover: imageData.Gorod_KroviCover },
-  { key: 'de', label: 'Der Eisendrache', cover: imageData.Der_EisendracheCover },
-  { key: 'soe', label: 'Shadows of Evil', cover: imageData.Shadows_Of_EvilCover },
+  { key: 'origins-speedrun', label: 'Origins Speed Run', cover: originsArtwork },
+  { key: 'kino', label: 'Kino der Toten', cover: imageData.Kino_Der_TotenLayout },
+  { key: 'gk', label: 'Gorod Krovi', cover: gorodArtwork },
+  { key: 'de', label: 'Der Eisendrache', cover: derEisendracheArtwork },
+  { key: 'soe', label: 'Shadows of Evil', cover: imageData.Shadows_Of_EvilLayout },
 ];
 
 export default function SideEasterEggList() {
