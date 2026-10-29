@@ -80,12 +80,8 @@ try {
     const sideCards = page.locator('.side-ee-card');
     assert.equal(await sideCards.count(), 5, 'Side Easter Eggs keeps all five guide cards');
     const sideArtworkRatios = await sideCards.evaluateAll(cards => Promise.all(cards.map(async card => {
-      const artwork = card.querySelector('.side-ee-card__header');
-      const backgroundImage = getComputedStyle(artwork).backgroundImage;
-      const source = backgroundImage.match(/^url\(["']?(.*?)["']?\)$/)?.[1];
-      if (!source) throw new Error('Side Easter Egg card has no rendered artwork source');
-      const image = new Image();
-      image.src = source;
+      const image = card.querySelector('.side-ee-card__art');
+      if (!image?.currentSrc) throw new Error('Side Easter Egg card has no rendered artwork source');
       await image.decode();
       return image.naturalWidth / image.naturalHeight;
     })));
@@ -93,9 +89,11 @@ try {
       sideArtworkRatios.every(ratio => ratio >= 1.6 && ratio <= 1.9),
       `Side Easter Egg cards use clean widescreen artwork instead of catalog strips: ${sideArtworkRatios.join(', ')}`,
     );
-    const sideColumns = await page.locator('.side-ee-grid').evaluate(element =>
-      getComputedStyle(element).gridTemplateColumns.split(' ').filter(Boolean).length,
-    );
+    // Count cards in the first visual row (the grid uses extra tracks to center a short last row).
+    const sideColumns = await sideCards.evaluateAll(cards => {
+      const firstTop = Math.round(cards[0].getBoundingClientRect().top);
+      return cards.filter(card => Math.round(card.getBoundingClientRect().top) === firstTop).length;
+    });
     assert.equal(sideColumns, width === 390 ? 1 : 3, `Side Easter Eggs uses the expected ${width}px grid`);
     await assertNoHorizontalOverflow(page, '/side-easter-eggs');
     await page.screenshot({

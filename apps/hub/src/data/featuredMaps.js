@@ -3,7 +3,7 @@ import OriginsImg        from '../assets/images/Featured/Origins.webp';
 import RevelationsImg    from '../assets/images/Featured/Rev.jpg';
 import MobOfTheDeadImg   from '../assets/images/Featured/MOTD.jpg';
 import DerEisendracheImg from '../assets/images/Featured/DE.webp';
-import GorodKroviImg     from '../assets/images/Featured/GK.jpg';
+import GorodKroviImg     from '../assets/images/Featured/GK.webp';
 import SideEEImg         from '../assets/images/Featured/SideEE.jpg';
 import { getDedicatedGuideRoute } from './dedicatedGuides';
 

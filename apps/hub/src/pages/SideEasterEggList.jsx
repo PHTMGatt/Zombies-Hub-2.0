@@ -2,19 +2,16 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import imageData from '../data/imageData';
-import originsArtwork from '../assets/images/Featured/Origins.webp';
-import gorodArtwork from '../assets/images/Featured/GK.jpg';
-import derEisendracheArtwork from '../assets/images/Featured/DE.webp';
+import sideEEArtwork from '../data/sideEEArtwork';
 import '../styles/SideEE/SideEasterEggList.css';
 
 const MAPS = [
-  { key: 'origins-speedrun', label: 'Origins Speed Run', cover: originsArtwork },
-  { key: 'kino', label: 'Kino der Toten', cover: imageData.Kino_Der_TotenLayout },
-  { key: 'gk', label: 'Gorod Krovi', cover: gorodArtwork },
-  { key: 'de', label: 'Der Eisendrache', cover: derEisendracheArtwork },
-  { key: 'soe', label: 'Shadows of Evil', cover: imageData.Shadows_Of_EvilLayout },
-];
+  { key: 'origins-speedrun', label: 'Origins Speed Run', detail: 'BO3 speedrun route' },
+  { key: 'kino', label: 'Kino der Toten', detail: 'Film reels + hidden radios' },
+  { key: 'gk', label: 'Gorod Krovi', detail: 'Side Easter Egg video guide' },
+  { key: 'de', label: 'Der Eisendrache', detail: 'Side Easter Egg video guide' },
+  { key: 'soe', label: 'Shadows of Evil', detail: 'Side Easter Egg video guide' },
+].map((entry) => ({ ...entry, cover: sideEEArtwork[entry.key].src, focus: sideEEArtwork[entry.key].focus }));
 
 export default function SideEasterEggList() {
   return (
@@ -26,17 +23,28 @@ export default function SideEasterEggList() {
       </header>
 
       <section className="side-ee-grid">
-        {MAPS.map(({ key, label, cover }) => (
+        {MAPS.map(({ key, label, detail, focus, cover }) => (
           <Link
             key={key}
             to={`/side-easter-eggs/${key}`}
             className="side-ee-card"
           >
-            <div
-              className="side-ee-card__header"
-              style={{ backgroundImage: `url(${cover || ''})` }}
-            />
-            <div className="side-ee-card__title">{label}</div>
+            <div className="side-ee-card__media">
+              <img
+                className="side-ee-card__art"
+                src={cover}
+                alt=""
+                width="1280"
+                height="720"
+                decoding="async"
+                style={{ objectPosition: focus }}
+              />
+            </div>
+            <div className="side-ee-card__body">
+              <span className="side-ee-card__title">{label}</span>
+              <span className="side-ee-card__detail">{detail}</span>
+            </div>
+            <span className="side-ee-card__cue" aria-hidden="true">→</span>
           </Link>
         ))}
       </section>
