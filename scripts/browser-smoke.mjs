@@ -83,6 +83,7 @@ try {
     await sideCards.first().click();
     await page.waitForLoadState('networkidle');
     assert.equal(new URL(page.url()).pathname, firstSideTarget, 'Side Easter Egg card reaches its intended route');
+    await page.waitForFunction(() => document.activeElement?.id === 'zh-main');
     assert.equal(
       await page.evaluate(() => document.activeElement?.id),
       'zh-main',
