@@ -83,6 +83,11 @@ try {
     await sideCards.first().click();
     await page.waitForLoadState('networkidle');
     assert.equal(new URL(page.url()).pathname, firstSideTarget, 'Side Easter Egg card reaches its intended route');
+    assert.equal(
+      await page.evaluate(() => document.activeElement?.id),
+      'zh-main',
+      'client-side route navigation moves focus to the new guide landmark',
+    );
     await page.getByRole('link', { name: /Back to Side Easter Eggs/i }).click();
     await page.waitForLoadState('networkidle');
     assert.equal(new URL(page.url()).pathname, '/side-easter-eggs', 'Side Easter Egg detail returns to the list');
