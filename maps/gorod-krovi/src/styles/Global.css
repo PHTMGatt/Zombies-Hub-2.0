@@ -31,8 +31,9 @@
   z-index: 1;
 }
 
-.gorod-module > main {
-  flex: 1;
+/* Route content fills the column so the footer stays pinned to the bottom of short pages. */
+.gorod-module > .gorod-content {
+  flex: 1 0 auto;
   width: 100%;
 }
 

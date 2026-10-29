@@ -53,6 +53,16 @@ try {
       const response = await page.goto(`${base}${route}`, { waitUntil: 'networkidle' });
       assert(response?.ok(), `${route} returned ${response?.status()}`);
       assert.equal(errors.length, 0, `${route} page errors: ${errors.join('; ')}`);
+      if (route.startsWith('/maps/')) {
+        // Short guides must still pin the map footer to the bottom edge, with no dead band beneath it.
+        const gapBelowFooter = await page.evaluate(() => {
+          const footer = document.querySelector('.map-module footer');
+          if (!footer) return null;
+          return Math.round(document.documentElement.scrollHeight - (footer.getBoundingClientRect().bottom + window.scrollY));
+        });
+        assert(gapBelowFooter !== null, `${route} renders no map footer`);
+        assert(gapBelowFooter <= 1, `${route} leaves ${gapBelowFooter}px of dead space below the map footer`);
+      }
       results.push({ width, route, passed: true });
     }
 

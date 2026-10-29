@@ -14,7 +14,7 @@ export default function GorodRoutes() {
   return (
     <section className="map-module gorod-module">
       <Header />
-      <div>
+      <div className="gorod-content">
         <Routes>
           <Route index element={<MainGuide />} />
           <Route path="trophies" element={<TrophyChallenges />} />

@@ -2,6 +2,18 @@
   --soe-purple: #aa79df;
   --soe-gold: #d9b461;
   --soe-ink: #08070d;
+
+  display: flex;
+  flex-direction: column;
+}
+
+/* The guide fills the module column; any other route still pins the footer to the bottom. */
+.shadows-module > .soe-page {
+  flex: 1 0 auto;
+}
+
+.shadows-module > .soe-footer {
+  margin-top: auto;
 }
 
 .shadows-module .soe-header {

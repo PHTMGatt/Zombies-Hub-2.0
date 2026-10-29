@@ -133,3 +133,34 @@
     grid-column: 1 / -1;
   }
 }
+
+/* Landscape phones: one compact row so the sticky header doesn't eat the short viewport. */
+@media (max-height: 500px) and (orientation: landscape) {
+  .gorod-module .gorod-header__content {
+    width: min(100% - 1.5rem, 1280px);
+    flex-direction: row;
+    text-align: left;
+    padding: 0.4rem 0;
+  }
+
+  .gorod-module .gorod-header__identity {
+    display: flex;
+  }
+
+  .gorod-module .gorod-header__title {
+    font-size: 1.45rem;
+  }
+
+  .gorod-module .gorod-header__subtitle {
+    margin-top: 0;
+  }
+
+  .gorod-module .gorod-header__nav {
+    flex-wrap: nowrap;
+  }
+
+  .gorod-module .gorod-nav-link {
+    min-height: 30px;
+    padding: 0.25rem 0.55rem;
+  }
+}
