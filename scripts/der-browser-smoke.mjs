@@ -54,6 +54,8 @@ try {
     assert.match(mainText, /unranked/i);
     assert.match(mainText, /all four bows/i);
     await assertHeaderArtLoaded(page, mainRoute);
+    assert.equal(await page.locator('.de-nav').count(), 1, 'Der Eisendrache keeps one map-level navigation row');
+    assert.equal(await page.locator('.de-quick-links').count(), 0, 'Der Eisendrache duplicate bottom navigation stays removed');
     await assertNoHorizontalOverflow(page, mainRoute);
     results.push({ width, route: mainRoute, passed: true });
 

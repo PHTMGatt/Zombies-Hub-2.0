@@ -65,13 +65,6 @@ const Home: React.FC = () => (
         </li>
       ))}
     </ol>
-
-    <nav className="de-quick-links" aria-label="Der Eisendrache focused guides">
-      <Link to={`${BASE}/bows`}>Bows <span>Base + four upgrades</span></Link>
-      <Link to={`${BASE}/wisps`}>Wisps <span>Both cycles + locations</span></Link>
-      <Link to={`${BASE}/parts`}>Gear <span>Shield + Ragnarok DG-4</span></Link>
-      <Link to={`${BASE}/boss`}>Boss <span>Keeper fight + ending</span></Link>
-    </nav>
   </div>
 );
 
