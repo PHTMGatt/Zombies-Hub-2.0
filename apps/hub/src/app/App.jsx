@@ -1,4 +1,4 @@
-import React, { Suspense, useLayoutEffect, useRef } from 'react';
+import React, { Suspense, useEffect, useLayoutEffect, useRef } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import AppRoutes from './AppRoutes';
 import HubHeader from '../components/HubHeader';
@@ -14,8 +14,6 @@ function RootLayout() {
   const previousPathRef = useRef(pathname);
 
   useLayoutEffect(() => {
-    const pathChanged = previousPathRef.current !== pathname;
-    previousPathRef.current = pathname;
     document.title = routeTitle(pathname);
     if (hash) {
       const target = document.getElementById(hash.slice(1));
@@ -24,7 +22,12 @@ function RootLayout() {
     }
 
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
-    if (pathChanged) mainRef.current?.focus({ preventScroll: true });
+  }, [pathname, hash]);
+
+  useEffect(() => {
+    const pathChanged = previousPathRef.current !== pathname;
+    previousPathRef.current = pathname;
+    if (pathChanged && !hash) mainRef.current?.focus({ preventScroll: true });
   }, [pathname, hash]);
 
   return (
