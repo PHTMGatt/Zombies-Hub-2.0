@@ -13,6 +13,7 @@ const routes = [
   '/side-easter-eggs',
   '/maps/origins',
   '/maps/mob-of-the-dead',
+  '/maps/shadows-of-evil',
   '/maps/der-eisendrache',
   '/maps/zetsubou-no-shima',
   '/maps/gorod-krovi',
