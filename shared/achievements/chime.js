@@ -1,9 +1,11 @@
 /*
  * An original "achievement unlocked" chime, synthesized with Web Audio (no audio files, nothing
  * borrowed): a soft low thump, then a quick rising major third that rings out with a light shimmer.
- * About 0.9 s, peak gain 0.16. It only ever plays right after a player's own tap (the unlock happens on
- * "Mark step done"), which browsers accept as a user gesture; any failure is silent.
+ * About 0.9 s, peak gain 0.16. The audio context is unlocked on the player's first tap
+ * (primeAudioOnFirstGesture); any failure is silent.
  */
+import { soundEnabled } from './achievements';
+
 let context = null;
 
 const audioContext = () => {
@@ -25,6 +27,31 @@ const tone = (ctx, { type, frequency, start, duration, peak, out }) => {
   oscillator.start(start);
   oscillator.stop(start + duration + 0.05);
 };
+
+/*
+ * Browsers (iOS Safari especially) only let audio start inside a user gesture. The unlock itself happens a
+ * moment after the tap (in an effect), so the context is created and resumed on the player's first tap
+ * instead; later chimes then play on an already-running context. Call once when the app mounts.
+ */
+export function primeAudioOnFirstGesture() {
+  const prime = () => {
+    try {
+      if (!soundEnabled()) return; // stay armed: the next tap after turning sound on primes it
+      const ctx = audioContext();
+      if (ctx?.state === 'suspended') ctx.resume();
+    } catch {
+      // No audio: chimes stay silent, toasts still show.
+    }
+    window.removeEventListener('pointerdown', prime, true);
+    window.removeEventListener('keydown', prime, true);
+  };
+  window.addEventListener('pointerdown', prime, true);
+  window.addEventListener('keydown', prime, true);
+  return () => {
+    window.removeEventListener('pointerdown', prime, true);
+    window.removeEventListener('keydown', prime, true);
+  };
+}
 
 export async function playChime() {
   try {

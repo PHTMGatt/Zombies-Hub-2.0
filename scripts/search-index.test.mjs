@@ -18,7 +18,8 @@ const STEP_FILES = {
 test('every search entry that opens a guide reference points at a step that exists', () => {
   for (const entry of SEARCH_ENTRIES.filter((item) => item.stepId)) {
     const source = readFileSync(resolve(root, STEP_FILES[entry.map]), 'utf8');
-    assert.match(source, new RegExp(`id: '${entry.stepId}'`), `${entry.map} has no step "${entry.stepId}" (search: ${entry.title})`);
+    // A step is an object whose id is followed by its title (task ids are followed by label instead).
+    assert.match(source, new RegExp(`id: '${entry.stepId}',\\s*\\n\\s*title:`), `${entry.map} has no step "${entry.stepId}" (search: ${entry.title})`);
   }
 });
 

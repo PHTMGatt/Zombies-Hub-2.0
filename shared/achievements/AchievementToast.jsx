@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { MAPS, UNLOCK_EVENT, achievementById, soundEnabled } from './achievements';
-import { playChime } from './chime';
+import { playChime, primeAudioOnFirstGesture } from './chime';
 import './achievements.css';
 
 const SHOW_MS = 5200;
@@ -27,6 +27,8 @@ export default function AchievementToast() {
   const timer = useRef(null);
   const leavingRef = useRef(false);
   const current = queue[0];
+
+  useEffect(() => primeAudioOnFirstGesture(), []);
 
   useEffect(() => {
     const onUnlock = (event) => {

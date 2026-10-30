@@ -188,6 +188,42 @@ try {
     await context.close();
   }
 
+  // A run finished before achievements existed is credited once, silently; "Reset achievements" sticks.
+  // A run whose last action is an earlier step still shows the finish panel.
+  {
+    const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+    await context.addInitScript(audioStub);
+    const page = await context.newPage();
+    page.on('dialog', (dialog) => dialog.accept());
+    await page.goto(`${base}/maps/gorod-krovi`, { waitUntil: 'networkidle' });
+    await page.evaluate(() => {
+      localStorage.clear();
+      const ids = ['shield', 'dragon-network', 'dragon-strike', 'egg', 'valves', 'kronos', 'trophies', 'challenges', 'power-core', 'dragon-boss', 'nikolai'];
+      localStorage.setItem('zh-guide-progress:gorod-krovi', JSON.stringify({ current: 'nikolai', done: Object.fromEntries(ids.map((id) => [id, true])) }));
+    });
+    await page.reload({ waitUntil: 'networkidle' });
+    await page.waitForTimeout(600);
+    assert.equal(await toast(page).count(), 0, 'backfill is silent');
+    assert(await page.evaluate(() => JSON.parse(localStorage.getItem('zh-achievements')).unlocked['gorod-krovi/main']), 'finished run credited');
+    check('pre-existing finished run credited silently');
+
+    // Finish on a middle step: the finish panel still appears.
+    await page.locator('.guide-rail__step').nth(4).click();
+    await page.getByRole('button', { name: /Done — undo/ }).click();
+    await page.getByRole('button', { name: 'Mark step done' }).click();
+    await page.locator('.guide-finish').waitFor();
+    check('finish panel shows when the last action is a middle step');
+
+    await page.goto(SHELF, { waitUntil: 'networkidle' });
+    await page.locator('.ach-danger summary').click();
+    await page.getByRole('button', { name: 'Reset achievements' }).click();
+    await page.goto(`${base}/maps/gorod-krovi`, { waitUntil: 'networkidle' });
+    await page.waitForTimeout(400);
+    assert.deepEqual(await page.evaluate(() => JSON.parse(localStorage.getItem('zh-achievements')).unlocked), {}, 'reset is not undone by the finished run');
+    check('reset achievements is not undone by backfill');
+    await context.close();
+  }
+
   // Reduced motion: the toast fades instead of sliding.
   const context = await browser.newContext({ viewport: { width: 390, height: 844 }, reducedMotion: 'reduce' });
   await context.addInitScript(audioStub);

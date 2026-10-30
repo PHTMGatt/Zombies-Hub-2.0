@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import GuideReferences from './GuideReferences';
-import { MAPS, mainAchievementFor, resetMap, unlockAchievement } from '../achievements/achievements';
+import { MAPS, backfillAchievement, mainAchievementFor, resetMap, unlockAchievement } from '../achievements/achievements';
 import QuickRefs from './QuickRefs';
 import { useGuideDepth, useGuideProgress } from './useGuideProgress';
 import './guide.css';
@@ -114,10 +114,17 @@ export default function GuideSteps({ guideId, label, steps, mapId, quickRefs, de
     wasAllDone.current = allDone;
   }, [allDone, mapId]);
 
+  // A run finished before achievements existed is credited once, quietly (no popup on page load).
+  useEffect(() => {
+    const achievement = mapId && mainAchievementFor(mapId);
+    if (achievement && allDone) backfillAchievement(achievement.id);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   const map = mapId ? MAPS[mapId] : null;
   const mainAchievement = mapId ? mainAchievementFor(mapId) : null;
-  const showFinish = allDone && index === steps.length - 1;
-  const hasProgress = progress.completed > 0 || steps.some((s) => s.tasks?.some((t) => progress.isTaskDone(s.id, t.id)));
+  // Whichever step the run ends on, a finished run offers the ways onward.
+  const showFinish = allDone;
+  const hasProgress = index > 0 || progress.completed > 0 || steps.some((s) => s.tasks?.some((t) => progress.isTaskDone(s.id, t.id)));
   const confirmReset = (message) => {
     if (window.confirm(message)) progress.reset();
   };

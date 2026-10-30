@@ -148,7 +148,7 @@ function termScore(term, phrases, tokens) {
   if (tokens.has(term)) return 3;
   // Plurals and partial typing: "valve" ↔ "valves", "trop" → "trophies".
   for (const token of tokens) {
-    if (token.startsWith(term) || term.startsWith(token)) return term.length >= 3 && token.length >= 3 ? 2 : 0;
+    if (term.length >= 3 && token.length >= 3 && (token.startsWith(term) || term.startsWith(token))) return 2;
   }
   return phrases.some((phrase) => phrase.includes(term)) && term.length >= 3 ? 1 : 0;
 }

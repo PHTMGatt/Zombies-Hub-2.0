@@ -5,7 +5,8 @@ import { GUIDE_PREFIX, progressKey, read, remove, storedKeys, write } from '../s
  *
  * Two separate records:
  *   run progress        – each guide's `zh-guide-progress:<guideId>` record plus per-map tool notes.
- *   achievement history – `zh-achievements`: { v: 1, unlocked: { [achievementId]: { at: ISO date } } }.
+ *   achievement history – `zh-achievements`: { v: 1, unlocked: { [achievementId]: { at: ISO date | null } },
+ *                         checked: [mapIds already credited or reset] }.
  * Resetting a run never touches achievement history; "Reset achievements" is its own explicit action.
  *
  * Achievement ids are `<mapId>/<name>` and carry a `kind`, so side Easter Eggs, speedruns, wonder
@@ -62,7 +63,7 @@ const readRecord = () => {
   return saved && typeof saved.unlocked === 'object' && saved.unlocked ? saved : null;
 };
 
-// Unlocks made while storage is blocked, so the popup still only shows once per visit.
+// Unlocks made while storage is blocked (only then), so the popup still shows once per visit.
 const sessionUnlocks = {};
 
 // { [id]: { at: ISO date | null } }. A legacy unlock (no date) counts only until the first record is
@@ -93,9 +94,32 @@ export function unlockAchievement(id) {
   const unlocked = getUnlocked();
   if (unlocked[id]) return false;
   const entry = { at: new Date().toISOString() };
-  sessionUnlocks[id] = entry;
-  write(ACHIEVEMENTS_KEY, { v: 1, unlocked: { ...(readRecord()?.unlocked ?? {}), ...withoutLegacyDates(unlocked), [id]: entry } });
+  const record = readRecord();
+  const saved = write(ACHIEVEMENTS_KEY, {
+    v: 1,
+    unlocked: { ...(record?.unlocked ?? {}), ...withoutLegacyDates(unlocked), [id]: entry },
+    checked: [...new Set([...(record?.checked ?? []), achievement.map])],
+  });
+  if (!saved) sessionUnlocks[id] = entry;
   window.dispatchEvent(new CustomEvent(UNLOCK_EVENT, { detail: { id } }));
+  announceChange();
+  return true;
+}
+
+/*
+ * Credit a run that was already finished before achievements existed: once per map, silently (no popup).
+ * `checked` remembers which maps were looked at, so "Reset achievements" (which marks every map
+ * checked) is never undone by revisiting a finished guide.
+ */
+export function backfillAchievement(id) {
+  const achievement = achievementById(id);
+  const record = readRecord();
+  if (!achievement || record?.checked?.includes(achievement.map) || getUnlocked()[id]) return false;
+  write(ACHIEVEMENTS_KEY, {
+    v: 1,
+    unlocked: { ...(record?.unlocked ?? {}), ...withoutLegacyDates(getUnlocked()), [id]: { at: null } },
+    checked: [...new Set([...(record?.checked ?? []), achievement.map])],
+  });
   announceChange();
   return true;
 }
@@ -147,7 +171,7 @@ export function resetAllProgress() {
 // Origins' speedrun unlock no longer count; the features those flags unlock are left alone.
 export function resetAchievements() {
   Object.keys(sessionUnlocks).forEach((id) => delete sessionUnlocks[id]);
-  write(ACHIEVEMENTS_KEY, { v: 1, unlocked: {} });
+  write(ACHIEVEMENTS_KEY, { v: 1, unlocked: {}, checked: Object.keys(MAPS) });
   announceChange();
 }
 

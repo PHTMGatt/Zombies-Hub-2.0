@@ -7,6 +7,8 @@ import { read, write } from '../storage';
  * The choice is remembered with the run (and cleared by the map / all-progress resets).
  * options: [{ id, label, answer }]; prompt and answerLabel frame the result.
  */
+const SYNC_EVENT = 'zh-pick-tool-change';
+
 export default function PickTool({ storageKey, mapId, prompt, answerLabel, options }) {
   const [picked, setPicked] = useState(() => read(storageKey, null));
   useEffect(() => {
@@ -14,13 +16,22 @@ export default function PickTool({ storageKey, mapId, prompt, answerLabel, optio
       const { all, mapId: target } = event.detail ?? {};
       if (all || target === mapId) setPicked(null);
     };
+    // Every copy (in the step and in the Quick refs sheet) shows the same choice.
+    const sync = (event) => {
+      if (event.detail?.key === storageKey) setPicked(read(storageKey, null));
+    };
     window.addEventListener(PROGRESS_RESET_EVENT, onReset);
-    return () => window.removeEventListener(PROGRESS_RESET_EVENT, onReset);
-  }, [mapId]);
+    window.addEventListener(SYNC_EVENT, sync);
+    return () => {
+      window.removeEventListener(PROGRESS_RESET_EVENT, onReset);
+      window.removeEventListener(SYNC_EVENT, sync);
+    };
+  }, [mapId, storageKey]);
 
   const choose = (id) => {
     setPicked(id);
     write(storageKey, id);
+    window.dispatchEvent(new CustomEvent(SYNC_EVENT, { detail: { key: storageKey } }));
   };
   const choice = options.find((option) => option.id === picked);
 
