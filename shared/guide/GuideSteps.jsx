@@ -2,13 +2,15 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import GuideReferences from './GuideReferences';
 import { MAPS, mainAchievementFor, resetMap, unlockAchievement } from '../achievements/achievements';
+import QuickRefs from './QuickRefs';
 import { useGuideDepth, useGuideProgress } from './useGuideProgress';
 import './guide.css';
 
 /*
  * One Easter Egg, two depths.
- *   Quick: what + the visual reference + sub-tasks + critical warnings. Glance, confirm, keep playing.
- *   Full:  adds how-to steps, troubleshooting and a contextual video link.
+ *   Quick: "do this now" + the visual reference + sub-tasks + critical warnings. Glance, confirm, keep playing.
+ *   Walkthrough: adds the how-to steps and a contextual video link.
+ * "Not working?" troubleshooting is available at both depths but stays collapsed until asked for.
  * Both modes render the same steps and share one progress record, so switching never loses your place.
  *
  * Step shape:
@@ -26,11 +28,12 @@ const DEPTH_IDS = QUICK_FULL.map((item) => item.id);
 
 /*
  * Props: guideId, label, steps; optional mapId (enables the map's main Easter Egg achievement and the
- * "reset map" option), depths + depth/onDepthPress (controlled), progress (from useGuideProgress, when
+ * "reset map" option), quickRefs ([{ label, stepId } | { label, to }] — the map's most-used references,
+ * opened in a sheet without moving the run), depths + depth/onDepthPress (controlled), progress (from useGuideProgress, when
  * the page needs it too), selectorExtra (more buttons in the depth switch), and override (replaces the
  * steps body, e.g. a locked panel).
  */
-export default function GuideSteps({ guideId, label, steps, mapId, depths, depth: controlledDepth, onDepthPress, progress: sharedProgress, selectorExtra, override }) {
+export default function GuideSteps({ guideId, label, steps, mapId, quickRefs, depths, depth: controlledDepth, onDepthPress, progress: sharedProgress, selectorExtra, override }) {
   const [ownDepth, setOwnDepth] = useGuideDepth(DEPTH_IDS);
   const ownProgress = useGuideProgress(sharedProgress ? null : guideId, steps);
   const progress = sharedProgress ?? ownProgress;
@@ -64,19 +67,21 @@ export default function GuideSteps({ guideId, label, steps, mapId, depths, depth
       rail.scrollLeft += activeBox.left - railBox.left - (railBox.width - activeBox.width) / 2;
     }
 
-    if (firstRender.current) {
-      firstRender.current = false;
-      return;
-    }
-    // Bring the new step on screen when its top is hidden above, or sits so low that only its title shows
-    // (phones, where the step row and toolbar come first).
-    const top = stepRef.current?.getBoundingClientRect().top ?? 0;
+    // Bring the step on screen when its top is hidden above, or sits so low that only its title shows
+    // (phones, where the step row and toolbar come first). On first load this only happens for a run
+    // already under way, so a returning player lands on their step, not on the page intro.
+    const first = firstRender.current;
+    firstRender.current = false;
+    const resuming = first && (index > 0 || progress.completed > 0);
+    // No step on screen (an override such as a locked panel), or a fresh run: nothing to scroll to.
+    if (!stepRef.current || (first && !resuming)) return;
+    const top = stepRef.current.getBoundingClientRect().top;
     const offset = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--hub-nav-height')) || 0;
-    if (top < offset || top > window.innerHeight * 0.6) {
+    if (top < offset || top > window.innerHeight * (resuming ? 0.4 : 0.6)) {
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      stepRef.current.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+      stepRef.current.scrollIntoView({ behavior: reduceMotion || resuming ? 'auto' : 'smooth', block: 'start' });
     }
-  }, [step.id]);
+  }, [step.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Every step done is the Easter Egg done: unlock it once, on the player's own tap. The ref starts at
   // the stored value, so loading an already-finished run never re-announces it.
@@ -91,10 +96,14 @@ export default function GuideSteps({ guideId, label, steps, mapId, depths, depth
   }, [allDone, mapId]);
 
   const map = mapId ? MAPS[mapId] : null;
+  const mainAchievement = mapId ? mainAchievementFor(mapId) : null;
+  const showFinish = allDone && index === steps.length - 1;
   const hasProgress = progress.completed > 0 || steps.some((s) => s.tasks?.some((t) => progress.isTaskDone(s.id, t.id)));
-  const confirmResetRun = () => {
-    if (window.confirm(`Start ${label} over? This clears your current step, finished steps and ticks. Achievements stay.`)) progress.reset();
+  const confirmReset = (message) => {
+    if (window.confirm(message)) progress.reset();
   };
+  const confirmNewRun = () => confirmReset(`Start a new ${label} run? Your current ticks are cleared. Achievements stay.`);
+  const confirmResetRun = () => confirmReset(`Start ${label} over? This clears your current step, finished steps and ticks. Achievements stay.`);
   const confirmResetMap = () => {
     if (window.confirm(`Clear everything saved for ${map.name}? Guide progress and saved notes are removed. Achievements stay.`)) {
       resetMap(mapId);
@@ -113,6 +122,8 @@ export default function GuideSteps({ guideId, label, steps, mapId, depths, depth
           ))}
           {selectorExtra}
         </div>
+
+        {quickRefs?.length > 0 && <QuickRefs items={quickRefs} steps={steps} label={label} />}
 
         <div className="guide-progress" role="status" aria-label={`${progress.completed} of ${progress.total} steps done`}>
           <span className="guide-progress__count">
@@ -163,7 +174,9 @@ export default function GuideSteps({ guideId, label, steps, mapId, depths, depth
               {stepDone && <span className="guide-step__done">✓ Done</span>}
             </div>
             <h3 id={`guide-step-${step.id}`}>{step.title}</h3>
-            {show.goal && step.goal && <p className="guide-step__goal">{step.goal}</p>}
+            {show.goal && step.goal && (
+              <p className="guide-step__goal"><span className="guide-step__now">Do this now</span> {step.goal}</p>
+            )}
           </header>
 
           <div className="guide-step__grid">
@@ -201,18 +214,12 @@ export default function GuideSteps({ guideId, label, steps, mapId, depths, depth
               )}
             </div>
 
-            {full && (step.how?.length > 0 || step.problems?.length > 0 || step.video) && (
+            {full && (step.how?.length > 0 || step.video) && (
               <div className="guide-step__detail">
                 {step.how?.length > 0 && (
                   <section className="guide-how">
                     <h4>How to do it</h4>
                     <ol>{step.how.map((line) => <li key={line}>{line}</li>)}</ol>
-                  </section>
-                )}
-                {step.problems?.length > 0 && (
-                  <section className="guide-problems">
-                    <h4>Not working?</h4>
-                    <ul>{step.problems.map((line) => <li key={line}>{line}</li>)}</ul>
                   </section>
                 )}
                 {step.video && (
@@ -223,6 +230,24 @@ export default function GuideSteps({ guideId, label, steps, mapId, depths, depth
               </div>
             )}
           </div>
+
+          {step.problems?.length > 0 && (
+            <details className="guide-problems" key={`problems-${step.id}`}>
+              <summary>Not working?</summary>
+              <ul>{step.problems.map((line) => <li key={line}>{line}</li>)}</ul>
+            </details>
+          )}
+
+          {showFinish && (
+            <div className="guide-finish" role="status">
+              <strong>{mainAchievement ? `${mainAchievement.title} complete` : `${label} complete`}</strong>
+              <div className="guide-finish__actions">
+                {mainAchievement && <Link to="/achievements">View achievement</Link>}
+                <button type="button" onClick={confirmNewRun}>Start new run</button>
+                <Link to="/allmaps">Back to maps</Link>
+              </div>
+            </div>
+          )}
 
           {step.links?.length > 0 && (
             <div className="guide-links">

@@ -8,6 +8,7 @@ import { PROGRESS_RESET_EVENT } from '../../../../shared/achievements/achievemen
  */
 const KEY = 'zh-de-safe-code';
 const EMPTY = ['', '', ''];
+const SYNC_EVENT = 'zh-de-safe-code-change';
 
 export default function SafeCodeNote() {
   const [slots, setSlots] = useState(() => {
@@ -15,9 +16,22 @@ export default function SafeCodeNote() {
     return Array.isArray(saved) && saved.length === 3 ? saved : EMPTY;
   });
 
+  // Every copy of the note (in the step and in the Quick refs sheet) shares one record and stays in sync.
   useEffect(() => {
+    const saved = readStored(KEY, EMPTY);
+    if (JSON.stringify(saved) === JSON.stringify(slots)) return;
     writeStored(KEY, slots);
+    window.dispatchEvent(new Event(SYNC_EVENT));
   }, [slots]);
+
+  useEffect(() => {
+    const sync = () => {
+      const saved = readStored(KEY, EMPTY);
+      if (Array.isArray(saved) && saved.length === 3) setSlots((current) => (JSON.stringify(current) === JSON.stringify(saved) ? current : saved));
+    };
+    window.addEventListener(SYNC_EVENT, sync);
+    return () => window.removeEventListener(SYNC_EVENT, sync);
+  }, []);
 
   // "Reset map" / "Reset all progress" clear the note too.
   useEffect(() => {

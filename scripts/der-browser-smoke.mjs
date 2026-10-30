@@ -70,7 +70,7 @@ try {
     await page.getByRole('button', { name: 'Mark step done' }).click();
     assert.match(await page.locator('.guide-step h3').innerText(), /Death Ray/, 'Marking done advances to the next step');
     assert.equal(await page.getByLabel('Safe symbol 1').inputValue(), 'Test', 'Safe code note carries to the terminal step');
-    await page.getByRole('button', { name: /^Quick/ }).click();
+    await page.getByRole('button', { name: 'Quick', exact: true }).click();
     await page.evaluate(() => window.localStorage.clear());
     results.push({ width, route: mainRoute, passed: true });
 

@@ -1,11 +1,12 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { PROGRESS_RESET_EVENT } from '../achievements/achievements';
 import { progressKey, read, write } from '../storage';
 
 /*
  * Easter Egg progress, stored only in this browser (localStorage), one record per guide:
- *   { current: stepId, done: { [stepId]: true, [`${stepId}/${taskId}`]: true }, total: stepCount }
- * (`total` lets the achievement shelf show "4 / 11" without loading the guide.)
+ *   { current: stepId, done: { [stepId]: true, [`${stepId}/${taskId}`]: true }, total, step, at }
+ * (`total`, the current `step` number and the last-played time `at` let the hub show "Step 5 / 11 —
+ * Continue" without loading the guide.)
  * Quick and Full mode read the same record, so switching depth never loses your place.
  */
 const PROGRESS_KEY = progressKey;
@@ -22,9 +23,15 @@ export function useGuideProgress(guideId, steps) {
     return { current, done: saved?.done ?? {} };
   });
 
+  // `at` (last played) moves only when the player changes something, not when a page merely opens.
+  const savedAt = useRef(guideId ? read(PROGRESS_KEY(guideId), null)?.at ?? 0 : 0);
+  const changed = useRef(false);
   useEffect(() => {
-    if (guideId) write(PROGRESS_KEY(guideId), { ...state, total: stepIds.length });
-  }, [guideId, state, stepIds.length]);
+    if (!guideId) return;
+    if (changed.current) savedAt.current = Date.now();
+    changed.current = true;
+    write(PROGRESS_KEY(guideId), { ...state, total: stepIds.length, step: stepIds.indexOf(state.current) + 1, at: savedAt.current });
+  }, [guideId, state, stepIds]);
 
   // A reset from the progress menu or the achievement shelf clears storage; start this guide over too.
   useEffect(() => {

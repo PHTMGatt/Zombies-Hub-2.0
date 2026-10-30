@@ -5,6 +5,14 @@ import zetsGuideSteps from '../data/zetsGuideSteps';
 import '../styles/Guide.css';
 import '../styles/MainGuideCompact.css';
 
+const QUICK_REFS = [
+  { label: 'Shield + Gas Mask parts', stepId: 'bunker' },
+  { label: 'KT-4 parts', stepId: 'kt4' },
+  { label: 'Masamune ingredients', stepId: 'masamune' },
+  { label: 'Cog 2 plant cycle', stepId: 'cog-2' },
+  { label: 'Buildables page', to: '/maps/zetsubou-no-shima/buildables' },
+];
+
 const MainGuide = () => (
   <div className="zets-main-guide">
     <header className="zets-run-header">
@@ -13,7 +21,7 @@ const MainGuide = () => (
     </header>
 
     <div className="zets-guide">
-      <GuideSteps guideId="zetsubou-no-shima" mapId="zetsubou-no-shima" label="Seeds of Doubt" steps={zetsGuideSteps} />
+      <GuideSteps guideId="zetsubou-no-shima" mapId="zetsubou-no-shima" quickRefs={QUICK_REFS} label="Seeds of Doubt" steps={zetsGuideSteps} />
     </div>
   </div>
 );

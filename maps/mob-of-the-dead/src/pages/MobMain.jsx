@@ -4,6 +4,14 @@ import { mobPrerequisites } from '../data/mobGuide';
 import mobGuideSteps from '../data/mobGuideSteps';
 import '../styles/MobMain.css';
 
+const QUICK_REFS = [
+  { label: 'Plane parts', stepId: 'plane' },
+  { label: 'Cerberus heads + Retriever', stepId: 'retriever' },
+  { label: 'Blue skulls', stepId: 'skulls' },
+  { label: 'Afterlife codes', stepId: 'codes' },
+  { label: 'Headphones', stepId: 'audio' },
+];
+
 const MobMain = () => (
   <div className="mobmain-page">
     <header className="mob-run-header">
@@ -17,7 +25,7 @@ const MobMain = () => (
     </details>
 
     <div className="mob-guide">
-      <GuideSteps guideId="mob-of-the-dead" mapId="mob-of-the-dead" label="Pop Goes the Weasel" steps={mobGuideSteps} />
+      <GuideSteps guideId="mob-of-the-dead" mapId="mob-of-the-dead" quickRefs={QUICK_REFS} label="Pop Goes the Weasel" steps={mobGuideSteps} />
     </div>
   </div>
 );

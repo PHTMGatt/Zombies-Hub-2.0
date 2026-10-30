@@ -363,6 +363,178 @@
   line-height: 1.4;
 }
 
+/* The action lead: a small tag so the eye lands on what to do, not on explanation. */
+.guide-step__now {
+  display: inline-block;
+  margin-right: 0.35rem;
+  padding: 0.1rem 0.45rem;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--guide-accent) 20%, transparent);
+  color: var(--guide-accent);
+  font-size: 0.72rem;
+  font-weight: 850;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  vertical-align: 0.15em;
+}
+
+/* Quick references: a toolbar button and a sheet. */
+.guide-quickrefs {
+  min-height: 44px;
+  padding: 0 0.9rem;
+  border: 1px solid var(--guide-line);
+  border-radius: 10px;
+  background: var(--guide-surface-2);
+  color: var(--guide-ink);
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.guide-quickrefs:hover {
+  border-color: var(--guide-accent);
+}
+
+.guide-quickrefs:focus-visible,
+.guide-sheet :focus-visible {
+  outline: 2px solid var(--guide-accent);
+  outline-offset: 2px;
+}
+
+.guide-sheet {
+  width: min(720px, calc(100vw - 1.5rem));
+  max-height: min(86vh, 900px);
+  padding: 0;
+  border: 1px solid var(--guide-line);
+  border-radius: 16px;
+  background: color-mix(in srgb, #000 70%, var(--guide-surface));
+  color: var(--guide-text);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+}
+
+.guide-sheet::backdrop {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.guide-sheet__inner {
+  display: grid;
+  gap: 0.8rem;
+  padding: 0.75rem 1rem 1.1rem;
+}
+
+.guide-sheet__head {
+  position: sticky;
+  top: -0.75rem;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin: -0.75rem -1rem 0;
+  padding: 0.5rem 0.5rem 0.5rem 1rem;
+  border-bottom: 1px solid var(--guide-line);
+  background: inherit;
+  background-color: color-mix(in srgb, #000 70%, var(--guide-surface));
+  color: var(--guide-ink);
+}
+
+.guide-sheet__back,
+.guide-sheet__close {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 0.5rem;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--guide-ink);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.guide-sheet__close {
+  font-size: 1.5rem;
+}
+
+.guide-sheet__body {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.guide-sheet__body h3 {
+  margin: 0;
+  color: var(--guide-ink);
+  font-size: 1.4rem;
+}
+
+.guide-sheet__menu,
+.guide-sheet__list {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.guide-sheet__menu li,
+.guide-sheet__list li {
+  margin: 0;
+}
+
+.guide-sheet__menu a,
+.guide-sheet__menu button {
+  width: 100%;
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+  border: 1px solid var(--guide-line);
+  border-radius: 12px;
+  background: var(--guide-surface-2);
+  color: var(--guide-ink);
+  font: inherit;
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.guide-sheet__menu a:hover,
+.guide-sheet__menu button:hover {
+  border-color: var(--guide-accent);
+}
+
+.guide-sheet__list li {
+  display: grid;
+  gap: 0.1rem;
+  padding: 0.55rem 0.8rem;
+  border-left: 3px solid var(--gref-tone, var(--guide-accent));
+  background: var(--guide-surface-2);
+  border-radius: 0 10px 10px 0;
+}
+
+.guide-sheet__list strong {
+  color: var(--guide-ink);
+}
+
+.guide-sheet__list span {
+  color: var(--guide-muted);
+  font-size: 0.92rem;
+}
+
+@media (max-width: 680px) {
+  .guide-sheet {
+    width: 100vw;
+    max-width: 100vw;
+    max-height: 88vh;
+    margin: auto 0 0;
+    border-radius: 16px 16px 0 0;
+  }
+}
+
 .guide-step__grid {
   display: grid;
   gap: 1.25rem;
@@ -794,22 +966,51 @@
   font-weight: 700;
 }
 
+/* Troubleshooting: collapsed until asked for, at every depth. */
 .guide-problems {
-  padding: 0.85rem 1rem;
+  margin-top: 0.9rem;
   border-radius: 12px;
-  background: color-mix(in srgb, var(--guide-warn) 8%, transparent);
-  border: 1px solid color-mix(in srgb, var(--guide-warn) 30%, transparent);
+  border: 1px solid color-mix(in srgb, var(--guide-warn) 26%, transparent);
+  background: color-mix(in srgb, var(--guide-warn) 6%, transparent);
 }
 
-.guide-problems h4 {
+.guide-problems summary {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 0.9rem;
   color: var(--guide-warn);
+  font-weight: 700;
+  cursor: pointer;
+  list-style: none;
+}
+
+.guide-problems summary::-webkit-details-marker {
+  display: none;
+}
+
+.guide-problems summary::after {
+  content: '▾';
+  margin-left: auto;
+  font-size: 0.8em;
+}
+
+.guide-problems[open] summary::after {
+  content: '▴';
+}
+
+.guide-problems summary:focus-visible {
+  outline: 2px solid var(--guide-warn);
+  outline-offset: -2px;
+  border-radius: 12px;
 }
 
 .guide-problems ul {
   display: grid;
   gap: 0.45rem;
   margin: 0;
-  padding-left: 1.2rem;
+  padding: 0 1rem 0.85rem 2rem;
 }
 
 .guide-problems li {
@@ -817,6 +1018,59 @@
   color: var(--guide-text);
   font-size: 0.98rem;
   line-height: 1.5;
+}
+
+/* Run finished: a short line and three ways onward, inside the last step. */
+.guide-finish {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem 1rem;
+  margin-top: 1rem;
+  padding: 0.75rem 0.9rem;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--guide-done) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--guide-done) 40%, transparent);
+}
+
+.guide-finish strong {
+  color: var(--guide-done);
+  font-size: 1.08rem;
+}
+
+.guide-finish__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.guide-finish__actions a,
+.guide-finish__actions button {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 0.9rem;
+  border: 1px solid var(--guide-line);
+  border-radius: 10px;
+  background: var(--guide-surface-2);
+  color: var(--guide-ink);
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.guide-finish__actions a:first-child {
+  border-color: transparent;
+  background: var(--guide-done);
+  color: #052014;
+}
+
+.guide-finish__actions :focus-visible {
+  outline: 2px solid var(--guide-accent);
+  outline-offset: 2px;
 }
 
 .guide-video {

@@ -101,15 +101,28 @@ export function unlockAchievement(id) {
 }
 
 // Guide progress summary for the shelf: { done, total } from the saved record (total is written by the guide).
-export function guideProgress(mapId) {
+export function guideProgress(mapId, record) {
   const guideId = MAPS[mapId]?.guideId;
   if (!guideId) return null;
-  const saved = read(progressKey(guideId), null);
+  const saved = record ?? read(progressKey(guideId), null);
   const total = saved?.total ?? null;
   if (!saved?.done) return { done: 0, total };
   const done = Object.keys(saved.done).filter((key) => !key.includes('/') && saved.done[key]).length;
   // A step removed from a guide can linger in an old record; never report more than the guide has.
   return { done: total ? Math.min(done, total) : done, total };
+}
+
+// Runs under way (some progress, not finished), most recently played first, for "Continue run".
+export function activeRuns() {
+  return Object.entries(MAPS)
+    .filter(([, map]) => map.guideId)
+    .map(([mapId, map]) => {
+      const saved = read(progressKey(map.guideId), null);
+      const progress = guideProgress(mapId, saved);
+      return { mapId, map, step: saved?.step ?? null, at: saved?.at ?? 0, ...progress };
+    })
+    .filter((run) => run.total && run.done < run.total && (run.done > 0 || (run.step ?? 1) > 1))
+    .sort((a, b) => b.at - a.at);
 }
 
 /* ---- Resets. Each one names exactly what it clears; none of them touches achievement history. ---- */

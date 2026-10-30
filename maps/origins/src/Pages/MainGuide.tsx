@@ -18,6 +18,12 @@ const DEPTHS = [
 ];
 const DEPTH_IDS = [...DEPTHS.map((depth) => depth.id), "speedrun"];
 
+const QUICK_REFS = [
+  { label: "Staff build codes", stepId: "build-staffs" },
+  { label: "Staff upgrades", stepId: "upgrade-staffs" },
+  { label: "Lightning switch board", to: "/maps/origins/lightning-staff" },
+];
+
 const MainGuide = () => {
   const progress = useGuideProgress("origins", originsGuide);
   const [depth, setDepth] = useGuideDepth(DEPTH_IDS, "zh-origins-depth");
@@ -37,6 +43,7 @@ const MainGuide = () => {
         <GuideSteps
           guideId="origins"
           mapId="origins"
+          quickRefs={QUICK_REFS}
           label="Little Lost Girl"
           steps={originsGuide}
           depths={DEPTHS}
