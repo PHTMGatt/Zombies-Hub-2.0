@@ -40,6 +40,7 @@ export default function GuideSteps({ guideId, label, steps, depths, depth: contr
   const [variant, setVariant] = useState(null);
   const railRef = useRef(null);
   const stepRef = useRef(null);
+  const stepHeadingRef = useRef(null);
   const firstRender = useRef(true);
 
   const index = Math.max(0, steps.findIndex((step) => step.id === progress.current));
@@ -66,6 +67,7 @@ export default function GuideSteps({ guideId, label, steps, depths, depth: contr
       firstRender.current = false;
       return;
     }
+    stepHeadingRef.current?.focus({ preventScroll: true });
     // When the step changed from far down the page, bring the new step's top back on screen.
     const top = stepRef.current?.getBoundingClientRect().top ?? 0;
     const offset = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--hub-nav-height')) || 0;
@@ -141,7 +143,7 @@ export default function GuideSteps({ guideId, label, steps, depths, depth: contr
               <span>Step {pad(index + 1)} of {steps.length}</span>
               {stepDone && <span className="guide-step__done">✓ Done</span>}
             </div>
-            <h3 id={`guide-step-${step.id}`}>{step.title}</h3>
+            <h3 ref={stepHeadingRef} id={`guide-step-${step.id}`} tabIndex="-1">{step.title}</h3>
             {show.goal && step.goal && <p className="guide-step__goal">{step.goal}</p>}
           </header>
 
