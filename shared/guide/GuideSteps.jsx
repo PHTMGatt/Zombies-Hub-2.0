@@ -11,7 +11,7 @@ import './guide.css';
  * Both modes render the same steps and share one progress record, so switching never loses your place.
  *
  * Step shape:
- *   { id, title, goal, refs: [reference blocks], tasks: [{ id, label }],
+ *   { id, title, goal, refs: [reference blocks], tasks: [{ id, label, hint?, tone? }],
  *     how: [string], problems: [string], critical: [string], video: { url, label }, links: [{ to, label }] }
  */
 const pad = (value) => String(value).padStart(2, '0');
@@ -151,7 +151,7 @@ export default function GuideSteps({ guideId, label, steps, depths, depth: contr
               <GuideReferences refs={step.refs} tabState={{ value: variant, set: setVariant }} />
 
               {taskCount > 0 && (
-                <div className="guide-tasks">
+                <div className={`guide-tasks${step.tasks.some((task) => task.hint) ? ' guide-tasks--hints' : ''}`}>
                   <span className="gref__label">Track it <small>{tasksDone}/{taskCount}</small></span>
                   <ul>
                     {step.tasks.map((task) => {
@@ -166,7 +166,10 @@ export default function GuideSteps({ guideId, label, steps, depths, depth: contr
                             style={task.tone ? { '--gref-tone': task.tone } : undefined}
                           >
                             <span className="guide-task__box" aria-hidden="true">{ticked ? '✓' : ''}</span>
-                            {task.label}
+                            <span className="guide-task__text">
+                              {task.label}
+                              {task.hint && <small>{task.hint}</small>}
+                            </span>
                           </button>
                         </li>
                       );

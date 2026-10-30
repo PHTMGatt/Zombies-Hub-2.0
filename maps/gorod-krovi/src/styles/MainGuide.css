@@ -166,7 +166,7 @@
 
   .gorod-run-header > p {
     margin-top: 0.3rem;
-    font-size: 0.86rem;
+    font-size: 0.82rem;
     text-align: left;
   }
 
@@ -178,12 +178,12 @@
     font-size: 1.6rem;
   }
 
-  .gorod-run-header > p {
-    font-size: 0.82rem;
+  .gorod-run-alert {
+    margin-top: 0.4rem;
   }
 
   .gorod-guide {
-    margin-top: 0.7rem;
+    margin-top: 0.6rem;
   }
 }
 
@@ -209,6 +209,6 @@
   }
 
   .gorod-guide .guide {
-    --guide-sticky-top: calc(var(--hub-nav-height) + 44px + 0.5rem);
+    --guide-sticky-top: calc(var(--hub-nav-height) + 58px + 0.5rem);
   }
 }

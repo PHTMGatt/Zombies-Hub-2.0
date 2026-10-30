@@ -1,6 +1,6 @@
 import React from 'react';
 import ValveSolverTool from '../components/ValveSolverTool';
-import GKMap from '../assets/GK_Map.png';
+import GKMap from '../assets/GK_Map.webp';
 import {
   GuideHero,
   GuideCallout,
@@ -14,10 +14,10 @@ const ValveSolver = () => {
       <GuideHero
         kicker="Gorod Krovi"
         title="Valve Solver"
-        description="Choose where the green light starts and where the Master Code Cylinder is located. The solver returns the six valve settings for that game."
+        description="Choose where the green light starts and where the Master Code Cylinder is located. The solver returns the five valve settings for that game."
       >
         <GuideChip>Randomized puzzle</GuideChip>
-        <GuideChip>6 valves</GuideChip>
+        <GuideChip>5 settings</GuideChip>
         <GuideChip>S.O.P.H.I.A. setup</GuideChip>
       </GuideHero>
 
@@ -29,7 +29,9 @@ const ValveSolver = () => {
         <div className="gorod-valve-map-wrap">
           <img
             src={GKMap}
-            alt="Gorod Krovi map showing valve areas"
+            alt="Gorod Krovi map with the six valve locations marked"
+            width="1600"
+            height="1040"
             className="gorod-valve-map"
           />
         </div>

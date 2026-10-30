@@ -1,4 +1,5 @@
 import React from 'react';
+import ValveMap from '../assets/GK_Map.webp';
 import ValveSolverTool from '../components/ValveSolverTool';
 import buildables from './buildables';
 import { gorodBossPhases, gorodChallenges, gorodRun, gorodTrophies } from './gorodRun';
@@ -18,7 +19,7 @@ const shield = buildables.find((item) => item.name.startsWith('Guard of Fafnir')
 
 const CYLINDER = { blue: '#5fb4ff', yellow: '#ffd25a', red: '#ff5a43' };
 
-// Short labels for the trophy and challenge cards; full wording stays in how-to and on the reference page.
+// Short trophy methods shown under each trophy's check box; full wording stays in Walkthrough and on the reference page.
 const trophyShort = [
   'Fafnir fireball → left window by Double Tap',
   'Shoot it off the statue hand above the tank',
@@ -27,6 +28,18 @@ const trophyShort = [
   'Sewer ride: shoot the red light green → toilet',
   'Gauntlet Whelp at the safe, then punch it',
 ];
+
+// One-line versions of each challenge objective for Quick; the full objective is in Walkthrough.
+const challengeShort = [
+  'Shoot the orb until it returns to Dragon Command',
+  'Disable the terminals in the flashed order',
+  'Break the shoulder armor, walk him onto the circle',
+  'Stay with the injured Valkyrie to Dragon Command',
+  'Defend the module, Whelp brings the drop back',
+  'Keycard → Hatchery computer, survive, return it',
+];
+const dragon = run('Kill the Dragon');
+const shieldTip = dragon.details.find((line) => /shield/i.test(line));
 
 const gorodGuideSteps = [
   {
@@ -101,17 +114,18 @@ const gorodGuideSteps = [
   {
     id: 'valves',
     title: 'Valve network',
-    goal: 'Find the green-lit valve and the Master Code Cylinder, set the six dials, take the cylinder to S.O.P.H.I.A.',
+    goal: 'Find the green-lit valve and the Master Code Cylinder, set the other five valves, take the cylinder to S.O.P.H.I.A.',
     refs: [
       { type: 'custom', key: 'valve-solver', render: () => <ValveSolverTool compact /> },
+      { type: 'image', src: ValveMap, alt: 'Gorod Krovi map with the six valve locations marked', caption: 'Valve locations — tap to enlarge', width: 1600, height: 1040 },
     ],
     tasks: [
-      { id: 'dials', label: 'Six dials set' },
+      { id: 'dials', label: 'Five valves set' },
       { id: 'cylinder', label: 'Cylinder at Dragon Command' },
     ],
     how: how('Solve the Valve Network'),
-    problems: ['The green-light / cylinder combination changes every game — always solve it fresh.'],
-    links: [{ to: `${BASE}/valves`, label: 'Valve Solver with map' }],
+    problems: ['No settings? Re-check which valve is green and where the cylinder is — both change every game.'],
+    links: [{ to: `${BASE}/valves`, label: 'Full-size Valve Solver' }],
   },
   {
     id: 'kronos',
@@ -127,10 +141,7 @@ const gorodGuideSteps = [
     id: 'trophies',
     title: 'Six silver trophies',
     goal: 'Collect all six, then place the set at Dragon Command.',
-    refs: [
-      { type: 'facts', items: gorodTrophies.map((trophy, index) => ({ k: trophy.location, v: trophyShort[index] })) },
-    ],
-    tasks: gorodTrophies.map((trophy, index) => ({ id: `t${index + 1}`, label: trophy.location })),
+    tasks: gorodTrophies.map((trophy, index) => ({ id: `t${index + 1}`, label: trophy.location, hint: trophyShort[index] })),
     how: gorodTrophies.map((trophy) => `${trophy.location}: ${trophy.method}`),
     problems: ['The safe trophy needs the Gauntlet of Siegfried — finish the egg first.'],
     links: [{ to: `${BASE}/trophies`, label: 'Trophies + Challenges' }],
@@ -138,14 +149,12 @@ const gorodGuideSteps = [
   {
     id: 'challenges',
     title: 'S.O.P.H.I.A. challenges',
-    goal: 'Complete the challenges the lit trophies show. The Group 935 keycard lockdown always comes last.',
+    goal: 'Complete each challenge the lit trophies show.',
     critical: ['The Group 935 keycard lockdown always comes last, after the other five.'],
-    refs: [
-      { type: 'facts', items: gorodChallenges.map((challenge) => ({ k: challenge.title, v: challenge.objective })) },
-    ],
-    tasks: gorodChallenges.map((challenge, index) => ({ id: `c${index + 1}`, label: challenge.title })),
-    how: run('Complete S.O.P.H.I.A.’s Challenges').details,
-    problems: gorodChallenges.map((challenge) => `${challenge.title}: ${challenge.tip}`),
+    tasks: gorodChallenges.map((challenge, index) => ({ id: `c${index + 1}`, label: challenge.title, hint: challengeShort[index] })),
+    how: gorodChallenges.map((challenge) => `${challenge.title}: ${challenge.objective}`),
+    // A tip that only restates the "always comes last" warning above is left out.
+    problems: gorodChallenges.filter((challenge) => !/always comes last/i.test(challenge.tip)).map((challenge) => `${challenge.title}: ${challenge.tip}`),
     links: [{ to: `${BASE}/trophies`, label: 'Trophies + Challenges' }],
   },
   {
@@ -162,11 +171,11 @@ const gorodGuideSteps = [
     id: 'dragon-boss',
     title: 'Kill the dragon',
     goal: 'Hit each weak point Nikolai exposes as the dragon lands, with the Ray Gun Mark 3.',
+    critical: [shieldTip],
     refs: [
       { type: 'sequence', label: 'Repeat each landing', items: ['Dragon lands', 'Nikolai exposes a weak point', 'Ray Gun Mark 3 on the wound'] },
-      { type: 'warning', text: 'Keep the shield between you and the dragon’s fire when repositioning.' },
     ],
-    how: [...how('Kill the Dragon'), ...gorodBossPhases[0].details],
+    how: [dragon.summary, ...dragon.details.filter((line) => line !== shieldTip), ...gorodBossPhases[0].details.filter((line) => /final weak point/i.test(line))],
     links: [{ to: `${BASE}/boss`, label: 'Boss Fight' }],
   },
   {

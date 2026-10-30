@@ -147,7 +147,7 @@
 
   .gorod-module .gorod-nav-link {
     flex: 0 0 auto;
-    min-height: 38px;
+    min-height: 44px;
     padding: 0.35rem 0.8rem;
     font-size: 0.78rem;
     scroll-snap-align: start;
@@ -180,7 +180,7 @@
   }
 
   .gorod-module .gorod-nav-link {
-    min-height: 34px;
-    padding: 0.25rem 0.6rem;
+    min-height: 44px;
+    padding: 0.25rem 0.7rem;
   }
 }

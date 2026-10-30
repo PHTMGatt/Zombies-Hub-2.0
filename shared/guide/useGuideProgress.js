@@ -62,7 +62,8 @@ export function useGuideProgress(guideId, steps) {
     });
   }, [stepIds]);
 
-  // Ticking a step's last task completes the step; unticking one reopens it.
+  // Ticking a step's last task completes the step and moves on, exactly like "Mark step done";
+  // unticking one reopens it.
   const toggleTask = useCallback((stepId, taskId) => {
     setState((previous) => {
       const step = steps.find((item) => item.id === stepId);
@@ -75,10 +76,12 @@ export function useGuideProgress(guideId, steps) {
       }
       done[key] = true;
       const allTasks = step?.tasks?.every((task) => done[taskKey(stepId, task.id)]);
-      if (allTasks && !done[stepId]) done[stepId] = true;
-      return { ...previous, done };
+      if (!allTasks || done[stepId]) return { ...previous, done };
+      done[stepId] = true;
+      const after = stepIds.slice(stepIds.indexOf(stepId) + 1).find((id) => !done[id]);
+      return { done, current: after ?? stepId };
     });
-  }, [steps]);
+  }, [steps, stepIds]);
 
   const reset = useCallback(() => setState({ current: stepIds[0], done: {} }), [stepIds]);
 
