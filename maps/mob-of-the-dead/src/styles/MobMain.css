@@ -1,166 +1,184 @@
+/* Pop Goes the Weasel: a slim title strip, then the tracked guide straight on the Alcatraz backdrop
+   (no outer card, so the step is never a box inside a box). */
 .mobmain-page {
-  width: min(100% - 1.5rem, 1080px);
-  margin: 1rem auto 1.8rem;
-  padding: 1rem 1.1rem 1.35rem;
+  width: min(100% - 1.5rem, 1240px);
+  margin: 1rem auto 2rem;
   color: #f5f1e8;
-  border: 1px solid rgba(240, 179, 33, 0.24);
-  border-radius: 16px;
-  background: rgba(8, 10, 13, 0.62);
-  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.36), 0 0 24px rgba(240, 179, 33, 0.08);
-  backdrop-filter: blur(14px) saturate(1.05);
 }
 
 .mob-run-header {
   display: flex;
-  align-items: end;
+  align-items: baseline;
   justify-content: space-between;
   gap: 1rem;
-  padding: 0.1rem 0 0.7rem;
-  border-bottom: 1px solid rgba(240, 179, 33, 0.15);
-}
-
-.mob-run-header span {
-  display: block;
-  margin-bottom: 0.08rem;
-  color: #f0b321;
-  font-size: 0.58rem;
-  font-weight: 850;
-  letter-spacing: 0.15em;
+  padding: 0.75rem 1rem;
+  border-left: 4px solid #f0b321;
+  border-radius: 0 12px 12px 0;
+  background: linear-gradient(90deg, rgba(36, 22, 6, 0.88), rgba(8, 10, 13, 0.6));
 }
 
 .mob-run-header h2 {
   margin: 0;
   color: #fff4df;
-  font-size: clamp(1.65rem, 3vw, 2.2rem);
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
   line-height: 1;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
 }
 
 .mob-run-header > p {
-  max-width: 430px;
   margin: 0;
-  color: #d6cdbd;
-  font-size: 0.78rem;
-  line-height: 1.35;
+  color: #dcd1bf;
+  font-size: 0.92rem;
+  line-height: 1.4;
   text-align: right;
 }
 
 .mob-run-alert {
-  display: flex;
-  gap: 0.45rem;
-  align-items: baseline;
-  margin: 0.65rem 0 0.25rem;
-  padding: 0.5rem 0.6rem;
-  border-left: 3px solid #f0b321;
-  border-radius: 0 8px 8px 0;
-  background: rgba(48, 20, 7, 0.62);
-  color: #d8cfbf;
-  font-size: 0.72rem;
-  line-height: 1.35;
-}
-
-.mob-run-alert strong {
-  flex: 0 0 auto;
-  color: #ffd15c;
-}
-
-.mob-run-flow {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0 0.85rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.mob-run-flow li {
-  min-width: 0;
-  display: grid;
-  grid-template-columns: 32px minmax(0, 1fr);
-  gap: 0.55rem;
-  align-items: start;
-  padding: 0.78rem 0.25rem;
-  border-bottom: 1px solid rgba(240, 179, 33, 0.11);
-}
-
-.mob-run-number {
-  width: 30px;
-  height: 30px;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  color: #1c1202;
-  background: linear-gradient(145deg, #ffd75a, #e1910f);
-  font-size: 0.62rem;
-  font-weight: 900;
-}
-
-.mob-run-flow h3 {
-  margin: 0;
-  color: #fff6e9;
-  font-size: 0.9rem;
-  line-height: 1.2;
-}
-
-.mob-run-flow p {
-  margin: 0.2rem 0 0;
-  color: #d2c8b9;
-  font-size: 0.74rem;
+  margin: 0.6rem 0 0;
+  border-radius: 10px;
+  background: rgba(48, 26, 6, 0.6);
+  color: #ddd3c2;
+  font-size: 0.92rem;
   line-height: 1.45;
 }
 
-.mob-run-flow a {
-  display: inline-flex;
-  margin-top: 0.28rem;
+.mob-run-alert summary {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 0.85rem;
   color: #ffd15c;
-  font-size: 0.7rem;
   font-weight: 800;
-  text-decoration: none;
+  cursor: pointer;
+  list-style: none;
 }
 
-.mob-run-flow a:hover {
-  color: #fff1b1;
-  text-decoration: underline;
+.mob-run-alert summary::-webkit-details-marker {
+  display: none;
+}
+
+.mob-run-alert summary::before {
+  content: '▸';
+  transition: transform 0.2s ease;
+}
+
+.mob-run-alert[open] summary::before {
+  transform: rotate(90deg);
+}
+
+.mob-run-alert summary:focus-visible {
+  outline: 2px solid #ffd15c;
+  outline-offset: -2px;
+  border-radius: 10px;
+}
+
+.mob-run-alert ul {
+  display: grid;
+  gap: 0.3rem;
+  margin: 0;
+  padding: 0 1rem 0.75rem 2rem;
+}
+
+.mob-guide {
+  margin-top: 1rem;
+}
+
+/* Mob theme for the shared step guide: warden-lamp gold on cold prison steel. */
+.mob-guide .guide {
+  --guide-accent: #f0b321;
+  --guide-accent-ink: #1c1202;
+  --guide-ink: #fbf5ea;
+  --guide-text: #e6ddcf;
+  --guide-muted: #b9ae9c;
+  --guide-surface: rgba(8, 10, 13, 0.82);
+  --guide-surface-2: rgba(240, 179, 33, 0.07);
+  --guide-line: rgba(240, 179, 33, 0.2);
+  --guide-done: #9bd47a;
+  --guide-sticky-top: calc(var(--hub-nav-height) + 0.75rem);
+}
+
+.mob-guide .guide-step {
+  border-top: 0;
+  background:
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.025) 0 2px, transparent 2px 46px),
+    var(--guide-surface);
+  box-shadow: inset 0 3px 0 0 var(--guide-accent), 0 18px 40px rgba(0, 0, 0, 0.45);
+}
+
+.mob-guide .guide-step__meta {
+  letter-spacing: 0.16em;
+}
+
+.mob-guide .guide-rail__step.is-current {
+  background: linear-gradient(90deg, color-mix(in srgb, var(--guide-accent) 26%, transparent), rgba(60, 36, 6, 0.45) 60%, var(--guide-surface));
+}
+
+.mob-guide .guide-rail__step.is-current .guide-rail__num,
+.mob-guide .guide-actions__done:not(.is-done) {
+  background: linear-gradient(145deg, color-mix(in srgb, var(--guide-accent) 70%, #fff), color-mix(in srgb, var(--guide-accent) 85%, #a03c00));
 }
 
 @media (max-width: 720px) {
   .mobmain-page {
-    width: min(100% - 1rem, 680px);
-    margin-top: 0.7rem;
-    padding: 0.8rem 0.85rem 1.05rem;
-    border-radius: 13px;
+    width: min(100% - 1rem, 720px);
+    margin-top: 0.6rem;
   }
 
   .mob-run-header {
     display: block;
+    padding: 0.65rem 0.8rem;
+  }
+
+  .mob-run-header h2 {
+    font-size: 1.55rem;
   }
 
   .mob-run-header > p {
-    margin-top: 0.25rem;
+    margin-top: 0.3rem;
+    font-size: 0.84rem;
     text-align: left;
   }
 
-  .mob-run-flow {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 480px) {
   .mob-run-alert {
-    display: block;
+    margin-top: 0.4rem;
   }
 
-  .mob-run-alert strong {
-    display: block;
-    margin-bottom: 0.12rem;
+  .mob-guide {
+    margin-top: 0.6rem;
   }
 }
 
-/* Touch: the per-phase link is the main way into each focused page, so give it a real tap target. */
-@media (pointer: coarse), (max-width: 720px) {
-  .mob-run-flow a {
-    min-height: 36px;
-    align-items: center;
-    margin-top: 0.1rem;
-    font-size: 0.78rem;
+/* Landscape phones: the header already names the Easter Egg, so the title is kept for screen readers
+   only; the requirement line stays, and the step moves up into the short screen. */
+@media (max-height: 500px) and (orientation: landscape) {
+  .mobmain-page {
+    margin-top: 0.5rem;
+  }
+
+  .mob-run-header {
+    padding-block: 0.4rem;
+  }
+
+  .mob-run-header h2 {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .mob-run-header > p {
+    font-size: 0.82rem;
+    text-align: left;
+  }
+
+  .mob-run-alert {
+    margin-top: 0;
+  }
+
+  .mob-guide {
+    margin-top: 0.5rem;
   }
 }
