@@ -63,7 +63,7 @@ try {
     await page.reload({ waitUntil: 'networkidle' });
     assert.equal(await page.locator('.guide-rail__step').count(), 12, 'Der guide keeps all 12 steps');
     await page.locator('.guide-rail__step').nth(4).click();
-    await page.getByRole('button', { name: /^Full/ }).click();
+    await page.getByRole('button', { name: /^Walkthrough/ }).click();
     assert.match(await page.locator('.guide-step h3').innerText(), /Past lab/, 'Switching to Full keeps the current step');
     assert.equal(await page.locator('.guide-how').count(), 1, 'Full mode shows the how-to');
     await page.getByLabel('Safe symbol 1').fill('Test');

@@ -11,7 +11,7 @@ const Home: React.FC = () => (
         <span>MAIN EASTER EGG</span>
         <h2>My Brother’s Keeper</h2>
       </div>
-      <p>Twelve steps. Quick shows the reference you need mid-game; Full adds the how-to and fixes.</p>
+      <p>Twelve steps. Quick for the reference, Walkthrough for the how-to.</p>
     </header>
 
     <div className="de-run-alert">

@@ -18,8 +18,8 @@ const pad = (value) => String(value).padStart(2, '0');
 
 // Default depths. A map can pass its own (Origins uses Low / Medium / High).
 export const QUICK_FULL = [
-  { id: 'quick', label: 'Quick', sub: 'glance', show: { goal: true, critical: true } },
-  { id: 'full', label: 'Full', sub: 'explain', show: { goal: true, critical: true, detail: true } },
+  { id: 'quick', label: 'Quick', show: { goal: true, critical: true } },
+  { id: 'full', label: 'Walkthrough', show: { goal: true, critical: true, detail: true } },
 ];
 const DEPTH_IDS = QUICK_FULL.map((item) => item.id);
 
@@ -94,16 +94,13 @@ export default function GuideSteps({ guideId, label, steps, depths, depth: contr
 
         <div className="guide-progress" role="status" aria-label={`${progress.completed} of ${progress.total} steps done`}>
           <span className="guide-progress__count">
-            <strong>{progress.completed}</strong> / {progress.total} done
+            <strong>{progress.completed}</strong> / {progress.total}
           </span>
           <span className="guide-progress__meter" aria-hidden="true">
             <span style={{ width: `${(progress.completed / progress.total) * 100}%` }} />
           </span>
         </div>
 
-        <button type="button" className="guide-reset" onClick={confirmReset} disabled={progress.completed === 0 && !steps.some((s) => s.tasks?.some((t) => progress.isTaskDone(s.id, t.id)))}>
-          Reset
-        </button>
       </div>
 
       {override ?? (
@@ -243,6 +240,12 @@ export default function GuideSteps({ guideId, label, steps, depths, depth: contr
         </article>
       </div>
       )}
+
+      <div className="guide-footer">
+        <button type="button" className="guide-reset" onClick={confirmReset} disabled={progress.completed === 0 && !steps.some((s) => s.tasks?.some((t) => progress.isTaskDone(s.id, t.id)))}>
+          Reset progress
+        </button>
+      </div>
     </section>
   );
 }

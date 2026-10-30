@@ -117,27 +117,33 @@
   transition: width 0.3s ease;
 }
 
+.guide-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Reset is deliberately quiet: a text link under the guide, never competing with the current step. */
 .guide-reset {
   min-height: 40px;
-  padding: 0.3rem 0.9rem;
-  border: 1px solid var(--guide-line);
-  border-radius: 9px;
+  padding: 0.3rem 0.4rem;
+  border: 0;
   background: transparent;
   color: var(--guide-muted);
   font: inherit;
-  font-size: 0.9rem;
-  font-weight: 600;
+  font-size: 0.85rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  opacity: 0.75;
   cursor: pointer;
 }
 
 .guide-reset:hover:not(:disabled) {
   color: var(--guide-ink);
-  border-color: var(--guide-accent);
+  opacity: 1;
 }
 
 .guide-reset:disabled {
-  opacity: 0.4;
-  cursor: default;
+  visibility: hidden;
 }
 
 /* Rail + step */
