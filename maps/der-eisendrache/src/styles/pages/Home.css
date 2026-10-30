@@ -7,17 +7,111 @@
   --guide-text: #eff8ff;
   --guide-muted: #b9c9d6;
 
-  width: min(1080px, calc(100% - 1.5rem));
+  width: min(1240px, calc(100% - 1.5rem));
   margin: 0 auto;
   padding: 1.35rem 0 2.4rem;
 }
 
-.de-home-page .zh-guide-hero {
-  background: linear-gradient(90deg, rgba(58, 137, 194, 0.16), transparent 48%);
+/* Der Eisendrache theme for the shared step guide: ice-blue on deep navy glass. */
+.de-home-page .de-guide {
+  margin-top: 1rem;
 }
 
-.de-home-page .zh-guide-step-card {
-  border-left: 3px solid rgba(121, 207, 255, 0.52);
+.de-home-page .de-guide .guide {
+  --guide-accent: #7bcfff;
+  --guide-accent-ink: #031420;
+  --guide-ink: #f2faff;
+  --guide-text: #dbe9f4;
+  --guide-muted: #a3b8c8;
+  --guide-surface: rgba(2, 9, 17, 0.72);
+  --guide-surface-2: rgba(123, 207, 255, 0.06);
+  --guide-line: rgba(123, 207, 255, 0.18);
+  --guide-sticky-top: calc(var(--hub-nav-height) + 88px + 0.75rem);
+}
+
+/* Safe-code notepad (past lab → Clock Tower terminal). */
+.de-home-page .de-safe-note__slots {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.de-home-page .de-safe-note__slots li {
+  margin: 0;
+}
+
+.de-home-page .de-safe-note__slots label {
+  display: grid;
+  grid-template-columns: 1.6rem minmax(0, 1fr);
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.5rem;
+  border: 1px solid rgba(123, 207, 255, 0.3);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.de-home-page .de-safe-note__slots label span {
+  width: 1.6rem;
+  height: 1.6rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(123, 207, 255, 0.16);
+  color: #7bcfff;
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
+.de-home-page .de-safe-note__slots input {
+  width: 100%;
+  min-width: 0;
+  min-height: 40px;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  font: inherit;
+  font-size: 1.05rem;
+  font-weight: 700;
+  outline: none;
+}
+
+.de-home-page .de-safe-note__slots label:focus-within {
+  border-color: #7bcfff;
+  box-shadow: 0 0 0 2px rgba(123, 207, 255, 0.35);
+}
+
+.de-home-page .de-safe-note__clear {
+  margin-top: 0.4rem;
+  min-height: 36px;
+  padding: 0.2rem 0.8rem;
+  border: 1px solid rgba(123, 207, 255, 0.25);
+  border-radius: 8px;
+  background: transparent;
+  color: #a3b8c8;
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.de-home-page .de-safe-note__clear:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+@media (max-width: 720px) {
+  .de-home-page .de-guide .guide {
+    --guide-sticky-top: calc(var(--hub-nav-height) + 104px + 0.75rem);
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .de-home-page .de-guide .guide {
+    --guide-sticky-top: calc(var(--hub-nav-height) + 58px + 0.5rem);
+  }
 }
 
 @media (max-width: 520px) {

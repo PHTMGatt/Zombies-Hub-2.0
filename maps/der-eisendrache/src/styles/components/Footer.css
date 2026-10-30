@@ -28,7 +28,7 @@
   z-index: -1;
   background:
     linear-gradient(90deg, rgba(2, 8, 15, 0.95), rgba(3, 10, 18, 0.68), rgba(2, 8, 15, 0.95)),
-    url('../../assets/images/DE-Header3.jpg') center 56% / cover no-repeat;
+    url('../../assets/images/DE-Header3.webp') center 56% / cover no-repeat;
   filter: saturate(0.72) brightness(0.54);
 }
 
