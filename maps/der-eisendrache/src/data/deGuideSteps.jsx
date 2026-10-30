@@ -72,6 +72,8 @@ const deGuideSteps = [
         tabs: [
           {
             id: 'storm', label: 'Storm', tone: TONE.storm,
+            problems: bowGuides.storm.tips,
+            links: [{ to: `${BASE}/bows/electric`, label: 'Storm Bow page', tone: TONE.storm }],
             refs: [
               { type: 'facts', items: [{ k: 'Start', v: bowGuides.storm.start }, { k: 'Difficulty', v: bowGuides.storm.difficulty }] },
               { type: 'chips', label: 'Bonfires (charged shots)', items: ['Overlooking village / spawn', 'Outside the Clock Tower', 'Mountain near Rocket Test'] },
@@ -81,6 +83,8 @@ const deGuideSteps = [
           },
           {
             id: 'fire', label: 'Fire', tone: TONE.fire,
+            problems: bowGuides.fire.tips.slice(1),
+            links: [{ to: `${BASE}/bows/fire`, label: 'Fire Bow page', tone: TONE.fire }],
             refs: [
               { type: 'facts', items: [{ k: 'Start', v: bowGuides.fire.start }, { k: 'Difficulty', v: bowGuides.fire.difficulty }] },
               { type: 'facts', label: 'Circle → Wundersphere to use', items: [
@@ -99,6 +103,8 @@ const deGuideSteps = [
           },
           {
             id: 'wolf', label: 'Wolf', tone: TONE.wolf,
+            problems: bowGuides.wolf.tips,
+            links: [{ to: `${BASE}/bows/wolf`, label: 'Wolf Bow page', tone: TONE.wolf }],
             refs: [
               { type: 'facts', items: [{ k: 'Start', v: bowGuides.wolf.start }, { k: 'Difficulty', v: bowGuides.wolf.difficulty }] },
               { type: 'sequence', label: 'Painting order (positions vary, order doesn’t)', items: ['King on throne with wolves', 'King on horseback with flag', 'Castle struck by lightning', 'Slain king, servant mourning'] },
@@ -107,6 +113,8 @@ const deGuideSteps = [
           },
           {
             id: 'void', label: 'Void', tone: TONE.void,
+            problems: bowGuides.void.tips,
+            links: [{ to: `${BASE}/bows/void`, label: 'Void Bow page', tone: TONE.void }],
             refs: [
               { type: 'facts', items: [{ k: 'Start', v: bowGuides.void.start }, { k: 'Difficulty', v: bowGuides.void.difficulty }] },
               { type: 'chips', label: '6 skulls', items: ['Mule Kick side', 'Double Tap side', 'Samantha’s room', 'Upper Trophy / field window', 'Teleporter-room sink', 'Truck bed at Rocket Test'] },
@@ -124,23 +132,12 @@ const deGuideSteps = [
       { id: 'void', label: 'Void', tone: TONE.void },
     ],
     how: [
-      'Pick the upgrade your lobby needs (each tab shows its start point, the key references, and the step order).',
       'Every path ends the same way: place the reforged arrow in that bow’s altar around the Pyramid, feed it zombie souls, insert the Wrath of the Ancients, and collect the upgraded bow.',
       'Finish the required upgrade before starting the wisp cycle — the wisps are shot with an upgraded bow.',
     ],
-    problems: [
-      'Only tick the bows you need; mark the step done when your lobby’s requirement is met.',
-      ...bowGuides.fire.tips.slice(1),
-      ...bowGuides.void.tips,
-      ...bowGuides.wolf.tips,
-    ],
+    // Troubleshooting and the bow page link follow the selected tab (tab.problems / tab.links).
+    problems: ['Only tick the bows you need; mark the step done when your lobby’s requirement is met.'],
     video: video('00:48', 'Watch the Storm Bow route'),
-    links: [
-      { to: `${BASE}/bows/electric`, label: 'Storm', tone: TONE.storm },
-      { to: `${BASE}/bows/fire`, label: 'Fire', tone: TONE.fire },
-      { to: `${BASE}/bows/wolf`, label: 'Wolf', tone: TONE.wolf },
-      { to: `${BASE}/bows/void`, label: 'Void', tone: TONE.void },
-    ],
   },
   {
     id: 'gear',

@@ -102,6 +102,25 @@
   background: rgba(92, 67, 20, 0.44);
 }
 
+/* Main Easter Egg list: what each card actually offers. */
+.map-ee-chip--tracked {
+  color: #062014;
+  border-color: transparent;
+  background: #7ee2a8;
+}
+
+.map-ee-chip--video {
+  color: #d7ecff;
+  border-color: rgba(109, 194, 255, 0.35);
+  background: rgba(20, 60, 96, 0.6);
+}
+
+.map-ee-chip--none {
+  color: #b8c3cd;
+  border-color: rgba(255, 255, 255, 0.12);
+  background: rgba(20, 26, 32, 0.7);
+}
+
 .map-info {
   position: absolute;
   left: 0.9rem;

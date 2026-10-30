@@ -108,13 +108,13 @@
     background-attachment: scroll;
   }
 
+  /* The header is in the page flow on phones; no spacer, and anchors clear only the hub bar. */
   .de-module .header-spacer {
-    flex-basis: 104px;
-    height: 104px;
+    display: none;
   }
 
   .de-phase-anchor {
-    scroll-margin-top: calc(var(--hub-nav-height) + 114px);
+    scroll-margin-top: calc(var(--hub-nav-height) + 14px);
   }
 }
 

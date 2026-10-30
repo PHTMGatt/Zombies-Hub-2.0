@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import GuideSteps from "../../../../shared/guide/GuideSteps";
 import { useGuideDepth, useGuideProgress } from "../../../../shared/guide/useGuideProgress";
 import originsGuide from "../data/originsGuide";
@@ -18,26 +18,22 @@ const DEPTHS = [
 ];
 const DEPTH_IDS = [...DEPTHS.map((depth) => depth.id), "speedrun"];
 
+const QUICK_REFS = [
+  { label: "Staff build codes", stepId: "build-staffs" },
+  { label: "Staff upgrades", stepId: "upgrade-staffs" },
+  { label: "Lightning switch board", to: "/maps/origins/lightning-staff" },
+];
+
 const MainGuide = () => {
   const progress = useGuideProgress("origins", originsGuide);
   const [depth, setDepth] = useGuideDepth(DEPTH_IDS, "zh-origins-depth");
   const { unlocked, unlock } = useSpeedrunUnlock();
-  const [toast, setToast] = useState("");
   const finished = progress.completed === progress.total;
 
-  // Finishing the tracker earns Speedrun mode for good.
+  // Finishing the tracker earns Speedrun mode for good (announced by the hub's achievement popup).
   useEffect(() => {
-    if (finished && !unlocked) {
-      unlock();
-      setToast("⏱ Easter Egg complete — Speedrun mode unlocked");
-    }
+    if (finished && !unlocked) unlock();
   }, [finished, unlocked, unlock]);
-
-  useEffect(() => {
-    if (!toast) return undefined;
-    const timer = window.setTimeout(() => setToast(""), 4500);
-    return () => window.clearTimeout(timer);
-  }, [toast]);
 
   const speedrun = depth === "speedrun";
 
@@ -46,6 +42,8 @@ const MainGuide = () => {
       <div className="origins-guide__inner">
         <GuideSteps
           guideId="origins"
+          mapId="origins"
+          quickRefs={QUICK_REFS}
           label="Little Lost Girl"
           steps={originsGuide}
           depths={DEPTHS}
@@ -69,9 +67,10 @@ const MainGuide = () => {
           ) : undefined}
         />
 
-        {toast && <p className="origins-guide__toast" role="status">{toast}</p>}
 
-        <section className="origins-guide__credits" aria-label="Credits and audio">
+        {/* Credits and the two radio clips are extras: tucked away so they never sit between the step and play. */}
+        <details className="origins-guide__credits">
+          <summary>Credits + radio audio</summary>
           <p className="credits">
             <em>MrRoflWaffles – Staff Images</em>
             <a href={KRONORIUM_URL} target="_blank" rel="noreferrer">Kronorium.com</a>
@@ -80,7 +79,7 @@ const MainGuide = () => {
             <audio controls aria-label="Origins robot radio message" src={Audio1} preload="none"></audio>
             <audio controls aria-label="Origins zombie intro" src={Audio2} preload="none"></audio>
           </div>
-        </section>
+        </details>
       </div>
     </div>
   );

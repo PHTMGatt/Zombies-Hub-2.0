@@ -139,23 +139,88 @@
   }
 }
 
+/* Phones: title on one baseline row and the nav as a single swipeable row of 44px pills,
+   instead of a stacked title plus a two-column pill grid. */
 @media (max-width: 520px) {
-  .mob-module .mob-header__identity {
-    display: block;
+  .mob-module .mob-header .header-content {
+    width: 100%;
+    gap: 0.4rem;
+    padding: 0.55rem 0 0.5rem;
   }
 
-  .mob-module .mob-header .header-content small {
-    display: block;
-    margin-top: 0.18rem;
+  .mob-module .mob-header__identity {
+    display: flex;
+    gap: 0.5rem;
+    padding-inline: 0.75rem;
+  }
+
+  .mob-module .mob-header .header-content h1 {
+    font-size: 1.55rem;
+  }
+
+  .mob-module .mob-header .header-content nav {
+    width: 100%;
   }
 
   .mob-module .mob-header .header-content nav ul {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    width: 100%;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    padding: 2px 0.75rem;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 0.75rem, #000 calc(100% - 0.75rem), transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 0.75rem, #000 calc(100% - 0.75rem), transparent);
   }
 
+  .mob-module .mob-header .header-content nav ul::-webkit-scrollbar {
+    display: none;
+  }
+
+  .mob-module .mob-header .header-content nav li {
+    flex: 0 0 auto;
+  }
+}
+
+/* Touch layouts get full-size tap targets. */
+@media (max-width: 760px), (pointer: coarse), (max-height: 500px) and (orientation: landscape) {
   .mob-module .mob-header .header-content nav a {
-    width: 100%;
+    min-height: 44px;
+    padding-inline: 0.85rem;
+    font-size: 0.8rem;
+  }
+}
+
+.mob-module .mob-header .header-content nav a:focus-visible {
+  outline: 2px solid #ffd75a;
+  outline-offset: -2px;
+}
+
+/* Landscape phones: identity and nav on one compact row. */
+@media (max-height: 500px) and (orientation: landscape) {
+  .mob-module .mob-header,
+  .mob-module .mob-header .header-content {
+    min-height: 0;
+  }
+
+  .mob-module .mob-header .header-content {
+    flex-direction: row;
+    padding: 0.35rem 0;
+  }
+
+  .mob-module .mob-header .header-content nav {
+    min-width: 0;
+  }
+
+  .mob-module .mob-header .header-content h1 {
+    font-size: 1.4rem;
+  }
+
+  .mob-module .mob-header .header-content nav ul {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    padding-block: 2px;
+    overflow-x: auto;
+    scrollbar-width: none;
   }
 }

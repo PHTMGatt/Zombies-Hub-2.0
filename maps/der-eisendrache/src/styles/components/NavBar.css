@@ -71,7 +71,7 @@
   .de-nav__link {
     flex: 1 0 auto;
     min-width: 58px;
-    min-height: 38px;
+    min-height: 44px;
     padding: 0.35rem 0.52rem;
     font-size: 0.72rem;
   }
@@ -82,5 +82,12 @@
 
   .de-nav__short {
     display: inline;
+  }
+}
+
+/* Landscape phones are touch too: full-size tabs (the 58px header still fits them). */
+@media (max-height: 500px) and (orientation: landscape) {
+  .de-module .de-nav__link {
+    min-height: 44px;
   }
 }

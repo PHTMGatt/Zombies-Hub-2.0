@@ -144,6 +144,10 @@ try {
     assert.equal(await page.locator('.guide-how').count(), 0, 'Low depth is reference only');
     await page.getByRole('button', { name: 'Mark step done' }).click();
     assert.equal(await page.locator('.guide-step h3').innerText(), 'Thunder Fists', 'Marking done advances to the next open step');
+    assert(
+      await page.locator('.guide-step h3').evaluate(heading => document.activeElement === heading),
+      'Changing a shared-guide step moves focus to the new step heading',
+    );
     await page.getByRole('button', { name: /Speedrun mode \(locked\)/ }).click();
     assert(await page.locator('.speedrun-gate.is-locked').isVisible(), 'Speedrun mode is locked before the secret');
     await page.goto(`${base}/side-easter-eggs/origins-speedrun`, { waitUntil: 'networkidle' });

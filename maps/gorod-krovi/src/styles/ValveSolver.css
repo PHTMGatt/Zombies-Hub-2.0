@@ -185,8 +185,18 @@
 }
 
 .gorod-valve-setting__location {
-  color: #dbc6bd;
-  font-size: 0.82rem;
+  color: #f1e2db;
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.gorod-valve-setting__location small {
+  display: block;
+  margin-top: 0.1rem;
+  color: #c4aaa0;
+  font-size: 0.74rem;
+  font-weight: 500;
+  line-height: 1.3;
 }
 
 .gorod-valve-setting strong {
@@ -228,4 +238,9 @@
     flex-direction: column;
     align-items: flex-start;
   }
+}
+
+/* Inside the guide step the tool sits in a narrower column: let the settings reflow by width, not viewport. */
+.gorod-valve-tool.is-compact .gorod-valve-setting-grid {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 210px), 1fr));
 }

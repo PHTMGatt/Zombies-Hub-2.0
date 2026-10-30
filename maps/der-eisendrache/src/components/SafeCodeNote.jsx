@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { readStored, writeStored } from '../../../../shared/guide/useGuideProgress';
+import { PROGRESS_RESET_EVENT } from '../../../../shared/achievements/achievements';
 
 /*
  * Dr. Groph's safe code changes every game, and you read it in the past but enter it in the present.
@@ -7,6 +8,7 @@ import { readStored, writeStored } from '../../../../shared/guide/useGuideProgre
  */
 const KEY = 'zh-de-safe-code';
 const EMPTY = ['', '', ''];
+const SYNC_EVENT = 'zh-de-safe-code-change';
 
 export default function SafeCodeNote() {
   const [slots, setSlots] = useState(() => {
@@ -14,9 +16,32 @@ export default function SafeCodeNote() {
     return Array.isArray(saved) && saved.length === 3 ? saved : EMPTY;
   });
 
+  // Every copy of the note (in the step and in the Quick refs sheet) shares one record and stays in sync.
   useEffect(() => {
+    const saved = readStored(KEY, EMPTY);
+    if (JSON.stringify(saved) === JSON.stringify(slots)) return;
     writeStored(KEY, slots);
+    window.dispatchEvent(new Event(SYNC_EVENT));
   }, [slots]);
+
+  useEffect(() => {
+    const sync = () => {
+      const saved = readStored(KEY, EMPTY);
+      if (Array.isArray(saved) && saved.length === 3) setSlots((current) => (JSON.stringify(current) === JSON.stringify(saved) ? current : saved));
+    };
+    window.addEventListener(SYNC_EVENT, sync);
+    return () => window.removeEventListener(SYNC_EVENT, sync);
+  }, []);
+
+  // "Reset map" / "Reset all progress" clear the note too.
+  useEffect(() => {
+    const onReset = (event) => {
+      const { all, mapId } = event.detail ?? {};
+      if (all || mapId === 'der-eisendrache') setSlots(EMPTY);
+    };
+    window.addEventListener(PROGRESS_RESET_EVENT, onReset);
+    return () => window.removeEventListener(PROGRESS_RESET_EVENT, onReset);
+  }, []);
 
   const update = (index, value) => setSlots((previous) => previous.map((slot, i) => (i === index ? value : slot)));
 

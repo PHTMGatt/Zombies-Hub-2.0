@@ -1,30 +1,16 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { PROGRESS_RESET_EVENT } from '../achievements/achievements';
+import { progressKey, read, write } from '../storage';
 
 /*
  * Easter Egg progress, stored only in this browser (localStorage), one record per guide:
- *   { current: stepId, done: { [stepId]: true, [`${stepId}/${taskId}`]: true } }
+ *   { current: stepId, done: { [stepId]: true, [`${stepId}/${taskId}`]: true }, total, step, at }
+ * (`total`, the current `step` number and the last-played time `at` let the hub show "Step 5 / 11 —
+ * Continue" without loading the guide.)
  * Quick and Full mode read the same record, so switching depth never loses your place.
- * Every storage access is guarded: private windows or blocked storage just mean no persistence.
  */
-const PROGRESS_KEY = (guideId) => `zh-guide-progress:${guideId}`;
+const PROGRESS_KEY = progressKey;
 const MODE_KEY = 'zh-guide-mode';
-
-const read = (key, fallback) => {
-  try {
-    const raw = window.localStorage.getItem(key);
-    return raw ? JSON.parse(raw) : fallback;
-  } catch {
-    return fallback;
-  }
-};
-
-const write = (key, value) => {
-  try {
-    window.localStorage.setItem(key, JSON.stringify(value));
-  } catch {
-    // Storage unavailable: progress still works for this visit.
-  }
-};
 
 export const taskKey = (stepId, taskId) => `${stepId}/${taskId}`;
 
@@ -37,9 +23,26 @@ export function useGuideProgress(guideId, steps) {
     return { current, done: saved?.done ?? {} };
   });
 
+  // `at` (last played) moves only when the player changes something, not when a page merely opens.
+  const savedAt = useRef(guideId ? read(PROGRESS_KEY(guideId), null)?.at ?? 0 : 0);
+  const changed = useRef(false);
   useEffect(() => {
-    if (guideId) write(PROGRESS_KEY(guideId), state);
-  }, [guideId, state]);
+    if (!guideId) return;
+    if (changed.current) savedAt.current = Date.now();
+    changed.current = true;
+    write(PROGRESS_KEY(guideId), { ...state, total: stepIds.length, step: stepIds.indexOf(state.current) + 1, at: savedAt.current });
+  }, [guideId, state, stepIds]);
+
+  // A reset from the progress menu or the achievement shelf clears storage; start this guide over too.
+  useEffect(() => {
+    if (!guideId) return undefined;
+    const onReset = (event) => {
+      const { all, guideId: target } = event.detail ?? {};
+      if (all || target === guideId) setState({ current: stepIds[0], done: {} });
+    };
+    window.addEventListener(PROGRESS_RESET_EVENT, onReset);
+    return () => window.removeEventListener(PROGRESS_RESET_EVENT, onReset);
+  }, [guideId, stepIds]);
 
   const isDone = useCallback((stepId) => Boolean(state.done[stepId]), [state.done]);
   const isTaskDone = useCallback((stepId, taskId) => Boolean(state.done[taskKey(stepId, taskId)]), [state.done]);
@@ -62,7 +65,8 @@ export function useGuideProgress(guideId, steps) {
     });
   }, [stepIds]);
 
-  // Ticking a step's last task completes the step; unticking one reopens it.
+  // Ticking a step's last task completes the step and moves on, exactly like "Mark step done";
+  // unticking one reopens it.
   const toggleTask = useCallback((stepId, taskId) => {
     setState((previous) => {
       const step = steps.find((item) => item.id === stepId);
@@ -75,10 +79,12 @@ export function useGuideProgress(guideId, steps) {
       }
       done[key] = true;
       const allTasks = step?.tasks?.every((task) => done[taskKey(stepId, task.id)]);
-      if (allTasks && !done[stepId]) done[stepId] = true;
-      return { ...previous, done };
+      if (!allTasks || done[stepId]) return { ...previous, done };
+      done[stepId] = true;
+      const after = stepIds.slice(stepIds.indexOf(stepId) + 1).find((id) => !done[id]);
+      return { done, current: after ?? stepId };
     });
-  }, [steps]);
+  }, [steps, stepIds]);
 
   const reset = useCallback(() => setState({ current: stepIds[0], done: {} }), [stepIds]);
 

@@ -1,0 +1,262 @@
+/* Achievement popup: a slim pill under the hub bar, map-accented, gone in a few seconds. */
+.zh-ach-toast-region {
+  position: fixed;
+  top: calc(var(--hub-nav-height, 72px) + 0.75rem);
+  right: 1rem;
+  z-index: 10001;
+  width: min(380px, calc(100vw - 1.5rem));
+  pointer-events: none;
+}
+
+.zh-ach-toast {
+  --ach-accent: #6dc2ff;
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 0.6rem 0.65rem 0.75rem;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--ach-accent) 45%, transparent);
+  border-radius: 16px;
+  background:
+    radial-gradient(120% 140% at 0% 50%, color-mix(in srgb, var(--ach-accent) 22%, transparent), transparent 60%),
+    rgba(8, 11, 16, 0.94);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), 0 0 24px color-mix(in srgb, var(--ach-accent) 22%, transparent);
+  color: #f4f7fb;
+  pointer-events: auto;
+  animation: zh-ach-in 0.42s cubic-bezier(0.2, 0.9, 0.25, 1.2) both;
+}
+
+/* A single light sweep across the toast as it lands. */
+.zh-ach-toast::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.16) 50%, transparent 65%);
+  transform: translateX(-100%);
+  animation: zh-ach-sweep 0.9s 0.3s ease-out both;
+  pointer-events: none;
+}
+
+.zh-ach-toast.is-leaving {
+  animation: zh-ach-out 0.26s ease-in both;
+}
+
+.zh-ach-toast .zh-ach-icon {
+  animation: zh-ach-pop 0.5s 0.12s cubic-bezier(0.3, 1.6, 0.5, 1) both;
+}
+
+.zh-ach-toast__text {
+  min-width: 0;
+  display: grid;
+  gap: 0.05rem;
+  line-height: 1.2;
+}
+
+.zh-ach-toast__kicker {
+  color: var(--ach-accent);
+  font-size: 0.68rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.zh-ach-toast__text strong {
+  overflow: hidden;
+  font-size: 1.02rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.zh-ach-toast__map {
+  color: #aeb8c6;
+  font-size: 0.82rem;
+}
+
+.zh-ach-toast__link,
+.zh-ach-toast__close {
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: #d9e2ee;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 750;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.zh-ach-toast__close {
+  font-size: 1.35rem;
+  color: #8f9aa9;
+}
+
+.zh-ach-toast__link:hover,
+.zh-ach-toast__close:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+.zh-ach-toast__link:focus-visible,
+.zh-ach-toast__close:focus-visible {
+  outline: 2px solid var(--ach-accent);
+  outline-offset: -2px;
+}
+
+/* Medal icon, tinted by map. */
+.zh-ach-icon {
+  --ach-accent: #6dc2ff;
+  flex: 0 0 auto;
+  filter: drop-shadow(0 0 10px color-mix(in srgb, var(--ach-accent) 45%, transparent));
+}
+
+.zh-ach-icon__ribbon {
+  fill: color-mix(in srgb, var(--ach-accent) 55%, #1b2330);
+}
+
+.zh-ach-icon__disc {
+  fill: var(--ach-accent);
+}
+
+.zh-ach-icon__ring {
+  fill: none;
+  stroke: rgba(0, 0, 0, 0.28);
+  stroke-width: 1.5;
+}
+
+.zh-ach-icon__star {
+  fill: rgba(5, 10, 16, 0.78);
+}
+
+.zh-ach-icon.is-locked {
+  filter: none;
+  opacity: 0.55;
+}
+
+.zh-ach-icon.is-locked .zh-ach-icon__disc,
+.zh-ach-icon.is-locked .zh-ach-icon__ribbon {
+  fill: #2a313c;
+}
+
+.zh-ach-icon.is-locked .zh-ach-icon__star {
+  fill: #48515e;
+}
+
+@keyframes zh-ach-in {
+  from { opacity: 0; transform: translateY(-14px) scale(0.96); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes zh-ach-out {
+  to { opacity: 0; transform: translateY(-10px); }
+}
+
+@keyframes zh-ach-pop {
+  from { transform: scale(0.4) rotate(-20deg); }
+  to { transform: none; }
+}
+
+@keyframes zh-ach-sweep {
+  to { transform: translateX(100%); }
+}
+
+@media (max-width: 560px) {
+  .zh-ach-toast-region {
+    right: 50%;
+    transform: translateX(50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zh-ach-toast,
+  .zh-ach-toast.is-leaving,
+  .zh-ach-toast .zh-ach-icon {
+    animation-name: zh-ach-fade;
+    animation-duration: 0.2s;
+    animation-timing-function: linear;
+  }
+
+  .zh-ach-toast.is-leaving {
+    animation-direction: reverse;
+  }
+
+  .zh-ach-toast::after {
+    display: none;
+  }
+}
+
+@keyframes zh-ach-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Hub "Continue run" strip. */
+.zh-continue {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.zh-continue__run {
+  --ach-accent: #6dc2ff;
+  flex: 1 1 260px;
+  min-height: 56px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas: 'label go' 'name go' 'step go';
+  align-items: center;
+  column-gap: 0.75rem;
+  padding: 0.55rem 0.9rem;
+  border: 1px solid color-mix(in srgb, var(--ach-accent) 45%, transparent);
+  border-left: 4px solid var(--ach-accent);
+  border-radius: 12px;
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--ach-accent) 14%, transparent), transparent 70%),
+    rgba(8, 13, 20, 0.88);
+  color: #f4f7fb;
+  text-decoration: none;
+}
+
+.zh-continue__run:hover {
+  color: #fff;
+  border-color: var(--ach-accent);
+}
+
+.zh-continue__run:focus-visible {
+  outline: 2px solid var(--ach-accent);
+  outline-offset: 2px;
+}
+
+.zh-continue__label {
+  grid-area: label;
+  color: var(--ach-accent);
+  font-size: 0.7rem;
+  font-weight: 850;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.zh-continue__run strong {
+  grid-area: name;
+  font-size: 1.1rem;
+}
+
+.zh-continue__step {
+  grid-area: step;
+  color: #aeb8c6;
+  font-size: 0.88rem;
+}
+
+.zh-continue__go {
+  grid-area: go;
+  color: var(--ach-accent);
+  font-size: 1.5rem;
+}

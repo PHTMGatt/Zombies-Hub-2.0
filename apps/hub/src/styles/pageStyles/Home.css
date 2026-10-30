@@ -435,3 +435,18 @@
     padding: 1.2rem;
   }
 }
+
+/* Search sits right under "Continue run": the two fastest ways back into the game. */
+.home-search {
+  margin-bottom: 1.25rem;
+}
+
+/* Touch layouts: full-size tap targets for the quick links. */
+@media (pointer: coarse), (max-width: 720px), (max-height: 500px) and (orientation: landscape) {
+  .home-text-link,
+  .home-utility-actions a {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+}

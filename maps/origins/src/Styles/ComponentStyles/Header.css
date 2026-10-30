@@ -159,29 +159,30 @@
   }
 }
 
-/* Narrow phones: stack the title as eyebrow + name rather than wrapping it mid-phrase. */
+/* Narrow phones: one short line ("Origins · Little Lost Girl") so the header stays under ~90px and the
+   current step starts higher. The revive icons are decoration and go. */
 @media (max-width: 460px) {
   .origins-module .header-title {
-    flex-direction: column;
-    gap: 0.05rem;
-    white-space: normal;
-    text-align: center;
+    gap: 0.4rem;
+    font-size: 1.22rem;
+    white-space: nowrap;
   }
 
-  .origins-module .black-text {
-    font-size: 0.86rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+  .origins-module .header-title__ee {
+    display: none;
   }
 
-  .origins-module .white-text {
-    font-size: 1.5rem;
+  .origins-module .black-text::after {
+    content: ' ·';
   }
 
   .origins-module .revive-header-icon {
-    width: 26px;
-    height: 26px;
-    flex-basis: 26px;
+    display: none;
+  }
+
+  .origins-module .origins-header__content {
+    gap: 0.35rem;
+    padding: 0.45rem 0 0.4rem;
   }
 }
 

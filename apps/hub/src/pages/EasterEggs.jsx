@@ -1,6 +1,7 @@
 import React from 'react';
 import mapData from '../data/mapData';
 import MapCard from '../components/MapCard';
+import { mainEggStatus } from '../data/guideStatus';
 import '../styles/pageStyles/AllMaps.css';
 
 const games = ['Black Ops 1', 'Black Ops 2', 'Black Ops 3'];
@@ -14,7 +15,7 @@ export default function EasterEggs() {
         <span className="maps-kicker">Main quests</span>
         <h1 className="page-title">Easter Egg Maps</h1>
         <p className="page-subtitle">
-          Jump straight into main quest coverage across Black Ops 1–3.
+          Tracked guides check off as you play; the rest link to a video or the map’s info.
         </p>
         <div className="maps-summary-pill">{easterEggMaps.length} quest-enabled maps</div>
       </header>
@@ -34,13 +35,18 @@ export default function EasterEggs() {
               </div>
 
               <div className="maps-grid">
-                {section.map(map => (
-                  <MapCard
-                    key={`${game}-${map.slug}`}
-                    map={{ ...map, hasEasterEgg: true }}
-                    to={`/easter-eggs/${map.slug}`}
-                  />
-                ))}
+                {section.map(map => {
+                  const status = mainEggStatus(map);
+                  return (
+                    <MapCard
+                      key={`${game}-${map.slug}`}
+                      map={{ ...map, hasEasterEgg: true }}
+                      to={status.to}
+                      badge={status.badge}
+                      badgeKind={status.kind}
+                    />
+                  );
+                })}
               </div>
             </section>
           );

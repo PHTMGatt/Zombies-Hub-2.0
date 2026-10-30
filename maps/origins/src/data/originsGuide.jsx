@@ -18,13 +18,6 @@ const TONE = {
   lightning: '#d8a8ff',
 };
 
-const STAFF_LINKS = [
-  { to: '/maps/origins/ice-staff', label: 'Ice Staff', tone: TONE.ice },
-  { to: '/maps/origins/fire-staff', label: 'Fire Staff', tone: TONE.fire },
-  { to: '/maps/origins/wind-staff', label: 'Wind Staff', tone: TONE.wind },
-  { to: '/maps/origins/lightning-staff', label: 'Lightning Staff', tone: TONE.lightning },
-];
-
 const staffTasks = (verb) => [
   { id: 'ice', label: `Ice ${verb}`, tone: TONE.ice },
   { id: 'fire', label: `Fire ${verb}`, tone: TONE.fire },
@@ -95,7 +88,6 @@ const originsGuide = [
       'Build and upgrade the staffs as early as the run allows.',
       'Save a zombie when you need uninterrupted time for staff puzzles or map setup.',
     ],
-    links: STAFF_LINKS,
   },
   {
     id: 'upgrade-staffs',
@@ -170,7 +162,6 @@ const originsGuide = [
       'Lightning: switches can be set before the piano step; once that step is active, a correct switch stops sparking. The current remembers.',
       'Use the staff pages for full-size puzzle images instead of memorising every code.',
     ],
-    links: STAFF_LINKS,
   },
   {
     id: 'secure-keys',
@@ -294,7 +285,7 @@ const originsGuide = [
     how: ['Pick up the Maxis Drone, release it into the beam in the Crazy Place, and trigger the ending.'],
     problems: [
       'Going for the ending cutscene? Keep all generators active when you recover the upgraded Maxis Drone from the pilot sequence.',
-      'Marking this final step done unlocks Speedrun mode in the depth switch.',
+      'Speedrun mode unlocks once every step is marked done.',
     ],
   },
 ];

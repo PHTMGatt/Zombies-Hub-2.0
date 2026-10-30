@@ -1,195 +1,125 @@
+/* Seeds of Doubt: a slim title strip, then the tracked guide straight on the island backdrop
+   (no outer card, so the step is never a box inside a box). */
 .zets-module .zets-main-guide {
-  width: min(100% - 1.5rem, 1080px);
-  margin: 1rem auto 1.8rem;
-  padding: 1rem 1.1rem 1.35rem;
+  width: min(100% - 1.5rem, 1240px);
+  margin: 1rem auto 2rem;
+  padding: 0;
   color: #effff7;
-  border: 1px solid rgba(105, 230, 173, 0.24);
-  border-radius: 16px;
-  background: rgba(3, 12, 8, 0.64);
-  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.38), 0 0 26px rgba(105, 230, 173, 0.08);
-  backdrop-filter: blur(14px) saturate(1.06);
 }
 
 .zets-module .zets-run-header {
   display: flex;
-  align-items: end;
+  align-items: baseline;
   justify-content: space-between;
   gap: 1rem;
-  padding: 0.1rem 0 0.7rem;
-  border-bottom: 1px solid rgba(105, 230, 173, 0.15);
-}
-
-.zets-module .zets-run-header span {
-  display: block;
-  margin-bottom: 0.08rem;
-  color: #69e6ad;
-  font-size: 0.58rem;
-  font-weight: 850;
-  letter-spacing: 0.15em;
+  padding: 0.75rem 1rem;
+  border-left: 4px solid #69e6ad;
+  border-radius: 0 12px 12px 0;
+  background: linear-gradient(90deg, rgba(6, 40, 26, 0.88), rgba(3, 14, 10, 0.55));
 }
 
 .zets-module .zets-run-header h2 {
   margin: 0;
   color: #effff7;
-  font-size: clamp(1.65rem, 3vw, 2.2rem);
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
   line-height: 1;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
 }
 
 .zets-module .zets-run-header > p {
-  max-width: 440px;
   margin: 0;
-  color: #c7e2d4;
-  font-size: 0.78rem;
-  line-height: 1.35;
+  color: #cfe9dc;
+  font-size: 0.92rem;
+  line-height: 1.4;
   text-align: right;
 }
 
-.zets-module .zets-run-alert {
-  display: flex;
-  gap: 0.45rem;
-  align-items: baseline;
-  margin: 0.65rem 0 0.25rem;
-  padding: 0.5rem 0.6rem;
-  border-left: 3px solid #69e6ad;
-  border-radius: 0 8px 8px 0;
-  background: rgba(7, 45, 28, 0.62);
-  color: #d0e6da;
-  font-size: 0.72rem;
-  line-height: 1.35;
+.zets-module .zets-guide {
+  margin-top: 1rem;
 }
 
-.zets-module .zets-run-alert strong {
-  flex: 0 0 auto;
-  color: #91efc1;
+/* Zetsubou theme for the shared step guide: spore green over deep lagoon. */
+.zets-module .zets-guide .guide {
+  --guide-accent: #69e6ad;
+  --guide-accent-ink: #022114;
+  --guide-ink: #effff7;
+  --guide-text: #d7eee2;
+  --guide-muted: #a9cbbb;
+  --guide-surface: rgba(3, 16, 12, 0.84);
+  --guide-surface-2: rgba(105, 230, 173, 0.07);
+  --guide-line: rgba(105, 230, 173, 0.2);
+  --guide-done: #c6f26b;
+  --guide-sticky-top: calc(var(--hub-nav-height) + 0.75rem);
 }
 
-.zets-module .zets-run-flow {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0 0.85rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
+.zets-module .zets-guide .guide-step {
+  border-top: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 0% 100%, rgba(30, 160, 110, 0.16), transparent 70%),
+    radial-gradient(ellipse 50% 40% at 100% 0%, rgba(70, 200, 230, 0.08), transparent 70%),
+    var(--guide-surface);
+  box-shadow: inset 0 3px 0 0 var(--guide-accent), 0 18px 40px rgba(0, 0, 0, 0.45);
 }
 
-.zets-module .zets-run-flow li {
-  min-width: 0;
-  display: grid;
-  grid-template-columns: 32px minmax(0, 1fr);
-  gap: 0.55rem;
-  align-items: start;
-  padding: 0.78rem 0.25rem;
-  border-bottom: 1px solid rgba(105, 230, 173, 0.11);
+.zets-module .zets-guide .guide-rail__step.is-current {
+  background: linear-gradient(90deg, color-mix(in srgb, var(--guide-accent) 24%, transparent), rgba(4, 40, 28, 0.5) 60%, var(--guide-surface));
 }
 
-.zets-module .zets-run-number {
-  width: 30px;
-  height: 30px;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  color: #032116;
-  background: linear-gradient(145deg, #a7f7cf, #4bd69a);
-  font-size: 0.62rem;
-  font-weight: 900;
-}
-
-.zets-module .zets-run-flow h3 {
-  margin: 0;
-  color: #eafff4;
-  font-size: 0.9rem;
-  line-height: 1.2;
-}
-
-.zets-module .zets-run-flow p {
-  margin: 0.2rem 0 0;
-  color: #cfe3d7;
-  font-size: 0.74rem;
-  line-height: 1.45;
-}
-
-.zets-module .zets-run-flow a {
-  display: inline-flex;
-  margin-top: 0.28rem;
-  color: #83e9b6;
-  font-size: 0.7rem;
-  font-weight: 800;
-  text-decoration: none;
-}
-
-.zets-module .zets-run-flow a:hover {
-  color: #dfffee;
-  text-decoration: underline;
-}
-
-.zets-module .zets-run-shortcuts {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem;
-  margin-top: 0.7rem;
-}
-
-.zets-module .zets-run-shortcuts a {
-  min-height: 32px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.3rem 0.62rem;
-  color: #d7f5e6;
-  font-size: 0.7rem;
-  font-weight: 750;
-  text-decoration: none;
-  border: 1px solid rgba(105, 230, 173, 0.2);
+/* Organic, rounded sequence tags, like seed pods. */
+.zets-module .zets-guide .gref-sequence span {
   border-radius: 999px;
-  background: rgba(4, 15, 10, 0.68);
-  backdrop-filter: blur(8px);
-}
-
-.zets-module .zets-run-shortcuts a:hover {
-  color: #fff;
-  border-color: rgba(105, 230, 173, 0.38);
-  background: rgba(10, 45, 30, 0.72);
 }
 
 @media (max-width: 720px) {
   .zets-module .zets-main-guide {
-    width: min(100% - 1rem, 680px);
-    margin-top: 0.7rem;
-    padding: 0.8rem 0.85rem 1.05rem;
-    border-radius: 13px;
+    width: min(100% - 1rem, 720px);
+    margin-top: 0.6rem;
   }
 
   .zets-module .zets-run-header {
     display: block;
+    padding: 0.65rem 0.8rem;
+  }
+
+  .zets-module .zets-run-header h2 {
+    font-size: 1.55rem;
   }
 
   .zets-module .zets-run-header > p {
-    margin-top: 0.25rem;
+    margin-top: 0.3rem;
+    font-size: 0.84rem;
     text-align: left;
   }
 
-  .zets-module .zets-run-flow {
-    grid-template-columns: 1fr;
+  .zets-module .zets-guide {
+    margin-top: 0.6rem;
   }
 }
 
-@media (max-width: 480px) {
-  .zets-module .zets-run-alert {
-    display: block;
+@media (max-height: 500px) and (orientation: landscape) {
+  .zets-module .zets-main-guide {
+    margin-top: 0.5rem;
   }
 
-  .zets-module .zets-run-alert strong {
-    display: block;
-    margin-bottom: 0.12rem;
+  .zets-module .zets-run-header {
+    padding-block: 0.4rem;
   }
-}
 
-/* Touch: the per-phase link is the main way into each focused page, so give it a real tap target. */
-@media (pointer: coarse), (max-width: 720px) {
-  .zets-module .zets-run-flow a {
-    min-height: 36px;
-    align-items: center;
-    margin-top: 0.1rem;
-    font-size: 0.78rem;
+  .zets-module .zets-run-header h2 {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .zets-module .zets-run-header > p {
+    font-size: 0.82rem;
+    text-align: left;
+  }
+
+  .zets-module .zets-guide {
+    margin-top: 0.5rem;
   }
 }

@@ -144,3 +144,11 @@
     padding-inline: 0.75rem;
   }
 }
+
+@media (pointer: coarse), (max-width: 720px), (max-height: 500px) and (orientation: landscape) {
+  .de-module .de-bow-video-reference summary {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+}

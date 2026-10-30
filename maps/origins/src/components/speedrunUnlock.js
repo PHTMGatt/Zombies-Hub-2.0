@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { readStored, writeStored } from '../../../../shared/guide/useGuideProgress';
+import { unlockAchievement } from '../../../../shared/achievements/achievements';
 
 /*
  * Speedrun mode is a reward. It unlocks when the Little Lost Girl tracker is finished, or when the
@@ -22,6 +23,9 @@ export function useSpeedrunUnlock() {
   }, []);
 
   const unlock = useCallback(() => {
+    // Also a hidden achievement. unlockAchievement is a no-op once recorded, so solving the panel again
+    // re-earns it only after "Reset achievements" (which keeps Speedrun mode itself unlocked).
+    unlockAchievement('origins/speedrun-unlocked');
     writeStored(KEY, true);
     setUnlocked(true);
     window.dispatchEvent(new Event(EVENT));

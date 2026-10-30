@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import Nav from './Nav';
 import '../styles/Header.css';
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { pathname } = useLocation();
+
+  // Picking a page closes the menu.
+  useEffect(() => setMenuOpen(false), [pathname]);
 
   return (
     <header className="zets-header">

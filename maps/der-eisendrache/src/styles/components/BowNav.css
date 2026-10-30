@@ -37,7 +37,7 @@
 .de-module .de-bow-nav__link {
   --bow-nav-accent: #8ed5ff;
   flex: 0 0 auto;
-  min-height: 34px;
+  min-height: 44px;
   display: inline-flex;
   align-items: center;
   justify-content: center;

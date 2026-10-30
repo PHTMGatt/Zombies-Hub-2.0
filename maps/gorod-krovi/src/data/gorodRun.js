@@ -28,10 +28,10 @@ export const gorodRun = [
   },
   {
     title: 'Solve the Valve Network',
-    summary: 'Find the green-lit valve and the Master Code Cylinder, use the valve solution to set the six dials, then take the released cylinder to S.O.P.H.I.A.',
+    summary: 'Find the green-lit valve and the Master Code Cylinder, use the valve solution to set the five valves, then take the released cylinder to S.O.P.H.I.A.',
     details: [
       'The green-light/cylinder combination changes, so use the dedicated Valve Solver rather than memorizing one arrangement.',
-      'Once the dials are set correctly, the cylinder releases and can be inserted at Dragon Command.',
+      'Once the valves are set correctly, the cylinder releases and can be inserted at Dragon Command.',
     ],
   },
   {

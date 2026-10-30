@@ -8,6 +8,8 @@ export default function MapCard({
   isPreview = true,
   disableLink = false,
   to,
+  badge,
+  badgeKind,
 }) {
   const {
     name,
@@ -35,7 +37,7 @@ export default function MapCard({
     ? {}
     : {
         to: destination,
-        'aria-label': `Open ${name} map guide`,
+        'aria-label': badge ? `${name} — ${badge}` : `Open ${name} map guide`,
       };
   const eeAvailable = Boolean(hasEasterEgg ?? isEasterEgg);
 
@@ -59,7 +61,9 @@ export default function MapCard({
 
       <div className="map-card__meta" aria-hidden="true">
         {game && <span className="map-game-chip">{game.replace('Black Ops ', 'BO')}</span>}
-        {eeAvailable && <span className="map-ee-chip">Main EE</span>}
+        {badge
+          ? <span className={`map-ee-chip map-ee-chip--${badgeKind}`}>{badge}</span>
+          : eeAvailable && <span className="map-ee-chip">Main EE</span>}
       </div>
 
       <div className="map-info">

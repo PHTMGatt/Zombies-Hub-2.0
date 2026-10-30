@@ -81,6 +81,25 @@ try {
       results.push({ width, route: guide.route, passed: true });
     }
 
+    // Tracked guide: 12 steps in order, sub-tasks advance the run, progress survives a reload.
+    errors.length = 0;
+    await page.goto(`${base}/maps/mob-of-the-dead`, { waitUntil: 'networkidle' });
+    await page.evaluate(() => localStorage.removeItem('zh-guide-progress:mob-of-the-dead'));
+    await page.reload({ waitUntil: 'networkidle' });
+    await page.getByRole('heading', { name: 'Pop Goes the Weasel', level: 2 }).waitFor();
+    assert.equal(await page.locator('.guide-rail__step').count(), 12, 'Mob guide should list 12 steps');
+    await page.locator('.guide-rail__step').nth(8).click();
+    await page.getByRole('heading', { name: 'Afterlife codes', level: 3 }).waitFor();
+    for (const code of ['101', '386', '872', '481']) await page.getByRole('button', { name: code, exact: true }).click();
+    await page.getByRole('heading', { name: 'Audio trail', level: 3 }).waitFor();
+    assert.match(await page.locator('.guide-step').innerText(), /walkway, Warden.s Office ↔ Cafeteria/i);
+    await page.reload({ waitUntil: 'networkidle' });
+    await page.getByRole('heading', { name: 'Audio trail', level: 3 }).waitFor();
+    assert.match(await page.locator('.guide-progress__count').innerText(), /1 \/ 12/);
+    assert.equal(errors.length, 0, `Mob guide page errors: ${errors.join('; ')}`);
+    await assertNoHorizontalOverflow(page, '/maps/mob-of-the-dead');
+    results.push({ width, route: '/maps/mob-of-the-dead (tracked guide)', passed: true });
+
     errors.length = 0;
     await page.goto(`${base}/maps/mob-of-the-dead/spoon`, { waitUntil: 'networkidle' });
     await page.waitForURL('**/maps/mob-of-the-dead/retriever-skulls');

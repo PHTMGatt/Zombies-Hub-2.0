@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { IoArrowForward, IoMapOutline, IoSparklesOutline } from 'react-icons/io5';
 import featuredMaps from '../data/featuredMaps';
 import mapData from '../data/mapData';
+import ContinueRuns from '../../../../shared/achievements/ContinueRuns';
+import SearchBox from '../../../../shared/search/SearchBox';
 import '../styles/pageStyles/Home.css';
 
 export default function Home() {
@@ -13,6 +15,10 @@ export default function Home() {
   return (
     <section className="home">
       <div className="home-shell">
+        <ContinueRuns />
+        <section className="home-search" aria-label="Search the guides">
+          <SearchBox compact />
+        </section>
         <section
           className="home-hero-panel"
           style={{ '--home-hero-image': `url(${allMapsEntry?.image})` }}

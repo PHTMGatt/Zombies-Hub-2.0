@@ -48,6 +48,17 @@ try {
     await assertCssImageLoaded(page, mainRoute, '.zets-header', '::before');
     await assertNoHorizontalOverflow(page, mainRoute);
 
+    // Tracked guide: 11 steps, ticks advance the run, progress survives a reload.
+    await page.evaluate(() => localStorage.removeItem('zh-guide-progress:zetsubou-no-shima'));
+    await page.reload({ waitUntil: 'networkidle' });
+    assert.equal(await page.locator('.guide-rail__step').count(), 11, 'Zetsubou guide should list 11 steps');
+    for (const trial of ['Trial 1', 'Trial 2', 'Trial 3']) await page.getByRole('button', { name: trial, exact: true }).click();
+    await page.getByRole('heading', { name: 'Clean the four skulls', level: 3 }).waitFor();
+    await page.reload({ waitUntil: 'networkidle' });
+    await page.getByRole('heading', { name: 'Clean the four skulls', level: 3 }).waitFor();
+    assert.match(await page.locator('.guide-progress__count').innerText(), /1 \/ 11/);
+    assert.equal(errors.length, 0, `${mainRoute} guide errors: ${errors.join('; ')}`);
+
     if (width === 390) {
       const toggle = page.getByRole('button', { name: 'Toggle Zetsubou guide navigation' });
       await toggle.click();

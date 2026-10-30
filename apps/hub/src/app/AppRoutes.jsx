@@ -11,6 +11,8 @@ const MapInfo = lazy(() => import('../pages/MapInfo'));
 const SideEasterEggList = lazy(() => import('../pages/SideEasterEggList'));
 const SideEEInfo = lazy(() => import('../pages/SideEEInfo'));
 const ComingSoon = lazy(() => import('../pages/ComingSoon'));
+const Achievements = lazy(() => import('../pages/Achievements'));
+const Search = lazy(() => import('../pages/Search'));
 const OriginsRoutes = lazy(() => import('../../../../maps/origins/routes/OriginsRoutes'));
 const MobRoutes = lazy(() => import('../../../../maps/mob-of-the-dead/routes/MobRoutes'));
 const ShadowsRoutes = lazy(() => import('../../../../maps/shadows-of-evil/routes/ShadowsRoutes'));
@@ -33,6 +35,8 @@ export default function AppRoutes({ RootLayout }) {
         <Route path="side-easter-eggs" element={<SideEasterEggList />} />
         <Route path="side-easter-eggs/:mapKey" element={<SideEEInfo />} />
         <Route path="coming-soon" element={<ComingSoon />} />
+        <Route path="achievements" element={<Achievements />} />
+        <Route path="search" element={<Search />} />
 
         {/* Dedicated guide applications now mount inside the Hub shell. */}
         <Route path="maps/origins/*" element={<OriginsRoutes />} />

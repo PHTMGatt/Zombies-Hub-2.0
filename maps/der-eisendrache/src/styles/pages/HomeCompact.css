@@ -1,28 +1,26 @@
+/* My Brother's Keeper: a slim title strip, then the tracked guide straight on the castle backdrop
+   (no glass card or backdrop blur around it: no box inside a box, no GPU cost during play). */
 .de-home-page {
   margin-top: 1rem;
   margin-bottom: 1.8rem;
-  padding: 1rem 1.1rem 1.35rem;
-  border: 1px solid rgba(123, 207, 255, 0.24);
-  border-radius: 16px;
-  background: rgba(3, 10, 18, 0.64);
-  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.38), 0 0 26px rgba(123, 207, 255, 0.08);
-  backdrop-filter: blur(14px) saturate(1.05);
 }
 
 .de-run-header {
   display: flex;
-  align-items: end;
+  align-items: baseline;
   justify-content: space-between;
   gap: 1rem;
-  padding: 0.1rem 0 0.7rem;
-  border-bottom: 1px solid rgba(123, 207, 255, 0.15);
+  padding: 0.75rem 1rem;
+  border-left: 4px solid #79cfff;
+  border-radius: 0 12px 12px 0;
+  background: linear-gradient(90deg, rgba(10, 36, 58, 0.88), rgba(3, 10, 18, 0.55));
 }
 
 .de-run-header span {
   display: block;
   margin-bottom: 0.08rem;
   color: #79cfff;
-  font-size: 0.58rem;
+  font-size: 0.66rem;
   font-weight: 850;
   letter-spacing: 0.15em;
 }
@@ -38,28 +36,54 @@
   max-width: 460px;
   margin: 0;
   color: #c8d7e1;
-  font-size: 0.78rem;
+  font-size: 0.9rem;
   line-height: 1.35;
   text-align: right;
 }
 
 .de-run-alert {
-  display: flex;
-  gap: 0.45rem;
-  align-items: baseline;
-  margin: 0.65rem 0 0.25rem;
-  padding: 0.5rem 0.6rem;
-  border-left: 3px solid #79cfff;
-  border-radius: 0 8px 8px 0;
+  margin: 0.6rem 0 0.25rem;
+  border-radius: 10px;
   background: rgba(8, 31, 49, 0.62);
   color: #d0dfe8;
-  font-size: 0.72rem;
-  line-height: 1.35;
+  font-size: 0.92rem;
+  line-height: 1.45;
 }
 
-.de-run-alert strong {
-  flex: 0 0 auto;
+.de-run-alert summary {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 0.85rem;
   color: #a9e2ff;
+  font-weight: 800;
+  cursor: pointer;
+  list-style: none;
+}
+
+.de-run-alert summary::-webkit-details-marker {
+  display: none;
+}
+
+.de-run-alert summary::before {
+  content: '▸';
+  transition: transform 0.2s ease;
+}
+
+.de-run-alert[open] summary::before {
+  transform: rotate(90deg);
+}
+
+.de-run-alert summary:focus-visible {
+  outline: 2px solid #a9e2ff;
+  outline-offset: -2px;
+  border-radius: 10px;
+}
+
+.de-run-alert p {
+  margin: 0;
+  padding: 0 1rem 0.75rem 2rem;
 }
 
 @media (max-width: 820px) {
@@ -76,17 +100,60 @@
 
 @media (max-width: 520px) {
   .de-home-page {
-    margin-top: 0.7rem;
-    padding: 0.8rem 0.85rem 1.05rem;
-    border-radius: 13px;
+    margin-top: 0.6rem;
   }
 
-  .de-run-alert {
-    display: block;
+  .de-run-header {
+    padding: 0.6rem 0.8rem;
   }
 
-  .de-run-alert strong {
-    display: block;
-    margin-bottom: 0.12rem;
+  .de-run-header span {
+    display: none;
+  }
+
+  .de-run-header h2 {
+    font-size: 1.5rem;
+  }
+}
+
+/* Landscape phones: the map header already names it; keep the title for screen readers and the bow
+   requirement on one short line so the step reaches the screen. */
+@media (max-height: 500px) and (orientation: landscape) {
+  .de-home-page {
+    margin-top: 0.5rem;
+  }
+
+  .de-run-header {
+    padding-block: 0.4rem;
+  }
+
+  .de-run-header span {
+    display: none;
+  }
+
+  .de-run-header h2 {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .de-run-header > p {
+    margin: 0;
+    font-size: 0.82rem;
+    text-align: left;
+  }
+}
+
+/* Phones and landscape phones: less air above the run so the current step comes up sooner. */
+@media (max-width: 520px), (max-height: 500px) and (orientation: landscape) {
+  .de-home-page {
+    padding-top: 0.5rem;
+  }
+
+  .de-home-page .de-guide {
+    margin-top: 0.6rem;
   }
 }
