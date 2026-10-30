@@ -45,6 +45,7 @@ export default function GuideSteps({ guideId, label, steps, mapId, quickRefs, de
   const [variant, setVariant] = useState(null);
   const railRef = useRef(null);
   const stepRef = useRef(null);
+  const stepHeadingRef = useRef(null);
   const firstRender = useRef(true);
 
   const index = Math.max(0, steps.findIndex((step) => step.id === progress.current));
@@ -75,6 +76,8 @@ export default function GuideSteps({ guideId, label, steps, mapId, quickRefs, de
     const resuming = first && (index > 0 || progress.completed > 0);
     // No step on screen (an override such as a locked panel), or a fresh run: nothing to scroll to.
     if (!stepRef.current || (first && !resuming)) return;
+    // A step change the player made moves focus to the new heading, so screen readers announce it.
+    if (!first) stepHeadingRef.current?.focus({ preventScroll: true });
     const top = stepRef.current.getBoundingClientRect().top;
     const offset = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--hub-nav-height')) || 0;
     if (top < offset || top > window.innerHeight * (resuming ? 0.4 : 0.6)) {
@@ -173,7 +176,7 @@ export default function GuideSteps({ guideId, label, steps, mapId, quickRefs, de
               <span>Step {pad(index + 1)} of {steps.length}</span>
               {stepDone && <span className="guide-step__done">✓ Done</span>}
             </div>
-            <h3 id={`guide-step-${step.id}`}>{step.title}</h3>
+            <h3 ref={stepHeadingRef} id={`guide-step-${step.id}`} tabIndex="-1">{step.title}</h3>
             {show.goal && step.goal && (
               <p className="guide-step__goal"><span className="guide-step__now">Do this now</span> {step.goal}</p>
             )}

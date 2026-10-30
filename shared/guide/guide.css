@@ -354,6 +354,17 @@
   line-height: 1.1;
 }
 
+/* The heading takes focus when the step changes (for screen readers); show a ring only for keyboard users. */
+.guide-step h3:focus {
+  outline: none;
+}
+
+.guide-step h3:focus-visible {
+  outline: 2px solid var(--guide-accent);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
 .guide-step__goal {
   max-width: 62ch;
   margin: 0;
