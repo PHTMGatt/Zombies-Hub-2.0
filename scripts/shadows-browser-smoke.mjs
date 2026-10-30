@@ -111,7 +111,7 @@ try {
 
 let existing = [];
 try {
-  existing = JSON.parse(await fs.readFile(reporqUrl, 'utf8'));
+  existing = JSON.parse(await fs.readFile(reportUrl, 'utf8'));
 } catch (error) {
   if (error.code !== 'ENOENT') throw error;
 }
