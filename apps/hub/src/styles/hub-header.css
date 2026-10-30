@@ -102,6 +102,7 @@
   box-shadow: 0 0 12px rgba(109, 194, 255, 0.55);
 }
 
+.hub-header__nav a.hub-header__icon,
 .hub-header__nav a.hub-header__ach {
   min-width: 44px;
   min-height: 44px;
@@ -112,6 +113,11 @@
   color: var(--zh-gold);
 }
 
+.hub-header__nav a.hub-header__icon {
+  color: var(--zh-text);
+}
+
+.hub-header__nav a.hub-header__icon.active::after,
 .hub-header__nav a.hub-header__ach.active::after {
   left: 0.6rem;
   right: 0.6rem;

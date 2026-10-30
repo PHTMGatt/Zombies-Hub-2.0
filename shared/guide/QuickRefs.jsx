@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import GuideReferences from './GuideReferences';
 
@@ -7,8 +7,9 @@ import GuideReferences from './GuideReferences';
  * Opening one shows that step's reference blocks (and its checklist as a plain list) in a sheet, so the
  * player can look something up without moving their place in the run.
  * items: [{ label, stepId }] for an in-guide reference, or [{ label, to }] for a reference page.
+ * openStepId (from a search result's ?ref=) opens the sheet straight on that step; onDismiss runs on close.
  */
-export default function QuickRefs({ items: allItems, steps, label }) {
+export default function QuickRefs({ items: allItems, steps, label, openStepId, onDismiss }) {
   // A reference pointing at a step that no longer exists is dropped (and flagged while developing).
   const items = allItems.filter((item) => {
     const ok = item.to || steps.some((entry) => entry.id === item.stepId);
@@ -18,7 +19,8 @@ export default function QuickRefs({ items: allItems, steps, label }) {
   const dialogRef = useRef(null);
   const [openId, setOpenId] = useState(null);
   const [tab, setTab] = useState(null);
-  const active = items.find((item) => item.stepId === openId);
+  const linked = steps.find((entry) => entry.id === openId);
+  const active = items.find((item) => item.stepId === openId) ?? (linked ? { label: linked.title, stepId: linked.id } : null);
   const step = active ? steps.find((entry) => entry.id === active.stepId) : null;
 
   const open = () => {
@@ -28,7 +30,18 @@ export default function QuickRefs({ items: allItems, steps, label }) {
   const close = () => dialogRef.current?.close();
   // Unmount the open reference when the sheet closes (by button, backdrop or Esc), so its tools never
   // linger as hidden duplicates of the ones in the step.
-  const onClose = () => setOpenId(null);
+  const onClose = () => {
+    setOpenId(null);
+    onDismiss?.();
+  };
+
+  // Arriving from search: open the sheet on the requested reference (the run itself is untouched).
+  useEffect(() => {
+    if (!openStepId || !steps.some((entry) => entry.id === openStepId)) return;
+    setTab(null);
+    setOpenId(openStepId);
+    if (!dialogRef.current?.open) dialogRef.current?.showModal();
+  }, [openStepId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>

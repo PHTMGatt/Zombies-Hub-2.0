@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import GuideReferences from './GuideReferences';
 import { MAPS, mainAchievementFor, resetMap, unlockAchievement } from '../achievements/achievements';
 import QuickRefs from './QuickRefs';
@@ -43,6 +43,15 @@ export default function GuideSteps({ guideId, label, steps, mapId, quickRefs, de
   const show = depthList.find((item) => item.id === depthId)?.show ?? QUICK_FULL[0].show;
   const mode = depthId;
   const [variant, setVariant] = useState(null);
+  // ?ref=<stepId> (from search) opens that step's references in the Quick refs sheet.
+  const [searchParams, setSearchParams] = useSearchParams();
+  const refParam = searchParams.get('ref');
+  const clearRef = () => {
+    if (!searchParams.has('ref')) return;
+    const next = new URLSearchParams(searchParams);
+    next.delete('ref');
+    setSearchParams(next, { replace: true });
+  };
   const railRef = useRef(null);
   const stepRef = useRef(null);
   const stepHeadingRef = useRef(null);
@@ -126,7 +135,9 @@ export default function GuideSteps({ guideId, label, steps, mapId, quickRefs, de
           {selectorExtra}
         </div>
 
-        {quickRefs?.length > 0 && <QuickRefs items={quickRefs} steps={steps} label={label} />}
+        {(quickRefs?.length > 0 || refParam) && (
+          <QuickRefs items={quickRefs ?? []} steps={steps} label={label} openStepId={refParam} onDismiss={clearRef} />
+        )}
 
         <div className="guide-progress" role="status" aria-label={`${progress.completed} of ${progress.total} steps done`}>
           <span className="guide-progress__count">
