@@ -16,6 +16,14 @@ try {
     const errors = [];
     page.on('pageerror', (error) => errors.push(error.message));
 
+    // The hub bar must be exactly the height every page reserves for it, or page tops hide beneath it.
+    await page.goto(base, { waitUntil: 'networkidle' });
+    const bar = await page.evaluate(() => ({
+      height: Math.round(document.querySelector('.hub-header').getBoundingClientRect().height),
+      reserved: parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--hub-nav-height')),
+    }));
+    assert.equal(bar.height, bar.reserved, `hub bar is ${bar.height}px but pages reserve ${bar.reserved}px`);
+
     // A Gorod run already on step 2.
     await page.goto(`${base}/maps/gorod-krovi`, { waitUntil: 'networkidle' });
     await page.evaluate(() => localStorage.clear());

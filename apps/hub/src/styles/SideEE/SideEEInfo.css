@@ -148,3 +148,24 @@
     font-size: 1.25rem;
   }
 }
+
+/* Kino's tracked checklist: projector-lamp amber on the comic-book page. */
+.side-ee-info__guide .guide {
+  --guide-accent: #f0c56b;
+  --guide-accent-ink: #1d1404;
+  --guide-surface: rgba(12, 10, 8, 0.82);
+  --guide-surface-2: rgba(240, 197, 107, 0.07);
+  --guide-line: rgba(240, 197, 107, 0.2);
+}
+
+.side-ee-info__guide {
+  margin-bottom: 1.25rem;
+}
+
+@media (pointer: coarse), (max-width: 720px), (max-height: 500px) and (orientation: landscape) {
+  .side-ee-info__back-link {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+}

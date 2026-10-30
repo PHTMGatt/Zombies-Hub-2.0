@@ -9,6 +9,7 @@ const QUICK_REFS = [
   { label: 'Your Keeper + Margwa spots', stepId: 'upgrade' },
   { label: 'Flag order', stepId: 'flag' },
   { label: 'Four-player team setup', stepId: 'finale' },
+  { label: 'Side Easter Egg video', to: '/side-easter-eggs/soe' },
 ];
 
 function MainGuide() {

@@ -11,6 +11,7 @@ const QUICK_REFS = [
   { label: 'Code cylinder terminals', stepId: 'dragon-network' },
   { label: 'Shield parts', stepId: 'shield' },
   { label: 'Buildables page', to: '/maps/gorod-krovi/buildables' },
+  { label: 'Side Easter Egg video', to: '/side-easter-eggs/gk' },
 ];
 
 const MainGuide = () => (

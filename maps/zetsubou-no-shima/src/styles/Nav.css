@@ -62,3 +62,9 @@
     grid-template-columns: 1fr;
   }
 }
+
+@media (pointer: coarse), (max-height: 500px) and (orientation: landscape) {
+  .zets-module .zets-nav a {
+    min-height: 44px;
+  }
+}

@@ -16,6 +16,7 @@ import './guide.css';
  * Step shape:
  *   { id, title, goal, refs: [reference blocks], tasks: [{ id, label, hint?, tone? }],
  *     how: [string], problems: [string], critical: [string], video: { url, label }, links: [{ to, label }] }
+ *   A tabs ref's tabs may add their own `problems` and `links`, shown only while that tab is selected.
  */
 const pad = (value) => String(value).padStart(2, '0');
 
@@ -63,6 +64,12 @@ export default function GuideSteps({ guideId, label, steps, mapId, quickRefs, de
   const next = steps[index + 1];
   const full = Boolean(show.detail);
   const stepDone = progress.isDone(step.id);
+  // A tabbed reference (e.g. one tab per bow) can carry its own troubleshooting and page link; they follow
+  // the selected tab so the step never mixes tips for variants the player isn't doing.
+  const tabsRef = step.refs?.find((ref) => ref.type === 'tabs');
+  const activeTab = tabsRef ? (tabsRef.tabs.find((tab) => tab.id === variant) ?? tabsRef.tabs[0]) : null;
+  const problems = [...(step.problems ?? []), ...(activeTab?.problems ?? [])];
+  const links = [...(activeTab?.links ?? []), ...(step.links ?? [])];
   const taskCount = step.tasks?.length ?? 0;
   const tasksDone = step.tasks?.filter((task) => progress.isTaskDone(step.id, task.id)).length ?? 0;
 
@@ -126,6 +133,8 @@ export default function GuideSteps({ guideId, label, steps, mapId, quickRefs, de
   return (
     <section className={`guide guide--${mode}${full ? ' guide--detail' : ''}`} aria-label={`${label} guide`}>
       <div className="guide-bar">
+        {/* A depth switch only when the depths differ: a checklist with no Walkthrough detail hides it. */}
+        {(depths || steps.some((entry) => entry.how?.length || entry.video)) && (
         <div className="guide-mode" role="group" aria-label="Guide depth">
           {depthList.map((item) => (
             <button key={item.id} type="button" aria-pressed={item.id === depthId} onClick={() => pressDepth(item.id)}>
@@ -134,6 +143,7 @@ export default function GuideSteps({ guideId, label, steps, mapId, quickRefs, de
           ))}
           {selectorExtra}
         </div>
+        )}
 
         {(quickRefs?.length > 0 || refParam) && (
           <QuickRefs items={quickRefs ?? []} steps={steps} label={label} openStepId={refParam} onDismiss={clearRef} />
@@ -245,10 +255,10 @@ export default function GuideSteps({ guideId, label, steps, mapId, quickRefs, de
             )}
           </div>
 
-          {step.problems?.length > 0 && (
+          {problems.length > 0 && (
             <details className="guide-problems" key={`problems-${step.id}`}>
               <summary>Not working?</summary>
-              <ul>{step.problems.map((line) => <li key={line}>{line}</li>)}</ul>
+              <ul>{problems.map((line) => <li key={line}>{line}</li>)}</ul>
             </details>
           )}
 
@@ -263,9 +273,9 @@ export default function GuideSteps({ guideId, label, steps, mapId, quickRefs, de
             </div>
           )}
 
-          {step.links?.length > 0 && (
+          {links.length > 0 && (
             <div className="guide-links">
-              {step.links.map((link) => (
+              {links.map((link) => (
                 <Link key={link.to} to={link.to} style={link.tone ? { '--gref-tone': link.tone } : undefined}>
                   {link.label} <span aria-hidden="true">→</span>
                 </Link>

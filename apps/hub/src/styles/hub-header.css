@@ -160,6 +160,14 @@
     padding: 0.5rem 0.65rem;
     font-size: 0.8rem;
   }
+
+  /* Icon links match the text links' height here so the bar stays exactly --hub-nav-height tall. */
+  .hub-header__nav a.hub-header__icon,
+  .hub-header__nav a.hub-header__ach {
+    min-height: 0;
+    min-width: 40px;
+    padding: 0.3rem 0.6rem;
+  }
 }
 
 /* Landscape phones: keep the hub bar on one compact row so map content stays above the fold. */

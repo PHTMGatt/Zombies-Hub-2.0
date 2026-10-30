@@ -83,9 +83,13 @@
   }
 }
 
+/* Phones: the header scrolls away with the page instead of staying fixed, so during play the screen
+   belongs to the current step (only the hub bar stays). */
 @media (max-width: 720px) {
   .de-header {
-    height: 104px;
+    position: relative;
+    top: 0;
+    height: auto;
   }
 
   .de-header__content {

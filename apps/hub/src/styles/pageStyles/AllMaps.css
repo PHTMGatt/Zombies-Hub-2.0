@@ -228,3 +228,9 @@
     grid-template-columns: 1fr;
   }
 }
+
+@media (pointer: coarse), (max-width: 720px), (max-height: 500px) and (orientation: landscape) {
+  .map-search input {
+    min-height: 44px;
+  }
+}

@@ -221,3 +221,9 @@
     font-size: 0.78rem;
   }
 }
+
+@media (pointer: coarse), (max-width: 720px), (max-height: 500px) and (orientation: landscape) {
+  .revelations-module .rev-nav-link {
+    min-height: 44px;
+  }
+}

@@ -68,7 +68,9 @@ const MainGuide = () => {
         />
 
 
-        <section className="origins-guide__credits" aria-label="Credits and audio">
+        {/* Credits and the two radio clips are extras: tucked away so they never sit between the step and play. */}
+        <details className="origins-guide__credits">
+          <summary>Credits + radio audio</summary>
           <p className="credits">
             <em>MrRoflWaffles – Staff Images</em>
             <a href={KRONORIUM_URL} target="_blank" rel="noreferrer">Kronorium.com</a>
@@ -77,7 +79,7 @@ const MainGuide = () => {
             <audio controls aria-label="Origins robot radio message" src={Audio1} preload="none"></audio>
             <audio controls aria-label="Origins zombie intro" src={Audio2} preload="none"></audio>
           </div>
-        </section>
+        </details>
       </div>
     </div>
   );

@@ -11,12 +11,12 @@ const Header = () => {
       <div className="origins-header__content">
         <div className="header-left">
           <div className="title-box">
-            <img src={ReviveIcon} alt="Revive Icon" className="revive-header-icon" />
+            <img src={ReviveIcon} alt="" aria-hidden="true" className="revive-header-icon" />
             <h1 className="header-title">
-              <span className="black-text">Origins Easter Egg</span>{" "}
+              <span className="black-text">Origins<span className="header-title__ee"> Easter Egg</span></span>{" "}
               <span className="white-text">Little Lost Girl</span>
             </h1>
-            <img src={ReviveIcon} alt="Revive Icon" className="revive-header-icon" />
+            <img src={ReviveIcon} alt="" aria-hidden="true" className="revive-header-icon" />
           </div>
         </div>
 
