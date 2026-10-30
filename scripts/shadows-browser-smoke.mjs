@@ -72,8 +72,9 @@ try {
     // Blocked storage must make run tools session-only, not unusable. Both the visible step and its
     // Quick refs copy should keep sharing the player's note / picker choice even when setItem throws.
     await page.goto(`${base}${route}`, { waitUntil: 'networkidle' });
+    await page.evaluate(() => localStorage.clear());
+    await page.reload({ waitUntil: 'networkidle' });
     await page.evaluate(() => {
-      localStorage.clear();
       Storage.prototype.setItem = () => { throw new DOMException('Storage blocked', 'SecurityError'); };
     });
     await page.getByLabel('Symbol 1').fill('eye');
@@ -110,7 +111,7 @@ try {
 
 let existing = [];
 try {
-  existing = JSON.parse(await fs.readFile(reportUrl, 'utf8'));
+  existing = JSON.parse(await fs.readFile(reporqUrl, 'utf8'));
 } catch (error) {
   if (error.code !== 'ENOENT') throw error;
 }
