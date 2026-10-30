@@ -20,7 +20,7 @@ const Home: React.FC = () => (
     </div>
 
     <div className="de-guide">
-      <GuideSteps guideId="der-eisendrache" label="My Brother’s Keeper" steps={deGuideSteps} />
+      <GuideSteps guideId="der-eisendrache" mapId="der-eisendrache" label="My Brother’s Keeper" steps={deGuideSteps} />
     </div>
   </div>
 );

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import GuideSteps from "../../../../shared/guide/GuideSteps";
 import { useGuideDepth, useGuideProgress } from "../../../../shared/guide/useGuideProgress";
 import originsGuide from "../data/originsGuide";
@@ -22,22 +22,12 @@ const MainGuide = () => {
   const progress = useGuideProgress("origins", originsGuide);
   const [depth, setDepth] = useGuideDepth(DEPTH_IDS, "zh-origins-depth");
   const { unlocked, unlock } = useSpeedrunUnlock();
-  const [toast, setToast] = useState("");
   const finished = progress.completed === progress.total;
 
-  // Finishing the tracker earns Speedrun mode for good.
+  // Finishing the tracker earns Speedrun mode for good (announced by the hub's achievement popup).
   useEffect(() => {
-    if (finished && !unlocked) {
-      unlock();
-      setToast("⏱ Easter Egg complete — Speedrun mode unlocked");
-    }
+    if (finished && !unlocked) unlock();
   }, [finished, unlocked, unlock]);
-
-  useEffect(() => {
-    if (!toast) return undefined;
-    const timer = window.setTimeout(() => setToast(""), 4500);
-    return () => window.clearTimeout(timer);
-  }, [toast]);
 
   const speedrun = depth === "speedrun";
 
@@ -46,6 +36,7 @@ const MainGuide = () => {
       <div className="origins-guide__inner">
         <GuideSteps
           guideId="origins"
+          mapId="origins"
           label="Little Lost Girl"
           steps={originsGuide}
           depths={DEPTHS}
@@ -69,7 +60,6 @@ const MainGuide = () => {
           ) : undefined}
         />
 
-        {toast && <p className="origins-guide__toast" role="status">{toast}</p>}
 
         <section className="origins-guide__credits" aria-label="Credits and audio">
           <p className="credits">

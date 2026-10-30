@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import GuideReferences from './GuideReferences';
+import { MAPS, mainAchievementFor, resetMap, unlockAchievement } from '../achievements/achievements';
 import { useGuideDepth, useGuideProgress } from './useGuideProgress';
 import './guide.css';
 
@@ -24,11 +25,12 @@ export const QUICK_FULL = [
 const DEPTH_IDS = QUICK_FULL.map((item) => item.id);
 
 /*
- * Props: guideId, label, steps; optional depths + depth/onDepthPress (controlled), progress (from
- * useGuideProgress, when the page needs it too), selectorExtra (more buttons in the depth switch), and
- * override (replaces the steps body, e.g. a locked panel).
+ * Props: guideId, label, steps; optional mapId (enables the map's main Easter Egg achievement and the
+ * "reset map" option), depths + depth/onDepthPress (controlled), progress (from useGuideProgress, when
+ * the page needs it too), selectorExtra (more buttons in the depth switch), and override (replaces the
+ * steps body, e.g. a locked panel).
  */
-export default function GuideSteps({ guideId, label, steps, depths, depth: controlledDepth, onDepthPress, progress: sharedProgress, selectorExtra, override }) {
+export default function GuideSteps({ guideId, label, steps, mapId, depths, depth: controlledDepth, onDepthPress, progress: sharedProgress, selectorExtra, override }) {
   const [ownDepth, setOwnDepth] = useGuideDepth(DEPTH_IDS);
   const ownProgress = useGuideProgress(sharedProgress ? null : guideId, steps);
   const progress = sharedProgress ?? ownProgress;
@@ -76,8 +78,28 @@ export default function GuideSteps({ guideId, label, steps, depths, depth: contr
     }
   }, [step.id]);
 
-  const confirmReset = () => {
-    if (window.confirm(`Clear your ${label} progress?`)) progress.reset();
+  // Every step done is the Easter Egg done: unlock it once, on the player's own tap. The ref starts at
+  // the stored value, so loading an already-finished run never re-announces it.
+  const allDone = progress.completed === progress.total;
+  const wasAllDone = useRef(allDone);
+  useEffect(() => {
+    if (allDone && !wasAllDone.current) {
+      const achievement = mapId && mainAchievementFor(mapId);
+      if (achievement) unlockAchievement(achievement.id);
+    }
+    wasAllDone.current = allDone;
+  }, [allDone, mapId]);
+
+  const map = mapId ? MAPS[mapId] : null;
+  const hasProgress = progress.completed > 0 || steps.some((s) => s.tasks?.some((t) => progress.isTaskDone(s.id, t.id)));
+  const confirmResetRun = () => {
+    if (window.confirm(`Start ${label} over? This clears your current step, finished steps and ticks. Achievements stay.`)) progress.reset();
+  };
+  const confirmResetMap = () => {
+    if (window.confirm(`Clear everything saved for ${map.name}? Guide progress and saved notes are removed. Achievements stay.`)) {
+      resetMap(mapId);
+      progress.reset();
+    }
   };
 
   return (
@@ -244,10 +266,16 @@ export default function GuideSteps({ guideId, label, steps, depths, depth: contr
       </div>
       )}
 
+      {/* Destructive actions live in a quiet menu below the guide, away from Mark step done. */}
       <div className="guide-footer">
-        <button type="button" className="guide-reset" onClick={confirmReset} disabled={progress.completed === 0 && !steps.some((s) => s.tasks?.some((t) => progress.isTaskDone(s.id, t.id)))}>
-          Reset progress
-        </button>
+        <details className="guide-menu">
+          <summary>Progress options</summary>
+          <div className="guide-menu__list">
+            <button type="button" onClick={confirmResetRun} disabled={!hasProgress}>Reset this run</button>
+            {map && <button type="button" onClick={confirmResetMap}>Reset all {map.name} progress</button>}
+            <Link to="/achievements">Achievements + reset all</Link>
+          </div>
+        </details>
       </div>
     </section>
   );

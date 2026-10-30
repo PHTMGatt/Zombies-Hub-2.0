@@ -1,30 +1,15 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { PROGRESS_RESET_EVENT } from '../achievements/achievements';
+import { progressKey, read, write } from '../storage';
 
 /*
  * Easter Egg progress, stored only in this browser (localStorage), one record per guide:
- *   { current: stepId, done: { [stepId]: true, [`${stepId}/${taskId}`]: true } }
+ *   { current: stepId, done: { [stepId]: true, [`${stepId}/${taskId}`]: true }, total: stepCount }
+ * (`total` lets the achievement shelf show "4 / 11" without loading the guide.)
  * Quick and Full mode read the same record, so switching depth never loses your place.
- * Every storage access is guarded: private windows or blocked storage just mean no persistence.
  */
-const PROGRESS_KEY = (guideId) => `zh-guide-progress:${guideId}`;
+const PROGRESS_KEY = progressKey;
 const MODE_KEY = 'zh-guide-mode';
-
-const read = (key, fallback) => {
-  try {
-    const raw = window.localStorage.getItem(key);
-    return raw ? JSON.parse(raw) : fallback;
-  } catch {
-    return fallback;
-  }
-};
-
-const write = (key, value) => {
-  try {
-    window.localStorage.setItem(key, JSON.stringify(value));
-  } catch {
-    // Storage unavailable: progress still works for this visit.
-  }
-};
 
 export const taskKey = (stepId, taskId) => `${stepId}/${taskId}`;
 
@@ -38,8 +23,19 @@ export function useGuideProgress(guideId, steps) {
   });
 
   useEffect(() => {
-    if (guideId) write(PROGRESS_KEY(guideId), state);
-  }, [guideId, state]);
+    if (guideId) write(PROGRESS_KEY(guideId), { ...state, total: stepIds.length });
+  }, [guideId, state, stepIds.length]);
+
+  // A reset from the progress menu or the achievement shelf clears storage; start this guide over too.
+  useEffect(() => {
+    if (!guideId) return undefined;
+    const onReset = (event) => {
+      const { all, guideId: target } = event.detail ?? {};
+      if (all || target === guideId) setState({ current: stepIds[0], done: {} });
+    };
+    window.addEventListener(PROGRESS_RESET_EVENT, onReset);
+    return () => window.removeEventListener(PROGRESS_RESET_EVENT, onReset);
+  }, [guideId, stepIds]);
 
   const isDone = useCallback((stepId) => Boolean(state.done[stepId]), [state.done]);
   const isTaskDone = useCallback((stepId, taskId) => Boolean(state.done[taskKey(stepId, taskId)]), [state.done]);

@@ -10,7 +10,7 @@ const names = {
 const labels = {
   '/': 'Maps, Easter Eggs & Guides', '/allmaps': 'All Maps',
   '/easter-eggs': 'Main Easter Egg Guides', '/side-easter-eggs': 'Side Easter Eggs',
-  '/coming-soon': 'Guide in progress',
+  '/coming-soon': 'Guide in progress', '/achievements': 'Achievements',
 };
 const displayName = (slug) => names[slug] || slug.replace(/([a-z])([A-Z])/g, '$1 $2')
   .split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');

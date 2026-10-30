@@ -6,6 +6,7 @@ import HubFooter from '../components/HubFooter';
 import { isDedicatedMapPath } from '../data/dedicatedGuides';
 import { routeTitle } from './routeMetadata';
 import RouteBoundary from '../../../../shared/ui/RouteBoundary';
+import AchievementToast from '../../../../shared/achievements/AchievementToast';
 
 function RootLayout() {
   const { pathname, hash } = useLocation();
@@ -44,6 +45,7 @@ function RootLayout() {
         </div>
       </main>
       {!isDedicatedMapRoute && <HubFooter />}
+      <AchievementToast />
     </div>
   );
 }

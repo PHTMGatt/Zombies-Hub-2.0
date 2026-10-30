@@ -122,28 +122,88 @@
   justify-content: flex-end;
 }
 
-/* Reset is deliberately quiet: a text link under the guide, never competing with the current step. */
-.guide-reset {
-  min-height: 40px;
-  padding: 0.3rem 0.4rem;
-  border: 0;
-  background: transparent;
+/* Progress options are deliberately quiet: a small disclosure under the guide, never competing with
+   the current step. Destructive actions sit inside it and each asks for confirmation. */
+.guide-menu {
+  position: relative;
+  display: grid;
+  justify-items: end;
+  text-align: right;
   color: var(--guide-muted);
-  font: inherit;
-  font-size: 0.85rem;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  opacity: 0.75;
-  cursor: pointer;
+  font-size: 0.88rem;
 }
 
-.guide-reset:hover:not(:disabled) {
+.guide-menu summary {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0 0.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  list-style: none;
+  opacity: 0.8;
+}
+
+.guide-menu summary::-webkit-details-marker {
+  display: none;
+}
+
+.guide-menu summary::after {
+  content: '▾';
+  font-size: 0.75em;
+}
+
+.guide-menu[open] summary::after {
+  content: '▴';
+}
+
+.guide-menu summary:hover,
+.guide-menu[open] summary {
   color: var(--guide-ink);
   opacity: 1;
 }
 
-.guide-reset:disabled {
-  visibility: hidden;
+.guide-menu summary:focus-visible,
+.guide-menu__list > :focus-visible {
+  outline: 2px solid var(--guide-accent);
+  outline-offset: -2px;
+}
+
+.guide-menu__list {
+  display: grid;
+  justify-items: end;
+  gap: 0.1rem;
+  padding-top: 0.2rem;
+}
+
+.guide-menu__list > button,
+.guide-menu__list > a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 0.6rem;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--guide-text);
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.guide-menu__list > button {
+  color: color-mix(in srgb, #ff8a7a 70%, var(--guide-text));
+}
+
+.guide-menu__list > button:hover:not(:disabled),
+.guide-menu__list > a:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.guide-menu__list > button:disabled {
+  opacity: 0.4;
+  cursor: default;
 }
 
 /* Rail + step */

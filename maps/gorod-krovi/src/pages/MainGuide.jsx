@@ -20,7 +20,7 @@ const MainGuide = () => (
     </details>
 
     <div className="gorod-guide">
-      <GuideSteps guideId="gorod-krovi" label="Love and War" steps={gorodGuideSteps} />
+      <GuideSteps guideId="gorod-krovi" mapId="gorod-krovi" label="Love and War" steps={gorodGuideSteps} />
     </div>
   </div>
 );

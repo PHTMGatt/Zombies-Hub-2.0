@@ -17,7 +17,7 @@ const MobMain = () => (
     </details>
 
     <div className="mob-guide">
-      <GuideSteps guideId="mob-of-the-dead" label="Pop Goes the Weasel" steps={mobGuideSteps} />
+      <GuideSteps guideId="mob-of-the-dead" mapId="mob-of-the-dead" label="Pop Goes the Weasel" steps={mobGuideSteps} />
     </div>
   </div>
 );

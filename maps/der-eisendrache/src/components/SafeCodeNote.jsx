@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { readStored, writeStored } from '../../../../shared/guide/useGuideProgress';
+import { PROGRESS_RESET_EVENT } from '../../../../shared/achievements/achievements';
 
 /*
  * Dr. Groph's safe code changes every game, and you read it in the past but enter it in the present.
@@ -17,6 +18,16 @@ export default function SafeCodeNote() {
   useEffect(() => {
     writeStored(KEY, slots);
   }, [slots]);
+
+  // "Reset map" / "Reset all progress" clear the note too.
+  useEffect(() => {
+    const onReset = (event) => {
+      const { all, mapId } = event.detail ?? {};
+      if (all || mapId === 'der-eisendrache') setSlots(EMPTY);
+    };
+    window.addEventListener(PROGRESS_RESET_EVENT, onReset);
+    return () => window.removeEventListener(PROGRESS_RESET_EVENT, onReset);
+  }, []);
 
   const update = (index, value) => setSlots((previous) => previous.map((slot, i) => (i === index ? value : slot)));
 

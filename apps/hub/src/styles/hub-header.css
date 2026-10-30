@@ -102,6 +102,21 @@
   box-shadow: 0 0 12px rgba(109, 194, 255, 0.55);
 }
 
+.hub-header__nav a.hub-header__ach {
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  color: var(--zh-gold);
+}
+
+.hub-header__nav a.hub-header__ach.active::after {
+  left: 0.6rem;
+  right: 0.6rem;
+}
+
 @media (max-width: 700px) {
   .hub-header {
     min-height: var(--hub-nav-height);
