@@ -36,13 +36,35 @@ try {
     assert(response?.ok(), `${route} returned ${response?.status()}`);
     assert.equal(errors.length, 0, `${route} page errors: ${errors.join('; ')}`);
     await page.getByRole('heading', { name: 'Shadows of Evil', level: 2 }).waitFor();
-    await page.locator('details').evaluateAll(details => details.forEach(detail => { detail.open = true; }));
-    const text = await page.locator('.soe-page__content').innerText();
+    await page.evaluate(() => {
+      ['zh-guide-progress:shadows-of-evil', 'zh-soe-train-symbols', 'zh-soe-character'].forEach((key) => localStorage.removeItem(key));
+    });
+    await page.reload({ waitUntil: 'networkidle' });
+    assert.match(await page.locator('.soe-run-header').innerText(), /full ending require four players/i);
+    assert.equal(await page.locator('.guide-rail__step').count(), 7, 'Shadows guide should list 7 steps');
+
+    // Step 1: the train rides that give the sword symbols, and a notepad for them that persists.
+    let text = await page.locator('.guide-step').innerText();
     assert.match(text, /Waterfront\s*→\s*Footlight/i);
     assert.match(text, /Footlight\s*→\s*Canals/i);
+    await page.getByLabel('Symbol 1').fill('eye');
+    await page.reload({ waitUntil: 'networkidle' });
+    assert.equal(await page.getByLabel('Symbol 1').inputValue(), 'eye', 'train symbol note survives a reload');
+
+    // Step 4: pick your character, get your Keeper room.
+    await page.locator('.guide-rail__step').nth(3).click();
+    await page.getByRole('button', { name: 'Jackie Vincent' }).click();
+    assert.match(await page.locator('.pick-tool__answer').innerText(), /Ruby Rabbit/);
+
+    // Finale: team setup and the train-caller rule are on the step; the full how-to is in Walkthrough.
+    await page.locator('.guide-rail__step').nth(6).click();
+    text = await page.locator('.guide-step').innerText();
+    assert.match(text, /Team setup/i);
     assert.match(text, /train caller/i);
-    assert.match(text, /fourth player waits near the center Gateworm/i);
-    assert.match(text, /full ending require four players/i);
+    await page.getByRole('button', { name: 'Walkthrough', exact: true }).click();
+    assert.match(await page.locator('.guide-step').innerText(), /fourth player waits near the center Gateworm/i);
+    await page.getByRole('button', { name: 'Quick', exact: true }).click();
+    assert.equal(errors.length, 0, `${route} guide errors: ${errors.join('; ')}`);
     await assertImagesLoaded(page, route);
     await assertNoHorizontalOverflow(page, route);
     results.push({ width, route, passed: true });

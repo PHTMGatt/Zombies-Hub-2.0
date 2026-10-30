@@ -25,7 +25,7 @@ export const PROGRESS_RESET_EVENT = 'zh-progress-reset';
 export const MAPS = {
   origins: { name: 'Origins', accent: '#6dc2ff', route: '/maps/origins', guideId: 'origins', keys: [] },
   'mob-of-the-dead': { name: 'Mob of the Dead', accent: '#f0b321', route: '/maps/mob-of-the-dead', guideId: 'mob-of-the-dead', keys: [] },
-  'shadows-of-evil': { name: 'Shadows of Evil', accent: '#aa79df', route: '/maps/shadows-of-evil', guideId: null, keys: [] },
+  'shadows-of-evil': { name: 'Shadows of Evil', accent: '#aa79df', route: '/maps/shadows-of-evil', guideId: 'shadows-of-evil', keys: ['zh-soe-train-symbols', 'zh-soe-character'] },
   'der-eisendrache': { name: 'Der Eisendrache', accent: '#7bcfff', route: '/maps/der-eisendrache', guideId: 'der-eisendrache', keys: ['zh-de-safe-code'] },
   'zetsubou-no-shima': { name: 'Zetsubou No Shima', accent: '#69e6ad', route: '/maps/zetsubou-no-shima', guideId: 'zetsubou-no-shima', keys: [] },
   'gorod-krovi': { name: 'Gorod Krovi', accent: '#ff7a52', route: '/maps/gorod-krovi', guideId: 'gorod-krovi', keys: [] },

@@ -78,7 +78,8 @@
 
 .shadows-module .soe-page {
   position: relative;
-  overflow: hidden;
+  /* clip, not hidden: hidden would make this the scroll container and break the sticky step rail. */
+  overflow: clip;
   isolation: isolate;
   background: #08070d;
 }
@@ -128,53 +129,6 @@
 
 .shadows-module .soe-page__content .zh-guide-step-card {
   border-left: 3px solid rgba(170, 121, 223, 0.56);
-}
-
-.shadows-module .soe-phase-notes {
-  margin-top: 0.38rem;
-  color: #ccbfd4;
-  font-size: 0.8rem;
-}
-
-.shadows-module .soe-phase-notes summary {
-  color: #e1c878;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.shadows-module .soe-phase-notes ul {
-  margin: 0.45rem 0 0;
-  padding-left: 1.15rem;
-}
-
-.shadows-module .soe-phase-notes li {
-  margin: 0.28rem 0;
-  line-height: 1.4;
-}
-
-.shadows-module .soe-map-reference {
-  width: min(100%, 1020px);
-  margin: 0 auto;
-  overflow: hidden;
-  border: 1px solid rgba(170, 121, 223, 0.18);
-  border-radius: 9px;
-  background: rgba(7, 6, 11, 0.78);
-}
-
-.shadows-module .soe-map-reference summary {
-  padding: 0.65rem 0.8rem;
-  color: #d9cbea;
-  font-size: 0.84rem;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.shadows-module .soe-map-reference img {
-  display: block;
-  width: 100%;
-  max-height: 620px;
-  object-fit: contain;
-  background: #050409;
 }
 
 .shadows-module .soe-footer {

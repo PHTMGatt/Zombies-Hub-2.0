@@ -1362,3 +1362,109 @@
     transition: none;
   }
 }
+
+/* Run notes: tiny notepads for randomised info, placed in the step that generates it. */
+.run-note {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.run-note__slots {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr));
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.run-note__slots li {
+  display: grid;
+  gap: 0.2rem;
+  margin: 0;
+}
+
+.run-note__slots label {
+  color: var(--guide-muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.run-note__slots input {
+  min-height: 48px;
+  width: 100%;
+  padding: 0 0.75rem;
+  border: 1px solid var(--guide-line);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.35);
+  color: var(--guide-ink);
+  font: inherit;
+  font-size: 1.05rem;
+}
+
+.run-note__slots input:focus-visible {
+  outline: 2px solid var(--guide-accent);
+  outline-offset: 1px;
+}
+
+.run-note__clear {
+  justify-self: start;
+  min-height: 44px;
+  padding: 0 0.4rem;
+  border: 0;
+  background: transparent;
+  color: var(--guide-muted);
+  font: inherit;
+  font-size: 0.88rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+/* Pick-one tool (e.g. "which character are you?"): big buttons, one answer below. */
+.pick-tool {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.pick-tool__options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 130px), 1fr));
+  gap: 0.4rem;
+}
+
+.pick-tool__options button {
+  min-height: 48px;
+  padding: 0 0.75rem;
+  border: 1px solid var(--guide-line);
+  border-radius: 10px;
+  background: var(--guide-surface-2);
+  color: var(--guide-ink);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.pick-tool__options button[aria-pressed='true'] {
+  border-color: var(--guide-accent);
+  background: color-mix(in srgb, var(--guide-accent) 22%, transparent);
+}
+
+.pick-tool__options button:focus-visible {
+  outline: 2px solid var(--guide-accent);
+  outline-offset: 2px;
+}
+
+.pick-tool__answer {
+  margin: 0;
+  padding: 0.6rem 0.85rem;
+  border-left: 3px solid var(--guide-accent);
+  border-radius: 0 10px 10px 0;
+  background: var(--guide-surface-2);
+  color: var(--guide-ink);
+  font-size: 1.08rem;
+}
+
+.pick-tool__answer strong {
+  color: var(--guide-accent);
+}
