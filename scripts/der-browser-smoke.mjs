@@ -57,6 +57,21 @@ try {
     assert.equal(await page.locator('.de-nav').count(), 1, 'Der Eisendrache keeps one map-level navigation row');
     assert.equal(await page.locator('.de-quick-links').count(), 0, 'Der Eisendrache duplicate bottom navigation stays removed');
     await assertNoHorizontalOverflow(page, mainRoute);
+
+    // Stepped guide: 12 tracked steps, Quick/Full share the step, the safe-code note follows you to the terminal step.
+    await page.evaluate(() => window.localStorage.clear());
+    await page.reload({ waitUntil: 'networkidle' });
+    assert.equal(await page.locator('.guide-rail__step').count(), 12, 'Der guide keeps all 12 steps');
+    await page.locator('.guide-rail__step').nth(4).click();
+    await page.getByRole('button', { name: /^Full/ }).click();
+    assert.match(await page.locator('.guide-step h3').innerText(), /Past lab/, 'Switching to Full keeps the current step');
+    assert.equal(await page.locator('.guide-how').count(), 1, 'Full mode shows the how-to');
+    await page.getByLabel('Safe symbol 1').fill('Test');
+    await page.getByRole('button', { name: 'Mark step done' }).click();
+    assert.match(await page.locator('.guide-step h3').innerText(), /Death Ray/, 'Marking done advances to the next step');
+    assert.equal(await page.getByLabel('Safe symbol 1').inputValue(), 'Test', 'Safe code note carries to the terminal step');
+    await page.getByRole('button', { name: /^Quick/ }).click();
+    await page.evaluate(() => window.localStorage.clear());
     results.push({ width, route: mainRoute, passed: true });
 
     errors.length = 0;
