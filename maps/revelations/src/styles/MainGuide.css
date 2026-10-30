@@ -1,506 +1,116 @@
-.revelations-module .rev-guide-grid {
-  display: grid;
-  grid-template-columns: minmax(250px, 300px) minmax(0, 1fr);
-  gap: 1.5rem;
-  align-items: stretch;
+/* For The Good Of All: a slim cosmic title strip, then the tracked guide straight on the Apothicon
+   backdrop (no glass shell around it, and no backdrop blur to cost the GPU during play). */
+.revelations-module .rev-main-guide {
+  padding-top: 1rem;
 }
 
-/* Step rail: a timeline, not a box. The cyan line fills up to the current step. */
-.revelations-module .rev-step-list {
-  position: sticky;
-  top: calc(var(--hub-nav-height) + 1rem);
-  align-self: start;
-  min-width: 0;
-}
-
-.revelations-module .rev-step-list ol {
-  --rev-rail-x: 1.35rem;
-
-  position: relative;
-  margin: 0;
-  padding: 0.15rem 0;
-  list-style: none;
-}
-
-.revelations-module .rev-step-list ol::before,
-.revelations-module .rev-step-list ol::after {
-  content: '';
-  position: absolute;
-  left: var(--rev-rail-x);
-  top: 1.25rem;
-  width: 2px;
-  margin-left: -1px;
-  border-radius: 2px;
-  pointer-events: none;
-}
-
-.revelations-module .rev-step-list ol::before {
-  bottom: 1.25rem;
-  background: rgba(140, 200, 255, 0.12);
-}
-
-.revelations-module .rev-step-list ol::after {
-  height: calc((100% - 2.5rem) * var(--rev-progress, 0));
-  background: linear-gradient(180deg, var(--rev-cyan), var(--rev-violet));
-  box-shadow: 0 0 10px rgba(109, 214, 255, 0.45);
-  transition: height 0.3s ease;
-}
-
-.revelations-module .rev-step-button {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  min-height: 40px;
-  display: grid;
-  grid-template-columns: 1.85rem minmax(0, 1fr);
-  gap: 0.75rem;
-  align-items: center;
-  padding: 0.4rem 0.65rem 0.4rem 0.45rem;
-  border: 1px solid transparent;
-  border-radius: 12px;
-  background: transparent;
-  color: var(--rev-muted);
-  font: inherit;
-  text-align: left;
-  cursor: pointer;
-  transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
-}
-
-.revelations-module .rev-step-button:hover {
+.revelations-module .rev-run {
+  width: min(100%, 1240px);
+  margin: 0 auto;
   color: var(--rev-ink);
-  background: rgba(255, 255, 255, 0.04);
 }
 
-.revelations-module .rev-step-button__num {
-  width: 1.85rem;
-  height: 1.85rem;
-  display: grid;
-  place-items: center;
-  border: 1px solid rgba(140, 200, 255, 0.28);
-  border-radius: 50%;
-  background: #08101e;
-  color: #8fcfee;
-  font-size: 0.66rem;
-  font-weight: 800;
-  font-variant-numeric: tabular-nums;
-  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.revelations-module .rev-step-button__title {
-  min-width: 0;
-  font-size: 0.8rem;
-  font-weight: 600;
-  line-height: 1.25;
-}
-
-.revelations-module .rev-step-button[data-state='past'] .rev-step-button__num {
-  border-color: rgba(109, 214, 255, 0.55);
-  background: #0c2236;
-  color: #bfeaff;
-}
-
-.revelations-module .rev-step-button[data-state='past'] {
-  color: #a9bdd0;
-}
-
-.revelations-module .rev-step-button.active {
-  border-color: rgba(109, 214, 255, 0.28);
-  background: var(--rev-active);
-  color: #fff;
-}
-
-.revelations-module .rev-step-button.active .rev-step-button__num {
-  border-color: transparent;
-  background: linear-gradient(135deg, #8fe3ff, var(--rev-cyan-strong));
-  color: #03101c;
-  box-shadow: 0 0 0 4px rgba(56, 196, 255, 0.16), 0 0 18px rgba(56, 196, 255, 0.55);
-}
-
-.revelations-module .rev-step-button.active .rev-step-button__title {
-  font-weight: 750;
-}
-
-/* Step content: an inset reading surface. */
-.revelations-module .rev-step-panel {
-  position: relative;
-  min-width: 0;
+.revelations-module .rev-run-header {
   display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  padding: 1.6rem 1.85rem 1.4rem;
-  border: 1px solid var(--rev-line);
-  border-radius: 18px;
-  background:
-    radial-gradient(ellipse 60% 40% at 100% 0%, rgba(169, 139, 255, 0.08), transparent 70%),
-    var(--rev-surface);
-  scroll-margin-top: calc(var(--hub-nav-height) + 0.75rem);
-}
-
-.revelations-module .rev-step-progress {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: rgba(140, 200, 255, 0.08);
-}
-
-.revelations-module .rev-step-progress span {
-  display: block;
-  height: 100%;
-  background: linear-gradient(90deg, var(--rev-cyan), var(--rev-violet));
-  box-shadow: 0 0 12px rgba(109, 214, 255, 0.6);
-  transition: width 0.3s ease;
-}
-
-.revelations-module .rev-step-meta {
-  display: flex;
+  align-items: baseline;
   justify-content: space-between;
-  align-items: center;
   gap: 1rem;
+  padding: 0.75rem 1rem;
+  border-left: 4px solid var(--rev-cyan);
+  border-radius: 0 12px 12px 0;
+  background: linear-gradient(90deg, rgba(14, 36, 66, 0.88), rgba(5, 8, 20, 0.5));
 }
 
-.revelations-module .rev-step-meta__step {
-  padding: 0.22rem 0.6rem;
-  border: 1px solid rgba(109, 214, 255, 0.3);
-  border-radius: 999px;
-  background: rgba(56, 196, 255, 0.1);
-  color: var(--rev-cyan);
-  font-size: 0.66rem;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-
-.revelations-module .rev-step-meta__count {
-  color: var(--rev-muted);
-  font-size: 0.78rem;
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-}
-
-.revelations-module .rev-step-panel h3 {
-  margin: 0.9rem 0 0.6rem;
-  color: #f4f9ff;
-  font-size: clamp(1.45rem, 2.4vw, 2.05rem);
-  font-weight: 800;
-  line-height: 1.12;
-  letter-spacing: -0.01em;
-}
-
-.revelations-module .rev-step-detail {
-  max-width: 68ch;
+.revelations-module .rev-run-header h2 {
   margin: 0;
-  color: var(--rev-text);
-  font-size: 1rem;
-  line-height: 1.65;
-}
-
-.revelations-module .rev-step-notes {
-  max-width: 72ch;
-  margin-top: 1.25rem;
-  padding-top: 1.05rem;
-  border-top: 1px solid var(--rev-line);
-}
-
-.revelations-module .rev-step-bullets {
-  display: grid;
-  gap: 0.55rem;
-  margin: 0.7rem 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.revelations-module .rev-step-bullets li {
-  position: relative;
-  padding-left: 1.35rem;
-  color: #bdd0e2;
-  font-size: 0.9rem;
-  line-height: 1.55;
-}
-
-.revelations-module .rev-step-bullets li::before {
-  content: '';
-  position: absolute;
-  left: 0.2rem;
-  top: 0.58em;
-  width: 7px;
-  height: 7px;
-  border-radius: 1px;
-  background: var(--rev-cyan);
-  box-shadow: 0 0 8px rgba(109, 214, 255, 0.6);
-  transform: rotate(45deg);
-}
-
-.revelations-module .rev-step-reference {
-  align-self: flex-start;
-  min-height: 38px;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  margin-top: 1.2rem;
-  padding: 0.4rem 0.95rem;
-  border: 1px solid rgba(109, 214, 255, 0.38);
-  border-radius: 999px;
-  background: rgba(56, 196, 255, 0.12);
-  color: #c9f0ff;
-  font-size: 0.82rem;
-  font-weight: 750;
-  transition: background 0.18s ease, border-color 0.18s ease;
-}
-
-.revelations-module .rev-step-reference:hover {
-  border-color: rgba(109, 214, 255, 0.7);
-  background: rgba(56, 196, 255, 0.22);
-  color: #fff;
-}
-
-.revelations-module .rev-step-controls {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.75rem;
-  margin-top: auto;
-  padding-top: 1.5rem;
-}
-
-.revelations-module .rev-step-nav {
-  min-width: 0;
-  min-height: 58px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 0.15rem;
-  padding: 0.55rem 0.95rem;
-  border: 1px solid var(--rev-line);
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.025);
   color: var(--rev-ink);
-  font: inherit;
-  text-align: left;
-  cursor: pointer;
-  transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  line-height: 1;
 }
 
-.revelations-module .rev-step-nav--next {
-  align-items: flex-end;
+.revelations-module .rev-run-header > p {
+  margin: 0;
+  color: var(--rev-muted);
+  font-size: 0.92rem;
   text-align: right;
-  border-color: rgba(109, 214, 255, 0.34);
-  background: linear-gradient(90deg, rgba(56, 196, 255, 0.06), rgba(56, 196, 255, 0.16));
 }
 
-.revelations-module .rev-step-nav:hover:not(:disabled) {
-  border-color: rgba(109, 214, 255, 0.6);
-  background: rgba(56, 196, 255, 0.16);
+.revelations-module .rev-guide {
+  margin-top: 1rem;
 }
 
-.revelations-module .rev-step-nav:disabled {
-  opacity: 0.4;
-  cursor: default;
+/* Revelations theme for the shared step guide: Apothicon cyan into nebula violet. */
+.revelations-module .rev-guide .guide {
+  --guide-accent: #6dd6ff;
+  --guide-accent-ink: #031424;
+  --guide-ink: #f2f8ff;
+  --guide-text: #d9e6f4;
+  --guide-muted: #a7b9cc;
+  --guide-surface: rgba(6, 11, 24, 0.86);
+  --guide-surface-2: rgba(109, 214, 255, 0.07);
+  --guide-line: rgba(109, 214, 255, 0.2);
+  --guide-done: #b9a2ff;
+  --guide-sticky-top: calc(var(--hub-nav-height) + 0.75rem);
 }
 
-.revelations-module .rev-step-nav__dir {
-  color: var(--rev-cyan);
-  font-size: 0.66rem;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+.revelations-module .rev-guide .guide-step {
+  border-top: 0;
+  background:
+    radial-gradient(ellipse 70% 50% at 100% 0%, rgba(169, 139, 255, 0.14), transparent 70%),
+    radial-gradient(ellipse 60% 50% at 0% 100%, rgba(56, 196, 255, 0.1), transparent 70%),
+    var(--guide-surface);
+  box-shadow: inset 0 3px 0 0 var(--guide-accent), 0 18px 40px rgba(0, 0, 0, 0.5);
 }
 
-.revelations-module .rev-step-nav__title {
-  max-width: 100%;
-  overflow: hidden;
-  font-size: 0.86rem;
-  font-weight: 650;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+.revelations-module .rev-guide .guide-rail__step.is-current {
+  background: linear-gradient(90deg, rgba(109, 214, 255, 0.24), rgba(80, 60, 160, 0.35) 60%, var(--guide-surface));
 }
 
-/* Tablet portrait: slimmer rail, same two-pane reading layout. */
-@media (max-width: 980px) {
-  .revelations-module .rev-guide-grid {
-    grid-template-columns: minmax(220px, 250px) minmax(0, 1fr);
-    gap: 1rem;
-  }
-
-  .revelations-module .rev-step-panel {
-    padding: 1.35rem 1.3rem 1.2rem;
-  }
-
-  .revelations-module .rev-step-nav__title {
-    display: -webkit-box;
-    line-height: 1.25;
-    white-space: normal;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-  }
+.revelations-module .rev-guide .guide-actions__done:not(.is-done) {
+  background: linear-gradient(135deg, #8fe3ff, #a98bff);
 }
 
-/* Phones: the 12 steps become one swipeable chip row above the step, not half a screen of list. */
 @media (max-width: 760px) {
-  .revelations-module .rev-guide-grid {
-    grid-template-columns: 1fr;
-    gap: 0.85rem;
+  .revelations-module .rev-main-guide {
+    padding-top: 0.6rem;
   }
 
-  .revelations-module .rev-step-list {
-    position: static;
-    margin: 0 -0.85rem;
+  .revelations-module .rev-run-header {
+    display: block;
+    padding: 0.65rem 0.8rem;
   }
 
-  .revelations-module .rev-step-list ol {
-    display: flex;
-    gap: 0.45rem;
-    padding: 0.15rem 0.85rem 0.35rem;
-    overflow-x: auto;
-    overscroll-behavior-inline: contain;
-    scroll-snap-type: x proximity;
-    scroll-padding-inline: 0.85rem;
-    scrollbar-width: none;
-    -webkit-mask-image: linear-gradient(90deg, transparent, #000 0.85rem, #000 calc(100% - 0.85rem), transparent);
-    mask-image: linear-gradient(90deg, transparent, #000 0.85rem, #000 calc(100% - 0.85rem), transparent);
+  .revelations-module .rev-run-header h2 {
+    font-size: 1.55rem;
   }
 
-  .revelations-module .rev-step-list ol::-webkit-scrollbar {
-    display: none;
+  .revelations-module .rev-run-header > p {
+    margin-top: 0.3rem;
+    font-size: 0.84rem;
+    text-align: left;
   }
 
-  .revelations-module .rev-step-list ol::before,
-  .revelations-module .rev-step-list ol::after {
-    display: none;
-  }
-
-  .revelations-module .rev-step-list li {
-    flex: 0 0 auto;
-    scroll-snap-align: start;
-  }
-
-  .revelations-module .rev-step-button {
-    width: 9.75rem;
-    min-height: 58px;
-    grid-template-columns: 1.75rem minmax(0, 1fr);
-    gap: 0.55rem;
-    padding: 0.45rem 0.6rem 0.45rem 0.5rem;
-    border-color: var(--rev-line);
-    background: rgba(255, 255, 255, 0.03);
-  }
-
-  .revelations-module .rev-step-button__num {
-    width: 1.75rem;
-    height: 1.75rem;
-  }
-
-  .revelations-module .rev-step-button__title {
-    display: -webkit-box;
-    overflow: hidden;
-    font-size: 0.76rem;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-  }
-
-  .revelations-module .rev-step-panel {
-    padding: 1.2rem 1rem 1rem;
-    border-radius: 14px;
-  }
-
-  .revelations-module .rev-step-panel h3 {
-    margin-top: 0.75rem;
-    font-size: 1.45rem;
-  }
-
-  .revelations-module .rev-step-detail {
-    font-size: 0.96rem;
-  }
-
-  .revelations-module .rev-step-controls {
-    gap: 0.5rem;
-    padding-top: 1.2rem;
-  }
-
-  .revelations-module .rev-step-nav {
-    min-height: 62px;
-    padding: 0.55rem 0.75rem;
-  }
-
-  .revelations-module .rev-step-nav__title {
-    display: -webkit-box;
-    font-size: 0.8rem;
-    line-height: 1.25;
-    white-space: normal;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
+  .revelations-module .rev-guide {
+    margin-top: 0.6rem;
   }
 }
 
-/* Landscape phones: keep the rail beside the step; it scrolls on its own within the short viewport. */
 @media (max-height: 500px) and (orientation: landscape) {
-  .revelations-module .rev-guide-grid {
-    grid-template-columns: minmax(200px, 240px) minmax(0, 1fr);
-    gap: 0.75rem;
+  .revelations-module .rev-run-header {
+    padding-block: 0.4rem;
   }
 
-  .revelations-module .rev-step-list {
-    position: sticky;
-    top: calc(var(--hub-nav-height) + 0.5rem);
-    max-height: calc(100vh - var(--hub-nav-height) - 1rem);
-    margin: 0;
-    overflow-y: auto;
-    scrollbar-width: thin;
+  .revelations-module .rev-run-header h2 {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
   }
 
-  .revelations-module .rev-step-list ol {
-    --rev-rail-x: 1.25rem;
-
-    display: block;
-    padding: 0;
-    overflow: visible;
-    -webkit-mask-image: none;
-    mask-image: none;
-  }
-
-  .revelations-module .rev-step-list ol::before,
-  .revelations-module .rev-step-list ol::after {
-    display: block;
-  }
-
-  .revelations-module .rev-step-button {
-    width: 100%;
-    min-height: 34px;
-    padding-block: 0.2rem;
-    border-color: transparent;
-    background: transparent;
-  }
-
-  .revelations-module .rev-step-button.active {
-    border-color: rgba(109, 214, 255, 0.28);
-    background: var(--rev-active);
-  }
-
-  .revelations-module .rev-step-button__num {
-    width: 1.6rem;
-    height: 1.6rem;
-  }
-
-  .revelations-module .rev-step-button__title {
-    display: block;
-    font-size: 0.74rem;
-  }
-
-  .revelations-module .rev-step-panel {
-    padding: 1rem 1.05rem 0.95rem;
-  }
-
-  .revelations-module .rev-step-panel h3 {
-    font-size: 1.3rem;
-  }
-
-  .revelations-module .rev-step-detail {
-    font-size: 0.9rem;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .revelations-module .rev-step-list ol::after,
-  .revelations-module .rev-step-progress span {
-    transition: none;
+  .revelations-module .rev-run-header > p {
+    font-size: 0.82rem;
+    text-align: left;
   }
 }

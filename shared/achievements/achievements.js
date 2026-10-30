@@ -29,7 +29,7 @@ export const MAPS = {
   'der-eisendrache': { name: 'Der Eisendrache', accent: '#7bcfff', route: '/maps/der-eisendrache', guideId: 'der-eisendrache', keys: ['zh-de-safe-code'] },
   'zetsubou-no-shima': { name: 'Zetsubou No Shima', accent: '#69e6ad', route: '/maps/zetsubou-no-shima', guideId: 'zetsubou-no-shima', keys: [] },
   'gorod-krovi': { name: 'Gorod Krovi', accent: '#ff7a52', route: '/maps/gorod-krovi', guideId: 'gorod-krovi', keys: [] },
-  revelations: { name: 'Revelations', accent: '#8fe3ff', route: '/maps/revelations', guideId: null, keys: [] },
+  revelations: { name: 'Revelations', accent: '#8fe3ff', route: '/maps/revelations', guideId: 'revelations', keys: ['zh-rev-kronorium-symbols'] },
 };
 
 /*

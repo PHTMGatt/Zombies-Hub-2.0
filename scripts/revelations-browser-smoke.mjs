@@ -54,41 +54,56 @@ try {
     );
     assert.deepEqual(sectionLinksOutsideHeader, [], `Revelations renders a second section navigation: ${sectionLinksOutsideHeader.join(', ')}`);
     assert.equal(await page.locator('.rev-header__nav a').count(), 5, 'Header nav reaches all five Revelations sections');
-    assert.equal(await page.locator('.rev-step-button').count(), 12, 'Revelations keeps all 12 Easter Egg steps');
+    await page.evaluate(() => localStorage.removeItem('zh-guide-progress:revelations'));
+    await page.reload({ waitUntil: 'networkidle' });
+    assert.equal(await page.locator('.guide-rail__step').count(), 12, 'Revelations keeps all 12 Easter Egg steps');
     await assertCssImageLoaded(page, mainRoute, '.rev-header');
     await assertCssImageLoaded(page, mainRoute, '.rev-backdrop');
     await assertNoHorizontalOverflow(page, mainRoute);
+    const step = (title) => page.locator('.guide-rail__step', { hasText: title }).click();
 
-    await page.getByRole('button', { name: /Kronorium \+ Four Eggs/ }).click();
-    let stepText = await page.locator('.rev-step-panel').innerText();
-    assert.match(stepText, /incubation nests|pustules/i);
+    // Servant step: the in-game captures for each blue rock, one tab per map.
+    await step('Upgrade the Servant');
+    await page.getByRole('tab', { name: 'Mob of the Dead' }).click();
+    const shot = page.locator('.guide-step .gref--image img').first();
+    await shot.scrollIntoViewIfNeeded();
+    assert(await shot.evaluate(img => img.complete && img.naturalWidth > 0), 'Servant rock capture loads');
+
+    await step('Kronorium + four eggs');
+    let stepText = await page.locator('.guide-step').innerText();
+    assert.match(stepText, /nest|pustule/i);
     assert.match(stepText, /10 zombie souls/i);
-    assert(await page.getByRole('link', { name: /Open Egg Locations/ }).isVisible());
+    assert(await page.getByRole('link', { name: /Egg locations/ }).isVisible());
 
-    await page.getByRole('button', { name: /Symbol Room \+ Summoning Key/ }).click();
-    stepText = await page.locator('.rev-step-panel').innerText();
+    await step('Symbol room');
+    stepText = await page.locator('.guide-step').innerText();
     assert.match(stepText, /all players/i);
     assert.match(stepText, /Kino projector/i);
     assert.match(stepText, /purple rift|purple circle/i);
+    await page.getByLabel('1st').fill('skull');
 
-    await page.getByRole('button', { name: /Seven Summoning Key Throws/ }).click();
-    stepText = await page.locator('.rev-step-panel').innerText();
-    assert.match(stepText, /Mob of the Dead: poster/i);
+    await step('Seven key throws');
+    stepText = await page.locator('.guide-step').innerText();
+    assert.match(stepText, /Mob of the Dead\s*Poster/i);
     assert.match(stepText, /MG42/i);
     assert.match(stepText, /Focusing Stone/i);
-    assert(await page.getByRole('link', { name: /Open Summoning Key Throws/ }).isVisible());
+    assert(await page.getByRole('link', { name: /Throw videos/ }).isVisible());
 
-    // Previous / Next walk the run and stop at its ends.
+    // Previous / Next walk the run and stop at its ends; the place and the symbol note survive a reload.
     const nextStep = page.getByRole('button', { name: 'Next step' });
     const previousStep = page.getByRole('button', { name: 'Previous step' });
     await nextStep.click();
-    assert.equal(await page.locator('.rev-step-panel h3').innerText(), 'Final Boss — Shadowman');
+    assert.equal(await page.locator('.guide-step h3').innerText(), 'Final boss — Shadowman');
     assert(await nextStep.isDisabled(), 'Next is disabled on the final step');
     await previousStep.click();
-    assert.equal(await page.locator('.rev-step-panel h3').innerText(), 'Seven Summoning Key Throws');
-    assert.equal(await page.locator('.rev-step-button[aria-current="step"]').count(), 1, 'Exactly one step is current');
+    assert.equal(await page.locator('.guide-step h3').innerText(), 'Seven key throws');
+    assert.equal(await page.locator('.guide-rail__step[aria-current="step"]').count(), 1, 'Exactly one step is current');
+    await page.reload({ waitUntil: 'networkidle' });
+    assert.equal(await page.locator('.guide-step h3').innerText(), 'Seven key throws', 'Revelations remembers the current step');
+    await step('Symbol room');
+    assert.equal(await page.getByLabel('1st').inputValue(), 'skull', 'Kronorium symbol note survives a reload');
 
-    await page.locator('.rev-step-button').first().click();
+    await page.locator('.guide-rail__step').first().click();
     assert(await previousStep.isDisabled(), 'Previous is disabled on the first step');
     await page.evaluate(() => {
       document.activeElement?.blur();
@@ -187,7 +202,7 @@ try {
       const footer = document.querySelector('.rev-footer').getBoundingClientRect();
       const page = document.querySelector('.rev-stage').getBoundingClientRect();
       const header = document.querySelector('.rev-header').getBoundingClientRect();
-      const firstPanel = document.querySelector('.rev-shell').getBoundingClientRect();
+      const firstPanel = document.querySelector('.rev-shell, .rev-run').getBoundingClientRect();
       return {
         gapBelowFooter: document.documentElement.scrollHeight - (footer.bottom + window.scrollY),
         pageToFooter: footer.top - page.bottom,

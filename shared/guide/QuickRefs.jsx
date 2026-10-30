@@ -32,8 +32,9 @@ export default function QuickRefs({ items: allItems, steps, label }) {
 
   return (
     <>
-      <button type="button" className="guide-quickrefs" onClick={open} aria-haspopup="dialog">
-        Quick refs
+      <button type="button" className="guide-quickrefs" onClick={open} aria-haspopup="dialog" aria-label="Quick refs">
+        <span className="guide-quickrefs__long">Quick refs</span>
+        <span className="guide-quickrefs__short" aria-hidden="true">Refs</span>
       </button>
       <dialog
         ref={dialogRef}
