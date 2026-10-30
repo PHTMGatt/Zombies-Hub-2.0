@@ -19,7 +19,7 @@
 }
 
 .de-header__art {
-  background: url('../../assets/images/DE-Header1.jpg') center 44% / cover no-repeat;
+  background: url('../../assets/images/DE-Header1.webp') center 44% / cover no-repeat;
   filter: saturate(0.78) contrast(1.06) brightness(0.6);
   transform: scale(1.02);
 }
