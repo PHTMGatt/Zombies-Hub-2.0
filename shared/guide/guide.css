@@ -154,6 +154,10 @@
   min-width: 0;
 }
 
+.guide-rail__hint {
+  display: none;
+}
+
 .guide-rail ol {
   display: grid;
   gap: 0.3rem;
@@ -880,6 +884,22 @@
 
   .guide-rail ol::-webkit-scrollbar {
     display: none;
+  }
+
+  /* The row scrolls sideways: fade its edges and label it so the extra steps are obvious. */
+  .guide-rail ol {
+    -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 2.5rem), transparent);
+    mask-image: linear-gradient(90deg, #000 calc(100% - 2.5rem), transparent);
+  }
+
+  .guide-rail__hint {
+    display: block;
+    margin: 0 0 0.3rem 0.15rem;
+    color: var(--guide-muted);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
   }
 
   .guide-rail li {

@@ -66,10 +66,11 @@ export default function GuideSteps({ guideId, label, steps, depths, depth: contr
       firstRender.current = false;
       return;
     }
-    // When the step changed from far down the page, bring the new step's top back on screen.
+    // Bring the new step on screen when its top is hidden above, or sits so low that only its title shows
+    // (phones, where the step row and toolbar come first).
     const top = stepRef.current?.getBoundingClientRect().top ?? 0;
     const offset = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--hub-nav-height')) || 0;
-    if (top < offset) {
+    if (top < offset || top > window.innerHeight * 0.6) {
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       stepRef.current.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
     }
@@ -108,6 +109,7 @@ export default function GuideSteps({ guideId, label, steps, depths, depth: contr
       {override ?? (
       <div className="guide-body">
         <nav className="guide-rail" aria-label={`${label} steps`}>
+          <span className="guide-rail__hint" aria-hidden="true">Swipe · {steps.length} steps →</span>
           <ol ref={railRef}>
             {steps.map((item, itemIndex) => {
               const done = progress.isDone(item.id);

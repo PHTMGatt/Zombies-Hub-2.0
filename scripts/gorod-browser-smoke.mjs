@@ -46,6 +46,23 @@ try {
     assert.doesNotMatch(mainText, /motherboard/i);
     await assertHeaderArtLoaded(page, mainRoute);
     await assertNoHorizontalOverflow(page, mainRoute);
+
+    // Tracked guide: 11 steps, the Valve Solver works inside its step, progress survives a reload.
+    await page.evaluate(() => window.localStorage.clear());
+    await page.reload({ waitUntil: 'networkidle' });
+    assert.equal(await page.locator('.guide-rail__step').count(), 11, 'Gorod guide keeps all 11 steps');
+    await page.locator('.guide-rail__step').nth(4).click();
+    assert.match(await page.locator('.guide-step h3').innerText(), /Valve network/);
+    const valveSelects = page.locator('.guide-step .gorod-valve-fields select');
+    await valveSelects.nth(0).selectOption('Armory');
+    await valveSelects.nth(1).selectOption('Dragon Command');
+    assert((await page.locator('.guide-step .gorod-valve-setting').count()) > 0, 'Embedded Valve Solver returns settings');
+    await page.getByRole('button', { name: 'Mark step done' }).click();
+    assert.match(await page.locator('.guide-step h3').innerText(), /KRONOS/, 'Marking done advances to the next step');
+    await page.reload({ waitUntil: 'networkidle' });
+    assert.match(await page.locator('.guide-step h3').innerText(), /KRONOS/, 'Current step survives a reload');
+    assert.match(await page.locator('.guide-progress__count').innerText(), /1 \/ 11/);
+    await page.evaluate(() => window.localStorage.clear());
     results.push({ width, route: mainRoute, passed: true });
 
     errors.length = 0;

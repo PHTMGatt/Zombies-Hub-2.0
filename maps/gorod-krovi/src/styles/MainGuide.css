@@ -1,13 +1,9 @@
+/* Love and War: a slim intro strip, then the tracked guide directly on the battlefield backdrop
+   (no outer card around it, so the step is never a box inside a box). */
 .gorod-main-guide {
-  width: min(100% - 1.5rem, 1080px);
-  margin: 1rem auto 1.8rem;
-  padding: 1rem 1.1rem 1.35rem;
+  width: min(100% - 1.5rem, 1240px);
+  margin: 1rem auto 2rem;
   color: #fff4ee;
-  border: 1px solid rgba(255, 112, 77, 0.28);
-  border-radius: 16px;
-  background: rgba(18, 8, 5, 0.62);
-  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.38), 0 0 26px rgba(255, 112, 77, 0.1);
-  backdrop-filter: blur(14px) saturate(1.06);
 }
 
 .gorod-run-header {
@@ -15,152 +11,204 @@
   align-items: end;
   justify-content: space-between;
   gap: 1rem;
-  padding: 0.1rem 0 0.7rem;
-  border-bottom: 1px solid rgba(255, 112, 77, 0.17);
+  padding: 0.85rem 1rem 0.75rem;
+  border-left: 4px solid #ff704d;
+  border-radius: 0 12px 12px 0;
+  background: linear-gradient(90deg, rgba(40, 12, 6, 0.86), rgba(14, 7, 5, 0.6));
 }
 
 .gorod-run-header span {
   display: block;
-  margin-bottom: 0.08rem;
+  margin-bottom: 0.1rem;
   color: #ff704d;
-  font-size: 0.58rem;
+  font-size: 0.7rem;
   font-weight: 850;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.18em;
 }
 
 .gorod-run-header h2 {
   margin: 0;
   color: #fff1ea;
-  font-size: clamp(1.65rem, 3vw, 2.2rem);
+  font-size: clamp(1.8rem, 3.2vw, 2.4rem);
   line-height: 1;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
 }
 
 .gorod-run-header > p {
-  max-width: 430px;
+  max-width: 470px;
   margin: 0;
   color: #e0c7bd;
-  font-size: 0.78rem;
-  line-height: 1.35;
+  font-size: 0.92rem;
+  line-height: 1.4;
   text-align: right;
 }
 
 .gorod-run-alert {
-  display: flex;
-  gap: 0.45rem;
-  align-items: baseline;
-  margin: 0.65rem 0 0.25rem;
-  padding: 0.5rem 0.6rem;
-  border-left: 3px solid #ff704d;
-  border-radius: 0 8px 8px 0;
-  background: rgba(72, 20, 10, 0.62);
+  margin: 0.6rem 0 0;
+  border-radius: 10px;
+  background: rgba(72, 20, 10, 0.55);
   color: #e1cbc2;
-  font-size: 0.72rem;
-  line-height: 1.35;
-}
-
-.gorod-run-alert strong {
-  flex: 0 0 auto;
-  color: #ffb08f;
-}
-
-.gorod-run-flow {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0 0.85rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.gorod-run-flow li {
-  min-width: 0;
-  display: grid;
-  grid-template-columns: 32px minmax(0, 1fr);
-  gap: 0.55rem;
-  align-items: start;
-  padding: 0.78rem 0.25rem;
-  border-bottom: 1px solid rgba(255, 112, 77, 0.11);
-}
-
-.gorod-run-number {
-  width: 30px;
-  height: 30px;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  color: #1b0904;
-  background: linear-gradient(145deg, #ffb28c, #ff6843);
-  font-size: 0.62rem;
-  font-weight: 900;
-}
-
-.gorod-run-flow h3 {
-  margin: 0;
-  color: #fff4ee;
-  font-size: 0.9rem;
-  line-height: 1.2;
-}
-
-.gorod-run-flow p {
-  margin: 0.2rem 0 0;
-  color: #dbc2b8;
-  font-size: 0.74rem;
+  font-size: 0.92rem;
   line-height: 1.45;
 }
 
-.gorod-run-flow a {
-  display: inline-flex;
-  margin-top: 0.28rem;
+.gorod-run-alert summary {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 0.85rem;
   color: #ffb08f;
-  font-size: 0.7rem;
   font-weight: 800;
-  text-decoration: none;
+  cursor: pointer;
+  list-style: none;
 }
 
-.gorod-run-flow a:hover {
-  color: #ffe0d2;
-  text-decoration: underline;
+.gorod-run-alert summary::-webkit-details-marker {
+  display: none;
+}
+
+.gorod-run-alert summary::before {
+  content: '▸';
+  transition: transform 0.2s ease;
+}
+
+.gorod-run-alert[open] summary::before {
+  transform: rotate(90deg);
+}
+
+.gorod-run-alert ul {
+  display: grid;
+  gap: 0.3rem;
+  margin: 0;
+  padding: 0 1rem 0.75rem 2rem;
+}
+
+.gorod-run-alert li {
+  margin: 0;
+}
+
+.gorod-guide {
+  margin-top: 1rem;
+}
+
+/* Gorod theme for the shared step guide: ember on warm charcoal, stencil-cut tags. */
+.gorod-guide .guide {
+  --guide-accent: #ff7a52;
+  --guide-accent-ink: #1b0904;
+  --guide-ink: #fff4ee;
+  --guide-text: #ecdcd5;
+  --guide-muted: #c4aaa0;
+  --guide-surface: rgba(16, 8, 6, 0.8);
+  --guide-surface-2: rgba(255, 112, 77, 0.07);
+  --guide-line: rgba(255, 112, 77, 0.2);
+  --guide-done: #9be27a;
+  --guide-sticky-top: calc(var(--hub-nav-height) + 88px + 0.75rem);
+}
+
+.gorod-guide .guide-step {
+  border-top: 0;
+  background:
+    radial-gradient(ellipse 70% 55% at 100% 0%, rgba(255, 92, 48, 0.14), transparent 70%),
+    var(--guide-surface);
+  box-shadow: inset 0 3px 0 0 #ff704d, 0 18px 40px rgba(0, 0, 0, 0.4);
+}
+
+.gorod-guide .guide-step__meta {
+  letter-spacing: 0.16em;
+}
+
+.gorod-guide .guide-rail__step.is-current {
+  background: linear-gradient(90deg, rgba(255, 92, 48, 0.32), rgba(110, 22, 10, 0.4) 60%, var(--guide-surface));
+  box-shadow: 0 0 18px rgba(255, 92, 48, 0.18);
+}
+
+.gorod-guide .guide-rail__step.is-current .guide-rail__num,
+.gorod-guide .guide-actions__done:not(.is-done) {
+  background: linear-gradient(145deg, #ffb28c, #ff6843);
+}
+
+.gorod-guide .gref-sequence span {
+  border: 0;
+  border-radius: 2px;
+  background: linear-gradient(180deg, rgba(255, 112, 77, 0.26), rgba(120, 30, 14, 0.4));
+  clip-path: polygon(9px 0, 100% 0, calc(100% - 9px) 100%, 0 100%);
+  padding-inline: 1.15rem;
+  letter-spacing: 0.02em;
+}
+
+.gorod-guide .gref-facts > div {
+  border-radius: 0 8px 8px 0;
+}
+
+/* The embedded Valve Solver keeps its own look but sheds the page-level frame. */
+.gorod-guide .gorod-valve-tool.is-compact .gorod-valve-empty,
+.gorod-guide .gorod-valve-tool.is-compact .gorod-valve-solution {
+  margin-top: 0.6rem;
+}
+
+@media (max-width: 980px) {
+  .gorod-guide .guide {
+    --guide-sticky-top: calc(var(--hub-nav-height) + 100px + 0.75rem);
+  }
 }
 
 @media (max-width: 720px) {
   .gorod-main-guide {
-    width: min(100% - 1rem, 680px);
-    margin-top: 0.7rem;
-    padding: 0.8rem 0.85rem 1.05rem;
-    border-radius: 13px;
+    width: min(100% - 1rem, 720px);
+    margin-top: 0.6rem;
   }
 
   .gorod-run-header {
     display: block;
+    padding: 0.7rem 0.8rem 0.65rem;
   }
 
   .gorod-run-header > p {
-    margin-top: 0.25rem;
+    margin-top: 0.3rem;
+    font-size: 0.86rem;
     text-align: left;
   }
 
-  .gorod-run-flow {
-    grid-template-columns: 1fr;
+  .gorod-run-header span {
+    display: none;
+  }
+
+  .gorod-run-header h2 {
+    font-size: 1.6rem;
+  }
+
+  .gorod-run-header > p {
+    font-size: 0.82rem;
+  }
+
+  .gorod-guide {
+    margin-top: 0.7rem;
   }
 }
 
-@media (max-width: 480px) {
-  .gorod-run-alert {
-    display: block;
+@media (max-height: 500px) and (orientation: landscape) {
+  .gorod-main-guide {
+    margin-top: 0.5rem;
   }
 
-  .gorod-run-alert strong {
-    display: block;
-    margin-bottom: 0.12rem;
+  .gorod-run-header {
+    padding-block: 0.5rem;
   }
-}
 
-/* Touch: the per-phase link is the main way into each focused page, so give it a real tap target. */
-@media (pointer: coarse), (max-width: 720px) {
-  .gorod-run-flow a {
-    min-height: 36px;
-    align-items: center;
-    margin-top: 0.1rem;
-    font-size: 0.78rem;
+  .gorod-run-header span {
+    display: none;
+  }
+
+  .gorod-run-header h2 {
+    font-size: 1.4rem;
+  }
+
+  .gorod-run-header > p {
+    font-size: 0.8rem;
+  }
+
+  .gorod-guide .guide {
+    --guide-sticky-top: calc(var(--hub-nav-height) + 44px + 0.5rem);
   }
 }

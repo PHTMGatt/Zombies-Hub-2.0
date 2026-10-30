@@ -1,36 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import GuideSteps from '../../../../shared/guide/GuideSteps';
+import gorodGuideSteps from '../data/gorodGuideSteps';
 import { gorodPrerequisites } from '../data/gorodRun';
 import '../styles/MainGuide.css';
-
-const BASE = '/maps/gorod-krovi';
-
-const phases = [
-  {
-    title: 'Open the Dragon Network',
-    summary: 'Power → 3 Groph Modules → Dragon Network → ride the dragon → Dragon Strike → egg / Gauntlet setup.',
-    to: `${BASE}/buildables`,
-    link: 'Gear + Buildables',
-  },
-  {
-    title: 'Solve Valves + Spell KRONOS',
-    summary: 'Solve the valves → release the Master Code Cylinder → insert it at S.O.P.H.I.A. → spell KRONOS.',
-    to: `${BASE}/valves`,
-    link: 'Valve Solver',
-  },
-  {
-    title: 'Trophies + S.O.P.H.I.A. Challenges',
-    summary: 'Collect 6 trophies → place them at Dragon Command → finish the five randomized challenges → complete the always-last Group 935 keycard lockdown.',
-    to: `${BASE}/trophies`,
-    link: 'Trophies + Challenges',
-  },
-  {
-    title: 'Power Core + Boss Fight',
-    summary: 'Take the Power Core → use the Gauntlet Whelp at spawn → open the boss route → kill the dragon → destroy Nikolai’s mech weak points.',
-    to: `${BASE}/boss`,
-    link: 'Boss Fight',
-  },
-];
 
 const MainGuide = () => (
   <div className="gorod-main-guide">
@@ -39,26 +11,17 @@ const MainGuide = () => (
         <span>MAIN EASTER EGG</span>
         <h2>Love and War</h2>
       </div>
-      <p>Four phases. Use the solver and reference tabs only when the run reaches them.</p>
+      <p>Eleven steps from the Dragon Shield to Nikolai. The Group 935 keycard lockdown is always the last S.O.P.H.I.A. challenge.</p>
     </header>
 
-    <div className="gorod-run-alert">
-      <strong>Before you start:</strong>
-      <span>{gorodPrerequisites.join(' ')}</span>
-    </div>
+    <details className="gorod-run-alert">
+      <summary>Before you start</summary>
+      <ul>{gorodPrerequisites.map((item) => <li key={item}>{item}</li>)}</ul>
+    </details>
 
-    <ol className="gorod-run-flow">
-      {phases.map((phase, index) => (
-        <li key={phase.title}>
-          <span className="gorod-run-number">{String(index + 1).padStart(2, '0')}</span>
-          <div>
-            <h3>{phase.title}</h3>
-            <p>{phase.summary}</p>
-            <Link to={phase.to}>{phase.link} →</Link>
-          </div>
-        </li>
-      ))}
-    </ol>
+    <div className="gorod-guide">
+      <GuideSteps guideId="gorod-krovi" label="Love and War" steps={gorodGuideSteps} />
+    </div>
   </div>
 );
 
