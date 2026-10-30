@@ -27,7 +27,7 @@ export const MAPS = {
   'mob-of-the-dead': { name: 'Mob of the Dead', accent: '#f0b321', route: '/maps/mob-of-the-dead', guideId: 'mob-of-the-dead', keys: [] },
   'shadows-of-evil': { name: 'Shadows of Evil', accent: '#aa79df', route: '/maps/shadows-of-evil', guideId: null, keys: [] },
   'der-eisendrache': { name: 'Der Eisendrache', accent: '#7bcfff', route: '/maps/der-eisendrache', guideId: 'der-eisendrache', keys: ['zh-de-safe-code'] },
-  'zetsubou-no-shima': { name: 'Zetsubou No Shima', accent: '#69e6ad', route: '/maps/zetsubou-no-shima', guideId: null, keys: [] },
+  'zetsubou-no-shima': { name: 'Zetsubou No Shima', accent: '#69e6ad', route: '/maps/zetsubou-no-shima', guideId: 'zetsubou-no-shima', keys: [] },
   'gorod-krovi': { name: 'Gorod Krovi', accent: '#ff7a52', route: '/maps/gorod-krovi', guideId: 'gorod-krovi', keys: [] },
   revelations: { name: 'Revelations', accent: '#8fe3ff', route: '/maps/revelations', guideId: null, keys: [] },
 };
