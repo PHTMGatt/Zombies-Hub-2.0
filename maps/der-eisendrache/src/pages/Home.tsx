@@ -1,5 +1,6 @@
 import React from 'react';
 import GuideSteps from '../../../../shared/guide/GuideSteps';
+import CompleteEasterEgg from '../../../../shared/achievements/CompleteEasterEgg';
 import deGuideSteps from '../data/deGuideSteps';
 import '../styles/pages/Home.css';
 import '../styles/pages/HomeCompact.css';
@@ -20,7 +21,7 @@ const Home: React.FC = () => (
     </details>
 
     <div className="de-guide">
-      <GuideSteps label="My Brother’s Keeper" steps={deGuideSteps} />
+      <GuideSteps label="My Brother’s Keeper" steps={deGuideSteps} footer={<CompleteEasterEgg mapId="der-eisendrache" />} />
     </div>
   </div>
 );

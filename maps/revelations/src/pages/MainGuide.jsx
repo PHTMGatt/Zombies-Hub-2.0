@@ -1,5 +1,6 @@
 import React from 'react';
 import GuideSteps from '../../../../shared/guide/GuideSteps';
+import CompleteEasterEgg from '../../../../shared/achievements/CompleteEasterEgg';
 import revGuideSteps from '../data/revGuideSteps';
 import '../styles/MainGuide.css';
 
@@ -12,7 +13,7 @@ const MainGuide = () => (
       </header>
 
       <div className="rev-guide">
-        <GuideSteps label="For The Good Of All" steps={revGuideSteps} />
+        <GuideSteps label="For The Good Of All" steps={revGuideSteps} footer={<CompleteEasterEgg mapId="revelations" />} />
       </div>
     </div>
   </div>

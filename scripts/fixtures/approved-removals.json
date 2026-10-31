@@ -420,5 +420,23 @@
     ],
     "reason": "Removed Origins Low / Medium / High depth switch and its Speedrun-mode button.",
     "spec": "§4.1, §4.4"
+  },
+  {
+    "text": "Tracked guides check off as you play; the rest link to a video or the map’s info.",
+    "layer": "rendered",
+    "routes": [
+      "/easter-eggs"
+    ],
+    "reason": "Hub copy described the removed step tracker; now \"Full guides walk every step; …\".",
+    "spec": "§4.1"
+  },
+  {
+    "text": "Tracked guide",
+    "layer": "rendered",
+    "routes": [
+      "/easter-eggs"
+    ],
+    "reason": "Card badge named the removed tracker; now \"Full guide\" (or \"✓ Complete\" once earned). Progress badges (\"Step N / M\") removed.",
+    "spec": "§4.1"
   }
 ]

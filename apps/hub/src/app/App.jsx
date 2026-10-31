@@ -7,6 +7,7 @@ import { isDedicatedMapPath } from '../data/dedicatedGuides';
 import { routeTitle } from './routeMetadata';
 import RouteBoundary from '../../../../shared/ui/RouteBoundary';
 import AchievementToast from '../../../../shared/achievements/AchievementToast';
+import { backfillLegacyMainAchievements } from '../../../../shared/achievements/achievements';
 
 function RootLayout() {
   const { pathname, hash } = useLocation();
@@ -24,6 +25,11 @@ function RootLayout() {
 
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
   }, [pathname, hash]);
+
+  // Runs finished under the old step tracker are credited once, silently.
+  useEffect(() => {
+    backfillLegacyMainAchievements();
+  }, []);
 
   useEffect(() => {
     const pathChanged = previousPathRef.current !== pathname;

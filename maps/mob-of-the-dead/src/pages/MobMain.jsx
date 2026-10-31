@@ -1,5 +1,6 @@
 import React from 'react';
 import GuideSteps from '../../../../shared/guide/GuideSteps';
+import CompleteEasterEgg from '../../../../shared/achievements/CompleteEasterEgg';
 import { mobPrerequisites } from '../data/mobGuide';
 import mobGuideSteps from '../data/mobGuideSteps';
 import '../styles/MobMain.css';
@@ -17,7 +18,7 @@ const MobMain = () => (
     </details>
 
     <div className="mob-guide">
-      <GuideSteps label="Pop Goes the Weasel" steps={mobGuideSteps} />
+      <GuideSteps label="Pop Goes the Weasel" steps={mobGuideSteps} footer={<CompleteEasterEgg mapId="mob-of-the-dead" />} />
     </div>
   </div>
 );

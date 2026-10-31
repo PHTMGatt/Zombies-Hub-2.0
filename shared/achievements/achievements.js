@@ -1,13 +1,12 @@
 import { GUIDE_PREFIX, progressKey, read, remove, storedKeys, write } from '../storage';
 
 /*
- * Zombies Hub achievements and local progress, all kept in this browser (localStorage).
- *
- * Two separate records:
- *   run progress        – each guide's `zh-guide-progress:<guideId>` record plus per-map tool notes.
- *   achievement history – `zh-achievements`: { v: 1, unlocked: { [achievementId]: { at: ISO date | null } },
- *                         checked: [mapIds already credited or reset] }.
- * Resetting a run never touches achievement history; "Reset achievements" is its own explicit action.
+ * Zombies Hub achievements, kept in this browser (localStorage):
+ *   `zh-achievements`: { v: 1, unlocked: { [achievementId]: { at: ISO date | null } },
+ *                        checked: [mapIds already credited or reset] }.
+ * A main Easter Egg is recorded by the player's own "I completed this Easter Egg" tap. Guides keep no
+ * step progress; old `zh-guide-progress:*` records are read once to credit finished runs, then ignored.
+ * Saved in-game notes (MAPS[*].keys) belong to their tools and are never cleared from here.
  *
  * Achievement ids are `<mapId>/<name>` and carry a `kind`, so side Easter Eggs, speedruns, wonder
  * weapons and challenges can be added to ACHIEVEMENTS later without changing the stored shape.
@@ -19,8 +18,8 @@ export const CHANGE_EVENT = 'zh-achievements-change';
 export const PROGRESS_RESET_EVENT = 'zh-progress-reset';
 
 /*
- * The seven dedicated maps. `guideId` is the tracked guide (null until the map has one); `keys` are the
- * map's other saved run notes (cleared by "Reset map", kept out of achievement history).
+ * The seven dedicated maps. `guideId` names the map's old step-progress record (read only for the one-time
+ * legacy credit); `keys` lists the map's saved in-game notes, which stay until their own tool clears them.
  * Accents match each map's guide theme.
  */
 export const MAPS = {
@@ -124,46 +123,38 @@ export function backfillAchievement(id) {
   return true;
 }
 
-// Guide progress summary for the shelf: { done, total } from the saved record (total is written by the guide).
-export function guideProgress(mapId, record) {
-  const guideId = MAPS[mapId]?.guideId;
-  if (!guideId) return null;
-  const saved = record ?? read(progressKey(guideId), null);
-  const total = saved?.total ?? null;
-  if (!saved?.done) return { done: 0, total };
+/* ---- Old step-progress records (from before guides dropped progress tracking) ---- */
+
+const LEGACY_CHECKED_KEY = 'zh-legacy-progress-checked';
+const LEGACY_KEYS = ['zh-guide-mode', 'zh-origins-depth', LEGACY_CHECKED_KEY];
+
+const legacyRunFinished = (guideId) => {
+  const saved = read(progressKey(guideId), null);
+  if (!saved?.total || !saved.done) return false;
   const done = Object.keys(saved.done).filter((key) => !key.includes('/') && saved.done[key]).length;
-  // A step removed from a guide can linger in an old record; never report more than the guide has.
-  return { done: total ? Math.min(done, total) : done, total };
+  return done >= saved.total;
+};
+
+/*
+ * Once per browser: credit every map whose old progress record shows the whole Easter Egg done, silently,
+ * through backfillAchievement (which also respects "Reset achievements"). Returns how many were credited.
+ */
+export function backfillLegacyMainAchievements() {
+  if (read(LEGACY_CHECKED_KEY, false) === true) return 0;
+  let credited = 0;
+  Object.entries(MAPS).forEach(([mapId, map]) => {
+    const achievement = mainAchievementFor(mapId);
+    if (map.guideId && achievement && legacyRunFinished(map.guideId) && backfillAchievement(achievement.id)) credited += 1;
+  });
+  write(LEGACY_CHECKED_KEY, true);
+  return credited;
 }
 
-// Runs under way (some progress, not finished), most recently played first, for "Continue run".
-export function activeRuns() {
-  return Object.entries(MAPS)
-    .filter(([, map]) => map.guideId)
-    .map(([mapId, map]) => {
-      const saved = read(progressKey(map.guideId), null);
-      const progress = guideProgress(mapId, saved);
-      return { mapId, map, step: saved?.step ?? null, at: saved?.at ?? 0, ...progress };
-    })
-    .filter((run) => run.total && run.done < run.total && (run.done > 0 || (run.step ?? 1) > 1))
-    .sort((a, b) => b.at - a.at);
-}
-
-/* ---- Resets. Each one names exactly what it clears; none of them touches achievement history. ---- */
-
-export function resetMap(mapId) {
-  const map = MAPS[mapId];
-  if (!map) return;
-  if (map.guideId) remove(progressKey(map.guideId));
-  map.keys.forEach(remove);
-  window.dispatchEvent(new CustomEvent(PROGRESS_RESET_EVENT, { detail: { mapId, guideId: map.guideId } }));
-  announceChange();
-}
-
-export function resetAllProgress() {
+// "Clear old guide data": removes only records of the retired progress and mode machinery. Achievements
+// and saved in-game notes (character picks, symbols, safe codes) stay.
+export function clearOldGuideData() {
   storedKeys().filter((key) => key.startsWith(GUIDE_PREFIX)).forEach(remove);
-  Object.values(MAPS).forEach((map) => map.keys.forEach(remove));
-  window.dispatchEvent(new CustomEvent(PROGRESS_RESET_EVENT, { detail: { all: true } }));
+  LEGACY_KEYS.forEach(remove);
   announceChange();
 }
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import GuideSteps from '../../../../shared/guide/GuideSteps';
+import CompleteEasterEgg from '../../../../shared/achievements/CompleteEasterEgg';
 import zetsGuideSteps from '../data/zetsGuideSteps';
 // Guide.css also carries styles the cog and boss pages share (this route chunk always loads it).
 import '../styles/Guide.css';
@@ -13,7 +14,7 @@ const MainGuide = () => (
     </header>
 
     <div className="zets-guide">
-      <GuideSteps label="Seeds of Doubt" steps={zetsGuideSteps} />
+      <GuideSteps label="Seeds of Doubt" steps={zetsGuideSteps} footer={<CompleteEasterEgg mapId="zetsubou-no-shima" />} />
     </div>
   </div>
 );

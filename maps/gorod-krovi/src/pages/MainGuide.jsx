@@ -1,5 +1,6 @@
 import React from 'react';
 import GuideSteps from '../../../../shared/guide/GuideSteps';
+import CompleteEasterEgg from '../../../../shared/achievements/CompleteEasterEgg';
 import gorodGuideSteps from '../data/gorodGuideSteps';
 import { gorodPrerequisites } from '../data/gorodRun';
 import '../styles/MainGuide.css';
@@ -20,7 +21,7 @@ const MainGuide = () => (
     </details>
 
     <div className="gorod-guide">
-      <GuideSteps label="Love and War" steps={gorodGuideSteps} />
+      <GuideSteps label="Love and War" steps={gorodGuideSteps} footer={<CompleteEasterEgg mapId="gorod-krovi" />} />
     </div>
   </div>
 );
