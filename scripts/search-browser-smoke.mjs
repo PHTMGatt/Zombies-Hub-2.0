@@ -1,3 +1,4 @@
+import { VIEWPORTS } from './smoke-viewports.mjs';
 import { chromium } from 'playwright';
 import assert from 'node:assert/strict';
 
@@ -10,7 +11,7 @@ const results = [];
 
 const browser = await chromium.launch({ headless: true });
 try {
-  for (const viewport of [{ width: 1440, height: 900 }, { width: 360, height: 740 }]) {
+  for (const viewport of VIEWPORTS) {
     const context = await browser.newContext({ viewport });
     const page = await context.newPage();
     const errors = [];

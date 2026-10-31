@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 const base = process.env.SMOKE_BASE_URL || 'http://127.0.0.1:4173';
 const artifactDir = new URL('./artifacts/', new URL('../', import.meta.url));
 const reportUrl = new URL('browser-smoke.json', artifactDir);
-const widths = [390, 1440];
+import { VIEWPORTS } from './smoke-viewports.mjs';
 const results = [];
 
 const assertNoHorizontalOverflow = async (page, route) => {
@@ -34,8 +34,8 @@ await fs.mkdir(artifactDir, { recursive: true });
 
 const browser = await chromium.launch({ headless: true });
 try {
-  for (const width of widths) {
-    const context = await browser.newContext({ viewport: { width, height: 900 } });
+  for (const { name: viewportName, width, height } of VIEWPORTS) {
+    const context = await browser.newContext({ viewport: { width, height } });
     const page = await context.newPage();
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));

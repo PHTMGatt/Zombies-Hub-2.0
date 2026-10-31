@@ -4,7 +4,7 @@ import fs from 'node:fs/promises';
 
 const base = process.env.SMOKE_BASE_URL || 'http://127.0.0.1:4173';
 const reportUrl = new URL('./artifacts/browser-smoke.json', new URL('../', import.meta.url));
-const widths = [390, 1440];
+import { VIEWPORTS } from './smoke-viewports.mjs';
 const results = [];
 
 const assertNoHorizontalOverflow = async (page, route) => {
@@ -61,8 +61,8 @@ const guides = [
 
 const browser = await chromium.launch({ headless: true });
 try {
-  for (const width of widths) {
-    const context = await browser.newContext({ viewport: { width, height: 900 } });
+  for (const { name: viewportName, width, height } of VIEWPORTS) {
+    const context = await browser.newContext({ viewport: { width, height } });
     const page = await context.newPage();
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));

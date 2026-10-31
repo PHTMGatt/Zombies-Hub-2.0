@@ -1,3 +1,4 @@
+import { VIEWPORTS } from './smoke-viewports.mjs';
 import { chromium } from 'playwright';
 import assert from 'node:assert/strict';
 
@@ -35,7 +36,7 @@ const browser = await chromium.launch({ headless: true });
 const results = [];
 const check = (name) => results.push(name);
 try {
-  for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 }]) {
+  for (const viewport of VIEWPORTS) {
     const context = await browser.newContext({ viewport });
     await context.addInitScript(audioStub);
     const page = await context.newPage();

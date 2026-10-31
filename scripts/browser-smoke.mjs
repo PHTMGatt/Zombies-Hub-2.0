@@ -5,7 +5,7 @@ import fs from 'node:fs/promises';
 const base = process.env.SMOKE_BASE_URL || 'http://127.0.0.1:4173';
 const artifactsDir = new URL('../artifacts/', import.meta.url);
 const out = new URL('../artifacts/browser-smoke.json', import.meta.url);
-const widths = [390, 1440];
+import { VIEWPORTS } from './smoke-viewports.mjs';
 const routes = [
   '/',
   '/allmaps',
@@ -44,8 +44,8 @@ const assertImagesLoaded = async (page, route, selector) => {
 await fs.mkdir(artifactsDir, { recursive: true });
 const browser = await chromium.launch({ headless: true });
 try {
-  for (const width of widths) {
-    const context = await browser.newContext({ viewport: { width, height: 900 } });
+  for (const { name: viewportName, width, height } of VIEWPORTS) {
+    const context = await browser.newContext({ viewport: { width, height } });
     const page = await context.newPage();
     for (const route of routes) {
       const errors = [];
@@ -68,7 +68,7 @@ try {
           if (!header || !['sticky', 'fixed'].includes(getComputedStyle(header).position)) return 0;
           return header.offsetHeight;
         });
-        assert(pinnedHeader <= (width === 390 ? 130 : 110), `${route} pins a ${pinnedHeader}px map header at ${width}px`);
+        assert(pinnedHeader <= { phone: 130, landscape: 130, desktop: 110 }[viewportName], `${route} pins a ${pinnedHeader}px map header at ${width}px`);
       }
       results.push({ width, route, passed: true });
     }
@@ -101,7 +101,7 @@ try {
       const firstTop = Math.round(cards[0].getBoundingClientRect().top);
       return cards.filter(card => Math.round(card.getBoundingClientRect().top) === firstTop).length;
     });
-    assert.equal(sideColumns, width === 390 ? 1 : 3, `Side Easter Eggs uses the expected ${width}px grid`);
+    assert.equal(sideColumns, { phone: 1, landscape: 3, desktop: 3 }[viewportName], `Side Easter Eggs uses the expected ${width}px grid`);
     await assertNoHorizontalOverflow(page, '/side-easter-eggs');
     await page.screenshot({
       path: new URL(`../artifacts/side-easter-eggs-${width}.png`, import.meta.url).pathname,
@@ -188,7 +188,7 @@ try {
         titleInView: title.left >= 0 && title.right <= window.innerWidth,
       };
     });
-    assert(originsHeader.height <= (width === 390 ? 130 : 100), `Origins sticky header is ${originsHeader.height}px tall at ${width}px`);
+    assert(originsHeader.height <= { phone: 130, landscape: 130, desktop: 100 }[viewportName], `Origins sticky header is ${originsHeader.height}px tall at ${width}px`);
     assert(originsHeader.activeInView, 'Origins keeps the active staff tab in view');
     assert(originsHeader.titleInView, 'Origins header title is not clipped');
 

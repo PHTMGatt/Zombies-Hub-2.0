@@ -4,7 +4,7 @@ import fs from 'node:fs/promises';
 
 const base = process.env.SMOKE_BASE_URL || 'http://127.0.0.1:4173';
 const reportUrl = new URL('../artifacts/browser-smoke.json', import.meta.url);
-const widths = [390, 1440];
+import { VIEWPORTS } from './smoke-viewports.mjs';
 const results = [];
 
 const assertNoHorizontalOverflow = async (page, route) => {
@@ -30,8 +30,8 @@ const assertCssImageLoaded = async (page, route, selector, pseudo = null) => {
 
 const browser = await chromium.launch({ headless: true });
 try {
-  for (const width of widths) {
-    const context = await browser.newContext({ viewport: { width, height: 900 } });
+  for (const { name: viewportName, width, height } of VIEWPORTS) {
+    const context = await browser.newContext({ viewport: { width, height } });
     const page = await context.newPage();
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
@@ -59,7 +59,7 @@ try {
     assert.match(await page.locator('.guide-progress__count').innerText(), /1 \/ 11/);
     assert.equal(errors.length, 0, `${mainRoute} guide errors: ${errors.join('; ')}`);
 
-    if (width === 390) {
+    if (viewportName === 'phone') {
       const toggle = page.getByRole('button', { name: 'Toggle Zetsubou guide navigation' });
       await toggle.click();
       assert.equal(await toggle.getAttribute('aria-expanded'), 'true', 'Zetsubou mobile guide menu expands');
