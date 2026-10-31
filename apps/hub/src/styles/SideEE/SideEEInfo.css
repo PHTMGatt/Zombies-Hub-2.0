@@ -149,7 +149,7 @@
   }
 }
 
-/* Kino's tracked checklist: projector-lamp amber on the comic-book page. */
+/* Kino's step list: projector-lamp amber on the comic-book page. */
 .side-ee-info__guide .guide {
   --guide-accent: #f0c56b;
   --guide-accent-ink: #1d1404;
@@ -167,5 +167,20 @@
     min-height: 44px;
     display: inline-flex;
     align-items: center;
+  }
+}
+
+/* Short landscape phones: a shorter artwork band so the first step is fully on the first screen. */
+@media (max-height: 500px) and (orientation: landscape) {
+  .side-ee-info__header {
+    height: 140px;
+  }
+
+  .side-ee-info__title {
+    font-size: 1.75rem;
+  }
+
+  .side-ee-info__body {
+    padding-top: 1rem;
   }
 }

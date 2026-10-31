@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { readStored, writeStored } from '../../../../shared/guide/useGuideProgress';
+import { read as readStored, write as writeStored } from '../../../../shared/storage';
 import { PROGRESS_RESET_EVENT } from '../../../../shared/achievements/achievements';
 
 /*

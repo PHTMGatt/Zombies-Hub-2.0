@@ -215,3 +215,15 @@
     min-width: 0;
   }
 }
+
+/* Short landscape phones: the map header scrolls away instead of pinning under the hub bar. */
+@media (max-height: 500px) and (orientation: landscape) {
+  .origins-module {
+    --origins-header-height: 0px;
+  }
+
+  .origins-module .site-header.origins-map-header {
+    position: relative;
+    top: auto;
+  }
+}

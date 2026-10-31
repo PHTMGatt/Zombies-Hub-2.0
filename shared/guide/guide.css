@@ -1,6 +1,7 @@
-/* Shared Easter Egg guide system. Maps theme it by setting these on an ancestor:
+/* Shared Easter Egg step sequence and reference blocks. Maps theme it by setting these on an ancestor:
    --guide-accent, --guide-accent-ink, --guide-ink, --guide-text, --guide-muted,
-   --guide-surface, --guide-surface-2, --guide-line, --guide-sticky-top */
+   --guide-surface, --guide-surface-2, --guide-line.
+   The sequence below is a plain holding presentation; each map replaces it with its own layout. */
 .guide {
   --guide-accent: #6dc2ff;
   --guide-accent-ink: #04121e;
@@ -10,16 +11,129 @@
   --guide-surface: rgba(0, 0, 0, 0.66);
   --guide-surface-2: rgba(255, 255, 255, 0.04);
   --guide-line: rgba(255, 255, 255, 0.1);
-  --guide-done: #7dffbf;
   --guide-warn: #ffb24d;
-  --guide-sticky-top: calc(var(--hub-nav-height) + 1rem);
 
   display: grid;
-  /* minmax(0, …) everywhere: swipeable rows inside must scroll, never widen the page. */
   grid-template-columns: minmax(0, 1fr);
   min-width: 0;
   gap: 1rem;
   color: var(--guide-text);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* One sequence: every step visible in order, its answer first, the how-to behind "More". */
+.guide-seq {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: 1px solid var(--guide-line);
+  border-radius: 12px;
+  background: var(--guide-surface);
+  counter-reset: guide-step;
+}
+
+.guide-seq__step {
+  display: grid;
+  gap: 0.75rem;
+  min-width: 0;
+  padding: 1.25rem clamp(1rem, 3vw, 1.75rem);
+  counter-increment: guide-step;
+  /* A deep link (#step-id) lands below the pinned hub bar; GuideSteps also clears a pinned map header. */
+  scroll-margin-top: calc(var(--hub-pin-height, var(--hub-nav-height)) + 1rem);
+}
+
+.guide-seq__step + .guide-seq__step {
+  border-top: 1px solid var(--guide-line);
+}
+
+.guide-seq__step:target {
+  box-shadow: inset 3px 0 0 var(--guide-accent);
+}
+
+.guide-seq__step h3 {
+  display: flex;
+  gap: 0.6rem;
+  align-items: baseline;
+  margin: 0;
+  color: var(--guide-ink);
+  font-size: 1.15rem;
+  line-height: 1.3;
+}
+
+.guide-seq__step h3::before {
+  content: counter(guide-step);
+  flex: none;
+  min-width: 1.6em;
+  color: var(--guide-accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.guide-seq__goal {
+  margin: 0;
+  color: var(--guide-ink);
+}
+
+.guide-seq__tasks {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.guide-seq__tasks small {
+  display: block;
+  color: var(--guide-muted);
+  font-size: 0.95rem;
+}
+
+.guide-seq__more {
+  display: grid;
+  gap: 1rem;
+}
+
+.guide-seq__more > summary {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-self: start;
+  padding: 0.35rem 0;
+  color: var(--guide-accent);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.guide-seq__more > summary:focus-visible {
+  outline: 3px solid var(--guide-accent);
+  outline-offset: 2px;
+}
+
+.guide-seq__more h4 {
+  margin: 0 0 0.5rem;
+  color: var(--guide-ink);
+  font-size: 1rem;
+}
+
+.guide-seq__footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 1.5rem;
+  padding: 0 0.25rem;
+}
+
+/* Quiet onward links after the last step (e.g. the map's Side Easter Egg video). */
+.guide-seq__related {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  color: var(--guide-accent);
+  font-weight: 700;
+}
+
+.guide-seq__related:focus-visible {
+  outline: 3px solid var(--guide-accent);
+  outline-offset: 2px;
 }
 
 .guide .visually-hidden {
@@ -36,534 +150,8 @@
   outline-offset: 2px;
 }
 
-/* Toolbar: depth switch, progress, reset */
-.guide-bar {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.75rem 1rem;
-  padding: 0.6rem;
-  border: 1px solid var(--guide-line);
-  border-radius: 14px;
-  background: var(--guide-surface);
-}
-
-.guide-mode {
-  display: inline-flex;
-  padding: 0.2rem;
-  border-radius: 11px;
-  background: rgba(0, 0, 0, 0.45);
-}
-
-.guide-mode button {
-  min-height: 44px;
-  display: inline-flex;
-  align-items: baseline;
-  gap: 0.35rem;
-  padding: 0.35rem 1.1rem;
-  border: 0;
-  border-radius: 9px;
-  background: transparent;
-  color: var(--guide-muted);
-  font: inherit;
-  font-size: 1.02rem;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.guide-mode button small {
-  font-size: 0.75rem;
-  font-weight: 600;
-  opacity: 0.8;
-}
-
-.guide-mode button[aria-pressed='true'] {
-  background: var(--guide-accent);
-  color: var(--guide-accent-ink);
-}
-
-.guide-progress {
-  flex: 1 1 200px;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  min-width: 0;
-}
-
-.guide-progress__count {
-  flex: 0 0 auto;
-  color: var(--guide-muted);
-  font-size: 0.95rem;
-}
-
-.guide-progress__count strong {
-  color: var(--guide-ink);
-  font-size: 1.15rem;
-}
-
-.guide-progress__meter {
-  flex: 1 1 auto;
-  height: 8px;
-  overflow: hidden;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.08);
-}
-
-.guide-progress__meter span {
-  display: block;
-  height: 100%;
-  border-radius: inherit;
-  background: linear-gradient(90deg, var(--guide-accent), var(--guide-done));
-  transition: width 0.3s ease;
-}
-
-.guide-footer {
-  display: flex;
-  justify-content: flex-end;
-}
-
-/* Progress options are deliberately quiet: a small disclosure under the guide, never competing with
-   the current step. Destructive actions sit inside it and each asks for confirmation. */
-.guide-menu {
-  position: relative;
-  display: grid;
-  justify-items: end;
-  text-align: right;
-  color: var(--guide-muted);
-  font-size: 0.88rem;
-}
-
-.guide-menu summary {
-  min-height: 44px;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0 0.5rem;
-  border-radius: 8px;
-  cursor: pointer;
-  list-style: none;
-  opacity: 0.8;
-}
-
-.guide-menu summary::-webkit-details-marker {
-  display: none;
-}
-
-.guide-menu summary::after {
-  content: '▾';
-  font-size: 0.75em;
-}
-
-.guide-menu[open] summary::after {
-  content: '▴';
-}
-
-.guide-menu summary:hover,
-.guide-menu[open] summary {
-  color: var(--guide-ink);
-  opacity: 1;
-}
-
-.guide-menu summary:focus-visible,
-.guide-menu__list > :focus-visible {
-  outline: 2px solid var(--guide-accent);
-  outline-offset: -2px;
-}
-
-.guide-menu__list {
-  display: grid;
-  justify-items: end;
-  gap: 0.1rem;
-  padding-top: 0.2rem;
-}
-
-.guide-menu__list > button,
-.guide-menu__list > a {
-  min-height: 44px;
-  display: inline-flex;
-  align-items: center;
-  padding: 0 0.6rem;
-  border: 0;
-  border-radius: 8px;
-  background: transparent;
-  color: var(--guide-text);
-  font: inherit;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.guide-menu__list > button {
-  color: color-mix(in srgb, #ff8a7a 70%, var(--guide-text));
-}
-
-.guide-menu__list > button:hover:not(:disabled),
-.guide-menu__list > a:hover {
-  background: rgba(255, 255, 255, 0.06);
-}
-
-.guide-menu__list > button:disabled {
-  opacity: 0.4;
-  cursor: default;
-}
-
-/* Rail + step */
-.guide-body {
-  display: grid;
-  grid-template-columns: minmax(230px, 280px) minmax(0, 1fr);
-  gap: 1rem;
-  align-items: start;
-}
-
-.guide-rail {
-  position: sticky;
-  top: var(--guide-sticky-top);
-  min-width: 0;
-}
-
-.guide-rail__hint {
-  display: none;
-}
-
-.guide-rail ol {
-  display: grid;
-  gap: 0.3rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.guide-rail li {
-  margin: 0;
-  line-height: 1.2;
-}
-
-.guide-rail__step {
-  /* Positioned so its visually-hidden text stays inside the scrolling rail. */
-  position: relative;
-  width: 100%;
-  min-height: 46px;
-  display: grid;
-  grid-template-columns: 2rem minmax(0, 1fr) auto;
-  gap: 0.6rem;
-  align-items: center;
-  padding: 0.35rem 0.6rem 0.35rem 0.4rem;
-  border: 1px solid transparent;
-  border-radius: 11px;
-  background: var(--guide-surface);
-  color: var(--guide-muted);
-  font: inherit;
-  text-align: left;
-  cursor: pointer;
-  transition: border-color 0.18s ease, background 0.18s ease, color 0.18s ease;
-}
-
-.guide-rail__step:hover {
-  border-color: var(--guide-line);
-  color: var(--guide-ink);
-}
-
-.guide-rail__num {
-  width: 2rem;
-  height: 2rem;
-  display: grid;
-  place-items: center;
-  border: 1px solid var(--guide-line);
-  border-radius: 50%;
-  font-size: 0.85rem;
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-}
-
-.guide-rail__title {
-  min-width: 0;
-  font-size: 0.98rem;
-  font-weight: 600;
-}
-
-.guide-rail__tasks {
-  color: var(--guide-accent);
-  font-size: 0.8rem;
-  font-weight: 700;
-}
-
-.guide-rail__step.is-done {
-  color: var(--guide-muted);
-}
-
-.guide-rail__step.is-done .guide-rail__num {
-  border-color: transparent;
-  background: color-mix(in srgb, var(--guide-done) 22%, transparent);
-  color: var(--guide-done);
-}
-
-.guide-rail__step.is-done .guide-rail__title {
-  text-decoration: line-through;
-  text-decoration-color: color-mix(in srgb, var(--guide-muted) 60%, transparent);
-}
-
-.guide-rail__step.is-current {
-  border-color: var(--guide-accent);
-  background: linear-gradient(90deg, color-mix(in srgb, var(--guide-accent) 24%, transparent), var(--guide-surface));
-  color: var(--guide-ink);
-}
-
-.guide-rail__step.is-current .guide-rail__num {
-  border-color: transparent;
-  background: var(--guide-accent);
-  color: var(--guide-accent-ink);
-  box-shadow: 0 0 14px color-mix(in srgb, var(--guide-accent) 60%, transparent);
-}
-
-.guide-rail__step.is-current .guide-rail__title {
-  text-decoration: none;
-}
-
-.guide-step {
-  min-width: 0;
-  padding: 1.35rem 1.5rem 1.25rem;
-  border: 1px solid var(--guide-line);
-  border-top: 3px solid var(--guide-accent);
-  border-radius: 14px;
-  background: var(--guide-surface);
-  scroll-margin-top: var(--guide-sticky-top);
-}
-
-.guide-step__meta {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  color: var(--guide-accent);
-  font-size: 0.85rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.guide-step__done {
-  padding: 0.1rem 0.55rem;
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--guide-done) 18%, transparent);
-  color: var(--guide-done);
-  letter-spacing: 0.04em;
-}
-
-.guide-step h3 {
-  margin: 0.35rem 0 0.3rem;
-  color: var(--guide-ink);
-  font-size: clamp(1.6rem, 2.6vw, 2.15rem);
-  line-height: 1.1;
-}
-
-/* The heading takes focus when the step changes (for screen readers); show a ring only for keyboard users. */
-.guide-step h3:focus {
-  outline: none;
-}
-
-.guide-step h3:focus-visible {
-  outline: 2px solid var(--guide-accent);
-  outline-offset: 4px;
-  border-radius: 4px;
-}
-
-.guide-step__goal {
-  max-width: 62ch;
-  margin: 0;
-  color: var(--guide-ink);
-  font-size: 1.12rem;
-  font-weight: 600;
-  line-height: 1.4;
-}
-
-/* The action lead: a small tag so the eye lands on what to do, not on explanation. */
-.guide-step__now {
-  display: inline-block;
-  margin-right: 0.35rem;
-  padding: 0.1rem 0.45rem;
-  border-radius: 6px;
-  background: color-mix(in srgb, var(--guide-accent) 20%, transparent);
-  color: var(--guide-accent);
-  font-size: 0.72rem;
-  font-weight: 850;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  vertical-align: 0.15em;
-}
-
-/* Quick references: a toolbar button and a sheet. */
-.guide-quickrefs {
-  min-height: 44px;
-  padding: 0 0.9rem;
-  border: 1px solid var(--guide-line);
-  border-radius: 10px;
-  background: var(--guide-surface-2);
-  color: var(--guide-ink);
-  font: inherit;
-  font-size: 0.95rem;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.guide-quickrefs:hover {
-  border-color: var(--guide-accent);
-}
-
-.guide-quickrefs:focus-visible,
-.guide-sheet :focus-visible {
-  outline: 2px solid var(--guide-accent);
-  outline-offset: 2px;
-}
-
-.guide-sheet {
-  width: min(720px, calc(100vw - 1.5rem));
-  max-height: min(86vh, 900px);
-  padding: 0;
-  border: 1px solid var(--guide-line);
-  border-radius: 16px;
-  background: color-mix(in srgb, #000 70%, var(--guide-surface));
-  color: var(--guide-text);
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
-}
-
-.guide-sheet::backdrop {
-  background: rgba(0, 0, 0, 0.6);
-}
-
-.guide-sheet__inner {
-  display: grid;
-  gap: 0.8rem;
-  padding: 0.75rem 1rem 1.1rem;
-}
-
-.guide-sheet__head {
-  position: sticky;
-  top: -0.75rem;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem;
-  margin: -0.75rem -1rem 0;
-  padding: 0.5rem 0.5rem 0.5rem 1rem;
-  border-bottom: 1px solid var(--guide-line);
-  background: inherit;
-  background-color: color-mix(in srgb, #000 70%, var(--guide-surface));
-  color: var(--guide-ink);
-}
-
-.guide-sheet__back,
-.guide-sheet__close {
-  min-width: 44px;
-  min-height: 44px;
-  padding: 0 0.5rem;
-  border: 0;
-  border-radius: 10px;
-  background: transparent;
-  color: var(--guide-ink);
-  font: inherit;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.guide-sheet__close {
-  font-size: 1.5rem;
-}
-
-.guide-sheet__body {
-  display: grid;
-  gap: 0.85rem;
-}
-
-.guide-sheet__body h3 {
-  margin: 0;
-  color: var(--guide-ink);
-  font-size: 1.4rem;
-}
-
-.guide-sheet__menu,
-.guide-sheet__list {
-  display: grid;
-  gap: 0.35rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.guide-sheet__menu li,
-.guide-sheet__list li {
-  margin: 0;
-}
-
-.guide-sheet__menu a,
-.guide-sheet__menu button {
-  width: 100%;
-  min-height: 52px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 1rem;
-  border: 1px solid var(--guide-line);
-  border-radius: 12px;
-  background: var(--guide-surface-2);
-  color: var(--guide-ink);
-  font: inherit;
-  font-size: 1.05rem;
-  font-weight: 700;
-  text-align: left;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.guide-sheet__menu a:hover,
-.guide-sheet__menu button:hover {
-  border-color: var(--guide-accent);
-}
-
-.guide-sheet__list li {
-  display: grid;
-  gap: 0.1rem;
-  padding: 0.55rem 0.8rem;
-  border-left: 3px solid var(--gref-tone, var(--guide-accent));
-  background: var(--guide-surface-2);
-  border-radius: 0 10px 10px 0;
-}
-
-.guide-sheet__list strong {
-  color: var(--guide-ink);
-}
-
-.guide-sheet__list span {
-  color: var(--guide-muted);
-  font-size: 0.92rem;
-}
-
-@media (max-width: 680px) {
-  .guide-sheet {
-    width: 100vw;
-    max-width: 100vw;
-    max-height: 88vh;
-    margin: auto 0 0;
-    border-radius: 16px 16px 0 0;
-  }
-}
-
-.guide-step__grid {
-  display: grid;
-  gap: 1.25rem;
-  margin-top: 1.1rem;
-}
-
-.guide--detail .guide-step__grid {
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-  align-items: start;
-}
-
-.guide--detail .guide-step__grid:has(> :only-child) {
-  grid-template-columns: minmax(0, 1fr);
-}
-
 /* Reference blocks */
-.gref-stack,
-.guide-step__reference {
+.gref-stack {
   display: grid;
   gap: 0.85rem;
   min-width: 0;
@@ -857,97 +445,6 @@
   --gref-tone: inherit;
 }
 
-/* Sub-objective tracking */
-.guide-tasks ul {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 0.4rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.guide-tasks li {
-  margin: 0;
-}
-
-.guide-tasks .gref__label small {
-  color: var(--guide-accent);
-  letter-spacing: 0.04em;
-}
-
-.guide-task {
-  --gref-tone: var(--guide-accent);
-  width: 100%;
-  min-height: 48px;
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.4rem 0.75rem;
-  border: 1px solid var(--guide-line);
-  border-radius: 10px;
-  background: var(--guide-surface-2);
-  color: var(--guide-ink);
-  font: inherit;
-  font-size: 1rem;
-  font-weight: 600;
-  text-align: left;
-  cursor: pointer;
-}
-
-.guide-task__box {
-  flex: 0 0 auto;
-  width: 1.5rem;
-  height: 1.5rem;
-  display: grid;
-  place-items: center;
-  border: 2px solid color-mix(in srgb, var(--gref-tone) 70%, transparent);
-  border-radius: 6px;
-  font-size: 0.95rem;
-  font-weight: 800;
-}
-
-.guide-task__text {
-  min-width: 0;
-}
-
-.guide-task__text small {
-  display: block;
-  margin-top: 0.1rem;
-  color: var(--guide-muted);
-  font-size: 0.82rem;
-  font-weight: 500;
-  line-height: 1.3;
-}
-
-.guide-tasks--hints ul {
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
-}
-
-.guide-task.is-done {
-  border-color: color-mix(in srgb, var(--guide-done) 50%, transparent);
-  background: color-mix(in srgb, var(--guide-done) 10%, transparent);
-}
-
-.guide-task.is-done .guide-task__box {
-  border-color: transparent;
-  background: var(--guide-done);
-  color: #052014;
-}
-
-/* Full-mode detail */
-.guide-step__detail {
-  display: grid;
-  gap: 1rem;
-  min-width: 0;
-}
-
-.guide-step__detail h4 {
-  margin: 0 0 0.5rem;
-  color: var(--guide-ink);
-  font-size: 1.1rem;
-}
-
 .guide-how ol {
   display: grid;
   gap: 0.5rem;
@@ -983,7 +480,7 @@
   font-weight: 700;
 }
 
-/* Troubleshooting: collapsed until asked for, at every depth. */
+/* Troubleshooting: collapsed until asked for. */
 .guide-problems {
   margin-top: 0.9rem;
   border-radius: 12px;
@@ -1037,59 +534,6 @@
   line-height: 1.5;
 }
 
-/* Run finished: a short line and three ways onward, inside the last step. */
-.guide-finish {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.6rem 1rem;
-  margin-top: 1rem;
-  padding: 0.75rem 0.9rem;
-  border-radius: 12px;
-  background: color-mix(in srgb, var(--guide-done) 12%, transparent);
-  border: 1px solid color-mix(in srgb, var(--guide-done) 40%, transparent);
-}
-
-.guide-finish strong {
-  color: var(--guide-done);
-  font-size: 1.08rem;
-}
-
-.guide-finish__actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-}
-
-.guide-finish__actions a,
-.guide-finish__actions button {
-  min-height: 44px;
-  display: inline-flex;
-  align-items: center;
-  padding: 0 0.9rem;
-  border: 1px solid var(--guide-line);
-  border-radius: 10px;
-  background: var(--guide-surface-2);
-  color: var(--guide-ink);
-  font: inherit;
-  font-size: 0.92rem;
-  font-weight: 700;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.guide-finish__actions a:first-child {
-  border-color: transparent;
-  background: var(--guide-done);
-  color: #052014;
-}
-
-.guide-finish__actions :focus-visible {
-  outline: 2px solid var(--guide-accent);
-  outline-offset: 2px;
-}
-
 .guide-video {
   justify-self: start;
   min-height: 44px;
@@ -1132,243 +576,6 @@
 
 .guide-links a:hover {
   background: color-mix(in srgb, var(--gref-tone) 22%, transparent);
-}
-
-/* Actions */
-.guide-actions {
-  display: grid;
-  grid-template-columns: 56px minmax(0, 1fr) 56px;
-  gap: 0.5rem;
-  margin-top: 1.25rem;
-}
-
-.guide-actions button {
-  min-height: 52px;
-  border-radius: 12px;
-  font: inherit;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.guide-actions__nav {
-  border: 1px solid var(--guide-line);
-  background: var(--guide-surface-2);
-  color: var(--guide-ink);
-  font-size: 1.3rem !important;
-}
-
-.guide-actions__nav:disabled {
-  opacity: 0.35;
-  cursor: default;
-}
-
-.guide-actions__done {
-  border: 0;
-  background: var(--guide-accent);
-  color: var(--guide-accent-ink);
-  font-size: 1.08rem !important;
-}
-
-.guide-actions__done.is-done {
-  border: 1px solid color-mix(in srgb, var(--guide-done) 55%, transparent);
-  background: color-mix(in srgb, var(--guide-done) 14%, transparent);
-  color: var(--guide-done);
-}
-
-@media (max-width: 1080px) {
-  .guide--detail .guide-step__grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-}
-
-/* Tablet portrait: slim rail. */
-@media (max-width: 900px) {
-  .guide-body {
-    grid-template-columns: minmax(190px, 220px) minmax(0, 1fr);
-    gap: 0.75rem;
-  }
-
-  .guide-rail__title {
-    font-size: 0.92rem;
-  }
-
-  .guide-step {
-    padding: 1.15rem 1.1rem 1.1rem;
-  }
-}
-
-/* Phones: steps become a swipeable row, and step controls ride along at the bottom of the screen. */
-@media (max-width: 680px) {
-  .guide {
-    gap: 0.7rem;
-  }
-
-  .guide-bar {
-    gap: 0.6rem;
-    padding: 0.5rem;
-  }
-
-  /* Depth switch, quick refs and progress share one row so the step starts higher. */
-  .guide-mode {
-    flex: 1 1 0;
-    min-width: 0;
-  }
-
-  .guide-mode button {
-    flex: 1 1 50%;
-    justify-content: center;
-    padding-inline: 0.6rem;
-  }
-
-  .guide-progress {
-    flex: 0 0 auto;
-    gap: 0.45rem;
-  }
-
-  /* The count says it; the bar would push the progress onto its own row. */
-  .guide-progress__meter {
-    display: none;
-  }
-
-  .guide-body {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 0.6rem;
-  }
-
-  .guide-rail {
-    position: static;
-  }
-
-  .guide-rail ol {
-    display: flex;
-    gap: 0.4rem;
-    padding: 0.1rem 0.1rem 0.3rem;
-    overflow-x: auto;
-    overscroll-behavior-inline: contain;
-    scroll-snap-type: x proximity;
-    scrollbar-width: none;
-  }
-
-  .guide-rail ol::-webkit-scrollbar {
-    display: none;
-  }
-
-  /* The row scrolls sideways: fade its edges and label it so the extra steps are obvious. */
-  .guide-rail ol {
-    -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 2.5rem), transparent);
-    mask-image: linear-gradient(90deg, #000 calc(100% - 2.5rem), transparent);
-  }
-
-  .guide-rail__hint {
-    display: block;
-    margin: 0 0 0.3rem 0.15rem;
-    color: var(--guide-muted);
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  .guide-rail li {
-    flex: 0 0 auto;
-    scroll-snap-align: start;
-  }
-
-  .guide-rail__step {
-    width: 9.5rem;
-    min-height: 56px;
-    grid-template-columns: 1.85rem minmax(0, 1fr);
-    border-color: var(--guide-line);
-  }
-
-  .guide-rail__num {
-    width: 1.85rem;
-    height: 1.85rem;
-  }
-
-  .guide-rail__title {
-    display: -webkit-box;
-    overflow: hidden;
-    font-size: 0.88rem;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-  }
-
-  .guide-rail__tasks {
-    display: none;
-  }
-
-  .guide-step {
-    padding: 1rem 0.9rem 0;
-  }
-
-  .guide-step h3 {
-    font-size: 1.55rem;
-  }
-
-  .guide-step__goal {
-    font-size: 1.05rem;
-  }
-
-  .guide-actions {
-    position: sticky;
-    bottom: 0;
-    z-index: 5;
-    margin: 1rem -0.9rem 0;
-    padding: 0.6rem 0.9rem calc(0.6rem + env(safe-area-inset-bottom));
-    border-top: 1px solid var(--guide-line);
-    border-radius: 0 0 14px 14px;
-    background: color-mix(in srgb, #000 88%, var(--guide-accent));
-  }
-}
-
-/* Landscape phones: rail beside the step, scrolling on its own inside the short screen. */
-@media (max-height: 500px) and (orientation: landscape) {
-  .guide-body {
-    grid-template-columns: minmax(170px, 210px) minmax(0, 1fr);
-  }
-
-  .guide-rail {
-    max-height: calc(100vh - var(--guide-sticky-top) - 0.5rem);
-    overflow-y: auto;
-    scrollbar-width: thin;
-  }
-
-  .guide-bar {
-    padding: 0.35rem 0.5rem;
-  }
-
-  .guide-mode button {
-    min-height: 44px;
-    padding-block: 0.2rem;
-  }
-
-  .guide-rail__step {
-    min-height: 44px;
-  }
-
-  .guide-rail__num {
-    width: 1.7rem;
-    height: 1.7rem;
-  }
-
-  .guide-rail__title {
-    font-size: 0.86rem;
-  }
-
-  .guide-step h3 {
-    font-size: 1.35rem;
-  }
-
-  .guide-actions button {
-    min-height: 44px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .guide-progress__meter span {
-    transition: none;
-  }
 }
 
 /* Run notes: tiny notepads for randomised info, placed in the step that generates it. */
@@ -1475,24 +682,4 @@
 
 .pick-tool__answer strong {
   color: var(--guide-accent);
-}
-
-.guide-quickrefs__short {
-  display: none;
-}
-
-/* Phones: the Quick refs button shortens so depth, refs and progress share one row. */
-@media (max-width: 680px) {
-  .guide-quickrefs {
-    flex: 0 0 auto;
-    padding-inline: 0.7rem;
-  }
-
-  .guide-quickrefs__long {
-    display: none;
-  }
-
-  .guide-quickrefs__short {
-    display: inline;
-  }
 }

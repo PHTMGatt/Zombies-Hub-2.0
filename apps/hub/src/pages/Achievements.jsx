@@ -4,10 +4,9 @@ import {
   ACHIEVEMENTS,
   CHANGE_EVENT,
   MAPS,
+  clearOldGuideData,
   getUnlocked,
-  guideProgress,
   resetAchievements,
-  resetAllProgress,
   setSoundEnabled,
   soundEnabled,
 } from '../../../../shared/achievements/achievements';
@@ -20,12 +19,11 @@ const formatDate = (iso) => (iso ? new Date(iso).toLocaleDateString(undefined, {
 const snapshot = () => ({
   unlocked: getUnlocked(),
   sound: soundEnabled(),
-  progress: Object.fromEntries(Object.keys(MAPS).map((mapId) => [mapId, guideProgress(mapId)])),
 });
 
 /*
- * The completion cabinet: one medal per map's main Easter Egg, then hidden extras once earned.
- * Settings and the two global resets sit below, out of the way.
+ * The completion cabinet: one medal per map's main Easter Egg (earned with "I completed this Easter Egg"
+ * at the end of its guide), then hidden extras once earned. Settings and clear options sit below.
  */
 export default function Achievements() {
   const [state, setState] = useState(snapshot);
@@ -52,12 +50,12 @@ export default function Achievements() {
     if (next) playChime();
   };
 
-  const confirmResetAll = () => {
-    if (window.confirm('Clear all saved guide progress on every map? Your achievements stay.')) resetAllProgress();
+  const confirmClearOld = () => {
+    if (window.confirm('Clear data left by the old step tracker and guide modes? Achievements and saved notes (character picks, symbols, safe codes) stay.')) clearOldGuideData();
   };
 
   const confirmResetAchievements = () => {
-    if (window.confirm('Erase every earned achievement and its date? Guide progress stays. This cannot be undone.')) resetAchievements();
+    if (window.confirm('Erase every earned achievement and its date? Saved notes stay. This cannot be undone.')) resetAchievements();
   };
 
   return (
@@ -73,14 +71,7 @@ export default function Achievements() {
         {mains.map((item) => {
           const map = MAPS[item.map];
           const earned = state.unlocked[item.id];
-          const progress = state.progress[item.map];
-          const status = earned
-            ? (formatDate(earned.at) ?? 'Complete')
-            : !map.guideId
-              ? 'Tracker coming'
-              : progress?.done
-                ? `${progress.done}${progress.total ? ` / ${progress.total}` : ''} steps`
-                : 'Not started';
+          const status = earned ? (formatDate(earned.at) ?? 'Complete') : 'Not yet';
           return (
             <li key={item.id} className={`ach-medal${earned ? ' is-earned' : ''}`} style={{ '--ach-accent': map.accent }}>
               <Link to={map.route} className="ach-medal__link">
@@ -91,11 +82,6 @@ export default function Achievements() {
                   <span className="visually-hidden">{earned ? 'Unlocked: ' : 'Locked: '}</span>
                   {status}
                 </span>
-                {!earned && progress?.total > 0 && progress.done > 0 && (
-                  <span className="ach-medal__meter" aria-hidden="true">
-                    <span style={{ width: `${(progress.done / progress.total) * 100}%` }} />
-                  </span>
-                )}
               </Link>
             </li>
           );
@@ -132,10 +118,10 @@ export default function Achievements() {
         <details className="ach-danger">
           <summary>Reset options</summary>
           <div>
-            <button type="button" onClick={confirmResetAll}>Reset all progress</button>
-            <p>Every map’s current step, finished steps, ticks and saved notes. Achievements stay.</p>
+            <button type="button" onClick={confirmClearOld}>Clear old guide data</button>
+            <p>Removes data left by the old step tracker and guide modes. Achievements and saved notes stay.</p>
             <button type="button" onClick={confirmResetAchievements}>Reset achievements</button>
-            <p>Erases earned achievements and dates. Guide progress stays.</p>
+            <p>Erases earned achievements and dates. Saved notes stay.</p>
           </div>
         </details>
       </section>

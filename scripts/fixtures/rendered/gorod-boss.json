@@ -1,0 +1,31 @@
+{
+  "route": "/maps/gorod-krovi/boss",
+  "segments": [
+    "Gorod Krovi",
+    "Love and War",
+    "Guide",
+    "Valve Solver",
+    "Trophies",
+    "Buildables",
+    "Boss Fight",
+    "Final Battle",
+    "Dragon + Nikolai",
+    "Two phases. Bring a fresh shield, strong perks, and preferably a Pack-a-Punched Ray Gun Mark 3.",
+    "Recommended:",
+    "Ray Gun Mark 3",
+    "Fresh Shield",
+    "In Plain Sight",
+    "1",
+    "Dragon Phase",
+    "Activate the arena and survive until Nikolai fires on the dragon. When a wounded weak point opens, focus the Ray Gun Mark 3 on that exposed area.",
+    "Keep the shield between you and incoming dragon fire when repositioning.",
+    "Repeat the exposed-weak-point cycle as the dragon lands at its different positions.",
+    "After the final weak point is destroyed, the dragon dies and the Nikolai phase begins.",
+    "2",
+    "Nikolai Phase",
+    "Use In Plain Sight as the phase begins, destroy the exposed mech weak points, then shoot the center when it opens.",
+    "Focus the lit mech sections and the upper left/right weak points first.",
+    "Once those are destroyed, the middle opens for the finishing damage.",
+    "•"
+  ]
+}

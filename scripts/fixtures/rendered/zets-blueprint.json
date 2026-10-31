@@ -1,0 +1,29 @@
+{
+  "route": "/maps/zetsubou-no-shima/reveal-blueprint",
+  "segments": [
+    "Zetsubou No Shima",
+    "Seeds of Doubt",
+    "Overview",
+    "Prerequisites",
+    "Reveal Blueprint",
+    "Cogs",
+    "Boss Fight",
+    "Buildables",
+    "Reveal the Elevator Quest",
+    "Use the Skull of Nan Sapwe to expose the hidden blueprint and elevator machinery before you start hunting the three cogs.",
+    "Skull of Nan Sapwe",
+    "Mesmerize",
+    "3-cog objective",
+    "You are ready when",
+    "The concealed elevator machinery is visible and the panel shows three missing cog positions. At that point the three cog routes are your next objective.",
+    "Quest Trigger",
+    "Reveal it in two moves",
+    "1",
+    "Reveal the blueprint",
+    "Use the Skull of Nan Sapwe on the hidden/torn blueprint in the bunker area to expose the quest information.",
+    "2",
+    "Reveal the elevator machinery",
+    "Use Mesmerize again on the concealed wall/panel by the elevator so the broken machinery and three missing cog slots are exposed.",
+    "•"
+  ]
+}

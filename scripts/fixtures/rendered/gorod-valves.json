@@ -1,0 +1,23 @@
+{
+  "route": "/maps/gorod-krovi/valves",
+  "segments": [
+    "Gorod Krovi",
+    "Love and War",
+    "Guide",
+    "Valve Solver",
+    "Trophies",
+    "Buildables",
+    "Boss Fight",
+    "Choose where the green light starts and where the Master Code Cylinder is located. The solver returns the five valve settings for that game.",
+    "Randomized puzzle",
+    "5 settings",
+    "S.O.P.H.I.A. setup",
+    "What to look for",
+    "Find the valve with the green light, then find the air-vent location holding the Master Code Cylinder. Those two locations are the only inputs the solver needs.",
+    "Green light starts at",
+    "Master Cylinder is at",
+    "Select both locations.",
+    "Your five valve settings appear here.",
+    "•"
+  ]
+}

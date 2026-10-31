@@ -129,13 +129,14 @@
   }
 }
 
+/* Short landscape phones: the header is in the page flow (see Header.css), so no spacer and anchors only
+   clear a little breathing room. */
 @media (max-height: 500px) and (orientation: landscape) {
   .de-module .header-spacer {
-    flex-basis: 58px;
-    height: 58px;
+    display: none;
   }
 
   .de-phase-anchor {
-    scroll-margin-top: calc(var(--hub-nav-height) + 68px);
+    scroll-margin-top: 14px;
   }
 }

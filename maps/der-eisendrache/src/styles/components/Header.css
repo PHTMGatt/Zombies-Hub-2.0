@@ -144,3 +144,11 @@
     min-width: 0;
   }
 }
+
+/* Short landscape phones: the header joins the page flow and scrolls away (global.css drops the spacer). */
+@media (max-height: 500px) and (orientation: landscape) {
+  .de-header {
+    position: relative;
+    top: auto;
+  }
+}

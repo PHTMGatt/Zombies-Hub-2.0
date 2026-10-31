@@ -15,7 +15,7 @@ export default function EasterEggs() {
         <span className="maps-kicker">Main quests</span>
         <h1 className="page-title">Easter Egg Maps</h1>
         <p className="page-subtitle">
-          Tracked guides check off as you play; the rest link to a video or the map’s info.
+          Full guides walk every step; the rest link to a video or the map’s info.
         </p>
         <div className="maps-summary-pill">{easterEggMaps.length} quest-enabled maps</div>
       </header>

@@ -146,7 +146,7 @@
 
 .origins-module .speedrun-rail {
   position: sticky;
-  top: calc(var(--hub-nav-height) + var(--origins-header-height, 84px) + 0.75rem);
+  top: calc(var(--hub-pin-height, var(--hub-nav-height)) + var(--origins-header-height, 84px) + 0.75rem);
 }
 
 .origins-module .speedrun-rail ol {
@@ -233,7 +233,7 @@
 .origins-module .speedrun-panel {
   min-width: 0;
   padding: 1.5rem 1.75rem 1.4rem;
-  scroll-margin-top: calc(var(--hub-nav-height) + var(--origins-header-height, 84px) + 0.75rem);
+  scroll-margin-top: calc(var(--hub-pin-height, var(--hub-nav-height)) + var(--origins-header-height, 84px) + 0.75rem);
 }
 
 .origins-module .speedrun-panel__meta {

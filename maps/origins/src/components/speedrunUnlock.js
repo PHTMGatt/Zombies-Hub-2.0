@@ -1,13 +1,16 @@
 import { useCallback, useEffect, useState } from 'react';
-import { readStored, writeStored } from '../../../../shared/guide/useGuideProgress';
+import { read as readStored, write as writeStored } from '../../../../shared/storage';
 import { unlockAchievement } from '../../../../shared/achievements/achievements';
 
 /*
- * Speedrun mode is a reward. It unlocks when the Little Lost Girl tracker is finished, or when the
- * Electrical Panel on the Lightning Staff page is brought fully live.
+ * Remembers that the Electrical Panel was solved (so it stays solved) and records the hidden
+ * "Electrical Panel Solved" achievement. It unlocks nothing: Speed Run is always open.
+ * Its own key, on purpose: the old `zh-origins-speedrun-unlocked` flag was also set by finishing the retired
+ * step tracker, so it cannot say whether the panel itself was solved. The achievement id keeps its old name
+ * so earned records survive.
  */
-const KEY = 'zh-origins-speedrun-unlocked';
-const EVENT = 'zh-origins-speedrun-unlock';
+const KEY = 'zh-origins-panel-solved';
+const EVENT = 'zh-origins-panel-solved';
 
 export function useSpeedrunUnlock() {
   const [unlocked, setUnlocked] = useState(() => readStored(KEY, false) === true);
@@ -24,7 +27,7 @@ export function useSpeedrunUnlock() {
 
   const unlock = useCallback(() => {
     // Also a hidden achievement. unlockAchievement is a no-op once recorded, so solving the panel again
-    // re-earns it only after "Reset achievements" (which keeps Speedrun mode itself unlocked).
+    // re-earns it only after "Reset achievements" (the panel itself stays solved).
     unlockAchievement('origins/speedrun-unlocked');
     writeStored(KEY, true);
     setUnlocked(true);

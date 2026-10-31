@@ -12,6 +12,10 @@ const featureScopes = [
   ['maps/zetsubou-no-shima/', '.zets-module'],
   ['maps/gorod-krovi/', '.gorod-module'],
   ['maps/revelations/', '.revelations-module'],
+  // Origins and Shadows of Evil were written with every selector already prefixed; listing them here
+  // enforces that, so a future unprefixed rule cannot leak into the hub or another map.
+  ['maps/origins/', '.origins-module'],
+  ['maps/shadows-of-evil/', '.shadows-module'],
 ];
 
 function scopeSelector(selector, scope) {
