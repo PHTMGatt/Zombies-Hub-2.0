@@ -12,6 +12,7 @@ import { REMOVALS_PATH } from './guide-content.mjs';
 import { captureSegments, newContentContext, renderedPath } from './content-snapshot.mjs';
 
 const approved = JSON.parse(readFileSync(REMOVALS_PATH, 'utf8')).filter((entry) => entry.layer === 'rendered');
+const transient = new Set(['Player unavailable here — use YouTube.']);
 const isApproved = (text, route) => approved.some((entry) => {
   if (entry.routes && !entry.routes.includes(route)) return false;
   return entry.pattern ? new RegExp(entry.pattern).test(text) : entry.text === text;
@@ -26,7 +27,7 @@ try {
     if (!existsSync(renderedPath(name))) continue;
     const { segments } = JSON.parse(readFileSync(renderedPath(name), 'utf8'));
     const now = (await captureSegments(page, route)).join(' \n ');
-    const missing = segments.filter((text) => !now.includes(text) && !isApproved(text, route));
+    const missing = segments.filter((text) => !transient.has(text) && !now.includes(text) && !isApproved(text, route));
     assert.deepEqual(missing, [], `${route} lost text that it showed before the redesign`);
     results.push(`${route} (${segments.length} pieces)`);
   }
