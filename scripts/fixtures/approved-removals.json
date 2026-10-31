@@ -438,5 +438,14 @@
     ],
     "reason": "Card badge named the removed tracker; now \"Full guide\" (or \"✓ Complete\" once earned). Progress badges (\"Step N / M\") removed.",
     "spec": "§4.1"
+  },
+  {
+    "text": "Speedrun",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins"
+    ],
+    "reason": "Label of the removed Origins \"⏱ Speedrun\" depth button (baseline captured with the legacy unlock set). The always-visible nav item reads \"Speed Run\".",
+    "spec": "§4.4"
   }
 ]

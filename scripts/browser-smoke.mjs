@@ -141,11 +141,23 @@ try {
     assert.match(await page.locator('#secure-keys').innerText(), /Odin · middle robot/, 'Staff placement answer is visible without opening anything');
     await page.locator('#secure-keys .guide-seq__more > summary').click();
     assert(await page.locator('#secure-keys .guide-how').isVisible(), '"More on this step" shows the how-to');
+    // Speed Run is always open: the last Origins nav item, reachable with empty storage, no lock copy anywhere.
+    await page.evaluate(() => window.localStorage.clear());
+    await page.goto(`${base}/maps/origins`, { waitUntil: 'networkidle' });
+    const navLinks = page.locator('.origins-nav-link');
+    const lastNav = navLinks.last();
+    assert.equal((await lastNav.innerText()).trim(), 'Speed Run', 'Speed Run is the last Origins nav item');
+    await lastNav.scrollIntoViewIfNeeded();
+    const navBox = await lastNav.boundingBox();
+    assert(navBox && navBox.x >= 0 && navBox.x + navBox.width <= width + 1, 'Speed Run nav item can sit fully inside the viewport');
+    await assertNoHorizontalOverflow(page, '/maps/origins (nav scrolled)');
     await page.goto(`${base}/side-easter-eggs/origins-speedrun`, { waitUntil: 'networkidle' });
     assert.equal(new URL(page.url()).pathname, '/maps/origins/speed-run', 'Old Origins Speed Run address redirects into the Origins guide');
-    assert(await page.locator('.speedrun-gate.is-locked').isVisible(), 'Speed Run pages are locked before the secret');
+    await page.getByRole('heading', { name: 'Origins Speed Run', level: 2 }).waitFor();
+    assert.equal(await page.locator('.speedrun-gate').count(), 0, 'no Speed Run lock screen');
+    assert.doesNotMatch(await page.locator('main').innerText(), /to unlock Speedrun/i);
 
-    // The Electrical Panel secret: start at the untouched positions, turn each the in-game number of times.
+    // The Electrical Panel is a hidden achievement only: solving it records "Electrical Panel Solved" and links to Speed Run.
     await page.goto(`${base}/maps/origins/lightning-staff`, { waitUntil: 'networkidle' });
     await page.getByRole('button', { name: /Electrical Panel/ }).click();
     const panelSwitches = page.locator('.electrical-switch');
@@ -153,8 +165,12 @@ try {
     for (const [index, turns] of turnsNeeded.entries()) {
       for (let turn = 0; turn < turns; turn += 1) await panelSwitches.nth(index).click();
     }
-    assert.equal(await page.locator('.electrical-panel__reward strong').innerText(), 'Speedrun Difficulty Unlocked');
-    await page.getByRole('link', { name: 'Straight to the route →' }).click();
+    assert.equal(await page.locator('.electrical-panel__reward strong').innerText(), 'Electrical Panel Solved');
+    const lightningText = await page.locator('main').innerText();
+    assert.doesNotMatch(lightningText, /Speedrun mode/i, 'no Speedrun-mode copy on the Lightning page');
+    assert.doesNotMatch(lightningText, /unlock/i, 'nothing on the Lightning page claims to unlock');
+    assert((await page.evaluate(() => JSON.parse(localStorage.getItem('zh-achievements')).unlocked))['origins/speedrun-unlocked'], 'panel solve records the hidden achievement');
+    await page.getByRole('link', { name: 'Open Speed Run' }).click();
     await page.waitForLoadState('networkidle');
     await page.getByRole('button', { name: 'Next checkpoint' }).click();
     assert.match(await page.locator('.speedrun-panel h3').innerText(), /Ice \+ Wind Staff/);

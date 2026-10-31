@@ -3,8 +3,9 @@ import { read as readStored, write as writeStored } from '../../../../shared/sto
 import { unlockAchievement } from '../../../../shared/achievements/achievements';
 
 /*
- * Speedrun mode is a reward. It unlocks when the Little Lost Girl tracker is finished, or when the
- * Electrical Panel on the Lightning Staff page is brought fully live.
+ * Remembers that the Electrical Panel was solved (so it stays solved) and records the hidden
+ * "Electrical Panel Solved" achievement. It unlocks nothing: Speed Run is always open. The storage key and
+ * achievement id keep their old "speedrun" names so earlier solves and earned records survive.
  */
 const KEY = 'zh-origins-speedrun-unlocked';
 const EVENT = 'zh-origins-speedrun-unlock';
@@ -24,7 +25,7 @@ export function useSpeedrunUnlock() {
 
   const unlock = useCallback(() => {
     // Also a hidden achievement. unlockAchievement is a no-op once recorded, so solving the panel again
-    // re-earns it only after "Reset achievements" (which keeps Speedrun mode itself unlocked).
+    // re-earns it only after "Reset achievements" (the panel itself stays solved).
     unlockAchievement('origins/speedrun-unlocked');
     writeStored(KEY, true);
     setUnlocked(true);

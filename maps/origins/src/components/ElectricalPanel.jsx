@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import SwitchDial, { DIRECTION_ANGLE } from './SwitchDial';
 import { playSet, playTurn } from './switchSounds';
 import { useSpeedrunUnlock } from './speedrunUnlock';
-import { write as writeStored } from '../../../../shared/storage';
 import { originsLightningSwitchRoute } from '../../../../shared/data/originsLightning';
 import '../Styles/ComponentStyles/ElectricalPanel.css';
 
@@ -11,7 +10,8 @@ import '../Styles/ComponentStyles/ElectricalPanel.css';
  * The Origins secret. Seven unlabeled switches start at their untouched in-game positions; each tap turns
  * one a quarter clockwise, so each needs the same number of turns as in the game (Spawn ×2, Gen 2 ×3 …).
  * Like the real dials, a switch stops sparking once it sits in its Lightning Staff position. Bring all
- * seven live and Speedrun mode unlocks. The answer is on the page above — you just have to apply it.
+ * seven live to earn the hidden "Electrical Panel Solved" achievement. It gates nothing: Speed Run is always
+ * open. The answer is on the page above — you just have to apply it.
  */
 export default function ElectricalPanel() {
   const { unlocked, unlock } = useSpeedrunUnlock();
@@ -42,7 +42,6 @@ export default function ElectricalPanel() {
     }
   };
 
-  const openSpeedrunMode = () => writeStored('zh-origins-depth', 'speedrun');
   const complete = unlocked || justSolved;
 
   return (
@@ -67,11 +66,10 @@ export default function ElectricalPanel() {
           {complete ? (
             <div className="electrical-panel__reward" role="status">
               <span className="electrical-panel__reward-kicker">Circuit complete</span>
-              <strong>Speedrun Difficulty Unlocked</strong>
-              <p>A fourth depth now sits beside Low, Medium and High in the Origins guide.</p>
+              <strong>Electrical Panel Solved</strong>
+              <p>All seven switches live. Logged as a hidden achievement.</p>
               <div className="electrical-panel__reward-links">
-                <Link to="/maps/origins" onClick={openSpeedrunMode}>Open Speedrun mode →</Link>
-                <Link to="/maps/origins/speed-run">Straight to the route →</Link>
+                <Link to="/maps/origins/speed-run">Open Speed Run</Link>
               </div>
             </div>
           ) : (
