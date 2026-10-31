@@ -9,13 +9,15 @@ Second-screen Call of Duty Zombies Easter Egg guide: glance, understand, keep pl
 - `shared/` – guide components, layout, search, achievements, shared data
 - `scripts/` – source verification, unit tests (`*.test.mjs`), Playwright browser smokes (`*-browser-smoke.mjs`)
 - `docs/polish-roadmap.md` – product and design direction; read it before any UI work
+- `docs/superpowers/specs/2026-10-31-zombies-hub-redesign-design.md` + `docs/superpowers/plans/2026-10-31-zombies-hub-redesign.md` – the approved redesign spec and plan; they win where the roadmap conflicts
 
 ## Commands
 
-- `npm test` – unit and guide-health tests
+- `npm test` – unit, guide-health, content-preservation (`guide-content.test.mjs`) and CSS-scope tests
 - `npm run check` – source verification (`scripts/verify.mjs`)
 - `npm run build` – check + production compile
-- `npm run test:browser` – Playwright smokes at 390 and 1440; needs `npm run preview -- --host 127.0.0.1 --port 4173` running
+- `npm run test:browser` – Playwright smokes at 390×844, 844×390 and 1440×900 (`scripts/smoke-viewports.mjs`), ending with `content-browser-smoke.mjs`; needs `npm run preview -- --host 127.0.0.1 --port 4173` running
+- Content preservation: `scripts/fixtures/guide-content.baseline.json` (step data) and `scripts/fixtures/rendered/*.json` (page text) were captured before the redesign. Any removal must be listed in `scripts/fixtures/approved-removals.json` with a reason and spec section; never list a guide fact there without the user's approval.
 
 ## Rules
 

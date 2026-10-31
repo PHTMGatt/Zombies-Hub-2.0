@@ -12,9 +12,9 @@ Text, images, timestamps, videos, solvers, and interactive tools are all support
 
 ## Core design philosophy
 
-### Shared structure, unique flavor
+### Shared design language, not shared information architecture
 
-Every map should use the same underlying wireframe and information flow so the experience feels cohesive across the entire Hub.
+> Superseded 2026-10-31 by the approved redesign spec (`docs/superpowers/specs/2026-10-31-zombies-hub-redesign-design.md`): maps share quality, typography, spacing, interaction and accessibility standards, but **not** one page structure. Each map earns its layout from its own Easter Egg mechanics. No guide modes, step tracking or Mark-done flows.
 
 Map personality should come from:
 - Artwork
@@ -55,21 +55,9 @@ Revelations currently has the strongest overall visual language:
 
 Its header/footer treatment should be the visual quality target for the other dedicated maps without making every map look identical.
 
-## Standard map-guide wireframe
+## Map-guide structure
 
-Each dedicated map should move toward this shared structure:
-
-1. **Map header / local navigation**
-2. **Main Easter Egg guide**
-3. **Step-by-step progression**
-4. **Quick-reference images / diagrams**
-5. **Media only where it improves clarity**
-6. **Map-specific tools / solvers**
-7. **Side Easter Eggs**
-8. **Tips / speedrun references**
-9. **Map footer**
-
-The guide should favor concise steps and visual references over long prose.
+Superseded: there is no standard wireframe. See the redesign spec's per-map designs (§6) for each map's structure. The ordering ideas below survive only as a checklist of things a map *may* need: main Easter Egg sequence, visual references, media where it adds clarity, map-specific tools, side Easter Eggs, speedrun references.
 
 ## Accuracy rule
 
