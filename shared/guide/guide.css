@@ -39,8 +39,8 @@
   min-width: 0;
   padding: 1.25rem clamp(1rem, 3vw, 1.75rem);
   counter-increment: guide-step;
-  /* A deep link (#step-id) lands below the fixed hub header. */
-  scroll-margin-top: calc(var(--hub-nav-height) + 1rem);
+  /* A deep link (#step-id) lands below the pinned hub bar; GuideSteps also clears a pinned map header. */
+  scroll-margin-top: calc(var(--hub-pin-height, var(--hub-nav-height)) + 1rem);
 }
 
 .guide-seq__step + .guide-seq__step {
@@ -115,7 +115,25 @@
 }
 
 .guide-seq__footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 1.5rem;
   padding: 0 0.25rem;
+}
+
+/* Quiet onward links after the last step (e.g. the map's Side Easter Egg video). */
+.guide-seq__related {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  color: var(--guide-accent);
+  font-weight: 700;
+}
+
+.guide-seq__related:focus-visible {
+  outline: 3px solid var(--guide-accent);
+  outline-offset: 2px;
 }
 
 .guide .visually-hidden {

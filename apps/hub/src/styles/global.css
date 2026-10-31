@@ -3,6 +3,8 @@
   color: #f7fbff;
   background: #071019;
   --hub-nav-height: 72px;
+  /* How much of the top edge the hub bar covers while pinned: use it for sticky offsets and anchor margins. */
+  --hub-pin-height: var(--hub-nav-height);
   --zh-bg: #071019;
   --zh-surface: #0b1824;
   --zh-surface-2: #102332;
@@ -187,5 +189,7 @@ summary:focus-visible,
 @media (max-height: 500px) and (orientation: landscape) {
   :root {
     --hub-nav-height: 52px;
+    /* The bar scrolls away here (hub-header.css), so nothing is pinned over the page. */
+    --hub-pin-height: 0px;
   }
 }

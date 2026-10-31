@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import GuideSteps from '../../../../shared/guide/GuideSteps';
 import CompleteEasterEgg from '../../../../shared/achievements/CompleteEasterEgg';
 import soeGuideSteps from '../data/soeGuideSteps';
@@ -16,7 +17,12 @@ function MainGuide() {
         </header>
 
         <div className="soe-guide">
-          <GuideSteps label="Shadows of Evil" steps={soeGuideSteps} footer={<CompleteEasterEgg mapId="shadows-of-evil" />} />
+          <GuideSteps label="Shadows of Evil" steps={soeGuideSteps} footer={(
+          <>
+            <CompleteEasterEgg mapId="shadows-of-evil" />
+            <Link className="guide-seq__related" to="/side-easter-eggs/soe">Side Easter Egg video</Link>
+          </>
+        )} />
         </div>
       </div>
     </div>

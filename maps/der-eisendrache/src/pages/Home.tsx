@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import GuideSteps from '../../../../shared/guide/GuideSteps';
 import CompleteEasterEgg from '../../../../shared/achievements/CompleteEasterEgg';
 import deGuideSteps from '../data/deGuideSteps';
@@ -21,7 +22,12 @@ const Home: React.FC = () => (
     </details>
 
     <div className="de-guide">
-      <GuideSteps label="My Brother’s Keeper" steps={deGuideSteps} footer={<CompleteEasterEgg mapId="der-eisendrache" />} />
+      <GuideSteps label="My Brother’s Keeper" steps={deGuideSteps} footer={(
+          <>
+            <CompleteEasterEgg mapId="der-eisendrache" />
+            <Link className="guide-seq__related" to="/side-easter-eggs/de">Side Easter Egg video</Link>
+          </>
+        )} />
     </div>
   </div>
 );

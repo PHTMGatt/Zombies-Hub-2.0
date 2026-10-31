@@ -75,18 +75,37 @@ function StepItem({ step }) {
   );
 }
 
+// A mistyped or truncated link (#100%) must never take the guide down.
+const fragmentId = (hash) => {
+  try {
+    return decodeURIComponent(hash.slice(1));
+  } catch {
+    return '';
+  }
+};
+
+// Bottom edge of whatever is pinned over the page: the hub bar and, on some maps, the map header too.
+const pinnedBottom = () => Math.max(0, ...[...document.querySelectorAll('.hub-header, .map-module header')]
+  .filter((element) => ['fixed', 'sticky'].includes(getComputedStyle(element).position))
+  .map((element) => element.getBoundingClientRect().bottom));
+
 export default function GuideSteps({ label, steps, footer }) {
   const { hash, search } = useLocation();
 
   // The map chunk loads after the app shell has already tried to scroll to #<step>; finish the job here.
-  // Wait for web fonts (a late font swap moves the step after the scroll), then jump without animating.
-  // An old ?ref=<step> link counts too: the app shell rewrites it to #<step>, but this may render first.
+  // Wait for web fonts (a late font swap moves the step after the scroll), then jump without animating,
+  // and nudge the step clear of a pinned map header. An old ?ref=<step> link counts too: the app shell
+  // rewrites it to #<step>, but this may render first.
   useEffect(() => {
-    const id = decodeURIComponent(hash.slice(1)) || new URLSearchParams(search).get('ref');
+    const id = fragmentId(hash) || new URLSearchParams(search).get('ref');
     if (!id || !steps.some((step) => step.id === id)) return undefined;
     let cancelled = false;
     const land = () => {
-      if (!cancelled) document.getElementById(id)?.scrollIntoView({ block: 'start', behavior: 'instant' });
+      const target = document.getElementById(id);
+      if (cancelled || !target) return;
+      target.scrollIntoView({ block: 'start', behavior: 'instant' });
+      const overlap = pinnedBottom() + 12 - target.getBoundingClientRect().top;
+      if (overlap > 0) window.scrollBy({ top: -overlap, behavior: 'instant' });
     };
     land();
     (document.fonts?.ready ?? Promise.resolve()).then(() => requestAnimationFrame(land));

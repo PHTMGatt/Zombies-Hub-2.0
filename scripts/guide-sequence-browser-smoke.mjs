@@ -47,6 +47,13 @@ try {
       results.push(`${name}: ${guide} — ${steps.length} steps in order, tasks as text, no machinery`);
     }
 
+    // Links the old Quick refs sheet carried that no map nav covers: each map's Side Easter Egg video.
+    for (const [route, href] of [['/maps/gorod-krovi', '/side-easter-eggs/gk'], ['/maps/der-eisendrache', '/side-easter-eggs/de'], ['/maps/shadows-of-evil', '/side-easter-eggs/soe']]) {
+      await page.goto(`${base}${route}`, { waitUntil: 'networkidle' });
+      assert.equal(await page.locator(`section.guide a[href="${href}"]`).count(), 1, `${route}: guide links to its Side Easter Egg video (${href})`);
+    }
+    results.push(`${name}: Gorod, DE and Shadows guides link to their Side Easter Egg videos`);
+
     // Tabs stay reachable: every staff tab in "Build the four staffs" shows its own facts.
     const origins = guides.find((entry) => entry.guide === 'origins');
     const buildStep = origins.steps.find((step) => step.id === 'build-staffs');
@@ -67,15 +74,25 @@ try {
     const coldPage = await cold.newPage();
     await coldPage.goto(`${base}/maps/origins#upgrade-staffs`, { waitUntil: 'networkidle' });
     await coldPage.waitForTimeout(150);
+    // Every pinned bar counts: the hub bar and the map's own header (Origins pins one under the hub bar).
     const position = await coldPage.evaluate(() => {
       const target = document.getElementById('upgrade-staffs').getBoundingClientRect();
-      const header = document.querySelector('.hub-header').getBoundingClientRect();
-      const pinned = ['fixed', 'sticky'].includes(getComputedStyle(document.querySelector('.hub-header')).position);
-      return { top: target.top, headerBottom: pinned ? header.bottom : 0, viewport: window.innerHeight };
+      const headerBottom = Math.max(0, ...[...document.querySelectorAll('.hub-header, .map-module header')]
+        .filter((el) => ['fixed', 'sticky'].includes(getComputedStyle(el).position))
+        .map((el) => el.getBoundingClientRect().bottom));
+      return { top: target.top, headerBottom, viewport: window.innerHeight };
     });
-    assert(position.top >= position.headerBottom - 1, `${name}: deep-linked step sits below the hub header (${Math.round(position.top)} < ${Math.round(position.headerBottom)})`);
+    assert(position.top >= position.headerBottom - 1, `${name}: deep-linked step sits below every pinned header (${Math.round(position.top)} < ${Math.round(position.headerBottom)})`);
     assert(position.top < position.viewport * 0.4, `${name}: deep-linked step is near the top (${Math.round(position.top)}px of ${position.viewport}px)`);
     results.push(`${name}: cold #upgrade-staffs link lands on the step`);
+
+    // A mistyped or truncated link (#100%) must not take the guide down.
+    const brokenErrors = [];
+    coldPage.on('pageerror', (error) => brokenErrors.push(error.message));
+    await coldPage.goto(`${base}/maps/origins#100%`, { waitUntil: 'networkidle' });
+    assert.equal(await coldPage.locator('li.guide-seq__step').count(), 11, `${name}: guide still renders with a malformed #fragment`);
+    assert.deepEqual(brokenErrors, [], `${name}: malformed #fragment errors: ${brokenErrors.join('; ')}`);
+    results.push(`${name}: malformed #fragment is harmless`);
     await cold.close();
   }
 } finally {

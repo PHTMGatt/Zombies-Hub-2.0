@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import GuideSteps from '../../../../shared/guide/GuideSteps';
 import CompleteEasterEgg from '../../../../shared/achievements/CompleteEasterEgg';
 import gorodGuideSteps from '../data/gorodGuideSteps';
@@ -21,7 +22,12 @@ const MainGuide = () => (
     </details>
 
     <div className="gorod-guide">
-      <GuideSteps label="Love and War" steps={gorodGuideSteps} footer={<CompleteEasterEgg mapId="gorod-krovi" />} />
+      <GuideSteps label="Love and War" steps={gorodGuideSteps} footer={(
+          <>
+            <CompleteEasterEgg mapId="gorod-krovi" />
+            <Link className="guide-seq__related" to="/side-easter-eggs/gk">Side Easter Egg video</Link>
+          </>
+        )} />
     </div>
   </div>
 );

@@ -65,6 +65,19 @@ try {
       results.push(`${viewport.name}: "${query}" → ${title}`);
     }
 
+    // Searching for the step you are already anchored to brings it back into view.
+    await page.goto(`${base}/maps/mob-of-the-dead#plane`, { waitUntil: 'networkidle' });
+    await assertStepInView('plane');
+    await page.evaluate(() => document.getElementById('codes').scrollIntoView({ block: 'start', behavior: 'instant' }));
+    await page.getByRole('link', { name: 'Search' }).click();
+    await page.waitForURL('**/search');
+    await page.waitForFunction(() => document.querySelectorAll('input[type="search"]').length === 1);
+    await page.getByRole('searchbox').fill('mob plane parts');
+    await page.locator('.zh-search__results a').first().click();
+    await page.waitForURL('**/maps/mob-of-the-dead#plane');
+    await assertStepInView('plane');
+    results.push(`${viewport.name}: searching the current step again brings it back into view`);
+
     // Old ?ref= links (bookmarks, shared links) land on the same step.
     await page.goto(`${base}/maps/mob-of-the-dead?ref=codes`, { waitUntil: 'networkidle' });
     await page.waitForURL('**/maps/mob-of-the-dead#codes');

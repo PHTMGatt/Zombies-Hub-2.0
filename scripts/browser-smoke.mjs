@@ -158,8 +158,13 @@ try {
     assert.doesNotMatch(await page.locator('main').innerText(), /to unlock Speedrun/i);
 
     // The Electrical Panel is a hidden achievement only: solving it records "Electrical Panel Solved" and links to Speed Run.
+    // A finished run of the old tracker set the same legacy flag; that must not mark the panel solved.
+    await page.evaluate(() => localStorage.setItem('zh-origins-speedrun-unlocked', 'true'));
     await page.goto(`${base}/maps/origins/lightning-staff`, { waitUntil: 'networkidle' });
     await page.getByRole('button', { name: /Electrical Panel/ }).click();
+    assert.equal(await page.locator('.electrical-panel__reward').count(), 0, 'the old tracker unlock does not mark the panel solved');
+    assert.equal(await page.locator('.electrical-switch').count(), 7, 'the panel is playable');
+    await page.evaluate(() => localStorage.removeItem('zh-origins-speedrun-unlocked'));
     const panelSwitches = page.locator('.electrical-switch');
     const turnsNeeded = [2, 3, 3, 2, 2, 1, 3];
     for (const [index, turns] of turnsNeeded.entries()) {
@@ -299,6 +304,16 @@ try {
     const kinoStep = await page.locator('li.guide-seq__step h3').first().boundingBox();
     assert(kinoStep && kinoStep.y + kinoStep.height <= 390, `Kino's first step title ends at ${Math.round(kinoStep ? kinoStep.y + kinoStep.height : NaN)}px; it must be fully on the 390px landscape screen`);
     results.push({ width: 844, height: 390, check: 'no pinned headers; Home headline and Kino first step in the first screen', passed: true });
+
+    // With the hub bar scrolled away, sticky panels must not keep an empty band where it used to be.
+    await page.goto(`${base}/maps/revelations/apothicon-upgrade`, { waitUntil: 'networkidle' });
+    await page.evaluate(() => window.scrollTo(0, 700));
+    await page.waitForTimeout(100);
+    const stickyTops = await page.evaluate(() => [...document.querySelectorAll('main *')]
+      .filter((el) => getComputedStyle(el).position === 'sticky' && el.getBoundingClientRect().height > 0)
+      .map((el) => ({ el: el.className, top: Math.round(el.getBoundingClientRect().top), cssTop: getComputedStyle(el).top })));
+    for (const item of stickyTops) assert(parseFloat(item.cssTop) <= 20, `${item.el} sticks ${item.cssTop} from the top at 844×390, leaving an empty band where the hub bar was`);
+    results.push({ width: 844, height: 390, check: 'sticky panels sit at the top once the hub bar scrolls away', passed: true });
 
     // Measured, not asserted until each map's own redesign: where the first step title starts.
     for (const route of routes.filter((item) => item.startsWith('/maps/'))) {

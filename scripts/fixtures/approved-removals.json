@@ -447,5 +447,14 @@
     ],
     "reason": "Label of the removed Origins \"⏱ Speedrun\" depth button (baseline captured with the legacy unlock set). The always-visible nav item reads \"Speed Run\".",
     "spec": "§4.4"
+  },
+  {
+    "text": "The circuit holds.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/lightning-staff"
+    ],
+    "reason": "Electrical Panel solved-state caption. The baseline was captured with the legacy speedrun flag, which also came from finishing the old tracker; the panel now shows solved only after an actual panel solve (code review finding). Unsolved caption \"The current remembers.\" still shows.",
+    "spec": "§4.4"
   }
 ]
