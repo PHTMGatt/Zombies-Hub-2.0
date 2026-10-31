@@ -21,7 +21,7 @@ Second-screen Call of Duty Zombies Easter Egg guide: glance, understand, keep pl
 
 - Work on `claude-forge` only. Do not create branches or worktrees. `enforce-branch-policy.yml` keeps only `main`, `chatgpt-forge`, `claude-forge`.
 - Never fabricate Easter Egg steps or game facts. Redesign changes presentation, not guide content; do not drop or reorder steps, codes, solver data, or timestamps.
-- CSS for hub legacy styles and most maps is auto-scoped by `postcss.config.js` (`.mob-module`, `.de-module`, …). Origins and Shadows of Evil are NOT in that list: their CSS is global, so check for leaks when restyling them.
+- CSS for hub legacy styles and all seven maps is auto-scoped by `postcss.config.js` (`.origins-module`, `.mob-module`, `.de-module`, …); `scripts/css-scope.test.mjs` fails if a map is missing. Origins and Shadows of Evil were hand-scoped and never leaked; they are now enforced too (adding them left the built CSS byte-identical). `shared/guide/guide.css` is deliberately global.
 - `verify.mjs` rejects root-relative `/src` or `/images` asset paths; import assets instead.
 - Do not edit `package-lock.json`, `render.yaml`, `.github/workflows/`, or `.env*` during UI work.
 - Write screenshots and scratch output to `artifacts/` (gitignored), not `shots/`.
