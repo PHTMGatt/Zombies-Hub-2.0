@@ -69,7 +69,7 @@ Scope is deliberately narrow. Remove harmful shared machinery and render existin
 | Home "Continue run" strip | `ContinueRuns.jsx`, `Home.jsx`, `activeRuns()` |
 | Achievements page "N / M steps" progress bars | `apps/hub/src/pages/Achievements.jsx` |
 
-The step `tasks` arrays stay in the data files, because they carry facts (for example "Engine — Der Eisendrache"). The interim renderer shows them as a plain non-interactive list where a step has no equivalent ref, so no fact disappears. Each map's redesign decides their final form.
+The step `tasks` arrays stay in the data files, because they carry facts (for example "Engine — Der Eisendrache"). Some steps keep facts only in tasks: both Kino radio locations, and the Kino film → rocket follow-up, live only in task `label` + `hint`. The interim renderer therefore always shows every task as a plain, non-interactive list in data order, with label **and** hint, so no fact disappears. Each map's redesign decides their final form.
 
 ### 4.2 Interim presentation (Phase 1 only)
 
@@ -107,7 +107,37 @@ This is a neutral holding state. Desktop Revelations will temporarily lose its r
 - At `max-height: 500px`, the hub header is not sticky and is compact. Map headers are never sticky on short viewports.
 - Home hero is reduced at `max-height: 500px` so the headline is in the first landscape viewport. Home loses the Continue strip and gains nothing in its place.
 
-### 4.7 Tests
+### 4.7 Side EE consumers of `GuideSteps`
+
+**Scope.** On 2026-10-31, `GuideSteps` / `useGuideProgress` / `QuickRefs` / `PickTool` / `RunNote` were checked across `apps/` and `shared/`. The only Side EE consumer is the **Kino der Toten** page (`apps/hub/src/pages/SideEEInfo.jsx` with `apps/hub/src/data/sideEE/Kino.js`, two steps: "Three film reels" and "Two hidden radios").
+
+The other Side EE pages (GK, DE, SoE video sections and `SideEECard` entries) do not use the shared guide machinery. The deletion pass does not affect them, and this spec does not redesign them. `origins-speedrun` is already a redirect to `/maps/origins/speed-run`.
+
+**Changes for Kino in Phase 1:**
+- **Removed:** the same inherited machinery as the maps — Track-it checkboxes, the 0/N counter, Mark done, ←/→, swipe rail, depth switch, Progress options, finish panel, and the `kino-side` progress record. That key is covered by "Clear old guide data".
+- **Preserved:**
+  - every fact: the four teleport rooms and their reel spots; Reel 1–3; "Film played — back at the Pack-a-Punch projector, press Use"; "Rocket launched — after the next teleport it appears in the Conference Room — shoot it"; and both radios with their location hints
+  - the "Film reels + radios" search entry
+  - the Side EE listing count (the default export of `Kino.js`)
+  - the page's artwork header
+- **No completion action:** Kino has no main-EE achievement, so it gets no "I completed this Easter Egg" button.
+- **No map architecture:** Kino is not given a main-map structure. It stays a Side EE page inside the hub shell.
+- **Comments:** stale code comments ("tracked checklist", "Tracked like the main guides") are updated to describe the page as it now is.
+
+**Final structure decision.** The simplified Phase 1 presentation is the **intended final structure** for Kino. The content is two short sequences whose answers are location lists. A numbered sequence with the room table and the reels / film / rocket / radios items as plain text is the fastest way to read it mid-match. No later structural pass is planned.
+
+**Acceptance bar.** This is decided at the end of Phase 1, not deferred. Kino is checked with Playwright at **1440×900, 390×844 and 844×390** for:
+- every fact listed above visible on the page
+- the first step title in the first viewport at 844×390
+- no horizontal overflow
+- readable contrast over the artwork header
+- no leftover machinery
+
+If any check fails, it is fixed **within Phase 1** (step 1b in the order in section 8), not left for later.
+
+Kino is included in the Phase 9 independent critique only in the same way as every other page. That pass is visual polish, not a pending structural redesign.
+
+### 4.8 Tests
 
 - **Delete:** checks that exist only to verify removed machinery (`run-mode-browser-smoke.mjs`; the Mark-done/progress parts of `achievements-browser-smoke.mjs` and the per-map smokes).
 - **Add or replace with behavioural coverage:**
@@ -117,6 +147,7 @@ This is a neutral holding state. Desktop Revelations will temporarily lose its r
   - Origins Speed Run is visible in nav and its route renders content with empty storage
   - "I completed this Easter Egg" unlocks the main achievement and changes nothing else
   - Home has no Continue strip; no horizontal overflow
+  - Kino Side EE page shows every reel room, reel/film/rocket item and both radio locations with their hints, and no machinery
 - **Add `844×390`** to the browser smoke viewports (`scripts/browser-smoke.mjs` and the per-map smokes that loop viewports).
 - `npm test` guide-health tests keep checking content integrity. They gain a check that every step id is unique and anchor-safe.
 - The old count of 156 browser checks is not a target. Meaningful coverage of new behaviour is.
@@ -199,7 +230,23 @@ When an image-only reference (staff code charts, symbol tables, switch diagrams)
 3. Mark any unclear cell as unclear in the UI and in the commit or PR notes. Never guess.
 4. Ask the user to confirm the transcription before the original stops being the primary reference.
 
-## 8. Verification per phase
+## 8. Implementation order and verification
+
+Order:
+1. **Phase 1** — shared deletion pass, CSS guard, short-viewport fixes and test replacement (sections 4.1–4.6, 4.8).
+   - **1b.** Kino Side EE verification and any fixes it needs (section 4.7). Phase 1 is not complete until 1b passes.
+2. **Phase 2** — Origins.
+3. **Phase 3** — Revelations.
+4. **Phase 4** — Gorod Krovi.
+5. **Phase 5** — Der Eisendrache.
+6. **Phase 6** — Zetsubou No Shima.
+7. **Phase 7** — Shadows of Evil.
+8. **Phase 8** — Mob of the Dead.
+9. **Phase 9** — independent critique / polish across all pages, including Kino.
+
+No shared consumer is left in a holding state without a named phase. Every `GuideSteps` consumer is one of the seven maps (Phases 2–8) or Kino (final at 1b).
+
+Verification per phase:
 
 - `npm test`, `npm run check`, `npm run build` and `npm run test:browser` all pass.
 - Playwright MCP at **1440×900, 390×844 and 844×390** for every changed route.
@@ -222,5 +269,6 @@ When an image-only reference (staff code charts, symbol tables, switch diagrams)
 | Interim Phase 1 sequences are long on mobile | Depth 2 is collapsed by default; only Depth 1 shows. Each map's redesign follows quickly. |
 | Users lose stored "current step" | Intended. Achievements are preserved via the one-time backfill. |
 | PostCSS guard changes output unexpectedly | Built CSS is diffed before and after; any difference is investigated before committing. |
+| Kino left as an orphaned interim page | Declared final at Phase 1b against an explicit three-viewport acceptance bar (section 4.7). |
 | Removing `tasks` UI drops a fact | Tasks are rendered as plain text wherever not otherwise represented; a browser smoke check confirms every task label still appears on the rendered page. |
 | Zetsubou consolidation loses page-only facts | A line-by-line diff gates any page removal. |
