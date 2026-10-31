@@ -1,8 +1,11 @@
 /*
- * Guarded localStorage access for every Zombies Hub record. Private windows or blocked storage just
- * mean nothing persists; callers always get their fallback instead of an exception.
+ * Guarded localStorage access for every Zombies Hub record. Private windows or blocked storage keep
+ * working for the current page session; callers still get their fallback instead of an exception.
  */
+const volatile = new Map();
+
 export const read = (key, fallback) => {
+  if (volatile.has(key)) return volatile.get(key);
   try {
     const raw = window.localStorage.getItem(key);
     return raw ? JSON.parse(raw) : fallback;
@@ -12,15 +15,24 @@ export const read = (key, fallback) => {
 };
 
 export const write = (key, value) => {
+  let serialized;
   try {
-    window.localStorage.setItem(key, JSON.stringify(value));
+    serialized = JSON.stringify(value);
+  } catch {
+    return false;
+  }
+  try {
+    window.localStorage.setItem(key, serialized);
+    volatile.delete(key);
     return true;
   } catch {
+    volatile.set(key, value);
     return false;
   }
 };
 
 export const remove = (key) => {
+  volatile.delete(key);
   try {
     window.localStorage.removeItem(key);
   } catch {
@@ -30,9 +42,9 @@ export const remove = (key) => {
 
 export const storedKeys = () => {
   try {
-    return Object.keys(window.localStorage);
+    return [...new Set([...Object.keys(window.localStorage), ...volatile.keys()])];
   } catch {
-    return [];
+    return [...volatile.keys()];
   }
 };
 

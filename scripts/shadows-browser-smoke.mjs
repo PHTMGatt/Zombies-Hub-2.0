@@ -66,6 +66,26 @@ try {
     await assertNoHorizontalOverflow(page, route);
     results.push({ width, route, passed: true });
 
+    // If storage becomes read-only after a saved game, the visible tools must prefer the player's
+    // newest session choice over the older persisted value.
+    await page.goto(`${base}${route}`, { waitUntil: 'networkidle' });
+    await page.evaluate(() => {
+      localStorage.clear();
+      localStorage.setItem('zh-soe-train-symbols', JSON.stringify(['stale', '', '']));
+      localStorage.setItem('zh-soe-character', JSON.stringify('floyd'));
+    });
+    await page.reload({ waitUntil: 'networkidle' });
+    assert.equal(await page.locator('#rituals').getByLabel('Symbol 1').inputValue(), 'stale', 'stored note loads before storage becomes read-only');
+    await page.evaluate(() => {
+      Storage.prototype.setItem = () => { throw new DOMException('Storage blocked', 'SecurityError'); };
+    });
+    await page.locator('#rituals').getByLabel('Symbol 1').fill('eye');
+    assert.equal(await page.locator('#rituals').getByLabel('Symbol 1').inputValue(), 'eye', 'blocked storage keeps the latest note for this session');
+
+    await page.locator('#upgrade').getByRole('button', { name: 'Jackie Vincent' }).click();
+    assert.match(await page.locator('#upgrade .pick-tool__answer').innerText(), /Ruby Rabbit/, 'blocked storage keeps the latest picker choice for this session');
+    results.push({ width, route: `${route} (blocked storage tools)`, passed: true });
+
     errors.length = 0;
     const badRoute = '/maps/shadows-of-evil/not-a-guide';
     const badResponse = await page.goto(`${base}${badRoute}`, { waitUntil: 'networkidle' });
