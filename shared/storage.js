@@ -5,11 +5,12 @@
 const volatile = new Map();
 
 export const read = (key, fallback) => {
+  if (volatile.has(key)) return volatile.get(key);
   try {
     const raw = window.localStorage.getItem(key);
-    return raw ? JSON.parse(raw) : (volatile.has(key) ? volatile.get(key) : fallback);
+    return raw ? JSON.parse(raw) : fallback;
   } catch {
-    return volatile.has(key) ? volatile.get(key) : fallback;
+    return fallback;
   }
 };
 
