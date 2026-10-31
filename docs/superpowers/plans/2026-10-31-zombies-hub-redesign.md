@@ -339,21 +339,311 @@ Content checks for every map phase:
 
 ### Phase 2 — Origins (CHECKPOINT 2: sets direction for later maps)
 
-- **Likely files:**
-  - `maps/origins/src/Pages/{MainGuide,IceStaff,FireStaff,WindStaff,LightningStaff}.tsx`
-  - `maps/origins/src/components/{Header,Nav}.tsx`
-  - `maps/origins/src/Styles/PageStyles/*.css`, `maps/origins/src/Styles/ComponentStyles/{Header,Nav}.css`
-  - new `maps/origins/src/components/RunSheet.jsx` (map-specific, not shared)
-  - first use of `StepDetail`, `ZoomImage` and `tokens.css`
-- **Target:** a compact 11-row run sheet showing each step's Depth 1 answer, with tap or click for Depth 2.
-  - The desktop side column holds the setup reference (staff → robot/pedestal, soul chests), taken from existing data.
-  - Nav: Main Guide | Ice | Fire | Wind | Lightning | Speed Run.
-  - Staff pages become mini-guides (parts → Crazy Place puzzle → upgrade). Lightning's switch board and code is the primary visual. Ice, Fire and Wind code charts use `ZoomImage`.
-- **Content checks:**
-  - rendered baselines for the four staff pages and Speed Run
-  - the existing `origins-guide-health.test.mjs` source assertions still pass
-  - any code-chart transcription follows §7
-- **Landscape:** the first run-sheet row is inside 844×390; this becomes an assertion.
+**Approved direction (2026-10-31):** the "dig-site field sheet". Content is structured by a brass survey spine, type and colour, not glass cards. The four staff colours have fixed jobs. Artwork appears only in the title block. The Main Guide carries a staff board; each staff page follows Build / Puzzle / Upgrade. Reference mockups (not code): `artifacts/phase-2/mockup/` (gitignored).
+
+**User decisions (2026-10-31):**
+- **Switch board:** the Lightning switch board leaves the Main Guide. Its only home is the Lightning page, and the Main Guide links to it from step 2.
+- **Tracker lines:** tracking-only task lines are removed and listed as approved removals.
+- **Ice ordering:**
+  - The three gravestones are unordered locations.
+  - The Crazy Place symbol puzzle is sequence-sensitive: follow the game's displayed order and use the chart to convert each dot pattern.
+  - Neither page may imply a gravestone order, and no location fact may change.
+- **Excavation rings:** one shared ring reference for all four staffs (same four rings and levers; Ice blue, Fire red, Wind yellow, Lightning purple; then shoot the matching orb). It is not Lightning's seven panel switches. Lever→ring labels may be used only where existing source data states them.
+- **Achievement:** the hidden achievement is retitled "Circuit Complete" (id unchanged).
+- **Type:** no new font files. Rajdhani plus the system UI font only.
+
+**Design tokens.** Declared once in `maps/origins/src/Styles/origins-tokens.css` on `.origins-module`, so they are scoped by PostCSS:
+
+| Token | Value | Job |
+|---|---|---|
+| `--o-ground` | `#0F1A17` | page ground (trench) |
+| `--o-ground-2` | `#16231F` | title block, raised bands |
+| `--o-ink` | `#EEF2EC` | answers, titles |
+| `--o-muted` | `#9DB0A7` | labels, secondary text (≥ 4.5:1 on ground) |
+| `--o-brass` | `#C9A45C` | sequence spine, step markers, section rules |
+| `--o-steel` | `#7CC4F2` | navigation, links, focus |
+| `--o-warn` | `#FFB24D` | warnings only |
+| `--o-ice` / `--o-fire` / `--o-wind` / `--o-lightning` | `#78E8E1` / `#FF7844` / `#FFE657` / `#D8A8FF` | that staff only |
+
+**Type scale:**
+- Rajdhani 700 for the wordmark (clamp 48–104px), staff names and labels (12–15px, uppercase, tracked).
+- Rajdhani 700 at 23–26px for step titles.
+- `system-ui` for answers (17–18px, weight 500), body (16–17px) and secondary text (15px).
+
+**Visual guardrails** (checked in Task 2.6 and at the checkpoint):
+- Contour lines stay at most 0.07 opacity.
+- Staff colour appears only on staff names, rules or bands up to 6px, ticks and icons. Never as a fill larger than a 6px band, and never on body text.
+- No `backdrop-filter` and no full-page artwork behind body text.
+- Body text is never Rajdhani.
+
+### Task 2.0: Preflight and "Circuit Complete"
+
+**Files:**
+- Modify: `shared/achievements/achievements.js` (title of `origins/speedrun-unlocked`)
+- Modify: `maps/origins/src/components/ElectricalPanel.jsx` (reward heading)
+- Modify: `scripts/browser-smoke.mjs` (expected text)
+
+- [ ] **Step 1:** Confirm a clean `claude-forge` at or after this plan commit, then run GATE items 1–4 and record the counts in `artifacts/phase-2/baseline.txt`.
+- [ ] **Step 2:** In `browser-smoke.mjs`, change the expected panel reward text to `'Circuit Complete'`. Run it. Expected: FAIL.
+- [ ] **Step 3:**
+  - Set the achievement `title: 'Circuit Complete'`, keeping the id and `legacyKey`.
+  - Set the panel's reward `<strong>` to `Circuit Complete` and its kicker to `Electrical Panel`.
+- [ ] **Step 4:** Run GATE items 1–4. Expected: PASS. Commit as `feat(origins): rename hidden achievement to Circuit Complete`.
+
+### Task 2.1: Shared primitives (only what Origins needs)
+
+**Files:**
+- Create: `shared/guide/StepDetail.jsx`, `shared/guide/useHashLanding.js`, `shared/ui/ZoomImage.jsx`, `shared/ui/ZoomImage.css`, `shared/ui/tokens.css`
+- Modify: `shared/guide/GuideSteps.jsx` (consumes `StepMore` and `useHashLanding`; output must not change)
+- Modify: `apps/hub/src/main.jsx` (import `shared/ui/tokens.css` once)
+
+**Interfaces (produces):**
+- **`StepMore({ step, problems?, links?, summary?: string = 'More on this step' })`**
+  - Renders the existing `details.guide-seq__more` (how / video / links / nested "Not working?").
+  - Returns `null` when there is nothing to show.
+  - `problems` and `links` default to the step's own.
+- **`useHashLanding(ids: string[]): void`** — the landing logic now inside `GuideSteps`, moved verbatim:
+  - safe decode;
+  - legacy `?ref`;
+  - waits for fonts;
+  - instant scroll;
+  - clears pinned headers.
+- **`ZoomImage({ src, alt, width, height, caption?, className? })`**
+  - **Markup:** `<figure class="zoom-image">` with a `<button>` named "Enlarge: {alt}" wrapping the `<img>`, then an optional `<figcaption>`.
+  - **Full screen:** the button opens a `<dialog class="zoom-image__dialog">` showing the image at up to 100vw × 100vh with `touch-action: pinch-zoom`. Close with a 48px "Close" button, Esc, or a backdrop tap. Focus returns to the trigger.
+  - **Motion:** honours `prefers-reduced-motion` (no zoom animation).
+- **`shared/ui/tokens.css`** (global, tiny):
+  - `:root { --zh-tap: 48px; --zh-focus-width: 3px; }`
+  - `@media (prefers-reduced-transparency: reduce) { :root { --zh-transparency: 0; } }`
+
+- [ ] **Step 1:** Extract `StepMore` and `useHashLanding` from `GuideSteps.jsx` without behaviour changes.
+- [ ] **Step 2:** Run GATE items 3–4. Expected: PASS with identical counts. Every other map still renders through `GuideSteps`, and `content-browser-smoke` passes with no new removals.
+- [ ] **Step 3:** Add `ZoomImage` and `tokens.css`. They are covered by the Origins smoke in Task 2.5; no consumer exists yet.
+- [ ] **Step 4:** Commit as `refactor(guide): StepMore, useHashLanding and ZoomImage primitives`.
+
+### Task 2.2: Origins content model (data only, no visual change yet)
+
+**Files:**
+- Modify: `maps/origins/src/data/originsGuide.jsx`
+- Create: `maps/origins/src/data/originsStaffPages.js`
+- Modify: `scripts/origins-guide-health.test.mjs` (read facts from the new data file instead of the `.tsx` sources)
+- Modify: `scripts/fixtures/approved-removals.json`
+- Test: `scripts/origins-content.test.mjs` (new)
+
+**Interfaces (produces), used by Tasks 2.4 and 2.5:**
+- **`originsGuide`:** the same 11 steps, ids and order, with these changes:
+  - **Tracker `tasks` removed** from `build-staffs`, `upgrade-staffs`, `secure-keys` and `thunder-fists`. Their facts already exist in the steps' refs ("Odin · middle robot", "Gen 5 footprint", …).
+  - **Ice upgrade tab refs split:**
+    - `{ type: 'list', unordered: true, items: ['Crazy Place: match blue-dot pillar → ceiling stone, shoot it', 'Freeze 3 gravestones → shatter with bullets'] }`
+    - then `{ type: 'list', items: ['Excavation rings all BLUE → shoot the orb', 'Blue pedestal → kill zombies to charge'] }`
+    - The strings are unchanged. `unordered` means "render without numbering". It makes no claim about relative order: the two pages currently disagree, and you only confirmed that the gravestones are unordered.
+  - **New:** a `link` on the Lightning upgrade tab, `{ to: '/maps/origins/lightning-staff#switches', label: 'Switch board' }`. The `custom` switch-board ref is removed from the tab (its home is the Lightning page).
+- **`originsStaffPages`:** `{ ice, fire, wind, lightning }`. Each is:
+  - `{ name, tone, build: [{ k, v }], puzzle: { chart: { src, alt, width, height }, steps: string[], note?: string }, upgrade: { anyOrder?: { label, text }, steps: string[] }, ringColour: 'BLUE'|'RED'|'YELLOW'|'PURPLE' }`
+  - Every `k` / `v` / step string is copied verbatim from the current `IceStaff.tsx`, `FireStaff.tsx`, `WindStaff.tsx` and `LightningStaff.tsx`. The `k` labels drop the trailing colon ("Part 1:" → "Part 1").
+  - **Ice:**
+    - `upgrade.anyOrder = { label: 'Any order', text: 'Find all three gravestones on the main map, freeze each one with the Ice Staff, then shoot the frozen stone with a normal bullet weapon to break it.' }`
+    - `puzzle.note = 'The pillar order is different every game. Follow the order the game shows, and use the chart to turn each dot pattern into its ceiling stone.'` (user-provided, 2026-10-31)
+  - **Lightning:** `puzzle` also carries `pianoCode` from `shared/data/originsLightning.js`.
+  - **Chart alt text** describes structure only, never transcribes. Ice example: "Ice Staff code chart: twelve pairs, each a dot pattern on a pillar beside the ceiling-stone symbol to shoot."
+
+**Steps:**
+- [ ] **Step 1: Write `scripts/origins-content.test.mjs`** (uses `loadGuides()` plus Vite `ssrLoadModule` for `originsStaffPages.js`):
+  - `test('origins keeps 11 steps in order')`: ids equal the baseline.
+  - `test('no tracker-only task lines remain in Origins')`: no step has `tasks`; none of the 16 tracker labels appears in `guideStrings(origins)`.
+  - `test('the facts behind removed tracker lines are still in the steps')`: `guideStrings(origins)` contains each of 'Odin · middle robot', 'Freya · Church / Gen 6 robot', 'Thor · spawn / Gen 1–3 robot', 'Pedestal at the bottom of the mound', 'Gen 5 footprint', 'Mound footprint', 'Gen 6 footprint' and 'Footprint behind Juggernog'.
+  - `test('Ice puzzle and gravestones are distinguished')`: the Ice tab has exactly one `unordered: true` list containing both strings; `originsStaffPages.ice.upgrade.anyOrder.label === 'Any order'`; `originsStaffPages.ice.puzzle.note` matches `/Follow the order the game shows/`.
+  - `test('the switch board is linked, not embedded, on the Main Guide')`: no `custom` ref remains in `upgrade-staffs`; the Lightning tab links to `/maps/origins/lightning-staff#switches`.
+  - `test('staff pages keep every line they had')`: a fixture captured in Step 2, `scripts/fixtures/origins-staff-pages.baseline.json` (every `<li>` text and `<strong>` label in the four `.tsx` pages at this commit, trimmed), is fully contained in `originsStaffPages` strings, with labels compared without their trailing colon.
+- [ ] **Step 2:** Capture `origins-staff-pages.baseline.json` with a one-off script that reads the four `.tsx` files (regex over `<li>…</li>`, tags stripped). Commit it with the test. Run the test. Expected: FAIL.
+- [ ] **Step 3:** Edit `originsGuide.jsx`, create `originsStaffPages.js`, and point `origins-guide-health.test.mjs` at the data file (same regexes).
+- [ ] **Step 4: Approved removals.** Add `layer: "data"` entries for the 16 tracker labels:
+  - "Ice built", "Fire built", "Wind built", "Lightning built"
+  - "Ice upgraded", "Fire upgraded", "Wind upgraded", "Lightning upgraded"
+  - "Wind → Odin", "Ice → Freya", "Lightning → Thor", "Fire → mound"
+  - "Gen 5 chest", "Mound chest", "Gen 6 chest", "Juggernog chest"
+  - Reason: "tracker-only line; user decision 2026-10-31; underlying fact kept in refs".
+  - Run `npm test`. Expected: PASS.
+- [ ] **Step 5:** Commit as `refactor(origins): content model for the field-sheet redesign`.
+
+> Note: until Task 2.4 lands, the Phase-1 `GuideSteps` still renders Origins. The Lightning tab then shows a "Switch board" link instead of the board. That is acceptable for this intermediate local commit and is covered by Task 2.4's smoke.
+
+### Task 2.3: Shell, title block and elemental nav plates
+
+**Files:**
+- Modify: `maps/origins/routes/OriginsRoutes.jsx` (drop the `--origins-bg` full-page artwork)
+- Modify: `maps/origins/src/components/{Header,Nav,Footer}.tsx`
+- Rewrite: `maps/origins/styles/origins-shell.css`, `maps/origins/src/Styles/ComponentStyles/{Header,Nav,Footer}.css`
+- Create: `maps/origins/src/Styles/origins-tokens.css`
+- Test: `scripts/origins-browser-smoke.mjs` (new; added to `test:browser` before `content-browser-smoke.mjs`)
+
+**Design:**
+- **Header:**
+  - `<header class="origins-mast">` with `<h1>Origins</h1>`, the subtitle "Little Lost Girl" and the eyebrow "Main Easter Egg".
+  - The robot (`Robot.webp`) is cropped right, duotone (grayscale + darkened), behind a diagonal clip.
+  - Height: about 210px desktop, about 100px phone, about 64px landscape. It scrolls away.
+- **Nav (`<nav class="origins-plates">`):** six equal cells (Guide, Ice, Fire, Wind, Lightning, Speed Run) with an icon plus label.
+  - **Phone:** icon over a short label ("Light", "Speed"), at least 56px tall.
+  - **Active cell:** `aria-current="page"` and a 4px underline in the cell's colour.
+  - **Pinned** under the hub bar on desktop and phone; in flow at 844×390.
+- **Footer:** one quiet line on the ground, no backdrop art.
+- **Ground:** `--o-ground` plus a contour SVG at most 0.07 opacity, as `.origins-module` background. Nothing else sits behind content.
+
+**Steps:**
+- [ ] **Step 1: Write `origins-browser-smoke.mjs` shell checks** (every viewport, every Origins route):
+  - `h1` text is "Origins".
+  - `.origins-plates a` count is 6, labels in order, last is Speed Run.
+  - Exactly one has `aria-current="page"`, matching the route.
+  - Every cell is ≥ 48px tall and fully inside the viewport (no clipping, no row scrolling).
+  - Pinned elements below the hub bar total ≤ 64px at phone and desktop and 0 at landscape.
+  - No element in `main` has a non-`none` `backdrop-filter`.
+  - No horizontal overflow.
+- [ ] **Step 2:** Run it. Expected: FAIL.
+- [ ] **Step 3:** Implement. Update the `browser-smoke.mjs` Origins header block to the new selectors (`.origins-mast h1`, `.origins-plates a`) with the same intent: title unclipped, active item in view, Speed Run last.
+- [ ] **Step 4:** Run GATE items 3–4. List the rendered-text differences with `/tmp` `missing.mjs`. Add each chrome-only difference ("Origins Easter Egg", "Main Guide", "Ice Staff" nav labels, …) to `approved-removals.json` with its reason. **Any guide fact is a stop-and-ask.**
+- [ ] **Step 5:** Commit as `feat(origins): field-sheet shell, title block and elemental nav plates`.
+
+### Task 2.4: Main Guide run sheet and staff board
+
+**Files:**
+- Create: `maps/origins/src/components/RunSheet.jsx`, `maps/origins/src/components/StaffBoard.jsx`
+- Rewrite: `maps/origins/src/Pages/MainGuide.tsx`, `maps/origins/src/Styles/PageStyles/MainGuide.css`
+- Modify: `scripts/origins-browser-smoke.mjs`
+- Modify: `scripts/guide-sequence-browser-smoke.mjs` (Origins leaves the generic per-guide loop; the tabs check moves to Revelations `#servant`; cold deep link and malformed-hash checks stay on Origins via `getElementById`)
+- Modify: `scripts/achievements-browser-smoke.mjs` and `scripts/browser-smoke.mjs` (Origins selectors only)
+
+**Interfaces:**
+- **`RunSheet({ steps, staffBoard, footer })`** renders:
+  - `<section class="run-sheet" aria-labelledby="run-sheet-title">`
+  - a visually hidden `<h2 id="run-sheet-title">Little Lost Girl</h2>`
+  - `<ol class="run-sheet__steps">` of `<li class="run-step" id={step.id}>` with:
+    - `<span class="run-step__n">` (brass marker; the staff steps 1–2 get a four-colour ring around a dark centre)
+    - `<h3>{title}</h3>`
+    - `<p class="run-step__answer">{goal}</p>`
+    - warnings, then refs through `GuideReferences` (styled as ticks and trails under `.origins-module`)
+    - `StepMore`, with summary "How to …" for steps 1–2 and "More" otherwise
+  - Uses `useHashLanding(ids)`.
+- **`StaffBoard({ step, mode: 'build' | 'upgrade' })`** reads the tabs ref of `build-staffs` or `upgrade-staffs`:
+  - **Desktop build board:** `<aside class="staff-board">` with four `<section class="staff-board__staff" data-staff>`, each with its name, a 6px band, a "{Name} Staff page" link to `/maps/origins/{id}-staff`, and a `dl` of its facts.
+  - **Upgrade mode:** four columns, each a colour-topped rule with the staff name, an unnumbered bullet group (no label, no order claim) when `unordered`, the remaining items as an ordered list, and the tab's `links` (Lightning → "Switch board").
+  - **Phone and landscape:** each staff is a `<details class="staff-row">` with a `<summary>` at least 52px tall showing the staff name and a "+" / "−" indicator (open state also gets `--o-ground-2` background and a 6px band), closed by default. Any number can be open.
+- **`MainGuide.tsx`** = `RunSheet` + `CompleteEasterEgg` footer + the existing "Credits + radio audio" `<details>` (unchanged text and audio).
+
+**Layout:**
+- **Desktop ≥ 1100px:** two columns, run sheet `minmax(0, 1fr)` and board 360–400px.
+  - The board is sticky only when it fits (`max-height` = viewport − pinned chrome − 24px); otherwise it scrolls with the page.
+  - The run sheet keeps at least 640px of reading width at 1440.
+- **Phone:** one column; step 1 shows the build rows inline, step 2 the upgrade rows.
+- **Landscape:** one column; staff rows in a 2×2 grid; step 2 upgrade columns 4-up.
+
+**Steps:**
+- [ ] **Step 1: Extend `origins-browser-smoke.mjs` for `/maps/origins`** (all viewports):
+  - `li.run-step` ids and `h3` titles equal the data, in order.
+  - Every `goal` is visible without opening anything.
+  - `.switch-board` count is 0.
+  - None of the 16 tracker labels is in `main` text.
+  - The `#upgrade-staffs` Lightning column links to `/maps/origins/lightning-staff#switches`.
+  - Each staff has a link to its staff page.
+  - The Ice upgrade column shows both prerequisite lines in one unnumbered `ul` with no order wording.
+  - The piano code '1 · 3 · 6', '3 · 5 · 7', '2 · 4 · 6' is visible in the Lightning upgrade column.
+  - The credits `<details>` exists with 2 named audio controls.
+  - "I completed this Easter Egg" is present.
+  - **Desktop:**
+    - `.staff-board` width ≤ 400px;
+    - run sheet width ≥ 640px;
+    - board height ≤ viewport height − pinned bottom − 24 when sticky;
+    - steps' body text ≥ 16px and Rajdhani is not used for `.run-step__answer`.
+  - **Phone and landscape:**
+    - 4 `details.staff-row` in step 1 and 4 in step 2, all closed;
+    - each summary ≥ 52px;
+    - clicking opens it (`open` set; the indicator changes to "−") and shows its facts; opening a second leaves the first open;
+    - first step title fully in the first viewport;
+    - `#secure-keys` top < 2 × viewport height on phone and < 3 × viewport height at landscape.
+  - **Contrast:** answer, body and muted label colours ≥ 4.5:1 against `--o-ground` (computed colours).
+- [ ] **Step 2:** Run it. Expected: FAIL.
+- [ ] **Step 3:** Implement `RunSheet`, `StaffBoard`, `MainGuide.tsx` and `MainGuide.css`. Delete the Phase-1 Origins guide rules and the 7 dead `.guide-mode__secret` / `.speedrun-gate` rules.
+- [ ] **Step 4:** Migrate the other smokes listed under Files. Run GATE items 1–4.
+- [ ] **Step 5:** Content review.
+  - The rendered `/maps/origins` differences must be only the switch-board text (approved: "moved to `/maps/origins/lightning-staff`", one entry per string, `routes: ['/maps/origins']`) and chrome.
+  - Code-chart `alt` strings are not text nodes; the charts' single home is now their staff pages (verified in Task 2.5).
+  - **Anything else is stop-and-ask.**
+- [ ] **Step 6:** Commit as `feat(origins): run sheet on the survey spine with the staff board`.
+
+### Task 2.5: Staff pages (Build / Puzzle / Upgrade)
+
+**Files:**
+- Create: `maps/origins/src/components/StaffPage.jsx`, `maps/origins/src/components/ExcavationRings.jsx`, `maps/origins/src/Styles/PageStyles/StaffPage.css`
+- Rewrite: `maps/origins/src/Pages/{IceStaff,FireStaff,WindStaff,LightningStaff}.tsx` (each renders `StaffPage` with its `originsStaffPages` entry; Lightning adds its tools)
+- Delete: `maps/origins/src/Styles/PageStyles/{IceStaff,FireStaff,WindStaff,LightningStaff}.css`
+- Modify: `maps/origins/src/components/LightningSwitchBoard.jsx` (wrapper gets `id="switches"`; behaviour unchanged)
+- Modify: `scripts/origins-browser-smoke.mjs`, `scripts/browser-smoke.mjs` (staff-guide headings)
+
+**Interfaces:**
+- **`StaffPage({ staff, tools? })`** renders:
+  - `<h2 class="staff-hero" data-staff>` with "{Name} Staff", plus jump links Build / Puzzle / Upgrade (`#build`, `#puzzle`, `#upgrade`, each ≥ 44px);
+  - `<section id="build">`: a `dl` of `build`;
+  - `<section id="puzzle">`:
+    - Ice / Fire / Wind: `ZoomImage(chart)`, then `steps` as an `ol`, then `note`;
+    - Lightning: the piano chord chips, then `tools` (switch board with `id="switches"`, then the existing Speed Run link slot), then `ZoomImage(chart)`, then the Electrical Panel;
+  - `<section id="upgrade">`: the `anyOrder` group (label "Any order" plus text, unnumbered) if present, then `steps` as an `ol`, then `ExcavationRings`.
+- **Layout:**
+  - **Desktop:** Build and Upgrade on the left; Puzzle sticky on the right while it fits the viewport.
+  - **Phone:** Build, then Puzzle, then Upgrade.
+  - **Landscape:** two columns, chart height capped at 250px, tap to enlarge.
+- **`ExcavationRings({ colour: 'BLUE'|'RED'|'YELLOW'|'PURPLE', tone })`**
+  - **Diagram:** an inline SVG of four stacked rings drawn in `tone`, numbered 1–4 top to bottom, with `role="img"` and an `aria-label` naming the ring colour target.
+  - **No new caption:** the staff's own upgrade steps directly above already say it. The shared ring/orb system is user-confirmed (2026-10-31).
+  - **Lever text:**
+    - Below the caption, the existing `originsExcavationRingReference.levers` sentences verbatim, labelled "Lever positions (from the Lightning ring reference)".
+    - Rings 3–4 stay grouped exactly as the source states. No per-lever labels are added that the source does not contain.
+    - If you veto these sentences at the checkpoint, the diagram ships without them.
+
+**Steps:**
+- [ ] **Step 1: Extend `origins-browser-smoke.mjs` for each staff page** (all viewports):
+  - `#build`, `#puzzle` and `#upgrade` exist in document order on phone.
+  - Every baseline line of that staff (from `origins-staff-pages.baseline.json`) is in `main` text.
+  - **The chart:**
+    - its button opens `dialog.zoom-image__dialog[open]`;
+    - the dialog image is ≥ 90% of the viewport width at phone;
+    - Esc closes it and focus returns to the button;
+    - the 48px Close button also closes it.
+  - `ExcavationRings` is present with the right colour word and 4 ring shapes.
+  - **Ice:** contains "Any order" next to the gravestone text, and `#puzzle` contains "Follow the order the game shows".
+  - **Lightning:** `#switches` exists with 7 dials; the piano code is visible; the Electrical Panel is present; the Speed Run link is present.
+  - **Desktop:** `#puzzle` is in the first viewport.
+  - **Phone:** the chart is ≥ 340px wide.
+  - **Landscape:** the chart is ≤ 260px tall and inside the viewport after jumping to `#puzzle`.
+  - Section headings are not Rajdhani-only body text: body ≥ 16px system font.
+  - No horizontal overflow.
+- [ ] **Step 2:** Run it. Expected: FAIL.
+- [ ] **Step 3:** Implement.
+- [ ] **Step 4:** Update `browser-smoke.mjs` `originsStaffGuides` headings to the new hero text (same `required` regexes). Run GATE items 1–4.
+- [ ] **Step 5:** Content review. Staff-page rendered differences may only be heading chrome ("Ice Staff Parts", "Crazy Place & Code", "Piano Code Chart", …) and label colons ("Part 1:" → "Part 1"), approved one per string with a reason. **Anything else is stop-and-ask.**
+- [ ] **Step 6:** Commit as `feat(origins): Build / Puzzle / Upgrade staff pages with zoomable charts and ring reference`.
+
+### Task 2.6: Verification, review, Checkpoint 2
+
+- [ ] **Step 1:** Full GATE.
+- [ ] **Step 2: Playwright MCP** at 1440×900, 390×844 and 844×390 on `/maps/origins`, all four staff pages, Speed Run and `/maps/origins#upgrade-staffs`. Screenshots go to `artifacts/phase-2/after/`, including a side-by-side with `artifacts/phase-2/audit/`.
+  - **Three-second test:** on each screen, can a player find the answer in about three seconds?
+  - **Guardrail audit:**
+    - contour opacity at most 0.07;
+    - no staff-colour fills over 6px;
+    - no glass panels;
+    - body text in the system font at 16px or larger;
+    - the desktop board doesn't steal reading width;
+    - staff rows clearly show open and closed states.
+- [ ] **Step 3:** Speed Run regression check. Its pages render on the new ground with no overflow and their smokes pass (visual restyle is out of scope).
+- [ ] **Step 4:** Run built-in `/code-review` on the Phase 2 range. Fix Critical/Important findings test-first; ledger Minors.
+- [ ] **Step 5:** Push and record in the ledger.
+- [ ] **Step 6: CHECKPOINT 2.** Report to the user:
+  - gate results and test counts;
+  - before/after screenshots at three viewports for the Main Guide and all four staff pages;
+  - measured positions (first step, step 3);
+  - the `approved-removals.json` diff;
+  - review findings;
+  - deviations from this plan.
+  - **Stop until approval.** Do not start Revelations.
 
 ### Phase 3 — Revelations (CHECKPOINT 3: proves a different structure works)
 
