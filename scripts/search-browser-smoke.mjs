@@ -35,10 +35,12 @@ try {
       }, id, { timeout: 5000 }).catch(() => assert.fail(`#${id} is not in view after search`));
     };
 
-    // Header icon → search page → "gorod valves" + Enter → the valve step, with its solver.
-    await page.goto(base, { waitUntil: 'networkidle' });
+    // Header icon → search page → "gorod valves" + Enter → the valve step, with its solver. Start on a page
+    // without its own search box (Home has one), so typing can only reach the search page's box.
+    await page.goto(`${base}/maps/gorod-krovi`, { waitUntil: 'networkidle' });
     await page.getByRole('link', { name: 'Search' }).click();
     await page.waitForURL('**/search');
+    await page.waitForFunction(() => document.querySelectorAll('input[type="search"]').length === 1);
     await page.getByRole('searchbox').fill('gorod valves');
     assert.match(await page.locator('.zh-search__results li').first().innerText(), /Valve Solver/);
     await page.getByRole('searchbox').press('Enter');

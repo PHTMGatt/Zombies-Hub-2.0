@@ -297,7 +297,7 @@ try {
     assert(headline && headline.y + headline.height <= 390, `Home headline ends at ${Math.round(headline.y + headline.height)}px, below the 390px landscape viewport`);
     await page.goto(`${base}/side-easter-eggs/kino`, { waitUntil: 'networkidle' });
     const kinoStep = await page.locator('li.guide-seq__step h3').first().boundingBox();
-    assert(kinoStep && kinoStep.y < 390, `Kino's first step title starts at ${Math.round(kinoStep?.y)}px, below the landscape viewport`);
+    assert(kinoStep && kinoStep.y + kinoStep.height <= 390, `Kino's first step title ends at ${Math.round(kinoStep ? kinoStep.y + kinoStep.height : NaN)}px; it must be fully on the 390px landscape screen`);
     results.push({ width: 844, height: 390, check: 'no pinned headers; Home headline and Kino first step in the first screen', passed: true });
 
     // Measured, not asserted until each map's own redesign: where the first step title starts.
