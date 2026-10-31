@@ -28,7 +28,29 @@ Second-screen Call of Duty Zombies Easter Egg guide: glance, understand, keep pl
 
 ## Tooling: one job per tool
 
-- **frontend-design** is the only design/taste skill during the redesign. Invoke it for UI work. The explicit project brief overrides its defaults. Per-map identity is required; do not force one aesthetic across maps. Zombies-style all-caps labels and map accent colours are allowed where intentional. Origins is the usability reference, Revelations the visual reference.
+Policy: one taste skill per phase. Discover broadly, invoke selectively. Do not install plugins merely because they exist. The plugin set is frozen; changes need explicit approval.
+
+- **frontend-design** is the only design/taste skill during the redesign. Invoke it for UI work. Explicit project requirements override its defaults. Per-map identity is required; do not force one aesthetic across maps. Zombies-style all-caps labels and map accent colours are allowed where intentional. Origins is the usability reference, Revelations the visual reference.
+- **Shared design language does NOT mean shared information architecture.** Each map may need a different guide structure based on its Easter Egg mechanics; do not force one page structure onto every map.
 - **Superpowers**: use `brainstorming`, `writing-plans`, `executing-plans`, `verification-before-completion`, `systematic-debugging`. Do not use its worktree, branch-finishing, or code-review skills.
 - **Review**: built-in `/code-review` after meaningful passes. Impeccable is a later, separate critique pass, never alongside frontend-design.
-- **Playwright MCP** (`.mcp.json`, local Chromium; override the path with `ZH_CHROMIUM_PATH` off the cloud image). UI changes are not done until checked in the rendered app at 1440 desktop, 390 portrait phone, and 844×390 landscape phone: navigation, horizontal overflow, tap targets, readability, with screenshots reviewed.
+- **Playwright MCP** is the primary visual/browser verification tool (`.mcp.json`, local Chromium; override the path with `ZH_CHROMIUM_PATH` off the cloud image). UI changes are not done until checked in the rendered app at 1440 desktop, 390 portrait phone, and 844×390 landscape phone: navigation, horizontal overflow, tap targets, readability, with screenshots reviewed.
+
+Reserved or skipped (not installed):
+
+- **Impeccable**: later independent critique/polish phase only.
+- **Taste Skill** (`Leonxlnx/taste-skill`): alternative to frontend-design only if frontend-design proves inadequate after real use. Never stack the two.
+- **designlang / extract-design-system**: possible one-time design-system audit later; not needed to start.
+- **React Bits, GSAP Skills, Transitions.dev**: skip. Glanceability and gameplay usability beat animation and component spectacle.
+
+## Running the browser smokes in the cloud container
+
+The repo pins Playwright 1.59 (Chromium build 1217); the cloud image ships build 1243 at `/opt/pw-browsers`. Do not run `playwright install`. Point Playwright at a link folder instead:
+
+```bash
+mkdir -p /tmp/pw-shim
+ln -sfn /opt/pw-browsers/chromium_headless_shell-1243 /tmp/pw-shim/chromium_headless_shell-1217
+ln -sfn /opt/pw-browsers/chromium-1243 /tmp/pw-shim/chromium-1217
+ln -sfn /opt/pw-browsers/ffmpeg-1011 /tmp/pw-shim/ffmpeg-1011
+PLAYWRIGHT_BROWSERS_PATH=/tmp/pw-shim npm run test:browser
+```
