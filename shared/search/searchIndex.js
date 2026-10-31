@@ -1,12 +1,12 @@
 /*
  * Player-language search: "ice staff code", "gorod valves", "mob plane parts", "de wisps".
  *
- * Each entry points at the fastest useful place: an in-guide reference opens in that map's Quick refs
- * sheet (`?ref=<stepId>`, which never moves the player's run), a tool or reference page opens directly.
+ * Each entry points at the fastest useful place: an in-guide reference opens that step of the map's guide
+ * (`/maps/<map>#<stepId>`), a tool or reference page opens directly.
  * Keywords are the words players actually type. Step ids are checked against each map's step data by
  * scripts/search-index.test.mjs, so a renamed step fails the tests instead of silently breaking search.
  */
-const ref = (map, stepId) => `/maps/${map}?ref=${stepId}`;
+const ref = (map, stepId) => `/maps/${map}#${stepId}`;
 
 export const MAP_ALIASES = {
   origins: ['origins', 'ori', 'staffs', 'little lost girl'],

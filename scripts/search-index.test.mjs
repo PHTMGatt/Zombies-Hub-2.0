@@ -23,6 +23,13 @@ test('every search entry that opens a guide reference points at a step that exis
   }
 });
 
+test('search results for a guide step link straight to that step (#step-id), not a ?ref sheet', () => {
+  for (const entry of SEARCH_ENTRIES.filter((item) => item.stepId)) {
+    assert.match(entry.to, /^\/maps\/[a-z-]+#[a-z0-9-]+$/, `${entry.title} links to ${entry.to}`);
+    assert.equal(entry.to, `/maps/${entry.map}#${entry.stepId}`, `${entry.title} links to its own step`);
+  }
+});
+
 test('player-language queries land on the right reference first', () => {
   const top = (query) => search(query)[0];
   const cases = [

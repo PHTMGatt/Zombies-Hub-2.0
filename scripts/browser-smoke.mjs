@@ -68,7 +68,7 @@ try {
           if (!header || !['sticky', 'fixed'].includes(getComputedStyle(header).position)) return 0;
           return header.offsetHeight;
         });
-        assert(pinnedHeader <= { phone: 130, landscape: 130, desktop: 110 }[viewportName], `${route} pins a ${pinnedHeader}px map header at ${width}px`);
+        assert(pinnedHeader <= { phone: 130, landscape: 0, desktop: 110 }[viewportName], `${route} pins a ${pinnedHeader}px map header at ${width}px`);
       }
       results.push({ width, route, passed: true });
     }
@@ -278,6 +278,34 @@ try {
     assert.equal(await selects.nth(1).inputValue(), '');
 
     results.push({ width, interactions: 'map search, empty state, Side Easter Egg layout/navigation, Origins staff guide content/images/overflow and navigation, Mob guide navigation, video timestamp fallback, Gorod valve solver solution/reset', passed: true });
+    await context.close();
+  }
+
+  // Short landscape phones (844×390): chrome scrolls away so guide content reaches the first screen.
+  {
+    const context = await browser.newContext({ viewport: { width: 844, height: 390 } });
+    const page = await context.newPage();
+    const pinned = () => page.evaluate(() => [...document.querySelectorAll('.hub-header, .map-module header')]
+      .filter((el) => ['fixed', 'sticky'].includes(getComputedStyle(el).position))
+      .map((el) => el.className));
+    for (const route of routes) {
+      await page.goto(`${base}${route}`, { waitUntil: 'networkidle' });
+      assert.deepEqual(await pinned(), [], `${route} pins a header at 844×390`);
+    }
+    await page.goto(base, { waitUntil: 'networkidle' });
+    const headline = await page.locator('h1').boundingBox();
+    assert(headline && headline.y + headline.height <= 390, `Home headline ends at ${Math.round(headline.y + headline.height)}px, below the 390px landscape viewport`);
+    await page.goto(`${base}/side-easter-eggs/kino`, { waitUntil: 'networkidle' });
+    const kinoStep = await page.locator('li.guide-seq__step h3').first().boundingBox();
+    assert(kinoStep && kinoStep.y < 390, `Kino's first step title starts at ${Math.round(kinoStep?.y)}px, below the landscape viewport`);
+    results.push({ width: 844, height: 390, check: 'no pinned headers; Home headline and Kino first step in the first screen', passed: true });
+
+    // Measured, not asserted until each map's own redesign: where the first step title starts.
+    for (const route of routes.filter((item) => item.startsWith('/maps/'))) {
+      await page.goto(`${base}${route}`, { waitUntil: 'networkidle' });
+      const first = await page.locator('li.guide-seq__step h3').first().boundingBox();
+      results.push({ width: 844, height: 390, route, metric: 'first step title top (px)', value: first ? Math.round(first.y) : null, passed: true });
+    }
     await context.close();
   }
 } finally {

@@ -199,3 +199,11 @@
     bottom: 0.2rem;
   }
 }
+
+/* Short landscape phones: the bar scrolls away with the page (its space stays reserved), so a 390px-tall
+   screen is not spent on chrome while someone reads a guide mid-match. */
+@media (max-height: 500px) and (orientation: landscape) {
+  .hub-header {
+    position: absolute;
+  }
+}

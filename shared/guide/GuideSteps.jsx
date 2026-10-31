@@ -76,12 +76,13 @@ function StepItem({ step }) {
 }
 
 export default function GuideSteps({ label, steps, footer }) {
-  const { hash } = useLocation();
+  const { hash, search } = useLocation();
 
   // The map chunk loads after the app shell has already tried to scroll to #<step>; finish the job here.
   // Wait for web fonts (a late font swap moves the step after the scroll), then jump without animating.
+  // An old ?ref=<step> link counts too: the app shell rewrites it to #<step>, but this may render first.
   useEffect(() => {
-    const id = decodeURIComponent(hash.slice(1));
+    const id = decodeURIComponent(hash.slice(1)) || new URLSearchParams(search).get('ref');
     if (!id || !steps.some((step) => step.id === id)) return undefined;
     let cancelled = false;
     const land = () => {
@@ -90,7 +91,7 @@ export default function GuideSteps({ label, steps, footer }) {
     land();
     (document.fonts?.ready ?? Promise.resolve()).then(() => requestAnimationFrame(land));
     return () => { cancelled = true; };
-  }, [hash, steps]);
+  }, [hash, search, steps]);
 
   return (
     <section className="guide" aria-label={`${label} guide`}>
