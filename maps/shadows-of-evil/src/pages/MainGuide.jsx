@@ -1,16 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import GuideSteps from '../../../../shared/guide/GuideSteps';
+import CompleteEasterEgg from '../../../../shared/achievements/CompleteEasterEgg';
 import soeGuideSteps from '../data/soeGuideSteps';
 import '../styles/Shadows.css';
 import '../styles/MainGuide.css';
-
-const QUICK_REFS = [
-  { label: 'Train symbols + rituals', stepId: 'rituals' },
-  { label: 'Your Keeper + Margwa spots', stepId: 'upgrade' },
-  { label: 'Flag order', stepId: 'flag' },
-  { label: 'Four-player team setup', stepId: 'finale' },
-  { label: 'Side Easter Egg video', to: '/side-easter-eggs/soe' },
-];
 
 function MainGuide() {
   return (
@@ -23,7 +17,12 @@ function MainGuide() {
         </header>
 
         <div className="soe-guide">
-          <GuideSteps guideId="shadows-of-evil" mapId="shadows-of-evil" quickRefs={QUICK_REFS} label="Shadows of Evil" steps={soeGuideSteps} />
+          <GuideSteps label="Shadows of Evil" steps={soeGuideSteps} footer={(
+          <>
+            <CompleteEasterEgg mapId="shadows-of-evil" />
+            <Link className="guide-seq__related" to="/side-easter-eggs/soe">Side Easter Egg video</Link>
+          </>
+        )} />
         </div>
       </div>
     </div>

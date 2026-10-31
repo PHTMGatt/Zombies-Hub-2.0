@@ -285,7 +285,6 @@ const originsGuide = [
     how: ['Pick up the Maxis Drone, release it into the beam in the Crazy Place, and trigger the ending.'],
     problems: [
       'Going for the ending cutscene? Keep all generators active when you recover the upgraded Maxis Drone from the pilot sequence.',
-      'Speedrun mode unlocks once every step is marked done.',
     ],
   },
 ];

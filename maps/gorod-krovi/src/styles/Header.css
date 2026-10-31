@@ -184,3 +184,11 @@
     padding: 0.25rem 0.7rem;
   }
 }
+
+/* Short landscape phones: the map header scrolls away instead of pinning under the hub bar. */
+@media (max-height: 500px) and (orientation: landscape) {
+  .gorod-module .gorod-header {
+    position: relative;
+    top: auto;
+  }
+}

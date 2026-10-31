@@ -450,3 +450,24 @@
     align-items: center;
   }
 }
+
+/* Short landscape phones: the headline must be on the first screen, so the hero drops its tall floor and
+   starts its copy at the top. */
+@media (max-height: 500px) and (orientation: landscape) {
+  .home-shell {
+    padding-top: 1rem;
+  }
+
+  .home-search {
+    margin-bottom: 0.75rem;
+  }
+
+  .home-hero-panel {
+    min-height: 0;
+    align-items: flex-start;
+  }
+
+  .home-hero-copy {
+    padding: 1.25rem 1.75rem 1.75rem;
+  }
+}

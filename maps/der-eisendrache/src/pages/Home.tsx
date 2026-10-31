@@ -1,17 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import GuideSteps from '../../../../shared/guide/GuideSteps';
+import CompleteEasterEgg from '../../../../shared/achievements/CompleteEasterEgg';
 import deGuideSteps from '../data/deGuideSteps';
 import '../styles/pages/Home.css';
 import '../styles/pages/HomeCompact.css';
-
-const QUICK_REFS = [
-  { label: "Bow upgrades", stepId: "upgrade-bow" },
-  { label: "Shield + Ragnaroks", stepId: "gear" },
-  { label: "First wisp cycle", stepId: "first-wisps" },
-  { label: "Safe code", stepId: "death-ray-safe" },
-  { label: "Keeper ritual", stepId: "keeper-ritual" },
-  { label: "Side Easter Egg video", to: "/side-easter-eggs/de" },
-];
 
 const Home: React.FC = () => (
   <div className="de-home-page">
@@ -29,7 +22,12 @@ const Home: React.FC = () => (
     </details>
 
     <div className="de-guide">
-      <GuideSteps guideId="der-eisendrache" mapId="der-eisendrache" quickRefs={QUICK_REFS} label="My Brother’s Keeper" steps={deGuideSteps} />
+      <GuideSteps label="My Brother’s Keeper" steps={deGuideSteps} footer={(
+          <>
+            <CompleteEasterEgg mapId="der-eisendrache" />
+            <Link className="guide-seq__related" to="/side-easter-eggs/de">Side Easter Egg video</Link>
+          </>
+        )} />
     </div>
   </div>
 );

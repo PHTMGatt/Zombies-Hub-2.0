@@ -1,15 +1,17 @@
 import { chromium } from 'playwright';
 import assert from 'node:assert/strict';
+import { VIEWPORTS } from './smoke-viewports.mjs';
 
 /*
- * Achievements + reset tiers, end to end:
- * unlock only on the final step, once; survives reload; run / map / all resets keep achievements;
- * "Reset achievements" is separate; sound preference persists; reduced motion swaps the animation.
+ * Achievements are secondary: one quiet "I completed this Easter Egg" action at the end of each guide.
+ * It records the map's achievement and changes nothing else. Old step-progress records are credited
+ * once, silently, and never read again. Saved in-game notes survive "Clear old guide data".
  */
 const base = process.env.SMOKE_BASE_URL || 'http://127.0.0.1:4173';
+const REV = `${base}/maps/revelations`;
 const MOB = `${base}/maps/mob-of-the-dead`;
-const DE = `${base}/maps/der-eisendrache`;
 const SHELF = `${base}/achievements`;
+const COMPLETE = 'I completed this Easter Egg';
 
 // Count chime plays without real audio.
 const audioStub = () => {
@@ -17,7 +19,7 @@ const audioStub = () => {
   class FakeNode { connect(next) { return next ?? this; } start() {} stop() {} }
   const param = () => ({ value: 0, setValueAtTime() {}, exponentialRampToValueAtTime() {} });
   window.AudioContext = class {
-    constructor() { window.__chimes += 0; this.state = 'running'; this.currentTime = 0; this.destination = new FakeNode(); }
+    constructor() { this.state = 'running'; this.currentTime = 0; this.destination = new FakeNode(); }
     resume() { return Promise.resolve(); }
     createOscillator() { window.__chimes += 1; return Object.assign(new FakeNode(), { type: '', frequency: param() }); }
     createGain() { return Object.assign(new FakeNode(), { gain: param() }); }
@@ -25,17 +27,18 @@ const audioStub = () => {
 };
 
 const toast = (page) => page.locator('.zh-ach-toast');
-const markDone = (page) => page.getByRole('button', { name: 'Mark step done' }).click();
-const openMenu = async (page) => {
-  const menu = page.locator('.guide-menu');
-  if (!(await menu.evaluate((el) => el.open))) await menu.locator('summary').click();
-};
+const unlocked = (page) => page.evaluate(() => JSON.parse(localStorage.getItem('zh-achievements') ?? '{"unlocked":{}}').unlocked);
+const pageShape = (page) => page.evaluate(() => ({
+  steps: document.querySelectorAll('li.guide-seq__step').length,
+  nav: [...document.querySelectorAll('.map-module nav a')].map((link) => link.textContent.trim()),
+}));
 
 const browser = await chromium.launch({ headless: true });
 const results = [];
 const check = (name) => results.push(name);
 try {
-  for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 }]) {
+  for (const viewport of VIEWPORTS) {
+    const label = viewport.name;
     const context = await browser.newContext({ viewport });
     await context.addInitScript(audioStub);
     const page = await context.newPage();
@@ -43,199 +46,160 @@ try {
     const errors = [];
     page.on('pageerror', (error) => errors.push(error.message));
 
-    await page.goto(MOB, { waitUntil: 'networkidle' });
+    // The action sits at the very end of the guide and is the only thing it changes.
+    await page.goto(REV, { waitUntil: 'networkidle' });
     await page.evaluate(() => localStorage.clear());
     await page.reload({ waitUntil: 'networkidle' });
-
-    // The final step alone (others unfinished) is not the Easter Egg: no unlock.
-    await page.locator('.guide-rail__step').last().click();
-    await markDone(page);
-    await page.waitForTimeout(300);
-    assert.equal(await toast(page).count(), 0, 'final step alone must not unlock');
-    await page.getByRole('button', { name: /Done — undo/ }).click();
-    await page.locator('.guide-rail__step').first().click();
-    check('final step alone does not unlock');
-
-    // Eleven steps done: no unlock yet.
-    for (let i = 0; i < 11; i += 1) await markDone(page);
-    await page.getByRole('heading', { name: 'Break or continue the cycle', level: 3 }).waitFor();
-    assert.equal(await toast(page).count(), 0, 'no achievement before the final step');
-    check('no unlock before final step');
-
-    // Final step: one toast, map + title, chime played.
-    await markDone(page);
+    const button = page.getByRole('button', { name: COMPLETE });
+    assert.equal(await button.count(), 1, 'one completion action');
+    assert(await page.locator('.guide-seq__footer').evaluate((footer) => footer === footer.parentElement.lastElementChild), 'completion action follows the last step');
+    assert(await button.evaluate((el) => el.closest('.guide-seq__footer') !== null), 'completion action lives in the guide footer');
+    const box = await button.boundingBox();
+    assert(box.height >= 44, `completion action is a usable tap target (${box.height}px)`);
+    assert.notEqual(await button.evaluate((el) => getComputedStyle(el).position), 'sticky', 'completion action is not pinned');
+    const before = await pageShape(page);
+    await button.click();
     await toast(page).waitFor();
-    const text = await toast(page).innerText();
-    assert.match(text, /Achievement unlocked/i);
-    assert.match(text, /Pop Goes the Weasel/);
-    assert.match(text, /Mob of the Dead/);
-    assert(await page.evaluate(() => window.__chimes) > 0, 'chime should play with sound on');
-    await page.screenshot({ path: `/tmp/claude-0/shots/ach-toast-${viewport.width}.png` });
-    check('unlock on final step with toast + sound');
+    const toastText = await toast(page).innerText();
+    assert.match(toastText, /Achievement unlocked/i);
+    assert.match(toastText, /For The Good Of All/);
+    assert(await page.evaluate(() => window.__chimes) > 0, 'chime plays with sound on');
+    assert((await unlocked(page))['revelations/main'], 'revelations/main recorded');
+    await page.locator('.guide-seq__footer').getByText('Completed').waitFor();
+    assert.equal(await page.getByRole('button', { name: COMPLETE }).count(), 0, 'the button is replaced by a quiet note');
+    assert.deepEqual(await pageShape(page), before, 'completing changes no steps and no navigation');
+    check(`${label}: completion action records the achievement and changes nothing else`);
 
-    // Toast leaves on its own.
     await toast(page).waitFor({ state: 'detached', timeout: 8000 });
-    check('toast auto-dismisses');
-
-    // Undo + redo the final step, and reload: never a second popup.
-    await page.getByRole('button', { name: /Done — undo/ }).click();
-    await markDone(page);
     await page.reload({ waitUntil: 'networkidle' });
     await page.waitForTimeout(600);
-    assert.equal(await toast(page).count(), 0, 'no duplicate toast after redo or reload');
-    check('no duplicate after redo/reload');
+    assert.equal(await toast(page).count(), 0, 'no second popup after reload');
+    check(`${label}: toast auto-dismisses and never repeats`);
 
-    // Shelf shows it, with a date.
+    // Kino is a side Easter Egg with no achievement: no action.
+    await page.goto(`${base}/side-easter-eggs/kino`, { waitUntil: 'networkidle' });
+    assert.equal(await page.getByRole('button', { name: COMPLETE }).count(), 0, 'Kino has no completion action');
+    check(`${label}: Kino has no completion action`);
+
+    // Shelf: earned with a date, no step progress anywhere.
     await page.goto(SHELF, { waitUntil: 'networkidle' });
-    const mobMedal = page.locator('.ach-medal', { hasText: 'Pop Goes the Weasel' });
-    assert.match(await mobMedal.getAttribute('class'), /is-earned/);
-    assert.match(await mobMedal.innerText(), /\d{4}/, 'completion date shown');
+    const revMedal = page.locator('.ach-medal', { hasText: 'For The Good Of All' });
+    assert.match(await revMedal.getAttribute('class'), /is-earned/);
+    assert.match(await revMedal.innerText(), /\d{4}/, 'completion date shown');
     assert.match(await page.locator('.ach-head__count').innerText(), /^1\s*\/\s*7/);
-    check('shelf shows earned + date');
+    assert.doesNotMatch(await page.locator('.ach-shelf').innerText(), /\bsteps?\b/i, 'no step progress on the shelf');
+    assert.equal(await page.locator('.ach-medal__meter').count(), 0, 'no progress meters');
+    check(`${label}: shelf shows the earned medal with a date and no step progress`);
 
-    // Reset this run: progress gone, achievement stays.
-    await page.goto(MOB, { waitUntil: 'networkidle' });
-    await openMenu(page);
-    await page.getByRole('button', { name: 'Reset this run' }).click();
-    assert.match(await page.locator('.guide-progress__count').innerText(), /^0\s*\/\s*12/);
-    await page.getByRole('heading', { name: 'Warden’s Key', level: 3 }).waitFor();
-    assert(await page.evaluate(() => JSON.parse(localStorage.getItem('zh-achievements')).unlocked['mob-of-the-dead/main']));
-    check('reset run keeps achievement');
-
-    // Reset map (Der Eisendrache): guide progress + safe-code note cleared, achievements untouched.
-    await page.goto(DE, { waitUntil: 'networkidle' });
-    await markDone(page);
-    await page.evaluate(() => localStorage.setItem('zh-de-safe-code', JSON.stringify(['a', 'b', 'c'])));
-    await openMenu(page);
-    await page.getByRole('button', { name: 'Reset all Der Eisendrache progress' }).click();
-    assert.match(await page.locator('.guide-progress__count').innerText(), /^0\s*\//);
-    const deState = await page.evaluate(() => ({
-      safe: localStorage.getItem('zh-de-safe-code'),
-      ach: localStorage.getItem('zh-achievements'),
-    }));
-    assert(deState.safe === null || deState.safe === JSON.stringify(['', '', '']), `safe code cleared, got ${deState.safe}`);
-    assert.match(deState.ach, /mob-of-the-dead\/main/);
-    check('reset map clears map progress + notes only');
-
-    // Reset all progress from the shelf: every guide record gone, achievements stay.
-    await page.goto(MOB, { waitUntil: 'networkidle' });
-    await markDone(page);
-    await page.goto(SHELF, { waitUntil: 'networkidle' });
+    // "Clear old guide data" removes only obsolete machinery records; saved notes stay.
+    await page.evaluate(() => {
+      localStorage.setItem('zh-guide-progress:gorod-krovi', JSON.stringify({ current: 'valves', done: {} }));
+      localStorage.setItem('zh-guide-mode', JSON.stringify('full'));
+      localStorage.setItem('zh-origins-depth', JSON.stringify('high'));
+      localStorage.setItem('zh-soe-character', JSON.stringify('jackie'));
+      localStorage.setItem('zh-de-safe-code', JSON.stringify(['a', 'b', 'c']));
+    });
     await page.locator('.ach-danger summary').click();
-    await page.getByRole('button', { name: 'Reset all progress' }).click();
-    const afterAll = await page.evaluate(() => ({
-      guides: Object.keys(localStorage).filter((key) => key.startsWith('zh-guide-progress:')),
-      ach: localStorage.getItem('zh-achievements'),
-    }));
-    assert.deepEqual(afterAll.guides, []);
-    assert.match(afterAll.ach, /mob-of-the-dead\/main/);
-    check('reset all progress keeps achievements');
+    await page.getByRole('button', { name: 'Clear old guide data' }).click();
+    const left = await page.evaluate(() => Object.keys(localStorage));
+    for (const gone of ['zh-guide-progress:gorod-krovi', 'zh-guide-mode', 'zh-origins-depth']) assert(!left.includes(gone), `${gone} cleared`);
+    for (const kept of ['zh-soe-character', 'zh-de-safe-code', 'zh-achievements']) assert(left.includes(kept), `${kept} kept`);
+    check(`${label}: Clear old guide data keeps saved notes and achievements`);
 
-    // Sound toggle persists across reload.
+    // Sound preference persists; Reset achievements is separate and explicit.
     const toggle = page.getByRole('switch', { name: 'Unlock sound' });
     assert.equal(await toggle.getAttribute('aria-checked'), 'true');
     await toggle.click();
     await page.reload({ waitUntil: 'networkidle' });
     assert.equal(await page.getByRole('switch', { name: 'Unlock sound' }).getAttribute('aria-checked'), 'false');
-    check('sound preference persists');
-
-    // Reset achievements: separate, explicit.
     await page.locator('.ach-danger summary').click();
     await page.getByRole('button', { name: 'Reset achievements' }).click();
     assert.match(await page.locator('.ach-head__count').innerText(), /^0\s*\/\s*7/);
-    assert.deepEqual(await page.evaluate(() => JSON.parse(localStorage.getItem('zh-achievements')).unlocked), {});
-    check('reset achievements clears history');
+    assert.deepEqual(await unlocked(page), {});
+    check(`${label}: sound preference persists; reset achievements clears history`);
 
-    // Sound off: unlocking again shows the toast silently.
+    // Sound off: completing again shows the toast silently.
     await page.goto(MOB, { waitUntil: 'networkidle' });
     await page.evaluate(() => { window.__chimes = 0; });
-    for (let i = 0; i < 12; i += 1) await markDone(page);
+    await page.getByRole('button', { name: COMPLETE }).click();
     await toast(page).waitFor();
     assert.equal(await page.evaluate(() => window.__chimes), 0, 'no chime when sound is off');
-    check('sound off is silent');
+    check(`${label}: sound off is silent`);
+
+    // Home has no "Continue run" strip.
+    await page.goto(base, { waitUntil: 'networkidle' });
+    assert.equal(await page.locator('.zh-continue').count(), 0, 'no Continue run strip');
+    check(`${label}: Home has no Continue run strip`);
 
     assert.deepEqual(errors, [], `page errors: ${errors.join('; ')}`);
     await context.close();
   }
 
-  // Origins: finishing earns both the main and the hidden achievement (queued, one at a time). After
-  // "Reset achievements", Speedrun mode stays unlocked and revisiting the finished guide stays silent.
+  // Legacy progress: a finished run is credited exactly once, silently; unfinished runs are not.
   {
     const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
-    await context.addInitScript(audioStub);
     const page = await context.newPage();
-    page.on('dialog', (dialog) => dialog.accept());
-    await page.goto(`${base}/maps/origins`, { waitUntil: 'networkidle' });
-    await page.evaluate(() => localStorage.clear());
-    await page.reload({ waitUntil: 'networkidle' });
-    const total = await page.locator('.guide-rail__step').count();
-    for (let i = 0; i < total; i += 1) await markDone(page);
-    await toast(page).waitFor();
-    assert.match(await toast(page).innerText(), /Little Lost Girl/);
-    await page.locator('.zh-ach-toast__close').click();
-    await page.locator('.zh-ach-toast', { hasText: 'Speedrun Difficulty Unlocked' }).waitFor();
-    check('Origins queues main + hidden achievement');
-
-    await page.goto(SHELF, { waitUntil: 'networkidle' });
-    await page.locator('.ach-danger summary').click();
-    await page.getByRole('button', { name: 'Reset achievements' }).click();
-    await page.goto(`${base}/maps/origins`, { waitUntil: 'networkidle' });
-    await page.waitForTimeout(700);
-    assert.equal(await toast(page).count(), 0, 'no re-announce after reset achievements');
-    assert.equal(await page.evaluate(() => localStorage.getItem('zh-origins-speedrun-unlocked')), 'true');
-    assert.deepEqual(await page.evaluate(() => JSON.parse(localStorage.getItem('zh-achievements')).unlocked), {});
-    check('reset achievements keeps Speedrun mode and stays silent');
-    await context.close();
-  }
-
-  // A run finished before achievements existed is credited once, silently; "Reset achievements" sticks.
-  // A run whose last action is an earlier step still shows the finish panel.
-  {
-    const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
-    await context.addInitScript(audioStub);
-    const page = await context.newPage();
-    page.on('dialog', (dialog) => dialog.accept());
-    await page.goto(`${base}/maps/gorod-krovi`, { waitUntil: 'networkidle' });
+    const errors = [];
+    page.on('pageerror', (error) => errors.push(error.message));
+    await page.goto(base, { waitUntil: 'networkidle' });
     await page.evaluate(() => {
       localStorage.clear();
-      const ids = ['shield', 'dragon-network', 'dragon-strike', 'egg', 'valves', 'kronos', 'trophies', 'challenges', 'power-core', 'dragon-boss', 'nikolai'];
-      localStorage.setItem('zh-guide-progress:gorod-krovi', JSON.stringify({ current: 'nikolai', done: Object.fromEntries(ids.map((id) => [id, true])) }));
+      const gorod = ['shield', 'dragon-network', 'dragon-strike', 'egg', 'valves', 'kronos', 'trophies', 'challenges', 'power-core', 'dragon-boss', 'nikolai'];
+      localStorage.setItem('zh-guide-progress:gorod-krovi', JSON.stringify({ current: 'nikolai', done: Object.fromEntries(gorod.map((id) => [id, true])), total: 11 }));
+      localStorage.setItem('zh-guide-progress:revelations', JSON.stringify({ current: 'servant', done: { engines: true }, total: 12 }));
+      localStorage.setItem('zh-guide-mode', JSON.stringify('full'));
+      localStorage.setItem('zh-origins-depth', JSON.stringify('speedrun'));
     });
     await page.reload({ waitUntil: 'networkidle' });
     await page.waitForTimeout(600);
-    assert.equal(await toast(page).count(), 0, 'backfill is silent');
-    assert(await page.evaluate(() => JSON.parse(localStorage.getItem('zh-achievements')).unlocked['gorod-krovi/main']), 'finished run credited');
-    check('pre-existing finished run credited silently');
+    const after = await unlocked(page);
+    assert.deepEqual(after['gorod-krovi/main'], { at: null }, 'finished legacy run credited without a date');
+    assert(!after['revelations/main'], 'unfinished legacy run not credited');
+    assert.equal(await toast(page).count(), 0, 'legacy credit is silent');
+    const record = await page.evaluate(() => localStorage.getItem('zh-achievements'));
+    await page.reload({ waitUntil: 'networkidle' });
+    assert.equal(await page.evaluate(() => localStorage.getItem('zh-achievements')), record, 'credit happens once');
+    check('legacy finished run credited once, silently; unfinished run ignored');
 
-    // Finish on a middle step: the finish panel still appears.
-    await page.locator('.guide-rail__step').nth(4).click();
-    await page.getByRole('button', { name: /Done — undo/ }).click();
-    await page.getByRole('button', { name: 'Mark step done' }).click();
-    await page.locator('.guide-finish').waitFor();
-    check('finish panel shows when the last action is a middle step');
+    // Old mode keys are harmless.
+    await page.goto(`${base}/maps/origins`, { waitUntil: 'networkidle' });
+    assert.equal(await page.locator('li.guide-seq__step').count(), 11, 'Origins renders its sequence with old mode keys present');
+    assert.deepEqual(errors, [], `page errors: ${errors.join('; ')}`);
+    check('old guide-mode / origins-depth keys are harmless');
+    await context.close();
+  }
 
-    await page.goto(SHELF, { waitUntil: 'networkidle' });
-    await page.locator('.ach-danger summary').click();
-    await page.getByRole('button', { name: 'Reset achievements' }).click();
-    await page.goto(`${base}/maps/gorod-krovi`, { waitUntil: 'networkidle' });
-    await page.waitForTimeout(400);
-    assert.deepEqual(await page.evaluate(() => JSON.parse(localStorage.getItem('zh-achievements')).unlocked), {}, 'reset is not undone by the finished run');
-    check('reset achievements is not undone by backfill');
+  // Blocked storage: completing still works for this visit and never throws.
+  {
+    const context = await browser.newContext({ viewport: { width: 390, height: 844 } });
+    await context.addInitScript(() => {
+      Storage.prototype.setItem = () => { throw new DOMException('blocked', 'SecurityError'); };
+    });
+    const page = await context.newPage();
+    const errors = [];
+    page.on('pageerror', (error) => errors.push(error.message));
+    await page.goto(MOB, { waitUntil: 'networkidle' });
+    await page.getByRole('button', { name: COMPLETE }).click();
+    await page.locator('.guide-seq__footer').getByText('Completed').waitFor();
+    assert.deepEqual(errors, [], `page errors with blocked storage: ${errors.join('; ')}`);
+    check('blocked storage: completion shows as earned, no errors');
     await context.close();
   }
 
   // Reduced motion: the toast fades instead of sliding.
-  const context = await browser.newContext({ viewport: { width: 390, height: 844 }, reducedMotion: 'reduce' });
-  await context.addInitScript(audioStub);
-  const page = await context.newPage();
-  await page.goto(MOB, { waitUntil: 'networkidle' });
-  await page.evaluate(() => localStorage.clear());
-  await page.reload({ waitUntil: 'networkidle' });
-  for (let i = 0; i < 12; i += 1) await markDone(page);
-  await toast(page).waitFor();
-  assert.equal(await toast(page).evaluate((el) => getComputedStyle(el).animationName), 'zh-ach-fade');
-  check('reduced motion respected');
-  await context.close();
+  {
+    const context = await browser.newContext({ viewport: { width: 390, height: 844 }, reducedMotion: 'reduce' });
+    await context.addInitScript(audioStub);
+    const page = await context.newPage();
+    await page.goto(MOB, { waitUntil: 'networkidle' });
+    await page.evaluate(() => localStorage.clear());
+    await page.reload({ waitUntil: 'networkidle' });
+    await page.getByRole('button', { name: COMPLETE }).click();
+    await toast(page).waitFor();
+    assert.equal(await toast(page).evaluate((el) => getComputedStyle(el).animationName), 'zh-ach-fade');
+    check('reduced motion respected');
+    await context.close();
+  }
 } finally {
   await browser.close();
 }

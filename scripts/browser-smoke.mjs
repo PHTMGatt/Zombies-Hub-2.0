@@ -5,7 +5,7 @@ import fs from 'node:fs/promises';
 const base = process.env.SMOKE_BASE_URL || 'http://127.0.0.1:4173';
 const artifactsDir = new URL('../artifacts/', import.meta.url);
 const out = new URL('../artifacts/browser-smoke.json', import.meta.url);
-const widths = [390, 1440];
+import { VIEWPORTS } from './smoke-viewports.mjs';
 const routes = [
   '/',
   '/allmaps',
@@ -44,8 +44,8 @@ const assertImagesLoaded = async (page, route, selector) => {
 await fs.mkdir(artifactsDir, { recursive: true });
 const browser = await chromium.launch({ headless: true });
 try {
-  for (const width of widths) {
-    const context = await browser.newContext({ viewport: { width, height: 900 } });
+  for (const { name: viewportName, width, height } of VIEWPORTS) {
+    const context = await browser.newContext({ viewport: { width, height } });
     const page = await context.newPage();
     for (const route of routes) {
       const errors = [];
@@ -68,7 +68,7 @@ try {
           if (!header || !['sticky', 'fixed'].includes(getComputedStyle(header).position)) return 0;
           return header.offsetHeight;
         });
-        assert(pinnedHeader <= (width === 390 ? 130 : 110), `${route} pins a ${pinnedHeader}px map header at ${width}px`);
+        assert(pinnedHeader <= { phone: 130, landscape: 0, desktop: 110 }[viewportName], `${route} pins a ${pinnedHeader}px map header at ${width}px`);
       }
       results.push({ width, route, passed: true });
     }
@@ -101,7 +101,7 @@ try {
       const firstTop = Math.round(cards[0].getBoundingClientRect().top);
       return cards.filter(card => Math.round(card.getBoundingClientRect().top) === firstTop).length;
     });
-    assert.equal(sideColumns, width === 390 ? 1 : 3, `Side Easter Eggs uses the expected ${width}px grid`);
+    assert.equal(sideColumns, { phone: 1, landscape: 3, desktop: 3 }[viewportName], `Side Easter Eggs uses the expected ${width}px grid`);
     await assertNoHorizontalOverflow(page, '/side-easter-eggs');
     await page.screenshot({
       path: new URL(`../artifacts/side-easter-eggs-${width}.png`, import.meta.url).pathname,
@@ -132,38 +132,50 @@ try {
     await page.waitForLoadState('networkidle');
     assert.equal(new URL(page.url()).pathname, originsTarget, 'Origins guide navigation reaches its intended route');
 
-    // Origins guide: Low/Medium/High share one progression, and Speedrun mode is a locked reward.
+    // Origins guide: one sequence. Each step's answer is on the page; its how-to sits under "More on this step".
     await page.goto(`${base}/maps/origins`, { waitUntil: 'networkidle' });
     await page.evaluate(() => window.localStorage.clear());
     await page.reload({ waitUntil: 'networkidle' });
-    await page.locator('.guide-rail__step').nth(2).click();
-    await page.getByRole('button', { name: /^High/ }).click();
-    assert.equal(await page.locator('.guide-step h3').innerText(), 'Secure the keys', 'Changing depth keeps the current step');
-    assert.equal(await page.locator('.guide-how').count(), 1, 'High depth shows the how-to');
-    await page.getByRole('button', { name: /^Low/ }).click();
-    assert.equal(await page.locator('.guide-how').count(), 0, 'Low depth is reference only');
-    await page.getByRole('button', { name: 'Mark step done' }).click();
-    assert.equal(await page.locator('.guide-step h3').innerText(), 'Thunder Fists', 'Marking done advances to the next open step');
-    assert(
-      await page.locator('.guide-step h3').evaluate(heading => document.activeElement === heading),
-      'Changing a shared-guide step moves focus to the new step heading',
-    );
-    await page.getByRole('button', { name: /Speedrun mode \(locked\)/ }).click();
-    assert(await page.locator('.speedrun-gate.is-locked').isVisible(), 'Speedrun mode is locked before the secret');
+    assert.equal(await page.locator('#secure-keys h3').innerText(), 'Secure the keys');
+    assert.equal(await page.locator('#thunder-fists h3').innerText(), 'Thunder Fists');
+    assert.match(await page.locator('#secure-keys').innerText(), /Odin · middle robot/, 'Staff placement answer is visible without opening anything');
+    await page.locator('#secure-keys .guide-seq__more > summary').click();
+    assert(await page.locator('#secure-keys .guide-how').isVisible(), '"More on this step" shows the how-to');
+    // Speed Run is always open: the last Origins nav item, reachable with empty storage, no lock copy anywhere.
+    await page.evaluate(() => window.localStorage.clear());
+    await page.goto(`${base}/maps/origins`, { waitUntil: 'networkidle' });
+    const navLinks = page.locator('.origins-nav-link');
+    const lastNav = navLinks.last();
+    assert.equal((await lastNav.innerText()).trim(), 'Speed Run', 'Speed Run is the last Origins nav item');
+    await lastNav.scrollIntoViewIfNeeded();
+    const navBox = await lastNav.boundingBox();
+    assert(navBox && navBox.x >= 0 && navBox.x + navBox.width <= width + 1, 'Speed Run nav item can sit fully inside the viewport');
+    await assertNoHorizontalOverflow(page, '/maps/origins (nav scrolled)');
     await page.goto(`${base}/side-easter-eggs/origins-speedrun`, { waitUntil: 'networkidle' });
     assert.equal(new URL(page.url()).pathname, '/maps/origins/speed-run', 'Old Origins Speed Run address redirects into the Origins guide');
-    assert(await page.locator('.speedrun-gate.is-locked').isVisible(), 'Speed Run pages are locked before the secret');
+    await page.getByRole('heading', { name: 'Origins Speed Run', level: 2 }).waitFor();
+    assert.equal(await page.locator('.speedrun-gate').count(), 0, 'no Speed Run lock screen');
+    assert.doesNotMatch(await page.locator('main').innerText(), /to unlock Speedrun/i);
 
-    // The Electrical Panel secret: start at the untouched positions, turn each the in-game number of times.
+    // The Electrical Panel is a hidden achievement only: solving it records "Electrical Panel Solved" and links to Speed Run.
+    // A finished run of the old tracker set the same legacy flag; that must not mark the panel solved.
+    await page.evaluate(() => localStorage.setItem('zh-origins-speedrun-unlocked', 'true'));
     await page.goto(`${base}/maps/origins/lightning-staff`, { waitUntil: 'networkidle' });
     await page.getByRole('button', { name: /Electrical Panel/ }).click();
+    assert.equal(await page.locator('.electrical-panel__reward').count(), 0, 'the old tracker unlock does not mark the panel solved');
+    assert.equal(await page.locator('.electrical-switch').count(), 7, 'the panel is playable');
+    await page.evaluate(() => localStorage.removeItem('zh-origins-speedrun-unlocked'));
     const panelSwitches = page.locator('.electrical-switch');
     const turnsNeeded = [2, 3, 3, 2, 2, 1, 3];
     for (const [index, turns] of turnsNeeded.entries()) {
       for (let turn = 0; turn < turns; turn += 1) await panelSwitches.nth(index).click();
     }
-    assert.equal(await page.locator('.electrical-panel__reward strong').innerText(), 'Speedrun Difficulty Unlocked');
-    await page.getByRole('link', { name: 'Straight to the route →' }).click();
+    assert.equal(await page.locator('.electrical-panel__reward strong').innerText(), 'Electrical Panel Solved');
+    const lightningText = await page.locator('main').innerText();
+    assert.doesNotMatch(lightningText, /Speedrun mode/i, 'no Speedrun-mode copy on the Lightning page');
+    assert.doesNotMatch(lightningText, /unlock/i, 'nothing on the Lightning page claims to unlock');
+    assert((await page.evaluate(() => JSON.parse(localStorage.getItem('zh-achievements')).unlocked))['origins/speedrun-unlocked'], 'panel solve records the hidden achievement');
+    await page.getByRole('link', { name: 'Open Speed Run' }).click();
     await page.waitForLoadState('networkidle');
     await page.getByRole('button', { name: 'Next checkpoint' }).click();
     assert.match(await page.locator('.speedrun-panel h3').innerText(), /Ice \+ Wind Staff/);
@@ -188,7 +200,7 @@ try {
         titleInView: title.left >= 0 && title.right <= window.innerWidth,
       };
     });
-    assert(originsHeader.height <= (width === 390 ? 130 : 100), `Origins sticky header is ${originsHeader.height}px tall at ${width}px`);
+    assert(originsHeader.height <= { phone: 130, landscape: 130, desktop: 100 }[viewportName], `Origins sticky header is ${originsHeader.height}px tall at ${width}px`);
     assert(originsHeader.activeInView, 'Origins keeps the active staff tab in view');
     assert(originsHeader.titleInView, 'Origins header title is not clipped');
 
@@ -271,6 +283,44 @@ try {
     assert.equal(await selects.nth(1).inputValue(), '');
 
     results.push({ width, interactions: 'map search, empty state, Side Easter Egg layout/navigation, Origins staff guide content/images/overflow and navigation, Mob guide navigation, video timestamp fallback, Gorod valve solver solution/reset', passed: true });
+    await context.close();
+  }
+
+  // Short landscape phones (844×390): chrome scrolls away so guide content reaches the first screen.
+  {
+    const context = await browser.newContext({ viewport: { width: 844, height: 390 } });
+    const page = await context.newPage();
+    const pinned = () => page.evaluate(() => [...document.querySelectorAll('.hub-header, .map-module header')]
+      .filter((el) => ['fixed', 'sticky'].includes(getComputedStyle(el).position))
+      .map((el) => el.className));
+    for (const route of routes) {
+      await page.goto(`${base}${route}`, { waitUntil: 'networkidle' });
+      assert.deepEqual(await pinned(), [], `${route} pins a header at 844×390`);
+    }
+    await page.goto(base, { waitUntil: 'networkidle' });
+    const headline = await page.locator('h1').boundingBox();
+    assert(headline && headline.y + headline.height <= 390, `Home headline ends at ${Math.round(headline.y + headline.height)}px, below the 390px landscape viewport`);
+    await page.goto(`${base}/side-easter-eggs/kino`, { waitUntil: 'networkidle' });
+    const kinoStep = await page.locator('li.guide-seq__step h3').first().boundingBox();
+    assert(kinoStep && kinoStep.y + kinoStep.height <= 390, `Kino's first step title ends at ${Math.round(kinoStep ? kinoStep.y + kinoStep.height : NaN)}px; it must be fully on the 390px landscape screen`);
+    results.push({ width: 844, height: 390, check: 'no pinned headers; Home headline and Kino first step in the first screen', passed: true });
+
+    // With the hub bar scrolled away, sticky panels must not keep an empty band where it used to be.
+    await page.goto(`${base}/maps/revelations/apothicon-upgrade`, { waitUntil: 'networkidle' });
+    await page.evaluate(() => window.scrollTo(0, 700));
+    await page.waitForTimeout(100);
+    const stickyTops = await page.evaluate(() => [...document.querySelectorAll('main *')]
+      .filter((el) => getComputedStyle(el).position === 'sticky' && el.getBoundingClientRect().height > 0)
+      .map((el) => ({ el: el.className, top: Math.round(el.getBoundingClientRect().top), cssTop: getComputedStyle(el).top })));
+    for (const item of stickyTops) assert(parseFloat(item.cssTop) <= 20, `${item.el} sticks ${item.cssTop} from the top at 844×390, leaving an empty band where the hub bar was`);
+    results.push({ width: 844, height: 390, check: 'sticky panels sit at the top once the hub bar scrolls away', passed: true });
+
+    // Measured, not asserted until each map's own redesign: where the first step title starts.
+    for (const route of routes.filter((item) => item.startsWith('/maps/'))) {
+      await page.goto(`${base}${route}`, { waitUntil: 'networkidle' });
+      const first = await page.locator('li.guide-seq__step h3').first().boundingBox();
+      results.push({ width: 844, height: 390, route, metric: 'first step title top (px)', value: first ? Math.round(first.y) : null, passed: true });
+    }
     await context.close();
   }
 } finally {

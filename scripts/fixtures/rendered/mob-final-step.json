@@ -1,0 +1,31 @@
+{
+  "route": "/maps/mob-of-the-dead/final-step",
+  "segments": [
+    "Mob of the Dead",
+    "Pop Goes the Weasel",
+    "Guide",
+    "Plane",
+    "Retriever + Skulls",
+    "Codes",
+    "Final Fight",
+    "Final Afterlife Flight",
+    "Once the code and audio sequence is complete, the rooftop plane becomes the final trigger. No fuel is required for this flight.",
+    "Co-op required",
+    "Afterlife flight",
+    "Weasel showdown",
+    "Final requirement",
+    "This is the point where a solo run stops. The final bridge fight requires multiple players, and a two- or three-player game needs Weasel present.",
+    "1",
+    "Enter Afterlife and interact with the rooftop plane. It does not need fuel; the team is transported to the bridge in Afterlife.",
+    "This final flight cannot be completed solo.",
+    "There is no normal boarding prompt; interact with the plane while in Afterlife.",
+    "Revive yourselves from the electric chairs on the bridge to begin the final showdown.",
+    "2",
+    "Break or Continue the Cycle",
+    "The final fight is Weasel versus the other mobsters. Weasel wins by killing the others; the others win by killing Weasel.",
+    "Weasel is ignored by the zombies during the showdown and has increased durability to offset being outnumbered.",
+    "If Weasel wins, the cycle is broken; if the other mobsters kill Weasel, the cycle continues.",
+    "Either outcome completes Pop Goes the Weasel and ends the game.",
+    "•"
+  ]
+}

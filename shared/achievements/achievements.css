@@ -197,66 +197,37 @@
   to { opacity: 1; }
 }
 
-/* Hub "Continue run" strip. */
-.zh-continue {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-}
-
-.zh-continue__run {
-  --ach-accent: #6dc2ff;
-  flex: 1 1 260px;
-  min-height: 56px;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  grid-template-areas: 'label go' 'name go' 'step go';
+/* "I completed this Easter Egg": a quiet text action after the last step, never a bar or a banner. */
+.zh-complete {
+  min-height: 44px;
+  display: inline-flex;
   align-items: center;
-  column-gap: 0.75rem;
-  padding: 0.55rem 0.9rem;
-  border: 1px solid color-mix(in srgb, var(--ach-accent) 45%, transparent);
-  border-left: 4px solid var(--ach-accent);
-  border-radius: 12px;
-  background:
-    linear-gradient(90deg, color-mix(in srgb, var(--ach-accent) 14%, transparent), transparent 70%),
-    rgba(8, 13, 20, 0.88);
-  color: #f4f7fb;
-  text-decoration: none;
+  margin: 0;
+  padding: 0.5rem 0;
+  border: 0;
+  background: none;
+  color: var(--guide-muted, #a5b8c9);
+  font: inherit;
+  font-size: 1rem;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  cursor: pointer;
 }
 
-.zh-continue__run:hover {
-  color: #fff;
-  border-color: var(--ach-accent);
+.zh-complete:hover {
+  color: var(--guide-ink, #fff);
 }
 
-.zh-continue__run:focus-visible {
-  outline: 2px solid var(--ach-accent);
+.zh-complete:focus-visible {
+  outline: 3px solid var(--guide-accent, #6dc2ff);
   outline-offset: 2px;
 }
 
-.zh-continue__label {
-  grid-area: label;
-  color: var(--ach-accent);
-  font-size: 0.7rem;
-  font-weight: 850;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+.zh-complete--earned {
+  cursor: default;
+  text-decoration: none;
 }
 
-.zh-continue__run strong {
-  grid-area: name;
-  font-size: 1.1rem;
-}
-
-.zh-continue__step {
-  grid-area: step;
-  color: #aeb8c6;
-  font-size: 0.88rem;
-}
-
-.zh-continue__go {
-  grid-area: go;
-  color: var(--ach-accent);
-  font-size: 1.5rem;
+.zh-complete--earned a {
+  color: inherit;
 }

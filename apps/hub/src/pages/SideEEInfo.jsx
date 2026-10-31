@@ -45,9 +45,9 @@ export default function SideEEInfo() {
 
         <div className="side-ee-info__body">
           {mapKey === 'kino' ? (
-            // Tracked like the main guides: tick reels and radios off as you find them.
+            // The reels and radios as a plain step list: every room, reel spot and radio location on the page.
             <div className="side-ee-info__guide">
-              <GuideSteps guideId="kino-side" label="Kino der Toten side Easter Eggs" steps={kinoSteps} />
+              <GuideSteps label="Kino der Toten side Easter Eggs" steps={kinoSteps} />
             </div>
           ) : (
             entries.map((ee) => (

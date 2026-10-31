@@ -120,21 +120,6 @@
   font-weight: 700;
 }
 
-.ach-medal__meter {
-  width: 70%;
-  height: 4px;
-  margin-top: 0.3rem;
-  overflow: hidden;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.08);
-}
-
-.ach-medal__meter span {
-  display: block;
-  height: 100%;
-  background: var(--ach-accent);
-}
-
 /* Secrets */
 .ach-extras {
   margin-top: 1.75rem;

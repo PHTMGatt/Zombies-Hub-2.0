@@ -4,7 +4,7 @@ import fs from 'node:fs/promises';
 
 const base = process.env.SMOKE_BASE_URL || 'http://127.0.0.1:4173';
 const reportUrl = new URL('../artifacts/browser-smoke.json', import.meta.url);
-const widths = [390, 1440];
+import { VIEWPORTS } from './smoke-viewports.mjs';
 const results = [];
 
 const assertNoHorizontalOverflow = async (page, route) => {
@@ -25,8 +25,8 @@ const assertImagesLoaded = async (page, route) => {
 
 const browser = await chromium.launch({ headless: true });
 try {
-  for (const width of widths) {
-    const context = await browser.newContext({ viewport: { width, height: 900 } });
+  for (const { name: viewportName, width, height } of VIEWPORTS) {
+    const context = await browser.newContext({ viewport: { width, height } });
     const page = await context.newPage();
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
@@ -41,60 +41,49 @@ try {
     });
     await page.reload({ waitUntil: 'networkidle' });
     assert.match(await page.locator('.soe-run-header').innerText(), /full ending require four players/i);
-    assert.equal(await page.locator('.guide-rail__step').count(), 7, 'Shadows guide should list 7 steps');
+    assert.equal(await page.locator('li.guide-seq__step').count(), 7, 'Shadows guide should list 7 steps');
 
     // Step 1: the train rides that give the sword symbols, and a notepad for them that persists.
-    let text = await page.locator('.guide-step').innerText();
+    let text = await page.locator('#rituals').innerText();
     assert.match(text, /Waterfront\s*→\s*Footlight/i);
     assert.match(text, /Footlight\s*→\s*Canals/i);
-    await page.getByLabel('Symbol 1').fill('eye');
+    await page.locator('#rituals').getByLabel('Symbol 1').fill('eye');
     await page.reload({ waitUntil: 'networkidle' });
-    assert.equal(await page.getByLabel('Symbol 1').inputValue(), 'eye', 'train symbol note survives a reload');
+    assert.equal(await page.locator('#rituals').getByLabel('Symbol 1').inputValue(), 'eye', 'train symbol note survives a reload');
 
     // Step 4: pick your character, get your Keeper room.
-    await page.locator('.guide-rail__step').nth(3).click();
-    await page.getByRole('button', { name: 'Jackie Vincent' }).click();
-    assert.match(await page.locator('.pick-tool__answer').innerText(), /Ruby Rabbit/);
+    await page.locator('#upgrade').getByRole('button', { name: 'Jackie Vincent' }).click();
+    assert.match(await page.locator('#upgrade .pick-tool__answer').innerText(), /Ruby Rabbit/);
 
-    // Finale: team setup and the train-caller rule are on the step; the full how-to is in Walkthrough.
-    await page.locator('.guide-rail__step').nth(6).click();
-    text = await page.locator('.guide-step').innerText();
+    // Finale: team setup and the train-caller rule are on the step; the full how-to is under "More on this step".
+    text = await page.locator('#finale').innerText();
     assert.match(text, /Team setup/i);
     assert.match(text, /train caller/i);
-    await page.getByRole('button', { name: 'Walkthrough', exact: true }).click();
-    assert.match(await page.locator('.guide-step').innerText(), /fourth player waits near the center Gateworm/i);
-    await page.getByRole('button', { name: 'Quick', exact: true }).click();
+    await page.locator('#finale .guide-seq__more > summary').click();
+    assert.match(await page.locator('#finale').innerText(), /fourth player waits near the center Gateworm/i);
     assert.equal(errors.length, 0, `${route} guide errors: ${errors.join('; ')}`);
     await assertImagesLoaded(page, route);
     await assertNoHorizontalOverflow(page, route);
     results.push({ width, route, passed: true });
 
-    // Blocked storage must make run tools session-only, not unusable. Both the visible step and its
-    // Quick refs copy should keep sharing the player's note / picker choice even when setItem throws.
+    // If storage becomes read-only after a saved game, the visible tools must prefer the player's
+    // newest session choice over the older persisted value.
     await page.goto(`${base}${route}`, { waitUntil: 'networkidle' });
     await page.evaluate(() => {
       localStorage.clear();
       localStorage.setItem('zh-soe-train-symbols', JSON.stringify(['stale', '', '']));
+      localStorage.setItem('zh-soe-character', JSON.stringify('floyd'));
     });
     await page.reload({ waitUntil: 'networkidle' });
-    assert.equal(await page.getByLabel('Symbol 1').inputValue(), 'stale', 'stored note loads before storage becomes read-only');
+    assert.equal(await page.locator('#rituals').getByLabel('Symbol 1').inputValue(), 'stale', 'stored note loads before storage becomes read-only');
     await page.evaluate(() => {
       Storage.prototype.setItem = () => { throw new DOMException('Storage blocked', 'SecurityError'); };
     });
-    await page.getByLabel('Symbol 1').fill('eye');
-    assert.equal(await page.getByLabel('Symbol 1').inputValue(), 'eye', 'blocked storage keeps the note for this session');
-    await page.getByRole('button', { name: 'Quick refs' }).click();
-    await page.getByRole('button', { name: /Train symbols \+ rituals/ }).click();
-    assert.equal(await page.locator('.guide-sheet').getByLabel('Symbol 1').inputValue(), 'eye', 'blocked-storage note syncs into Quick refs');
-    await page.keyboard.press('Escape');
+    await page.locator('#rituals').getByLabel('Symbol 1').fill('eye');
+    assert.equal(await page.locator('#rituals').getByLabel('Symbol 1').inputValue(), 'eye', 'blocked storage keeps the latest note for this session');
 
-    await page.locator('.guide-rail__step').nth(3).click();
-    await page.getByRole('button', { name: 'Jackie Vincent' }).click();
-    assert.match(await page.locator('.guide-step .pick-tool__answer').innerText(), /Ruby Rabbit/, 'blocked storage keeps the picker choice for this session');
-    await page.getByRole('button', { name: 'Quick refs' }).click();
-    await page.getByRole('button', { name: /Your Keeper \+ Margwa spots/ }).click();
-    assert.match(await page.locator('.guide-sheet .pick-tool__answer').innerText(), /Ruby Rabbit/, 'blocked-storage picker syncs into Quick refs');
-    await page.keyboard.press('Escape');
+    await page.locator('#upgrade').getByRole('button', { name: 'Jackie Vincent' }).click();
+    assert.match(await page.locator('#upgrade .pick-tool__answer').innerText(), /Ruby Rabbit/, 'blocked storage keeps the latest picker choice for this session');
     results.push({ width, route: `${route} (blocked storage tools)`, passed: true });
 
     errors.length = 0;
