@@ -1,0 +1,33 @@
+{
+  "route": "/maps/zetsubou-no-shima/cogs",
+  "segments": [
+    "Zetsubou No Shima",
+    "Seeds of Doubt",
+    "Overview",
+    "Prerequisites",
+    "Reveal Blueprint",
+    "Cogs",
+    "Boss Fight",
+    "Buildables",
+    "The Three Cogs",
+    "Three completely different mini-objectives power the elevator. Pick the cog you are currently working on and ignore the other two.",
+    "Anywhere But Here!",
+    "AA Cannon",
+    "Electrified Shield",
+    "Order",
+    "The cogs do not need to be collected in the order shown here. Route them around your GobbleGum, plant growth, shield charge, and current round.",
+    "Cog Routes",
+    "Choose the objective you need",
+    "01",
+    "Anywhere But Here! Room",
+    "Use the required GobbleGum after the elevator quest is active to reach the hidden room and grab the first cog.",
+    "Open cog guide →",
+    "02",
+    "AA Cannon Plane",
+    "Grow the three-round Blue Water + KT-4/Masamune artillery-shell plant, fire the AA cannon at the cargo plane, then recover the cog where it lands.",
+    "03",
+    "Electrified Zipline Drop",
+    "After every player completes all three Trials, charge the shield with the challenge lightning and use the electrified zipline setup to drop onto the hidden dock.",
+    "•"
+  ]
+}

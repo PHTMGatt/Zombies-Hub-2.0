@@ -1,0 +1,3 @@
+[
+  { "text": "Speedrun mode unlocks once every step is marked done.", "layer": "data", "reason": "Speed Run is no longer gated; the line describes removed behaviour.", "spec": "§3, §4.4" }
+]
