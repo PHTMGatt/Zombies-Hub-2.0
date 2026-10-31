@@ -47,64 +47,50 @@ try {
     assert.equal(errors.length, 0, `${mainRoute} page errors: ${errors.join('; ')}`);
     assert.equal(await page.locator('.rev-header__nav').count(), 1, 'Revelations keeps one map-level navigation row');
     assert.equal(await page.locator('.rev-main-shortcuts').count(), 0, 'Revelations duplicate bottom navigation stays removed');
-    // Behavioural guard: on step 1 nothing outside the header may link to the Revelations sections,
-    // whatever class a duplicate strip might be given. (Contextual links appear only on steps 3/8/9/11.)
+    // Behavioural guard: no duplicate section strip. Only the header nav and the contextual links inside a
+    // step (servant, eggs, symbols, throws) may link to the Revelations sections.
     const sectionLinksOutsideHeader = await page.locator('a[href^="/maps/revelations/"]').evaluateAll(links =>
-      links.filter(link => !link.closest('.rev-header')).map(link => link.textContent.trim()),
+      links.filter(link => !link.closest('.rev-header') && !link.closest('.guide-seq__step')).map(link => link.textContent.trim()),
     );
     assert.deepEqual(sectionLinksOutsideHeader, [], `Revelations renders a second section navigation: ${sectionLinksOutsideHeader.join(', ')}`);
     assert.equal(await page.locator('.rev-header__nav a').count(), 5, 'Header nav reaches all five Revelations sections');
-    await page.evaluate(() => localStorage.removeItem('zh-guide-progress:revelations'));
     await page.reload({ waitUntil: 'networkidle' });
-    assert.equal(await page.locator('.guide-rail__step').count(), 12, 'Revelations keeps all 12 Easter Egg steps');
+    assert.equal(await page.locator('li.guide-seq__step').count(), 12, 'Revelations keeps all 12 Easter Egg steps');
     await assertCssImageLoaded(page, mainRoute, '.rev-header');
     await assertCssImageLoaded(page, mainRoute, '.rev-backdrop');
     await assertNoHorizontalOverflow(page, mainRoute);
-    const step = (title) => page.locator('.guide-rail__step', { hasText: title }).click();
+    const openMore = (id) => page.locator(`#${id} .guide-seq__more > summary`).click();
 
     // Servant step: the in-game captures for each blue rock, one tab per map.
-    await step('Upgrade the Servant');
-    await page.getByRole('tab', { name: 'Mob of the Dead' }).click();
-    const shot = page.locator('.guide-step .gref--image img').first();
+    await page.locator('#servant').getByRole('tab', { name: 'Mob of the Dead' }).click();
+    const shot = page.locator('#servant .gref--image img').first();
     await shot.scrollIntoViewIfNeeded();
     assert(await shot.evaluate(img => img.complete && img.naturalWidth > 0), 'Servant rock capture loads');
 
-    await step('Kronorium + four eggs');
-    let stepText = await page.locator('.guide-step').innerText();
+    let stepText = await page.locator('#eggs').innerText();
     assert.match(stepText, /nest|pustule/i);
     assert.match(stepText, /10 zombie souls/i);
-    assert(await page.getByRole('link', { name: /Egg locations/ }).isVisible());
+    await openMore('eggs');
+    assert(await page.locator('#eggs').getByRole('link', { name: /Egg locations/ }).isVisible());
 
-    await step('Symbol room');
-    stepText = await page.locator('.guide-step').innerText();
+    stepText = await page.locator('#symbols').innerText();
     assert.match(stepText, /all players/i);
     assert.match(stepText, /Kino projector/i);
     assert.match(stepText, /purple rift|purple circle/i);
-    await page.getByLabel('1st').fill('skull');
+    await page.locator('#symbols').getByLabel('1st').fill('skull');
 
-    await step('Seven key throws');
-    stepText = await page.locator('.guide-step').innerText();
+    stepText = await page.locator('#throws').innerText();
     assert.match(stepText, /Mob of the Dead\s*Poster/i);
     assert.match(stepText, /MG42/i);
     assert.match(stepText, /Focusing Stone/i);
-    assert(await page.getByRole('link', { name: /Throw videos/ }).isVisible());
+    await openMore('throws');
+    assert(await page.locator('#throws').getByRole('link', { name: /Throw videos/ }).isVisible());
+    assert.equal(await page.locator('#boss h3').innerText(), 'Final boss — Shadowman');
 
-    // Previous / Next walk the run and stop at its ends; the place and the symbol note survive a reload.
-    const nextStep = page.getByRole('button', { name: 'Next step' });
-    const previousStep = page.getByRole('button', { name: 'Previous step' });
-    await nextStep.click();
-    assert.equal(await page.locator('.guide-step h3').innerText(), 'Final boss — Shadowman');
-    assert(await nextStep.isDisabled(), 'Next is disabled on the final step');
-    await previousStep.click();
-    assert.equal(await page.locator('.guide-step h3').innerText(), 'Seven key throws');
-    assert.equal(await page.locator('.guide-rail__step[aria-current="step"]').count(), 1, 'Exactly one step is current');
+    // The Kronorium symbol note is game state, not progress: it survives a reload.
     await page.reload({ waitUntil: 'networkidle' });
-    assert.equal(await page.locator('.guide-step h3').innerText(), 'Seven key throws', 'Revelations remembers the current step');
-    await step('Symbol room');
-    assert.equal(await page.getByLabel('1st').inputValue(), 'skull', 'Kronorium symbol note survives a reload');
+    assert.equal(await page.locator('#symbols').getByLabel('1st').inputValue(), 'skull', 'Kronorium symbol note survives a reload');
 
-    await page.locator('.guide-rail__step').first().click();
-    assert(await previousStep.isDisabled(), 'Previous is disabled on the first step');
     await page.evaluate(() => {
       document.activeElement?.blur();
       window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
@@ -118,7 +104,7 @@ try {
       path: fileURLToPath(new URL(`revelations-${width}.png`, artifactDir)),
       fullPage: true,
     });
-    results.push({ width, route: mainRoute, interactions: 'step selection + contextual references + top-aligned screenshot', passed: true });
+    results.push({ width, route: mainRoute, interactions: 'step sequence + contextual references + top-aligned screenshot', passed: true });
 
     errors.length = 0;
     const upgradeRoute = '/maps/revelations/apothicon-upgrade';

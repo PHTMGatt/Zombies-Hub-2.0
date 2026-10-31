@@ -1,4 +1,4 @@
-// Kino der Toten side Easter Eggs (BO1). The single source for the Kino page's tracked checklist.
+// Kino der Toten side Easter Eggs (BO1). The single source for the Kino page's step list.
 // Rooms and spots are unchanged from the original notes: four possible teleport rooms, three reels per match.
 export const kinoReelRooms = [
   { k: 'Samantha’s Room (intact)', v: 'Table, bed, or against the rocking chair' },

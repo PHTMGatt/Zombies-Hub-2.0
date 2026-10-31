@@ -1,3 +1,424 @@
 [
-  { "text": "Speedrun mode unlocks once every step is marked done.", "layer": "data", "reason": "Speed Run is no longer gated; the line describes removed behaviour.", "spec": "§3, §4.4" }
+  {
+    "text": "Speedrun mode unlocks once every step is marked done.",
+    "layer": "data",
+    "reason": "Speed Run is no longer gated; the line describes removed behaviour.",
+    "spec": "§3, §4.4"
+  },
+  {
+    "pattern": "^(0[1-9]|1[0-2])$",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins",
+      "/maps/revelations",
+      "/maps/gorod-krovi",
+      "/maps/der-eisendrache",
+      "/maps/zetsubou-no-shima",
+      "/maps/shadows-of-evil",
+      "/maps/mob-of-the-dead",
+      "/side-easter-eggs/kino"
+    ],
+    "reason": "Zero-padded step numbers of the removed swipe rail; steps are still numbered, now by a CSS counter.",
+    "spec": "§4.1"
+  },
+  {
+    "text": "0",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins",
+      "/maps/revelations",
+      "/maps/gorod-krovi",
+      "/maps/der-eisendrache",
+      "/maps/zetsubou-no-shima",
+      "/maps/shadows-of-evil",
+      "/maps/mob-of-the-dead",
+      "/side-easter-eggs/kino"
+    ],
+    "reason": "Digits of the removed progress counter (\"0 / 11\") and task tick counts (\"0/4\").",
+    "spec": "§4.1"
+  },
+  {
+    "text": "/",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins",
+      "/maps/revelations",
+      "/maps/gorod-krovi",
+      "/maps/der-eisendrache",
+      "/maps/zetsubou-no-shima",
+      "/maps/shadows-of-evil",
+      "/maps/mob-of-the-dead",
+      "/side-easter-eggs/kino"
+    ],
+    "reason": "Digits of the removed progress counter (\"0 / 11\") and task tick counts (\"0/4\").",
+    "spec": "§4.1"
+  },
+  {
+    "text": "4",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins",
+      "/maps/revelations",
+      "/maps/gorod-krovi",
+      "/maps/der-eisendrache",
+      "/maps/zetsubou-no-shima",
+      "/maps/shadows-of-evil",
+      "/maps/mob-of-the-dead",
+      "/side-easter-eggs/kino"
+    ],
+    "reason": "Digits of the removed progress counter (\"0 / 11\") and task tick counts (\"0/4\").",
+    "spec": "§4.1"
+  },
+  {
+    "text": "5",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins",
+      "/maps/revelations",
+      "/maps/gorod-krovi",
+      "/maps/der-eisendrache",
+      "/maps/zetsubou-no-shima",
+      "/maps/shadows-of-evil",
+      "/maps/mob-of-the-dead",
+      "/side-easter-eggs/kino"
+    ],
+    "reason": "Digits of the removed progress counter (\"0 / 11\") and task tick counts (\"0/4\").",
+    "spec": "§4.1"
+  },
+  {
+    "text": "7",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins",
+      "/maps/revelations",
+      "/maps/gorod-krovi",
+      "/maps/der-eisendrache",
+      "/maps/zetsubou-no-shima",
+      "/maps/shadows-of-evil",
+      "/maps/mob-of-the-dead",
+      "/side-easter-eggs/kino"
+    ],
+    "reason": "Digits of the removed progress counter (\"0 / 11\") and task tick counts (\"0/4\").",
+    "spec": "§4.1"
+  },
+  {
+    "text": "11",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins",
+      "/maps/revelations",
+      "/maps/gorod-krovi",
+      "/maps/der-eisendrache",
+      "/maps/zetsubou-no-shima",
+      "/maps/shadows-of-evil",
+      "/maps/mob-of-the-dead",
+      "/side-easter-eggs/kino"
+    ],
+    "reason": "Digits of the removed progress counter (\"0 / 11\") and task tick counts (\"0/4\").",
+    "spec": "§4.1"
+  },
+  {
+    "text": "12",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins",
+      "/maps/revelations",
+      "/maps/gorod-krovi",
+      "/maps/der-eisendrache",
+      "/maps/zetsubou-no-shima",
+      "/maps/shadows-of-evil",
+      "/maps/mob-of-the-dead",
+      "/side-easter-eggs/kino"
+    ],
+    "reason": "Digits of the removed progress counter (\"0 / 11\") and task tick counts (\"0/4\").",
+    "spec": "§4.1"
+  },
+  {
+    "text": "Step",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins",
+      "/maps/revelations",
+      "/maps/gorod-krovi",
+      "/maps/der-eisendrache",
+      "/maps/zetsubou-no-shima",
+      "/maps/shadows-of-evil",
+      "/maps/mob-of-the-dead",
+      "/side-easter-eggs/kino"
+    ],
+    "reason": "Removed \"Step NN of NN\" meta line.",
+    "spec": "§4.1"
+  },
+  {
+    "text": "Do this now",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins",
+      "/maps/revelations",
+      "/maps/gorod-krovi",
+      "/maps/der-eisendrache",
+      "/maps/zetsubou-no-shima",
+      "/maps/shadows-of-evil",
+      "/maps/mob-of-the-dead",
+      "/side-easter-eggs/kino"
+    ],
+    "reason": "Removed label in front of each step goal; the goal text itself stays.",
+    "spec": "§4.1"
+  },
+  {
+    "text": "Track it",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins",
+      "/maps/revelations",
+      "/maps/gorod-krovi",
+      "/maps/der-eisendrache",
+      "/maps/zetsubou-no-shima",
+      "/maps/shadows-of-evil",
+      "/maps/mob-of-the-dead",
+      "/side-easter-eggs/kino"
+    ],
+    "reason": "Removed task-checkbox heading; task labels and hints stay as text.",
+    "spec": "§4.1"
+  },
+  {
+    "text": "Mark step done",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins",
+      "/maps/revelations",
+      "/maps/gorod-krovi",
+      "/maps/der-eisendrache",
+      "/maps/zetsubou-no-shima",
+      "/maps/shadows-of-evil",
+      "/maps/mob-of-the-dead",
+      "/side-easter-eggs/kino"
+    ],
+    "reason": "Removed Mark-done control.",
+    "spec": "§4.1"
+  },
+  {
+    "text": "←",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins",
+      "/maps/revelations",
+      "/maps/gorod-krovi",
+      "/maps/der-eisendrache",
+      "/maps/zetsubou-no-shima",
+      "/maps/shadows-of-evil",
+      "/maps/mob-of-the-dead",
+      "/side-easter-eggs/kino"
+    ],
+    "reason": "Removed previous-step button glyph.",
+    "spec": "§4.1"
+  },
+  {
+    "text": "→",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins",
+      "/maps/revelations",
+      "/maps/gorod-krovi",
+      "/maps/der-eisendrache",
+      "/maps/zetsubou-no-shima",
+      "/maps/shadows-of-evil",
+      "/maps/mob-of-the-dead",
+      "/side-easter-eggs/kino"
+    ],
+    "reason": "Removed next-step / swipe-hint / link arrow glyphs.",
+    "spec": "§4.1"
+  },
+  {
+    "text": "Progress options",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins",
+      "/maps/revelations",
+      "/maps/gorod-krovi",
+      "/maps/der-eisendrache",
+      "/maps/zetsubou-no-shima",
+      "/maps/shadows-of-evil",
+      "/maps/mob-of-the-dead",
+      "/side-easter-eggs/kino"
+    ],
+    "reason": "Removed progress options menu.",
+    "spec": "§4.1"
+  },
+  {
+    "text": "Reset this run",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins",
+      "/maps/revelations",
+      "/maps/gorod-krovi",
+      "/maps/der-eisendrache",
+      "/maps/zetsubou-no-shima",
+      "/maps/shadows-of-evil",
+      "/maps/mob-of-the-dead",
+      "/side-easter-eggs/kino"
+    ],
+    "reason": "Removed progress options menu.",
+    "spec": "§4.1"
+  },
+  {
+    "text": "Reset all",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins",
+      "/maps/revelations",
+      "/maps/gorod-krovi",
+      "/maps/der-eisendrache",
+      "/maps/zetsubou-no-shima",
+      "/maps/shadows-of-evil",
+      "/maps/mob-of-the-dead",
+      "/side-easter-eggs/kino"
+    ],
+    "reason": "Removed progress options menu.",
+    "spec": "§4.1"
+  },
+  {
+    "text": "progress",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins",
+      "/maps/revelations",
+      "/maps/gorod-krovi",
+      "/maps/der-eisendrache",
+      "/maps/zetsubou-no-shima",
+      "/maps/shadows-of-evil",
+      "/maps/mob-of-the-dead",
+      "/side-easter-eggs/kino"
+    ],
+    "reason": "Removed progress options menu.",
+    "spec": "§4.1"
+  },
+  {
+    "text": "Achievements + reset all",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins",
+      "/maps/revelations",
+      "/maps/gorod-krovi",
+      "/maps/der-eisendrache",
+      "/maps/zetsubou-no-shima",
+      "/maps/shadows-of-evil",
+      "/maps/mob-of-the-dead",
+      "/side-easter-eggs/kino"
+    ],
+    "reason": "Removed progress options menu.",
+    "spec": "§4.1"
+  },
+  {
+    "text": "Quick refs",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins",
+      "/maps/revelations",
+      "/maps/gorod-krovi",
+      "/maps/der-eisendrache",
+      "/maps/zetsubou-no-shima",
+      "/maps/shadows-of-evil",
+      "/maps/mob-of-the-dead",
+      "/side-easter-eggs/kino"
+    ],
+    "reason": "Removed Quick refs sheet; step deep links replace it.",
+    "spec": "§4.1, §4.3"
+  },
+  {
+    "text": "Quick",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins",
+      "/maps/revelations",
+      "/maps/gorod-krovi",
+      "/maps/der-eisendrache",
+      "/maps/zetsubou-no-shima",
+      "/maps/shadows-of-evil",
+      "/maps/mob-of-the-dead",
+      "/side-easter-eggs/kino"
+    ],
+    "reason": "Removed Quick / Walkthrough depth switch.",
+    "spec": "§4.1"
+  },
+  {
+    "text": "Walkthrough",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins",
+      "/maps/revelations",
+      "/maps/gorod-krovi",
+      "/maps/der-eisendrache",
+      "/maps/zetsubou-no-shima",
+      "/maps/shadows-of-evil",
+      "/maps/mob-of-the-dead",
+      "/side-easter-eggs/kino"
+    ],
+    "reason": "Removed Quick / Walkthrough depth switch.",
+    "spec": "§4.1"
+  },
+  {
+    "text": "codes",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins",
+      "/maps/revelations",
+      "/maps/gorod-krovi",
+      "/maps/der-eisendrache",
+      "/maps/zetsubou-no-shima",
+      "/maps/shadows-of-evil",
+      "/maps/mob-of-the-dead",
+      "/side-easter-eggs/kino"
+    ],
+    "reason": "Removed Origins Low / Medium / High depth switch and its Speedrun-mode button.",
+    "spec": "§4.1, §4.4"
+  },
+  {
+    "text": "Medium",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins",
+      "/maps/revelations",
+      "/maps/gorod-krovi",
+      "/maps/der-eisendrache",
+      "/maps/zetsubou-no-shima",
+      "/maps/shadows-of-evil",
+      "/maps/mob-of-the-dead",
+      "/side-easter-eggs/kino"
+    ],
+    "reason": "Removed Origins Low / Medium / High depth switch and its Speedrun-mode button.",
+    "spec": "§4.1, §4.4"
+  },
+  {
+    "text": "High",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins",
+      "/maps/revelations",
+      "/maps/gorod-krovi",
+      "/maps/der-eisendrache",
+      "/maps/zetsubou-no-shima",
+      "/maps/shadows-of-evil",
+      "/maps/mob-of-the-dead",
+      "/side-easter-eggs/kino"
+    ],
+    "reason": "Removed Origins Low / Medium / High depth switch and its Speedrun-mode button.",
+    "spec": "§4.1, §4.4"
+  },
+  {
+    "text": "⏱",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins",
+      "/maps/revelations",
+      "/maps/gorod-krovi",
+      "/maps/der-eisendrache",
+      "/maps/zetsubou-no-shima",
+      "/maps/shadows-of-evil",
+      "/maps/mob-of-the-dead",
+      "/side-easter-eggs/kino"
+    ],
+    "reason": "Removed Origins Low / Medium / High depth switch and its Speedrun-mode button.",
+    "spec": "§4.1, §4.4"
+  }
 ]

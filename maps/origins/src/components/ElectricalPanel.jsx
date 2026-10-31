@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import SwitchDial, { DIRECTION_ANGLE } from './SwitchDial';
 import { playSet, playTurn } from './switchSounds';
 import { useSpeedrunUnlock } from './speedrunUnlock';
-import { writeStored } from '../../../../shared/guide/useGuideProgress';
+import { write as writeStored } from '../../../../shared/storage';
 import { originsLightningSwitchRoute } from '../../../../shared/data/originsLightning';
 import '../Styles/ComponentStyles/ElectricalPanel.css';
 

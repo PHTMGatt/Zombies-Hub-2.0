@@ -132,24 +132,15 @@ try {
     await page.waitForLoadState('networkidle');
     assert.equal(new URL(page.url()).pathname, originsTarget, 'Origins guide navigation reaches its intended route');
 
-    // Origins guide: Low/Medium/High share one progression, and Speedrun mode is a locked reward.
+    // Origins guide: one sequence. Each step's answer is on the page; its how-to sits under "More on this step".
     await page.goto(`${base}/maps/origins`, { waitUntil: 'networkidle' });
     await page.evaluate(() => window.localStorage.clear());
     await page.reload({ waitUntil: 'networkidle' });
-    await page.locator('.guide-rail__step').nth(2).click();
-    await page.getByRole('button', { name: /^High/ }).click();
-    assert.equal(await page.locator('.guide-step h3').innerText(), 'Secure the keys', 'Changing depth keeps the current step');
-    assert.equal(await page.locator('.guide-how').count(), 1, 'High depth shows the how-to');
-    await page.getByRole('button', { name: /^Low/ }).click();
-    assert.equal(await page.locator('.guide-how').count(), 0, 'Low depth is reference only');
-    await page.getByRole('button', { name: 'Mark step done' }).click();
-    assert.equal(await page.locator('.guide-step h3').innerText(), 'Thunder Fists', 'Marking done advances to the next open step');
-    assert(
-      await page.locator('.guide-step h3').evaluate(heading => document.activeElement === heading),
-      'Changing a shared-guide step moves focus to the new step heading',
-    );
-    await page.getByRole('button', { name: /Speedrun mode \(locked\)/ }).click();
-    assert(await page.locator('.speedrun-gate.is-locked').isVisible(), 'Speedrun mode is locked before the secret');
+    assert.equal(await page.locator('#secure-keys h3').innerText(), 'Secure the keys');
+    assert.equal(await page.locator('#thunder-fists h3').innerText(), 'Thunder Fists');
+    assert.match(await page.locator('#secure-keys').innerText(), /Odin · middle robot/, 'Staff placement answer is visible without opening anything');
+    await page.locator('#secure-keys .guide-seq__more > summary').click();
+    assert(await page.locator('#secure-keys .guide-how').isVisible(), '"More on this step" shows the how-to');
     await page.goto(`${base}/side-easter-eggs/origins-speedrun`, { waitUntil: 'networkidle' });
     assert.equal(new URL(page.url()).pathname, '/maps/origins/speed-run', 'Old Origins Speed Run address redirects into the Origins guide');
     assert(await page.locator('.speedrun-gate.is-locked').isVisible(), 'Speed Run pages are locked before the secret');

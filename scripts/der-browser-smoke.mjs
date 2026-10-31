@@ -58,19 +58,18 @@ try {
     assert.equal(await page.locator('.de-quick-links').count(), 0, 'Der Eisendrache duplicate bottom navigation stays removed');
     await assertNoHorizontalOverflow(page, mainRoute);
 
-    // Stepped guide: 12 tracked steps, Quick/Full share the step, the safe-code note follows you to the terminal step.
+    // One sequence: 12 steps, how-to under "More", and the safe-code note shared by the two steps that need it.
     await page.evaluate(() => window.localStorage.clear());
     await page.reload({ waitUntil: 'networkidle' });
-    assert.equal(await page.locator('.guide-rail__step').count(), 12, 'Der guide keeps all 12 steps');
-    await page.locator('.guide-rail__step').nth(4).click();
-    await page.getByRole('button', { name: /^Walkthrough/ }).click();
-    assert.match(await page.locator('.guide-step h3').innerText(), /Past lab/, 'Switching to Full keeps the current step');
-    assert.equal(await page.locator('.guide-how').count(), 1, 'Full mode shows the how-to');
-    await page.getByLabel('Safe symbol 1').fill('Test');
-    await page.getByRole('button', { name: 'Mark step done' }).click();
-    assert.match(await page.locator('.guide-step h3').innerText(), /Death Ray/, 'Marking done advances to the next step');
-    assert.equal(await page.getByLabel('Safe symbol 1').inputValue(), 'Test', 'Safe code note carries to the terminal step');
-    await page.getByRole('button', { name: 'Quick', exact: true }).click();
+    assert.equal(await page.locator('li.guide-seq__step').count(), 12, 'Der guide keeps all 12 steps');
+    assert.match(await page.locator('#past-lab-1 h3').innerText(), /Past lab/);
+    await page.locator('#past-lab-1 .guide-seq__more > summary').click();
+    assert.equal(await page.locator('#past-lab-1 .guide-how').count(), 1, '"More on this step" shows the how-to');
+    await page.locator('#past-lab-1').getByLabel('Safe symbol 1').fill('Test');
+    assert.match(await page.locator('#death-ray-safe h3').innerText(), /Death Ray/);
+    // The second copy updates on the next render; wait for it rather than reading once.
+    await page.waitForFunction(() => document.querySelector('#death-ray-safe input[aria-label="Safe symbol 1"]')?.value === 'Test', null, { timeout: 3000 })
+      .catch(() => assert.fail('Safe code note carries to the terminal step'));
     await page.evaluate(() => window.localStorage.clear());
     results.push({ width, route: mainRoute, passed: true });
 

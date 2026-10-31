@@ -48,15 +48,12 @@ try {
     await assertCssImageLoaded(page, mainRoute, '.zets-header', '::before');
     await assertNoHorizontalOverflow(page, mainRoute);
 
-    // Tracked guide: 11 steps, ticks advance the run, progress survives a reload.
-    await page.evaluate(() => localStorage.removeItem('zh-guide-progress:zetsubou-no-shima'));
+    // One sequence: 11 steps, the Trials listed as facts on the first step, nothing to tick.
     await page.reload({ waitUntil: 'networkidle' });
-    assert.equal(await page.locator('.guide-rail__step').count(), 11, 'Zetsubou guide should list 11 steps');
-    for (const trial of ['Trial 1', 'Trial 2', 'Trial 3']) await page.getByRole('button', { name: trial, exact: true }).click();
-    await page.getByRole('heading', { name: 'Clean the four skulls', level: 3 }).waitFor();
-    await page.reload({ waitUntil: 'networkidle' });
-    await page.getByRole('heading', { name: 'Clean the four skulls', level: 3 }).waitFor();
-    assert.match(await page.locator('.guide-progress__count').innerText(), /1 \/ 11/);
+    assert.equal(await page.locator('li.guide-seq__step').count(), 11, 'Zetsubou guide should list 11 steps');
+    const trialsText = await page.locator('#trials').innerText();
+    for (const trial of ['Trial 1', 'Trial 2', 'Trial 3']) assert.match(trialsText, new RegExp(trial), `Trials step lists ${trial}`);
+    assert.equal(await page.locator('#skulls h3').innerText(), 'Clean the four skulls');
     assert.equal(errors.length, 0, `${mainRoute} guide errors: ${errors.join('; ')}`);
 
     if (viewportName === 'phone') {

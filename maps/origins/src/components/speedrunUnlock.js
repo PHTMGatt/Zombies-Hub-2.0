@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { readStored, writeStored } from '../../../../shared/guide/useGuideProgress';
+import { read as readStored, write as writeStored } from '../../../../shared/storage';
 import { unlockAchievement } from '../../../../shared/achievements/achievements';
 
 /*

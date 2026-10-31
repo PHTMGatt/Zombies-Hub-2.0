@@ -47,22 +47,16 @@ try {
     await assertHeaderArtLoaded(page, mainRoute);
     await assertNoHorizontalOverflow(page, mainRoute);
 
-    // Tracked guide: 11 steps, the Valve Solver works inside its step, progress survives a reload.
+    // One sequence: 11 steps, and the Valve Solver still works inside the valve step.
     await page.evaluate(() => window.localStorage.clear());
     await page.reload({ waitUntil: 'networkidle' });
-    assert.equal(await page.locator('.guide-rail__step').count(), 11, 'Gorod guide keeps all 11 steps');
-    await page.locator('.guide-rail__step').nth(4).click();
-    assert.match(await page.locator('.guide-step h3').innerText(), /Valve network/);
-    const valveSelects = page.locator('.guide-step .gorod-valve-fields select');
+    assert.equal(await page.locator('li.guide-seq__step').count(), 11, 'Gorod guide keeps all 11 steps');
+    assert.match(await page.locator('#valves h3').innerText(), /Valve network/);
+    const valveSelects = page.locator('#valves .gorod-valve-fields select');
     await valveSelects.nth(0).selectOption('Armory');
     await valveSelects.nth(1).selectOption('Dragon Command');
-    assert((await page.locator('.guide-step .gorod-valve-setting').count()) > 0, 'Embedded Valve Solver returns settings');
-    await page.getByRole('button', { name: 'Mark step done' }).click();
-    assert.match(await page.locator('.guide-step h3').innerText(), /KRONOS/, 'Marking done advances to the next step');
-    await page.reload({ waitUntil: 'networkidle' });
-    assert.match(await page.locator('.guide-step h3').innerText(), /KRONOS/, 'Current step survives a reload');
-    assert.match(await page.locator('.guide-progress__count').innerText(), /1 \/ 11/);
-    await page.evaluate(() => window.localStorage.clear());
+    assert((await page.locator('#valves .gorod-valve-setting').count()) > 0, 'Embedded Valve Solver returns settings');
+    assert.match(await page.locator('#kronos h3').innerText(), /KRONOS/);
     results.push({ width, route: mainRoute, passed: true });
 
     errors.length = 0;
