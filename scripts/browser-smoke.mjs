@@ -218,29 +218,29 @@ try {
     const originsStaffGuides = [
       {
         route: '/maps/origins/fire-staff',
-        heading: 'Fire Staff Parts',
+        heading: 'Fire Staff',
         required: [/Generator 6/i, /glowing plane/i, /torch/i],
       },
       {
         route: '/maps/origins/ice-staff',
-        heading: 'Ice Staff Parts',
+        heading: 'Ice Staff',
         required: [/(Tank Station|Generator 2)/i, /gravestone/i],
       },
       {
         route: '/maps/origins/wind-staff',
-        heading: 'Wind Staff Parts',
+        heading: 'Wind Staff',
         required: [/Wind Tunnel/i, /Generator 4/i, /smoking chimneys/i],
       },
       {
         route: '/maps/origins/lightning-staff',
-        heading: 'Lightning Staff Parts',
+        heading: 'Lightning Staff',
         required: [/Purple Record/i, /Lightning Tunnel/i, /Generator 5/i],
       },
     ];
 
     for (const guide of originsStaffGuides) {
       await page.goto(`${base}${guide.route}`, { waitUntil: 'networkidle' });
-      await page.getByRole('heading', { name: guide.heading }).waitFor();
+      await page.getByRole('heading', { name: guide.heading, exact: true, level: 2 }).waitFor();
       const guideText = await page.locator('.origins-route-content').innerText();
       for (const requiredText of guide.required) {
         assert.match(guideText, requiredText, `${guide.route} is missing ${requiredText}`);

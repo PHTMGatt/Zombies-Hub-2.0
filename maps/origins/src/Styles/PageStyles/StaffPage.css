@@ -1,0 +1,318 @@
+/*
+ * Origins staff page: Build → Puzzle → Upgrade on the trench ground. The staff's colour marks its name,
+ * section rules and step numbers only; text stays bone and moss.
+ */
+.origins-module .staff-page {
+  width: min(1320px, 100% - 2 * clamp(16px, 4vw, 56px));
+  margin: 0 auto;
+  padding: 0 0 64px;
+}
+
+.origins-module .staff-page__hero {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 12px 24px;
+  padding: 30px 0 18px;
+  border-bottom: 1px solid var(--o-hair);
+}
+
+.origins-module .staff-page__hero h2 {
+  margin: 0;
+  color: var(--staff);
+  font: 700 clamp(46px, 7vw, 88px)/0.85 var(--o-display);
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+.origins-module .staff-page__jump {
+  display: flex;
+  gap: 4px 22px;
+  margin-left: auto;
+}
+
+.origins-module .staff-page__jump a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  border-bottom: 2px solid transparent;
+  color: var(--o-muted);
+  font: 700 15px var(--o-display);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.origins-module .staff-page__jump a:hover {
+  color: var(--o-ink);
+  border-bottom-color: var(--staff);
+}
+
+/* Desktop: Build and Upgrade on the left, the puzzle reference held beside them. */
+.origins-module .staff-page__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  grid-template-areas:
+    'build puzzle'
+    'upgrade puzzle';
+  align-items: start;
+  gap: 0 56px;
+  padding-top: 34px;
+}
+
+.origins-module .staff-block {
+  min-width: 0;
+  margin-bottom: 40px;
+  scroll-margin-top: calc(var(--hub-pin-height, var(--hub-nav-height)) + var(--o-plates-height) + 16px);
+}
+
+.origins-module .staff-block--build { grid-area: build; }
+.origins-module .staff-block--upgrade { grid-area: upgrade; }
+.origins-module .staff-block--puzzle { grid-area: puzzle; }
+
+@media (min-width: 1100px) and (min-height: 700px) {
+  .origins-module .staff-page:not(.staff-page--tools) .staff-block--puzzle {
+    position: sticky;
+    top: calc(var(--hub-pin-height, var(--hub-nav-height)) + var(--o-plates-height) + 20px);
+  }
+}
+
+.origins-module .staff-block > h3 {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 14px;
+  color: var(--staff);
+  font: 700 15px var(--o-display);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.origins-module .staff-block > h3::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--o-hair);
+}
+
+.origins-module .staff-page__facts {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+}
+
+.origins-module .staff-page__facts > div {
+  display: grid;
+  grid-template-columns: 124px minmax(0, 1fr);
+  gap: 0 18px;
+}
+
+.origins-module .staff-page__facts dt,
+.origins-module .staff-page__label {
+  color: var(--o-muted);
+  font: 700 13px/1.7 var(--o-display);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.origins-module .staff-page__facts dd {
+  margin: 0;
+  color: var(--o-ink);
+  font: 400 17px/1.5 var(--o-body);
+}
+
+.origins-module .staff-page__steps {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: staff-step;
+}
+
+.origins-module .staff-page__steps li {
+  position: relative;
+  padding-left: 46px;
+  color: var(--o-ink);
+  font: 400 17px/1.5 var(--o-body);
+  counter-increment: staff-step;
+}
+
+.origins-module .staff-page__steps li::before {
+  content: counter(staff-step);
+  position: absolute;
+  left: 0;
+  top: -1px;
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--staff);
+  border-radius: 50%;
+  color: var(--staff);
+  font: 700 16px/1 var(--o-display);
+}
+
+.origins-module .staff-page__step {
+  margin: 0;
+  color: var(--o-ink);
+  font: 400 17px/1.5 var(--o-body);
+}
+
+.origins-module .staff-page__steps strong {
+  color: var(--o-ink);
+}
+
+.origins-module .staff-block--puzzle > * + * {
+  margin-top: 18px;
+}
+
+/* The chart is the reference: framed by a thin rule in the staff colour, never a card. */
+.origins-module .staff-page__chart .zoom-image__open {
+  color: var(--staff);
+}
+
+.origins-module .staff-page__chart img {
+  border-radius: 4px;
+  outline: 2px solid var(--staff);
+  outline-offset: 4px;
+}
+
+.origins-module .staff-page__note {
+  margin: 0;
+  padding-left: 14px;
+  border-left: 3px solid var(--o-brass);
+  color: var(--o-text);
+  font-size: 16px;
+}
+
+.origins-module .staff-page__chords {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 18px;
+}
+
+.origins-module .staff-page__chords ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 22px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--o-ink);
+  font: 700 30px/1 var(--o-display);
+  letter-spacing: 0.04em;
+}
+
+/* Gravestones: unordered, so labelled and kept out of the numbered steps. */
+.origins-module .staff-any-order {
+  margin-bottom: 16px;
+  padding-left: 14px;
+  border-left: 4px solid var(--staff);
+}
+
+.origins-module .staff-any-order p {
+  margin: 2px 0 0;
+  color: var(--o-ink);
+  font: 400 17px/1.5 var(--o-body);
+}
+
+/* ---- Shared Excavation reference ---- */
+.origins-module .excavation-rings {
+  display: grid;
+  grid-template-columns: 112px minmax(0, 1fr);
+  align-items: center;
+  gap: 18px;
+  margin: 26px 0 0;
+  padding-top: 18px;
+  border-top: 1px solid var(--o-hair);
+}
+
+.origins-module .excavation-rings svg {
+  width: 112px;
+  height: auto;
+}
+
+.origins-module .excavation-rings__ring {
+  stroke: var(--staff);
+}
+
+.origins-module .excavation-rings__orb {
+  fill: var(--staff);
+}
+
+.origins-module .excavation-rings figcaption {
+  display: grid;
+  gap: 4px;
+  color: var(--o-text);
+  font-size: 16px;
+}
+
+.origins-module .excavation-rings figcaption strong {
+  color: var(--o-muted);
+  font: 700 13px var(--o-display);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.origins-module .excavation-rings figcaption b {
+  color: var(--staff);
+  font-family: var(--o-display);
+  letter-spacing: 0.06em;
+}
+
+/* ---- Phones: game order, one column ---- */
+@media (max-width: 1099px) {
+  .origins-module .staff-page__grid {
+    display: block;
+  }
+}
+
+@media (max-width: 700px) {
+  .origins-module .staff-page__hero {
+    padding-top: 20px;
+  }
+
+  .origins-module .staff-page__jump {
+    width: 100%;
+    margin-left: 0;
+    justify-content: space-between;
+  }
+
+  .origins-module .staff-page__facts > div {
+    grid-template-columns: 1fr;
+  }
+
+  .origins-module .staff-page__grid {
+    padding-top: 24px;
+  }
+}
+
+/* ---- Short landscape phones: facts beside the chart, chart capped to the screen ---- */
+@media (max-height: 500px) and (orientation: landscape) {
+  .origins-module .staff-page__hero {
+    padding: 14px 0 10px;
+  }
+
+  .origins-module .staff-page__hero h2 {
+    font-size: 42px;
+  }
+
+  .origins-module .staff-page__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 0 28px;
+    padding-top: 20px;
+  }
+
+  .origins-module .staff-page__facts > div {
+    grid-template-columns: 100px minmax(0, 1fr);
+  }
+
+  .origins-module .staff-page__chart img {
+    max-height: 250px;
+    object-fit: contain;
+    background: #000;
+  }
+}

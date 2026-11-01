@@ -7,7 +7,8 @@ import { chromium } from 'playwright';
 import { VIEWPORTS } from './smoke-viewports.mjs';
 import { loadModules } from './guide-content.mjs';
 
-const [{ default: originsGuide }] = await loadModules(['maps/origins/src/data/originsGuide.jsx']);
+const [{ default: originsGuide }, { default: staffPages }] = await loadModules(['maps/origins/src/data/originsGuide.jsx', 'maps/origins/src/data/originsStaffPages.js']);
+const staffLines = JSON.parse((await import('node:fs')).readFileSync(new URL('./fixtures/origins-staff-pages.baseline.json', import.meta.url), 'utf8'));
 const TRACKER_LABELS = ['Ice built', 'Fire built', 'Wind built', 'Lightning built', 'Ice upgraded', 'Fire upgraded', 'Wind upgraded', 'Lightning upgraded',
   'Wind → Odin', 'Ice → Freya', 'Lightning → Thor', 'Fire → mound', 'Gen 5 chest', 'Mound chest', 'Gen 6 chest', 'Juggernog chest'];
 const STAFFS = ['ice', 'fire', 'wind', 'lightning'];
@@ -177,6 +178,88 @@ try {
       assert(positions.step3 < limit, `step 3 starts at ${Math.round(positions.step3)}px (limit ${limit})`);
     }
     results.push(`${name}: run sheet, answers, staff board / rows, Lightning link, Ice pair, type and contrast`);
+
+    // ---- Staff pages: Build → Puzzle → Upgrade ----
+    for (const staff of STAFFS) {
+      const route = `/maps/origins/${staff}-staff`;
+      const data = staffPages[staff];
+      await page.goto(`${base}${route}`, { waitUntil: 'networkidle' });
+      const order = await page.evaluate(() => ['build', 'puzzle', 'upgrade'].map((id) => {
+        const el = document.getElementById(id);
+        return el ? el.getBoundingClientRect().top + window.scrollY : null;
+      }));
+      assert(order.every((top) => top !== null), `${route}: has #build, #puzzle and #upgrade`);
+      if (name === 'phone') assert(order[0] < order[1] && order[1] < order[2], `${route}: Build, Puzzle, Upgrade read in order on phones`);
+      const text = (await page.locator('main').innerText()).replace(/\s+/g, ' ');
+      const lower = text.toLowerCase();
+      for (const line of staffLines[staff].lines) {
+        assert(text.includes(line.text), `${route}: keeps "${line.text}"`);
+        if (line.label && line.label !== 'Excavation') assert(lower.includes(line.label.toLowerCase()), `${route}: keeps the label "${line.label}"`);
+      }
+
+      // The chart opens full screen and closes again (button, Esc), returning focus to the chart.
+      const open = page.locator('#puzzle .zoom-image__open');
+      await open.click();
+      const dialog = page.locator('dialog.zoom-image__dialog[open]');
+      await dialog.waitFor();
+      const shown = await dialog.locator('img').boundingBox();
+      if (name === 'phone') assert(shown.width >= width * 0.9, `${route}: full-screen chart is ${Math.round(shown.width)}px wide`);
+      await page.keyboard.press('Escape');
+      await dialog.waitFor({ state: 'detached' }).catch(() => {});
+      assert.equal(await page.locator('dialog.zoom-image__dialog[open]').count(), 0, `${route}: Esc closes the chart`);
+      assert(await open.evaluate((el) => document.activeElement === el), `${route}: focus returns to the chart`);
+      await open.click();
+      await dialog.waitFor();
+      const close = dialog.getByRole('button', { name: 'Close' });
+      assert((await close.boundingBox()).height >= 48, `${route}: Close is a 48px target`);
+      await close.click();
+      assert.equal(await page.locator('dialog.zoom-image__dialog[open]').count(), 0, `${route}: Close closes the chart`);
+
+      // The shared Excavation reference: four rings in the staff's colour, no lever-to-ring labels.
+      const rings = page.locator('#upgrade .excavation-rings');
+      assert.equal(await rings.count(), 1, `${route}: one Excavation ring reference`);
+      assert.equal(await rings.locator('svg ellipse.excavation-rings__ring').count(), 4, `${route}: four rings drawn`);
+      const ringText = await rings.innerText();
+      assert.match(ringText, new RegExp(data.ring.word), `${route}: rings set to ${data.ring.word}`);
+      assert.doesNotMatch(ringText, /Mule Kick|staircase|wooden platform/i, `${route}: no lever-to-ring mapping in the shared reference`);
+
+      const chart = await page.locator('#puzzle .zoom-image__open img').boundingBox();
+      if (name === 'desktop') assert(order[1] - (await page.evaluate(() => window.scrollY)) < height, `${route}: the puzzle is on the first screen`);
+      if (name === 'phone') assert(chart.width >= 340, `${route}: chart is ${Math.round(chart.width)}px wide on phones`);
+      if (name === 'landscape') {
+        // Ice / Fire / Wind open their puzzle with the chart; Lightning opens with its chords and switches,
+        // so its chart is checked where it sits.
+        await page.evaluate((target) => document.querySelector(target).scrollIntoView({ block: 'start', behavior: 'instant' }),
+          staff === 'lightning' ? '#puzzle .zoom-image' : '#puzzle');
+        const capped = await page.locator('#puzzle .zoom-image__open img').boundingBox();
+        assert(capped.height <= 260, `${route}: chart is ${Math.round(capped.height)}px tall in landscape`);
+        assert(capped.y >= -1 && capped.y + capped.height <= height + 1, `${route}: chart fits the landscape screen`);
+      }
+      const body = await page.evaluate(() => {
+        const dd = getComputedStyle(document.querySelector('#build dd'));
+        return { size: parseFloat(dd.fontSize), font: dd.fontFamily };
+      });
+      assert(body.size >= 16 && !/^\s*['"]?Rajdhani/i.test(body.font), `${route}: build facts are ${body.size}px in ${body.font}`);
+      await assertNoHorizontalOverflow(page, `${route} at ${name}`);
+    }
+
+    // Ice: the gravestones are unordered; the symbol puzzle follows the game's sequence.
+    await page.goto(`${base}/maps/origins/ice-staff`, { waitUntil: 'networkidle' });
+    const anyOrder = page.locator('#upgrade .staff-any-order');
+    assert.match(await anyOrder.innerText(), /any order/i, 'Ice gravestones carry "Any order"');
+    assert.match(await anyOrder.innerText(), /three gravestones/, 'the "Any order" group holds the gravestone line');
+    assert.match(await page.locator('#puzzle').innerText(), /Follow the order the game shows/, 'Ice puzzle explains the game-dependent order');
+
+    // Lightning: chords, the switch board (its only home), the Speed Run link and the Electrical Panel.
+    await page.goto(`${base}/maps/origins/lightning-staff#switches`, { waitUntil: 'networkidle' });
+    assert.equal(await page.locator('#switches .switch-card .switch-dial').count(), 7, 'Lightning page has the seven switch dials');
+    const lightningText = await page.locator('#puzzle').innerText();
+    for (const chord of ['1-3-6', '3-5-7', '2-4-6']) assert(lightningText.includes(chord), `Lightning chord ${chord}`);
+    assert.equal(await page.locator('a[href="/maps/origins/speed-run/lightning"]').count(), 1, 'Lightning page links to the Speed Run switch route');
+    assert.equal(await page.getByRole('button', { name: /Electrical Panel/ }).count(), 1, 'Electrical Panel present');
+    const switchesTop = await page.locator('#switches').evaluate((el) => el.getBoundingClientRect().top);
+    assert(switchesTop >= 0 && switchesTop < height * 0.6, `#switches deep link lands near the top (${Math.round(switchesTop)}px)`);
+    results.push(`${name}: four staff pages — order, every line, zoomable chart, ring reference, Ice order rules, Lightning tools`);
 
     assert.deepEqual(errors, [], `${name}: page errors: ${errors.join('; ')}`);
     await context.close();

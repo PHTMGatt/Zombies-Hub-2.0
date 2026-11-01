@@ -682,5 +682,329 @@
     ],
     "reason": "Old Origins nav label; the elemental nav plates read Guide / Ice / Fire / Wind / Lightning / Speed Run (full names kept as accessible labels).",
     "spec": "Phase 2 Task 2.3"
+  },
+  {
+    "text": "Fire Staff Parts",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/fire-staff"
+    ],
+    "reason": "Old staff-page section heading; sections are now Build / Puzzle / Upgrade with the same lines.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Fire Staff Upgrade Puzzle",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/fire-staff"
+    ],
+    "reason": "Old staff-page section heading; sections are now Build / Puzzle / Upgrade with the same lines.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Fire Staff Upgrade",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/fire-staff"
+    ],
+    "reason": "Old staff-page section heading; sections are now Build / Puzzle / Upgrade with the same lines.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Red Record:",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/fire-staff"
+    ],
+    "reason": "Same label without its trailing colon (now a Build row label, shown uppercase by CSS); the value text is unchanged.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Part 1:",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/fire-staff"
+    ],
+    "reason": "Same label without its trailing colon (now a Build row label, shown uppercase by CSS); the value text is unchanged.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Part 2:",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/fire-staff"
+    ],
+    "reason": "Same label without its trailing colon (now a Build row label, shown uppercase by CSS); the value text is unchanged.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Part 3:",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/fire-staff"
+    ],
+    "reason": "Same label without its trailing colon (now a Build row label, shown uppercase by CSS); the value text is unchanged.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Crystal:",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/fire-staff"
+    ],
+    "reason": "Same label without its trailing colon (now a Build row label, shown uppercase by CSS); the value text is unchanged.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Build:",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/fire-staff"
+    ],
+    "reason": "Same label without its trailing colon (now a Build row label, shown uppercase by CSS); the value text is unchanged.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Ice Staff Parts",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/ice-staff"
+    ],
+    "reason": "Old staff-page section heading; sections are now Build / Puzzle / Upgrade with the same lines.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Crazy Place & Code",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/ice-staff"
+    ],
+    "reason": "Old staff-page section heading; sections are now Build / Puzzle / Upgrade with the same lines.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Ice Staff Upgrade",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/ice-staff"
+    ],
+    "reason": "Old staff-page section heading; sections are now Build / Puzzle / Upgrade with the same lines.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Blue Record:",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/ice-staff"
+    ],
+    "reason": "Same label without its trailing colon (now a Build row label, shown uppercase by CSS); the value text is unchanged.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Part 1:",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/ice-staff"
+    ],
+    "reason": "Same label without its trailing colon (now a Build row label, shown uppercase by CSS); the value text is unchanged.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Part 2:",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/ice-staff"
+    ],
+    "reason": "Same label without its trailing colon (now a Build row label, shown uppercase by CSS); the value text is unchanged.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Part 3:",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/ice-staff"
+    ],
+    "reason": "Same label without its trailing colon (now a Build row label, shown uppercase by CSS); the value text is unchanged.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Crystal:",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/ice-staff"
+    ],
+    "reason": "Same label without its trailing colon (now a Build row label, shown uppercase by CSS); the value text is unchanged.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Build:",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/ice-staff"
+    ],
+    "reason": "Same label without its trailing colon (now a Build row label, shown uppercase by CSS); the value text is unchanged.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Wind Staff Parts",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/wind-staff"
+    ],
+    "reason": "Old staff-page section heading; sections are now Build / Puzzle / Upgrade with the same lines.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Wind Puzzle Code",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/wind-staff"
+    ],
+    "reason": "Old staff-page section heading; sections are now Build / Puzzle / Upgrade with the same lines.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Wind Staff Upgrade",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/wind-staff"
+    ],
+    "reason": "Old staff-page section heading; sections are now Build / Puzzle / Upgrade with the same lines.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Yellow Record:",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/wind-staff"
+    ],
+    "reason": "Same label without its trailing colon (now a Build row label, shown uppercase by CSS); the value text is unchanged.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Part 1:",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/wind-staff"
+    ],
+    "reason": "Same label without its trailing colon (now a Build row label, shown uppercase by CSS); the value text is unchanged.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Part 2:",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/wind-staff"
+    ],
+    "reason": "Same label without its trailing colon (now a Build row label, shown uppercase by CSS); the value text is unchanged.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Part 3:",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/wind-staff"
+    ],
+    "reason": "Same label without its trailing colon (now a Build row label, shown uppercase by CSS); the value text is unchanged.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Crystal:",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/wind-staff"
+    ],
+    "reason": "Same label without its trailing colon (now a Build row label, shown uppercase by CSS); the value text is unchanged.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Build:",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/wind-staff"
+    ],
+    "reason": "Same label without its trailing colon (now a Build row label, shown uppercase by CSS); the value text is unchanged.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Lightning Staff Parts",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/lightning-staff"
+    ],
+    "reason": "Old staff-page section heading; sections are now Build / Puzzle / Upgrade with the same lines.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Piano Code Chart",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/lightning-staff"
+    ],
+    "reason": "Old staff-page section heading; sections are now Build / Puzzle / Upgrade with the same lines.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Lightning Staff Upgrade",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/lightning-staff"
+    ],
+    "reason": "Old staff-page section heading; sections are now Build / Puzzle / Upgrade with the same lines.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Purple Record:",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/lightning-staff"
+    ],
+    "reason": "Same label without its trailing colon (now a Build row label, shown uppercase by CSS); the value text is unchanged.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Part 1:",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/lightning-staff"
+    ],
+    "reason": "Same label without its trailing colon (now a Build row label, shown uppercase by CSS); the value text is unchanged.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Part 2:",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/lightning-staff"
+    ],
+    "reason": "Same label without its trailing colon (now a Build row label, shown uppercase by CSS); the value text is unchanged.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Part 3:",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/lightning-staff"
+    ],
+    "reason": "Same label without its trailing colon (now a Build row label, shown uppercase by CSS); the value text is unchanged.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Crystal:",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/lightning-staff"
+    ],
+    "reason": "Same label without its trailing colon (now a Build row label, shown uppercase by CSS); the value text is unchanged.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Build:",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/lightning-staff"
+    ],
+    "reason": "Same label without its trailing colon (now a Build row label, shown uppercase by CSS); the value text is unchanged.",
+    "spec": "Phase 2 Task 2.5"
   }
 ]
