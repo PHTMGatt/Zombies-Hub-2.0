@@ -10,7 +10,7 @@ import '../Styles/ComponentStyles/ElectricalPanel.css';
  * The Origins secret. Seven unlabeled switches start at their untouched in-game positions; each tap turns
  * one a quarter clockwise, so each needs the same number of turns as in the game (Spawn ×2, Gen 2 ×3 …).
  * Like the real dials, a switch stops sparking once it sits in its Lightning Staff position. Bring all
- * seven live to earn the hidden "Electrical Panel Solved" achievement. It gates nothing: Speed Run is always
+ * seven live to earn the hidden "Circuit Complete" achievement. It gates nothing: Speed Run is always
  * open. The answer is on the page above — you just have to apply it.
  */
 export default function ElectricalPanel() {
@@ -65,8 +65,8 @@ export default function ElectricalPanel() {
         <div className="electrical-panel__board" id="electrical-panel-board">
           {complete ? (
             <div className="electrical-panel__reward" role="status">
-              <span className="electrical-panel__reward-kicker">Circuit complete</span>
-              <strong>Electrical Panel Solved</strong>
+              <span className="electrical-panel__reward-kicker">Electrical Panel</span>
+              <strong>Circuit Complete</strong>
               <p>All seven switches live. Logged as a hidden achievement.</p>
               <div className="electrical-panel__reward-links">
                 <Link to="/maps/origins/speed-run">Open Speed Run</Link>

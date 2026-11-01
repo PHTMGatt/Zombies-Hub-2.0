@@ -157,7 +157,7 @@ try {
     assert.equal(await page.locator('.speedrun-gate').count(), 0, 'no Speed Run lock screen');
     assert.doesNotMatch(await page.locator('main').innerText(), /to unlock Speedrun/i);
 
-    // The Electrical Panel is a hidden achievement only: solving it records "Electrical Panel Solved" and links to Speed Run.
+    // The Electrical Panel is a hidden achievement only: solving it records "Circuit Complete" and links to Speed Run.
     // A finished run of the old tracker set the same legacy flag; that must not mark the panel solved.
     await page.evaluate(() => localStorage.setItem('zh-origins-speedrun-unlocked', 'true'));
     await page.goto(`${base}/maps/origins/lightning-staff`, { waitUntil: 'networkidle' });
@@ -170,7 +170,7 @@ try {
     for (const [index, turns] of turnsNeeded.entries()) {
       for (let turn = 0; turn < turns; turn += 1) await panelSwitches.nth(index).click();
     }
-    assert.equal(await page.locator('.electrical-panel__reward strong').innerText(), 'Electrical Panel Solved');
+    assert.equal(await page.locator('.electrical-panel__reward strong').innerText(), 'Circuit Complete');
     const lightningText = await page.locator('main').innerText();
     assert.doesNotMatch(lightningText, /Speedrun mode/i, 'no Speedrun-mode copy on the Lightning page');
     assert.doesNotMatch(lightningText, /unlock/i, 'nothing on the Lightning page claims to unlock');

@@ -4,7 +4,7 @@ import { unlockAchievement } from '../../../../shared/achievements/achievements'
 
 /*
  * Remembers that the Electrical Panel was solved (so it stays solved) and records the hidden
- * "Electrical Panel Solved" achievement. It unlocks nothing: Speed Run is always open.
+ * "Circuit Complete" achievement. It unlocks nothing: Speed Run is always open.
  * Its own key, on purpose: the old `zh-origins-speedrun-unlocked` flag was also set by finishing the retired
  * step tracker, so it cannot say whether the panel itself was solved. The achievement id keeps its old name
  * so earned records survive.

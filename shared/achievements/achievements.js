@@ -49,7 +49,7 @@ export const ACHIEVEMENTS = [
     map: 'origins',
     kind: 'secret',
     hidden: true,
-    title: 'Electrical Panel Solved',
+    title: 'Circuit Complete',
     legacyKey: 'zh-origins-speedrun-unlocked',
   },
 ];
