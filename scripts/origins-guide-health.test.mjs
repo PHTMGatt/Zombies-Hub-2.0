@@ -2,12 +2,16 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { loadModules } from './guide-content.mjs';
 
 const root = resolve(import.meta.dirname, '..');
 const read = path => readFileSync(resolve(root, path), 'utf8');
+// Staff-page facts live in one data module; check each staff's own text so one page cannot cover another.
+const [{ default: staffPages }] = await loadModules(['maps/origins/src/data/originsStaffPages.js']);
+const staffText = id => JSON.stringify(staffPages[id]);
 
 test('Origins Fire guide uses the three actual staff-part sources and church torch upgrade', () => {
-  const source = read('maps/origins/src/Pages/FireStaff.tsx');
+  const source = staffText('fire');
   assert.match(source, /Generator 6/i);
   assert.match(source, /glowing plane/i);
   assert.match(source, /Panzer/i);
@@ -16,14 +20,14 @@ test('Origins Fire guide uses the three actual staff-part sources and church tor
 });
 
 test('Origins Ice guide separates the blue record from the Gen 6 tunnel and includes gravestones', () => {
-  const source = read('maps/origins/src/Pages/IceStaff.tsx');
+  const source = staffText('ice');
   assert.match(source, /(Tank Station|Generator 2)/i);
   assert.match(source, /gravestone/i);
-  assert.doesNotMatch(source, /Blue Record:\s*In the Ice Tunnel/i);
+  assert.doesNotMatch(source, /"Blue Record","v":"In the Ice Tunnel/i);
 });
 
 test('Origins Wind guide identifies the Gen 4 tunnel and smoke-orb upgrade phase', () => {
-  const source = read('maps/origins/src/Pages/WindStaff.tsx');
+  const source = staffText('wind');
   assert.match(source, /Wind Tunnel[^\n]*Generator 4|Generator 4[^\n]*Wind Tunnel/i);
   assert.match(source, /smok/i);
 });

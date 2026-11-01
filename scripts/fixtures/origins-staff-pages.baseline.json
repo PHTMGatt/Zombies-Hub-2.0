@@ -1,0 +1,200 @@
+{
+  "ice": {
+    "lines": [
+      {
+        "label": "Part 1",
+        "text": "Dig snowy dig sites in the spawn / starting trenches."
+      },
+      {
+        "label": "Part 2",
+        "text": "Dig snowy dig sites around the middle / Excavation area."
+      },
+      {
+        "label": "Part 3",
+        "text": "Dig snowy dig sites around the Church area."
+      },
+      {
+        "label": "Blue Record",
+        "text": "Check the three spawn points inside the Tank Station by Generator 2."
+      },
+      {
+        "label": "Crystal",
+        "text": "Take the blue record and Gramophone to the Ice Tunnel by Generator 6, enter the Crazy Place, and collect the blue crystal."
+      },
+      {
+        "label": "Build",
+        "text": "Use the blue pedestal beneath the Excavation Site."
+      },
+      {
+        "text": "Return through the Ice Tunnel and enter the Crazy Place with the Ice Staff."
+      },
+      {
+        "text": "Use the code chart to match the blue-dot pillar symbol to the correct ceiling stone."
+      },
+      {
+        "text": "Shoot each matching ceiling stone with the Ice Staff until the puzzle completes."
+      },
+      {
+        "text": "Find all three gravestones on the main map, freeze each one with the Ice Staff, then shoot the frozen stone with a normal bullet weapon to break it."
+      },
+      {
+        "text": "At the Excavation Site, use the four levers to align every ring to BLUE."
+      },
+      {
+        "text": "Go below the rings and shoot the blue orb with the Ice Staff."
+      },
+      {
+        "text": "Return to the Crazy Place and place the Ice Staff on the blue pedestal."
+      },
+      {
+        "text": "Kill zombies around the pedestal until the staff is fully charged, then pick it up."
+      }
+    ]
+  },
+  "fire": {
+    "lines": [
+      {
+        "label": "Part 1",
+        "text": "Activate all six generators, then collect the staff part from the reward chest beside Generator 6."
+      },
+      {
+        "label": "Part 2",
+        "text": "Kill the first Panzer Soldat (normally Round 8) and pick up the part it drops."
+      },
+      {
+        "label": "Part 3",
+        "text": "After the church path is open, shoot down the orange glowing plane and collect the fallen part near the Excavation mound."
+      },
+      {
+        "label": "Red Record",
+        "text": "Check its three spawn points in the Church / Generator 6 area."
+      },
+      {
+        "label": "Crystal",
+        "text": "Take the red record and Gramophone to the Fire Tunnel near spawn, enter the Crazy Place, and collect the red crystal."
+      },
+      {
+        "label": "Build",
+        "text": "Use the red pedestal beneath the Excavation Site."
+      },
+      {
+        "text": "In the Crazy Place, kill zombies on the metal grates beside the Fire area until all four fire cauldrons are lit."
+      },
+      {
+        "text": "Read the illuminated fire symbols and use the code chart to translate them into the numbered torches in the Church."
+      },
+      {
+        "text": "Go to the Church and shoot the matching numbered torches with the Fire Staff before the puzzle resets."
+      },
+      {
+        "text": "At the Excavation Site, use the four levers to align every ring to RED."
+      },
+      {
+        "text": "Go below the rings and shoot the red orb with the Fire Staff."
+      },
+      {
+        "text": "Return to the Crazy Place and place the Fire Staff on the red pedestal."
+      },
+      {
+        "text": "Kill zombies around the pedestal until the staff is fully charged, then pick it up."
+      }
+    ]
+  },
+  "wind": {
+    "lines": [
+      {
+        "label": "Part 1",
+        "text": "Enter Thor, the robot that walks through the spawn-side trenches."
+      },
+      {
+        "label": "Part 2",
+        "text": "Enter Odin, the robot that crosses the middle / Excavation area."
+      },
+      {
+        "label": "Part 3",
+        "text": "Enter Freya, the robot that walks through the Church area."
+      },
+      {
+        "label": "Yellow Record",
+        "text": "Check the Generator 5 area, including Stamin-Up and the Lightning Tunnel entrance."
+      },
+      {
+        "label": "Crystal",
+        "text": "Take the yellow record and Gramophone to the Wind Tunnel near Generator 4, enter the Crazy Place, and collect the yellow crystal."
+      },
+      {
+        "label": "Build",
+        "text": "Use the yellow pedestal beneath the Excavation Site."
+      },
+      {
+        "text": "In the Crazy Place, shoot the four ceiling rings with the Wind Staff until the symbols match the Wind puzzle code."
+      },
+      {
+        "text": "Return to the main map and use the Wind Staff on all three smoking chimneys so their smoke points toward the Excavation Site."
+      },
+      {
+        "text": "At the Excavation Site, use the four levers to align every ring to YELLOW."
+      },
+      {
+        "text": "Go below the rings and shoot the yellow orb with the Wind Staff."
+      },
+      {
+        "text": "Return to the Crazy Place and place the Wind Staff on the yellow pedestal."
+      },
+      {
+        "text": "Kill zombies around the pedestal until the staff is fully charged, then pick it up."
+      }
+    ]
+  },
+  "lightning": {
+    "lines": [
+      {
+        "label": "Part 1",
+        "text": "Church → Gen 2, jump right after Generator 4."
+      },
+      {
+        "label": "Part 2",
+        "text": "Gen 2 → Church, jump left onto Excavation scaffolding."
+      },
+      {
+        "label": "Part 3",
+        "text": "Gen 2 → Church, jump right just before Church."
+      },
+      {
+        "label": "Purple Record",
+        "text": "Generator 4 / Jug / Wind Tunnel area."
+      },
+      {
+        "label": "Crystal",
+        "text": "Open the Lightning Tunnel beside Generator 5 with the Gramophone + purple record, then grab the purple crystal in the Crazy Place."
+      },
+      {
+        "label": "Build",
+        "text": "Under Excavation."
+      },
+      {
+        "label": "Piano code",
+        "text": "1-3-6"
+      },
+      {
+        "label": "Piano code",
+        "text": "3-5-7"
+      },
+      {
+        "label": "Piano code",
+        "text": "2-4-6"
+      },
+      {
+        "text": "Set the seven switches using the dials below."
+      },
+      {
+        "label": "Excavation",
+        "text": "line all four rings purple → shoot the orb with the Lightning Staff."
+      },
+      {
+        "text": "Place the staff on the purple Crazy Place pedestal → kill zombies to fill it with souls."
+      }
+    ]
+  },
+  "_note": "Captured from the four Origins staff .tsx pages at 0f44766 (before the Phase 2 redesign). The composite piano-code line is stored as its three chords."
+}

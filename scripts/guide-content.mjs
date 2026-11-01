@@ -25,7 +25,8 @@ export const GUIDES = [
   { guide: 'kino-side', route: '/side-easter-eggs/kino', file: 'apps/hub/src/data/sideEE/Kino.js', exportName: 'kinoSteps' },
 ];
 
-export async function loadGuides() {
+// Loads repo modules (JSX, image imports, CSS imports) exactly as the app resolves them.
+export async function loadModules(files) {
   const server = await createServer({
     root,
     logLevel: 'error',
@@ -34,15 +35,17 @@ export async function loadGuides() {
     optimizeDeps: { noDiscovery: true, include: [] },
   });
   try {
-    const guides = [];
-    for (const { guide, route, file, exportName = 'default' } of GUIDES) {
-      const module = await server.ssrLoadModule(`/${file}`);
-      guides.push({ guide, route, steps: module[exportName] });
-    }
-    return guides;
+    const modules = [];
+    for (const file of files) modules.push(await server.ssrLoadModule(`/${file}`));
+    return modules;
   } finally {
     await server.close();
   }
+}
+
+export async function loadGuides() {
+  const modules = await loadModules(GUIDES.map((entry) => entry.file));
+  return GUIDES.map(({ guide, route, exportName = 'default' }, index) => ({ guide, route, steps: modules[index][exportName] }));
 }
 
 const clean = (value) => (typeof value === 'string' ? value.replace(/\s+/g, ' ').trim() : '');

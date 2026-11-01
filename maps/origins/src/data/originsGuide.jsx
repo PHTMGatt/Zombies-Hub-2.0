@@ -1,5 +1,3 @@
-import React from 'react';
-import LightningSwitchBoard from '../components/LightningSwitchBoard';
 import { originsExcavationRingReference } from '../../../../shared/data/originsLightning';
 import FireCode from '../assets/images/fire_staff_code.webp';
 import IceCode from '../assets/images/ice_staff_code.webp';
@@ -8,8 +6,8 @@ import LightningCode from '../assets/images/lightning_staff_code.webp';
 
 /*
  * Little Lost Girl as guide steps. Every fact here comes from the existing Origins guide, its setup
- * reference and tips, and the four staff pages; this file only reorganises it into
- * what / quick reference / how / problems so Quick and Full mode can share one progression.
+ * reference and tips, and the four staff pages; this file organises it into what / quick reference /
+ * how / problems for the Origins run sheet. Staff-page detail lives in originsStaffPages.js.
  */
 const TONE = {
   ice: '#78e8e1',
@@ -17,13 +15,6 @@ const TONE = {
   wind: '#ffe657',
   lightning: '#d8a8ff',
 };
-
-const staffTasks = (verb) => [
-  { id: 'ice', label: `Ice ${verb}`, tone: TONE.ice },
-  { id: 'fire', label: `Fire ${verb}`, tone: TONE.fire },
-  { id: 'wind', label: `Wind ${verb}`, tone: TONE.wind },
-  { id: 'lightning', label: `Lightning ${verb}`, tone: TONE.lightning },
-];
 
 const ringProblem = `Can't tell which lever turns which Excavation ring? ${originsExcavationRingReference.levers.slice(0, 3).join(' ')}`;
 
@@ -77,7 +68,6 @@ const originsGuide = [
       },
       { type: 'facts', items: [{ k: 'Build', v: 'Matching coloured pedestal beneath the Excavation Site' }] },
     ],
-    tasks: staffTasks('built'),
     how: [
       'Collect the three parts for a staff (each staff hides them differently — see the staff tabs).',
       'Find that staff\'s coloured record, then carry it with the Gramophone to the matching tunnel.',
@@ -102,9 +92,12 @@ const originsGuide = [
             id: 'ice', label: 'Ice', tone: TONE.ice,
             refs: [
               { type: 'image', src: IceCode, alt: 'Ice Staff code: blue-dot pillar symbols and their matching ceiling stones', width: 1600, height: 1040 },
-              { type: 'list', items: [
+              // Unnumbered on purpose: the puzzle and the gravestones are not shown as a required order.
+              { type: 'list', unordered: true, items: [
                 'Crazy Place: match blue-dot pillar → ceiling stone, shoot it',
                 'Freeze 3 gravestones → shatter with bullets',
+              ] },
+              { type: 'list', items: [
                 'Excavation rings all BLUE → shoot the orb',
                 'Blue pedestal → kill zombies to charge',
               ] },
@@ -136,10 +129,11 @@ const originsGuide = [
           },
           {
             id: 'lightning', label: 'Lightning', tone: TONE.lightning,
+            // The switch board lives on the Lightning Staff page; this step links straight to it.
+            links: [{ to: '/maps/origins/lightning-staff#switches', label: 'Switch board' }],
             refs: [
               { type: 'sequence', label: 'Piano code', items: ['1 · 3 · 6', '3 · 5 · 7', '2 · 4 · 6'], },
               { type: 'image', src: LightningCode, alt: 'Lightning Staff piano chart: first, second and third chords', width: 1600, height: 1040 },
-              { type: 'custom', key: 'lightning-switches', render: () => <LightningSwitchBoard /> },
               { type: 'list', items: [
                 'Play the 3 chords, set the 7 switches',
                 'Excavation rings all PURPLE → shoot the orb',
@@ -150,7 +144,6 @@ const originsGuide = [
         ],
       },
     ],
-    tasks: staffTasks('upgraded'),
     how: [
       'Solve the staff\'s own puzzle using its code chart (each tab shows the chart and the extra steps).',
       'At the Excavation Site, use the four levers to align every ring to the staff\'s colour.',
@@ -175,12 +168,6 @@ const originsGuide = [
         { k: 'Fire', v: 'Pedestal at the bottom of the mound', tone: TONE.fire },
       ] },
     ],
-    tasks: [
-      { id: 'wind', label: 'Wind → Odin', tone: TONE.wind },
-      { id: 'ice', label: 'Ice → Freya', tone: TONE.ice },
-      { id: 'lightning', label: 'Lightning → Thor', tone: TONE.lightning },
-      { id: 'fire', label: 'Fire → mound', tone: TONE.fire },
-    ],
     how: [
       'Place Wind in Odin (middle robot), Ice in Freya (church / Gen 6 robot), and Lightning in Thor (spawn / Gen 1–3 robot).',
       'Place Fire in the pedestal at the bottom of the mound.',
@@ -192,12 +179,6 @@ const originsGuide = [
     goal: 'Fill the four soul chests in the giant robot footprints, then take One Inch Punch from the reward chest.',
     refs: [
       { type: 'chips', label: 'Soul chests', items: ['Gen 5 footprint', 'Mound footprint', 'Gen 6 footprint', 'Footprint behind Juggernog'] },
-    ],
-    tasks: [
-      { id: 'gen5', label: 'Gen 5 chest' },
-      { id: 'mound', label: 'Mound chest' },
-      { id: 'gen6', label: 'Gen 6 chest' },
-      { id: 'jug', label: 'Juggernog chest' },
     ],
     how: [
       'Fill all four soul chests in the giant robot footprints.',
