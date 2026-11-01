@@ -145,6 +145,8 @@ try {
         return { boardWidth: board.width, boardHeight: board.height, sheetWidth: sheet.width, sticky: getComputedStyle(document.querySelector('.staff-board')).position, room: window.innerHeight - pinned - 24 };
       });
       assert(layout.boardWidth <= 400, `staff board is ${Math.round(layout.boardWidth)}px wide`);
+      const smallLinks = await page.locator('.staff-board a, .staff-columns a').evaluateAll((links) => links.filter((link) => link.getBoundingClientRect().height < 44).length);
+      assert.equal(smallLinks, 0, 'staff board and upgrade-column links are at least 44px tall');
       assert(layout.sheetWidth >= 640, `run sheet keeps ${Math.round(layout.sheetWidth)}px of reading width`);
       if (layout.sticky === 'sticky') assert(layout.boardHeight <= layout.room, `sticky board (${Math.round(layout.boardHeight)}px) fits the viewport (${Math.round(layout.room)}px)`);
     } else {
@@ -214,6 +216,11 @@ try {
       assert((await close.boundingBox()).height >= 48, `${route}: Close is a 48px target`);
       await close.click();
       assert.equal(await page.locator('dialog.zoom-image__dialog[open]').count(), 0, `${route}: Close closes the chart`);
+      // A tap on the dark area around the chart closes it too.
+      await open.click();
+      await dialog.waitFor();
+      await page.mouse.click(4, height - 4);
+      assert.equal(await page.locator('dialog.zoom-image__dialog[open]').count(), 0, `${route}: a backdrop tap closes the chart`);
 
       // The shared Excavation reference: four rings in the staff's colour, no lever-to-ring labels.
       const rings = page.locator('#upgrade .excavation-rings');
@@ -259,9 +266,32 @@ try {
     assert.equal(await page.getByRole('button', { name: /Electrical Panel/ }).count(), 1, 'Electrical Panel present');
     const switchesTop = await page.locator('#switches').evaluate((el) => el.getBoundingClientRect().top);
     assert(switchesTop >= 0 && switchesTop < height * 0.6, `#switches deep link lands near the top (${Math.round(switchesTop)}px)`);
+    if (name === 'landscape') {
+      // Nothing is pinned at 844x390, so a deep link should land near the very top.
+      await page.goto(`${base}/maps/origins#upgrade-staffs`, { waitUntil: 'networkidle' });
+      await page.waitForTimeout(150);
+      const top = await page.locator('#upgrade-staffs').evaluate((el) => el.getBoundingClientRect().top);
+      assert(top >= 0 && top <= 32, `landscape #upgrade-staffs lands at ${Math.round(top)}px`);
+    }
     results.push(`${name}: four staff pages — order, every line, zoomable chart, ring reference, Ice order rules, Lightning tools`);
 
     assert.deepEqual(errors, [], `${name}: page errors: ${errors.join('; ')}`);
+    await context.close();
+  }
+  // Short desktop (1280x720): a pinned puzzle column must fit under the pinned chrome, or not be pinned.
+  {
+    const context = await browser.newContext({ viewport: { width: 1280, height: 720 } });
+    const page = await context.newPage();
+    for (const staff of STAFFS) {
+      await page.goto(`${base}/maps/origins/${staff}-staff`, { waitUntil: 'networkidle' });
+      const fit = await page.evaluate(() => {
+        const puzzle = document.getElementById('puzzle');
+        const pinned = document.querySelector('.hub-header').offsetHeight + document.querySelector('.origins-plates').offsetHeight;
+        return { sticky: getComputedStyle(puzzle).position === 'sticky', height: puzzle.offsetHeight, room: window.innerHeight - pinned - 20 };
+      });
+      assert(!fit.sticky || fit.height <= fit.room, `${staff}: pinned puzzle (${fit.height}px) is taller than the room (${fit.room}px) at 1280x720`);
+    }
+    results.push('1280x720: staff puzzle columns are only pinned when they fit');
     await context.close();
   }
 } finally {

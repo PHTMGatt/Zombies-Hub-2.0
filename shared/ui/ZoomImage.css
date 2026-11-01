@@ -49,14 +49,22 @@
   touch-action: pinch-zoom;
 }
 
+.zoom-image__dialog[open] {
+  display: grid;
+  place-items: center;
+}
+
 .zoom-image__dialog::backdrop {
   background: rgba(0, 0, 0, 0.92);
 }
 
+/* Sized to the image, not the screen: taps on the dark area around it reach the dialog and close it. */
 .zoom-image__dialog img {
   display: block;
-  width: 100%;
-  height: 100%;
+  width: auto;
+  height: auto;
+  max-width: 100vw;
+  max-height: 100dvh;
   object-fit: contain;
 }
 

@@ -30,6 +30,11 @@ test('search results for a guide step link straight to that step (#step-id), not
   }
 });
 
+test('the Lightning switch-board search result opens the board itself', () => {
+  const entry = SEARCH_ENTRIES.find((item) => item.title.startsWith('Lightning switch board'));
+  assert.equal(entry.to, '/maps/origins/lightning-staff#switches');
+});
+
 test('player-language queries land on the right reference first', () => {
   const top = (query) => search(query)[0];
   const cases = [

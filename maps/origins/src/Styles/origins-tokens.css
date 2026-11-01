@@ -19,6 +19,14 @@
   --o-display: 'Rajdhani', 'Segoe UI', sans-serif;
   --o-body: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --o-plates-height: 56px;
+  /* How much of the top edge the nav plates cover while pinned (0 where they scroll away). */
+  --o-plates-pin: var(--o-plates-height);
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .origins-module {
+    --o-plates-pin: 0px;
+  }
 }
 
 /* Each staff sets --staff on its own elements; everything else stays neutral. */

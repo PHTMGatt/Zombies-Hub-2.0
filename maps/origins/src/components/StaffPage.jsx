@@ -45,7 +45,7 @@ export default function StaffPage({ staff, tools = null, extra = null }) {
         <section className="staff-block staff-block--puzzle" id="puzzle" aria-labelledby="puzzle-title">
           <h3 id="puzzle-title">Puzzle</h3>
           {puzzle.pianoCode && (
-            <div className="staff-page__chords" aria-label={`Piano code: ${puzzle.pianoCode.join(', ')}`}>
+            <div className="staff-page__chords" role="group" aria-label={`Piano code: ${puzzle.pianoCode.join(', ')}`}>
               <span className="staff-page__label">Piano code</span>
               <ol>{puzzle.pianoCode.map((chord) => <li key={chord}>{chord}</li>)}</ol>
             </div>

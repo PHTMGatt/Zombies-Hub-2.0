@@ -65,7 +65,7 @@
   display: grid;
   gap: 10px;
   padding: 0 0 40px 72px;
-  scroll-margin-top: calc(var(--hub-pin-height, var(--hub-nav-height)) + var(--o-plates-height) + 16px);
+  scroll-margin-top: calc(var(--hub-pin-height, var(--hub-nav-height)) + var(--o-plates-pin) + 16px);
 }
 
 .origins-module .run-step__n {
@@ -312,7 +312,7 @@
 }
 
 .origins-module .staff-board__name a {
-  min-height: 32px;
+  min-height: 44px;
   display: inline-flex;
   align-items: center;
   color: var(--staff);
