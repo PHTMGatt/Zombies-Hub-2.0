@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import './guide.css';
 
 /*
  * A step's second depth, from the step data alone: how-to, video, page links and "Not working?".

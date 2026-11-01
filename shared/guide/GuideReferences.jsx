@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import './guide.css';
 
 /*
  * Glanceable reference blocks for a guide step. Each answers "what do I need right now?" visually:

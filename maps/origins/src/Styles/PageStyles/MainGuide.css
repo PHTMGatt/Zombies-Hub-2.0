@@ -1,170 +1,618 @@
-.origins-module .main-guide {
-  background-image: var(--origins-bg);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  padding: 1.75rem 1rem 3rem;
-  font-family: 'Rajdhani', sans-serif;
-  color: #ffffff;
+/*
+ * Origins Main Guide: the run sheet on a brass survey spine, with the staff board beside it on desktop.
+ * No panels: structure comes from the spine, hairlines, type and the four staff colours.
+ */
+.origins-module .visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
-/* Origins theme for the shared step guide: the blue revive palette, Rajdhani, dark glass. */
-.origins-module .origins-guide .guide {
-  --guide-accent: #6dc2ff;
-  --guide-accent-ink: #04121e;
-  --guide-ink: #ffffff;
-  --guide-text: #e0eaff;
-  --guide-muted: #a8c3dc;
-  --guide-surface: rgba(0, 0, 0, 0.68);
-  --guide-surface-2: rgba(109, 194, 255, 0.06);
-  --guide-line: rgba(109, 194, 255, 0.2);
-  --guide-sticky-top: calc(var(--hub-nav-height) + 84px + 0.75rem);
-}
-
-.origins-module .origins-guide .guide-step {
-  box-shadow: 0 0 15px rgba(100, 200, 255, 0.2);
-}
-
-.origins-module .origins-guide__inner {
-  width: min(100%, 1240px);
+.origins-module .origins-guide {
+  width: min(1320px, 100% - 2 * clamp(16px, 4vw, 56px));
   margin: 0 auto;
+  padding: 44px 0 64px;
+}
+
+.origins-module .origins-sheet {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 1.25rem;
+  grid-template-columns: minmax(0, 1fr) 380px;
+  gap: 0 64px;
+  align-items: start;
+}
+
+/* Which staff layout shows: board + columns on desktop, tap rows below it. Scoped under .origins-sheet so
+   these always outrank the layouts' own display rules. */
+.origins-module .origins-sheet .only-narrow {
+  display: none;
+}
+
+/* Shared reference blocks and step detail take Origins colours. */
+.origins-module .run-sheet {
+  --guide-accent: var(--o-steel);
+  --guide-ink: var(--o-ink);
+  --guide-text: var(--o-text);
+  --guide-muted: var(--o-muted);
+  --guide-line: var(--o-hair);
+  --guide-surface-2: transparent;
+  --guide-warn: var(--o-warn);
+  min-width: 0;
+}
+
+/* ---- The survey spine ---- */
+.origins-module .run-sheet__steps {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.origins-module .run-sheet__steps::before {
+  content: '';
+  position: absolute;
+  left: 21px;
+  top: 12px;
+  bottom: 12px;
+  width: 2px;
+  background: linear-gradient(var(--o-brass), rgba(201, 164, 92, 0.25));
+}
+
+.origins-module .run-step {
+  position: relative;
+  display: grid;
+  gap: 10px;
+  padding: 0 0 40px 72px;
+  scroll-margin-top: calc(var(--hub-pin-height, var(--hub-nav-height)) + var(--o-plates-height) + 16px);
+}
+
+.origins-module .run-step__n {
+  position: absolute;
+  left: 0;
+  top: -6px;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--o-brass);
+  border-radius: 50%;
+  background: var(--o-ground);
+  color: var(--o-brass);
+  font: 700 22px/1 var(--o-display);
+}
+
+/* Steps 1–2 involve all four staffs: a four-colour ring around a dark centre. */
+.origins-module .run-step--staff .run-step__n {
+  border: 0;
+  background:
+    radial-gradient(circle, var(--o-ground) 0 15px, transparent 16px),
+    conic-gradient(var(--o-ice) 0 25%, var(--o-fire) 0 50%, var(--o-wind) 0 75%, var(--o-lightning) 0);
+  color: var(--o-ink);
+}
+
+.origins-module .run-step h3 {
+  margin: 0;
+  color: var(--o-ink);
+  font: 700 26px/1.1 var(--o-display);
+  letter-spacing: 0.01em;
+}
+
+.origins-module .run-step__answer {
+  max-width: 62ch;
+  margin: 0;
+  color: var(--o-ink);
+  font: 500 18px/1.45 var(--o-body);
+}
+
+.origins-module .run-step__warn {
+  max-width: 62ch;
+  margin: 0;
+  padding-left: 14px;
+  border-left: 3px solid var(--o-warn);
+  color: #ffdcab;
+  font-size: 16px;
+}
+
+.origins-module .run-step__warn strong {
+  margin-right: 8px;
+  color: var(--o-warn);
+  font: 700 13px var(--o-display);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.origins-module .run-step__aside,
+.origins-module .run-step__fact {
+  margin: 0;
+  color: var(--o-muted);
+  font-size: 15px;
+}
+
+.origins-module .run-step__fact b {
+  margin-right: 8px;
+  font: 700 12px var(--o-display);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* ---- Inline references, restyled: ticks and trails, no boxes ---- */
+.origins-module .run-step .gref-stack {
+  gap: 12px;
+}
+
+.origins-module .run-step .gref__label {
+  margin-bottom: 4px;
+  color: var(--o-muted);
+  font: 700 12px/1.4 var(--o-display);
+  letter-spacing: 0.14em;
+}
+
+.origins-module .run-step .gref-facts {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 28px;
+  max-width: 680px;
+}
+
+.origins-module .run-step .gref-facts > div {
+  padding: 0 0 0 14px;
+  border-left: 4px solid var(--gref-tone, var(--o-brass));
+  border-radius: 0;
+  background: none;
+}
+
+.origins-module .run-step .gref-facts dt {
+  font: 700 13px/1.5 var(--o-display);
+  letter-spacing: 0.14em;
+}
+
+.origins-module .run-step .gref-facts dd {
+  color: var(--o-ink);
+  font: 400 16px/1.4 var(--o-body);
+}
+
+.origins-module .run-step .gref-sequence,
+.origins-module .run-step .gref-chips {
+  gap: 6px 10px;
+}
+
+.origins-module .run-step .gref-sequence li + li::before {
+  content: '';
+  width: 18px;
+  height: 2px;
+  background: var(--o-brass);
+}
+
+.origins-module .run-step .gref-sequence span,
+.origins-module .run-step .gref-chips li {
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: var(--o-ink);
+  font: 600 18px/1.3 var(--o-display);
+}
+
+.origins-module .run-step .gref-chips li + li::before {
+  content: '';
+  display: inline-block;
+  width: 18px;
+  height: 2px;
+  margin-right: 10px;
+  vertical-align: middle;
+  background: var(--o-brass);
+}
+
+/* ---- Step detail (shared StepMore) ---- */
+.origins-module .run-step .guide-seq__more > summary {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  color: var(--o-steel);
+  font: 700 15px var(--o-display);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.origins-module .run-step .guide-seq__more[open] {
+  padding-bottom: 6px;
+}
+
+.origins-module .run-step .guide-how h4 {
+  margin: 6px 0 8px;
+  color: var(--o-muted);
+  font: 700 13px var(--o-display);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.origins-module .run-step .guide-how li {
+  color: var(--o-text);
+  font-size: 16px;
+}
+
+/* ---- Staff links (board, columns, rows) ---- */
+.origins-module .staff-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 18px;
+  margin: 6px 0 0;
+}
+
+.origins-module .staff-links a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  color: var(--staff, var(--o-steel));
+  font: 700 13px var(--o-display);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* ---- Desktop staff board ----
+   It sits beside the early steps, where the staffs matter. It only stays pinned on screens tall enough to
+   show all of it, so it never becomes a sidebar the reader has to scroll inside. */
+.origins-module .staff-board {
+  min-width: 0;
+}
+
+@media (min-height: 980px) {
+  .origins-module .staff-board {
+    position: sticky;
+    top: calc(var(--hub-pin-height, var(--hub-nav-height)) + var(--o-plates-height) + 20px);
+  }
+}
+
+.origins-module .staff-board__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--o-brass);
+}
+
+.origins-module .staff-board__head h2 {
+  margin: 0;
+  color: var(--o-brass);
+  font: 700 15px var(--o-display);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.origins-module .staff-board__head span {
+  color: var(--o-muted);
+  font-size: 13px;
+}
+
+.origins-module .staff-board__staff {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  gap: 0 14px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--o-hair);
+}
+
+.origins-module .staff-board__name {
+  display: grid;
+  align-content: start;
+  gap: 2px;
+  padding-top: 4px;
+  border-top: 5px solid var(--staff);
+}
+
+.origins-module .staff-board__name strong {
+  color: var(--staff);
+  font: 700 20px/1.1 var(--o-display);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.origins-module .staff-board__name a {
+  min-height: 32px;
+  display: inline-flex;
+  align-items: center;
+  color: var(--staff);
+  font: 700 11px var(--o-display);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.origins-module .staff-facts {
+  display: grid;
+  gap: 3px;
+  margin: 0;
+}
+
+.origins-module .staff-facts > div {
+  display: grid;
+  grid-template-columns: 74px minmax(0, 1fr);
+  gap: 0 10px;
+}
+
+.origins-module .staff-facts dt {
+  color: var(--o-muted);
+  font: 700 12px/1.65 var(--o-display);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.origins-module .staff-facts dd {
+  margin: 0;
+  color: var(--o-ink);
+  font-size: 14.5px;
+  line-height: 1.35;
+}
+
+.origins-module .staff-board__foot {
+  margin: 10px 0 0;
+  color: var(--o-muted);
+  font-size: 14px;
+}
+
+.origins-module .staff-board__foot b {
+  margin-right: 6px;
+  color: var(--o-ink);
+  font: 700 12px var(--o-display);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* ---- Desktop upgrade columns (step 2) ---- */
+.origins-module .staff-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px 28px;
+  max-width: 760px;
+}
+
+.origins-module .staff-upgrade {
+  padding-top: 8px;
+  border-top: 3px solid var(--staff);
+}
+
+.origins-module .staff-upgrade h4 {
+  margin: 0 0 6px;
+  color: var(--staff);
+  font: 700 15px var(--o-display);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.origins-module .staff-upgrade__body {
+  display: grid;
+  gap: 6px;
+}
+
+.origins-module :is(.staff-upgrade, .staff-row) :is(.staff-upgrade__steps, .staff-upgrade__either) {
+  margin: 0;
+  padding-left: 20px;
+  color: var(--o-text);
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.origins-module :is(.staff-upgrade, .staff-row) .staff-upgrade__either {
+  list-style: square;
+}
+
+.origins-module .staff-upgrade__code {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+}
+
+.origins-module .staff-upgrade__label {
+  color: var(--o-muted);
+  font: 700 12px var(--o-display);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.origins-module .staff-upgrade__code ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--o-ink);
+  font: 700 19px var(--o-display);
+}
+
+/* ---- Phone + landscape staff rows ---- */
+.origins-module .staff-rows {
+  display: grid;
+  gap: 6px;
+}
+
+.origins-module .staff-row {
+  border-left: 6px solid var(--staff);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.origins-module .staff-row[open] {
+  background: var(--o-ground-2);
+}
+
+.origins-module .staff-row > summary {
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0 14px;
+  list-style: none;
+  cursor: pointer;
+}
+
+.origins-module .staff-row > summary::-webkit-details-marker {
+  display: none;
+}
+
+.origins-module .staff-row > summary strong {
+  min-width: 104px;
+  color: var(--staff);
+  font: 700 21px var(--o-display);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.origins-module .staff-row__hint {
+  color: var(--o-muted);
+  font-size: 15px;
+}
+
+.origins-module .staff-row > summary::after {
+  content: '+';
+  margin-left: auto;
+  color: var(--staff);
+  font: 700 26px/1 var(--o-display);
+}
+
+.origins-module .staff-row[open] > summary::after {
+  content: '−';
+}
+
+.origins-module .staff-row > :not(summary) {
+  padding: 0 14px;
+}
+
+.origins-module .staff-row .staff-facts {
+  padding-bottom: 4px;
+}
+
+.origins-module .staff-row .staff-facts dd {
+  font-size: 16px;
+}
+
+.origins-module .staff-row .staff-upgrade__body {
+  padding-bottom: 4px;
+}
+
+/* ---- Footer: completion + credits ---- */
+.origins-module .run-sheet__footer {
+  padding-left: 72px;
 }
 
 .origins-module .origins-guide__credits {
-  margin-top: 0.25rem;
-  color: #b9cfe0;
-  font-size: 0.9rem;
+  margin-top: 28px;
+  padding-top: 14px;
+  border-top: 1px solid var(--o-hair);
+  color: var(--o-muted);
 }
 
 .origins-module .origins-guide__credits summary {
   min-height: 44px;
   display: inline-flex;
   align-items: center;
-  padding: 0 0.5rem;
-  border-radius: 8px;
+  color: var(--o-muted);
+  font: 700 14px var(--o-display);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   cursor: pointer;
-  opacity: 0.85;
-}
-
-.origins-module .origins-guide__credits summary:focus-visible {
-  outline: 2px solid #6dc2ff;
-  outline-offset: -2px;
-}
-
-.origins-module .origins-guide__credits[open] {
-  display: grid;
-  gap: 0.75rem;
-  padding: 0 0.5rem 0.75rem;
 }
 
 .origins-module .origins-guide .credits {
-  display: grid;
-  gap: 0.2rem;
-  margin: 0;
-  color: #a8cfff;
-  font-size: 0.95rem;
-}
-
-.origins-module .origins-guide .credits em {
-  color: #b8e0ff;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  margin: 6px 0 12px;
 }
 
 .origins-module .origins-guide .credits a {
-  color: #6dc2ff;
-  font-weight: 600;
+  color: var(--o-steel);
 }
 
 .origins-module .origins-guide .audio-players {
-  display: grid;
-  gap: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
-.origins-module .origins-guide audio {
-  width: 260px;
-  max-width: 100%;
-  height: 40px;
-  color-scheme: dark;
-}
-
-/* Speedrun mode button: hidden reward in the depth switch. */
-.origins-module .origins-guide .guide-mode__secret {
-  min-width: 52px;
-  justify-content: center;
-  color: #6f8293;
-  font-style: italic;
-  opacity: 0.75;
-}
-
-.origins-module .origins-guide .guide-mode__secret-label {
-  font-size: 0.78rem;
-  font-weight: 600;
-}
-
-.origins-module .origins-guide .guide-mode__secret.is-unlocked {
-  font-style: normal;
-  opacity: 1;
-}
-
-.origins-module .origins-guide .guide-mode__secret.is-unlocked {
-  color: #f0c56b;
-}
-
-.origins-module .origins-guide .guide-mode__secret[aria-pressed='true'] {
-  background: #f0c56b;
-  color: #1c1203;
-}
-
-@media (max-width: 980px) {
-  .origins-module .origins-guide .guide {
-    --guide-sticky-top: calc(var(--hub-nav-height) + 96px + 0.75rem);
-  }
-}
-
-@media (max-width: 760px) {
-  .origins-module .main-guide {
-    padding: 0.85rem 0.6rem 2rem;
-    background-attachment: scroll;
+/* ---- Below desktop: one column, staff rows inline ---- */
+@media (max-width: 1099px), (max-height: 500px) and (orientation: landscape) {
+  .origins-module .origins-sheet {
+    display: block;
   }
 
-  .origins-module .origins-guide audio {
-    width: 100%;
-  }
-
-  .origins-module .origins-guide .audio-players {
-    width: 100%;
-  }
-
-  /* Four depth buttons share one row; the sub-labels go so each stays a big target. */
-  .origins-module .origins-guide .guide-mode button {
-    flex: 1 1 0;
-    min-width: 0;
-    padding-inline: 0.3rem;
-    justify-content: center;
-  }
-
-  .origins-module .origins-guide .guide-mode button small {
+  .origins-module .origins-sheet .only-wide {
     display: none;
   }
 
-  .origins-module .origins-guide .guide-mode__secret {
-    flex: 0 0 52px !important;
+  .origins-module .origins-sheet .only-narrow {
+    display: grid;
   }
 
-  .origins-module .origins-guide .guide-mode__secret-label {
+  .origins-module .origins-sheet p.only-narrow {
+    display: block;
+  }
+}
+
+@media (max-width: 700px) {
+  .origins-module .origins-guide {
+    padding-top: 28px;
+  }
+
+  .origins-module .run-sheet__steps::before {
+    left: 19px;
+  }
+
+  .origins-module .run-step {
+    padding: 0 0 32px 58px;
+  }
+
+  .origins-module .run-step__n {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+
+  .origins-module .run-step--staff .run-step__n {
+    background:
+      radial-gradient(circle, var(--o-ground) 0 13px, transparent 14px),
+      conic-gradient(var(--o-ice) 0 25%, var(--o-fire) 0 50%, var(--o-wind) 0 75%, var(--o-lightning) 0);
+  }
+
+  .origins-module .run-step h3 {
+    font-size: 23px;
+  }
+
+  .origins-module .run-step__answer {
+    font-size: 17px;
+  }
+
+  .origins-module .run-step .gref-facts {
+    grid-template-columns: 1fr;
+  }
+
+  .origins-module .run-sheet__footer {
+    padding-left: 58px;
+  }
+}
+
+@media (max-width: 460px) {
+  .origins-module .staff-row__hint {
     display: none;
   }
 }
 
+/* Short landscape phones: rows two-up, so both staff steps fit in a couple of screens. */
 @media (max-height: 500px) and (orientation: landscape) {
-  .origins-module .main-guide {
-    padding: 0.7rem 0.75rem 1.5rem;
+  .origins-module .origins-guide {
+    padding-top: 22px;
   }
 
-  .origins-module .origins-guide .guide {
-    --guide-sticky-top: calc(var(--hub-nav-height) + 58px + 0.5rem);
+  .origins-module .staff-rows {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+    gap: 6px 14px;
+  }
+
+  .origins-module .run-step {
+    padding-bottom: 28px;
   }
 }

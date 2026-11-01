@@ -318,7 +318,7 @@ try {
     // Measured, not asserted until each map's own redesign: where the first step title starts.
     for (const route of routes.filter((item) => item.startsWith('/maps/'))) {
       await page.goto(`${base}${route}`, { waitUntil: 'networkidle' });
-      const first = await page.locator('li.guide-seq__step h3').first().boundingBox();
+      const first = await page.locator('li.guide-seq__step h3, li.run-step h3').first().boundingBox();
       results.push({ width: 844, height: 390, route, metric: 'first step title top (px)', value: first ? Math.round(first.y) : null, passed: true });
     }
     await context.close();
