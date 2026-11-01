@@ -1,0 +1,5 @@
+/* The few cross-map tokens: tap-target minimum and focus ring width. Maps own their colours and type. */
+:root {
+  --zh-tap: 48px;
+  --zh-focus-width: 3px;
+}

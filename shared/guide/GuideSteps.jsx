@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React, { useState } from 'react';
 import GuideReferences from './GuideReferences';
+import { StepMore } from './StepDetail';
+import useHashLanding from './useHashLanding';
 import './guide.css';
 
 /*
@@ -19,7 +20,6 @@ function StepItem({ step }) {
   const activeTab = tabsRef ? (tabsRef.tabs.find((tab) => tab.id === variant) ?? tabsRef.tabs[0]) : null;
   const problems = [...(step.problems ?? []), ...(activeTab?.problems ?? [])];
   const links = [...(activeTab?.links ?? []), ...(step.links ?? [])];
-  const hasMore = step.how?.length > 0 || step.video || links.length > 0 || problems.length > 0;
 
   return (
     <li className="guide-seq__step" id={step.id}>
@@ -40,77 +40,13 @@ function StepItem({ step }) {
         </ul>
       )}
 
-      {hasMore && (
-        <details className="guide-seq__more">
-          <summary>More on this step</summary>
-          {step.how?.length > 0 && (
-            <section className="guide-how">
-              <h4>How to do it</h4>
-              <ol>{step.how.map((line) => <li key={line}>{line}</li>)}</ol>
-            </section>
-          )}
-          {step.video && (
-            <a className="guide-video" href={step.video.url} target="_blank" rel="noreferrer">
-              {step.video.label ?? 'Watch this section'} <span aria-hidden="true">↗</span>
-            </a>
-          )}
-          {links.length > 0 && (
-            <div className="guide-links">
-              {links.map((link) => (
-                <Link key={link.to} to={link.to} style={link.tone ? { '--gref-tone': link.tone } : undefined}>
-                  {link.label}
-                </Link>
-              ))}
-            </div>
-          )}
-          {problems.length > 0 && (
-            <details className="guide-problems">
-              <summary>Not working?</summary>
-              <ul>{problems.map((line) => <li key={line}>{line}</li>)}</ul>
-            </details>
-          )}
-        </details>
-      )}
+      <StepMore step={step} problems={problems} links={links} />
     </li>
   );
 }
 
-// A mistyped or truncated link (#100%) must never take the guide down.
-const fragmentId = (hash) => {
-  try {
-    return decodeURIComponent(hash.slice(1));
-  } catch {
-    return '';
-  }
-};
-
-// Bottom edge of whatever is pinned over the page: the hub bar and, on some maps, the map header too.
-const pinnedBottom = () => Math.max(0, ...[...document.querySelectorAll('.hub-header, .map-module header')]
-  .filter((element) => ['fixed', 'sticky'].includes(getComputedStyle(element).position))
-  .map((element) => element.getBoundingClientRect().bottom));
-
 export default function GuideSteps({ label, steps, footer }) {
-  const { hash, search } = useLocation();
-
-  // The map chunk loads after the app shell has already tried to scroll to #<step>; finish the job here.
-  // Wait for web fonts (a late font swap moves the step after the scroll), then jump without animating,
-  // and nudge the step clear of a pinned map header. An old ?ref=<step> link counts too: the app shell
-  // rewrites it to #<step>, but this may render first.
-  useEffect(() => {
-    const id = fragmentId(hash) || new URLSearchParams(search).get('ref');
-    if (!id || !steps.some((step) => step.id === id)) return undefined;
-    let cancelled = false;
-    const land = () => {
-      const target = document.getElementById(id);
-      if (cancelled || !target) return;
-      target.scrollIntoView({ block: 'start', behavior: 'instant' });
-      const overlap = pinnedBottom() + 12 - target.getBoundingClientRect().top;
-      if (overlap > 0) window.scrollBy({ top: -overlap, behavior: 'instant' });
-    };
-    land();
-    (document.fonts?.ready ?? Promise.resolve()).then(() => requestAnimationFrame(land));
-    return () => { cancelled = true; };
-  }, [hash, search, steps]);
+  useHashLanding(steps.map((step) => step.id));
 
   return (
     <section className="guide" aria-label={`${label} guide`}>

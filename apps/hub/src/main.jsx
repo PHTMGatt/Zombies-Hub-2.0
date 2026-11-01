@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, HashRouter } from 'react-router-dom';
 import App from './app/App';
+import '../../../shared/ui/tokens.css';
 import './styles/global.css';
 const Router = import.meta.env.VITE_REVIEW_HASH_ROUTER === 'true' ? HashRouter : BrowserRouter;
 

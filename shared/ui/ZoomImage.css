@@ -1,0 +1,81 @@
+/* Shared, deliberately neutral: maps style the frame around it. */
+.zoom-image {
+  margin: 0;
+  min-width: 0;
+}
+
+.zoom-image__open {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+}
+
+.zoom-image__open img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.zoom-image__open:focus-visible {
+  outline: var(--zh-focus-width, 3px) solid currentColor;
+  outline-offset: 4px;
+}
+
+.zoom-image__hint {
+  position: absolute;
+  right: 0.5rem;
+  bottom: 0.5rem;
+  padding: 0.25rem 0.55rem;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.78);
+  color: #fff;
+  font: 600 0.8rem/1.2 system-ui, sans-serif;
+}
+
+.zoom-image__dialog {
+  width: 100vw;
+  max-width: 100vw;
+  height: 100dvh;
+  max-height: 100dvh;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: #000;
+  overflow: auto;
+  touch-action: pinch-zoom;
+}
+
+.zoom-image__dialog::backdrop {
+  background: rgba(0, 0, 0, 0.92);
+}
+
+.zoom-image__dialog img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.zoom-image__close {
+  position: fixed;
+  top: max(0.75rem, env(safe-area-inset-top));
+  right: 0.75rem;
+  min-width: var(--zh-tap, 48px);
+  min-height: var(--zh-tap, 48px);
+  padding: 0 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  font: 700 1rem system-ui, sans-serif;
+  cursor: pointer;
+}
+
+.zoom-image__close:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 2px;
+}
