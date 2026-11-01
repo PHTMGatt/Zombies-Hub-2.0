@@ -597,5 +597,90 @@
     ],
     "reason": "Label of the removed Origins Low/Medium/High depth switch (previously matched inside other text).",
     "spec": "§4.1"
+  },
+  {
+    "text": "Main Guide",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins",
+      "/maps/origins/ice-staff",
+      "/maps/origins/fire-staff",
+      "/maps/origins/wind-staff",
+      "/maps/origins/lightning-staff",
+      "/maps/origins/speed-run",
+      "/maps/origins/speed-run/prep",
+      "/maps/origins/speed-run/lightning",
+      "/side-easter-eggs/origins-speedrun"
+    ],
+    "reason": "Old Origins nav label; the elemental nav plates read Guide / Ice / Fire / Wind / Lightning / Speed Run (full names kept as accessible labels).",
+    "spec": "Phase 2 Task 2.3"
+  },
+  {
+    "text": "Ice Staff",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins",
+      "/maps/origins/ice-staff",
+      "/maps/origins/fire-staff",
+      "/maps/origins/wind-staff",
+      "/maps/origins/lightning-staff",
+      "/maps/origins/speed-run",
+      "/maps/origins/speed-run/prep",
+      "/maps/origins/speed-run/lightning",
+      "/side-easter-eggs/origins-speedrun"
+    ],
+    "reason": "Old Origins nav label; the elemental nav plates read Guide / Ice / Fire / Wind / Lightning / Speed Run (full names kept as accessible labels).",
+    "spec": "Phase 2 Task 2.3"
+  },
+  {
+    "text": "Fire Staff",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins",
+      "/maps/origins/ice-staff",
+      "/maps/origins/fire-staff",
+      "/maps/origins/wind-staff",
+      "/maps/origins/lightning-staff",
+      "/maps/origins/speed-run",
+      "/maps/origins/speed-run/prep",
+      "/maps/origins/speed-run/lightning",
+      "/side-easter-eggs/origins-speedrun"
+    ],
+    "reason": "Old Origins nav label; the elemental nav plates read Guide / Ice / Fire / Wind / Lightning / Speed Run (full names kept as accessible labels).",
+    "spec": "Phase 2 Task 2.3"
+  },
+  {
+    "text": "Wind Staff",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins",
+      "/maps/origins/ice-staff",
+      "/maps/origins/fire-staff",
+      "/maps/origins/wind-staff",
+      "/maps/origins/lightning-staff",
+      "/maps/origins/speed-run",
+      "/maps/origins/speed-run/prep",
+      "/maps/origins/speed-run/lightning",
+      "/side-easter-eggs/origins-speedrun"
+    ],
+    "reason": "Old Origins nav label; the elemental nav plates read Guide / Ice / Fire / Wind / Lightning / Speed Run (full names kept as accessible labels).",
+    "spec": "Phase 2 Task 2.3"
+  },
+  {
+    "text": "Lightning Staff",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins",
+      "/maps/origins/ice-staff",
+      "/maps/origins/fire-staff",
+      "/maps/origins/wind-staff",
+      "/maps/origins/lightning-staff",
+      "/maps/origins/speed-run",
+      "/maps/origins/speed-run/prep",
+      "/maps/origins/speed-run/lightning",
+      "/side-easter-eggs/origins-speedrun"
+    ],
+    "reason": "Old Origins nav label; the elemental nav plates read Guide / Ice / Fire / Wind / Lightning / Speed Run (full names kept as accessible labels).",
+    "spec": "Phase 2 Task 2.3"
   }
 ]

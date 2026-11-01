@@ -1,0 +1,28 @@
+/*
+ * Origins "dig-site field sheet" tokens. One trench ground, brass for the sequence, steel for navigation,
+ * and the four staff colours for their own staff only (names, ticks, bands of at most 6px).
+ */
+.origins-module {
+  --o-ground: #0f1a17;
+  --o-ground-2: #16231f;
+  --o-ink: #eef2ec;
+  --o-text: #dbe3dd;
+  --o-muted: #9db0a7;
+  --o-hair: rgba(201, 164, 92, 0.22);
+  --o-brass: #c9a45c;
+  --o-steel: #7cc4f2;
+  --o-warn: #ffb24d;
+  --o-ice: #78e8e1;
+  --o-fire: #ff7844;
+  --o-wind: #ffe657;
+  --o-lightning: #d8a8ff;
+  --o-display: 'Rajdhani', 'Segoe UI', sans-serif;
+  --o-body: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --o-plates-height: 56px;
+}
+
+/* Each staff sets --staff on its own elements; everything else stays neutral. */
+.origins-module [data-staff='ice'] { --staff: var(--o-ice); }
+.origins-module [data-staff='fire'] { --staff: var(--o-fire); }
+.origins-module [data-staff='wind'] { --staff: var(--o-wind); }
+.origins-module [data-staff='lightning'] { --staff: var(--o-lightning); }

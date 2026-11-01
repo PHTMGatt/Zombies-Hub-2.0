@@ -1,31 +1,21 @@
 import React from "react";
-import ReviveIcon from "../assets/images/Revive_Icon.png";
 import Nav from "./Nav";
 import "../Styles/ComponentStyles/Header.css";
 
-const Header = () => {
-  return (
-    <header className="site-header origins-map-header">
-      <div className="origins-header__backdrop" aria-hidden="true" />
-
-      <div className="origins-header__content">
-        <div className="header-left">
-          <div className="title-box">
-            <img src={ReviveIcon} alt="" aria-hidden="true" className="revive-header-icon" />
-            <h1 className="header-title">
-              <span className="black-text">Origins<span className="header-title__ee"> Easter Egg</span></span>{" "}
-              <span className="white-text">Little Lost Girl</span>
-            </h1>
-            <img src={ReviveIcon} alt="" aria-hidden="true" className="revive-header-icon" />
-          </div>
-        </div>
-
-        <div className="header-right">
-          <Nav />
-        </div>
+// Title block: the map name set large, the Easter Egg beneath, the robot cropped beside it. The
+// artwork stays here; the guide below sits on the plain trench ground.
+const Header = () => (
+  <>
+    <header className="origins-mast">
+      <div className="origins-mast__title">
+        <p className="origins-mast__eyebrow">Main Easter Egg</p>
+        <h1>Origins</h1>
+        <p className="origins-mast__sub">Little Lost Girl</p>
       </div>
+      <div className="origins-mast__art" aria-hidden="true" />
     </header>
-  );
-};
+    <Nav />
+  </>
+);
 
 export default Header;

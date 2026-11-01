@@ -1,229 +1,98 @@
-
-.origins-module .site-header.origins-map-header {
-  position: sticky;
-  top: var(--hub-nav-height);
-  z-index: 9000;
-  width: 100%;
-  min-height: 82px;
-  padding: 0;
+/* Title block: the map name as the loudest type on the page, the robot cropped and duotoned beside it. */
+.origins-module .origins-mast {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 46%);
+  min-height: 210px;
   overflow: hidden;
-  color: #fff;
-  font-family: 'Rajdhani', sans-serif;
-  border-bottom: 1px solid rgba(170, 224, 255, 0.18);
-  background: linear-gradient(to right, #0a4b78, #1c7ed6, #0a4b78);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
-  isolation: isolate;
+  background: var(--o-ground-2);
+  border-bottom: 2px solid var(--o-brass);
 }
 
-.origins-module .origins-header__backdrop {
+.origins-module .origins-mast__title {
+  position: relative;
+  z-index: 1;
+  align-self: end;
+  padding: 32px 0 24px clamp(20px, 5vw, 72px);
+}
+
+.origins-module .origins-mast__eyebrow {
+  margin: 0;
+  color: var(--o-brass);
+  font: 700 13px/1.2 var(--o-display);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.origins-module .origins-mast h1 {
+  margin: 4px 0 0;
+  color: var(--o-ink);
+  font: 700 clamp(56px, 8vw, 104px)/0.82 var(--o-display);
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+.origins-module .origins-mast__sub {
+  margin: 10px 0 0;
+  color: var(--o-muted);
+  font: 600 22px/1.2 var(--o-display);
+}
+
+.origins-module .origins-mast__art {
+  position: relative;
+  background: url('../../../public/images/Robot.webp') 30% 22% / cover no-repeat;
+  filter: grayscale(1) contrast(1.15) brightness(0.72);
+  clip-path: polygon(14% 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.origins-module .origins-mast__art::after {
+  content: '';
   position: absolute;
   inset: 0;
-  z-index: -1;
-  background:
-    linear-gradient(90deg, rgba(10, 75, 120, 0.96) 0%, rgba(15, 96, 153, 0.78) 30%, rgba(5, 27, 45, 0.6) 72%, rgba(4, 20, 34, 0.82) 100%),
-    url('../../../public/images/Robot.webp') center 40% / cover no-repeat;
+  background: linear-gradient(90deg, var(--o-ground-2) 0%, rgba(22, 35, 31, 0.2) 40%, rgba(124, 196, 242, 0.16) 100%);
 }
 
-.origins-module .origins-header__content {
-  width: min(1460px, calc(100% - 32px));
-  min-height: 82px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1.25rem;
-  padding: 0.45rem 0;
-}
-
-.origins-module .header-left,
-.origins-module .header-right {
-  display: flex;
-  align-items: center;
-}
-
-.origins-module .header-left {
-  flex: 0 0 auto;
-  min-width: 0;
-}
-
-.origins-module .title-box {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  flex-wrap: nowrap;
-  white-space: nowrap;
-}
-
-.origins-module .header-title {
-  display: flex;
-  align-items: center;
-  gap: 0.28rem;
-  margin: 0;
-  font-size: 2rem;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: 0;
-  text-shadow: 0 0 6px #6dc2ff, 0 0 10px rgba(255, 255, 255, 0.7);
-  white-space: nowrap;
-}
-
-.origins-module .black-text {
-  color: #05080b;
-}
-
-.origins-module .white-text {
-  color: #fff;
-}
-
-.origins-module .revive-header-icon {
-  width: 32px;
-  height: 32px;
-  flex: 0 0 32px;
-  object-fit: contain;
-}
-
-.origins-module .header-right {
-  flex: 1 1 auto;
-  justify-content: flex-end;
-  min-width: 0;
-}
-
-@media (max-width: 1180px) {
-  .origins-module .header-title {
-    font-size: 1.7rem;
-  }
-
-  .origins-module .revive-header-icon {
-    width: 28px;
-    height: 28px;
-    flex-basis: 28px;
-  }
-
-  .origins-module .origins-header__content {
-    width: min(100% - 20px, 1120px);
-    gap: 0.8rem;
-  }
-}
-
-@media (max-width: 980px) {
-  .origins-module .site-header.origins-map-header {
+@media (max-width: 700px) {
+  .origins-module .origins-mast {
+    grid-template-columns: minmax(0, 1fr) 38%;
     min-height: 0;
   }
 
-  /* The title centers over the backdrop's dark middle here; light a blue pool behind it so the
-     dark-glow "Origins Easter Egg" keeps the contrast it has on the desktop's lit left edge. */
-  .origins-module .origins-header__backdrop {
-    background:
-      radial-gradient(ellipse 62% 78% at 50% 22%, rgba(28, 126, 214, 0.9), rgba(16, 98, 160, 0.55) 55%, transparent 100%),
-      linear-gradient(180deg, rgba(10, 75, 120, 0.7), rgba(4, 20, 34, 0.86)),
-      url('../../../public/images/Robot.webp') center 40% / cover no-repeat;
+  .origins-module .origins-mast__title {
+    padding: 16px 0 14px 18px;
   }
 
-  .origins-module .origins-header__content {
+  .origins-module .origins-mast h1 {
+    font-size: 48px;
+  }
+
+  .origins-module .origins-mast__sub {
+    margin-top: 4px;
+    font-size: 18px;
+  }
+}
+
+/* Short landscape phones: a slim band, so the guide starts on the first screen. */
+@media (max-height: 500px) and (orientation: landscape) {
+  .origins-module .origins-mast {
+    grid-template-columns: minmax(0, 1fr) 40%;
     min-height: 0;
-    flex-direction: column;
-    gap: 0.45rem;
-    padding: 0.62rem 0;
   }
 
-  .origins-module .header-right {
-    width: 100%;
-    justify-content: center;
+  .origins-module .origins-mast__title {
+    padding: 10px 0 8px 20px;
   }
 
-  .origins-module .title-box {
-    justify-content: center;
-  }
-}
-
-@media (max-width: 620px) {
-  .origins-module .origins-header__content {
-    width: 100%;
-    gap: 0.5rem;
-    padding: 0.6rem 0 0.55rem;
-  }
-
-  .origins-module .header-title {
-    font-size: 1.34rem;
-  }
-
-  .origins-module .revive-header-icon {
-    width: 23px;
-    height: 23px;
-    flex-basis: 23px;
-  }
-
-  .origins-module .title-box {
-    gap: 6px;
-    padding-inline: 10px;
-  }
-}
-
-/* Narrow phones: one short line ("Origins · Little Lost Girl") so the header stays under ~90px and the
-   current step starts higher. The revive icons are decoration and go. */
-@media (max-width: 460px) {
-  .origins-module .header-title {
-    gap: 0.4rem;
-    font-size: 1.22rem;
-    white-space: nowrap;
-  }
-
-  .origins-module .header-title__ee {
+  .origins-module .origins-mast__eyebrow {
     display: none;
   }
 
-  .origins-module .black-text::after {
-    content: ' ·';
+  .origins-module .origins-mast h1 {
+    font-size: 40px;
   }
 
-  .origins-module .revive-header-icon {
-    display: none;
-  }
-
-  .origins-module .origins-header__content {
-    gap: 0.35rem;
-    padding: 0.45rem 0 0.4rem;
-  }
-}
-
-/* Landscape phones: title and staff chips share one row. */
-@media (max-height: 500px) and (orientation: landscape) {
-  .origins-module .origins-header__content {
-    width: 100%;
-    flex-direction: row;
-    gap: 0.25rem;
-    padding: 0.4rem 0 0.4rem 12px;
-  }
-
-  .origins-module .origins-header__backdrop {
-    background:
-      radial-gradient(ellipse 48% 130% at 18% 50%, rgba(28, 126, 214, 0.92), rgba(16, 98, 160, 0.5) 60%, transparent 100%),
-      linear-gradient(90deg, rgba(10, 75, 120, 0.6), rgba(4, 20, 34, 0.86)),
-      url('../../../public/images/Robot.webp') center 40% / cover no-repeat;
-  }
-
-  .origins-module .header-title {
-    font-size: 1.2rem;
-  }
-
-  .origins-module .revive-header-icon {
-    display: none;
-  }
-
-  .origins-module .header-right {
-    width: auto;
-    min-width: 0;
-  }
-}
-
-/* Short landscape phones: the map header scrolls away instead of pinning under the hub bar. */
-@media (max-height: 500px) and (orientation: landscape) {
-  .origins-module {
-    --origins-header-height: 0px;
-  }
-
-  .origins-module .site-header.origins-map-header {
-    position: relative;
-    top: auto;
+  .origins-module .origins-mast__sub {
+    margin-top: 2px;
+    font-size: 16px;
   }
 }

@@ -1,15 +1,16 @@
+/* The Origins ground: a dark trench with faint survey contours. Artwork lives only in the title block. */
 .origins-module {
-  --origins-bg: none;
   min-height: calc(100vh - var(--hub-nav-height));
   width: 100%;
-  color: #fff;
-  font-family: 'Rajdhani', 'Segoe UI', sans-serif;
-  background: #06192a;
+  color: var(--o-text);
+  font-family: var(--o-body);
+  background-color: var(--o-ground);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='420'%3E%3Cg fill='none' stroke='%23c9a45c' stroke-opacity='.06' stroke-width='1.2'%3E%3Cpath d='M-20 80 C 120 20 240 140 380 70 S 600 40 680 110'/%3E%3Cpath d='M-20 130 C 110 70 250 190 390 120 S 610 90 680 160'/%3E%3Cpath d='M-20 250 C 140 190 230 320 400 240 S 590 210 680 290'/%3E%3Cpath d='M-20 300 C 130 240 240 370 410 290 S 600 260 680 340'/%3E%3Cpath d='M-20 360 C 150 300 260 420 420 350 S 610 330 680 400'/%3E%3C/g%3E%3C/svg%3E");
   isolation: isolate;
-  /* Column layout so the content area can grow and keep the footer pinned on short pages. */
+  /* Column layout so short pages still pin the footer to the bottom. */
   display: flex;
   flex-direction: column;
-  /* clip, not hidden: hidden would make this a scroll container and break sticky headers/rails. */
+  /* clip, not hidden: hidden would make this a scroll container and break sticky elements. */
   overflow-x: clip;
 }
 
@@ -19,8 +20,12 @@
 }
 
 .origins-module .origins-route-content {
-  /* Fill the module column so short pages still pin the footer to the bottom. */
   flex: 1 0 auto;
   min-height: 60vh;
   width: 100%;
+}
+
+.origins-module :is(a, button, summary):focus-visible {
+  outline: var(--zh-focus-width, 3px) solid var(--o-steel);
+  outline-offset: 3px;
 }

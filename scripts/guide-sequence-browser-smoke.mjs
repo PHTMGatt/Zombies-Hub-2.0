@@ -77,7 +77,7 @@ try {
     // Every pinned bar counts: the hub bar and the map's own header (Origins pins one under the hub bar).
     const position = await coldPage.evaluate(() => {
       const target = document.getElementById('upgrade-staffs').getBoundingClientRect();
-      const headerBottom = Math.max(0, ...[...document.querySelectorAll('.hub-header, .map-module header')]
+      const headerBottom = Math.max(0, ...[...document.querySelectorAll('.hub-header, .map-module header, .map-module [data-pinned]')]
         .filter((el) => ['fixed', 'sticky'].includes(getComputedStyle(el).position))
         .map((el) => el.getBoundingClientRect().bottom));
       return { top: target.top, headerBottom, viewport: window.innerHeight };

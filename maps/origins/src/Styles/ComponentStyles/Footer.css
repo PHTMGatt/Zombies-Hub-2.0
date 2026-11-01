@@ -1,56 +1,22 @@
-
+/* One quiet line on the ground. */
 .origins-module .footer.origins-footer {
-  position: relative;
   margin: 0;
-  padding: 0;
-  min-height: 64px;
-  overflow: hidden;
-  border-radius: 0;
-  border-top: 1px solid rgba(190, 231, 255, 0.18);
-  background: #071726;
-  color: #eef9ff;
-  font-family: 'Rajdhani', sans-serif;
-  box-shadow: 0 -8px 24px rgba(20, 123, 194, 0.12);
-  isolation: isolate;
-}
-
-.origins-module .origins-footer__backdrop {
-  position: absolute;
-  inset: -16px;
-  z-index: -2;
-  background:
-    linear-gradient(90deg, rgba(3, 18, 31, 0.95), rgba(14, 91, 146, 0.46), rgba(3, 18, 31, 0.95)),
-    url('../../../public/images/Robot.webp') center 43% / cover no-repeat;
-  filter: blur(4px) saturate(0.8) brightness(0.6);
-  transform: scale(1.03);
-}
-
-.origins-module .origins-footer::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: linear-gradient(to bottom, rgba(7, 23, 38, 0.12), rgba(7, 23, 38, 0.78));
-  pointer-events: none;
+  padding: 22px clamp(20px, 5vw, 72px);
+  border-top: 1px solid var(--o-hair);
+  background: transparent;
+  color: var(--o-muted);
+  font: 600 15px/1.4 var(--o-display);
+  letter-spacing: 0.06em;
 }
 
 .origins-module .origins-footer__content {
-  width: min(1180px, calc(100% - 36px));
-  min-height: 64px;
-  margin: 0 auto;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.55rem;
-  color: #d7ebf7;
-  font-size: 0.9rem;
-  font-weight: 600;
-  letter-spacing: 0.025em;
-  text-align: center;
+  gap: 10px;
+  align-items: baseline;
 }
 
 .origins-module .origins-footer__content strong {
-  color: #f0f9ff;
-  font-size: 1rem;
-  text-shadow: 0 0 10px rgba(109, 194, 255, 0.4);
+  color: var(--o-ink);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
 }

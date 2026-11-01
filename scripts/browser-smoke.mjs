@@ -144,9 +144,9 @@ try {
     // Speed Run is always open: the last Origins nav item, reachable with empty storage, no lock copy anywhere.
     await page.evaluate(() => window.localStorage.clear());
     await page.goto(`${base}/maps/origins`, { waitUntil: 'networkidle' });
-    const navLinks = page.locator('.origins-nav-link');
+    const navLinks = page.locator('.origins-plates a');
     const lastNav = navLinks.last();
-    assert.equal((await lastNav.innerText()).trim(), 'Speed Run', 'Speed Run is the last Origins nav item');
+    assert.equal(await lastNav.getAttribute('aria-label'), 'Speed Run', 'Speed Run is the last Origins nav item');
     await lastNav.scrollIntoViewIfNeeded();
     const navBox = await lastNav.boundingBox();
     assert(navBox && navBox.x >= 0 && navBox.x + navBox.width <= width + 1, 'Speed Run nav item can sit fully inside the viewport');
@@ -189,18 +189,18 @@ try {
     await assertNoHorizontalOverflow(page, '/maps/origins/speed-run/lightning');
     await page.evaluate(() => window.localStorage.clear());
 
-    // The sticky Origins header must stay compact on phones, with an unclipped title and the active staff in view.
+    // Only the Origins nav plates stay pinned, and they stay compact, with an unclipped title and the active staff in view.
     await page.goto(`${base}/maps/origins/lightning-staff`, { waitUntil: 'networkidle' });
     const originsHeader = await page.evaluate(() => {
-      const active = document.querySelector('.origins-nav-link.active').getBoundingClientRect();
-      const title = document.querySelector('.origins-map-header .header-title').getBoundingClientRect();
+      const active = document.querySelector('.origins-plates a[aria-current="page"]').getBoundingClientRect();
+      const title = document.querySelector('.origins-mast h1').getBoundingClientRect();
       return {
-        height: document.querySelector('.origins-map-header').offsetHeight,
+        height: document.querySelector('.origins-plates').offsetHeight,
         activeInView: active.left >= 0 && active.right <= window.innerWidth,
         titleInView: title.left >= 0 && title.right <= window.innerWidth,
       };
     });
-    assert(originsHeader.height <= { phone: 130, landscape: 130, desktop: 100 }[viewportName], `Origins sticky header is ${originsHeader.height}px tall at ${width}px`);
+    assert(originsHeader.height <= 64, `Origins pinned nav is ${originsHeader.height}px tall at ${width}px`);
     assert(originsHeader.activeInView, 'Origins keeps the active staff tab in view');
     assert(originsHeader.titleInView, 'Origins header title is not clipped');
 

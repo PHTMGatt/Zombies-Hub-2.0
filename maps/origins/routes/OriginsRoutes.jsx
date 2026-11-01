@@ -14,15 +14,12 @@ import SpeedRunLayout from '../src/Pages/SpeedRun/SpeedRunLayout';
 import SpeedRunRoute from '../src/Pages/SpeedRun/SpeedRunRoute';
 import SpeedRunPrep from '../src/Pages/SpeedRun/SpeedRunPrep';
 import SpeedRunLightning from '../src/Pages/SpeedRun/SpeedRunLightning';
-import RobotBg from '../public/images/Robot.webp?url';
+import '../src/Styles/origins-tokens.css';
 import '../styles/origins-shell.css';
 
 export default function OriginsRoutes() {
   return (
-    <section
-      className="map-module origins-module"
-      style={{ '--origins-bg': `url(${RobotBg})` }}
-    >
+    <section className="map-module origins-module">
       <Header />
       <div className="origins-route-content">
         <Routes>
