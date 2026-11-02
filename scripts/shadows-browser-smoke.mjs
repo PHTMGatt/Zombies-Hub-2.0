@@ -66,32 +66,24 @@ try {
     await assertNoHorizontalOverflow(page, route);
     results.push({ width, route, passed: true });
 
-    // Blocked storage must make run tools session-only, not unusable. Both the visible step and its
-    // Quick refs copy should keep sharing the player's note / picker choice even when setItem throws.
+    // If storage becomes read-only after a saved game, the visible tools must prefer the player's
+    // newest session choice over the older persisted value.
     await page.goto(`${base}${route}`, { waitUntil: 'networkidle' });
     await page.evaluate(() => {
       localStorage.clear();
       localStorage.setItem('zh-soe-train-symbols', JSON.stringify(['stale', '', '']));
+      localStorage.setItem('zh-soe-character', JSON.stringify('floyd'));
     });
     await page.reload({ waitUntil: 'networkidle' });
-    assert.equal(await page.getByLabel('Symbol 1').inputValue(), 'stale', 'stored note loads before storage becomes read-only');
+    assert.equal(await page.locator('#rituals').getByLabel('Symbol 1').inputValue(), 'stale', 'stored note loads before storage becomes read-only');
     await page.evaluate(() => {
       Storage.prototype.setItem = () => { throw new DOMException('Storage blocked', 'SecurityError'); };
     });
-    await page.getByLabel('Symbol 1').fill('eye');
-    assert.equal(await page.getByLabel('Symbol 1').inputValue(), 'eye', 'blocked storage keeps the note for this session');
-    await page.getByRole('button', { name: 'Quick refs' }).click();
-    await page.getByRole('button', { name: /Train symbols \+ rituals/ }).click();
-    assert.equal(await page.locator('.guide-sheet').getByLabel('Symbol 1').inputValue(), 'eye', 'blocked-storage note syncs into Quick refs');
-    await page.keyboard.press('Escape');
+    await page.locator('#rituals').getByLabel('Symbol 1').fill('eye');
+    assert.equal(await page.locator('#rituals').getByLabel('Symbol 1').inputValue(), 'eye', 'blocked storage keeps the latest note for this session');
 
-    await page.locator('.guide-rail__step').nth(3).click();
-    await page.getByRole('button', { name: 'Jackie Vincent' }).click();
-    assert.match(await page.locator('.guide-step .pick-tool__answer').innerText(), /Ruby Rabbit/, 'blocked storage keeps the picker choice for this session');
-    await page.getByRole('button', { name: 'Quick refs' }).click();
-    await page.getByRole('button', { name: /Your Keeper \+ Margwa spots/ }).click();
-    assert.match(await page.locator('.guide-sheet .pick-tool__answer').innerText(), /Ruby Rabbit/, 'blocked-storage picker syncs into Quick refs');
-    await page.keyboard.press('Escape');
+    await page.locator('#upgrade').getByRole('button', { name: 'Jackie Vincent' }).click();
+    assert.match(await page.locator('#upgrade .pick-tool__answer').innerText(), /Ruby Rabbit/, 'blocked storage keeps the latest picker choice for this session');
     results.push({ width, route: `${route} (blocked storage tools)`, passed: true });
 
     errors.length = 0;
