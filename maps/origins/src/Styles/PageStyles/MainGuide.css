@@ -259,9 +259,23 @@
   margin-top: 0.4rem;
 }
 
+.origins-module .audio-players figure {
+  display: grid;
+  gap: 0.25rem;
+  margin: 0;
+}
+
+.origins-module .audio-players figcaption {
+  color: var(--o-muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/* Dark native controls, so the players sit inside the glass panel instead of glowing white */
 .origins-module .audio-players audio {
   width: 100%;
   height: 40px;
+  color-scheme: dark;
 }
 
 /* ---- Speed Run: a small utility, never a tab ---- */

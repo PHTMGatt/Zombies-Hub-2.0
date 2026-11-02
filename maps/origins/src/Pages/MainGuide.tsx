@@ -84,8 +84,14 @@ const MainGuide = () => {
             <a href={KRONORIUM_URL} target="_blank" rel="noreferrer">Kronorium.com</a>
           </p>
           <div className="audio-players">
-            <audio controls aria-label="Origins robot radio message" src={Audio1} preload="none"></audio>
-            <audio controls aria-label="Origins zombie intro" src={Audio2} preload="none"></audio>
+            <figure>
+              <figcaption aria-hidden="true">Robot radio message</figcaption>
+              <audio controls aria-label="Origins robot radio message" src={Audio1} preload="none"></audio>
+            </figure>
+            <figure>
+              <figcaption aria-hidden="true">Zombie intro</figcaption>
+              <audio controls aria-label="Origins zombie intro" src={Audio2} preload="none"></audio>
+            </figure>
           </div>
         </section>
         <SpeedRunLink className="origins-speedrun--wide" />
