@@ -1,6 +1,7 @@
 import { chromium } from 'playwright';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
 
 const base = process.env.SMOKE_BASE_URL || 'http://127.0.0.1:4173';
 const artifactsDir = new URL('../artifacts/', import.meta.url);
@@ -104,7 +105,7 @@ try {
     assert.equal(sideColumns, { phone: 1, landscape: 3, desktop: 3 }[viewportName], `Side Easter Eggs uses the expected ${width}px grid`);
     await assertNoHorizontalOverflow(page, '/side-easter-eggs');
     await page.screenshot({
-      path: new URL(`../artifacts/side-easter-eggs-${width}.png`, import.meta.url).pathname,
+      path: fileURLToPath(new URL(`../artifacts/side-easter-eggs-${width}.png`, import.meta.url)),
       fullPage: true,
     });
     const firstSideTarget = await sideCards.first().getAttribute('href');
