@@ -1,106 +1,91 @@
-/* Elemental nav plates: six equal cells, the active one underlined in its own colour. */
+/*
+ * Row 2 of the band: the guide and the four staffs as OG pills, cleaned up. Each tab carries its staff
+ * colour on the icon; the open tab fills with it and gets an underline, so it reads at a glance.
+ * Phones restore the OG stack: Main Guide across the top, then Ice | Fire, then Wind | Lightning.
+ */
 .origins-module .origins-plates {
-  position: sticky;
-  top: var(--hub-pin-height, var(--hub-nav-height));
-  z-index: 20;
-  display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  background: #0b1412;
-  border-bottom: 1px solid var(--o-hair);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  width: min(100% - 32px, 1000px);
+  height: var(--o-tabs-height);
+  margin: 0 auto;
+  align-items: center;
+  padding: 6px 0 14px;
 }
 
 .origins-module .origins-plate {
-  --plate: var(--o-steel);
-  min-height: var(--o-plates-height);
-  min-width: 0;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  padding: 0 6px;
-  border-right: 1px solid rgba(201, 164, 92, 0.12);
-  border-bottom: 4px solid transparent;
-  color: var(--o-muted);
-  font: 700 16px/1 var(--o-display);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 1px solid rgba(170, 224, 255, 0.16);
+  border-radius: 999px;
+  background: rgba(2, 12, 22, 0.66);
+  color: var(--o-ink);
+  font: 700 0.98rem/1 var(--o-font);
+  letter-spacing: 0.01em;
   text-decoration: none;
-}
-
-.origins-module .origins-plate:last-child {
-  border-right: 0;
-}
-
-.origins-module .origins-plate[data-staff] {
-  --plate: var(--staff, var(--o-steel));
-}
-
-.origins-module .origins-plate[data-staff='speed'] {
-  --plate: var(--o-brass);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+  transition: border-color 0.15s ease, background-color 0.15s ease;
 }
 
 .origins-module .origins-plate svg {
-  flex: none;
-  width: 22px;
-  height: 22px;
-  color: var(--plate);
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+  color: var(--staff);
 }
 
 .origins-module .origins-plate:hover {
-  color: var(--o-ink);
+  border-color: color-mix(in srgb, var(--staff) 60%, transparent);
 }
 
-.origins-module .origins-plate[aria-current='page'] {
-  color: var(--o-ink);
-  border-bottom-color: var(--plate);
-  background: rgba(255, 255, 255, 0.03);
+.origins-module .origins-plate.active {
+  border-color: var(--staff);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--staff) 24%, transparent), rgba(2, 12, 22, 0.74));
+  box-shadow: inset 0 -3px 0 var(--staff);
+  color: #fff;
 }
 
-.origins-module .origins-plate__short {
-  display: none;
-}
-
-/* Phones: icon over a short label, still one row of six. */
-@media (max-width: 700px) {
-  .origins-module {
-    --o-plates-height: 58px;
-  }
-
-  .origins-module .origins-plate {
-    flex-direction: column;
-    gap: 4px;
-    font-size: 12.5px;
-    letter-spacing: 0.04em;
-  }
-
-  .origins-module .origins-plate__long {
-    display: none;
-  }
-
-  .origins-module .origins-plate__short {
-    display: inline;
-  }
-}
-
-/* Short landscape phones: nothing pinned; the plates scroll away with the title. */
-@media (max-height: 500px) and (orientation: landscape) {
-  .origins-module {
-    --o-plates-height: 48px;
-  }
-
+@media (max-width: 900px) {
   .origins-module .origins-plates {
-    position: static;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    height: auto;
+    width: min(100% - 20px, 560px);
+    padding: 8px 0 12px;
   }
 
   .origins-module .origins-plate {
-    font-size: 14px;
+    min-height: 46px;
+    padding: 0 10px;
+    border-radius: 12px;
   }
 
-  .origins-module .origins-plate__long {
-    display: none;
+  .origins-module .origins-plate[data-staff='guide'] {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Short landscape phones: all five fit on one row under the title. */
+@media (max-height: 500px) and (orientation: landscape) {
+  .origins-module .origins-plates {
+    display: flex;
+    flex-wrap: nowrap;
+    width: calc(100% - 24px);
+    gap: 6px;
+    padding: 6px 0 10px;
   }
 
-  .origins-module .origins-plate__short {
-    display: inline;
+  .origins-module .origins-plate {
+    min-height: 44px;
+    padding: 0 12px;
+    border-radius: 999px;
+    font-size: 0.9rem;
   }
 }

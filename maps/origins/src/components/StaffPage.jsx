@@ -2,36 +2,39 @@ import React from 'react';
 import ZoomImage from '../../../../shared/ui/ZoomImage';
 import useHashLanding from '../../../../shared/guide/useHashLanding';
 import ExcavationRings from './ExcavationRings';
+import SkullIcon from '../assets/images/Skull2.png';
 import '../Styles/PageStyles/StaffPage.css';
 
 /*
- * One Origins staff as a field reference: Build → Puzzle → Upgrade.
- * Desktop keeps the puzzle reference (chart or Lightning's tools) on screen beside Build and Upgrade;
- * phones read the three sections in game order. Every line comes from originsStaffPages.js.
+ * One Origins staff, OG layout cleaned up: Build and Puzzle in the wide left column, Upgrade beside them
+ * (held in view on tall desktop screens). Phones read Build → Puzzle → Upgrade in one column.
+ * Every line comes from originsStaffPages.js.
  */
 const Step = ({ item }) => (typeof item === 'string'
   ? <li>{item}</li>
   : <li><strong>{`${item.label}:`}</strong> {item.text}</li>);
 
+const PanelTitle = ({ id, children }) => (
+  <h3 id={id}><img src={SkullIcon} alt="" className="origins-panel__icon" /> {children}</h3>
+);
+
 export default function StaffPage({ staff, tools = null, extra = null }) {
   const { id, name, build, puzzle, upgrade, ring } = staff;
-  // Section links (#build, #puzzle, #upgrade, Lightning's #switches) land clear of the pinned nav.
+  // Section links (#build, #puzzle, #upgrade, Lightning's #switches) land clear of the pinned tab row.
   useHashLanding(['build', 'puzzle', 'upgrade', 'switches']);
 
   return (
-    <div className={`staff-page${tools ? ' staff-page--tools' : ''}`} data-staff={id}>
-      <div className="staff-page__hero">
-        <h2>{name} Staff</h2>
-        <nav className="staff-page__jump" aria-label={`${name} Staff sections`}>
-          <a href="#build">Build</a>
-          <a href="#puzzle">Puzzle</a>
-          <a href="#upgrade">Upgrade</a>
-        </nav>
-      </div>
+    <div className={`origins-page staff-page${tools ? ' staff-page--tools' : ''}`} data-staff={id}>
+      <h2 className="visually-hidden">{name} Staff</h2>
+      <nav className="staff-page__jump" aria-label={`${name} Staff sections`}>
+        <a href="#build">Build</a>
+        <a href="#puzzle">Puzzle</a>
+        <a href="#upgrade">Upgrade</a>
+      </nav>
 
-      <div className="staff-page__grid">
-        <section className="staff-block staff-block--build" id="build" aria-labelledby="build-title">
-          <h3 id="build-title">Build</h3>
+      <div className="staff-page__main">
+        <section className="origins-panel staff-block" id="build" aria-labelledby="build-title">
+          <PanelTitle id="build-title">Build</PanelTitle>
           <dl className="staff-page__facts">
             {build.map((row) => (
               <div key={row.k}>
@@ -42,32 +45,30 @@ export default function StaffPage({ staff, tools = null, extra = null }) {
           </dl>
         </section>
 
-        <section className="staff-block staff-block--puzzle" id="puzzle" aria-labelledby="puzzle-title">
-          <h3 id="puzzle-title">Puzzle</h3>
+        <section className="origins-panel staff-block" id="puzzle" aria-labelledby="puzzle-title">
+          <PanelTitle id="puzzle-title">Puzzle</PanelTitle>
           {puzzle.pianoCode && (
             <div className="staff-page__chords" role="group" aria-label={`Piano code: ${puzzle.pianoCode.join(', ')}`}>
               <span className="staff-page__label">Piano code</span>
               <ol>{puzzle.pianoCode.map((chord) => <li key={chord}>{chord}</li>)}</ol>
             </div>
           )}
-          {!tools && <ZoomImage {...puzzle.chart} className="staff-page__chart" />}
           {/* A single step is not a sequence, so it gets no number. */}
           {puzzle.steps.length === 1
             ? <p className="staff-page__step">{puzzle.steps[0]}</p>
             : <ol className="staff-page__steps">{puzzle.steps.map((item) => <Step key={item} item={item} />)}</ol>}
           {puzzle.note && <p className="staff-page__note">{puzzle.note}</p>}
           {tools}
-          {tools && <ZoomImage {...puzzle.chart} className="staff-page__chart" />}
+          <ZoomImage {...puzzle.chart} className="staff-page__chart" />
           {extra}
         </section>
+      </div>
 
-        <section className="staff-block staff-block--upgrade" id="upgrade" aria-labelledby="upgrade-title">
-          <h3 id="upgrade-title">Upgrade</h3>
+      <div className="staff-page__side">
+        <section className="origins-panel staff-block" id="upgrade" aria-labelledby="upgrade-title">
+          <PanelTitle id="upgrade-title">Upgrade</PanelTitle>
           {upgrade.anyOrder && (
-            <div className="staff-any-order">
-              <span className="staff-page__label">{upgrade.anyOrder.label}</span>
-              <p>{upgrade.anyOrder.text}</p>
-            </div>
+            <p className="staff-any-order"><strong>{`${upgrade.anyOrder.label}:`}</strong> {upgrade.anyOrder.text}</p>
           )}
           <ol className="staff-page__steps">{upgrade.steps.map((item) => <Step key={typeof item === 'string' ? item : item.text} item={item} />)}</ol>
           <ExcavationRings staffName={name} ring={ring} />

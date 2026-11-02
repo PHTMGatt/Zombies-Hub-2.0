@@ -16,6 +16,7 @@ export default function SpeedRunLayout() {
   return (
     <div className="speedrun-page">
       <div className="speedrun-shell">
+        <Link to="/maps/origins" className="speedrun-back">← Back to Main Guide</Link>
         <header className="speedrun-head">
           <div>
             <span className="speedrun-kicker">Black Ops III · Advanced Route</span>
@@ -39,6 +40,7 @@ export default function SpeedRunLayout() {
         <Outlet />
 
         <div className="speedrun-foot">
+          <Link to="/maps/origins">← Main Guide</Link>
           <Link to="/side-easter-eggs">← Back to Side Easter Eggs</Link>
           <a href={originsSpeedRunVideo.url} target="_blank" rel="noreferrer">Full speedrun video ↗</a>
         </div>

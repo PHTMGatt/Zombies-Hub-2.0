@@ -132,25 +132,25 @@ try {
     await page.waitForLoadState('networkidle');
     assert.equal(new URL(page.url()).pathname, originsTarget, 'Origins guide navigation reaches its intended route');
 
-    // Origins guide: one sequence. Each step's answer is on the page; its how-to sits under "More on this step".
+    // Origins guide: one sequence. Each step's action is on the page; the rest of the step sits under Details.
     await page.goto(`${base}/maps/origins`, { waitUntil: 'networkidle' });
     await page.evaluate(() => window.localStorage.clear());
     await page.reload({ waitUntil: 'networkidle' });
-    assert.equal(await page.locator('#secure-keys h3').innerText(), 'Secure the keys');
+    assert.equal(await page.locator('#secure-keys h3').innerText(), 'Ascend from Darkness');
     assert.equal(await page.locator('#thunder-fists h3').innerText(), 'Thunder Fists');
     assert.match(await page.locator('#secure-keys').innerText(), /Odin · middle robot/, 'Staff placement answer is visible without opening anything');
-    await page.locator('#secure-keys .guide-seq__more > summary').click();
-    assert(await page.locator('#secure-keys .guide-how').isVisible(), '"More on this step" shows the how-to');
-    // Speed Run is always open: the last Origins nav item, reachable with empty storage, no lock copy anywhere.
+    await page.locator('#secure-keys .run-step__details > summary').click();
+    assert.match(await page.locator('#secure-keys .run-step__details').innerText(), /any order/, 'Details shows the rest of the step');
+    // Speed Run is always open: a small link on the Main Guide (not a tab), reachable with empty storage, no lock copy anywhere.
     await page.evaluate(() => window.localStorage.clear());
     await page.goto(`${base}/maps/origins`, { waitUntil: 'networkidle' });
-    const navLinks = page.locator('.origins-plates a');
-    const lastNav = navLinks.last();
-    assert.equal(await lastNav.getAttribute('aria-label'), 'Speed Run', 'Speed Run is the last Origins nav item');
-    await lastNav.scrollIntoViewIfNeeded();
-    const navBox = await lastNav.boundingBox();
-    assert(navBox && navBox.x >= 0 && navBox.x + navBox.width <= width + 1, 'Speed Run nav item can sit fully inside the viewport');
-    await assertNoHorizontalOverflow(page, '/maps/origins (nav scrolled)');
+    assert.equal(await page.locator('.origins-plates a[href="/maps/origins/speed-run"]').count(), 0, 'Speed Run is not an Origins tab');
+    const speedLink = page.locator('a.origins-speedrun:visible');
+    assert.equal(await speedLink.count(), 1, 'the Main Guide shows one Speed Run link');
+    await speedLink.scrollIntoViewIfNeeded();
+    const navBox = await speedLink.boundingBox();
+    assert(navBox && navBox.x >= 0 && navBox.x + navBox.width <= width + 1, 'Speed Run link sits fully inside the viewport');
+    await assertNoHorizontalOverflow(page, '/maps/origins (Speed Run link)');
     await page.goto(`${base}/side-easter-eggs/origins-speedrun`, { waitUntil: 'networkidle' });
     assert.equal(new URL(page.url()).pathname, '/maps/origins/speed-run', 'Old Origins Speed Run address redirects into the Origins guide');
     await page.getByRole('heading', { name: 'Origins Speed Run', level: 2 }).waitFor();
@@ -189,18 +189,22 @@ try {
     await assertNoHorizontalOverflow(page, '/maps/origins/speed-run/lightning');
     await page.evaluate(() => window.localStorage.clear());
 
-    // Only the Origins nav plates stay pinned, and they stay compact, with an unclipped title and the active staff in view.
+    // The Origins band: the OG title over its five tabs; at most the tab row stays pinned, with the active tab in view.
     await page.goto(`${base}/maps/origins/lightning-staff`, { waitUntil: 'networkidle' });
+    await page.evaluate(() => window.scrollTo(0, 600));
     const originsHeader = await page.evaluate(() => {
       const active = document.querySelector('.origins-plates a[aria-current="page"]').getBoundingClientRect();
-      const title = document.querySelector('.origins-mast h1').getBoundingClientRect();
+      const title = document.querySelector('.origins-head h1').getBoundingClientRect();
+      const hub = document.querySelector('.hub-header');
+      const hubBottom = ['fixed', 'sticky'].includes(getComputedStyle(hub).position) ? hub.getBoundingClientRect().bottom : 0;
+      const band = document.querySelector('.origins-top').getBoundingClientRect();
       return {
-        height: document.querySelector('.origins-plates').offsetHeight,
+        pinned: Math.max(0, band.bottom - Math.max(hubBottom, 0)),
         activeInView: active.left >= 0 && active.right <= window.innerWidth,
         titleInView: title.left >= 0 && title.right <= window.innerWidth,
       };
     });
-    assert(originsHeader.height <= 64, `Origins pinned nav is ${originsHeader.height}px tall at ${width}px`);
+    assert(originsHeader.pinned <= 72, `Origins keeps ${originsHeader.pinned}px pinned at ${width}px`);
     assert(originsHeader.activeInView, 'Origins keeps the active staff tab in view');
     assert(originsHeader.titleInView, 'Origins header title is not clipped');
 

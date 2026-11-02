@@ -34,13 +34,14 @@ export const MAP_NAMES = {
 export const SEARCH_ENTRIES = [
   // Origins
   { map: 'origins', kind: 'guide', title: 'Little Lost Girl — tracked guide', to: '/maps/origins', keywords: ['main easter egg', 'main quest', 'ee', 'walkthrough', 'steps'] },
-  { map: 'origins', kind: 'ref', title: 'Staff build codes', stepId: 'build-staffs', to: ref('origins', 'build-staffs'), keywords: ['staff code', 'staff codes', 'ice staff', 'fire staff', 'wind staff', 'lightning staff', 'build staff', 'symbols', 'gramophone', 'parts'] },
-  { map: 'origins', kind: 'ref', title: 'Staff upgrades', stepId: 'upgrade-staffs', to: ref('origins', 'upgrade-staffs'), keywords: ['upgrade staff', 'upgrade staffs', 'ice upgrade', 'fire upgrade', 'wind upgrade', 'lightning upgrade', 'gravestones', 'chimneys', 'cauldrons', 'rings'] },
+  // Staff codes, parts and upgrades live on the staff pages; the Main Guide steps only say "build" / "upgrade all four".
+  { map: 'origins', kind: 'ref', title: 'Build the Staffs', stepId: 'build-staffs', to: ref('origins', 'build-staffs'), keywords: ['build staffs', 'build the staffs', 'elemental staffs'] },
+  { map: 'origins', kind: 'ref', title: 'Secure the Keys (upgrade the staffs)', stepId: 'upgrade-staffs', to: ref('origins', 'upgrade-staffs'), keywords: ['secure the keys', 'upgrade staffs', 'staff upgrades'] },
   { map: 'origins', kind: 'tool', title: 'Lightning switch board + Electrical Panel', to: '/maps/origins/lightning-staff#switches', keywords: ['switches', 'switch board', 'electrical panel', 'lightning code', 'dials', 'piano', 'chords'] },
-  { map: 'origins', kind: 'page', title: 'Ice Staff', to: '/maps/origins/ice-staff', keywords: ['ice staff', 'ice code', 'tablets', 'freya'] },
-  { map: 'origins', kind: 'page', title: 'Fire Staff', to: '/maps/origins/fire-staff', keywords: ['fire staff', 'fire code', 'torches', 'mound'] },
-  { map: 'origins', kind: 'page', title: 'Wind Staff', to: '/maps/origins/wind-staff', keywords: ['wind staff', 'wind code', 'smoke', 'odin'] },
-  { map: 'origins', kind: 'page', title: 'Lightning Staff', to: '/maps/origins/lightning-staff', keywords: ['lightning staff', 'thor'] },
+  { map: 'origins', kind: 'page', title: 'Ice Staff', to: '/maps/origins/ice-staff', keywords: ['ice staff', 'ice staff code', 'ice code', 'ice puzzle', 'ice upgrade', 'gravestones', 'blue record', 'tablets', 'freya'] },
+  { map: 'origins', kind: 'page', title: 'Fire Staff', to: '/maps/origins/fire-staff', keywords: ['fire staff', 'fire staff code', 'fire code', 'fire upgrade', 'cauldrons', 'red record', 'torches', 'mound'] },
+  { map: 'origins', kind: 'page', title: 'Wind Staff', to: '/maps/origins/wind-staff', keywords: ['wind staff', 'wind staff code', 'wind code', 'wind upgrade', 'chimneys', 'yellow record', 'smoke', 'odin'] },
+  { map: 'origins', kind: 'page', title: 'Lightning Staff', to: '/maps/origins/lightning-staff', keywords: ['lightning staff', 'lightning staff code', 'lightning upgrade', 'purple record', 'thor'] },
   { map: 'origins', kind: 'page', title: 'Speedrun route', to: '/maps/origins/speed-run', keywords: ['speedrun', 'speed run', 'fast', 'route'] },
 
   // Mob of the Dead

@@ -5,7 +5,7 @@
   border-top: 1px solid var(--o-hair);
   background: transparent;
   color: var(--o-muted);
-  font: 600 15px/1.4 var(--o-display);
+  font: 600 15px/1.4 var(--o-font);
   letter-spacing: 0.06em;
 }
 

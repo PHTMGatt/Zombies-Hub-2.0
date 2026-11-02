@@ -1,6 +1,6 @@
 /*
- * Origins field-sheet redesign: title block, elemental nav plates, run sheet, staff board and the
- * Build / Puzzle / Upgrade staff pages, at every smoke viewport.
+ * Origins, the OG guide cleaned up: the blue title band with its five tabs, the lean Main Steps with
+ * Tips and Speed Run, and the Build / Puzzle / Upgrade staff pages, at every smoke viewport.
  */
 import assert from 'node:assert/strict';
 import { chromium } from 'playwright';
@@ -28,14 +28,14 @@ const contrastScript = () => {
 
 const base = process.env.SMOKE_BASE_URL || 'http://127.0.0.1:4173';
 const ROUTES = [
-  ['/maps/origins', 'Guide'],
-  ['/maps/origins/ice-staff', 'Ice'],
-  ['/maps/origins/fire-staff', 'Fire'],
-  ['/maps/origins/wind-staff', 'Wind'],
-  ['/maps/origins/lightning-staff', 'Lightning'],
-  ['/maps/origins/speed-run', 'Speed Run'],
+  ['/maps/origins', 'Main Guide'],
+  ['/maps/origins/ice-staff', 'Ice Staff'],
+  ['/maps/origins/fire-staff', 'Fire Staff'],
+  ['/maps/origins/wind-staff', 'Wind Staff'],
+  ['/maps/origins/lightning-staff', 'Lightning Staff'],
+  ['/maps/origins/speed-run', null],
 ];
-const PLATES = ['Guide', 'Ice', 'Fire', 'Wind', 'Lightning', 'Speed Run'];
+const TABS = ['Main Guide', 'Ice Staff', 'Fire Staff', 'Wind Staff', 'Lightning Staff'];
 const results = [];
 
 const assertNoHorizontalOverflow = async (page, label) => {
@@ -51,135 +51,110 @@ try {
     const errors = [];
     page.on('pageerror', (error) => errors.push(error.message));
 
-    // ---- Shell: title block, nav plates, nothing behind the reading surface ----
+    // ---- Shell: the OG band (title row, then the five tabs) over the robot ----
     for (const [route, current] of ROUTES) {
       await page.goto(`${base}${route}`, { waitUntil: 'networkidle' });
-      assert.equal((await page.locator('.origins-mast h1').innerText()).trim().toLowerCase(), 'origins', `${route}: title block names the map`);
-      const plates = await page.locator('.origins-plates a').evaluateAll((links) => links.map((link) => {
+      assert.equal((await page.locator('.origins-head h1').innerText()).replace(/\s+/g, ' ').trim(), 'Origins Easter Egg Little Lost Girl', `${route}: OG title`);
+      assert.equal(await page.locator('.origins-head img.origins-head__revive').count(), 2, `${route}: Revive icon either side of the title`);
+      const tabs = await page.locator('.origins-plates a').evaluateAll((links) => links.map((link) => {
         const box = link.getBoundingClientRect();
-        return { label: link.getAttribute('aria-label') || link.textContent.trim(), current: link.getAttribute('aria-current'), top: box.top, left: box.left, right: box.right, height: box.height };
+        return { label: link.textContent.trim(), current: link.getAttribute('aria-current'), top: Math.round(box.top), left: box.left, right: box.right, width: box.width, height: box.height };
       }));
-      assert.deepEqual(plates.map((plate) => plate.label), PLATES, `${route}: six plates in order`);
-      assert.deepEqual(plates.filter((plate) => plate.current === 'page').map((plate) => plate.label), [current], `${route}: the current plate is marked`);
-      for (const plate of plates) {
-        assert(plate.height >= 48, `${route}: ${plate.label} plate is ${Math.round(plate.height)}px tall`);
-        assert(plate.left >= -1 && plate.right <= width + 1, `${route}: ${plate.label} plate is clipped at ${width}px`);
+      assert.deepEqual(tabs.map((tab) => tab.label), TABS, `${route}: five tabs in order, no Speed Run tab`);
+      assert.deepEqual(tabs.filter((tab) => tab.current === 'page').map((tab) => tab.label), current ? [current] : [], `${route}: the current tab is marked`);
+      for (const tab of tabs) {
+        assert(tab.height >= 44, `${route}: ${tab.label} tab is ${Math.round(tab.height)}px tall`);
+        assert(tab.left >= -1 && tab.right <= width + 1, `${route}: ${tab.label} tab is clipped at ${width}px`);
       }
-      assert(new Set(plates.map((plate) => Math.round(plate.top))).size === 1, `${route}: plates sit on one row`);
+      const rows = [...new Set(tabs.map((tab) => tab.top))];
+      if (name === 'phone') {
+        // The OG phone stack: Main Guide across, then Ice | Fire, then Wind | Lightning.
+        assert.equal(rows.length, 3, `${route}: three tab rows on phones`);
+        assert(tabs[0].width > tabs[1].width * 1.8, `${route}: Main Guide spans the first row`);
+        assert.deepEqual(tabs.map((tab) => rows.indexOf(tab.top)), [0, 1, 1, 2, 2], `${route}: Ice | Fire, then Wind | Lightning`);
+      } else {
+        assert.equal(rows.length, 1, `${route}: tabs sit on one row at ${name}`);
+      }
+      const band = await page.evaluate(() => {
+        const title = document.querySelector('.origins-head h1').getBoundingClientRect();
+        const firstTab = document.querySelector('.origins-plates a').getBoundingClientRect();
+        return { gap: firstTab.top - title.bottom, robot: /Robot/.test(getComputedStyle(document.querySelector('.origins-module')).backgroundImage) };
+      });
+      assert(band.gap >= 8, `${route}: title row and tab row are ${Math.round(band.gap)}px apart`);
+      assert(band.robot, `${route}: the robot artwork is the page background`);
+      // What stays pinned under the hub bar once the page scrolls: only the tab row on desktop, nothing on phones.
+      await page.evaluate(() => window.scrollTo(0, 600));
       const pinned = await page.evaluate(() => {
         const hub = document.querySelector('.hub-header');
         const hubPinned = ['fixed', 'sticky'].includes(getComputedStyle(hub).position);
         const hubBottom = hubPinned ? hub.getBoundingClientRect().bottom : 0;
-        const below = [...document.querySelectorAll('.origins-module *')]
-          .filter((element) => ['fixed', 'sticky'].includes(getComputedStyle(element).position) && element.closest('header, [data-pinned]') === element)
-          .reduce((sum, element) => sum + element.getBoundingClientRect().height, 0);
-        return { below: Math.round(below), hubBottom };
+        const top = document.querySelector('.origins-top').getBoundingClientRect();
+        return { hubPinned, visibleBand: Math.max(0, top.bottom - Math.max(hubBottom, 0)) };
       });
-      assert(pinned.below <= (name === 'landscape' ? 0 : 64), `${route}: ${pinned.below}px pinned under the hub bar at ${name}`);
-      const glass = await page.evaluate(() => [...document.querySelectorAll('main *')].filter((element) => {
-        const filter = getComputedStyle(element).backdropFilter;
-        return filter && filter !== 'none';
-      }).length);
-      assert.equal(glass, 0, `${route}: no backdrop-filter glass inside the page`);
+      if (name === 'landscape') assert(!pinned.hubPinned, `${route}: the hub bar scrolls away in short landscape`);
+      assert(pinned.visibleBand <= (name === 'desktop' ? 72 : 0), `${route}: ${Math.round(pinned.visibleBand)}px of the band stays pinned at ${name}`);
       await assertNoHorizontalOverflow(page, `${route} at ${name}`);
     }
-    results.push(`${name}: title block, six nav plates, pinned chrome and no glass on every Origins route`);
+    results.push(`${name}: OG title row, five tabs (${name === 'phone' ? 'phone stack 1 / 2 / 2' : 'one row'}), robot background, pinned band on every Origins route`);
 
-    // ---- Main Guide: run sheet on the survey spine + staff board ----
+    // ---- Main Guide: the sequence, lean ----
     await page.addInitScript(contrastScript);
     await page.goto(`${base}/maps/origins`, { waitUntil: 'networkidle' });
     const rendered = await page.locator('li.run-step').evaluateAll((items) => items.map((item) => ({ id: item.id, title: item.querySelector('h3')?.textContent.trim() })));
-    assert.deepEqual(rendered.map((item) => item.id), originsGuide.map((step) => step.id), 'run sheet keeps the 11 steps in order');
-    assert.deepEqual(rendered.map((item) => item.title), originsGuide.map((step) => step.title), 'run sheet titles match the data');
+    assert.deepEqual(rendered.map((item) => item.id), originsGuide.map((step) => step.id), 'Main Steps keep the 11 steps in order');
+    assert.deepEqual(rendered.map((item) => item.title), originsGuide.map((step) => step.title), 'step names match the data');
     for (const step of originsGuide) {
-      assert(await page.locator(`#${step.id} .run-step__answer`).isVisible(), `${step.id}: answer visible without opening anything`);
-      assert.equal((await page.locator(`#${step.id} .run-step__answer`).innerText()).trim(), step.goal, `${step.id}: answer is the step goal`);
+      const goal = page.locator(`#${step.id} .run-step__goal`);
+      assert(await goal.isVisible(), `${step.id}: action visible without opening anything`);
+      assert.equal((await goal.innerText()).trim(), step.goal, `${step.id}: action is the step goal`);
+      assert.equal(await page.locator(`#${step.id} .run-step__warn`).count(), step.critical?.length ?? 0, `${step.id}: one warning line per critical note`);
     }
+    for (const id of ['build-staffs', 'upgrade-staffs']) {
+      assert.equal(await page.locator(`#${id} :is(details, .gref-stack, a, button)`).count(), 0, `${id}: one line, nothing behind it`);
+    }
+    assert.equal(await page.locator('.run-sheet__steps a[href*="-staff"]').count(), 0, 'no staff buttons or links under the Main Steps');
+    assert.equal(await page.locator('.run-step__details[open]').count(), 0, 'Details start closed');
+    const details = page.locator('#rain-fire .run-step__details');
+    await details.locator('summary').click();
+    assert.match(await details.innerText(), /open foot/, 'Details opens the rest of the step');
+    assert((await details.locator('summary').boundingBox()).height >= 44, 'Details is a 44px target');
     const mainText = await page.locator('main').innerText();
-    assert.equal(await page.locator('.switch-board').count(), 0, 'no switch board on the Main Guide');
+    assert.equal(await page.locator('.switch-board, .staff-board').count(), 0, 'no switch board or staff board on the Main Guide');
     assert.deepEqual(TRACKER_LABELS.filter((label) => mainText.includes(label)), [], 'no tracker-only lines on the Main Guide');
-    for (const staff of STAFFS) {
-      assert((await page.locator(`a[href="/maps/origins/${staff}-staff"]:visible`).count()) > 0, `a visible link to the ${staff} staff page`);
-    }
-    const lightningUpgrade = page.locator('#upgrade-staffs [data-staff="lightning"]:visible').first();
-    assert.equal(await lightningUpgrade.evaluate((el) => el.tagName === 'DETAILS' && !el.open), name !== 'desktop', 'staff rows start closed on phone and landscape');
-    if (name !== 'desktop') await lightningUpgrade.locator('summary').click();
-    assert.equal(await lightningUpgrade.locator('a[href="/maps/origins/lightning-staff#switches"]').count(), 1, 'step 2 links straight to the Lightning switch board');
-    for (const chord of ['1 · 3 · 6', '3 · 5 · 7', '2 · 4 · 6']) assert((await lightningUpgrade.innerText()).includes(chord), `Lightning upgrade shows chord ${chord}`);
-    const iceUpgrade = page.locator('#upgrade-staffs [data-staff="ice"]:visible').first();
-    if (name !== 'desktop') await iceUpgrade.locator('summary').click();
-    const icePrereqs = await iceUpgrade.locator('ul.staff-upgrade__either li').allInnerTexts();
-    assert.deepEqual(icePrereqs.map((text) => text.trim()), ['Crazy Place: match blue-dot pillar → ceiling stone, shoot it', 'Freeze 3 gravestones → shatter with bullets'], 'Ice puzzle and gravestone lines sit in one unnumbered list');
-    assert.doesNotMatch(await iceUpgrade.innerText(), /either order|any order/i, 'the Main Guide makes no order claim for the Ice pair');
-    assert.equal(await page.locator('.origins-guide__credits audio[aria-label]').count(), 2, 'credits keep both named audio clips');
+    assert.equal(await page.locator('.origins-tips li').count(), 3, 'Tips hold the three strategy tips');
+    assert.equal(await page.locator('.origins-tips audio[aria-label]').count(), 2, 'Tips keep both named audio clips');
     assert.equal(await page.getByRole('button', { name: 'I completed this Easter Egg' }).count(), 1, 'completion action present');
+    const speed = page.locator('a.origins-speedrun:visible');
+    assert.equal(await speed.count(), 1, 'one visible Speed Run link');
+    const order = await page.evaluate(() => {
+      const top = (selector) => [...document.querySelectorAll(selector)].find((el) => el.checkVisibility()).getBoundingClientRect();
+      return { steps: top('.origins-steps'), speed: top('a.origins-speedrun'), tips: top('.origins-tips') };
+    });
+    if (name === 'phone') {
+      assert(order.steps.bottom <= order.speed.top && order.speed.bottom <= order.tips.top, 'phone: Main Steps, then Speed Run, then Tips');
+    } else {
+      assert(order.speed.left >= order.steps.right && order.speed.top >= order.tips.bottom, `${name}: Speed Run sits under Tips, beside the steps`);
+    }
 
     const type = await page.evaluate(() => {
-      const answer = getComputedStyle(document.querySelector('.run-step__answer'));
-      const label = document.querySelector('.run-step .gref__label, .staff-board dt, .staff-row dt');
-      const ground = getComputedStyle(document.querySelector('.origins-module')).backgroundColor;
-      return {
-        answerSize: parseFloat(answer.fontSize),
-        answerFont: answer.fontFamily,
-        answerContrast: window.__contrast(answer.color, ground),
-        labelContrast: label ? window.__contrast(getComputedStyle(label).color, ground) : 99,
-      };
+      const goal = getComputedStyle(document.querySelector('.run-step__goal'));
+      const warn = getComputedStyle(document.querySelector('.run-step__warn'));
+      const panel = 'rgb(4, 15, 27)';
+      return { size: parseFloat(goal.fontSize), goal: window.__contrast(goal.color, panel), warn: window.__contrast(warn.color, panel) };
     });
-    assert(type.answerSize >= 16, `answers are ${type.answerSize}px`);
-    assert.doesNotMatch(type.answerFont, /^\s*['"]?Rajdhani/i, 'answers use the body font, not Rajdhani');
-    assert(type.answerContrast >= 4.5 && type.labelContrast >= 4.5, `contrast answer ${type.answerContrast.toFixed(2)} / label ${type.labelContrast.toFixed(2)}`);
-
-    // Exactly one staff layout per size: board + columns on desktop, tap rows below it.
-    const shown = await page.evaluate(() => ({
-      rows: [...document.querySelectorAll('details.staff-row')].filter((el) => el.checkVisibility()).length,
-      wide: [...document.querySelectorAll('.staff-board, .staff-columns')].filter((el) => el.checkVisibility()).length,
-    }));
-    assert.deepEqual(shown, name === 'desktop' ? { rows: 0, wide: 2 } : { rows: 8, wide: 0 }, `${name}: one staff layout at a time`);
-
+    assert(type.size >= 16, `actions are ${type.size}px`);
+    assert(type.goal >= 4.5 && type.warn >= 4.5, `contrast action ${type.goal.toFixed(2)} / warning ${type.warn.toFixed(2)}`);
     if (name === 'desktop') {
-      const layout = await page.evaluate(() => {
-        const board = document.querySelector('.staff-board').getBoundingClientRect();
-        const sheet = document.querySelector('.run-sheet__steps').getBoundingClientRect();
-        // Height of the chrome that stays pinned once the page scrolls: the hub bar plus the nav plates.
-        const pinned = document.querySelector('.hub-header').getBoundingClientRect().height + document.querySelector('.origins-plates').getBoundingClientRect().height;
-        return { boardWidth: board.width, boardHeight: board.height, sheetWidth: sheet.width, sticky: getComputedStyle(document.querySelector('.staff-board')).position, room: window.innerHeight - pinned - 24 };
-      });
-      assert(layout.boardWidth <= 400, `staff board is ${Math.round(layout.boardWidth)}px wide`);
-      const smallLinks = await page.locator('.staff-board a, .staff-columns a').evaluateAll((links) => links.filter((link) => link.getBoundingClientRect().height < 44).length);
-      assert.equal(smallLinks, 0, 'staff board and upgrade-column links are at least 44px tall');
-      assert(layout.sheetWidth >= 640, `run sheet keeps ${Math.round(layout.sheetWidth)}px of reading width`);
-      if (layout.sticky === 'sticky') assert(layout.boardHeight <= layout.room, `sticky board (${Math.round(layout.boardHeight)}px) fits the viewport (${Math.round(layout.room)}px)`);
-    } else {
-      await page.reload({ waitUntil: 'networkidle' });
-      for (const id of ['build-staffs', 'upgrade-staffs']) {
-        const rows = page.locator(`#${id} details.staff-row`);
-        assert.equal(await rows.count(), 4, `${id}: four staff rows`);
-        assert.equal(await rows.evaluateAll((items) => items.filter((item) => item.open).length), 0, `${id}: rows start closed`);
-        for (let index = 0; index < 4; index += 1) {
-          const box = await rows.nth(index).locator('summary').boundingBox();
-          assert(box.height >= 52, `${id}: row summary ${Math.round(box.height)}px tall`);
-        }
-      }
-      const first = page.locator('#build-staffs details.staff-row').nth(0);
-      const second = page.locator('#build-staffs details.staff-row').nth(1);
-      const indicator = (row) => row.locator('summary').evaluate((el) => getComputedStyle(el, '::after').content);
-      const closedMark = await indicator(first);
-      await first.locator('summary').click();
-      assert(await first.evaluate((el) => el.open), 'tapping a row opens it');
-      assert.notEqual(await indicator(first), closedMark, 'an open row shows a different indicator');
-      assert(await first.locator('dl').isVisible(), 'an open row shows its facts');
-      await second.locator('summary').click();
-      assert(await first.evaluate((el) => el.open) && await second.evaluate((el) => el.open), 'several rows can be open at once');
-      await page.reload({ waitUntil: 'networkidle' });
-      const positions = await page.evaluate(() => {
-        const title = document.querySelector('li.run-step h3').getBoundingClientRect();
-        return { firstBottom: title.bottom, step3: document.getElementById('secure-keys').getBoundingClientRect().top, viewport: window.innerHeight };
-      });
-      assert(positions.firstBottom <= positions.viewport, `first step title ends at ${Math.round(positions.firstBottom)}px, below the first screen`);
-      const limit = (name === 'phone' ? 2 : 3) * positions.viewport;
-      assert(positions.step3 < limit, `step 3 starts at ${Math.round(positions.step3)}px (limit ${limit})`);
+      const reading = await page.locator('.origins-steps').evaluate((el) => el.getBoundingClientRect().width);
+      assert(reading >= 640, `Main Steps keep ${Math.round(reading)}px of reading width`);
     }
-    results.push(`${name}: run sheet, answers, staff board / rows, Lightning link, Ice pair, type and contrast`);
+    results.push(`${name}: Main Steps (lean staff steps, warnings, closed Details), Tips, Speed Run placement, type and contrast`);
+
+    // ---- Speed Run: a way back to the Main Guide ----
+    await page.goto(`${base}/maps/origins/speed-run`, { waitUntil: 'networkidle' });
+    const back = page.locator('a.speedrun-back');
+    assert.equal(await back.getAttribute('href'), '/maps/origins', 'Speed Run leads back to the Main Guide');
+    assert((await back.boundingBox()).height >= 44, 'Back to Main Guide is a 44px target');
 
     // ---- Staff pages: Build → Puzzle → Upgrade ----
     for (const staff of STAFFS) {
@@ -231,22 +206,18 @@ try {
       assert.doesNotMatch(ringText, /Mule Kick|staircase|wooden platform/i, `${route}: no lever-to-ring mapping in the shared reference`);
 
       const chart = await page.locator('#puzzle .zoom-image__open img').boundingBox();
-      if (name === 'desktop') assert(order[1] - (await page.evaluate(() => window.scrollY)) < height, `${route}: the puzzle is on the first screen`);
+      if (name === 'desktop') assert(order[2] - (await page.evaluate(() => window.scrollY)) < height, `${route}: Upgrade is on the first screen`);
       if (name === 'phone') assert(chart.width >= 340, `${route}: chart is ${Math.round(chart.width)}px wide on phones`);
       if (name === 'landscape') {
-        // Ice / Fire / Wind open their puzzle with the chart; Lightning opens with its chords and switches,
-        // so its chart is checked where it sits.
-        await page.evaluate((target) => document.querySelector(target).scrollIntoView({ block: 'start', behavior: 'instant' }),
-          staff === 'lightning' ? '#puzzle .zoom-image' : '#puzzle');
+        // The chart follows its steps, so it is checked where it sits: whole on the short screen.
+        await page.evaluate(() => document.querySelector('#puzzle .zoom-image').scrollIntoView({ block: 'start', behavior: 'instant' }));
         const capped = await page.locator('#puzzle .zoom-image__open img').boundingBox();
-        assert(capped.height <= 260, `${route}: chart is ${Math.round(capped.height)}px tall in landscape`);
+        assert(capped.height <= 290, `${route}: chart is ${Math.round(capped.height)}px tall in landscape`);
         assert(capped.y >= -1 && capped.y + capped.height <= height + 1, `${route}: chart fits the landscape screen`);
       }
-      const body = await page.evaluate(() => {
-        const dd = getComputedStyle(document.querySelector('#build dd'));
-        return { size: parseFloat(dd.fontSize), font: dd.fontFamily };
-      });
-      assert(body.size >= 16 && !/^\s*['"]?Rajdhani/i.test(body.font), `${route}: build facts are ${body.size}px in ${body.font}`);
+      const body = await page.evaluate(() => parseFloat(getComputedStyle(document.querySelector('#build dd')).fontSize));
+      assert(body >= 16, `${route}: build facts are ${body}px`);
+      assert.equal(await page.locator('#upgrade .excavation-rings__levers > g').count(), 4, `${route}: four levers drawn`);
       await assertNoHorizontalOverflow(page, `${route} at ${name}`);
     }
 
@@ -268,30 +239,39 @@ try {
     assert(switchesTop >= 0 && switchesTop < height * 0.6, `#switches deep link lands near the top (${Math.round(switchesTop)}px)`);
     if (name === 'landscape') {
       // Nothing is pinned at 844x390, so a deep link should land near the very top.
-      await page.goto(`${base}/maps/origins#upgrade-staffs`, { waitUntil: 'networkidle' });
+      await page.goto(`${base}/maps/origins#rain-fire`, { waitUntil: 'networkidle' });
       await page.waitForTimeout(150);
-      const top = await page.locator('#upgrade-staffs').evaluate((el) => el.getBoundingClientRect().top);
-      assert(top >= 0 && top <= 32, `landscape #upgrade-staffs lands at ${Math.round(top)}px`);
+      const top = await page.locator('#rain-fire').evaluate((el) => el.getBoundingClientRect().top);
+      assert(top >= 0 && top <= 32, `landscape #rain-fire lands at ${Math.round(top)}px`);
+    } else {
+      // Deep links land clear of whatever is pinned (the hub bar, plus the tab row on desktop).
+      await page.goto(`${base}/maps/origins#rain-fire`, { waitUntil: 'networkidle' });
+      await page.waitForTimeout(150);
+      const landing = await page.evaluate(() => {
+        const pinned = Math.max(...[...document.querySelectorAll('.hub-header, .origins-plates')].map((el) => el.getBoundingClientRect().bottom).filter((bottom) => bottom > 0), 0);
+        return { top: document.getElementById('rain-fire').getBoundingClientRect().top, pinned };
+      });
+      assert(landing.top >= landing.pinned && landing.top <= landing.pinned + 48, `#rain-fire lands at ${Math.round(landing.top)}px under ${Math.round(landing.pinned)}px of chrome`);
     }
     results.push(`${name}: four staff pages — order, every line, zoomable chart, ring reference, Ice order rules, Lightning tools`);
 
     assert.deepEqual(errors, [], `${name}: page errors: ${errors.join('; ')}`);
     await context.close();
   }
-  // Short desktop (1280x720): a pinned puzzle column must fit under the pinned chrome, or not be pinned.
+  // Short desktop (1280x720): a pinned Upgrade column must fit under the pinned chrome, or not be pinned.
   {
     const context = await browser.newContext({ viewport: { width: 1280, height: 720 } });
     const page = await context.newPage();
     for (const staff of STAFFS) {
       await page.goto(`${base}/maps/origins/${staff}-staff`, { waitUntil: 'networkidle' });
       const fit = await page.evaluate(() => {
-        const puzzle = document.getElementById('puzzle');
+        const side = document.querySelector('.staff-page__side');
         const pinned = document.querySelector('.hub-header').offsetHeight + document.querySelector('.origins-plates').offsetHeight;
-        return { sticky: getComputedStyle(puzzle).position === 'sticky', height: puzzle.offsetHeight, room: window.innerHeight - pinned - 20 };
+        return { sticky: getComputedStyle(side).position === 'sticky', height: side.offsetHeight, room: window.innerHeight - pinned - 20 };
       });
-      assert(!fit.sticky || fit.height <= fit.room, `${staff}: pinned puzzle (${fit.height}px) is taller than the room (${fit.room}px) at 1280x720`);
+      assert(!fit.sticky || fit.height <= fit.room, `${staff}: pinned Upgrade (${fit.height}px) is taller than the room (${fit.room}px) at 1280x720`);
     }
-    results.push('1280x720: staff puzzle columns are only pinned when they fit');
+    results.push('1280x720: Upgrade columns are only pinned when they fit');
     await context.close();
   }
 } finally {

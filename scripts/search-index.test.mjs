@@ -38,7 +38,8 @@ test('the Lightning switch-board search result opens the board itself', () => {
 test('player-language queries land on the right reference first', () => {
   const top = (query) => search(query)[0];
   const cases = [
-    ['ice staff code', 'origins', 'Staff build codes'],
+    ['ice staff code', 'origins', 'Ice Staff'],
+    ['staff upgrades', 'origins', 'Secure the Keys (upgrade the staffs)'],
     ['gorod valves', 'gorod-krovi', 'Valve Solver'],
     ['mob plane parts', 'mob-of-the-dead', 'Plane parts'],
     ['DE wisps', 'der-eisendrache', 'Wisps'],

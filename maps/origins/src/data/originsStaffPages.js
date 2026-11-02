@@ -116,9 +116,9 @@ const originsStaffPages = {
     name: 'Lightning',
     ring: { word: 'PURPLE', orb: 'purple' },
     build: [
-      { k: 'Part 1', v: 'Church → Gen 2, jump right after Generator 4.' },
-      { k: 'Part 2', v: 'Gen 2 → Church, jump left onto Excavation scaffolding.' },
-      { k: 'Part 3', v: 'Gen 2 → Church, jump right just before Church.' },
+      { k: 'Part 1', v: 'Tank Church → Gen 2, jump right after Generator 4.' },
+      { k: 'Part 2', v: 'Tank Gen 2 → Church, jump left onto Excavation scaffolding.' },
+      { k: 'Part 3', v: 'Tank Gen 2 → Church, jump right just before Church.' },
       { k: 'Purple Record', v: 'Generator 4 / Jug / Wind Tunnel area.' },
       { k: 'Crystal', v: 'Open the Lightning Tunnel beside Generator 5 with the Gramophone + purple record, then grab the purple crystal in the Crazy Place.' },
       { k: 'Build', v: 'Under Excavation.' },
@@ -126,7 +126,7 @@ const originsStaffPages = {
     puzzle: {
       chart: { src: LightningCode, width: 1600, height: 1040, alt: 'Lightning Staff piano chart: first, second and third chords' },
       pianoCode: originsLightningPianoCode.map((chord) => chord.join('-')),
-      steps: ['Set the seven switches using the dials below.'],
+      steps: ['Play the three piano chords shown in the piano code.', 'Set the seven switches using the dials below.'],
     },
     upgrade: {
       steps: [

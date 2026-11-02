@@ -1,35 +1,33 @@
 /*
- * Origins "dig-site field sheet" tokens. One trench ground, brass for the sequence, steel for navigation,
- * and the four staff colours for their own staff only (names, ticks, bands of at most 6px).
+ * Origins tokens: the OG guide's icy blue over blue-black, Revive yellow for warnings, and each staff's
+ * own colour inside the blue (tab, upper edge, numbers, labels). Rajdhani throughout, as the OG.
  */
 .origins-module {
-  --o-ground: #0f1a17;
-  --o-ground-2: #16231f;
-  --o-ink: #eef2ec;
-  --o-text: #dbe3dd;
-  --o-muted: #9db0a7;
-  --o-hair: rgba(201, 164, 92, 0.22);
-  --o-brass: #c9a45c;
-  --o-steel: #7cc4f2;
-  --o-warn: #ffb24d;
+  --o-night: #04121f;
+  --o-panel: rgba(4, 15, 27, 0.8);
+  --o-ink: #f4fbff;
+  --o-text: #d6e6f5;
+  --o-muted: #9fbfdc;
+  --o-hair: rgba(150, 210, 255, 0.13);
+  --o-line: rgba(150, 210, 255, 0.2);
+  --o-blue: #6dc2ff;
+  --o-blue-deep: #0a4b78;
+  --o-link: #8ed7ff;
+  --o-warn: #ffc94d;
   --o-ice: #78e8e1;
   --o-fire: #ff7844;
   --o-wind: #ffe657;
   --o-lightning: #d8a8ff;
-  --o-display: 'Rajdhani', 'Segoe UI', sans-serif;
-  --o-body: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --o-plates-height: 56px;
-  /* How much of the top edge the nav plates cover while pinned (0 where they scroll away). */
-  --o-plates-pin: var(--o-plates-height);
+  --o-font: 'Rajdhani', 'Segoe UI', sans-serif;
+  /* Height of the tab row, which is all of the band that stays pinned on wide screens. */
+  --o-tabs-height: 68px;
+  --o-title-height: 76px;
+  --o-pin: 0px;
+  --staff: var(--o-blue);
 }
 
-@media (max-height: 500px) and (orientation: landscape) {
-  .origins-module {
-    --o-plates-pin: 0px;
-  }
-}
-
-/* Each staff sets --staff on its own elements; everything else stays neutral. */
+/* Each staff sets --staff on its own elements. */
+.origins-module [data-staff='guide'] { --staff: var(--o-blue); }
 .origins-module [data-staff='ice'] { --staff: var(--o-ice); }
 .origins-module [data-staff='fire'] { --staff: var(--o-fire); }
 .origins-module [data-staff='wind'] { --staff: var(--o-wind); }

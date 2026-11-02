@@ -1,4 +1,5 @@
 import React from 'react';
+import '@fontsource/rajdhani/latin-500.css';
 import '@fontsource/rajdhani/latin-600.css';
 import '@fontsource/rajdhani/latin-700.css';
 import NotFound from '../../../shared/ui/NotFound';

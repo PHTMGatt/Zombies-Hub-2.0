@@ -51,8 +51,7 @@ try {
 
     // Home search box: other maps, player phrasing.
     for (const [query, map, id, title] of [
-      ['ice staff code', '/maps/origins#build-staffs', 'build-staffs', 'Build the four staffs'],
-      ['staff upgrades', '/maps/origins#upgrade-staffs', 'upgrade-staffs', 'Upgrade the staffs'],
+      ['staff upgrades', '/maps/origins#upgrade-staffs', 'upgrade-staffs', 'Secure the Keys'],
       ['mob plane parts', '/maps/mob-of-the-dead#plane', 'plane', 'Build the Plane'],
       ['DE wisps', '/maps/der-eisendrache#first-wisps', 'first-wisps', 'First wisp cycle'],
     ]) {

@@ -13,7 +13,6 @@ const steps = guideModule.default;
 const staffPages = staffModule.default;
 const strings = guideStrings({ steps });
 const step = (id) => steps.find((item) => item.id === id);
-const tabs = (id) => step(id).refs.find((ref) => ref.type === 'tabs').tabs;
 
 const TRACKER_LABELS = [
   'Ice built', 'Fire built', 'Wind built', 'Lightning built',
@@ -37,22 +36,37 @@ test('the facts behind removed tracker lines are still in the steps', () => {
   assert.deepEqual(facts.filter((fact) => !strings.includes(fact)), []);
 });
 
-test('Ice puzzle and gravestones are distinguished', () => {
-  const ice = tabs('upgrade-staffs').find((tab) => tab.id === 'ice');
-  const unordered = ice.refs.filter((ref) => ref.unordered);
-  assert.equal(unordered.length, 1);
-  assert.deepEqual(unordered[0].items, ['Crazy Place: match blue-dot pillar → ceiling stone, shoot it', 'Freeze 3 gravestones → shatter with bullets']);
+test('the Main Guide carries the canonical Easter Egg names in order', () => {
+  const canonical = ['Secure the Keys', 'Ascend from Darkness', 'Rain Fire', 'Unleash the Horde', 'Skewer the Winged Beast', 'Wield a Fist of Iron', 'Raise Hell', 'Freedom'];
+  const titles = steps.map((item) => item.title);
+  assert.deepEqual(titles.filter((title) => canonical.includes(title)), canonical);
+});
+
+test('the two staff steps are one line each, with no staff how-to behind them', () => {
+  assert.equal(step('build-staffs').goal, 'Build all four elemental staffs before continuing.');
+  assert.equal(step('upgrade-staffs').goal, 'Upgrade all four staffs before continuing.');
+  for (const id of ['build-staffs', 'upgrade-staffs']) {
+    for (const key of ['refs', 'how', 'problems', 'links']) assert.equal(step(id)[key], undefined, `${id} has ${key}`);
+  }
+});
+
+test('no staff mechanics anywhere in the Main Guide', () => {
+  const text = strings.join('\n');
+  for (const word of [/\brecords?\b/i, /crystal/i, /gramophone/i, /\bpuzzle\b/i, /\bchords?\b/i, /\bswitch(es)?\b/i, /excavation rings?/i, /\borb\b/i]) {
+    assert.doesNotMatch(text, word, `Main Guide mentions ${word}`);
+  }
+});
+
+test('no lever-to-ring mapping is stated on any Origins page', () => {
+  const text = JSON.stringify({ steps, staffPages });
+  assert.doesNotMatch(text, /lever[^.]*controls/i);
+  assert.doesNotMatch(text, /(top|second|bottom)[^.]*ring[^.]*lever|lever[^.]*(top|second|bottom)[^.]*ring/i);
+});
+
+test('Ice gravestones are any order and the pillar order follows the game', () => {
   assert.equal(staffPages.ice.upgrade.anyOrder.label, 'Any order');
   assert.match(staffPages.ice.upgrade.anyOrder.text, /three gravestones/);
   assert.match(staffPages.ice.puzzle.note, /Follow the order the game shows/);
-});
-
-test('the switch board is linked, not embedded, on the Main Guide', () => {
-  const upgradeRefs = JSON.stringify(step('upgrade-staffs').refs);
-  assert.equal(step('upgrade-staffs').refs.flatMap((ref) => ref.tabs ?? []).flatMap((tab) => tab.refs).some((ref) => ref.type === 'custom'), false, 'no embedded tool in the upgrade tabs');
-  assert.match(upgradeRefs, /\/maps\/origins\/lightning-staff#switches/);
-  const lightning = tabs('upgrade-staffs').find((tab) => tab.id === 'lightning');
-  assert.deepEqual(lightning.links, [{ to: '/maps/origins/lightning-staff#switches', label: 'Switch board' }]);
 });
 
 test('staff pages keep every line they had', () => {

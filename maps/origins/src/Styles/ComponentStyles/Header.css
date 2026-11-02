@@ -1,98 +1,100 @@
-/* Title block: the map name as the loudest type on the page, the robot cropped and duotoned beside it. */
-.origins-module .origins-mast {
+/*
+ * The OG Origins band, given room: row 1 is the title between two Revive icons, row 2 the five tabs.
+ * The snowy robot shows through the blue between and around them.
+ */
+.origins-module .origins-top {
   position: relative;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 46%);
-  min-height: 210px;
-  overflow: hidden;
-  background: var(--o-ground-2);
-  border-bottom: 2px solid var(--o-brass);
-}
-
-.origins-module .origins-mast__title {
-  position: relative;
-  z-index: 1;
-  align-self: end;
-  padding: 32px 0 24px clamp(20px, 5vw, 72px);
-}
-
-.origins-module .origins-mast__eyebrow {
-  margin: 0;
-  color: var(--o-brass);
-  font: 700 13px/1.2 var(--o-display);
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-}
-
-.origins-module .origins-mast h1 {
-  margin: 4px 0 0;
+  z-index: 40;
+  isolation: isolate;
   color: var(--o-ink);
-  font: 700 clamp(56px, 8vw, 104px)/0.82 var(--o-display);
-  letter-spacing: -0.01em;
-  text-transform: uppercase;
+  border-bottom: 1px solid rgba(170, 224, 255, 0.2);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.32);
+  background:
+    linear-gradient(90deg, rgba(10, 75, 120, 0.95) 0%, rgba(17, 104, 166, 0.74) 32%, rgba(6, 32, 54, 0.6) 70%, rgba(4, 20, 34, 0.84) 100%),
+    url('../../../public/images/Robot.webp') center 38% / cover no-repeat,
+    var(--o-blue-deep);
 }
 
-.origins-module .origins-mast__sub {
-  margin: 10px 0 0;
-  color: var(--o-muted);
-  font: 600 22px/1.2 var(--o-display);
-}
-
-.origins-module .origins-mast__art {
-  position: relative;
-  background: url('../../../public/images/Robot.webp') 30% 22% / cover no-repeat;
-  filter: grayscale(1) contrast(1.15) brightness(0.72);
-  clip-path: polygon(14% 0, 100% 0, 100% 100%, 0 100%);
-}
-
-.origins-module .origins-mast__art::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, var(--o-ground-2) 0%, rgba(22, 35, 31, 0.2) 40%, rgba(124, 196, 242, 0.16) 100%);
-}
-
-@media (max-width: 700px) {
-  .origins-module .origins-mast {
-    grid-template-columns: minmax(0, 1fr) 38%;
-    min-height: 0;
+/* Wide, tall screens: the band pins with only its tab row showing; the title row slides under the hub bar. */
+@media (min-width: 901px) and (min-height: 600px) {
+  .origins-module {
+    --o-pin: var(--o-tabs-height);
   }
 
-  .origins-module .origins-mast__title {
-    padding: 16px 0 14px 18px;
+  .origins-module .origins-top {
+    position: sticky;
+    top: calc(var(--hub-pin-height, var(--hub-nav-height)) - var(--o-title-height));
   }
 
-  .origins-module .origins-mast h1 {
-    font-size: 48px;
-  }
-
-  .origins-module .origins-mast__sub {
-    margin-top: 4px;
-    font-size: 18px;
+  .origins-module .origins-head {
+    height: var(--o-title-height);
   }
 }
 
-/* Short landscape phones: a slim band, so the guide starts on the first screen. */
+.origins-module .origins-head {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 18px 16px 6px;
+}
+
+.origins-module .origins-head__title {
+  margin: 0;
+  font: 700 2rem/1 var(--o-font);
+  letter-spacing: 0;
+  text-align: center;
+  text-shadow: 0 0 6px #6dc2ff, 0 0 10px rgba(255, 255, 255, 0.6);
+}
+
+/* The OG two-tone title: the map line in black against the glow, the Easter Egg in white. */
+.origins-module .origins-head__map { color: #05080b; }
+.origins-module .origins-head__ee { color: #fff; }
+
+.origins-module .origins-head__revive {
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+  object-fit: contain;
+}
+
+@media (max-width: 620px) {
+  .origins-module .origins-head {
+    gap: 8px;
+    padding: 14px 10px 4px;
+  }
+
+  .origins-module .origins-head__title {
+    font-size: 1.3rem;
+    white-space: nowrap;
+  }
+
+  .origins-module .origins-head__revive {
+    width: 22px;
+    height: 22px;
+    flex-basis: 22px;
+  }
+}
+
+@media (max-width: 360px) {
+  .origins-module .origins-head__title { font-size: 1.12rem; }
+}
+
+/* Short landscape phones: the band scrolls away (it never pins here), with tighter rows. */
 @media (max-height: 500px) and (orientation: landscape) {
-  .origins-module .origins-mast {
-    grid-template-columns: minmax(0, 1fr) 40%;
-    min-height: 0;
+  .origins-module .origins-head {
+    padding: 10px 12px 4px;
+    gap: 8px;
   }
 
-  .origins-module .origins-mast__title {
-    padding: 10px 0 8px 20px;
+  .origins-module .origins-head__title {
+    font-size: 1.25rem;
+    white-space: nowrap;
   }
 
-  .origins-module .origins-mast__eyebrow {
-    display: none;
-  }
-
-  .origins-module .origins-mast h1 {
-    font-size: 40px;
-  }
-
-  .origins-module .origins-mast__sub {
-    margin-top: 2px;
-    font-size: 16px;
+  .origins-module .origins-head__revive {
+    width: 22px;
+    height: 22px;
+    flex-basis: 22px;
   }
 }
