@@ -1,8 +1,8 @@
 /* Reference workspace shared by Apothicon Upgrade, Egg Locations, Summoning Key and Sound Step:
-   a large guide video beside the panel of choices that drive it. */
+   a compact guide video beside the panel of choices that drive it. */
 .revelations-module .rev-workspace {
   display: grid;
-  grid-template-columns: minmax(0, 1.75fr) minmax(290px, 1fr);
+  grid-template-columns: minmax(0, 1.1fr) minmax(320px, 1fr);
   gap: 1.5rem;
   align-items: start;
 }
@@ -215,12 +215,12 @@
 
 @media (max-width: 980px) {
   .revelations-module .rev-workspace {
-    grid-template-columns: minmax(0, 1.4fr) minmax(250px, 1fr);
+    grid-template-columns: minmax(0, 1fr) minmax(250px, 1fr);
     gap: 1rem;
   }
 }
 
-/* Phones: the video pins under the hub bar while the choices scroll beneath it. */
+/* Portrait phones: keep the video in document flow so it never hides the choices. */
 @media (max-width: 760px) {
   .revelations-module .rev-workspace {
     grid-template-columns: 1fr;
@@ -228,10 +228,10 @@
   }
 
   .revelations-module .rev-workspace__media {
-    top: var(--hub-pin-height, var(--hub-nav-height));
-    margin: 0 -0.85rem;
-    padding: 0 0.35rem 0.5rem;
-    background: linear-gradient(180deg, rgba(5, 9, 20, 0.96) 80%, rgba(5, 9, 20, 0));
+    position: static;
+    margin: 0;
+    padding: 0;
+    background: none;
   }
 
   .revelations-module .rev-workspace__panel {
