@@ -11,7 +11,7 @@ const KRONORIUM_URL = "https://kronorium.com/";
 const MainGuide = () => (
   <div className="main-guide origins-guide">
     <div className="origins-guide__inner">
-      <GuideSteps label="Little Lost Girl" steps={originsGuide} footer={<CompleteEasterEgg mapId="origins" />} />
+      <GuideSteps label="Little Lost Girl" steps={originsGuide} collapsibleReferences footer={<CompleteEasterEgg mapId="origins" />} />
 
       {/* Credits and the two radio clips are extras: tucked away so they never sit between the step and play. */}
       <details className="origins-guide__credits">

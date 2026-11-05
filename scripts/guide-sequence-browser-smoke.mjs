@@ -60,12 +60,17 @@ try {
     const tabsRef = buildStep.refs.find((ref) => ref.type === 'tabs');
     await page.goto(`${base}/maps/origins#build-staffs`, { waitUntil: 'networkidle' });
     const step = page.locator('#build-staffs');
+    const optionalRefs = step.locator('details.guide-seq__references');
+    assert.equal(await optionalRefs.getAttribute('open'), null, 'Origins staff details start collapsed');
+    await optionalRefs.locator('summary').click();
     for (const tab of tabsRef.tabs) {
-      await step.getByRole('tab', { name: tab.label, exact: true }).click();
-      const panel = (await step.locator('[role="tabpanel"]').first().textContent()).replace(/\s+/g, ' ');
-      for (const fact of tabFacts(tab)) assert(panel.includes(fact), `Origins ${tab.label} tab shows "${fact}"`);
+      await step.getByRole('button', { name: tab.label, exact: true }).click();
+      const panel = (await step.locator('[role="region"]').first().textContent()).replace(/\s+/g, ' ');
+      for (const fact of tabFacts(tab)) assert(panel.includes(fact), `Origins ${tab.label} reference shows "${fact}"`);
     }
-    results.push(`${name}: Origins staff tabs all reachable with their facts`);
+    await step.getByRole('button', { name: tabsRef.tabs.at(-1).label, exact: true }).click();
+    assert.equal(await step.locator('[role="region"]').count(), 0, 'Clicking the selected staff collapses its panel');
+    results.push(`${name}: Origins staff quick references expand individually and can collapse`);
     assert.deepEqual(errors, [], `${name}: page errors: ${errors.join('; ')}`);
     await context.close();
 

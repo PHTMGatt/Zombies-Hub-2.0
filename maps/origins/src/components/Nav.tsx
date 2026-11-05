@@ -22,15 +22,18 @@ const Nav = () => {
   return (
     <nav className="origins-nav" aria-label="Origins guide navigation">
       <div className="origins-nav-links" ref={linksRef}>
-        <NavLink
-          to="/maps/origins"
-          end
-          className={({ isActive }) =>
-            `origins-nav-link main ${isActive ? "active main-active" : ""}`
-          }
-        >
-          <GiCrownedSkull /> <span>Main Guide</span>
-        </NavLink>
+        <div className="origins-nav-modes" role="group" aria-label="Origins guide version">
+          <NavLink to="/maps/origins" end
+            className={({ isActive }) => `origins-nav-link main ${isActive ? "active main-active" : ""}`}
+            aria-label="UI Guide">
+            <GiCrownedSkull aria-hidden="true" /> <span>UI <small>Main Guide</small></span>
+          </NavLink>
+          <NavLink to="/maps/origins/og" end
+            className={({ isActive }) => `origins-nav-link og ${isActive ? "active og-active" : ""}`}
+            aria-label="Original Origins guide">
+            <span>OG</span>
+          </NavLink>
+        </div>
 
         <NavLink
           to="/maps/origins/ice-staff"

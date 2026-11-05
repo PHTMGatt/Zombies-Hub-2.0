@@ -106,6 +106,21 @@ try {
     for (const kept of ['zh-soe-character', 'zh-de-safe-code', 'zh-achievements']) assert(left.includes(kept), `${kept} kept`);
     check(`${label}: Clear old guide data keeps saved notes and achievements`);
 
+    // Reset one map, preserving the other seven-map progress and game notes.
+    await page.goto(`${base}/maps/origins`, { waitUntil: 'networkidle' });
+    await page.getByRole('button', { name: COMPLETE }).click();
+    await page.goto(SHELF, { waitUntil: 'networkidle' });
+    assert.equal(await page.locator('.ach-head__count strong').innerText(), '2');
+    await page.locator('.ach-danger summary').click();
+    await page.locator('#ach-reset-map').selectOption('origins');
+    await page.getByRole('button', { name: 'Reset selected map' }).click();
+    assert.equal(await page.locator('.ach-head__count strong').innerText(), '1');
+    const afterMapReset = await unlocked(page);
+    assert(!afterMapReset['origins/main'], 'selected map achievement cleared');
+    assert(afterMapReset['revelations/main'], 'other map achievement preserved');
+    assert(await page.evaluate(() => localStorage.getItem('zh-soe-character')), 'map reset leaves game notes alone');
+    check(`${label}: per-map achievement reset preserves other maps and saved game notes`);
+
     // Sound preference persists; Reset achievements is separate and explicit.
     const toggle = page.getByRole('switch', { name: 'Unlock sound' });
     assert.equal(await toggle.getAttribute('aria-checked'), 'true');

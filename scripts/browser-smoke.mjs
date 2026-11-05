@@ -132,6 +132,11 @@ try {
     await page.waitForLoadState('networkidle');
     assert.equal(new URL(page.url()).pathname, originsTarget, 'Origins guide navigation reaches its intended route');
 
+    // OG is a separate, historical read-only route; the new UI guide stays at the canonical address.
+    await page.goto(`${base}/maps/origins/og`, { waitUntil: 'networkidle' });
+    assert(await page.locator('.origins-og .guide-grid').isVisible(), 'OG restores its original two-column guide structure');
+    assert.match(await page.locator('.origins-og').innerText(), /Rain Fire/, 'OG preserves named historical steps');
+
     // Origins guide: one sequence. Each step's answer is on the page; its how-to sits under "More on this step".
     await page.goto(`${base}/maps/origins`, { waitUntil: 'networkidle' });
     await page.evaluate(() => window.localStorage.clear());

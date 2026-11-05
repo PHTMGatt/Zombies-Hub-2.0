@@ -6,6 +6,7 @@ import { Route, Routes } from 'react-router-dom';
 import Header from '../src/components/Header';
 import Footer from '../src/components/Footer';
 import MainGuide from '../src/Pages/MainGuide';
+import OGGuide from '../src/Pages/OGGuide';
 import FireStaff from '../src/Pages/FireStaff';
 import IceStaff from '../src/Pages/IceStaff';
 import WindStaff from '../src/Pages/WindStaff';
@@ -27,6 +28,7 @@ export default function OriginsRoutes() {
       <div className="origins-route-content">
         <Routes>
           <Route index element={<MainGuide />} />
+          <Route path="og" element={<OGGuide />} />
           <Route path="fire-staff" element={<FireStaff />} />
           <Route path="ice-staff" element={<IceStaff />} />
           <Route path="wind-staff" element={<WindStaff />} />

@@ -168,3 +168,14 @@
     --guide-sticky-top: calc(var(--hub-nav-height) + 58px + 0.5rem);
   }
 }
+
+/* UI-only disclosure: existing staff diagrams appear on demand at original resolution. */
+.origins-module .origins-guide .guide-seq__references {display:block;margin:.15rem 0 .1rem;border:1px solid rgba(109,194,255,.2);border-radius:10px;background:rgba(3,15,28,.53)}
+.origins-module .origins-guide .guide-seq__references > summary {display:flex;align-items:center;min-height:44px;padding:.55rem .9rem;color:#8ed7ff;cursor:pointer;font-size:1rem;font-weight:700}
+.origins-module .origins-guide .guide-seq__references > summary::after {content:'⌄';margin-left:auto;font-size:1.2rem}
+.origins-module .origins-guide .guide-seq__references[open] > summary::after {content:'⌃'}
+.origins-module .origins-guide .guide-seq__references > .gref-stack,.origins-module .origins-guide .guide-seq__references > .guide-seq__tasks {margin:.4rem .9rem 1rem}
+.origins-module .origins-guide .guide-seq__references > summary:focus-visible,.origins-module .origins-guide .gref-tabs__tab:focus-visible {outline:3px solid #8ed7ff;outline-offset:2px}
+.origins-module .origins-guide .gref-tabs__tab[aria-expanded='true'] {border-color:var(--gref-tone);background:color-mix(in srgb,var(--gref-tone) 22%,transparent);box-shadow:inset 0 -3px 0 var(--gref-tone)}
+.origins-module .origins-guide .gref-tabs__panel .gref--image {width:100%}
+.origins-module .origins-guide .gref-tabs__panel .gref-image__open img {width:100%;height:auto;object-fit:contain}

@@ -69,7 +69,7 @@ export default function AchievementToast() {
     return () => clearTimeout(timer.current);
   }, [current, startTimer]);
 
-  const map = current ? MAPS[current.map] : null;
+  const map = current ? (MAPS[current.map] ?? { name: 'All maps', accent: '#f0c56b' }) : null;
 
   return (
     <div className="zh-ach-toast-region" aria-live="polite" aria-atomic="true">

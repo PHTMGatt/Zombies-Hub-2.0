@@ -1,4 +1,4 @@
-import { GUIDE_PREFIX, progressKey, read, remove, storedKeys, write } from '../storage';
+import { GUIDE_PREFIX, progressKey, read, remove, storedKeys, write } from '../storage.js';
 
 /*
  * Zombies Hub achievements, kept in this browser (localStorage):
@@ -47,12 +47,41 @@ export const ACHIEVEMENTS = [
   {
     id: 'origins/speedrun-unlocked',
     map: 'origins',
-    kind: 'secret',
-    hidden: true,
+    kind: 'bonus',
+    hidden: false,
     title: 'Electrical Panel Solved',
     legacyKey: 'zh-origins-speedrun-unlocked',
   },
+  {
+    id: 'hub/super-easter-egg',
+    map: 'all',
+    kind: 'secret',
+    hidden: true,
+    title: 'Super Easter Egg',
+  },
 ];
+
+export const SUPER_EASTER_EGG_ID = 'hub/super-easter-egg';
+
+const mainEEsComplete = (unlocked) => ACHIEVEMENTS
+  .filter((item) => item.kind === 'main-ee')
+  .every((item) => Boolean(unlocked[item.id]));
+
+// Derived for existing users who already completed all seven before this feature was added.
+// The trophy disappears if a map is reset, and reappears once all seven are completed again.
+const withSuperEasterEgg = (unlocked) => {
+  const next = { ...unlocked };
+  if (!mainEEsComplete(next)) {
+    delete next[SUPER_EASTER_EGG_ID];
+  } else if (!next[SUPER_EASTER_EGG_ID]) {
+    const dated = ACHIEVEMENTS
+      .filter((item) => item.kind === 'main-ee')
+      .map((item) => next[item.id]?.at)
+      .filter(Boolean);
+    next[SUPER_EASTER_EGG_ID] = { at: dated.length ? dated.sort().at(-1) : null };
+  }
+  return next;
+};
 
 export const achievementById = (id) => ACHIEVEMENTS.find((item) => item.id === id);
 export const mainAchievementFor = (mapId) => ACHIEVEMENTS.find((item) => item.map === mapId && item.kind === 'main-ee');
@@ -75,7 +104,7 @@ export function getUnlocked() {
       if (!unlocked[item.id] && item.legacyKey && read(item.legacyKey, false) === true) unlocked[item.id] = { at: null };
     });
   }
-  return unlocked;
+  return withSuperEasterEgg(unlocked);
 }
 
 const announceChange = () => window.dispatchEvent(new Event(CHANGE_EVENT));
@@ -91,16 +120,26 @@ export function unlockAchievement(id) {
   const achievement = achievementById(id);
   if (!achievement) return false;
   const unlocked = getUnlocked();
-  if (unlocked[id]) return false;
+  if (unlocked[id] || (id === SUPER_EASTER_EGG_ID && !mainEEsComplete(unlocked))) return false;
   const entry = { at: new Date().toISOString() };
   const record = readRecord();
+  const nextUnlocked = withSuperEasterEgg({
+    ...(record?.unlocked ?? {}), ...withoutLegacyDates(unlocked), [id]: entry,
+  });
+  const superEarnedNow = !unlocked[SUPER_EASTER_EGG_ID] && Boolean(nextUnlocked[SUPER_EASTER_EGG_ID]);
   const saved = write(ACHIEVEMENTS_KEY, {
     v: 1,
-    unlocked: { ...(record?.unlocked ?? {}), ...withoutLegacyDates(unlocked), [id]: entry },
+    unlocked: nextUnlocked,
     checked: [...new Set([...(record?.checked ?? []), achievement.map])],
   });
-  if (!saved) sessionUnlocks[id] = entry;
+  if (!saved) {
+    sessionUnlocks[id] = entry;
+    if (superEarnedNow) sessionUnlocks[SUPER_EASTER_EGG_ID] = nextUnlocked[SUPER_EASTER_EGG_ID];
+  }
   window.dispatchEvent(new CustomEvent(UNLOCK_EVENT, { detail: { id } }));
+  if (superEarnedNow && id !== SUPER_EASTER_EGG_ID) {
+    window.dispatchEvent(new CustomEvent(UNLOCK_EVENT, { detail: { id: SUPER_EASTER_EGG_ID } }));
+  }
   announceChange();
   return true;
 }
@@ -116,7 +155,7 @@ export function backfillAchievement(id) {
   if (!achievement || record?.checked?.includes(achievement.map) || getUnlocked()[id]) return false;
   write(ACHIEVEMENTS_KEY, {
     v: 1,
-    unlocked: { ...(record?.unlocked ?? {}), ...withoutLegacyDates(getUnlocked()), [id]: { at: null } },
+    unlocked: withSuperEasterEgg({ ...(record?.unlocked ?? {}), ...withoutLegacyDates(getUnlocked()), [id]: { at: null } }),
     checked: [...new Set([...(record?.checked ?? []), achievement.map])],
   });
   announceChange();
@@ -160,6 +199,28 @@ export function clearOldGuideData() {
 
 // Erases achievement history. An empty record (not a missing one) stays behind so legacy flags such as
 // Origins' speedrun unlock no longer count; the features those flags unlock are left alone.
+// Reset only one map's medals and related bonus rewards. A completed super trophy
+// must be earned again if any of the seven map achievements is reset.
+// Saved in-game notes, sound preferences, and other maps' medals stay.
+export function resetMapAchievements(mapId) {
+  if (!Object.hasOwn(MAPS, mapId)) return false;
+  const record = readRecord();
+  const unlocked = { ...getUnlocked() };
+  for (const item of ACHIEVEMENTS) {
+    if (item.map === mapId || item.id === SUPER_EASTER_EGG_ID) {
+      delete unlocked[item.id];
+      delete sessionUnlocks[item.id];
+    }
+  }
+  write(ACHIEVEMENTS_KEY, {
+    v: 1,
+    unlocked,
+    checked: [...new Set([...(record?.checked ?? []), mapId])],
+  });
+  announceChange();
+  return true;
+}
+
 export function resetAchievements() {
   Object.keys(sessionUnlocks).forEach((id) => delete sessionUnlocks[id]);
   write(ACHIEVEMENTS_KEY, { v: 1, unlocked: {}, checked: Object.keys(MAPS) });
