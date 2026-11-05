@@ -1,0 +1,17 @@
+/* Scoped OG recovery based on commit 6fb9cd7; no effects on UI/staff pages. */
+.origins-module .origins-og { min-height: 72vh; padding: 2.6rem 1rem 3rem; background: var(--origins-bg) center / cover fixed no-repeat; color: #fff; font-family: 'Rajdhani',sans-serif; }
+.origins-module .origins-og .guide-grid { display:grid; width:min(100%,1200px); margin:0 auto; grid-template-columns:minmax(0,2fr) minmax(260px,1fr); align-items:start; gap:2rem; }
+.origins-module .origins-og .left-column, .origins-module .origins-og .right-column {display:grid;gap:1.5rem;min-width:0}
+.origins-module .origins-og .guide-section {padding:1.65rem 1.8rem;border-top:3px solid #6dc2ff;border-bottom:3px solid #6dc2ff;border-radius:12px;background:rgba(0,0,0,.68);box-shadow:0 0 15px rgba(100,200,255,.24)}
+.origins-module .origins-og .guide-section h2 {display:flex;align-items:center;margin:0 0 .9rem;padding-bottom:.65rem;border-bottom:2px solid #6dc2ff;color:#cce6ff;font-size:1.6rem;line-height:1.2}
+.origins-module .origins-og .revive-icon {width:28px;height:28px;margin-right:.6rem;object-fit:contain}
+.origins-module .origins-og .guide-section ul {list-style:disc;margin:0;padding-left:1.45rem}
+.origins-module .origins-og .guide-section li {margin-bottom:.6rem;line-height:1.55;color:#e0eaff;font-size:1.05rem}
+.origins-module .origins-og .guide-section li strong {color:#fff}
+.origins-module .origins-og .credits {margin-top:1.25rem;padding-top:.8rem;border-top:1px solid #4faaff;color:#a8cfff;font-size:.95rem;text-align:center}
+.origins-module .origins-og .credits em {color:#b8e0ff}
+.origins-module .origins-og .credits a {color:#8ed7ff;display:inline-flex;align-items:center;min-height:44px}
+.origins-module .origins-og .audio-players {display:grid;justify-items:center;gap:.65rem;margin-top:1rem}
+.origins-module .origins-og audio {width:min(100%,290px);height:40px;color-scheme:dark}
+@media(max-width:900px){.origins-module .origins-og{background-attachment:scroll;padding:1rem .7rem 2rem}.origins-module .origins-og .guide-grid{grid-template-columns:minmax(0,1fr);gap:1rem}.origins-module .origins-og .left-column,.origins-module .origins-og .right-column{gap:1rem}.origins-module .origins-og .guide-section{padding:1.1rem 1rem 1.2rem}}
+@media(max-width:480px){.origins-module .origins-og .guide-section h2{font-size:1.35rem}.origins-module .origins-og .guide-section li{font-size:1rem}}

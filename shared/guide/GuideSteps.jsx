@@ -13,10 +13,10 @@ import './guide.css';
  * Step shape: { id, title, goal, refs, tasks: [{ id, label, hint? }], how, problems, critical, video, links }.
  * A tabs ref's tabs may add their own `problems` and `links`, shown only while that tab is selected.
  */
-function StepItem({ step }) {
+function StepItem({ step, collapsibleReferences = false }) {
   const [variant, setVariant] = useState(null);
   const tabsRef = step.refs?.find((ref) => ref.type === 'tabs');
-  const activeTab = tabsRef ? (tabsRef.tabs.find((tab) => tab.id === variant) ?? tabsRef.tabs[0]) : null;
+  const activeTab = tabsRef ? (tabsRef.tabs.find((tab) => tab.id === variant) ?? (collapsibleReferences ? null : tabsRef.tabs[0])) : null;
   const problems = [...(step.problems ?? []), ...(activeTab?.problems ?? [])];
   const links = [...(activeTab?.links ?? []), ...(step.links ?? [])];
   const hasMore = step.how?.length > 0 || step.video || links.length > 0 || problems.length > 0;
@@ -27,17 +27,35 @@ function StepItem({ step }) {
       {step.goal && <p className="guide-seq__goal">{step.goal}</p>}
       {step.critical?.map((text) => <p key={text} className="gref gref--warning" role="note"><strong>Watch out</strong> {text}</p>)}
 
-      <GuideReferences refs={step.refs} tabState={{ value: variant, set: setVariant }} />
-
-      {step.tasks?.length > 0 && (
-        <ul className="guide-seq__tasks">
-          {step.tasks.map((task) => (
-            <li key={task.id} style={task.tone ? { '--gref-tone': task.tone } : undefined}>
-              {task.label}
-              {task.hint && <small>{task.hint}</small>}
-            </li>
-          ))}
-        </ul>
+      {collapsibleReferences && (step.refs?.length > 0 || step.tasks?.length > 0) ? (
+        <details className="guide-seq__references">
+          <summary>{tabsRef ? 'Staff quick reference' : 'Show quick reference'}</summary>
+          <GuideReferences refs={step.refs} tabState={{ value: variant, set: setVariant }} collapsibleTabs />
+          {step.tasks?.length > 0 && (
+            <ul className="guide-seq__tasks">
+              {step.tasks.map((task) => (
+                <li key={task.id} style={task.tone ? { '--gref-tone': task.tone } : undefined}>
+                  {task.label}
+                  {task.hint && <small>{task.hint}</small>}
+                </li>
+              ))}
+            </ul>
+          )}
+        </details>
+      ) : (
+        <>
+          <GuideReferences refs={step.refs} tabState={{ value: variant, set: setVariant }} />
+          {step.tasks?.length > 0 && (
+            <ul className="guide-seq__tasks">
+              {step.tasks.map((task) => (
+                <li key={task.id} style={task.tone ? { '--gref-tone': task.tone } : undefined}>
+                  {task.label}
+                  {task.hint && <small>{task.hint}</small>}
+                </li>
+              ))}
+            </ul>
+          )}
+        </>
       )}
 
       {hasMore && (
@@ -89,7 +107,7 @@ const pinnedBottom = () => Math.max(0, ...[...document.querySelectorAll('.hub-he
   .filter((element) => ['fixed', 'sticky'].includes(getComputedStyle(element).position))
   .map((element) => element.getBoundingClientRect().bottom));
 
-export default function GuideSteps({ label, steps, footer }) {
+export default function GuideSteps({ label, steps, footer, collapsibleReferences = false }) {
   const { hash, search } = useLocation();
 
   // The map chunk loads after the app shell has already tried to scroll to #<step>; finish the job here.
@@ -115,7 +133,7 @@ export default function GuideSteps({ label, steps, footer }) {
   return (
     <section className="guide" aria-label={`${label} guide`}>
       <ol className="guide-seq">
-        {steps.map((step) => <StepItem key={step.id} step={step} />)}
+        {steps.map((step) => <StepItem key={step.id} step={step} collapsibleReferences={collapsibleReferences} />)}
       </ol>
       {footer && <div className="guide-seq__footer">{footer}</div>}
     </section>

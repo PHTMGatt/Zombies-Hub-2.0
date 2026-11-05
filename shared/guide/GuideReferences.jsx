@@ -94,21 +94,25 @@ function WarningRef({ text }) {
   );
 }
 
-function TabsRef({ label, tabs, activeTab, onTab }) {
-  const [localTab, setLocalTab] = useState(tabs[0]?.id);
-  const selected = activeTab ?? localTab;
-  const tab = tabs.find((item) => item.id === selected) ?? tabs[0];
-  const choose = (id) => (onTab ? onTab(id) : setLocalTab(id));
+function TabsRef({ label, tabs, activeTab, onTab, collapsible = false }) {
+  const [localTab, setLocalTab] = useState(collapsible ? null : tabs[0]?.id);
+  const selected = onTab ? activeTab : localTab;
+  const tab = tabs.find((item) => item.id === selected) ?? (collapsible ? null : tabs[0]);
+  const choose = (id) => {
+    const next = collapsible && selected === id ? null : id;
+    return onTab ? onTab(next) : setLocalTab(next);
+  };
 
   return (
     <div className="gref gref--tabs">
-      <div className="gref-tabs" role="tablist" aria-label={label ?? 'Variants'}>
+      <div className="gref-tabs" role={collapsible ? "group" : "tablist"} aria-label={label ?? "Variants"}>
         {tabs.map((item) => (
           <button
             key={item.id}
             type="button"
-            role="tab"
-            aria-selected={item.id === tab.id}
+            role={collapsible ? undefined : "tab"}
+            aria-selected={collapsible ? undefined : item.id === tab?.id}
+            aria-expanded={collapsible ? item.id === tab?.id : undefined}
             className="gref-tabs__tab"
             style={item.tone ? { '--gref-tone': item.tone } : undefined}
             onClick={() => choose(item.id)}
@@ -117,9 +121,11 @@ function TabsRef({ label, tabs, activeTab, onTab }) {
           </button>
         ))}
       </div>
-      <div className="gref-tabs__panel" role="tabpanel" style={tab.tone ? { '--gref-tone': tab.tone } : undefined}>
-        <GuideReferences refs={tab.refs} />
-      </div>
+      {tab && (
+        <div className="gref-tabs__panel" role={collapsible ? "region" : "tabpanel"} aria-label={collapsible ? `${tab.label} reference` : undefined} style={tab.tone ? { '--gref-tone': tab.tone } : undefined}>
+          <GuideReferences refs={tab.refs} />
+        </div>
+      )}
     </div>
   );
 }
@@ -134,7 +140,7 @@ const RENDERERS = {
   tabs: TabsRef,
 };
 
-export default function GuideReferences({ refs = [], tabState }) {
+export default function GuideReferences({ refs = [], tabState, collapsibleTabs = false }) {
   return (
     <div className="gref-stack">
       {refs.map((ref, index) => {
@@ -142,7 +148,7 @@ export default function GuideReferences({ refs = [], tabState }) {
         if (ref.type === 'custom') return <div className="gref gref--custom" key={key}>{ref.render()}</div>;
         const Renderer = RENDERERS[ref.type];
         if (!Renderer) return null;
-        const extra = ref.type === 'tabs' && tabState ? { activeTab: tabState.value, onTab: tabState.set } : {};
+        const extra = ref.type === 'tabs' ? { ...(tabState ? { activeTab: tabState.value, onTab: tabState.set } : {}), collapsible: collapsibleTabs } : {};
         return <Renderer key={key} {...ref} {...extra} />;
       })}
     </div>

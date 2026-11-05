@@ -140,3 +140,10 @@
     transform: none;
   }
 }
+
+/* Temporary OG/UI version switch in the current Origins nav. */
+.origins-module .origins-nav-modes {display:inline-flex;align-items:center;gap:.2rem;padding:.2rem;border:1px solid rgba(142,215,255,.22);border-radius:999px;background:rgba(0,8,17,.46);white-space:nowrap}
+.origins-module .origins-nav-modes .origins-nav-link {min-height:40px;padding:.35rem .7rem}
+.origins-module .origins-nav-link.og {--origin-link-accent:#f1f8ff;--origin-link-soft:rgba(109,194,255,.15)}
+.origins-module .og-active {color:#f1f8ff}
+@media(max-width:620px),(max-height:500px) and (orientation:landscape){.origins-module .origins-nav-modes{flex:0 0 auto;scroll-snap-align:start}.origins-module .origins-nav-modes .origins-nav-link{min-height:44px}}
