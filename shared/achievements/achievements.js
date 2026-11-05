@@ -1,4 +1,4 @@
-import { GUIDE_PREFIX, progressKey, read, remove, storedKeys, write } from '../storage';
+import { GUIDE_PREFIX, progressKey, read, remove, storedKeys, write } from '../storage.js';
 
 /*
  * Zombies Hub achievements, kept in this browser (localStorage):
