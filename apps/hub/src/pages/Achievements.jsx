@@ -7,6 +7,7 @@ import {
   clearOldGuideData,
   getUnlocked,
   resetAchievements,
+  resetMapAchievements,
   setSoundEnabled,
   soundEnabled,
 } from '../../../../shared/achievements/achievements';
@@ -27,6 +28,7 @@ const snapshot = () => ({
  */
 export default function Achievements() {
   const [state, setState] = useState(snapshot);
+  const [resetMapId, setResetMapId] = useState('origins');
 
   useEffect(() => {
     const refresh = () => setState(snapshot());
@@ -52,6 +54,13 @@ export default function Achievements() {
 
   const confirmClearOld = () => {
     if (window.confirm('Clear data left by the old step tracker and guide modes? Achievements and saved notes (character picks, symbols, safe codes) stay.')) clearOldGuideData();
+  };
+
+  const confirmResetMap = () => {
+    const name = MAPS[resetMapId]?.name;
+    if (name && window.confirm(`Reset achievements for ${name}? This also removes Super Easter Egg until all seven main Easter Eggs are complete again. Saved notes and other maps stay.`)) {
+      resetMapAchievements(resetMapId);
+    }
   };
 
   const confirmResetAchievements = () => {
@@ -93,9 +102,9 @@ export default function Achievements() {
           <h2>Secrets</h2>
           <ul>
             {earnedExtras.map((item) => (
-              <li key={item.id} style={{ '--ach-accent': MAPS[item.map].accent }}>
-                <AchievementIcon accent={MAPS[item.map].accent} size={32} />
-                <span><strong>{item.title}</strong> {MAPS[item.map].name}</span>
+              <li key={item.id} style={{ '--ach-accent': MAPS[item.map]?.accent ?? '#f0c56b' }}>
+                <AchievementIcon accent={MAPS[item.map]?.accent ?? '#f0c56b'} size={32} />
+                <span><strong>{item.title}</strong> {MAPS[item.map]?.name ?? 'All maps'}</span>
                 {formatDate(state.unlocked[item.id].at) && <small>{formatDate(state.unlocked[item.id].at)}</small>}
               </li>
             ))}
@@ -120,6 +129,14 @@ export default function Achievements() {
           <div>
             <button type="button" onClick={confirmClearOld}>Clear old guide data</button>
             <p>Removes data left by the old step tracker and guide modes. Achievements and saved notes stay.</p>
+            <label htmlFor="ach-reset-map">Reset one map</label>
+            <select id="ach-reset-map" value={resetMapId} onChange={(event) => setResetMapId(event.target.value)}>
+              {Object.entries(MAPS).map(([id, map]) => (
+                <option key={id} value={id}>{map.name}</option>
+              ))}
+            </select>
+            <button type="button" onClick={confirmResetMap}>Reset selected map</button>
+            <p>Clears that map's achievements and the Super Easter Egg reward. Other maps and saved notes stay.</p>
             <button type="button" onClick={confirmResetAchievements}>Reset achievements</button>
             <p>Erases earned achievements and dates. Saved notes stay.</p>
           </div>

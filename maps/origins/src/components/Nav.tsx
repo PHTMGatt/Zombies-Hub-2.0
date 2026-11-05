@@ -26,7 +26,7 @@ const Nav = () => {
           <NavLink to="/maps/origins" end
             className={({ isActive }) => `origins-nav-link main ${isActive ? "active main-active" : ""}`}
             aria-label="UI Guide">
-            <GiCrownedSkull aria-hidden="true" /> <span>UI</span>
+            <GiCrownedSkull aria-hidden="true" /> <span>UI <small>Main Guide</small></span>
           </NavLink>
           <NavLink to="/maps/origins/og" end
             className={({ isActive }) => `origins-nav-link og ${isActive ? "active og-active" : ""}`}
