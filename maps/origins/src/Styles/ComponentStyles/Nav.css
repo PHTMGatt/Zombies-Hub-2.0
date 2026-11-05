@@ -147,3 +147,16 @@
 .origins-module .origins-nav-link.og {--origin-link-accent:#f1f8ff;--origin-link-soft:rgba(109,194,255,.15)}
 .origins-module .og-active {color:#f1f8ff}
 @media(max-width:620px),(max-height:500px) and (orientation:landscape){.origins-module .origins-nav-modes{flex:0 0 auto;scroll-snap-align:start}.origins-module .origins-nav-modes .origins-nav-link{min-height:44px}}
+
+/* Desktop: OG/UI adds one extra link; keep the whole header to one row. */
+@media (min-width: 1181px) {
+  .origins-module .origins-nav-links {
+    max-width: none;
+    flex-wrap: nowrap;
+    gap: 0.3rem;
+  }
+  .origins-module .origins-nav-link {
+    padding-inline: 0.55rem;
+    white-space: nowrap;
+  }
+}
