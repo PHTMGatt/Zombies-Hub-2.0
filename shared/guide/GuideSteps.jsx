@@ -27,7 +27,7 @@ function StepItem({ step, collapsibleReferences = false }) {
       {step.goal && <p className="guide-seq__goal">{step.goal}</p>}
       {step.critical?.map((text) => <p key={text} className="gref gref--warning" role="note"><strong>Watch out</strong> {text}</p>)}
 
-      {collapsibleReferences && (step.refs?.length > 0 || step.tasks?.length > 0) ? (
+      {collapsibleReferences && Boolean(tabsRef) ? (
         <details className="guide-seq__references">
           <summary>{tabsRef ? 'Staff quick reference' : 'Show quick reference'}</summary>
           <GuideReferences refs={step.refs} tabState={{ value: variant, set: setVariant }} collapsibleTabs />
