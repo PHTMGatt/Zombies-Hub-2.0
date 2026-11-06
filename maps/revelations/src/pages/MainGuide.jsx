@@ -11,7 +11,10 @@ const MainGuide = () => (
         <div className="rev-run-header__identity">
           <span className="rev-run-header__kicker">THE FINAL CHAPTER / EASTER EGG</span>
           <h2>For The Good Of All</h2>
-          <p>Twelve objectives through the broken worlds. The original in-game screenshots and references remain right in the steps.</p>
+          <p>
+            <span>Twelve steps across every old map. Screenshots show where to aim.</span>{' '}
+            <span>The original in-game references remain right in the objectives.</span>
+          </p>
         </div>
         <div className="rev-run-header__count" aria-label="12 guide steps">
           <strong>12</strong>
