@@ -1,147 +1,102 @@
-/*
- * Revelations: The Final Chapter.
- * Cosmic cinematic main guide, deliberately separate from Origins' icy field manual.
- * No replacement artwork, step data, reference media, or section navigation.
- */
-.revelations-module .rev-main-guide {
-  padding-top: clamp(0.75rem, 1.8vw, 1.25rem);
-}
+/* Revelations Main Guide: one action-led runbook, not nested decorative cards.
+   Original map imagery and shared reference screenshots are unchanged. */
+.revelations-module .rev-main-guide { padding-top: clamp(0.55rem, 1.4vw, 1rem); }
 .revelations-module .rev-run {
-  width: min(100%, 1320px);
+  width: min(100%, 1280px);
   margin: 0 auto;
   overflow: hidden;
-  border: 1px solid rgba(128, 150, 215, 0.27);
-  border-radius: 20px;
-  background: linear-gradient(148deg, rgba(12, 19, 41, 0.88), rgba(4, 7, 23, 0.91) 54%, rgba(17, 11, 39, 0.88));
+  border: 1px solid rgba(126, 155, 220, 0.28);
+  border-radius: 16px;
+  background: linear-gradient(152deg, rgba(8, 14, 31, 0.92), rgba(6, 9, 22, 0.9) 65%, rgba(17, 12, 34, 0.87));
   color: var(--rev-ink);
-  box-shadow: 0 28px 75px rgba(0, 0, 0, 0.43), inset 0 1px 0 rgba(172, 211, 255, 0.1);
+  box-shadow: 0 20px 56px rgba(0, 0, 0, 0.36);
 }
 .revelations-module .rev-run-header {
-  position: relative;
-  min-height: 150px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1.2rem;
-  overflow: hidden;
-  padding: clamp(1.15rem, 2.5vw, 2rem) clamp(1rem, 3vw, 2.4rem);
-  background:
-    radial-gradient(ellipse at 92% 3%, rgba(160, 115, 255, 0.24), transparent 63%),
-    radial-gradient(ellipse at 8% 110%, rgba(83, 202, 255, 0.17), transparent 67%),
-    linear-gradient(95deg, rgba(5, 16, 35, 0.98), rgba(18, 12, 43, 0.82));
+  display: block;
+  padding: clamp(0.95rem, 2vw, 1.4rem) clamp(1rem, 2.5vw, 1.8rem);
+  border-bottom: 1px solid rgba(111, 169, 232, 0.22);
+  background: linear-gradient(95deg, rgba(41, 96, 142, 0.17), rgba(98, 60, 146, 0.12) 85%);
 }
-.revelations-module .rev-run-header::after {
-  content: '';
-  position: absolute;
-  inset: auto 0 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(109,214,255,.8), rgba(169,139,255,.8), transparent);
-  pointer-events: none;
-}
-.revelations-module .rev-run-header__identity { position: relative; z-index: 1; max-width: 65ch; min-width: 0; }
+.revelations-module .rev-run-header__identity { max-width: 72ch; }
 .revelations-module .rev-run-header__kicker {
   display: block;
-  margin-bottom: 0.6rem;
-  color: #a8ccf2;
-  font-size: 0.7rem;
+  margin-bottom: 0.35rem;
+  color: #a6c7eb;
+  font-size: 0.71rem;
   font-weight: 800;
-  letter-spacing: 0.2em;
+  line-height: 1.3;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 .revelations-module .rev-run-header h2 {
   margin: 0;
-  color: #f4f5ff;
-  font-size: clamp(1.65rem, 3.2vw, 2.6rem);
+  color: #f1f5ff;
+  font-size: clamp(1.6rem, 2.65vw, 2.12rem);
   font-weight: 800;
-  line-height: 1.09;
-  letter-spacing: -0.025em;
-  text-shadow: 0 0 28px rgba(137, 114, 255, 0.28);
+  line-height: 1.13;
+  letter-spacing: -0.015em;
 }
 .revelations-module .rev-run-header p {
-  max-width: 60ch;
-  margin: 0.65rem 0 0;
-  color: #c0d2eb;
-  font-size: 0.93rem;
-  line-height: 1.5;
+  margin: 0.32rem 0 0;
+  color: #b5c5dc;
+  font-size: 0.89rem;
+  line-height: 1.4;
 }
-.revelations-module .rev-run-header__count {
-  flex: 0 0 auto;
-  z-index: 1;
-  min-width: 104px;
-  padding: 0.7rem 0.85rem;
-  display: grid;
-  justify-items: center;
-  border: 1px solid rgba(157, 158, 251, 0.28);
-  border-radius: 12px;
-  background: rgba(37, 29, 75, 0.38);
-}
-.revelations-module .rev-run-header__count strong {
-  color: #b8a6ff;
-  font-size: 2.75rem;
-  font-weight: 800;
-  line-height: 1;
-  font-variant-numeric: tabular-nums;
-}
-.revelations-module .rev-run-header__count span {
-  margin-top: 0.25rem;
-  color: #c0c1e9;
-  font-size: 0.62rem;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-}
+
+/* Navigation is a compact step-range index, not a second set of giant cards. */
 .revelations-module .rev-run-chapters {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  border-bottom: 1px solid rgba(130, 165, 231, 0.19);
-  background: rgba(7, 13, 31, 0.9);
+  display: flex;
+  min-width: 0;
+  overflow-x: auto;
+  border-bottom: 1px solid rgba(111, 169, 232, 0.19);
+  background: rgba(6, 11, 25, 0.76);
+  scrollbar-width: thin;
 }
 .revelations-module .rev-run-chapters a {
+  flex: 1 0 auto;
   min-width: 0;
-  min-height: 82px;
-  display: grid;
-  align-content: center;
-  gap: 0.23rem;
-  padding: 0.7rem clamp(0.6rem, 1.7vw, 1.3rem);
-  border-right: 1px solid rgba(137, 162, 217, 0.13);
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0.75rem;
+  border-right: 1px solid rgba(135, 157, 222, 0.15);
   border-bottom: 2px solid transparent;
-  transition: background 160ms ease, border-color 160ms ease;
+  color: #e5ecfc;
+  text-decoration: none;
+  transition: background-color 140ms ease, border-color 140ms ease;
 }
 .revelations-module .rev-run-chapters a:last-child { border-right: 0; }
 .revelations-module .rev-run-chapters a:hover,
 .revelations-module .rev-run-chapters a:focus-visible {
-  background: linear-gradient(90deg, rgba(83, 174, 255, 0.12), rgba(145, 102, 237, 0.1));
-  border-bottom-color: #a891ff;
+  background: rgba(113, 123, 221, 0.15);
+  border-bottom-color: #aa96fa;
 }
 .revelations-module .rev-run-chapters__number {
-  color: #9a8ee9;
-  font-size: 0.74rem;
+  color: #a8a2e9;
+  font-size: 0.78rem;
   font-weight: 800;
-  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
 }
 .revelations-module .rev-run-chapters a strong {
-  color: #e9edff;
-  font-size: 0.99rem;
-  font-weight: 750;
-  line-height: 1.25;
+  color: #ecf2ff;
+  font-size: 0.9rem;
+  font-weight: 800;
+  white-space: nowrap;
 }
-.revelations-module .rev-run-chapters__hint {
-  color: #9fb4ce;
-  font-size: 0.78rem;
-  line-height: 1.2;
-}
-.revelations-module .rev-guide { margin: 0; }
 
-/* The guide lives in the same shell; remove the unrelated second card. */
+.revelations-module .rev-guide { margin: 0; }
 .revelations-module .rev-guide .guide {
-  --guide-accent: #7ed9ff;
+  --guide-accent: #8ad6ff;
   --guide-accent-ink: #031424;
-  --guide-ink: #f2f8ff;
-  --guide-text: #d9e6f4;
-  --guide-muted: #afc0d5;
+  --guide-ink: #f0f6ff;
+  --guide-text: #d8e7f6;
+  --guide-muted: #a5b9d1;
   --guide-surface: transparent;
-  --guide-surface-2: rgba(122, 174, 240, 0.075);
-  --guide-line: rgba(145, 169, 228, 0.16);
-  --guide-sticky-top: calc(var(--hub-nav-height) + 0.75rem);
+  --guide-surface-2: rgba(119, 162, 223, 0.065);
+  --guide-line: rgba(137, 170, 229, 0.13);
+  --guide-sticky-top: calc(var(--hub-nav-height) + 0.7rem);
   gap: 0;
 }
 .revelations-module .rev-guide .guide-seq {
@@ -149,88 +104,158 @@
   border-radius: 0;
   background: transparent;
 }
-.revelations-module .rev-guide .guide-seq__step {
-  padding: clamp(1rem, 2.3vw, 1.6rem) clamp(1rem, 3vw, 2.2rem);
-  border-color: rgba(142, 171, 228, 0.15);
+.revelations-module .rev-guide .guide-seq__step--runbook {
+  display: grid;
+  gap: 0.75rem;
+  padding: clamp(1.1rem, 2.2vw, 1.55rem) clamp(0.9rem, 2.5vw, 1.75rem);
 }
-.revelations-module .rev-guide .guide-seq__step:nth-child(4n + 1) {
-  background: linear-gradient(90deg, rgba(76, 171, 245, 0.05), transparent 80%);
+.revelations-module .rev-guide .guide-seq__step--runbook:nth-child(even) {
+  background: rgba(51, 57, 111, 0.045);
 }
-.revelations-module .rev-guide .guide-seq__step:nth-child(4n + 4) {
-  background: linear-gradient(90deg, rgba(146, 101, 239, 0.07), transparent 80%);
+.revelations-module .rev-guide .guide-seq__step--runbook:target {
+  box-shadow: inset 3px 0 0 #ad9aff;
+  background: rgba(112, 104, 191, 0.085);
 }
-.revelations-module .rev-guide .guide-seq__step h3 {
-  color: #f3f6ff;
-  font-size: clamp(1.11rem, 1.4vw, 1.32rem);
+.revelations-module .rev-guide .guide-seq__step--runbook > h3 {
+  align-items: center;
+  gap: 0.8rem;
+  margin: 0;
+  color: #f0f4ff;
+  font-size: clamp(1.1rem, 1.55vw, 1.37rem);
   font-weight: 800;
+  line-height: 1.24;
 }
-.revelations-module .rev-guide .guide-seq__step h3::before {
+.revelations-module .rev-guide .guide-seq__step--runbook > h3::before {
+  flex: 0 0 auto;
   display: grid;
   place-items: center;
-  width: 2rem;
-  min-width: 2rem;
-  height: 2rem;
-  border: 1px solid rgba(157, 169, 252, 0.35);
-  border-radius: 50%;
-  background: rgba(117, 99, 208, 0.14);
-  color: #c0b1ff;
-  font-size: 0.91rem;
-  line-height: 1;
+  width: 2.15rem;
+  min-width: 2.15rem;
+  height: 2.15rem;
+  border: 1px solid rgba(158, 152, 248, 0.4);
+  border-radius: 7px;
+  background: rgba(110, 96, 193, 0.16);
+  color: #cbbcff;
+  font-size: 0.93rem;
+  font-weight: 800;
 }
 .revelations-module .rev-guide .guide-seq__goal {
-  color: #d3e4f6;
-  max-width: 85ch;
-  font-size: 1.02rem;
-  line-height: 1.55;
+  max-width: 84ch;
+  margin: -0.2rem 0 0 2.9rem;
+  color: #c7d8eb;
+  font-size: 0.98rem;
+  line-height: 1.48;
 }
+
+/* Each fact has exactly one job: ordered actions on the left, code/media on the right. */
+.revelations-module .rev-guide .guide-seq__runbook-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+  gap: clamp(0.75rem, 1.8vw, 1.15rem);
+  align-items: start;
+  margin-top: 0.25rem;
+}
+.revelations-module .rev-guide .guide-seq__runbook-grid:has(> :only-child) {
+  grid-template-columns: minmax(0, 1fr);
+}
+.revelations-module .rev-guide :is(.guide-seq__action-block, .guide-seq__reference-block) {
+  min-width: 0;
+}
+.revelations-module .rev-guide .guide-seq__runbook-grid h4 {
+  margin: 0 0 0.55rem;
+  color: #a8c4ed;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+.revelations-module .rev-guide .guide-seq__tasks--ordered {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: rev-action;
+}
+.revelations-module .rev-guide .guide-seq__tasks--ordered li {
+  position: relative;
+  min-width: 0;
+  margin: 0;
+  padding: 0.58rem 0.4rem 0.58rem 2.35rem;
+  border-top: 1px solid rgba(132, 157, 222, 0.14);
+  color: #e5effd;
+  font-size: 0.98rem;
+  font-weight: 650;
+  line-height: 1.35;
+  counter-increment: rev-action;
+}
+.revelations-module .rev-guide .guide-seq__tasks--ordered li::before {
+  content: counter(rev-action, decimal-leading-zero);
+  position: absolute;
+  top: 0.61rem;
+  left: 0;
+  color: #aaa4ed;
+  font-size: 0.82rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+.revelations-module .rev-guide .guide-seq__tasks--ordered small {
+  display: block;
+  margin-top: 0.18rem;
+  color: #aec5db;
+  font-size: 0.89rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+.revelations-module .rev-guide .guide-seq__reference-block {
+  padding: 0.85rem;
+  border: 1px solid rgba(132, 165, 225, 0.19);
+  border-radius: 10px;
+  background: rgba(39, 48, 93, 0.13);
+}
+.revelations-module .rev-guide .guide-seq__reference-block .gref-stack { gap: 0.55rem; }
+.revelations-module .rev-guide .gref__label {
+  color: #a7bcda;
+  font-size: 0.74rem;
+}
+.revelations-module .rev-guide .gref-sequence li span {
+  min-height: 43px;
+  padding: 0.45rem 0.8rem;
+  border-color: rgba(158, 140, 252, 0.43);
+  background: rgba(139, 117, 237, 0.14);
+  font-variant-numeric: tabular-nums;
+}
+.revelations-module .rev-guide .guide-seq__more {
+  padding-top: 0.3rem;
+  border-top: 1px solid rgba(132, 165, 225, 0.15);
+}
+.revelations-module .rev-guide .guide-seq__more > summary { color: #a5dfff; }
 .revelations-module .rev-guide .guide-seq__footer {
-  padding: 1rem clamp(1rem, 3vw, 2.2rem);
-  border-top: 1px solid rgba(145, 169, 228, 0.17);
-  background: rgba(23, 20, 50, 0.31);
+  padding: 1rem clamp(0.9rem, 2.5vw, 1.75rem);
+  border-top: 1px solid rgba(132, 165, 225, 0.18);
+  background: rgba(24, 19, 50, 0.3);
 }
-.revelations-module .rev-guide .gref-tabs__tab[aria-selected='true'] {
-  border-color: #9c87ee;
-  background: rgba(146, 104, 239, 0.22);
-  box-shadow: inset 0 -3px 0 rgba(169, 139, 255, 0.85);
-}
-.revelations-module .rev-guide .guide-seq__more > summary {
-  color: #9adfff;
-}
-@media (max-width: 760px) {
-  .revelations-module .rev-main-guide { padding-top: 0.55rem; }
-  .revelations-module .rev-run { border-radius: 14px; }
-  .revelations-module .rev-run-header {
-    min-height: 0;
-    padding: 1.1rem 0.9rem;
-    align-items: flex-start;
+@media (max-width: 930px) {
+  .revelations-module .rev-guide .guide-seq__runbook-grid {
+    grid-template-columns: minmax(0, 1fr);
   }
-  .revelations-module .rev-run-header__count { min-width: 72px; padding: 0.55rem 0.45rem; }
-  .revelations-module .rev-run-header__count strong { font-size: 2rem; }
-  .revelations-module .rev-run-chapters { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .revelations-module .rev-run-chapters a {
-    min-height: 70px;
-    border-bottom: 1px solid rgba(137, 162, 217, 0.13);
-  }
-  .revelations-module .rev-run-chapters a:nth-child(2) { border-right: 0; }
-  .revelations-module .rev-run-chapters a:hover,
-  .revelations-module .rev-run-chapters a:focus-visible { border-bottom-color: #a891ff; }
-  .revelations-module .rev-run-chapters__hint { font-size: 0.73rem; }
-  .revelations-module .rev-guide .guide-seq__step { padding: 1rem 0.85rem; }
 }
-@media (max-width: 420px) {
-  .revelations-module .rev-run-header__count { min-width: 0; width: 58px; }
-  .revelations-module .rev-run-header__count strong { font-size: 1.6rem; }
-  .revelations-module .rev-run-header__count span { font-size: 0.53rem; letter-spacing: 0.03em; }
-  .revelations-module .rev-run-header__kicker { font-size: 0.62rem; letter-spacing: 0.12em; }
-  .revelations-module .rev-run-header h2 { font-size: 1.58rem; }
-  .revelations-module .rev-run-header p { font-size: 0.82rem; }
+@media (max-width: 620px) {
+  .revelations-module .rev-main-guide { padding-top: 0.45rem; }
+  .revelations-module .rev-run { border-radius: 12px; }
+  .revelations-module .rev-run-header { padding: 0.9rem 0.8rem; }
+  .revelations-module .rev-run-header h2 { font-size: 1.46rem; }
+  .revelations-module .rev-run-chapters a { min-height: 44px; padding: 0.5rem 0.75rem; }
+  .revelations-module .rev-run-chapters__number { font-size: 0.73rem; }
+  .revelations-module .rev-run-chapters a strong { font-size: 0.84rem; }
+  .revelations-module .rev-guide .guide-seq__step--runbook { padding: 0.95rem 0.85rem; }
+  .revelations-module .rev-guide .guide-seq__goal { margin-left: 2.9rem; font-size: 0.94rem; }
 }
 @media (max-height: 500px) and (orientation: landscape) {
-  .revelations-module .rev-main-guide { padding-top: 0.45rem; }
-  .revelations-module .rev-run-header { min-height: 0; padding: 0.7rem 1rem; }
-  .revelations-module .rev-run-header__kicker { margin-bottom: 0.25rem; }
-  .revelations-module .rev-run-header p { font-size: 0.81rem; }
-  .revelations-module .rev-run-chapters a { min-height: 55px; padding: 0.5rem 0.7rem; }
+  .revelations-module .rev-main-guide { padding-top: 0.35rem; }
+  .revelations-module .rev-run-header { padding: 0.65rem 0.9rem; }
+  .revelations-module .rev-run-chapters a { min-height: 40px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .revelations-module .rev-run-chapters a { transition: none; }
