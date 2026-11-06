@@ -92,7 +92,9 @@ function StepItem({ step, collapsibleReferences = false, compactAccordion = fals
     </>
   );
 
-  if (compactAccordion) {
+  // The robot/staff placement mapping is vital while playing; show it at a glance.
+  // Other steps stay folded to keep the entire Easter Egg sequence compact.
+  if (compactAccordion && step.id !== 'secure-keys') {
     return (
       <li className="guide-seq__step guide-seq__step--foldable" id={step.id}>
         <details className="guide-seq__step-disclosure">
