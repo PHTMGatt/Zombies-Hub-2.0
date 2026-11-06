@@ -13,7 +13,7 @@ import './guide.css';
  * Step shape: { id, title, goal, refs, tasks: [{ id, label, hint? }], how, problems, critical, video, links }.
  * A tabs ref's tabs may add their own `problems` and `links`, shown only while that tab is selected.
  */
-function StepItem({ step, collapsibleReferences = false, compactAccordion = false }) {
+function StepItem({ step, nextStep, accordionName, collapsibleReferences = false, compactAccordion = false }) {
   const [variant, setVariant] = useState(null);
   const tabsRef = step.refs?.find((ref) => ref.type === 'tabs');
   const activeTab = tabsRef ? (tabsRef.tabs.find((tab) => tab.id === variant) ?? (collapsibleReferences ? null : tabsRef.tabs[0])) : null;
@@ -106,7 +106,7 @@ function StepItem({ step, collapsibleReferences = false, compactAccordion = fals
             <small>{step.id === 'build-staffs' ? 'STEPS 01–05' : 'STEPS 06–11'}</small>
           </div>
         ) : null}
-        <details className="guide-seq__step-disclosure" name="origins-main-guide-steps">
+        <details className="guide-seq__step-disclosure" name={accordionName}>
           <summary className="guide-seq__step-summary">
             <div className="guide-seq__step-summary-text">
               <h3>{step.title}</h3>
@@ -114,7 +114,16 @@ function StepItem({ step, collapsibleReferences = false, compactAccordion = fals
             </div>
             <span className="guide-seq__step-chevron" aria-hidden="true">⌄</span>
           </summary>
-          <div className="guide-seq__step-body">{stepDetails}</div>
+          <div className="guide-seq__step-body">
+            {stepDetails}
+            {nextStep && (
+              <a className="guide-seq__next" href={`#${nextStep.id}`} aria-label={`Next step: ${nextStep.title}`}>
+                <span>Next objective</span>
+                <strong>{nextStep.title}</strong>
+                <span aria-hidden="true">→</span>
+              </a>
+            )}
+          </div>
         </details>
         {keyPlacements.length > 0 && (
           <ul className="guide-seq__step-glance" aria-label="Staff placement quick reference">
@@ -153,7 +162,7 @@ const pinnedBottom = () => Math.max(0, ...[...document.querySelectorAll('.hub-he
   .filter((element) => ['fixed', 'sticky'].includes(getComputedStyle(element).position))
   .map((element) => element.getBoundingClientRect().bottom));
 
-export default function GuideSteps({ label, steps, footer, collapsibleReferences = false, compactAccordion = false }) {
+export default function GuideSteps({ label, steps, footer, collapsibleReferences = false, compactAccordion = false, accordionName = 'origins-main-guide-steps' }) {
   const { hash, search } = useLocation();
 
   // The map chunk loads after the app shell has already tried to scroll to #<step>; finish the job here.
@@ -184,7 +193,7 @@ export default function GuideSteps({ label, steps, footer, collapsibleReferences
   return (
     <section className="guide" aria-label={`${label} guide`}>
       <ol className="guide-seq">
-        {steps.map((step) => <StepItem key={step.id} step={step} collapsibleReferences={collapsibleReferences} compactAccordion={compactAccordion} />)}
+        {steps.map((step, index) => <StepItem key={step.id} step={step} nextStep={steps[index + 1]} accordionName={accordionName} collapsibleReferences={collapsibleReferences} compactAccordion={compactAccordion} />)}
       </ol>
       {footer && <div className="guide-seq__footer">{footer}</div>}
     </section>

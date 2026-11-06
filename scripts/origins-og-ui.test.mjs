@@ -66,3 +66,13 @@ test('Origins UI has a field-manual masthead and two useful phase jumps', () => 
   assert.ok(steps.includes('THE EASTER EGG'));
   assert.ok(styles.includes('.origins-guide__route-link'));
 });
+
+test('Origins step handoff links to the next objective without changing other maps', () => {
+  const component = read('shared/guide/GuideSteps.jsx');
+  const styles = read('maps/origins/src/Styles/PageStyles/MainGuide.css');
+  assert.ok(component.includes('nextStep={steps[index + 1]}'));
+  assert.ok(component.includes('Next objective'));
+  assert.ok(component.includes('aria-label={`Next step: ${nextStep.title}`}'));
+  assert.ok(component.includes('accordionName = \'origins-main-guide-steps\''));
+  assert.ok(styles.includes('.origins-guide .guide-seq__next'));
+});
