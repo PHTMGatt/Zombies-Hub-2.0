@@ -62,7 +62,8 @@ try {
     const selectStep = async (id) => {
       await page.locator(`.rev-step-list button[aria-controls="${id}"]`).click();
       assert.equal(new URL(page.url()).hash, `#${id}`, `Step selector reaches ${id}`);
-      assert(await page.locator(`#${id}`).isVisible(), `Selected step ${id} is visible`);
+      await page.locator(`#${id}`).waitFor({ state: 'visible' });
+      assert.equal(await page.locator('li.guide-seq__step:visible').count(), 1, `Only selected step ${id} is visible`);
     };
     await selectStep('throws');
     await page.goto(`${base}${mainRoute}`, { waitUntil: 'networkidle' });
