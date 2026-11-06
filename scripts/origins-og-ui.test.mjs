@@ -61,7 +61,8 @@ test('Origins UI has a field-manual masthead and two useful phase jumps', () => 
   assert.ok(page.includes('href="#build-staffs"'));
   assert.ok(page.includes('href="#rain-fire"'));
   assert.ok(page.includes('Field Notes'));
-  assert.ok(steps.includes("name=\"origins-main-guide-steps\""));
+  assert.ok(steps.includes("name={accordionName}"));
+  assert.ok(steps.includes("accordionName = 'origins-main-guide-steps'"));
   assert.ok(steps.includes('PREPARE THE RUN'));
   assert.ok(steps.includes('THE EASTER EGG'));
   assert.ok(styles.includes('.origins-guide__route-link'));
