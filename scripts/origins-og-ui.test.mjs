@@ -52,3 +52,17 @@ test('Origins UI heading is part of the same panel as the steps', () => {
   assert.ok(css.includes('border: 0;'));
   assert.ok(css.includes('background: transparent;'));
 });
+
+test('Origins UI has a field-manual masthead and two useful phase jumps', () => {
+  const page = read('maps/origins/src/Pages/MainGuide.tsx');
+  const steps = read('shared/guide/GuideSteps.jsx');
+  const styles = read('maps/origins/src/Styles/PageStyles/MainGuide.css');
+  assert.ok(page.includes('origins-guide__mission'));
+  assert.ok(page.includes('href="#build-staffs"'));
+  assert.ok(page.includes('href="#rain-fire"'));
+  assert.ok(page.includes('Field Notes'));
+  assert.ok(steps.includes("name=\"origins-main-guide-steps\""));
+  assert.ok(steps.includes('PREPARE THE RUN'));
+  assert.ok(steps.includes('THE EASTER EGG'));
+  assert.ok(styles.includes('.origins-guide__route-link'));
+});

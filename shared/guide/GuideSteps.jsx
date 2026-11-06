@@ -99,7 +99,14 @@ function StepItem({ step, collapsibleReferences = false, compactAccordion = fals
   if (compactAccordion) {
     return (
       <li className="guide-seq__step guide-seq__step--foldable" id={step.id}>
-        <details className="guide-seq__step-disclosure">
+        {step.id === 'build-staffs' || step.id === 'rain-fire' ? (
+          <div className="guide-seq__phase" role="separator" aria-label={step.id === 'build-staffs' ? 'Setup phase' : 'Easter Egg phase'}>
+            <span className="guide-seq__phase-index">{step.id === 'build-staffs' ? 'I' : 'II'}</span>
+            <span>{step.id === 'build-staffs' ? 'PREPARE THE RUN' : 'THE EASTER EGG'}</span>
+            <small>{step.id === 'build-staffs' ? 'STEPS 01–05' : 'STEPS 06–11'}</small>
+          </div>
+        ) : null}
+        <details className="guide-seq__step-disclosure" name="origins-main-guide-steps">
           <summary className="guide-seq__step-summary">
             <div className="guide-seq__step-summary-text">
               <h3>{step.title}</h3>
