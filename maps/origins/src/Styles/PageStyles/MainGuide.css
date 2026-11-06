@@ -1,97 +1,174 @@
 /*
- * Origins UI guide — a single continuous run sheet, not floating glass cards.
- * Scoped to .origins-guide; the historical OG route and all four staff pages
- * use their own styles and are intentionally unaffected.
+ * Origins Field Manual — remastered Main Guide only.
+ * The OG archival view and the four staff page styles are deliberately untouched.
+ * Environmental art stays visible beyond the readable guide surface.
  */
 .origins-module .main-guide {
-  background-image: var(--origins-bg);
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  padding: clamp(0.8rem, 1.8vw, 1.6rem) clamp(0.65rem, 1.35vw, 1.25rem) 2.75rem;
+  --origins-ice: #90d7ff;
+  --origins-ice-strong: #b8e9ff;
+  --origins-mist: #b5cedf;
+  --origins-ink: #f1f8ff;
+  --origins-rule: rgba(129, 199, 235, 0.17);
+  background: var(--origins-bg) center / cover fixed no-repeat;
+  color: var(--origins-ink);
   font-family: 'Rajdhani', sans-serif;
-  color: #fff;
+  padding: clamp(0.95rem, 2vw, 1.7rem) clamp(0.6rem, 1.25vw, 1.2rem) 2.75rem;
 }
 
 .origins-module .origins-guide__inner {
-  width: min(100%, 1430px);
+  width: min(100%, 1400px);
   margin: 0 auto;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(260px, 310px);
+  grid-template-columns: minmax(0, 1fr) minmax(250px, 292px);
   align-items: start;
-  gap: clamp(0.9rem, 1.8vw, 1.5rem);
+  gap: clamp(0.85rem, 1.55vw, 1.4rem);
 }
 
 .origins-module .origins-guide__run,
 .origins-module .origins-guide__tips {
+  position: relative;
   min-width: 0;
   overflow: hidden;
-  border: 1px solid rgba(112, 196, 245, 0.29);
-  border-radius: 14px;
-  background: linear-gradient(155deg, rgba(6, 24, 39, 0.88), rgba(2, 10, 18, 0.84));
-  box-shadow: 0 14px 36px rgba(0, 5, 13, 0.22);
-  -webkit-backdrop-filter: blur(7px);
-  backdrop-filter: blur(7px);
+  border: 1px solid rgba(126, 194, 235, 0.26);
+  border-top: 2px solid rgba(143, 216, 255, 0.64);
+  border-radius: 13px;
+  background: linear-gradient(150deg, rgba(5, 25, 42, 0.94) 0%, rgba(2, 14, 26, 0.91) 59%, rgba(3, 17, 29, 0.88) 100%);
+  box-shadow: 0 18px 44px rgba(0, 5, 14, 0.3);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
 }
 
 .origins-module .origins-guide__section-heading {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.85rem;
-  min-height: 66px;
-  padding: 0.9rem clamp(0.9rem, 2vw, 1.4rem);
-  border-bottom: 1px solid rgba(114, 191, 237, 0.22);
-  background: linear-gradient(95deg, rgba(28, 82, 111, 0.29), rgba(13, 40, 59, 0.12));
+  gap: 1rem;
+  min-height: 100px;
+  padding: 1.05rem clamp(1rem, 2.25vw, 1.55rem);
+  border-bottom: 1px solid rgba(130, 199, 238, 0.2);
+  background: linear-gradient(100deg, rgba(30, 90, 125, 0.27), rgba(6, 28, 45, 0.02));
 }
 
+.origins-module .origins-guide__mission {
+  min-width: 0;
+  display: grid;
+  gap: 0.3rem;
+}
+
+.origins-module .origins-guide__eyebrow {
+  display: block;
+  color: #a9cde3;
+  font-size: 0.79rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.origins-module .origins-guide__mission-name,
 .origins-module .origins-guide__section-heading-label {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: 0.7rem;
   min-width: 0;
 }
 
-.origins-module .origins-guide__section-heading img {
-  width: 28px;
-  height: 28px;
+.origins-module .origins-guide__mission-name img,
+.origins-module .origins-guide__section-heading-label img {
+  width: 31px;
+  height: 31px;
   flex: 0 0 auto;
   object-fit: contain;
 }
 
 .origins-module .origins-guide__section-heading h2 {
   margin: 0;
-  color: #e5f4ff;
-  font-size: clamp(1.4rem, 1.85vw, 1.65rem);
+  color: #f1f9ff;
+  font-size: clamp(1.5rem, 2.1vw, 1.9rem);
   font-family: 'Rajdhani', sans-serif;
   font-weight: 700;
-  line-height: 1.15;
+  line-height: 1.08;
 }
 
-.origins-module .origins-guide__section-caption {
-  flex: 0 1 auto;
-  color: #a9cce4;
-  font-size: 0.92rem;
-  font-weight: 600;
-  line-height: 1.25;
-  text-align: right;
+.origins-module .origins-guide__mission-count {
+  margin-left: 0.3rem;
+  padding: 0.18rem 0.55rem;
+  border: 1px solid rgba(125, 205, 251, 0.26);
+  border-radius: 5px;
+  background: rgba(117, 203, 250, 0.09);
+  color: #bde4fb;
+  font-size: 0.83rem;
+  font-weight: 700;
+  line-height: 1.1;
   white-space: nowrap;
 }
 
-/* The heading and the step sequence are ONE panel with shared edges. */
+.origins-module .origins-guide__mission-description {
+  margin: 0;
+  color: #bfd5e5;
+  font-size: 0.98rem;
+  line-height: 1.28;
+}
+
+.origins-module .origins-guide__route {
+  display: flex;
+  align-items: stretch;
+  gap: 0.5rem;
+  flex: 0 0 auto;
+}
+
+.origins-module .origins-guide__route-link {
+  min-height: 55px;
+  display: grid;
+  align-content: center;
+  gap: 0.04rem;
+  min-width: 108px;
+  padding: 0.4rem 0.85rem;
+  border: 1px solid rgba(123, 193, 230, 0.25);
+  border-radius: 8px;
+  background: rgba(6, 26, 43, 0.67);
+  color: #e8f7ff;
+  text-decoration: none;
+  transition: border-color 150ms ease, background-color 150ms ease, transform 150ms ease;
+}
+
+.origins-module .origins-guide__route-link:hover {
+  border-color: #7bccf6;
+  background: rgba(58, 136, 179, 0.25);
+  transform: translateY(-1px);
+}
+
+.origins-module .origins-guide__route-link:focus-visible {
+  outline: 3px solid #9cdbff;
+  outline-offset: 2px;
+}
+
+.origins-module .origins-guide__route-number {
+  color: #8fd5fa;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.origins-module .origins-guide__route-link strong {
+  font-size: 0.99rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+/* One continuous guide sheet — no repeated independent cards. */
 .origins-module .origins-guide .guide {
-  --guide-accent: #80ceff;
+  --guide-accent: #8bd6ff;
   --guide-accent-ink: #04121e;
-  --guide-ink: #f5faff;
-  --guide-text: #e0eaff;
-  --guide-muted: #acc5d8;
+  --guide-ink: #f1f8ff;
+  --guide-text: #dfeefa;
+  --guide-muted: #adc6d8;
   --guide-surface: transparent;
   --guide-surface-2: rgba(110, 184, 228, 0.075);
-  --guide-line: rgba(118, 184, 223, 0.16);
+  --guide-line: var(--origins-rule);
   --guide-sticky-top: calc(var(--hub-nav-height) + 84px + 0.75rem);
-  gap: 0;
   min-width: 0;
+  gap: 0;
 }
 
 .origins-module .origins-guide .guide-seq {
@@ -103,110 +180,148 @@
   box-shadow: none;
 }
 
-.origins-module .origins-guide .guide-seq__step {
-  min-width: 0;
-  border-color: rgba(118, 184, 223, 0.15);
-}
-
 .origins-module .origins-guide .guide-seq__step--foldable {
   display: block;
+  min-width: 0;
+  position: relative;
   padding: 0;
+  border-color: var(--origins-rule);
+}
+
+.origins-module .origins-guide .guide-seq__phase {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  min-height: 35px;
+  padding: 0.45rem clamp(0.95rem, 2vw, 1.5rem);
+  border-bottom: 1px solid rgba(126, 197, 238, 0.12);
+  background: rgba(61, 128, 167, 0.11);
+  color: #acd8ee;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1.2;
+}
+
+.origins-module .origins-guide .guide-seq__phase-index {
+  width: 20px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(139, 207, 246, 0.3);
+  border-radius: 4px;
+  background: rgba(78, 151, 195, 0.1);
+  color: #d8f3ff;
+  font-size: 0.79rem;
+}
+
+.origins-module .origins-guide .guide-seq__phase small {
+  margin-left: auto;
+  color: #829fb4;
+  font-size: 0.71rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
 }
 
 .origins-module .origins-guide .guide-seq__step-summary {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
-  min-height: 72px;
-  padding: 0.8rem clamp(0.9rem, 2vw, 1.4rem);
+  gap: 1.1rem;
+  min-height: 71px;
+  padding: 0.78rem clamp(0.95rem, 2vw, 1.5rem);
+  border-left: 3px solid transparent;
   cursor: pointer;
   list-style: none;
-  transition: background-color 150ms ease;
+  transition: background-color 150ms ease, border-color 150ms ease;
 }
 
-.origins-module .origins-guide .guide-seq__step-summary::-webkit-details-marker {
-  display: none;
-}
+.origins-module .origins-guide .guide-seq__step-summary::-webkit-details-marker { display: none; }
 
 .origins-module .origins-guide .guide-seq__step-summary:hover {
-  background: rgba(113, 188, 233, 0.09);
+  border-left-color: rgba(137, 205, 244, 0.48);
+  background: rgba(105, 185, 232, 0.07);
 }
 
 .origins-module .origins-guide .guide-seq__step-summary:focus-visible {
-  outline: 2px solid #8ed7ff;
+  outline: 2px solid #9cdbff;
   outline-offset: -3px;
-  border-radius: 4px;
+}
+
+.origins-module .origins-guide .guide-seq__step-disclosure[open] > .guide-seq__step-summary {
+  background: linear-gradient(90deg, rgba(34, 109, 153, 0.2), rgba(30, 94, 129, 0.035));
+  border-left-color: #98dbff;
 }
 
 .origins-module .origins-guide .guide-seq__step-summary-text {
   display: grid;
   min-width: 0;
-  gap: 0.16rem;
+  gap: 0.18rem;
 }
 
 .origins-module .origins-guide .guide-seq__step-summary h3 {
   margin: 0;
   align-items: center;
   gap: 0.75rem;
-  font-size: clamp(1.11rem, 1.18vw, 1.29rem);
-  line-height: 1.2;
+  font-size: clamp(1.12rem, 1.26vw, 1.28rem);
   font-weight: 700;
+  line-height: 1.18;
 }
 
 .origins-module .origins-guide .guide-seq__step h3::before {
-  min-width: 1.7rem;
-  width: 1.7rem;
-  height: 1.7rem;
+  width: 1.85rem;
+  min-width: 1.85rem;
+  height: 1.85rem;
   display: inline-grid;
   place-items: center;
-  border: 1px solid rgba(115, 195, 247, 0.23);
-  border-radius: 7px;
-  background: rgba(95, 172, 220, 0.12);
-  color: #8ed7ff;
-  font-size: 0.96rem;
+  border: 1px solid rgba(115, 197, 242, 0.3);
+  border-radius: 6px;
+  background: rgba(87, 166, 211, 0.13);
+  color: #9bddff;
+  font-size: 0.94rem;
   line-height: 1;
+}
+
+.origins-module .origins-guide .guide-seq__step-disclosure[open] h3::before {
+  border-color: #a2e4ff;
+  background: rgba(114, 200, 251, 0.2);
+  color: #f0fbff;
 }
 
 .origins-module .origins-guide .guide-seq__step-brief {
   display: block;
-  margin-left: 2.45rem;
-  color: #c3d7e6;
-  font-size: 0.98rem;
-  line-height: 1.35;
+  margin-left: 2.6rem;
+  color: #c2d8e7;
+  font-size: 0.94rem;
+  line-height: 1.36;
 }
 
 .origins-module .origins-guide .guide-seq__step-chevron {
   flex: 0 0 auto;
-  color: #8ed7ff;
+  color: #87c8ee;
   font-size: 1.45rem;
   line-height: 1;
   transition: transform 150ms ease;
 }
 
-.origins-module .origins-guide .guide-seq__step-disclosure[open] > .guide-seq__step-summary {
-  background: rgba(113, 188, 233, 0.095);
-}
-
 .origins-module .origins-guide .guide-seq__step-disclosure[open] > .guide-seq__step-summary .guide-seq__step-chevron {
   transform: rotate(180deg);
+  color: #c9efff;
 }
 
 .origins-module .origins-guide .guide-seq__step-body {
   display: grid;
-  gap: 0.7rem;
-  padding: 0.5rem clamp(0.9rem, 2vw, 1.4rem) 1.2rem;
-  border-top: 1px solid rgba(114, 191, 237, 0.12);
+  gap: 0.65rem;
+  padding: 0.55rem clamp(0.95rem, 2vw, 1.5rem) 1.2rem;
+  border-top: 1px solid rgba(115, 189, 234, 0.11);
 }
 
-.origins-module .origins-guide .guide-seq__step-body > .gref-stack {
-  gap: 0.55rem;
-}
+.origins-module .origins-guide .guide-seq__step-body > .gref-stack { gap: 0.6rem; }
 
 .origins-module .origins-guide .guide-seq__more > summary,
 .origins-module .origins-guide .guide-seq__references > summary {
   min-height: 44px;
-  color: #91d8ff;
+  color: #9cddff;
 }
 
 .origins-module .origins-guide .gref-tabs__tab[aria-expanded='true'] {
@@ -222,13 +337,13 @@
   object-fit: contain;
 }
 
-/* One line of essential robot mapping stays outside its disclosure. */
+/* The four robot placements remain readable without opening step 3. */
 .origins-module .origins-guide .guide-seq__step-glance {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 0.45rem;
-  margin: -0.15rem 0 0.85rem;
-  padding: 0 clamp(0.9rem, 2vw, 1.4rem);
+  margin: -0.12rem 0 0.78rem;
+  padding: 0 clamp(0.95rem, 2vw, 1.5rem);
   list-style: none;
 }
 
@@ -238,10 +353,10 @@
   gap: 0.35rem;
   min-width: 0;
   padding: 0.38rem 0.5rem;
-  border-left: 2px solid #6dc2ff;
+  border-left: 2px solid #8bd6ff;
   border-radius: 3px;
-  background: rgba(90, 168, 215, 0.09);
-  font-size: 0.88rem;
+  background: rgba(104, 186, 233, 0.075);
+  font-size: 0.86rem;
   line-height: 1.3;
 }
 
@@ -250,92 +365,106 @@
 .origins-module .origins-guide .guide-seq__step-glance li:nth-child(3) { border-color: #d8a8ff; }
 .origins-module .origins-guide .guide-seq__step-glance li:nth-child(4) { border-color: #ff875f; }
 .origins-module .origins-guide .guide-seq__step-glance strong { flex: 0 0 auto; color: #fff; }
-.origins-module .origins-guide .guide-seq__step-glance span { min-width: 0; color: #c6d9e9; }
+.origins-module .origins-guide .guide-seq__step-glance span { min-width: 0; color: #c8dce9; }
 
 .origins-module .origins-guide .guide-seq__footer {
-  padding: 1rem clamp(0.9rem, 2vw, 1.4rem);
-  border-top: 1px solid rgba(118, 184, 223, 0.16);
-  background: rgba(9, 30, 46, 0.25);
+  padding: 1.05rem clamp(0.95rem, 2vw, 1.5rem);
+  border-top: 1px solid var(--origins-rule);
+  background: rgba(27, 70, 97, 0.13);
 }
 
-/* Tips echoes the same surface, without a competing floating title bar. */
-.origins-module .origins-guide__sidebar {
+/* Field notes: useful at a glance, never a competing second guide. */
+.origins-module .origins-guide__sidebar { display: grid; gap: 0.7rem; min-width: 0; }
+
+.origins-module .origins-guide__section-heading--tips {
+  min-height: 84px;
+  padding: 1rem 1rem;
+}
+
+.origins-module .origins-guide__section-heading--tips h2 { font-size: 1.45rem; }
+
+.origins-module .origins-guide__notes {
   display: grid;
-  gap: 0.85rem;
-  min-width: 0;
-}
-
-.origins-module .origins-guide__tips ul {
+  gap: 0;
   margin: 0;
-  padding: 1rem 1.1rem 1.1rem 2rem;
+  padding: 0.5rem 1rem 0.4rem;
+  list-style: none;
+  counter-reset: origins-note;
 }
 
-.origins-module .origins-guide__tips li {
-  margin-bottom: 0.75rem;
-  color: #d5e7f5;
-  font-size: 1rem;
-  line-height: 1.48;
+.origins-module .origins-guide__notes li {
+  display: grid;
+  gap: 0.17rem;
+  margin: 0;
+  padding: 0.72rem 0;
+  border-bottom: 1px solid rgba(134, 197, 236, 0.12);
+  color: #d5e8f6;
+  line-height: 1.34;
+  counter-increment: origins-note;
 }
 
-.origins-module .origins-guide__tips li:last-child {
-  margin-bottom: 0;
+.origins-module .origins-guide__notes li:last-child { border-bottom: 0; }
+
+.origins-module .origins-guide__notes strong {
+  color: #d9f3ff;
+  font-size: 0.96rem;
+  font-weight: 700;
+}
+
+.origins-module .origins-guide__notes span { color: #bfd2e1; font-size: 0.92rem; }
+
+.origins-module .origins-guide__notes-hint {
+  margin: 0;
+  padding: 0.65rem 1rem 0.85rem;
+  color: #9fbdd1;
+  font-size: 0.86rem;
+  line-height: 1.35;
 }
 
 .origins-module .origins-guide__credits {
-  padding: 0 0.5rem;
-  color: #a9c8e1;
-  font-size: 0.9rem;
+  margin: 0;
+  padding: 0.15rem 0.9rem 0.7rem;
+  border-top: 1px solid rgba(130, 199, 238, 0.15);
+  color: #adc9db;
+  font-size: 0.88rem;
 }
 
 .origins-module .origins-guide__credits > summary {
   display: inline-flex;
   align-items: center;
-  min-height: 44px;
-  padding: 0.3rem 0.2rem;
+  min-height: 42px;
+  padding: 0.3rem 0.15rem;
+  color: #9ccbe7;
   cursor: pointer;
   font-weight: 600;
 }
 
 .origins-module .origins-guide__credits summary:focus-visible {
-  outline: 2px solid #8ed7ff;
+  outline: 2px solid #9cdbff;
   outline-offset: 2px;
 }
 
 .origins-module .origins-guide .credits {
   display: grid;
-  gap: 0.25rem;
+  gap: 0.3rem;
   margin: 0.35rem 0;
   color: #a8cfff;
-  font-size: 0.95rem;
+  font-size: 0.92rem;
 }
+.origins-module .origins-guide .credits em { color: #b8e0ff; }
+.origins-module .origins-guide .credits a { color: #8ed7ff; font-weight: 600; }
+.origins-module .origins-guide .audio-players { display: grid; gap: 0.5rem; padding-bottom: 0.5rem; }
+.origins-module .origins-guide audio { width: min(100%, 260px); height: 40px; color-scheme: dark; }
 
-.origins-module .origins-guide .credits em {
-  color: #b8e0ff;
-}
-
-.origins-module .origins-guide .credits a {
-  color: #8ed7ff;
-  font-weight: 600;
-}
-
-.origins-module .origins-guide .audio-players {
-  display: grid;
-  gap: 0.5rem;
-  padding-bottom: 0.5rem;
-}
-
-.origins-module .origins-guide audio {
-  width: min(100%, 280px);
-  height: 40px;
-  color-scheme: dark;
-}
-
-@media (max-width: 1020px) {
+@media (max-width: 1100px) {
   .origins-module .origins-guide__inner {
+    width: min(100%, 950px);
     grid-template-columns: minmax(0, 1fr);
-    width: min(100%, 900px);
   }
-  .origins-module .origins-guide__sidebar { gap: 0.5rem; }
+  .origins-module .origins-guide__notes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 1.3rem;
+  }
 }
 
 @media (max-width: 760px) {
@@ -347,45 +476,45 @@
     --guide-sticky-top: calc(var(--hub-nav-height) + 96px + 0.75rem);
   }
   .origins-module .origins-guide__section-heading {
-    min-height: 59px;
-    padding: 0.7rem 0.9rem;
+    padding: 0.8rem 0.9rem;
+    flex-wrap: wrap;
+    min-height: 0;
   }
-  .origins-module .origins-guide__section-caption { white-space: normal; max-width: 11rem; }
-  .origins-module .origins-guide .guide-seq__step-glance {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+  .origins-module .origins-guide__route { width: 100%; }
+  .origins-module .origins-guide__route-link { min-width: 0; flex: 1 1 0; }
+  .origins-module .origins-guide .guide-seq__step-glance { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 460px) {
-  .origins-module .origins-guide__section-caption { display: none; }
+  .origins-module .origins-guide__section-heading { gap: 0.75rem; }
+  .origins-module .origins-guide__mission-name { flex-wrap: wrap; }
+  .origins-module .origins-guide__mission-count { font-size: 0.76rem; }
   .origins-module .origins-guide .guide-seq__step-summary {
-    min-height: 70px;
-    gap: 0.6rem;
-    padding: 0.7rem 0.78rem;
+    min-height: 68px;
+    padding: 0.7rem 0.8rem;
+    gap: 0.55rem;
   }
-  .origins-module .origins-guide .guide-seq__step-brief {
-    margin-left: 2.45rem;
-    font-size: 0.91rem;
-  }
+  .origins-module .origins-guide .guide-seq__step-summary h3 { font-size: 1.06rem; }
+  .origins-module .origins-guide .guide-seq__step-brief { margin-left: 2.6rem; font-size: 0.91rem; }
   .origins-module .origins-guide .guide-seq__step-glance {
     grid-template-columns: minmax(0, 1fr);
-    padding: 0 0.78rem;
+    padding: 0 0.8rem;
   }
-  .origins-module .origins-guide .guide-seq__step-body {
-    padding: 0.45rem 0.78rem 1rem;
-  }
+  .origins-module .origins-guide .guide-seq__step-body { padding: 0.45rem 0.8rem 1rem; }
+  .origins-module .origins-guide__notes { grid-template-columns: minmax(0, 1fr); }
+  .origins-module .origins-guide__route-link strong { font-size: 0.89rem; }
 }
 
 @media (max-height: 500px) and (orientation: landscape) {
-  .origins-module .main-guide { padding: 0.6rem 0.75rem 1.4rem; }
+  .origins-module .main-guide { padding: 0.55rem 0.7rem 1.35rem; }
   .origins-module .origins-guide .guide {
     --guide-sticky-top: calc(var(--hub-nav-height) + 58px + 0.5rem);
   }
+  .origins-module .origins-guide__section-heading { gap: 0.6rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .origins-module .origins-guide__route-link,
   .origins-module .origins-guide .guide-seq__step-summary,
-  .origins-module .origins-guide .guide-seq__step-chevron {
-    transition: none;
-  }
+  .origins-module .origins-guide .guide-seq__step-chevron { transition: none; }
 }
