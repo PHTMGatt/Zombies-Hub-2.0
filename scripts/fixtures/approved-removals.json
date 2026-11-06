@@ -465,5 +465,80 @@
     ],
     "reason": "Removed the legacy Low / Medium / High guide-depth switch. The main guide still contains the original staff instructions and accessible expandable diagrams.",
     "spec": "Origins UI simplification approved on Nov 5, 2026."
+  },
+  {
+    "text": "Shoot the spawn tombstones 2-3-1-4, activate all four Corruption Engines, then open Pack-a-Punch inside the Apothicon.",
+    "layer": "data",
+    "reason": "Step 1 repetition removed. All facts remain once, organized into the code reference and ordered actions; original ApothiconSteps source is untouched.",
+    "spec": "User direct UX feedback (Nov 6, 2026)"
+  },
+  {
+    "text": "Tombstones 2-3-1-4",
+    "layer": "data",
+    "reason": "Step 1 repetition removed. All facts remain once, organized into the code reference and ordered actions; original ApothiconSteps source is untouched.",
+    "spec": "User direct UX feedback (Nov 6, 2026)"
+  },
+  {
+    "text": "Nacht console, then the three yellow sacs",
+    "layer": "data",
+    "reason": "Step 1 repetition removed. All facts remain once, organized into the code reference and ordered actions; original ApothiconSteps source is untouched.",
+    "spec": "User direct UX feedback (Nov 6, 2026)"
+  },
+  {
+    "text": "Shoot the four spawn tombstones in positional order (2-3-1-4). A sound cue and small fire flash confirm the code. Then activate all four Corruption Engines so the Nacht console can open the route into the Giant Apothicon.",
+    "layer": "data",
+    "reason": "Step 1 repetition removed. All facts remain once, organized into the code reference and ordered actions; original ApothiconSteps source is untouched.",
+    "spec": "User direct UX feedback (Nov 6, 2026)"
+  },
+  {
+    "text": "Tombstone code: 2 → 3 → 1 → 4.",
+    "layer": "data",
+    "reason": "Step 1 repetition removed. All facts remain once, organized into the code reference and ordered actions; original ApothiconSteps source is untouched.",
+    "spec": "User direct UX feedback (Nov 6, 2026)"
+  },
+  {
+    "text": "Activate the Corruption Engines at Spawn, Der Eisendrache, Verrückt, and Mob of the Dead.",
+    "layer": "data",
+    "reason": "Step 1 repetition removed. All facts remain once, organized into the code reference and ordered actions; original ApothiconSteps source is untouched.",
+    "spec": "User direct UX feedback (Nov 6, 2026)"
+  },
+  {
+    "text": "Use the Nacht der Untoten console as the Giant Apothicon passes to open the Pack-a-Punch route.",
+    "layer": "data",
+    "reason": "Step 1 repetition removed. All facts remain once, organized into the code reference and ordered actions; original ApothiconSteps source is untouched.",
+    "spec": "User direct UX feedback (Nov 6, 2026)"
+  },
+  {
+    "text": "Inside the Apothicon, shoot the three yellow sacs holding Pack-a-Punch so the machine drops.",
+    "layer": "data",
+    "reason": "Step 1 repetition removed. All facts remain once, organized into the code reference and ordered actions; original ApothiconSteps source is untouched.",
+    "spec": "User direct UX feedback (Nov 6, 2026)"
+  },
+  {
+    "text": "Shoot the spawn tombstones 2-3-1-4, activate all four Corruption Engines, then open Pack-a-Punch inside the Apothicon.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations"
+    ],
+    "reason": "Step 1 text consolidated into code + ordered actions rather than repeated UI slots.",
+    "spec": "User UX feedback (Nov 6, 2026)"
+  },
+  {
+    "text": "Tombstones 2-3-1-4",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations"
+    ],
+    "reason": "Step 1 text consolidated into code + ordered actions rather than repeated UI slots.",
+    "spec": "User UX feedback (Nov 6, 2026)"
+  },
+  {
+    "text": "Nacht console, then the three yellow sacs",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations"
+    ],
+    "reason": "Step 1 text consolidated into code + ordered actions rather than repeated UI slots.",
+    "spec": "User UX feedback (Nov 6, 2026)"
   }
 ]

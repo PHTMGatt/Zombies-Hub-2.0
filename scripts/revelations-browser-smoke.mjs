@@ -66,6 +66,13 @@ try {
     await assertCssImageLoaded(page, mainRoute, '.rev-header');
     await assertCssImageLoaded(page, mainRoute, '.rev-backdrop');
     await assertNoHorizontalOverflow(page, mainRoute);
+    const opening = page.locator('#engines');
+    assert.equal(await opening.locator('.guide-seq__action-block .guide-seq__tasks li').count(), 6,
+      'Opening contains tombstones, four engine locations, and Pack-a-Punch');
+    assert.equal(await opening.locator('.guide-seq__reference-block .gref-sequence li').count(), 4,
+      'Tombstone code is shown as four ordered reference tokens');
+    assert.equal(await opening.locator('.guide-seq__more').count(), 0,
+      'Opening has no duplicate How-to section');
     const openMore = (id) => page.locator(`#${id} .guide-seq__more > summary`).click();
 
     // Servant step: the in-game captures for each blue rock, one tab per map.

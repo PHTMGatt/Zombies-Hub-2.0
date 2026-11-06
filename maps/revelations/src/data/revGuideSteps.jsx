@@ -74,17 +74,19 @@ const revGuideSteps = [
   {
     id: 'engines',
     title: 'Tombstones + engines',
-    goal: 'Shoot the spawn tombstones 2-3-1-4, activate all four Corruption Engines, then open Pack-a-Punch inside the Apothicon.',
-    refs: [{ type: 'sequence', label: 'Tombstone order', items: ['2', '3', '1', '4'] }],
+    // Outcome, action order, and code each have one home. Do not repeat instructions.
+    goal: 'Open Pack-a-Punch to begin the main quest.',
+    refs: [{ type: 'sequence', label: 'Tombstone order', items: ['2', '3', '1', '4'],
+      note: 'A sound cue and small fire flash confirm the code.' }],
     tasks: [
-      { id: 'tombstones', label: 'Tombstones 2-3-1-4' },
+      { id: 'tombstones', label: 'Shoot the four Spawn tombstones', hint: 'Use the code shown in the reference.' },
       { id: 'spawn', label: 'Engine — Spawn' },
       { id: 'de', label: 'Engine — Der Eisendrache' },
       { id: 'verruckt', label: 'Engine — Verrückt' },
       { id: 'motd', label: 'Engine — Mob of the Dead' },
-      { id: 'pap', label: 'Pack-a-Punch dropped', hint: 'Nacht console, then the three yellow sacs' },
+      { id: 'pap', label: 'Pack-a-Punch dropped', hint: 'Use the Nacht console as the Giant Apothicon passes; inside, shoot all three yellow sacs.' },
     ],
-    how: how(T.ENGINES),
+    // No redundant More section; all unique gameplay facts are above.
   },
   {
     id: 'keeper',

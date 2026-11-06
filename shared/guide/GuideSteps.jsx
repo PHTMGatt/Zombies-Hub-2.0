@@ -13,7 +13,7 @@ import './guide.css';
  * Step shape: { id, title, goal, refs, tasks: [{ id, label, hint? }], how, problems, critical, video, links }.
  * A tabs ref's tabs may add their own `problems` and `links`, shown only while that tab is selected.
  */
-function StepItem({ step, nextStep, accordionName, collapsibleReferences = false, compactAccordion = false }) {
+function StepItem({ step, nextStep, accordionName, collapsibleReferences = false, compactAccordion = false, presentation = 'standard' }) {
   const [variant, setVariant] = useState(null);
   const tabsRef = step.refs?.find((ref) => ref.type === 'tabs');
   const activeTab = tabsRef ? (tabsRef.tabs.find((tab) => tab.id === variant) ?? (collapsibleReferences ? null : tabsRef.tabs[0])) : null;
@@ -30,7 +30,29 @@ function StepItem({ step, nextStep, accordionName, collapsibleReferences = false
     <>
       {step.critical?.map((text) => <p key={text} className="gref gref--warning" role="note"><strong>Watch out</strong> {text}</p>)}
 
-      {collapsibleReferences && Boolean(tabsRef) && !compactAccordion ? (
+      {presentation === 'runbook' ? (
+        <div className="guide-seq__runbook-grid">
+          {step.tasks?.length > 0 && (
+            <section className="guide-seq__action-block" aria-label="Actions to complete">
+              <h4>Follow this order</h4>
+              <ol className="guide-seq__tasks guide-seq__tasks--ordered">
+                {step.tasks.map((task) => (
+                  <li key={task.id} style={task.tone ? { '--gref-tone': task.tone } : undefined}>
+                    {task.label}
+                    {task.hint && <small>{task.hint}</small>}
+                  </li>
+                ))}
+              </ol>
+            </section>
+          )}
+          {step.refs?.length > 0 && (
+            <section className="guide-seq__reference-block" aria-label="Step references">
+              <h4>{step.id === 'engines' ? 'Tombstone code' : 'Reference'}</h4>
+              <GuideReferences refs={step.refs} tabState={{ value: variant, set: setVariant }} />
+            </section>
+          )}
+        </div>
+      ) : collapsibleReferences && Boolean(tabsRef) && !compactAccordion ? (
         <details className="guide-seq__references">
           <summary>Staff quick reference</summary>
           <GuideReferences refs={step.refs} tabState={{ value: variant, set: setVariant }} collapsibleTabs />
@@ -140,7 +162,7 @@ function StepItem({ step, nextStep, accordionName, collapsibleReferences = false
   }
 
   return (
-    <li className="guide-seq__step" id={step.id}>
+    <li className={presentation === 'runbook' ? 'guide-seq__step guide-seq__step--runbook' : 'guide-seq__step'} id={step.id}>
       <h3>{step.title}</h3>
       {step.goal && <p className="guide-seq__goal">{step.goal}</p>}
       {stepDetails}
@@ -162,7 +184,7 @@ const pinnedBottom = () => Math.max(0, ...[...document.querySelectorAll('.hub-he
   .filter((element) => ['fixed', 'sticky'].includes(getComputedStyle(element).position))
   .map((element) => element.getBoundingClientRect().bottom));
 
-export default function GuideSteps({ label, steps, footer, collapsibleReferences = false, compactAccordion = false, accordionName = 'origins-main-guide-steps' }) {
+export default function GuideSteps({ label, steps, footer, collapsibleReferences = false, compactAccordion = false, accordionName = 'origins-main-guide-steps', presentation = 'standard' }) {
   const { hash, search } = useLocation();
 
   // The map chunk loads after the app shell has already tried to scroll to #<step>; finish the job here.
@@ -193,7 +215,7 @@ export default function GuideSteps({ label, steps, footer, collapsibleReferences
   return (
     <section className="guide" aria-label={`${label} guide`}>
       <ol className="guide-seq">
-        {steps.map((step, index) => <StepItem key={step.id} step={step} nextStep={steps[index + 1]} accordionName={accordionName} collapsibleReferences={collapsibleReferences} compactAccordion={compactAccordion} />)}
+        {steps.map((step, index) => <StepItem key={step.id} step={step} nextStep={steps[index + 1]} accordionName={accordionName} collapsibleReferences={collapsibleReferences} compactAccordion={compactAccordion} presentation={presentation} />)}
       </ol>
       {footer && <div className="guide-seq__footer">{footer}</div>}
     </section>
