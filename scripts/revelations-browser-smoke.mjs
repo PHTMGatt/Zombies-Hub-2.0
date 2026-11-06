@@ -56,6 +56,13 @@ try {
     assert.equal(await page.locator('.rev-header__nav a').count(), 5, 'Header nav reaches all five Revelations sections');
     await page.reload({ waitUntil: 'networkidle' });
     assert.equal(await page.locator('li.guide-seq__step').count(), 12, 'Revelations keeps all 12 Easter Egg steps');
+    const chapters = page.locator('.rev-run-chapters a');
+    assert.equal(await chapters.count(), 4, 'Four Revelations act shortcuts are available');
+    assert.deepEqual(await chapters.evaluateAll(links => links.map(link => link.getAttribute('href'))),
+      ['#engines', '#reel-1', '#sophia', '#throws'], 'Each chapter links to an existing step');
+    await chapters.last().click();
+    assert.equal(new URL(page.url()).hash, '#throws', 'Finale shortcut reaches its guide anchor');
+    await page.goto(`${base}${mainRoute}`, { waitUntil: 'networkidle' });
     await assertCssImageLoaded(page, mainRoute, '.rev-header');
     await assertCssImageLoaded(page, mainRoute, '.rev-backdrop');
     await assertNoHorizontalOverflow(page, mainRoute);

@@ -518,3 +518,37 @@
   .origins-module .origins-guide .guide-seq__step-summary,
   .origins-module .origins-guide .guide-seq__step-chevron { transition: none; }
 }
+
+/* Contextual onward action appears only inside an expanded Origins step. */
+.origins-module .origins-guide .guide-seq__next {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.75rem;
+  min-height: 44px;
+  margin-top: 0.35rem;
+  padding: 0.65rem 0.8rem;
+  border: 1px solid rgba(142, 218, 255, 0.22);
+  border-radius: 7px;
+  background: rgba(80, 159, 210, 0.08);
+  color: #e6f6ff;
+  text-decoration: none;
+  transition: background-color 140ms ease, border-color 140ms ease;
+}
+.origins-module .origins-guide .guide-seq__next:hover,
+.origins-module .origins-guide .guide-seq__next:focus-visible {
+  border-color: rgba(155, 226, 255, 0.7);
+  background: rgba(80, 159, 210, 0.17);
+}
+.origins-module .origins-guide .guide-seq__next span:first-child {
+  color: #acd6ed;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.origins-module .origins-guide .guide-seq__next strong { font-size: 0.96rem; font-weight: 700; }
+.origins-module .origins-guide .guide-seq__next span:last-child { margin-left: auto; font-size: 1.25rem; }
+@media (prefers-reduced-motion: reduce) {
+  .origins-module .origins-guide .guide-seq__next { transition: none; }
+}

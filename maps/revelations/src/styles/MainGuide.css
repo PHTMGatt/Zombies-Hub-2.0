@@ -1,116 +1,237 @@
-/* For The Good Of All: a slim cosmic title strip, then the tracked guide straight on the Apothicon
-   backdrop (no glass shell around it, and no backdrop blur to cost the GPU during play). */
+/*
+ * Revelations: The Final Chapter.
+ * Cosmic cinematic main guide, deliberately separate from Origins' icy field manual.
+ * No replacement artwork, step data, reference media, or section navigation.
+ */
 .revelations-module .rev-main-guide {
-  padding-top: 1rem;
+  padding-top: clamp(0.75rem, 1.8vw, 1.25rem);
 }
-
 .revelations-module .rev-run {
-  width: min(100%, 1240px);
+  width: min(100%, 1320px);
   margin: 0 auto;
+  overflow: hidden;
+  border: 1px solid rgba(128, 150, 215, 0.27);
+  border-radius: 20px;
+  background: linear-gradient(148deg, rgba(12, 19, 41, 0.88), rgba(4, 7, 23, 0.91) 54%, rgba(17, 11, 39, 0.88));
   color: var(--rev-ink);
+  box-shadow: 0 28px 75px rgba(0, 0, 0, 0.43), inset 0 1px 0 rgba(172, 211, 255, 0.1);
 }
-
 .revelations-module .rev-run-header {
+  position: relative;
+  min-height: 150px;
   display: flex;
-  align-items: baseline;
   justify-content: space-between;
-  gap: 1rem;
-  padding: 0.75rem 1rem;
-  border-left: 4px solid var(--rev-cyan);
-  border-radius: 0 12px 12px 0;
-  background: linear-gradient(90deg, rgba(14, 36, 66, 0.88), rgba(5, 8, 20, 0.5));
+  align-items: center;
+  gap: 1.2rem;
+  overflow: hidden;
+  padding: clamp(1.15rem, 2.5vw, 2rem) clamp(1rem, 3vw, 2.4rem);
+  background:
+    radial-gradient(ellipse at 92% 3%, rgba(160, 115, 255, 0.24), transparent 63%),
+    radial-gradient(ellipse at 8% 110%, rgba(83, 202, 255, 0.17), transparent 67%),
+    linear-gradient(95deg, rgba(5, 16, 35, 0.98), rgba(18, 12, 43, 0.82));
 }
-
+.revelations-module .rev-run-header::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(109,214,255,.8), rgba(169,139,255,.8), transparent);
+  pointer-events: none;
+}
+.revelations-module .rev-run-header__identity { position: relative; z-index: 1; max-width: 65ch; min-width: 0; }
+.revelations-module .rev-run-header__kicker {
+  display: block;
+  margin-bottom: 0.6rem;
+  color: #a8ccf2;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
 .revelations-module .rev-run-header h2 {
   margin: 0;
-  color: var(--rev-ink);
-  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  color: #f4f5ff;
+  font-size: clamp(1.65rem, 3.2vw, 2.6rem);
+  font-weight: 800;
+  line-height: 1.09;
+  letter-spacing: -0.025em;
+  text-shadow: 0 0 28px rgba(137, 114, 255, 0.28);
+}
+.revelations-module .rev-run-header p {
+  max-width: 60ch;
+  margin: 0.65rem 0 0;
+  color: #c0d2eb;
+  font-size: 0.93rem;
+  line-height: 1.5;
+}
+.revelations-module .rev-run-header__count {
+  flex: 0 0 auto;
+  z-index: 1;
+  min-width: 104px;
+  padding: 0.7rem 0.85rem;
+  display: grid;
+  justify-items: center;
+  border: 1px solid rgba(157, 158, 251, 0.28);
+  border-radius: 12px;
+  background: rgba(37, 29, 75, 0.38);
+}
+.revelations-module .rev-run-header__count strong {
+  color: #b8a6ff;
+  font-size: 2.75rem;
+  font-weight: 800;
   line-height: 1;
+  font-variant-numeric: tabular-nums;
 }
-
-.revelations-module .rev-run-header > p {
-  margin: 0;
-  color: var(--rev-muted);
-  font-size: 0.92rem;
-  text-align: right;
+.revelations-module .rev-run-header__count span {
+  margin-top: 0.25rem;
+  color: #c0c1e9;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
 }
-
-.revelations-module .rev-guide {
-  margin-top: 1rem;
+.revelations-module .rev-run-chapters {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-bottom: 1px solid rgba(130, 165, 231, 0.19);
+  background: rgba(7, 13, 31, 0.9);
 }
+.revelations-module .rev-run-chapters a {
+  min-width: 0;
+  min-height: 82px;
+  display: grid;
+  align-content: center;
+  gap: 0.23rem;
+  padding: 0.7rem clamp(0.6rem, 1.7vw, 1.3rem);
+  border-right: 1px solid rgba(137, 162, 217, 0.13);
+  border-bottom: 2px solid transparent;
+  transition: background 160ms ease, border-color 160ms ease;
+}
+.revelations-module .rev-run-chapters a:last-child { border-right: 0; }
+.revelations-module .rev-run-chapters a:hover,
+.revelations-module .rev-run-chapters a:focus-visible {
+  background: linear-gradient(90deg, rgba(83, 174, 255, 0.12), rgba(145, 102, 237, 0.1));
+  border-bottom-color: #a891ff;
+}
+.revelations-module .rev-run-chapters__number {
+  color: #9a8ee9;
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+.revelations-module .rev-run-chapters a strong {
+  color: #e9edff;
+  font-size: 0.99rem;
+  font-weight: 750;
+  line-height: 1.25;
+}
+.revelations-module .rev-run-chapters__hint {
+  color: #9fb4ce;
+  font-size: 0.78rem;
+  line-height: 1.2;
+}
+.revelations-module .rev-guide { margin: 0; }
 
-/* Revelations theme for the shared step guide: Apothicon cyan into nebula violet. */
+/* The guide lives in the same shell; remove the unrelated second card. */
 .revelations-module .rev-guide .guide {
-  --guide-accent: #6dd6ff;
+  --guide-accent: #7ed9ff;
   --guide-accent-ink: #031424;
   --guide-ink: #f2f8ff;
   --guide-text: #d9e6f4;
-  --guide-muted: #a7b9cc;
-  --guide-surface: rgba(6, 11, 24, 0.86);
-  --guide-surface-2: rgba(109, 214, 255, 0.07);
-  --guide-line: rgba(109, 214, 255, 0.2);
-  --guide-done: #b9a2ff;
+  --guide-muted: #afc0d5;
+  --guide-surface: transparent;
+  --guide-surface-2: rgba(122, 174, 240, 0.075);
+  --guide-line: rgba(145, 169, 228, 0.16);
   --guide-sticky-top: calc(var(--hub-nav-height) + 0.75rem);
+  gap: 0;
 }
-
-.revelations-module .rev-guide .guide-step {
-  border-top: 0;
-  background:
-    radial-gradient(ellipse 70% 50% at 100% 0%, rgba(169, 139, 255, 0.14), transparent 70%),
-    radial-gradient(ellipse 60% 50% at 0% 100%, rgba(56, 196, 255, 0.1), transparent 70%),
-    var(--guide-surface);
-  box-shadow: inset 0 3px 0 0 var(--guide-accent), 0 18px 40px rgba(0, 0, 0, 0.5);
+.revelations-module .rev-guide .guide-seq {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
 }
-
-.revelations-module .rev-guide .guide-rail__step.is-current {
-  background: linear-gradient(90deg, rgba(109, 214, 255, 0.24), rgba(80, 60, 160, 0.35) 60%, var(--guide-surface));
+.revelations-module .rev-guide .guide-seq__step {
+  padding: clamp(1rem, 2.3vw, 1.6rem) clamp(1rem, 3vw, 2.2rem);
+  border-color: rgba(142, 171, 228, 0.15);
 }
-
-.revelations-module .rev-guide .guide-actions__done:not(.is-done) {
-  background: linear-gradient(135deg, #8fe3ff, #a98bff);
+.revelations-module .rev-guide .guide-seq__step:nth-child(4n + 1) {
+  background: linear-gradient(90deg, rgba(76, 171, 245, 0.05), transparent 80%);
 }
-
+.revelations-module .rev-guide .guide-seq__step:nth-child(4n + 4) {
+  background: linear-gradient(90deg, rgba(146, 101, 239, 0.07), transparent 80%);
+}
+.revelations-module .rev-guide .guide-seq__step h3 {
+  color: #f3f6ff;
+  font-size: clamp(1.11rem, 1.4vw, 1.32rem);
+  font-weight: 800;
+}
+.revelations-module .rev-guide .guide-seq__step h3::before {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  min-width: 2rem;
+  height: 2rem;
+  border: 1px solid rgba(157, 169, 252, 0.35);
+  border-radius: 50%;
+  background: rgba(117, 99, 208, 0.14);
+  color: #c0b1ff;
+  font-size: 0.91rem;
+  line-height: 1;
+}
+.revelations-module .rev-guide .guide-seq__goal {
+  color: #d3e4f6;
+  max-width: 85ch;
+  font-size: 1.02rem;
+  line-height: 1.55;
+}
+.revelations-module .rev-guide .guide-seq__footer {
+  padding: 1rem clamp(1rem, 3vw, 2.2rem);
+  border-top: 1px solid rgba(145, 169, 228, 0.17);
+  background: rgba(23, 20, 50, 0.31);
+}
+.revelations-module .rev-guide .gref-tabs__tab[aria-selected='true'] {
+  border-color: #9c87ee;
+  background: rgba(146, 104, 239, 0.22);
+  box-shadow: inset 0 -3px 0 rgba(169, 139, 255, 0.85);
+}
+.revelations-module .rev-guide .guide-seq__more > summary {
+  color: #9adfff;
+}
 @media (max-width: 760px) {
-  .revelations-module .rev-main-guide {
-    padding-top: 0.6rem;
-  }
-
+  .revelations-module .rev-main-guide { padding-top: 0.55rem; }
+  .revelations-module .rev-run { border-radius: 14px; }
   .revelations-module .rev-run-header {
-    display: block;
-    padding: 0.65rem 0.8rem;
+    min-height: 0;
+    padding: 1.1rem 0.9rem;
+    align-items: flex-start;
   }
-
-  .revelations-module .rev-run-header h2 {
-    font-size: 1.55rem;
+  .revelations-module .rev-run-header__count { min-width: 72px; padding: 0.55rem 0.45rem; }
+  .revelations-module .rev-run-header__count strong { font-size: 2rem; }
+  .revelations-module .rev-run-chapters { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .revelations-module .rev-run-chapters a {
+    min-height: 70px;
+    border-bottom: 1px solid rgba(137, 162, 217, 0.13);
   }
-
-  .revelations-module .rev-run-header > p {
-    margin-top: 0.3rem;
-    font-size: 0.84rem;
-    text-align: left;
-  }
-
-  .revelations-module .rev-guide {
-    margin-top: 0.6rem;
-  }
+  .revelations-module .rev-run-chapters a:nth-child(2) { border-right: 0; }
+  .revelations-module .rev-run-chapters a:hover,
+  .revelations-module .rev-run-chapters a:focus-visible { border-bottom-color: #a891ff; }
+  .revelations-module .rev-run-chapters__hint { font-size: 0.73rem; }
+  .revelations-module .rev-guide .guide-seq__step { padding: 1rem 0.85rem; }
 }
-
+@media (max-width: 420px) {
+  .revelations-module .rev-run-header__count { min-width: 0; width: 58px; }
+  .revelations-module .rev-run-header__count strong { font-size: 1.6rem; }
+  .revelations-module .rev-run-header__count span { font-size: 0.53rem; letter-spacing: 0.03em; }
+  .revelations-module .rev-run-header__kicker { font-size: 0.62rem; letter-spacing: 0.12em; }
+  .revelations-module .rev-run-header h2 { font-size: 1.58rem; }
+  .revelations-module .rev-run-header p { font-size: 0.82rem; }
+}
 @media (max-height: 500px) and (orientation: landscape) {
-  .revelations-module .rev-run-header {
-    padding-block: 0.4rem;
-  }
-
-  .revelations-module .rev-run-header h2 {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip-path: inset(50%);
-    white-space: nowrap;
-  }
-
-  .revelations-module .rev-run-header > p {
-    font-size: 0.82rem;
-    text-align: left;
-  }
+  .revelations-module .rev-main-guide { padding-top: 0.45rem; }
+  .revelations-module .rev-run-header { min-height: 0; padding: 0.7rem 1rem; }
+  .revelations-module .rev-run-header__kicker { margin-bottom: 0.25rem; }
+  .revelations-module .rev-run-header p { font-size: 0.81rem; }
+  .revelations-module .rev-run-chapters a { min-height: 55px; padding: 0.5rem 0.7rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .revelations-module .rev-run-chapters a { transition: none; }
 }
