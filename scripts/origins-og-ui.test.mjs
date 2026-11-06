@@ -20,3 +20,13 @@ test('Only Origins opts into collapsible existing staff diagrams', () => {
   assert.ok(read('shared/guide/GuideReferences.jsx').includes('collapsibleTabs = false'));
   for(const name of ['ice','fire','wind','lightning']) assert.ok(read('maps/origins/src/data/originsGuide.jsx').includes(name+'_staff_code.webp'));
 });
+
+test('Only Origins UI gets the compact step accordion; original pages stay independent', () => {
+  const main=read('maps/origins/src/Pages/MainGuide.tsx');
+  const steps=read('shared/guide/GuideSteps.jsx');
+  assert.ok(main.includes('compactAccordion'));
+  assert.ok(steps.includes('compactAccordion = false'));
+  assert.ok(steps.includes('guide-seq__step-disclosure'));
+  assert.ok(steps.includes('if (disclosure) disclosure.open = true'), 'hash links open their target step');
+  assert.ok(read('maps/origins/src/Styles/PageStyles/MainGuide.css').includes('guide-seq__step-summary'));
+});

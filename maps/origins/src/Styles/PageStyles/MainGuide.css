@@ -27,7 +27,7 @@
 }
 
 .origins-module .origins-guide__inner {
-  width: min(100%, 1240px);
+  width: min(100%, 1520px);
   margin: 0 auto;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(250px, 310px);
@@ -291,4 +291,86 @@
   .origins-module .origins-guide__section-heading { padding: 0.6rem 0.75rem; }
   .origins-module .origins-guide__section-heading h2 { font-size: 1.45rem; }
   .origins-module .origins-guide .guide-seq__step { padding: 0.9rem 0.8rem; }
+}
+
+/* Origins UI only — short step titles/actions at rest; details on request. */
+.origins-module .origins-guide .guide-seq__step--foldable {
+  display: block;
+  padding: 0;
+}
+.origins-module .origins-guide .guide-seq__step-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 66px;
+  padding: 0.7rem clamp(0.85rem, 1.8vw, 1.35rem);
+  cursor: pointer;
+  list-style: none;
+  transition: background-color 150ms ease;
+}
+.origins-module .origins-guide .guide-seq__step-summary::-webkit-details-marker { display: none; }
+.origins-module .origins-guide .guide-seq__step-summary:hover {
+  background: rgba(109, 194, 255, 0.08);
+}
+.origins-module .origins-guide .guide-seq__step-summary:focus-visible {
+  outline: 2px solid #8ed7ff;
+  outline-offset: -3px;
+  border-radius: 8px;
+}
+.origins-module .origins-guide .guide-seq__step-summary-text {
+  display: grid;
+  gap: 0.16rem;
+  min-width: 0;
+}
+.origins-module .origins-guide .guide-seq__step-summary h3 {
+  margin: 0;
+  font-size: clamp(1.12rem, 1.1vw, 1.28rem);
+}
+.origins-module .origins-guide .guide-seq__step-brief {
+  display: block;
+  margin-left: 2.15em;
+  color: #c8dded;
+  font-size: 0.96rem;
+  line-height: 1.35;
+}
+.origins-module .origins-guide .guide-seq__step-chevron {
+  flex: 0 0 auto;
+  font-size: 1.55rem;
+  line-height: 1;
+  color: #8ed7ff;
+  transition: transform 150ms ease;
+}
+.origins-module .origins-guide .guide-seq__step-disclosure[open] > .guide-seq__step-summary {
+  background: rgba(109, 194, 255, 0.08);
+}
+.origins-module .origins-guide .guide-seq__step-disclosure[open] > .guide-seq__step-summary .guide-seq__step-chevron {
+  transform: rotate(180deg);
+}
+.origins-module .origins-guide .guide-seq__step-body {
+  display: grid;
+  gap: 0.65rem;
+  padding: 0.3rem clamp(0.85rem, 1.8vw, 1.35rem) 1.1rem;
+  border-top: 1px solid rgba(109, 194, 255, 0.11);
+}
+.origins-module .origins-guide .guide-seq__step-body > .guide-seq__references {
+  margin-top: 0.35rem;
+}
+@media (max-width: 560px) {
+  .origins-module .origins-guide .guide-seq__step-summary {
+    gap: 0.65rem;
+    min-height: 70px;
+    padding: 0.72rem 0.75rem;
+  }
+  .origins-module .origins-guide .guide-seq__step-summary h3 { font-size: 1.08rem; }
+  .origins-module .origins-guide .guide-seq__step-brief {
+    margin-left: 2.1em;
+    font-size: 0.93rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .origins-module .origins-guide .guide-seq__step-summary,
+  .origins-module .origins-guide .guide-seq__step-chevron {
+    transition: none;
+  }
 }

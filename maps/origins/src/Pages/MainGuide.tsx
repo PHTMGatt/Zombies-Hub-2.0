@@ -17,7 +17,7 @@ const MainGuide = () => (
           <img src={SkullIcon} alt="" aria-hidden="true" />
           <h2>Main Steps</h2>
         </div>
-        <GuideSteps label="Little Lost Girl" steps={originsGuide} collapsibleReferences footer={<CompleteEasterEgg mapId="origins" />} />
+        <GuideSteps label="Little Lost Girl" steps={originsGuide} collapsibleReferences compactAccordion footer={<CompleteEasterEgg mapId="origins" />} />
       </div>
 
       <aside className="origins-guide__sidebar" aria-label="Origins guide tips">
