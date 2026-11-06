@@ -79,7 +79,7 @@ const revGuideSteps = [
     refs: [{ type: 'sequence', label: 'Tombstone order', items: ['2', '3', '1', '4'],
       note: 'A sound cue and small fire flash confirm the code.' }],
     tasks: [
-      { id: 'tombstones', label: 'Shoot the four Spawn tombstones', hint: 'Use the code shown in the reference.' },
+      { id: 'tombstones', label: 'Shoot the four Spawn tombstones' },
       { id: 'spawn', label: 'Engine — Spawn' },
       { id: 'de', label: 'Engine — Der Eisendrache' },
       { id: 'verruckt', label: 'Engine — Verrückt' },

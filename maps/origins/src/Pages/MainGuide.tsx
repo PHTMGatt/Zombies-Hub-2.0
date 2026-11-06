@@ -39,8 +39,8 @@ const MainGuide = () => (
         <section className="origins-guide__brief" aria-labelledby="origins-brief-title">
           <h3 id="origins-brief-title">Field Notes</h3>
           <ul className="origins-guide__notes">
-            <li><strong>Build early</strong><span>Build and upgrade the staffs as early as your run allows.</span></li>
-            <li><strong>Use the rounds</strong><span>Fill the four soul chests while you set up, not at the end. Save a zombie for puzzles.</span></li>
+            <li><strong>Use the downtime</strong><span>Fill the four soul chests as you build the staffs.</span></li>
+            <li><strong>Keep one alive</strong><span>Save a zombie while solving staff puzzles and setting up.</span></li>
             <li><strong>Before Rain Fire</strong><span>Have the G-Strike and Maxis Drone ready.</span></li>
           </ul>
         </section>

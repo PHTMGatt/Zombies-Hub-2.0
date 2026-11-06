@@ -47,7 +47,7 @@ function StepItem({ step, nextStep, accordionName, collapsibleReferences = false
           )}
           {step.refs?.length > 0 && (
             <section className="guide-seq__reference-block" aria-label="Step references">
-              <h4>{step.id === 'engines' ? 'Tombstone code' : 'Reference'}</h4>
+              <h4>Reference</h4>
               <GuideReferences refs={step.refs} tabState={{ value: variant, set: setVariant }} />
             </section>
           )}
