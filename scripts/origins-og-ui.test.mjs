@@ -77,3 +77,12 @@ test('Origins step handoff links to the next objective without changing other ma
   assert.ok(component.includes('accordionName = \'origins-main-guide-steps\''));
   assert.ok(styles.includes('.origins-guide .guide-seq__next'));
 });
+
+test('Origins prep notes live within the main field manual instead of a detached sidebar', () => {
+  const source = read('maps/origins/src/Pages/MainGuide.tsx');
+  const css = read('maps/origins/src/Styles/PageStyles/MainGuide.css');
+  assert.ok(source.includes('<section className="origins-guide__brief"'));
+  assert.ok(source.includes('Little Lost Girl</h2>'));
+  assert.ok(!source.includes('<aside className="origins-guide__sidebar"'));
+  assert.ok(css.includes('.origins-guide__brief .origins-guide__notes'));
+});
