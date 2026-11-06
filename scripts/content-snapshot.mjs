@@ -52,6 +52,13 @@ export async function captureSegments(page, route) {
     await tabs.nth(index).click();
     await collect();
   }
+  // The Origins UI still contains the original staff text; its controls are
+  // expandable buttons rather than tab roles, so visit every staff option.
+  const staffOptions = page.locator('main .guide-seq__references .gref-tabs button[aria-expanded]');
+  for (let index = 0; index < await staffOptions.count(); index += 1) {
+    await staffOptions.nth(index).click();
+    await collect();
+  }
   return [...seen];
 }
 
