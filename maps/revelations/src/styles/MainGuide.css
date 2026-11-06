@@ -240,6 +240,9 @@
   .revelations-module .rev-guide .guide-seq__runbook-grid {
     grid-template-columns: minmax(0, 1fr);
   }
+  /* At phone/tablet widths, show the tombstone code before asking players to use it. */
+  .revelations-module .rev-guide #engines .guide-seq__reference-block { grid-row: 1; }
+  .revelations-module .rev-guide #engines .guide-seq__action-block { grid-row: 2; }
 }
 @media (max-width: 620px) {
   .revelations-module .rev-main-guide { padding-top: 0.45rem; }
