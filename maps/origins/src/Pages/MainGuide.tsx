@@ -9,19 +9,20 @@ import "../Styles/PageStyles/MainGuide.css";
 
 const KRONORIUM_URL = "https://kronorium.com/";
 
+// Origins UI: one field manual; the historical OG layout remains untouched.
 const MainGuide = () => (
   <div className="main-guide origins-guide">
     <div className="origins-guide__inner">
       <section className="origins-guide__run" aria-labelledby="origins-main-steps-title">
         <header className="origins-guide__section-heading origins-guide__section-heading--main">
           <div className="origins-guide__mission">
-            <span className="origins-guide__eyebrow">Origins / Little Lost Girl</span>
+            <span className="origins-guide__eyebrow">Origins · Main Steps</span>
             <div className="origins-guide__mission-name">
               <img src={SkullIcon} alt="" aria-hidden="true" />
-              <h2 id="origins-main-steps-title">Main Steps</h2>
+              <h2 id="origins-main-steps-title">Little Lost Girl</h2>
               <span className="origins-guide__mission-count">{originsGuide.length} steps</span>
             </div>
-            <p className="origins-guide__mission-description">Your run, start to finish. Open a step when you need the details.</p>
+            <p className="origins-guide__mission-description">Follow the sequence. Open a step for its exact staff code, placement or instruction.</p>
           </div>
           <nav className="origins-guide__route" aria-label="Jump to a guide phase">
             <a href="#build-staffs" className="origins-guide__route-link">
@@ -34,52 +35,30 @@ const MainGuide = () => (
             </a>
           </nav>
         </header>
-        <GuideSteps label="Little Lost Girl" steps={originsGuide} collapsibleReferences compactAccordion footer={<CompleteEasterEgg mapId="origins" />} />
-      </section>
 
-      <aside className="origins-guide__sidebar" aria-label="Origins guide tips">
-        <section className="origins-guide__tips" aria-labelledby="origins-tips-title">
-          <header className="origins-guide__section-heading origins-guide__section-heading--tips">
-            <div className="origins-guide__section-heading-label">
-              <img src={SkullIcon} alt="" aria-hidden="true" />
-              <div>
-                <span className="origins-guide__eyebrow">Keep the run moving</span>
-                <h2 id="origins-tips-title">Field Notes</h2>
-              </div>
-            </div>
-          </header>
-          <ol className="origins-guide__notes">
-            <li>
-              <strong>Build early</strong>
-              <span>Build and upgrade the staffs as early as your run allows.</span>
-            </li>
-            <li>
-              <strong>Do two things at once</strong>
-              <span>Fill the four soul chests while you set up, not at the end.</span>
-            </li>
-            <li>
-              <strong>Keep one alive</strong>
-              <span>Save a zombie when you need time for staff puzzles.</span>
-            </li>
-            <li>
-              <strong>Before Rain Fire</strong>
-              <span>Have the G-Strike and Maxis Drone ready.</span>
-            </li>
-          </ol>
-          <p className="origins-guide__notes-hint">Staff references open inside Steps 1 and 2. Full walkthroughs are in the staff pages above.</p>
-          <details className="origins-guide__credits">
-            <summary>Credits + radio audio</summary>
-            <p className="credits">
-              <em>MrRoflWaffles – Staff Images</em>
-              <a href={KRONORIUM_URL} target="_blank" rel="noreferrer">Kronorium.com</a>
-            </p>
-            <div className="audio-players">
-              <audio controls aria-label="Origins robot radio message" src={Audio1} preload="none"></audio>
-              <audio controls aria-label="Origins zombie intro" src={Audio2} preload="none"></audio>
-            </div>
-          </details>
+        <section className="origins-guide__brief" aria-labelledby="origins-brief-title">
+          <h3 id="origins-brief-title">Field Notes</h3>
+          <ul className="origins-guide__notes">
+            <li><strong>Use the downtime</strong><span>Fill the four soul chests as you build the staffs.</span></li>
+            <li><strong>Keep one alive</strong><span>Save a zombie while solving staff puzzles and setting up.</span></li>
+            <li><strong>Before Rain Fire</strong><span>Have the G-Strike and Maxis Drone ready.</span></li>
+          </ul>
         </section>
-      </aside>
+
+        <GuideSteps label="Little Lost Girl" steps={originsGuide} collapsibleReferences compactAccordion footer={<CompleteEasterEgg mapId="origins" />} />
+
+        <details className="origins-guide__credits">
+          <summary>Credits + radio audio</summary>
+          <p className="credits">
+            <em>MrRoflWaffles – Staff Images</em>
+            <a href={KRONORIUM_URL} target="_blank" rel="noreferrer">Kronorium.com</a>
+          </p>
+          <div className="audio-players">
+            <audio controls aria-label="Origins robot radio message" src={Audio1} preload="none"></audio>
+            <audio controls aria-label="Origins zombie intro" src={Audio2} preload="none"></audio>
+          </div>
+        </details>
+      </section>
     </div>
   </div>
 );
