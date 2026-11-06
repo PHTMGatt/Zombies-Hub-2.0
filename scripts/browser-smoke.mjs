@@ -144,6 +144,7 @@ try {
     assert.equal(await page.locator('#secure-keys h3').innerText(), 'Secure the keys');
     assert.equal(await page.locator('#thunder-fists h3').innerText(), 'Thunder Fists');
     assert.match(await page.locator('#secure-keys').innerText(), /Odin · middle robot/, 'Staff placement answer is visible without opening anything');
+    await page.locator('#secure-keys .guide-seq__step-summary').click();
     await page.locator('#secure-keys .guide-seq__more > summary').click();
     assert(await page.locator('#secure-keys .guide-how').isVisible(), '"More on this step" shows the how-to');
     // Speed Run is always open: the last Origins nav item, reachable with empty storage, no lock copy anywhere.

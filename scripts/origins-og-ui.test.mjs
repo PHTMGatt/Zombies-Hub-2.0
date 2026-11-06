@@ -30,3 +30,13 @@ test('Only Origins UI gets the compact step accordion; original pages stay indep
   assert.ok(steps.includes('if (disclosure) disclosure.open = true'), 'hash links open their target step');
   assert.ok(read('maps/origins/src/Styles/PageStyles/MainGuide.css').includes('guide-seq__step-summary'));
 });
+
+test('Origins UI keeps robot placements visible and opens staff directly from each step', () => {
+  const source = read('shared/guide/GuideSteps.jsx');
+  assert.ok(source.includes("step.id === 'secure-keys'"));
+  assert.ok(source.includes('guide-seq__step-glance'));
+  assert.ok(source.includes('collapsibleTabs={compactAccordion && Boolean(tabsRef)}'));
+  assert.ok(source.includes('if (compactAccordion)'));
+  const css = read('maps/origins/src/Styles/PageStyles/MainGuide.css');
+  assert.ok(css.includes('guide-seq__step-glance'));
+});

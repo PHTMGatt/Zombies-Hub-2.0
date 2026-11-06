@@ -374,3 +374,48 @@
     transition: none;
   }
 }
+
+/* Keep the four critical robot assignments visible without opening a huge step. */
+.origins-module .origins-guide .guide-seq__step-glance {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: -0.1rem 0 0.65rem;
+  padding: 0 clamp(0.85rem, 1.8vw, 1.35rem);
+  list-style: none;
+}
+.origins-module .origins-guide .guide-seq__step-glance li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  flex: 1 1 170px;
+  min-width: 0;
+  padding: 0.35rem 0.55rem;
+  border-left: 3px solid #6dc2ff;
+  border-radius: 5px;
+  background: rgba(109, 194, 255, 0.07);
+  font-size: 0.87rem;
+  line-height: 1.28;
+}
+.origins-module .origins-guide .guide-seq__step-glance li:nth-child(1) { border-color: #ffe657; }
+.origins-module .origins-guide .guide-seq__step-glance li:nth-child(2) { border-color: #78e8e1; }
+.origins-module .origins-guide .guide-seq__step-glance li:nth-child(3) { border-color: #d8a8ff; }
+.origins-module .origins-guide .guide-seq__step-glance li:nth-child(4) { border-color: #ff7844; }
+.origins-module .origins-guide .guide-seq__step-glance strong {
+  flex: 0 0 auto;
+  color: #fff;
+}
+.origins-module .origins-guide .guide-seq__step-glance span {
+  min-width: 0;
+  color: #c8dded;
+}
+@media (max-width: 560px) {
+  .origins-module .origins-guide .guide-seq__step-glance {
+    gap: 0.35rem;
+    padding: 0 0.75rem;
+  }
+  .origins-module .origins-guide .guide-seq__step-glance li {
+    font-size: 0.84rem;
+    flex-basis: 150px;
+  }
+}

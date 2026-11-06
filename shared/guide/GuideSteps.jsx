@@ -20,6 +20,9 @@ function StepItem({ step, collapsibleReferences = false, compactAccordion = fals
   const problems = [...(step.problems ?? []), ...(activeTab?.problems ?? [])];
   const links = [...(activeTab?.links ?? []), ...(step.links ?? [])];
   const hasMore = step.how?.length > 0 || step.video || links.length > 0 || problems.length > 0;
+  const keyPlacements = compactAccordion && step.id === 'secure-keys'
+    ? step.refs?.find((ref) => ref.type === 'facts')?.items ?? []
+    : [];
 
   // The same reference content is present in both presentations: the compact layout
   // simply folds it behind its step title, rather than removing or rewriting it.
@@ -27,7 +30,7 @@ function StepItem({ step, collapsibleReferences = false, compactAccordion = fals
     <>
       {step.critical?.map((text) => <p key={text} className="gref gref--warning" role="note"><strong>Watch out</strong> {text}</p>)}
 
-      {collapsibleReferences && Boolean(tabsRef) ? (
+      {collapsibleReferences && Boolean(tabsRef) && !compactAccordion ? (
         <details className="guide-seq__references">
           <summary>Staff quick reference</summary>
           <GuideReferences refs={step.refs} tabState={{ value: variant, set: setVariant }} collapsibleTabs />
@@ -44,7 +47,7 @@ function StepItem({ step, collapsibleReferences = false, compactAccordion = fals
         </details>
       ) : (
         <>
-          <GuideReferences refs={step.refs} tabState={{ value: variant, set: setVariant }} />
+          <GuideReferences refs={step.refs} tabState={{ value: variant, set: setVariant }} collapsibleTabs={compactAccordion && Boolean(tabsRef)} />
           {step.tasks?.length > 0 && (
             <ul className="guide-seq__tasks">
               {step.tasks.map((task) => (
@@ -92,9 +95,8 @@ function StepItem({ step, collapsibleReferences = false, compactAccordion = fals
     </>
   );
 
-  // The robot/staff placement mapping is vital while playing; show it at a glance.
-  // Other steps stay folded to keep the entire Easter Egg sequence compact.
-  if (compactAccordion && step.id !== 'secure-keys') {
+  // Every step folds, but the robot placement quick reference remains visible during play.
+  if (compactAccordion) {
     return (
       <li className="guide-seq__step guide-seq__step--foldable" id={step.id}>
         <details className="guide-seq__step-disclosure">
@@ -107,6 +109,16 @@ function StepItem({ step, collapsibleReferences = false, compactAccordion = fals
           </summary>
           <div className="guide-seq__step-body">{stepDetails}</div>
         </details>
+        {keyPlacements.length > 0 && (
+          <ul className="guide-seq__step-glance" aria-label="Staff placement quick reference">
+            {keyPlacements.map((item) => (
+              <li key={item.k}>
+                <strong>{item.k}</strong>
+                <span>{item.v}</span>
+              </li>
+            ))}
+          </ul>
+        )}
       </li>
     );
   }
