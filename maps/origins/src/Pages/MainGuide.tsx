@@ -12,20 +12,25 @@ const KRONORIUM_URL = "https://kronorium.com/";
 const MainGuide = () => (
   <div className="main-guide origins-guide">
     <div className="origins-guide__inner">
-      <div className="origins-guide__run">
-        <div className="origins-guide__section-heading">
-          <img src={SkullIcon} alt="" aria-hidden="true" />
-          <h2>Main Steps</h2>
-        </div>
+      <section className="origins-guide__run" aria-labelledby="origins-main-steps-title">
+        <header className="origins-guide__section-heading origins-guide__section-heading--main">
+          <div className="origins-guide__section-heading-label">
+            <img src={SkullIcon} alt="" aria-hidden="true" />
+            <h2 id="origins-main-steps-title">Main Steps</h2>
+          </div>
+          <span className="origins-guide__section-caption">{originsGuide.length} steps · Select a step for details</span>
+        </header>
         <GuideSteps label="Little Lost Girl" steps={originsGuide} collapsibleReferences compactAccordion footer={<CompleteEasterEgg mapId="origins" />} />
-      </div>
+      </section>
 
       <aside className="origins-guide__sidebar" aria-label="Origins guide tips">
         <section className="origins-guide__tips">
-          <div className="origins-guide__section-heading">
-            <img src={SkullIcon} alt="" aria-hidden="true" />
-            <h2>Tips</h2>
-          </div>
+          <header className="origins-guide__section-heading">
+            <div className="origins-guide__section-heading-label">
+              <img src={SkullIcon} alt="" aria-hidden="true" />
+              <h2>Tips</h2>
+            </div>
+          </header>
           <ul>
             <li>Build and upgrade the staffs as early as your run allows.</li>
             <li>Fill the four soul chests while you set up, not at the end.</li>

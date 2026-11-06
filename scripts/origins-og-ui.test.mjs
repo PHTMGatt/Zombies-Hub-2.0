@@ -40,3 +40,15 @@ test('Origins UI keeps robot placements visible and opens staff directly from ea
   const css = read('maps/origins/src/Styles/PageStyles/MainGuide.css');
   assert.ok(css.includes('guide-seq__step-glance'));
 });
+
+test('Origins UI heading is part of the same panel as the steps', () => {
+  const ui = read('maps/origins/src/Pages/MainGuide.tsx');
+  const css = read('maps/origins/src/Styles/PageStyles/MainGuide.css');
+  assert.ok(ui.includes('origins-guide__run" aria-labelledby="origins-main-steps-title"'));
+  assert.ok(ui.includes('origins-guide__section-heading--main'));
+  assert.ok(ui.includes('originsGuide.length'));
+  assert.ok(css.includes('.origins-guide__run,'));
+  assert.ok(css.includes('.guide-seq {'));
+  assert.ok(css.includes('border: 0;'));
+  assert.ok(css.includes('background: transparent;'));
+});
