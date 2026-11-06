@@ -56,6 +56,24 @@ export async function captureSegments(page, route) {
     (await page.evaluate(visibleText)).forEach((text) => seen.add(text));
   };
   await collect();
+
+  // Revelations restores the original split guide: every step is mounted
+  // for accessibility/deep links but only the selected step is visible.
+  // Visit each selection and each of its screenshot tabs to preserve all text.
+  if (route === '/maps/revelations') {
+    const stepButtons = page.locator('.rev-step-list .rev-step-button');
+    for (let index = 0; index < await stepButtons.count(); index += 1) {
+      await stepButtons.nth(index).click();
+      await collect();
+      const stepTabs = page.locator('main .guide-seq__step:not([hidden]) [role="tab"]');
+      for (let tabIndex = 0; tabIndex < await stepTabs.count(); tabIndex += 1) {
+        await stepTabs.nth(tabIndex).click();
+        await collect();
+      }
+    }
+    return [...seen];
+  }
+
   const tabs = page.locator('main [role="tab"]');
   for (let index = 0; index < await tabs.count(); index += 1) {
     await tabs.nth(index).click();
