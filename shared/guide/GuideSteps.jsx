@@ -97,10 +97,10 @@ function StepItem({ step, collapsibleReferences = false, compactAccordion = fals
       <li className="guide-seq__step guide-seq__step--foldable" id={step.id}>
         <details className="guide-seq__step-disclosure">
           <summary className="guide-seq__step-summary">
-            <span className="guide-seq__step-summary-text">
+            <div className="guide-seq__step-summary-text">
               <h3>{step.title}</h3>
               {step.goal && <span className="guide-seq__step-brief">{step.goal}</span>}
-            </span>
+            </div>
             <span className="guide-seq__step-chevron" aria-hidden="true">⌄</span>
           </summary>
           <div className="guide-seq__step-body">{stepDetails}</div>
