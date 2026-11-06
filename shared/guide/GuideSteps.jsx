@@ -13,23 +13,26 @@ import './guide.css';
  * Step shape: { id, title, goal, refs, tasks: [{ id, label, hint? }], how, problems, critical, video, links }.
  * A tabs ref's tabs may add their own `problems` and `links`, shown only while that tab is selected.
  */
-function StepItem({ step, collapsibleReferences = false }) {
+function StepItem({ step, collapsibleReferences = false, compactAccordion = false }) {
   const [variant, setVariant] = useState(null);
   const tabsRef = step.refs?.find((ref) => ref.type === 'tabs');
   const activeTab = tabsRef ? (tabsRef.tabs.find((tab) => tab.id === variant) ?? (collapsibleReferences ? null : tabsRef.tabs[0])) : null;
   const problems = [...(step.problems ?? []), ...(activeTab?.problems ?? [])];
   const links = [...(activeTab?.links ?? []), ...(step.links ?? [])];
   const hasMore = step.how?.length > 0 || step.video || links.length > 0 || problems.length > 0;
+  const keyPlacements = compactAccordion && step.id === 'secure-keys'
+    ? step.refs?.find((ref) => ref.type === 'facts')?.items ?? []
+    : [];
 
-  return (
-    <li className="guide-seq__step" id={step.id}>
-      <h3>{step.title}</h3>
-      {step.goal && <p className="guide-seq__goal">{step.goal}</p>}
+  // The same reference content is present in both presentations: the compact layout
+  // simply folds it behind its step title, rather than removing or rewriting it.
+  const stepDetails = (
+    <>
       {step.critical?.map((text) => <p key={text} className="gref gref--warning" role="note"><strong>Watch out</strong> {text}</p>)}
 
-      {collapsibleReferences && Boolean(tabsRef) ? (
+      {collapsibleReferences && Boolean(tabsRef) && !compactAccordion ? (
         <details className="guide-seq__references">
-          <summary>{tabsRef ? 'Staff quick reference' : 'Show quick reference'}</summary>
+          <summary>Staff quick reference</summary>
           <GuideReferences refs={step.refs} tabState={{ value: variant, set: setVariant }} collapsibleTabs />
           {step.tasks?.length > 0 && (
             <ul className="guide-seq__tasks">
@@ -44,7 +47,7 @@ function StepItem({ step, collapsibleReferences = false }) {
         </details>
       ) : (
         <>
-          <GuideReferences refs={step.refs} tabState={{ value: variant, set: setVariant }} />
+          <GuideReferences refs={step.refs} tabState={{ value: variant, set: setVariant }} collapsibleTabs={compactAccordion && Boolean(tabsRef)} />
           {step.tasks?.length > 0 && (
             <ul className="guide-seq__tasks">
               {step.tasks.map((task) => (
@@ -89,6 +92,42 @@ function StepItem({ step, collapsibleReferences = false }) {
           )}
         </details>
       )}
+    </>
+  );
+
+  // Every step folds, but the robot placement quick reference remains visible during play.
+  if (compactAccordion) {
+    return (
+      <li className="guide-seq__step guide-seq__step--foldable" id={step.id}>
+        <details className="guide-seq__step-disclosure">
+          <summary className="guide-seq__step-summary">
+            <div className="guide-seq__step-summary-text">
+              <h3>{step.title}</h3>
+              {step.goal && <span className="guide-seq__step-brief">{step.goal}</span>}
+            </div>
+            <span className="guide-seq__step-chevron" aria-hidden="true">⌄</span>
+          </summary>
+          <div className="guide-seq__step-body">{stepDetails}</div>
+        </details>
+        {keyPlacements.length > 0 && (
+          <ul className="guide-seq__step-glance" aria-label="Staff placement quick reference">
+            {keyPlacements.map((item) => (
+              <li key={item.k}>
+                <strong>{item.k}</strong>
+                <span>{item.v}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </li>
+    );
+  }
+
+  return (
+    <li className="guide-seq__step" id={step.id}>
+      <h3>{step.title}</h3>
+      {step.goal && <p className="guide-seq__goal">{step.goal}</p>}
+      {stepDetails}
     </li>
   );
 }
@@ -107,7 +146,7 @@ const pinnedBottom = () => Math.max(0, ...[...document.querySelectorAll('.hub-he
   .filter((element) => ['fixed', 'sticky'].includes(getComputedStyle(element).position))
   .map((element) => element.getBoundingClientRect().bottom));
 
-export default function GuideSteps({ label, steps, footer, collapsibleReferences = false }) {
+export default function GuideSteps({ label, steps, footer, collapsibleReferences = false, compactAccordion = false }) {
   const { hash, search } = useLocation();
 
   // The map chunk loads after the app shell has already tried to scroll to #<step>; finish the job here.
@@ -121,6 +160,11 @@ export default function GuideSteps({ label, steps, footer, collapsibleReferences
     const land = () => {
       const target = document.getElementById(id);
       if (cancelled || !target) return;
+      // A deep link must reveal its step even when the Origins UI is compact.
+      if (compactAccordion) {
+        const disclosure = target.querySelector('.guide-seq__step-disclosure');
+        if (disclosure) disclosure.open = true;
+      }
       target.scrollIntoView({ block: 'start', behavior: 'instant' });
       const overlap = pinnedBottom() + 12 - target.getBoundingClientRect().top;
       if (overlap > 0) window.scrollBy({ top: -overlap, behavior: 'instant' });
@@ -128,12 +172,12 @@ export default function GuideSteps({ label, steps, footer, collapsibleReferences
     land();
     (document.fonts?.ready ?? Promise.resolve()).then(() => requestAnimationFrame(land));
     return () => { cancelled = true; };
-  }, [hash, search, steps]);
+  }, [hash, search, steps, compactAccordion]);
 
   return (
     <section className="guide" aria-label={`${label} guide`}>
       <ol className="guide-seq">
-        {steps.map((step) => <StepItem key={step.id} step={step} collapsibleReferences={collapsibleReferences} />)}
+        {steps.map((step) => <StepItem key={step.id} step={step} collapsibleReferences={collapsibleReferences} compactAccordion={compactAccordion} />)}
       </ol>
       {footer && <div className="guide-seq__footer">{footer}</div>}
     </section>

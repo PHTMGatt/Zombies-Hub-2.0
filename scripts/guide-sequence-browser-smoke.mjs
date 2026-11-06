@@ -58,11 +58,11 @@ try {
     const origins = guides.find((entry) => entry.guide === 'origins');
     const buildStep = origins.steps.find((step) => step.id === 'build-staffs');
     const tabsRef = buildStep.refs.find((ref) => ref.type === 'tabs');
-    await page.goto(`${base}/maps/origins#build-staffs`, { waitUntil: 'networkidle' });
+    await page.goto(`${base}/maps/origins`, { waitUntil: 'networkidle' });
     const step = page.locator('#build-staffs');
-    const optionalRefs = step.locator('details.guide-seq__references');
-    assert.equal(await optionalRefs.getAttribute('open'), null, 'Origins staff details start collapsed');
-    await optionalRefs.locator('summary').click();
+    const stepDisclosure = step.locator('details.guide-seq__step-disclosure');
+    assert.equal(await stepDisclosure.getAttribute('open'), null, 'Origins steps start collapsed');
+    await stepDisclosure.locator('summary.guide-seq__step-summary').click();
     for (const tab of tabsRef.tabs) {
       await step.getByRole('button', { name: tab.label, exact: true }).click();
       const panel = (await step.locator('[role="region"]').first().textContent()).replace(/\s+/g, ' ');
