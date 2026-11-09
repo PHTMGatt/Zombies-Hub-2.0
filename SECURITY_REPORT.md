@@ -18,7 +18,7 @@
 
 | Gate | Where |
 |---|---|
-| gitleaks working-tree scan (pinned, checksum-verified), allowlist, proof step with run-time fake tokens | [security.yml](.github/workflows/security.yml), [.gitleaks.toml](.gitleaks.toml) |
+| gitleaks working-tree scan (pinned, checksum-verified), allowlist, proof step with run-time fake tokens | [security-pipeline.yml](.github/workflows/security-pipeline.yml), [.gitleaks.toml](.gitleaks.toml) |
 | `npm audit --audit-level=high` | security.yml |
 | Config validation | [.github/scripts/check-config.mjs](.github/scripts/check-config.mjs) |
 | Check, unit tests, compile, browser checks | existing [build.yml](.github/workflows/build.yml) (main only). Not duplicated. |
@@ -62,3 +62,15 @@
 ## Outcome
 
 GO as far as checked. Open: headers (14), and the branch is 45 behind main with 9 UI-file conflicts that need Bryen's visual decisions.
+
+## Pipeline levels (one reusable workflow)
+
+[security-pipeline.yml](.github/workflows/security-pipeline.yml) takes a `level` input; three thin callers choose it.
+
+| Level | Caller | Runs on | Adds |
+|---|---|---|---|
+| LOW | `security-low.yml` | every PR and every claude-forge push | gitleaks (tree + scanner proof), `npm audit` high/critical, config checks, build and tests where the repo's own CI does not already run them |
+| MED | `security-med.yml` | nightly and manual | full-history gitleaks, dependency review, red-team tests where the repo has them |
+| HIGH | `security-high.yml` | manual / pre-launch | ZAP baseline (and API fuzzing where there is an API) against a local instance with fake data, never production; then a GO / NO-GO verdict. No exemptions at this level: any high or critical advisory, failed check or open FAIL in this report is NO-GO |
+
+Until these files are on the default branch, the med and high callers also run when `claude-forge` changes them, because schedule and manual triggers need the default branch.

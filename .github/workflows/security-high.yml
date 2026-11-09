@@ -1,0 +1,30 @@
+# security-high
+# HIGH: manual or pre-launch only. Adds ZAP baseline and safe API fuzzing against a LOCAL instance started in CI
+# with fake data (never production), then a GO / NO-GO verdict. Unresolved high or critical findings mean NO-GO.
+# Until this file is on the default branch it also runs when claude-forge changes this file.
+# Logic lives in security-pipeline.yml; this file only picks the level.
+name: security-high
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [claude-forge]
+    paths: ['.github/workflows/security-high.yml']
+
+permissions:
+  contents: read
+
+concurrency:
+  group: security-high-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  run:
+    uses: ./.github/workflows/security-pipeline.yml
+    with:
+      level: "high"
+      node-version: "22"
+      audit-dirs: "."
+      prepare-command: "npm ci --no-audit --no-fund && npm run compile"
+      start-command: "npx vite preview --host 127.0.0.1 --port 4173"
+      target-url: "http://127.0.0.1:4173"

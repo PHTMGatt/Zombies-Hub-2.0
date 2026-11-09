@@ -1,0 +1,27 @@
+# security-low
+# LOW: every PR and every claude-forge push. Secrets scan, npm audit, config check, build and tests (a few minutes).
+# Logic lives in security-pipeline.yml; this file only picks the level.
+name: security-low
+
+on:
+  pull_request:
+  push:
+    branches: [claude-forge]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: security-low-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  run:
+    uses: ./.github/workflows/security-pipeline.yml
+    with:
+      level: "low"
+      node-version: "22"
+      audit-dirs: "."
+      prepare-command: "npm ci --no-audit --no-fund && npm run compile"
+      start-command: "npx vite preview --host 127.0.0.1 --port 4173"
+      target-url: "http://127.0.0.1:4173"
