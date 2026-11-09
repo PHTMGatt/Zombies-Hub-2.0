@@ -30,3 +30,4 @@ jobs:
       prepare-command: "npm ci --no-audit --no-fund && npm run compile"
       start-command: "npx vite preview --host 127.0.0.1 --port 4173"
       target-url: "http://127.0.0.1:4173"
+# rerun to verify pipeline revision 2
