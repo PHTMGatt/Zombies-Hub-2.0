@@ -65,15 +65,33 @@ The app uses one BrowserRouter. Map CSS is scoped by module so one guide cannot 
 
 ## Development
 
+Requires **Node 22** (the version CI and Render use).
+
 ```bash
-npm install
-npm run dev
+npm ci        # install the locked dependencies
+npm run dev   # local dev server
 ```
 
-Production verification/build:
+## Test and Build
 
 ```bash
+npm test          # unit, guide-health, content-preservation and CSS-scope tests
+npm run check     # source verification
+npm run build     # source verification + production compile into dist/
+```
+
+Browser smokes (Playwright, at 390×844, 844×390 and 1440×900) run against the built site:
+
+```bash
+npx playwright install chromium   # first time only
 npm run build
+npm run preview -- --host 127.0.0.1 --port 4173
+```
+
+Then, in a second terminal:
+
+```bash
+npm run test:browser
 ```
 
 Render build:
@@ -97,7 +115,11 @@ push / pull request
         ↓
 source verification
         ↓
+unit tests
+        ↓
 production compile
+        ↓
+browser smokes
         ↓
 GitHub CI passes
         ↓
@@ -111,6 +133,8 @@ optional 100-page visual QA
 `render.yaml` defines the static site, SPA rewrite, Node version, production asset caching, and **deploy-after-CI-passes** behavior. Every build also writes `dist/build-info.json` so the live Render deployment can be matched to its exact Git commit.
 
 The heavy desktop/mobile screenshot pass is an **on-demand GitHub Action**. Screenshots are uploaded as short-lived Actions artifacts instead of being permanently stored in the repository.
+
+Security checks run in three levels: `security-low` on every pull request and `claude-forge` push (secret scan, npm audit, config check, build and tests), `security-med` nightly (adds a full-history secret scan, dependency review and red-team tests) and `security-high` on demand (adds a ZAP baseline against a local instance). See [`SECURITY_REPORT.md`](SECURITY_REPORT.md).
 
 See [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) for the production pipeline and Render settings.
 
