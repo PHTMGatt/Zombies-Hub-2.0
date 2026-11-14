@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import CompleteEasterEgg from "../../../../shared/achievements/CompleteEasterEgg";
 import useHashLanding from "../../../../shared/guide/useHashLanding";
@@ -72,7 +72,7 @@ const TunnelLegend = () => (
 type MainStepProps = { step: Step; mapped: boolean; wide: boolean; onMap: (id: string) => void; inlineMap: React.ReactNode };
 
 // The Map button's id for the map it opens inside its step (below the wide layout).
-const inlineMapId =(id: string) => `map-${id}`;
+const inlineMapId = (id: string) => `map-${id}`;
 
 function MainStep({ step, mapped, wide, onMap, inlineMap }: MainStepProps) {
   const details = [...(step.how ?? []), ...(step.problems ?? [])];
@@ -128,9 +128,21 @@ const MainGuide = () => {
   useHashLanding(steps.map((step) => step.id));
   const wide = useWide();
   const [mapped, setMapped] = useState<string | null>(null);
-  const toggle = (id: string) => setMapped((current) => (current === id ? null : id));
+  const opened = useRef(false);
+  const toggle = (id: string) => {
+    opened.current = true;
+    setMapped((current) => (current === id ? null : id));
+  };
   const mappedStep = steps.find((step) => step.id === mapped);
   const places = mapped ? PLACES[mapped] : undefined;
+
+  // Below the wide layout the map opens at the end of its step, often under the fold (most steps on a
+  // landscape phone): bring the whole map into view, scrolling only as far as needed.
+  useEffect(() => {
+    if (!opened.current) return;
+    opened.current = false;
+    if (!wide && mapped) document.getElementById(inlineMapId(mapped))?.scrollIntoView({ block: "nearest" });
+  }, [mapped, wide]);
 
   return (
     <div className="origins-page origins-guide">

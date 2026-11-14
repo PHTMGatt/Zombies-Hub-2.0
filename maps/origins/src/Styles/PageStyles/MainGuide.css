@@ -197,7 +197,12 @@
   color: #04121f;
 }
 
-.origins-module .run-step__inline-map { margin-top: 0.8rem; }
+/* Opening it scrolls it into view (MainGuide.tsx): clear of the pinned hub bar, a little air below. */
+.origins-module .run-step__inline-map {
+  margin-top: 0.8rem;
+  scroll-margin-top: calc(var(--hub-pin-height, var(--hub-nav-height)) + var(--o-pin) + 12px);
+  scroll-margin-bottom: 12px;
+}
 
 .origins-module .run-step__goal {
   margin: 0.15rem 0 0;

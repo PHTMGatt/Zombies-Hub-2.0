@@ -53,6 +53,19 @@ const pinnedPanel = (page, selector) => page.evaluate((sel) => {
   return { pinned, top: box.top, bottom: box.bottom, heading: heading.top, sticky: getComputedStyle(panel).position === 'sticky', inner: panel.scrollHeight - panel.clientHeight };
 }, selector);
 
+// Waits until the page has stopped scrolling (the hub sets smooth scrolling unless motion is reduced).
+const settle = (page) => page.evaluate(() => new Promise((resolve) => {
+  let last = -1;
+  let still = 0;
+  const tick = () => {
+    still = window.scrollY === last ? still + 1 : 0;
+    last = window.scrollY;
+    if (still >= 6) resolve();
+    else requestAnimationFrame(tick);
+  };
+  tick();
+}));
+
 // Robot names on a sketch that no pin or tunnel covers (an "Odin" read as "Udin" under the Wind tunnel).
 const robotLabelClashes = (page, figure) => page.locator(figure).evaluate((root) => {
   const hit = (a, b) => a.left < b.right - 0.5 && b.left < a.right - 0.5 && a.top < b.bottom - 0.5 && b.top < a.bottom - 0.5;
@@ -210,6 +223,22 @@ try {
       await assertNoHorizontalOverflow(page, `Main Guide with a map open at ${name}`);
       await mapButton.click();
       assert.equal(await page.locator('.run-step__inline-map').count(), 0, `${name}: Map again closes it`);
+      // The map opens at the end of its step: pressed from low on the screen, it is brought fully into view
+      // (on a landscape phone most of them opened below the fold), clear of the pinned hub bar.
+      for (const id of mapIds) {
+        const button = page.locator(`#${id} .run-step__map`);
+        await button.evaluate((el) => el.scrollIntoView({ block: 'end', behavior: 'instant' }));
+        await button.click();
+        await settle(page);
+        const seen = await page.evaluate((mapId) => {
+          const hub = document.querySelector('.hub-header');
+          const pinned = ['fixed', 'sticky'].includes(getComputedStyle(hub).position) ? Math.max(0, hub.getBoundingClientRect().bottom) : 0;
+          const box = document.getElementById(mapId).getBoundingClientRect();
+          return { pinned, top: box.top, bottom: box.bottom };
+        }, `map-${id}`);
+        assert(seen.top >= seen.pinned - 1 && seen.bottom <= height + 1, `${name} ${id}: the opened map sits at ${Math.round(seen.top)}–${Math.round(seen.bottom)}px on a ${height}px screen (pinned bar ${Math.round(seen.pinned)}px)`);
+        await button.click();
+      }
       for (const id of mapIds.filter((step) => stepPlaces[step].layers?.includes('robots'))) {
         const button = page.locator(`#${id} .run-step__map`);
         await button.click();
