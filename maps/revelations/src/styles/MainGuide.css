@@ -35,10 +35,6 @@
   text-align: right;
 }
 
-.revelations-module .rev-guide {
-  margin-top: 1rem;
-}
-
 /* ---- The picker: step list | one step card ---- */
 .revelations-module .rev-picker {
   display: grid;
@@ -128,7 +124,13 @@
   background: rgba(5, 10, 22, 0.92);
   color: var(--guide-text);
   line-height: 1.5;
+  /* Back / Next bring the card's top (the step title) to here, clear of the pinned hub bar. */
+  scroll-margin-top: calc(var(--hub-pin-height, var(--hub-nav-height)) + 0.75rem);
 }
+
+/* Back / Next move focus to the card; a keyboard user sees where it went, a mouse user sees nothing. */
+.revelations-module .rev-card:focus { outline: none; }
+.revelations-module .rev-card:focus-visible { outline: 2px solid rgba(109, 214, 255, 0.6); outline-offset: 3px; }
 
 /* The step's number, big and hollow, like a rift opening behind the title. */
 .revelations-module .rev-card__mark {

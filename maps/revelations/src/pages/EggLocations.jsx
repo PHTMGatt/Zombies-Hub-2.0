@@ -4,15 +4,9 @@ import RevSectionHeader from '../components/RevSectionHeader';
 import RevOptionList, { formatRange } from '../components/RevOptionList';
 import { RevAreaPicker } from '../components/RevIslandMap';
 import eggData from '../data/eggData';
+import { EGG_ISLANDS } from '../data/revIslands';
 import '../styles/Reference.css';
 
-// Which islands each egg area covers on the ring (Kino and Der Eisendrache share one area, and so on).
-const EGG_ISLANDS = {
-  'Kino der Toten / Der Eisendrache': ['kino', 'de'],
-  'Spawn / Shangri-La': ['spawn', 'shang'],
-  Verruckt: ['verruckt'],
-  'Mob of the Dead / Origins': ['mob', 'origins'],
-};
 const areas = eggData.map((section) => ({ key: section.section, label: section.section, islands: EGG_ISLANDS[section.section] }));
 
 const EggLocations = () => {

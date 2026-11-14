@@ -4,6 +4,7 @@ import RevSectionHeader from '../components/RevSectionHeader';
 import RevOptionList from '../components/RevOptionList';
 import { RevAreaPicker } from '../components/RevIslandMap';
 import soundStepData from '../data/SoundStepData';
+import { SOUND_ISLANDS } from '../data/revIslands';
 import '../styles/Reference.css';
 
 const groupedData = soundStepData.reduce((acc, entry) => {
@@ -13,14 +14,6 @@ const groupedData = soundStepData.reduce((acc, entry) => {
 }, {});
 
 const areaList = Object.keys(groupedData);
-
-// Which islands each sound-step region covers on the ring.
-const SOUND_ISLANDS = {
-  'Der Eisendrache / Shangri-La': ['de', 'shang'],
-  Spawn: ['spawn'],
-  'Origins / Mob of the Dead': ['origins', 'mob'],
-  Verrückt: ['verruckt'],
-};
 const areas = areaList.map((area) => ({ key: area, label: area, islands: SOUND_ISLANDS[area] }));
 
 function timeToSeconds(value) {

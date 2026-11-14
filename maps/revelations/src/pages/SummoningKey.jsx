@@ -4,6 +4,7 @@ import RevSectionHeader from '../components/RevSectionHeader';
 import RevOptionList, { formatRange } from '../components/RevOptionList';
 import { RevAreaPicker } from '../components/RevIslandMap';
 import SummoningKeyData from '../data/SummoningKey';
+import { THROW_ISLANDS } from '../data/revIslands';
 import '../styles/Reference.css';
 
 // Data names read "Throw 3: Shangri-La Focusing Stone"; the list already numbers each throw.
@@ -15,11 +16,12 @@ const options = SummoningKeyData.map((entry) => ({
 }));
 
 // Each throw's target sits on one island; the map name leads each title ("Mob Cell Poster").
-const ISLAND_BY_MAP = { Kino: 'kino', DE: 'de', 'Shangri-La': 'shang', Origins: 'origins', Mob: 'mob', Verrückt: 'verruckt', Nacht: 'nacht' };
-const islandOf = (option) => ISLAND_BY_MAP[option.title.split(' ')[0]];
+const islandOf = (option) => THROW_ISLANDS[option.title.split(' ')[0]];
 const areas = options.map((option) => ({ key: option.key, label: option.title, islands: [islandOf(option)] }));
 // The throw order, as a small number on each island.
 const throwOrder = Object.fromEntries(options.map((option, index) => [islandOf(option), index + 1]));
+// A screen reader hears the badge too: "Throw 5, Mob of the Dead: Cell Poster".
+const throwLabel = (isle, area) => `Throw ${throwOrder[isle.id]}, ${isle.name}: ${area.label.split(' ').slice(1).join(' ')}`;
 
 function SummoningKey() {
   const videoRef = useRef(null);
@@ -55,6 +57,7 @@ function SummoningKey() {
               areas={areas}
               current={selected?.name}
               counts={throwOrder}
+              pickLabel={throwLabel}
               hint="Tap an island to play its throw. Numbers are the throw order."
               onPick={(key) => handleTimestampClick(options.find((option) => option.key === key))}
             />

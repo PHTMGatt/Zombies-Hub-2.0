@@ -43,6 +43,25 @@ const assertNoHorizontalOverflow = async (page, label) => {
   assert(scrollWidth <= clientWidth + 1, `${label} overflows horizontally (${scrollWidth} > ${clientWidth})`);
 };
 
+// Where a pinned panel sits once the page has scrolled, against the bottom of what is pinned over it
+// (the hub bar, plus the Origins tab row on wide screens).
+const pinnedPanel = (page, selector) => page.evaluate((sel) => {
+  const pinned = Math.max(0, ...[...document.querySelectorAll('.hub-header, .origins-plates')].map((el) => el.getBoundingClientRect().bottom).filter((bottom) => bottom > 0));
+  const panel = document.querySelector(sel);
+  const box = panel.getBoundingClientRect();
+  const heading = panel.querySelector('h2, h3').getBoundingClientRect();
+  return { pinned, top: box.top, bottom: box.bottom, heading: heading.top, sticky: getComputedStyle(panel).position === 'sticky', inner: panel.scrollHeight - panel.clientHeight };
+}, selector);
+
+// Robot names on a sketch that no pin or tunnel covers (an "Odin" read as "Udin" under the Wind tunnel).
+const robotLabelClashes = (page, figure) => page.locator(figure).evaluate((root) => {
+  const hit = (a, b) => a.left < b.right - 0.5 && b.left < a.right - 0.5 && a.top < b.bottom - 0.5 && b.top < a.bottom - 0.5;
+  const marks = [...root.querySelectorAll('.omap__pins .omap__pin, .omap__tunnels path')];
+  return [...root.querySelectorAll('.omap__robots text')].flatMap((label) => marks
+    .filter((mark) => hit(label.getBoundingClientRect(), mark.getBoundingClientRect()))
+    .map((mark) => `${label.textContent} under ${mark.textContent ? `pin ${mark.textContent}` : mark.getAttribute('class')}`));
+});
+
 const browser = await chromium.launch({ headless: true });
 try {
   for (const { name, width, height } of VIEWPORTS) {
@@ -155,20 +174,48 @@ try {
       assert(side.x >= order.steps.right, 'desktop: the map sits beside the steps');
       await mapButton.click();
       assert.equal(await mapButton.getAttribute('aria-pressed'), 'true', 'Map button shows it is on');
+      assert.equal(await mapButton.getAttribute('aria-controls'), 'origins-map', 'Map button points at the side map');
+      assert.equal(await page.locator('#origins-map h2').getAttribute('aria-live'), 'polite', 'the side map announces the step it now shows');
       assert.equal(await page.locator('.origins-guide__map h2').innerText(), 'Thunder Fists', 'the side map names its step');
       assert.equal(await page.locator('.origins-guide__map .omap__pins .omap__pin').count(), stepPlaces['thunder-fists'].pins.length, 'one pin per soul chest and the reward box');
       assert.equal(await page.locator('.origins-guide__map .omap__key li').count(), stepPlaces['thunder-fists'].pins.length, 'every pin is in the key, in words');
       assert.equal(await page.locator('.run-step__inline-map').count(), 0, 'desktop never opens a map inside a step');
+      // Every view, with the page scrolled: the side map's title clears the pinned hub bar and tab row, and
+      // the whole panel (sketch and key) fits the screen without scrolling inside itself.
+      for (const id of mapIds) {
+        const button = page.locator(`#${id} .run-step__map`);
+        if ((await button.getAttribute('aria-pressed')) !== 'true') await button.click();
+        await page.evaluate(() => window.scrollTo(0, 900));
+        const side = await pinnedPanel(page, '.origins-guide__map');
+        assert(side.sticky && side.heading >= side.pinned, `${id}: side map title at ${Math.round(side.heading)}px, under ${Math.round(side.pinned)}px of pinned chrome`);
+        assert(side.bottom <= height && side.inner <= 1, `${id}: side map runs to ${Math.round(side.bottom)}px (${side.inner}px hidden inside) on a ${height}px screen`);
+        if (stepPlaces[id].layers?.includes('robots')) assert.deepEqual(await robotLabelClashes(page, '.origins-guide__map figure'), [], `${id}: robot names covered`);
+      }
+      await page.locator(`#${mapIds.at(-1)} .run-step__map`).click();
     } else {
       assert.equal(await page.locator('.origins-guide__map').count(), 0, `${name}: no side map`);
+      // Below the wide layout the Map button is a disclosure for the map it opens inside its step.
+      assert.equal(await mapButton.getAttribute('aria-expanded'), 'false', `${name}: Map starts collapsed`);
+      assert.equal(await mapButton.getAttribute('aria-pressed'), null, `${name}: Map is a disclosure, not a toggle`);
+      const fill = () => mapButton.evaluate((button) => getComputedStyle(button).backgroundColor);
+      const offFill = await fill();
       await mapButton.click();
       const inline = page.locator('#thunder-fists .run-step__inline-map');
+      assert.equal(await mapButton.getAttribute('aria-expanded'), 'true', `${name}: Map says it is open`);
+      assert.notEqual(await fill(), offFill, `${name}: an open Map button looks on`);
+      assert.equal(await inline.getAttribute('id'), await mapButton.getAttribute('aria-controls'), `${name}: Map controls the map it opened`);
       assert.equal(await inline.locator('.omap__pins .omap__pin').count(), stepPlaces['thunder-fists'].pins.length, `${name}: the map opens inside the step with its pins`);
       const box = await inline.locator('svg.omap__svg').boundingBox();
       assert(box.width >= Math.min(width, 900) * 0.3 && box.height <= height, `${name}: the sketch fits the screen (${Math.round(box.width)}×${Math.round(box.height)})`);
       await assertNoHorizontalOverflow(page, `Main Guide with a map open at ${name}`);
       await mapButton.click();
       assert.equal(await page.locator('.run-step__inline-map').count(), 0, `${name}: Map again closes it`);
+      for (const id of mapIds.filter((step) => stepPlaces[step].layers?.includes('robots'))) {
+        const button = page.locator(`#${id} .run-step__map`);
+        await button.click();
+        assert.deepEqual(await robotLabelClashes(page, `#${id} .run-step__inline-map`), [], `${name} ${id}: robot names covered`);
+        await button.click();
+      }
     }
 
     const type = await page.evaluate(() => {
@@ -201,7 +248,12 @@ try {
         return el ? el.getBoundingClientRect().top + window.scrollY : null;
       }));
       assert(order.every((top) => top !== null), `${route}: has #build, #puzzle and #upgrade`);
-      if (name === 'phone') assert(order[0] < order[1] && order[1] < order[2], `${route}: Build, Puzzle, Upgrade read in order on phones`);
+      if (name === 'phone') {
+        assert(order[0] < order[1] && order[1] < order[2], `${route}: Build, Puzzle, Upgrade read in order on phones`);
+        const jumps = await page.locator('.staff-page__jump a').evaluateAll((links) => links.map((link) => ({ label: link.textContent.trim(), top: Math.round(link.getBoundingClientRect().top) })));
+        assert.deepEqual(jumps.map((jump) => jump.label), ['Build', 'Map', 'Puzzle', 'Upgrade'], `${route}: four section jumps`);
+        assert.equal(new Set(jumps.map((jump) => jump.top)).size, 1, `${route}: the section jumps share one row`);
+      }
       const text = (await page.locator('main').innerText()).replace(/\s+/g, ' ');
       const lower = text.toLowerCase();
       for (const line of staffLines[staff].lines) {
@@ -215,6 +267,7 @@ try {
       assert.equal(await page.locator('#map .omap__pins .omap__pin').count(), staffPlaces[staff].pins.length, `${route}: one pin per spot`);
       assert.deepEqual(await page.locator('#map .omap__key li').evaluateAll((items) => items.map((li) => li.textContent.trim())),
         staffPlaces[staff].pins.map((pin, i) => `${i + 1}${pin.text}`), `${route}: the key lists every spot in order`);
+      if (staffPlaces[staff].layers?.includes('robots')) assert.deepEqual(await robotLabelClashes(page, '#map figure'), [], `${route}: robot names covered`);
 
       // The chart opens full screen and closes again (button, Esc), returning focus to the chart.
       const open = page.locator('#puzzle .zoom-image__open');
@@ -248,7 +301,16 @@ try {
       assert.doesNotMatch(ringText, /Mule Kick|staircase|wooden platform/i, `${route}: no lever-to-ring mapping in the shared reference`);
 
       const chart = await page.locator('#puzzle .zoom-image__open img').boundingBox();
-      if (name === 'desktop') assert(order[2] - (await page.evaluate(() => window.scrollY)) < height, `${route}: Upgrade is on the first screen`);
+      if (name === 'desktop') {
+        assert(order[2] - (await page.evaluate(() => window.scrollY)) < height, `${route}: Upgrade is on the first screen`);
+        // Pinned beside the long column, Upgrade stays clear of the pinned chrome and whole on screen.
+        await page.evaluate(() => window.scrollTo(0, 600));
+        const side = await pinnedPanel(page, '.staff-page__side');
+        if (side.sticky) {
+          assert(side.heading >= side.pinned, `${route}: pinned Upgrade title at ${Math.round(side.heading)}px, under ${Math.round(side.pinned)}px of chrome`);
+          assert(side.bottom <= height, `${route}: pinned Upgrade runs to ${Math.round(side.bottom)}px on a ${height}px screen`);
+        }
+      }
       if (name === 'phone') assert(chart.width >= 340, `${route}: chart is ${Math.round(chart.width)}px wide on phones`);
       if (name === 'landscape') {
         // The chart follows its steps, so it is checked where it sits: whole on the short screen.
@@ -313,7 +375,15 @@ try {
       });
       assert(!fit.sticky || fit.height <= fit.room, `${staff}: pinned Upgrade (${fit.height}px) is taller than the room (${fit.room}px) at 1280x720`);
     }
-    results.push('1280x720: Upgrade columns are only pinned when they fit');
+    // The Main Guide's side map, on its longest key: clear of the pinned chrome and never cut off at the
+    // bottom (on a screen this short it may scroll inside itself instead).
+    await page.goto(`${base}/maps/origins`, { waitUntil: 'networkidle' });
+    await page.locator('#thunder-fists .run-step__map').click();
+    await page.evaluate(() => window.scrollTo(0, 900));
+    const side = await pinnedPanel(page, '.origins-guide__map');
+    assert(side.sticky && side.heading >= side.pinned, `1280x720: side map title at ${Math.round(side.heading)}px, under ${Math.round(side.pinned)}px of chrome`);
+    assert(side.bottom <= 720, `1280x720: side map runs to ${Math.round(side.bottom)}px`);
+    results.push('1280x720: Upgrade columns are only pinned when they fit; the side map fits under the pinned chrome');
     await context.close();
   }
 } finally {

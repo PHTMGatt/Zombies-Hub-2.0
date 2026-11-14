@@ -56,7 +56,8 @@ const originsGuide = [
   {
     id: 'g-strike',
     title: 'G-Strike',
-    goal: 'Purify the stone tablet with melee kills in the church, bring it back without touching mud.',
+    // 2026-11-14, review M4: the goal and the walk back now match the two melee batches (origins.md, G-Strike).
+    goal: 'Take the tablet from the Tank Station, purify it with melee kills at the church basin, carry it back without touching mud, then melee kill again at the table.',
     refs: [
       { type: 'sequence', items: ['Tablet', 'Church melee kills', 'Return — no mud', 'Table melee kills', 'G-Strikes'] },
     ],
@@ -65,9 +66,8 @@ const originsGuide = [
       // 2026-11-14, from the Wiki + MrRoflWaffles cross-check (research:zombies:2026-11-13): where the
       // tablet starts, and the second melee batch the old text left out.
       'Take the dirty stone tablet from the Tank Station table by Generator 2, left of the back door.',
-      'Complete the stone-tablet melee purification step in the church.',
       'In the church, put it in the holy-water basin and get about 20 melee kills next to it.',
-      'Return the tablet without stepping in mud to finish the G-Strike setup.',
+      'Carry it back to the Tank Station without stepping in mud (mud means rinsing it at the basin again).',
       'Back at the Tank Station, put it on the table and get about 20 more melee kills next to it. The G-Strikes appear on the table.',
       'Have the G-Strike grenades before Rain Fire.',
     ],
@@ -75,11 +75,13 @@ const originsGuide = [
   {
     id: 'rain-fire',
     title: 'Rain Fire',
-    goal: 'Press the button inside the middle robot, then G-Strike the seal by Generator 5 straight away.',
+    // 2026-11-14, review M5: any robot in co-op, Odin solo (origins.md, step 3 and disagreement 15), so the
+    // goal and the always-shown warning no longer ask a solo player to be in two places at once.
+    goal: 'Press the red button in a robot’s head, then land a G-Strike on the seal behind Generator 5 straight away.',
     refs: [
       { type: 'sequence', items: ['Middle robot · open foot', 'Red button', 'G-Strike the seal at Gen 5'] },
     ],
-    critical: ['Be at Generator 5 the moment you press the button — the seal must be active when the G-Strike lands.'],
+    critical: ['The G-Strike must land right after the press: in co-op, have the thrower waiting at the seal; solo, use Odin, then drop out, run and throw. A miss wastes the G-Strike.'],
     how: [
       'Enter the middle robot through an open foot and press the red button.',
       'Immediately throw a G-Strike onto the seal by Generator 5.',

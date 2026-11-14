@@ -69,9 +69,12 @@ const TunnelLegend = () => (
   </>
 );
 
-type MainStepProps = { step: Step; mapped: boolean; onMap: (id: string) => void; inlineMap: React.ReactNode };
+type MainStepProps = { step: Step; mapped: boolean; wide: boolean; onMap: (id: string) => void; inlineMap: React.ReactNode };
 
-function MainStep({ step, mapped, onMap, inlineMap }: MainStepProps) {
+// The Map button's id for the map it opens inside its step (below the wide layout).
+const inlineMapId =(id: string) => `map-${id}`;
+
+function MainStep({ step, mapped, wide, onMap, inlineMap }: MainStepProps) {
   const details = [...(step.how ?? []), ...(step.problems ?? [])];
   // Facts and chips are the answer at a glance (which robot, which footprints); sequences only restate
   // the action, so they wait in Details.
@@ -85,8 +88,17 @@ function MainStep({ step, mapped, onMap, inlineMap }: MainStepProps) {
       <span className="visually-hidden">{number ? `Step ${number}.` : `Prep for step ${neededFor}.`}</span>
       <div className="run-step__head">
         <h3>{step.title}</h3>
+        {/* Wide: a toggle for the side map, whose heading announces the step. Narrow: a disclosure that
+            opens the map inside this step. */}
         {PLACES[step.id] && (
-          <button type="button" className="run-step__map" aria-pressed={mapped} onClick={() => onMap(step.id)}>
+          <button
+            type="button"
+            className="run-step__map"
+            {...(wide
+              ? { "aria-pressed": mapped, "aria-controls": "origins-map" }
+              : { "aria-expanded": mapped, "aria-controls": inlineMapId(step.id) })}
+            onClick={() => onMap(step.id)}
+          >
             <svg viewBox="0 0 16 20" aria-hidden="true"><path d="M8 1a7 7 0 0 0-7 7c0 5 7 11 7 11s7-6 7-11a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 8 5.5a2.5 2.5 0 0 1 0 5Z" /></svg>
             Map
           </button>
@@ -130,9 +142,10 @@ const MainGuide = () => {
               key={step.id}
               step={step}
               mapped={mapped === step.id}
+              wide={wide}
               onMap={toggle}
               inlineMap={!wide && mapped === step.id && places
-                ? <OriginsMap className="run-step__inline-map" title={`Where: ${step.title}`} pins={places.pins} layers={places.layers} />
+                ? <OriginsMap id={inlineMapId(step.id)} className="run-step__inline-map" title={`Where: ${step.title}`} pins={places.pins} layers={places.layers} />
                 : null}
             />
           ))}
@@ -141,8 +154,8 @@ const MainGuide = () => {
       </section>
 
       {wide && (
-        <aside className="origins-guide__map" aria-labelledby="origins-map-title">
-          <h2 id="origins-map-title">{mappedStep ? mappedStep.title : "The map"}</h2>
+        <aside className="origins-guide__map" id="origins-map" aria-labelledby="origins-map-title">
+          <h2 id="origins-map-title" aria-live="polite">{mappedStep ? mappedStep.title : "The map"}</h2>
           <OriginsMap
             title={mappedStep ? `Where: ${mappedStep.title}` : "Origins zones and the four staff tunnels"}
             pins={places?.pins ?? []}

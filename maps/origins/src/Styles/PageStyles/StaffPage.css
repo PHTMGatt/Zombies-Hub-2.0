@@ -197,7 +197,7 @@
 .origins-module .excavation-rings figcaption strong { color: #fff; font-size: 1.05rem; }
 .origins-module .excavation-rings figcaption b { color: var(--staff); letter-spacing: 0.04em; }
 
-/* ---- Phones: one column, Build → Puzzle → Upgrade, with section jumps ---- */
+/* ---- Phones: one column, Build → Map → Puzzle → Upgrade, with the four section jumps on one row ---- */
 @media (max-width: 900px) {
   .origins-module .staff-page {
     grid-template-columns: minmax(0, 1fr);
@@ -209,7 +209,7 @@
 
   .origins-module .staff-page__jump {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 8px;
   }
 

@@ -63,13 +63,15 @@ export const stepPlaces = {
       { kind: 'spot', x: 160, y: 186, text: 'Fire → the holder at the bottom of the Excavation' },
     ],
   },
+  // Each chest is keyed by the step's own chip name (originsGuide.jsx), in the chips' order, then placed
+  // in the Wiki's words (origins.md, Thunder Fists table), so the chip and its pin read as one thing.
   'thunder-fists': {
     pins: [
-      { kind: 'spot', x: 282, y: 200, text: 'Footprint by Generator 5 / Stamin-Up' },
-      { kind: 'spot', x: 160, y: 118, text: 'Footprint on the path from the Excavation to the Church' },
-      { kind: 'spot', x: 104, y: 230, text: 'Footprint on the path from No Man’s Land toward Generator 4' },
-      { kind: 'spot', x: 34, y: 202, text: 'Footprint in the corner by Generator 4 / Juggernog / MP40' },
-      { kind: 'target', x: 196, y: 44, text: 'One Inch Punch: the reward box by Generator 6' },
+      { kind: 'spot', x: 282, y: 200, text: 'Gen 5 footprint: by Stamin-Up' },
+      { kind: 'spot', x: 104, y: 230, text: 'Mound footprint: path from No Man’s Land toward Gen 4' },
+      { kind: 'spot', x: 160, y: 118, text: 'Church path footprint: from the Excavation to the Church' },
+      { kind: 'spot', x: 34, y: 202, text: 'Footprint behind Juggernog: Gen 4 corner by the MP40' },
+      { kind: 'target', x: 196, y: 44, text: 'One Inch Punch: a reward box, usually the Gen 6 one' },
     ],
   },
   'g-strike': {
@@ -131,7 +133,7 @@ export const staffPlaces = {
     pins: [
       { kind: 'part', x: 196, y: 44, text: 'Part: reward box beside Generator 6' },
       { kind: 'part', x: 160, y: 132, text: 'Part: the orange plane’s part lands near the Excavation' },
-      { kind: 'record', x: 132, y: 62, text: 'Red record: Church / Generator 6 area' },
+      { kind: 'record', x: 130, y: 68, text: 'Red record: Church / Generator 6 area' },
       { kind: 'gate', x: 108, y: 326, text: 'Fire tunnel near spawn, on the way to Generator 3' },
       { kind: 'target', x: 124, y: 42, text: 'Torches: Church basement, lit with the Fire Staff' },
     ],

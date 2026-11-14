@@ -26,6 +26,12 @@
   --staff: var(--o-blue);
 }
 
+/* Wide, tall screens pin the tab row under the hub bar (Header.css), so sticky offsets and anchor margins
+   clear it. It lives here, after the base token: a later file with the same selector would reset it. */
+@media (min-width: 901px) and (min-height: 600px) {
+  .origins-module { --o-pin: var(--o-tabs-height); }
+}
+
 /* Each staff sets --staff on its own elements. */
 .origins-module [data-staff='guide'] { --staff: var(--o-blue); }
 .origins-module [data-staff='ice'] { --staff: var(--o-ice); }

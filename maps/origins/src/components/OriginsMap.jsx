@@ -59,17 +59,20 @@ const TRENCHES = [
   'M160 324 L 160 224',
 ];
 
+// Robot walk lines: [name, line y, label x, label y]. Each label sits where no pin, tunnel or zone name
+// can cover it on the views that show robots (Ascend from Darkness, Rain Fire, the Wind staff map):
+// Odin just under its line between Generator 4 and the Excavation, Thor above its line right of centre.
 const ROBOTS = [
-  ['Freya', 100, 8],
-  ['Odin', 186, 103],
-  ['Thor', 262, 8],
+  ['Freya', 100, 8, 94],
+  ['Odin', 186, 101, 199],
+  ['Thor', 262, 222, 256],
 ];
 
-export default function OriginsMap({ pins = [], layers = [], title, empty = null, className = '' }) {
+export default function OriginsMap({ pins = [], layers = [], title, empty = null, className = '', id }) {
   const titleId = useId();
   const show = new Set(layers);
   return (
-    <figure className={`omap ${className}`}>
+    <figure className={`omap ${className}`} id={id}>
       <svg viewBox="0 0 320 380" role="img" aria-labelledby={titleId} className="omap__svg">
         <title id={titleId}>{`${title}. Origins map sketch, not to scale${pins.length ? `, ${pins.length} marked spots listed below` : ''}.`}</title>
 
@@ -79,10 +82,10 @@ export default function OriginsMap({ pins = [], layers = [], title, empty = null
 
         {show.has('robots') && (
           <g className="omap__robots">
-            {ROBOTS.map(([name, y, labelX]) => (
+            {ROBOTS.map(([name, y, labelX, labelY]) => (
               <g key={name}>
                 <path d={`M6 ${y} H314`} />
-                <text x={labelX} y={y - 6}>{name}</text>
+                <text x={labelX} y={labelY}>{name}</text>
               </g>
             ))}
           </g>

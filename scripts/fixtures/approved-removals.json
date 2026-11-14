@@ -12,6 +12,36 @@
     "spec": "brief:zombies-origins-revelations:2026-11-12 part 2; research:zombies:2026-11-13 (origins.md disagreement 5)"
   },
   {
+    "text": "Purify the stone tablet with melee kills in the church, bring it back without touching mud.",
+    "layer": "data",
+    "reason": "G-Strike goal left out the second melee batch at the Tank Station table, so a player following it waits at the table with no beacon. Reworded to the full route (take, purify at the basin, carry back with no mud, melee again at the table); every fact it held is kept.",
+    "spec": "review:zombies:2026-11-14 M4; research:zombies:2026-11-13 (origins.md G-Strike, disagreement 2)"
+  },
+  {
+    "text": "Complete the stone-tablet melee purification step in the church.",
+    "layer": "data",
+    "reason": "Duplicate of the next line (\"In the church, put it in the holy-water basin and get about 20 melee kills next to it.\"), which keeps the fact with the count.",
+    "spec": "review:zombies:2026-11-14 M4"
+  },
+  {
+    "text": "Return the tablet without stepping in mud to finish the G-Strike setup.",
+    "layer": "data",
+    "reason": "Wrong since the second melee batch was added: carrying the tablet back does not finish the setup. Reworded to \"Carry it back to the Tank Station without stepping in mud (mud means rinsing it at the basin again).\"; the no-mud fact is kept.",
+    "spec": "review:zombies:2026-11-14 M4; research:zombies:2026-11-13 (origins.md G-Strike step 4)"
+  },
+  {
+    "text": "Press the button inside the middle robot, then G-Strike the seal by Generator 5 straight away.",
+    "layer": "data",
+    "reason": "Rain Fire goal made the middle robot required; any robot works in co-op and Odin only matters solo. Reworded to \"Press the red button in a robot’s head, then land a G-Strike on the seal behind Generator 5 straight away.\"",
+    "spec": "review:zombies:2026-11-14 M5; research:zombies:2026-11-13 (origins.md step 3, disagreement 15)"
+  },
+  {
+    "text": "Be at Generator 5 the moment you press the button — the seal must be active when the G-Strike lands.",
+    "layer": "data",
+    "reason": "The always-shown warning told a solo player to be at Generator 5 while pressing a button inside a robot. Reworded to the co-op and solo ways to land the G-Strike right after the press; the timing fact is kept.",
+    "spec": "review:zombies:2026-11-14 M5; research:zombies:2026-11-13 (origins.md step 3, disagreement 15)"
+  },
+  {
     "text": "←",
     "layer": "rendered",
     "routes": [

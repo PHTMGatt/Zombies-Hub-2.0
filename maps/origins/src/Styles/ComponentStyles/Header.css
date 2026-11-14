@@ -15,12 +15,9 @@
     var(--o-blue-deep);
 }
 
-/* Wide, tall screens: the band pins with only its tab row showing; the title row slides under the hub bar. */
+/* Wide, tall screens: the band pins with only its tab row showing; the title row slides under the hub bar.
+   The pinned height (--o-pin) is set for the same query in origins-tokens.css. */
 @media (min-width: 901px) and (min-height: 600px) {
-  .origins-module {
-    --o-pin: var(--o-tabs-height);
-  }
-
   .origins-module .origins-top {
     position: sticky;
     top: calc(var(--hub-pin-height, var(--hub-nav-height)) - var(--o-title-height));

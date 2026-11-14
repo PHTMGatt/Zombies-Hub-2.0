@@ -94,12 +94,23 @@
 }
 
 .revelations-module .rev-isles__caption {
+  position: relative;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 0.25rem 1rem;
   color: var(--rev-text);
   font-size: 0.9rem;
+}
+
+/* The lit islands in words, for screen readers on the static ring. */
+.revelations-module .rev-isles__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 .revelations-module .rev-isles__legend {

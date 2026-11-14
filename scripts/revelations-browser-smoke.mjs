@@ -80,6 +80,9 @@ try {
     assert.equal(await page.locator('li.guide-seq__step').getAttribute('id'), 'servant', 'Next shows the following step');
     assert.equal(new URL(page.url()).hash, '#servant', 'The picked step is in the URL');
     assert.equal(await page.locator('.rev-card .rev-isles__rock.is-lit').count(), 5, 'Servant lights its five rock islands');
+    // The ring is drawn for the eyes; its caption says which islands in words.
+    assert.match(await page.locator('.rev-card .rev-isles__caption').textContent(),
+      /Islands: Spawn, Shangri-La, Verrückt, Mob of the Dead, Nacht der Untoten\./, 'The ring names its lit islands for screen readers');
 
     // Servant step: the in-game captures for each blue rock, one tab per map.
     await page.locator('#servant').getByRole('tab', { name: 'Mob of the Dead' }).click();
@@ -111,6 +114,29 @@ try {
     assert(await page.locator('#throws').getByRole('link', { name: /Throw videos/ }).isVisible());
     await show('boss');
     assert.equal(await page.locator('#boss h3').innerText(), 'Final boss — Shadowman');
+
+    // Back / Next from the bottom of a step: the new step opens at its title, clear of the pinned hub bar,
+    // and focus moves to it, including at steps 1 and 12 where the button it was on goes away.
+    for (const [from, to, button] of [
+      ['reel-3', 'sophia', '.rev-card__next'],
+      ['servant', 'reel-1', '.rev-card__next'],
+      ['symbols', 'throws', '.rev-card__next'],
+      ['sophia', 'reel-3', '.rev-card__back'],
+      ['throws', 'boss', '.rev-card__next'],
+      ['keeper', 'engines', '.rev-card__back'],
+    ]) {
+      await show(from);
+      await page.locator(button).scrollIntoViewIfNeeded();
+      await page.locator(button).click();
+      await page.locator(`li.guide-seq__step#${to}`).waitFor();
+      const land = await page.evaluate((id) => {
+        const hub = document.querySelector('.hub-header');
+        const pinned = ['fixed', 'sticky'].includes(getComputedStyle(hub).position) ? Math.max(0, hub.getBoundingClientRect().bottom) : 0;
+        return { pinned, title: document.querySelector(`#${id} h3`).getBoundingClientRect().top, focus: document.activeElement?.id };
+      }, to);
+      assert(land.title >= land.pinned && land.title <= height - 40, `${from} → ${to}: the new title is at ${Math.round(land.title)}px (pinned bar ends at ${Math.round(land.pinned)}px)`);
+      assert.equal(land.focus, 'rev-step-panel', `${from} → ${to}: focus moves to the new step, not ${land.focus || 'the page'}`);
+    }
 
     // The Kronorium symbol note is game state, not progress: it survives a reload (here, a deep link).
     await page.goto(`${base}${mainRoute}#symbols`, { waitUntil: 'networkidle' });
@@ -178,7 +204,12 @@ try {
     // The ring: seven target islands numbered in throw order; tapping one plays its throw.
     assert.equal(await page.locator('.rev-area button.rev-isle').count(), 7, 'Seven throw islands on the ring');
     assert.equal(await page.locator('.rev-area button.rev-isle', { hasText: 'Mob' }).locator('.rev-isle__count').innerText(), '5', 'Mob is throw 5');
-    await page.getByRole('button', { name: 'Verrückt: Verrückt MG42 Fountain' }).click();
+    // Screen readers hear the badge too, and Tab walks the islands in throw order.
+    const isles = await page.locator('.rev-area button.rev-isle').evaluateAll((buttons) => buttons.map((b) => ({ name: b.getAttribute('aria-label'), badge: b.querySelector('.rev-isle__count').textContent })));
+    assert.deepEqual(isles.map((isle) => isle.badge), ['1', '2', '3', '4', '5', '6', '7'], 'Island buttons follow the throw order');
+    for (const isle of isles) assert.match(isle.name, new RegExp(`^Throw ${isle.badge}, `), `"${isle.name}" names its throw number`);
+    assert(isles.some((isle) => isle.name === 'Throw 5, Mob of the Dead: Cell Poster'), 'An island names its map once, then its target');
+    await page.getByRole('button', { name: /^Throw \d, Verrückt: MG42 Fountain$/ }).click();
     assert.match(await page.locator('.rev-video__now').innerText(), /Verrückt MG42 Fountain/);
     assert.match(await page.locator('.rev-option[aria-pressed="true"]').innerText(), /MG42/, 'The island picks its throw in the list too');
     await assertNoHorizontalOverflow(page, keyRoute);
@@ -258,9 +289,12 @@ try {
           titleInside: inside(document.querySelector('.rev-header__title')),
           activeTabInside: activeTab ? inside(activeTab) : false,
           gapBelowFooter: Math.round(document.documentElement.scrollHeight - (footer.bottom + window.scrollY)),
+          hasStepSelector: Boolean(steps),
           stepSelectorHeight: steps ? Math.round(steps.getBoundingClientRect().height) : 0,
         };
       });
+      // Measured only if it is there: a renamed picker would read 0px tall and pass every size check.
+      if (route === '/maps/revelations') assert(fit.hasStepSelector && fit.stepSelectorHeight > 0, `${route} @${vw}x${vh} has no step picker`);
       assert(fit.titleInside, `${route} @${vw}x${vh} clips the Revelations title`);
       assert(fit.activeTabInside, `${route} @${vw}x${vh} hides the active section tab`);
       assert(fit.gapBelowFooter <= 1, `${route} @${vw}x${vh} leaves ${fit.gapBelowFooter}px below the footer`);

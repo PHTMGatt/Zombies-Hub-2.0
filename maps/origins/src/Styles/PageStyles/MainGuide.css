@@ -52,11 +52,17 @@
 .origins-module .origins-steps { grid-area: steps; }
 .origins-module .origins-guide__more { grid-area: more; display: grid; gap: 1rem; }
 
-/* The map stays in view while the steps scroll past it. */
+/* The map stays in view while the steps scroll past it, clear of the pinned hub bar and tab row. The
+   sketch gives up height first, so the longest key (Thunder Fists) still fits a 900px-tall screen; on a
+   shorter one the panel scrolls inside itself rather than hide its key off the bottom. */
 .origins-module .origins-guide__map {
+  --map-top: calc(var(--hub-pin-height, var(--hub-nav-height)) + var(--o-pin) + 16px);
   grid-area: map;
   position: sticky;
-  top: calc(var(--hub-pin-height, var(--hub-nav-height)) + var(--o-pin) + 16px);
+  top: var(--map-top);
+  max-height: calc(100vh - var(--map-top) - 12px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
   display: grid;
   gap: 0.8rem;
   padding: 1.1rem 1.2rem 1.2rem;
@@ -64,6 +70,11 @@
   border-top: 3px solid var(--o-blue);
   border-radius: 12px;
   background: #04121f;
+}
+
+.origins-module .origins-guide__map .omap__svg {
+  max-height: min(540px, calc(100vh - 480px));
+  min-height: 240px;
 }
 
 .origins-module .origins-guide__map h2 {
@@ -179,7 +190,8 @@
 
 .origins-module .run-step__map:hover { border-color: var(--o-blue); }
 
-.origins-module .run-step__map[aria-pressed='true'] {
+/* On: pressed beside the side map (wide), expanded over the map inside the step (narrow). */
+.origins-module .run-step__map:is([aria-pressed='true'], [aria-expanded='true']) {
   border-color: var(--o-blue);
   background: var(--o-blue);
   color: #04121f;
@@ -386,8 +398,10 @@
 .origins-module .origins-speedrun__label { color: #fff; font-weight: 700; font-size: 1.1rem; }
 .origins-module .origins-speedrun__desc { color: var(--o-muted); font-size: 0.98rem; }
 
-/* ---- Below the wide layout: one column, Main Steps → Speed Run → Tips; the map opens inside a step ---- */
-@media (max-width: 999px) {
+/* ---- Below the wide layout: one column, Main Steps → Speed Run → Tips; the map opens inside a step ----
+   999.98px, not 999px: the exact complement of MainGuide.tsx's (min-width: 1000px), so a zoomed window
+   between 999 and 1000px wide never gets the two-column grid without its map. */
+@media (max-width: 999.98px) {
   .origins-module .origins-guide {
     grid-template-columns: minmax(0, 1fr);
     grid-template-areas: 'steps' 'more';

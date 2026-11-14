@@ -67,9 +67,12 @@ const Rock = ({ x, y }) => (
  * The one hunt picker: pick where you are on the island ring, see its spots in the list beside it.
  * `areas` are [{ key, label, islands }]; an area can span islands (Spawn / Shangri-La), and tapping any
  * of its islands picks it. `counts` puts a small number on an island (the Summoning Key throw order),
- * and `hint` replaces the caption. Used by every hunt page, so they all work the same way.
+ * `pickLabel(isle, area)` names an island button for screen readers, and `hint` replaces the caption.
+ * Used by every hunt page, so they all work the same way.
  */
-export function RevAreaPicker({ areas, current, onPick, kicker = 'Where you are', noun = 'spots', hint, counts }) {
+const areaLabel = (isle, area) => `${isle.name}: ${area.label}`;
+
+export function RevAreaPicker({ areas, current, onPick, kicker = 'Where you are', noun = 'spots', hint, counts, pickLabel = areaLabel }) {
   const area = areas.find((item) => item.key === current);
   const byIsland = (id) => areas.find((item) => item.islands.includes(id));
   return (
@@ -83,7 +86,7 @@ export function RevAreaPicker({ areas, current, onPick, kicker = 'Where you are'
         lit={areas.flatMap((item) => item.islands)}
         active={area?.islands ?? []}
         onPick={(id) => onPick(byIsland(id).key)}
-        pickLabel={(isle) => `${isle.name}: ${byIsland(isle.id).label}`}
+        pickLabel={(isle) => pickLabel(isle, byIsland(isle.id))}
         counts={counts}
       />
     </div>
@@ -102,6 +105,11 @@ export default function RevIslandMap({
   const litSet = new Set(lit);
   const activeSet = new Set(active);
   const state = (id) => (activeSet.has(id) ? 'is-active' : litSet.has(id) ? 'is-lit' : 'is-dim');
+  // Numbered islands (the throw order) are tabbed through in that order, not round the ring.
+  const order = (isle) => counts[isle.id] ?? ISLANDS.length + ISLANDS.indexOf(isle);
+  const overlay = [...ISLANDS].sort((a, b) => order(a) - order(b));
+  // The static ring (Main Guide) is drawn for the eyes only, so its caption names the lit islands.
+  const litNames = onPick ? [] : ISLANDS.filter((isle) => litSet.has(isle.id)).map((isle) => isle.name);
   return (
     <figure className={`rev-isles${onPick ? ' rev-isles--picker' : ''} ${className}`}>
       <div className="rev-isles__field">
@@ -116,7 +124,7 @@ export default function RevIslandMap({
             </g>
           ))}
         </svg>
-        {ISLANDS.map((isle) => {
+        {overlay.map((isle) => {
           const style = { left: `${(isle.x / W) * 100}%`, top: `${(isle.y / H) * 100}%` };
           const count = counts[isle.id];
           const body = (
@@ -145,6 +153,7 @@ export default function RevIslandMap({
       </div>
       <figcaption className="rev-isles__caption">
         {title}
+        {litNames.length > 0 && <span className="rev-isles__sr">{` Islands: ${litNames.join(', ')}.`}</span>}
         <span className="rev-isles__legend" aria-hidden="true">
           <span className="rev-isles__key rev-isles__key--pad" />jump pad
           <span className="rev-isles__key rev-isles__key--walk" />walk
