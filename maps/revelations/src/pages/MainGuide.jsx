@@ -61,11 +61,13 @@ const MainGuide = () => {
     walked.current = true;
     select(id);
   };
+  // Arrows walk the steps (wrapping); Home and End jump to step 1 and the boss.
   const onKey = (event) => {
     const move = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[event.key];
-    if (!move) return;
+    const jump = { Home: 0, End: ids.length - 1 }[event.key];
+    if (!move && jump === undefined) return;
     event.preventDefault();
-    const target = ids[(index + move + ids.length) % ids.length];
+    const target = ids[jump ?? (index + move + ids.length) % ids.length];
     select(target);
     document.getElementById(`rev-tab-${target}`)?.focus();
   };

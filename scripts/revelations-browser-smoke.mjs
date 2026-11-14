@@ -75,6 +75,15 @@ try {
     await page.locator('li.guide-seq__step#keeper').waitFor();
     assert.equal(await page.locator('li.guide-seq__step').getAttribute('id'), 'keeper', 'ArrowDown picks the next step');
     assert(await page.locator('#rev-tab-keeper').evaluate((tab) => tab === document.activeElement), 'Focus follows the picked step');
+    // Home and End jump to the first and last step, as the tabs pattern expects.
+    await page.keyboard.press('End');
+    await page.locator('li.guide-seq__step#boss').waitFor();
+    assert(await page.locator('#rev-tab-boss').evaluate((tab) => tab === document.activeElement), 'End picks and focuses the last step');
+    await page.keyboard.press('Home');
+    await page.locator('li.guide-seq__step#engines').waitFor();
+    assert(await page.locator('#rev-tab-engines').evaluate((tab) => tab === document.activeElement), 'Home picks and focuses step 1');
+    await page.keyboard.press('ArrowDown');
+    await page.locator('li.guide-seq__step#keeper').waitFor();
     await page.locator('.rev-card__next').click();
     await page.locator('li.guide-seq__step#servant').waitFor();
     assert.equal(await page.locator('li.guide-seq__step').getAttribute('id'), 'servant', 'Next shows the following step');
