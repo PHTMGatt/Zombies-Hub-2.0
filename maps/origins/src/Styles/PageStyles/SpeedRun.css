@@ -144,9 +144,10 @@
   align-items: start;
 }
 
+/* --o-pin is the Origins tab row when it is pinned (origins-tokens.css), 0 where it scrolls away. */
 .origins-module .speedrun-rail {
   position: sticky;
-  top: calc(var(--hub-pin-height, var(--hub-nav-height)) + var(--origins-header-height, 84px) + 0.75rem);
+  top: calc(var(--hub-pin-height, var(--hub-nav-height)) + var(--o-pin) + 0.75rem);
 }
 
 .origins-module .speedrun-rail ol {
@@ -233,8 +234,12 @@
 .origins-module .speedrun-panel {
   min-width: 0;
   padding: 1.5rem 1.75rem 1.4rem;
-  scroll-margin-top: calc(var(--hub-pin-height, var(--hub-nav-height)) + var(--origins-header-height, 84px) + 0.75rem);
+  scroll-margin-top: calc(var(--hub-pin-height, var(--hub-nav-height)) + var(--o-pin) + 0.75rem);
 }
+
+/* Previous / Next move focus here: a keyboard user sees where it went, a mouse user sees nothing. */
+.origins-module .speedrun-panel:focus { outline: none; }
+.origins-module .speedrun-panel:focus-visible { outline: 2px solid rgba(240, 197, 107, 0.6); outline-offset: 3px; }
 
 .origins-module .speedrun-panel__meta {
   display: flex;

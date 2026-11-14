@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { loadModules } from './guide-content.mjs';
 
@@ -53,4 +53,21 @@ test('Origins: only the tokens file sets the pinned-row height', () => {
   const files = ['maps/origins/src/Styles/ComponentStyles/Header.css', 'maps/origins/src/Styles/PageStyles/MainGuide.css', 'maps/origins/src/Styles/PageStyles/StaffPage.css', 'maps/origins/src/Styles/ComponentStyles/OriginsMap.css', 'maps/origins/styles/origins-shell.css'];
   for (const file of files) assert.doesNotMatch(read(file), /--o-pin\s*:/, `${file} sets --o-pin`);
   assert.match(read('maps/origins/src/Styles/origins-tokens.css'), /@media \(min-width: 901px\) and \(min-height: 600px\) \{\s*\.origins-module \{ --o-pin: var\(--o-tabs-height\); \}/);
+});
+
+// A token that is read but never set only ever gives its fallback: Speed Run kept clearing an 84px
+// "--origins-header-height" long after the header token was removed, instead of the real --o-pin.
+test('Origins and Revelations CSS read only custom properties that something defines', () => {
+  const walk = (dir) => readdirSync(resolve(root, dir), { withFileTypes: true }).flatMap((entry) => {
+    const path = `${dir}/${entry.name}`;
+    if (entry.isDirectory()) return ['node_modules', 'dist'].includes(entry.name) ? [] : walk(path);
+    return /\.(css|jsx?|tsx?)$/.test(entry.name) ? [path] : [];
+  });
+  const files = ['apps', 'maps', 'shared'].flatMap(walk);
+  const source = files.map(read).join('\n');
+  // Set in CSS (--x: …) or from code (style={{ '--x': … }}, setProperty('--x', …)).
+  const defined = new Set([...source.matchAll(/(--[\w-]+)\s*:/g), ...source.matchAll(/['"](--[\w-]+)['"]/g)].map((match) => match[1]));
+  const unset = files.filter((file) => /^maps\/(origins|revelations)\/.*\.css$/.test(file)).flatMap((file) =>
+    [...read(file).matchAll(/var\((--[\w-]+)/g)].map((match) => match[1]).filter((name) => !defined.has(name)).map((name) => `${file}: ${name}`));
+  assert.deepEqual([...new Set(unset)], [], 'custom properties read but never set');
 });

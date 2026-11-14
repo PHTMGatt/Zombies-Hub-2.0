@@ -266,6 +266,36 @@ try {
     const back = page.locator('a.speedrun-back');
     assert.equal(await back.getAttribute('href'), '/maps/origins', 'Speed Run leads back to the Main Guide');
     assert((await back.boundingBox()).height >= 44, 'Back to Main Guide is a 44px target');
+    // Previous / Next move focus to the new checkpoint, so it is heard and focus never drops to the page when
+    // the button turns disabled at either end; pressed from the bottom of a checkpoint, its title lands clear
+    // of the pinned hub bar and tab row. A pick on the rail leaves focus on the rail.
+    const speedPanel = page.locator('.speedrun-panel');
+    const checkpoint = () => page.locator('.speedrun-panel__meta > span').textContent();
+    for (let n = 2; n <= 8; n += 1) {
+      const next = page.getByRole('button', { name: 'Next checkpoint' });
+      await next.evaluate((el) => el.scrollIntoView({ block: 'end', behavior: 'instant' }));
+      await next.focus();
+      await page.keyboard.press('Enter');
+      await settle(page);
+      assert.equal(await checkpoint(), `Checkpoint ${n} of 8`, `Next opens checkpoint ${n}`);
+      const land = await page.evaluate(() => ({
+        pinned: Math.max(0, ...[...document.querySelectorAll('.hub-header, .origins-top')]
+          .filter((el) => ['fixed', 'sticky'].includes(getComputedStyle(el).position)).map((el) => el.getBoundingClientRect().bottom)),
+        title: document.querySelector('.speedrun-panel h3').getBoundingClientRect().top,
+        focused: document.activeElement?.classList.contains('speedrun-panel'),
+      }));
+      assert(land.focused, `Next to checkpoint ${n}: focus moves to the checkpoint`);
+      assert(land.title >= land.pinned && land.title <= height - 40, `Next to checkpoint ${n}: its title is at ${Math.round(land.title)}px (pinned chrome ends at ${Math.round(land.pinned)}px)`);
+    }
+    assert(await page.getByRole('button', { name: 'Next checkpoint' }).isDisabled(), 'Next stops at the last checkpoint');
+    assert.equal(await speedPanel.getAttribute('aria-labelledby'), await page.locator('.speedrun-panel h3').getAttribute('id'), 'the checkpoint is named by its title');
+    await page.locator('.speedrun-checkpoint').nth(1).click();
+    assert(await page.locator('.speedrun-checkpoint').nth(1).evaluate((el) => el === document.activeElement), 'a rail pick keeps focus on the rail');
+    await page.getByRole('button', { name: 'Previous checkpoint' }).focus();
+    await page.keyboard.press('Enter');
+    await settle(page);
+    assert.equal(await checkpoint(), 'Checkpoint 1 of 8', 'Previous opens checkpoint 1');
+    assert(await speedPanel.evaluate((el) => el === document.activeElement), 'Previous to the first checkpoint keeps focus on the checkpoint');
 
     // ---- Staff pages: Build → Puzzle → Upgrade ----
     for (const staff of STAFFS) {

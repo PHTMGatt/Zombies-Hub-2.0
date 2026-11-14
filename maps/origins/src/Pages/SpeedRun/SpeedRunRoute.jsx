@@ -11,15 +11,27 @@ export default function SpeedRunRoute() {
   const railRef = useRef(null);
   const panelRef = useRef(null);
   const firstRender = useRef(true);
+  const walked = useRef(false);
 
   const phase = route[index];
   const previous = route[index - 1];
   const next = route[index + 1];
+  // Previous / Next move focus to the new checkpoint: a screen reader hears its title, and focus never
+  // drops to the page when the button it was on turns disabled at the first or last checkpoint.
+  const walk = (to) => {
+    walked.current = true;
+    setIndex(to);
+  };
 
   useEffect(() => {
     if (firstRender.current) {
       firstRender.current = false;
       return;
+    }
+    const panel = panelRef.current;
+    if (walked.current) {
+      walked.current = false;
+      panel?.focus({ preventScroll: true });
     }
 
     // Phones: checkpoints are a swipeable row; keep the current one centered (row only, never the page).
@@ -31,10 +43,10 @@ export default function SpeedRunRoute() {
       rail.scrollLeft += activeBox.left - railBox.left - (railBox.width - activeBox.width) / 2;
     }
 
-    // After Previous/Next from the bottom of a long checkpoint, bring its start back into view.
-    const panel = panelRef.current;
-    const navHeight = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--hub-nav-height')) || 0;
-    if (panel && panel.getBoundingClientRect().top < navHeight) {
+    // After Previous/Next from the bottom of a long checkpoint, bring its start back into view, clear of
+    // everything pinned over it (its scroll-margin-top: the hub bar, plus the Origins tab row when pinned).
+    const clear = panel ? parseFloat(getComputedStyle(panel).scrollMarginTop) || 0 : 0;
+    if (panel && panel.getBoundingClientRect().top < clear) {
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       panel.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
     }
@@ -68,7 +80,7 @@ export default function SpeedRunRoute() {
           </ol>
         </nav>
 
-        <article className="speedrun-panel" ref={panelRef} id={`speedrun-${phase.id}`}>
+        <article className="speedrun-panel" ref={panelRef} id={`speedrun-${phase.id}`} tabIndex={-1} aria-labelledby="speedrun-panel-title">
           <div className="speedrun-panel__meta">
             <span>Checkpoint {index + 1} of {route.length}</span>
             {Number.isFinite(phase.timestamp) && (
@@ -78,7 +90,7 @@ export default function SpeedRunRoute() {
             )}
           </div>
 
-          <h3>{phase.title}</h3>
+          <h3 id="speedrun-panel-title">{phase.title}</h3>
           <p className="speedrun-panel__summary">{phase.summary}</p>
 
           <ol className="speedrun-panel__steps">
@@ -93,11 +105,11 @@ export default function SpeedRunRoute() {
           )}
 
           <div className="speedrun-panel__nav">
-            <button type="button" aria-label="Previous checkpoint" disabled={!previous} onClick={() => setIndex(index - 1)}>
+            <button type="button" aria-label="Previous checkpoint" disabled={!previous} onClick={() => walk(index - 1)}>
               <small>← Previous</small>
               <span>{previous ? previous.title : 'Start of the run'}</span>
             </button>
-            <button type="button" aria-label="Next checkpoint" disabled={!next} onClick={() => setIndex(index + 1)}>
+            <button type="button" aria-label="Next checkpoint" disabled={!next} onClick={() => walk(index + 1)}>
               <small>Next →</small>
               <span>{next ? next.title : 'End of the route'}</span>
             </button>
