@@ -197,6 +197,17 @@ try {
       path: fileURLToPath(new URL(`revelations-${width}.png`, artifactDir)),
       fullPage: true,
     });
+    // The note's slots are heard with their note, and clearing it (which removes the Clear button) puts
+    // focus in the first slot instead of dropping it to the page.
+    assert.equal(await page.locator('#symbols').getByRole('group', { name: /Kronorium order/ }).count(), 1, 'The symbol note is a named group');
+    await page.locator('#symbols').getByRole('button', { name: 'Clear for a new game' }).click();
+    assert.equal(await page.locator('#symbols').getByLabel('1st').inputValue(), '', 'Clear empties the note');
+    assert(await page.locator('#symbols').getByLabel('1st').evaluate((input) => input === document.activeElement), 'Clear puts focus in the first slot');
+    // "I completed this Easter Egg" goes away once pressed; focus moves to what replaces it.
+    await page.getByRole('button', { name: 'I completed this Easter Egg' }).click();
+    await page.locator('.zh-complete--earned').waitFor();
+    assert(await page.locator('.zh-complete--earned').evaluate((done) => done === document.activeElement), 'Completing the Easter Egg keeps focus on its result');
+    await page.evaluate(() => localStorage.removeItem('zh-achievements'));
     results.push({ width, route: mainRoute, interactions: 'step sequence + contextual references + top-aligned screenshot', passed: true });
 
     errors.length = 0;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CHANGE_EVENT, getUnlocked, mainAchievementFor, unlockAchievement } from './achievements';
 import './achievements.css';
@@ -10,6 +10,16 @@ import './achievements.css';
 export default function CompleteEasterEgg({ mapId }) {
   const achievement = mainAchievementFor(mapId);
   const [earned, setEarned] = useState(() => Boolean(achievement && getUnlocked()[achievement.id]));
+  const resultRef = useRef(null);
+  const justEarned = useRef(false);
+
+  // The button goes away once pressed: focus moves to the result ("Completed · View achievement") so it
+  // is heard, and never drops to the page.
+  useEffect(() => {
+    if (!earned || !justEarned.current) return;
+    justEarned.current = false;
+    resultRef.current?.focus();
+  }, [earned]);
 
   useEffect(() => {
     if (!achievement) return undefined;
@@ -26,14 +36,20 @@ export default function CompleteEasterEgg({ mapId }) {
 
   if (earned) {
     return (
-      <p className="zh-complete zh-complete--earned">
+      <p className="zh-complete zh-complete--earned" ref={resultRef} tabIndex={-1}>
         Completed · <Link to="/achievements">View achievement</Link>
       </p>
     );
   }
 
+  const complete = () => {
+    unlockAchievement(achievement.id);
+    justEarned.current = true;
+    setEarned(true);
+  };
+
   return (
-    <button type="button" className="zh-complete" onClick={() => { unlockAchievement(achievement.id); setEarned(true); }}>
+    <button type="button" className="zh-complete" onClick={complete}>
       I completed this Easter Egg
     </button>
   );
