@@ -1,8 +1,8 @@
 export const fireBow = {
   videoUrl: "https://youtu.be/2lA6-UH6Qjo",
   credit: {
-    author: "TheRealGamer",
-    link: "https://youtube.com/@therealgamer"
+    author: "SBZ vSylent",
+    link: "https://youtube.com/@sbzvsylent"
   },
   timestamps: [
     { time: "00:01", label: "Intro – Fire Bow requirements" },

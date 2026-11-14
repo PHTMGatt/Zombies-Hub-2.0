@@ -93,7 +93,7 @@ export default function OriginsMap({ pins = [], layers = [], title, empty = null
 
         {show.has('tank') && (
           <g className="omap__tank">
-            {/* Out on the Generator 5 side to the Church, back past Generator 4 to the Tank Station. */}
+            {/* Church to Tank Station down the Generator 4 side, Tank Station to Church up the Generator 5 side. */}
             <path d="M257 300 C 302 284, 314 222, 304 164 C 296 112, 254 72, 212 60" />
             <path d="M108 60 C 62 70, 20 112, 20 172 C 20 232, 82 254, 160 254 C 210 254, 238 272, 252 292" />
           </g>
@@ -149,7 +149,7 @@ export default function OriginsMap({ pins = [], layers = [], title, empty = null
             ))}
           </ol>
         ) : empty}
-        {show.has('tank') && <p className="omap__note"><span className="omap__swatch omap__swatch--tank" aria-hidden="true" />Tank route: out past Generator 5 to the Church, back past Generator 4.</p>}
+        {show.has('tank') && <p className="omap__note"><span className="omap__swatch omap__swatch--tank" aria-hidden="true" />Tank loop (approximate): Church to Tank Station down the Generator 4 side, Tank Station to Church up the Generator 5 side.</p>}
         <p className="omap__note omap__note--scale">Sketch, not to scale.</p>
       </figcaption>
     </figure>
