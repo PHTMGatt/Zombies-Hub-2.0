@@ -1,0 +1,127 @@
+/*
+ * The island ring: dim rocks in the void, the ones this step or hunt needs lit in Revelations cyan, the
+ * picked one white-hot. Links: dashed jump pads, solid walkways, Nacht's portals as violet dots.
+ */
+.revelations-module .rev-isles {
+  display: grid;
+  gap: 0.4rem;
+  margin: 0;
+}
+
+.revelations-module .rev-isles__field {
+  position: relative;
+  width: min(100%, 560px, calc((100svh - 120px) * 1.2));
+  aspect-ratio: 360 / 300;
+  margin-inline: auto;
+  border-radius: 18px;
+  background: radial-gradient(circle at 50% 50%, rgba(109, 214, 255, 0.12), rgba(109, 214, 255, 0.03) 45%, transparent 70%);
+}
+
+.revelations-module .rev-isles__svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.revelations-module .rev-isles__link {
+  fill: none;
+  stroke: rgba(140, 200, 255, 0.22);
+  stroke-width: 1.6;
+}
+
+.revelations-module .rev-isles__link--pad { stroke-dasharray: 5 5; }
+.revelations-module .rev-isles__link--walk { stroke-width: 3; stroke: rgba(140, 200, 255, 0.2); }
+.revelations-module .rev-isles__link--portal { stroke: rgba(169, 139, 255, 0.5); stroke-dasharray: 1 5; stroke-linecap: round; stroke-width: 2; }
+.revelations-module .rev-isles__link.is-on { stroke: rgba(109, 214, 255, 0.75); }
+
+.revelations-module .rev-isles__rock .rev-isles__top { fill: #1a2a40; stroke: rgba(140, 200, 255, 0.28); stroke-width: 1; }
+.revelations-module .rev-isles__rock .rev-isles__under { fill: #0c1626; stroke: rgba(140, 200, 255, 0.18); stroke-width: 1; }
+
+.revelations-module .rev-isles__rock.is-lit .rev-isles__top { fill: var(--rev-cyan); stroke: #bdeeff; }
+.revelations-module .rev-isles__rock.is-lit .rev-isles__under { fill: #1d5677; stroke: rgba(109, 214, 255, 0.6); }
+.revelations-module .rev-isles__rock.is-lit { filter: drop-shadow(0 0 7px rgba(56, 196, 255, 0.55)); }
+
+.revelations-module .rev-isles__rock.is-active .rev-isles__top { fill: #ffffff; stroke: #ffffff; }
+.revelations-module .rev-isles__rock.is-active .rev-isles__under { fill: var(--rev-cyan-strong); stroke: #bdeeff; }
+.revelations-module .rev-isles__rock.is-active { filter: drop-shadow(0 0 10px rgba(109, 214, 255, 0.9)); }
+
+/* Labels (and, on hunt pages, the buttons) sit on each rock: the rock above, the name under it. */
+.revelations-module .rev-isle {
+  position: absolute;
+  width: 26%;
+  max-width: 104px;
+  min-height: 48px;
+  transform: translate(-50%, -12px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 26px 2px 2px;
+  border: 0;
+  border-radius: 12px;
+  background: none;
+  color: var(--rev-muted);
+  font: 600 0.8rem/1.1 'Poppins', 'Segoe UI', sans-serif;
+  text-align: center;
+  text-shadow: 0 1px 3px #000, 0 0 6px #000;
+}
+
+.revelations-module .rev-isle.is-lit { color: var(--rev-ink); }
+.revelations-module .rev-isle.is-active { color: #fff; font-weight: 700; }
+
+.revelations-module button.rev-isle { cursor: pointer; }
+.revelations-module button.rev-isle:hover .rev-isle__name { color: var(--rev-cyan); }
+.revelations-module button.rev-isle:focus-visible { outline: 3px solid var(--rev-cyan); outline-offset: 2px; }
+
+.revelations-module .rev-isle__count {
+  position: absolute;
+  top: 0;
+  right: calc(50% - 38px);
+  min-width: 20px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+  padding: 0 4px;
+  border: 1px solid var(--rev-cyan);
+  border-radius: 10px;
+  background: #050c18;
+  color: var(--rev-cyan);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-shadow: none;
+}
+
+.revelations-module .rev-isles__caption {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.25rem 1rem;
+  color: var(--rev-text);
+  font-size: 0.9rem;
+}
+
+.revelations-module .rev-isles__legend {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.3rem;
+  color: var(--rev-muted);
+  font-size: 0.8rem;
+}
+
+.revelations-module .rev-isles__key {
+  display: inline-block;
+  width: 18px;
+  height: 0;
+  margin-left: 0.5rem;
+  border-top: 2px dashed rgba(140, 200, 255, 0.6);
+}
+
+.revelations-module .rev-isles__key--walk { border-top-style: solid; border-top-width: 3px; }
+.revelations-module .rev-isles__key--portal { border-top: 2px dotted rgba(169, 139, 255, 0.8); }
+
+@media (max-width: 420px) {
+  .revelations-module .rev-isle { font-size: 0.74rem; }
+}

@@ -12,6 +12,24 @@
     "spec": "brief:zombies-origins-revelations:2026-11-12 part 2; research:zombies:2026-11-13 (origins.md disagreement 5)"
   },
   {
+    "text": "←",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/sound-step"
+    ],
+    "reason": "Arrow glyphs of the removed Sound Step region rotator; regions are now picked by tapping an island on the ring.",
+    "spec": "brief:zombies-origins-revelations:2026-11-12 (Revelations: one unified picker on the hunt pages)"
+  },
+  {
+    "text": "→",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/sound-step"
+    ],
+    "reason": "Arrow glyphs of the removed Sound Step region rotator; regions are now picked by tapping an island on the ring.",
+    "spec": "brief:zombies-origins-revelations:2026-11-12 (Revelations: one unified picker on the hunt pages)"
+  },
+  {
     "pattern": "^(0[1-9]|1[0-2])$",
     "layer": "rendered",
     "routes": [

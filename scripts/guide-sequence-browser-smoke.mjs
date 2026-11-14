@@ -27,17 +27,32 @@ try {
     const errors = [];
     page.on('pageerror', (error) => errors.push(error.message));
 
-    // Origins has its own run sheet (origins-browser-smoke.mjs); every other guide is a plain sequence.
+    // Origins has its own run sheet (origins-browser-smoke.mjs); every other guide is a plain sequence,
+    // or (Revelations) a step picker that shows the same sequence one step at a time.
+    const readSteps = () => page.locator('li.guide-seq__step').evaluateAll((items) => items.map((item) => ({
+      id: item.id,
+      title: item.querySelector('h3')?.textContent.trim(),
+    })));
+    const readText = async () => (await page.locator('section.guide').textContent()).replace(/\s+/g, ' ');
     for (const { guide, route, steps } of guides.filter((entry) => entry.guide !== 'origins')) {
       await page.goto(`${base}${route}`, { waitUntil: 'networkidle' });
-      const rendered = await page.locator('li.guide-seq__step').evaluateAll((items) => items.map((item) => ({
-        id: item.id,
-        title: item.querySelector('h3')?.textContent.trim(),
-      })));
+      const picks = page.locator('[data-step-tabs] [role="tab"]');
+      const rendered = [];
+      let guideText = '';
+      if (await picks.count()) {
+        for (let index = 0; index < await picks.count(); index += 1) {
+          await picks.nth(index).click();
+          await page.locator(`[role="tabpanel"][aria-labelledby="${await picks.nth(index).getAttribute('id')}"]`).waitFor();
+          rendered.push(...await readSteps());
+          guideText += ` ${await readText()}`;
+        }
+      } else {
+        rendered.push(...await readSteps());
+        guideText = await readText();
+      }
       assert.deepEqual(rendered.map((item) => item.id), steps.map((step) => step.id), `${route}: every step renders in data order with its anchor`);
       assert.deepEqual(rendered.map((item) => item.title), steps.map((step) => step.title), `${route}: step titles match the guide data`);
 
-      const guideText = (await page.locator('section.guide').textContent()).replace(/\s+/g, ' ');
       const missingTasks = steps.flatMap((step) => (step.tasks ?? []).flatMap((task) => [task.label, task.hint]))
         .filter(Boolean)
         .filter((text) => !guideText.includes(text.replace(/\s+/g, ' ')));
@@ -47,7 +62,7 @@ try {
       const leftover = MACHINERY_TEXT.filter((text) => guideText.includes(text));
       assert.deepEqual(leftover, [], `${route}: no guide machinery text remains`);
 
-      const duplicateIds = await page.evaluate((ids) => ids.filter((id) => document.querySelectorAll(`[id="${id}"]`).length !== 1), steps.map((step) => step.id));
+      const duplicateIds = await page.evaluate((ids) => ids.filter((id) => document.querySelectorAll(`[id="${id}"]`).length > 1), steps.map((step) => step.id));
       assert.deepEqual(duplicateIds, [], `${route}: no element id collides with a step id`);
       results.push(`${name}: ${guide} — ${steps.length} steps in order, tasks as text, no machinery`);
     }

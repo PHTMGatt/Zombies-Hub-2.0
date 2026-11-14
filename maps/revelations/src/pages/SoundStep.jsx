@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import GuideVideoPlayer from '../components/GuideVideoPlayer';
 import RevSectionHeader from '../components/RevSectionHeader';
 import RevOptionList from '../components/RevOptionList';
+import { RevAreaPicker } from '../components/RevIslandMap';
 import soundStepData from '../data/SoundStepData';
 import '../styles/Reference.css';
 
@@ -12,6 +13,15 @@ const groupedData = soundStepData.reduce((acc, entry) => {
 }, {});
 
 const areaList = Object.keys(groupedData);
+
+// Which islands each sound-step region covers on the ring.
+const SOUND_ISLANDS = {
+  'Der Eisendrache / Shangri-La': ['de', 'shang'],
+  Spawn: ['spawn'],
+  'Origins / Mob of the Dead': ['origins', 'mob'],
+  Verrückt: ['verruckt'],
+};
+const areas = areaList.map((area) => ({ key: area, label: area, islands: SOUND_ISLANDS[area] }));
 
 function timeToSeconds(value) {
   const [minutes, seconds] = value.trim().split(':').map(Number);
@@ -24,18 +34,13 @@ function getEndTime(entry) {
 }
 
 function SoundStep() {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentArea, setCurrentArea] = useState(areaList[0]);
   const [selectedSpot, setSelectedSpot] = useState(null);
   const videoRef = useRef(null);
-  const currentArea = areaList[currentIndex];
 
-  const handleRotate = (direction) => {
+  const handleArea = (area) => {
     setSelectedSpot(null);
-    setCurrentIndex((previous) => (
-      direction === 'left'
-        ? (previous - 1 + areaList.length) % areaList.length
-        : (previous + 1) % areaList.length
-    ));
+    setCurrentArea(area);
   };
 
   const handleClick = (spot) => {
@@ -70,13 +75,17 @@ function SoundStep() {
           </div>
 
           <aside className="rev-workspace__panel">
-            <div className="rev-area-switch" role="group" aria-label="Change sound step area">
-              <button type="button" onClick={() => handleRotate('left')} aria-label="Previous area">&larr;</button>
-              <div>
-                <span className="rev-kicker">Region {currentIndex + 1} / {areaList.length}</span>
-                <strong>{currentArea}</strong>
-              </div>
-              <button type="button" onClick={() => handleRotate('right')} aria-label="Next area">&rarr;</button>
+            <RevAreaPicker
+              kicker="Region"
+              noun="sound spots"
+              areas={areas}
+              current={currentArea}
+              onPick={handleArea}
+            />
+
+            <div className="rev-panel-head">
+              <span className="rev-kicker">Spots</span>
+              <span className="rev-panel-count">{options.length}</span>
             </div>
 
             <RevOptionList

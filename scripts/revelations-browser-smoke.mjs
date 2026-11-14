@@ -55,11 +55,31 @@ try {
     assert.deepEqual(sectionLinksOutsideHeader, [], `Revelations renders a second section navigation: ${sectionLinksOutsideHeader.join(', ')}`);
     assert.equal(await page.locator('.rev-header__nav a').count(), 5, 'Header nav reaches all five Revelations sections');
     await page.reload({ waitUntil: 'networkidle' });
-    assert.equal(await page.locator('li.guide-seq__step').count(), 12, 'Revelations keeps all 12 Easter Egg steps');
+    // The scavenger hunt is a step picker: twelve step tabs, one step on show.
+    const chips = page.locator('[data-step-tabs] [role="tab"]');
+    assert.equal(await chips.count(), 12, 'Revelations keeps all 12 Easter Egg steps in the picker');
+    assert.equal(await page.locator('li.guide-seq__step').count(), 1, 'Only the picked step shows');
+    assert.equal(await page.locator('li.guide-seq__step').getAttribute('id'), 'engines', 'The picker opens on step 1');
     await assertCssImageLoaded(page, mainRoute, '.rev-header');
     await assertCssImageLoaded(page, mainRoute, '.rev-backdrop');
     await assertNoHorizontalOverflow(page, mainRoute);
+    const show = async (id) => {
+      await page.locator(`#rev-tab-${id}`).click();
+      await page.locator(`li.guide-seq__step#${id}`).waitFor();
+    };
     const openMore = (id) => page.locator(`#${id} .guide-seq__more > summary`).click();
+
+    // Arrow keys walk the picker, Next walks the card, and the picked step lives in the URL hash.
+    await page.locator('#rev-tab-engines').focus();
+    await page.keyboard.press('ArrowDown');
+    await page.locator('li.guide-seq__step#keeper').waitFor();
+    assert.equal(await page.locator('li.guide-seq__step').getAttribute('id'), 'keeper', 'ArrowDown picks the next step');
+    assert(await page.locator('#rev-tab-keeper').evaluate((tab) => tab === document.activeElement), 'Focus follows the picked step');
+    await page.locator('.rev-card__next').click();
+    await page.locator('li.guide-seq__step#servant').waitFor();
+    assert.equal(await page.locator('li.guide-seq__step').getAttribute('id'), 'servant', 'Next shows the following step');
+    assert.equal(new URL(page.url()).hash, '#servant', 'The picked step is in the URL');
+    assert.equal(await page.locator('.rev-card .rev-isles__rock.is-lit').count(), 5, 'Servant lights its five rock islands');
 
     // Servant step: the in-game captures for each blue rock, one tab per map.
     await page.locator('#servant').getByRole('tab', { name: 'Mob of the Dead' }).click();
@@ -67,28 +87,34 @@ try {
     await shot.scrollIntoViewIfNeeded();
     assert(await shot.evaluate(img => img.complete && img.naturalWidth > 0), 'Servant rock capture loads');
 
+    await show('eggs');
     let stepText = await page.locator('#eggs').innerText();
     assert.match(stepText, /nest|pustule/i);
     assert.match(stepText, /10 zombie souls/i);
     await openMore('eggs');
     assert(await page.locator('#eggs').getByRole('link', { name: /Egg locations/ }).isVisible());
 
+    await show('symbols');
     stepText = await page.locator('#symbols').innerText();
     assert.match(stepText, /all players/i);
     assert.match(stepText, /Kino projector/i);
     assert.match(stepText, /purple rift|purple circle/i);
     await page.locator('#symbols').getByLabel('1st').fill('skull');
 
+    await show('throws');
+    assert.equal(await page.locator('.rev-card .rev-isles__rock.is-lit').count(), 7, 'Throws light all seven target islands');
     stepText = await page.locator('#throws').innerText();
     assert.match(stepText, /Mob of the Dead\s*Poster/i);
     assert.match(stepText, /MG42/i);
     assert.match(stepText, /Focusing Stone/i);
     await openMore('throws');
     assert(await page.locator('#throws').getByRole('link', { name: /Throw videos/ }).isVisible());
+    await show('boss');
     assert.equal(await page.locator('#boss h3').innerText(), 'Final boss — Shadowman');
 
-    // The Kronorium symbol note is game state, not progress: it survives a reload.
-    await page.reload({ waitUntil: 'networkidle' });
+    // The Kronorium symbol note is game state, not progress: it survives a reload (here, a deep link).
+    await page.goto(`${base}${mainRoute}#symbols`, { waitUntil: 'networkidle' });
+    assert.equal(await page.locator('#rev-tab-symbols').getAttribute('aria-selected'), 'true', 'A deep link picks its step');
     assert.equal(await page.locator('#symbols').getByLabel('1st').inputValue(), 'skull', 'Kronorium symbol note survives a reload');
 
     await page.evaluate(() => {
@@ -126,9 +152,11 @@ try {
     assert(response?.ok(), `${eggRoute} returned ${response?.status()}`);
     await page.getByRole('heading', { name: 'Egg Locations', level: 2 }).waitFor();
     assert.equal(errors.length, 0, `${eggRoute} page errors: ${errors.join('; ')}`);
-    const areaTabs = page.locator('.rev-segment button');
-    assert((await areaTabs.count()) >= 2, 'Egg reference keeps multiple map areas');
-    await areaTabs.nth(1).click();
+    // One island picker on every hunt page: an area can span two islands, and either one picks it.
+    assert.equal(await page.locator('.rev-area button.rev-isle').count(), 7, 'Egg areas cover seven islands on the ring');
+    await page.getByRole('button', { name: 'Shangri-La: Spawn / Shangri-La' }).click();
+    assert.equal(await page.locator('.rev-area__head strong').innerText(), 'Spawn / Shangri-La', 'Tapping an island picks its egg area');
+    assert.equal(await page.locator('.rev-area button.rev-isle[aria-pressed="true"]').count(), 2, 'Both islands of the area light up');
     const eggLocations = page.locator('.rev-option');
     assert((await eggLocations.count()) > 0, 'Selected egg area exposes spawn locations');
     await eggLocations.first().click();
@@ -142,10 +170,17 @@ try {
     assert(response?.ok(), `${keyRoute} returned ${response?.status()}`);
     await page.getByRole('heading', { name: 'Summoning Key Throws', level: 2 }).waitFor();
     assert.equal(errors.length, 0, `${keyRoute} page errors: ${errors.join('; ')}`);
-    await page.getByRole('button', { name: /Mob Cell Poster/ }).click();
+    const throwOption = (name) => page.locator('.rev-option', { hasText: name });
+    await throwOption('Mob Cell Poster').click();
     assert.match(await page.locator('.rev-video__now').innerText(), /Mob Cell Poster/);
-    assert(await page.getByRole('button', { name: /Verrückt MG42 Fountain/ }).isVisible());
-    assert(await page.getByRole('button', { name: /Shangri-La Focusing Stone/ }).isVisible());
+    assert(await throwOption('Verrückt MG42 Fountain').isVisible());
+    assert(await throwOption('Shangri-La Focusing Stone').isVisible());
+    // The ring: seven target islands numbered in throw order; tapping one plays its throw.
+    assert.equal(await page.locator('.rev-area button.rev-isle').count(), 7, 'Seven throw islands on the ring');
+    assert.equal(await page.locator('.rev-area button.rev-isle', { hasText: 'Mob' }).locator('.rev-isle__count').innerText(), '5', 'Mob is throw 5');
+    await page.getByRole('button', { name: 'Verrückt: Verrückt MG42 Fountain' }).click();
+    assert.match(await page.locator('.rev-video__now').innerText(), /Verrückt MG42 Fountain/);
+    assert.match(await page.locator('.rev-option[aria-pressed="true"]').innerText(), /MG42/, 'The island picks its throw in the list too');
     await assertNoHorizontalOverflow(page, keyRoute);
     results.push({ width, route: keyRoute, interaction: 'exact target selection', passed: true });
 
@@ -155,16 +190,17 @@ try {
     assert(response?.ok(), `${soundRoute} returned ${response?.status()}`);
     await page.getByRole('heading', { name: 'Sound Step', level: 2 }).waitFor();
     assert.equal(errors.length, 0, `${soundRoute} page errors: ${errors.join('; ')}`);
-    const areaBefore = await page.locator('.rev-area-switch strong').innerText();
-    await page.getByRole('button', { name: 'Next area' }).click();
-    const areaAfter = await page.locator('.rev-area-switch strong').innerText();
-    assert.notEqual(areaAfter, areaBefore, 'Sound Step next-area control changes region');
+    const areaBefore = await page.locator('.rev-area__head strong').innerText();
+    await page.getByRole('button', { name: 'Spawn: Spawn' }).click();
+    const areaAfter = await page.locator('.rev-area__head strong').innerText();
+    assert.notEqual(areaAfter, areaBefore, 'Tapping an island changes the Sound Step region');
+    assert.equal(areaAfter, 'Spawn');
     const soundLocations = page.locator('.rev-option');
     assert((await soundLocations.count()) > 0, 'Sound Step exposes locations for selected area');
     await soundLocations.first().click();
     assert.match(await page.locator('.rev-video__now').innerText(), /Playing/i);
     await assertNoHorizontalOverflow(page, soundRoute);
-    results.push({ width, route: soundRoute, interaction: 'area rotation + location selection', passed: true });
+    results.push({ width, route: soundRoute, interaction: 'island pick + location selection', passed: true });
 
     errors.length = 0;
     const badRoute = '/maps/revelations/not-a-guide';
@@ -217,7 +253,7 @@ try {
         };
         const footer = document.querySelector('.rev-footer').getBoundingClientRect();
         const activeTab = document.querySelector('.rev-nav-link.active');
-        const steps = document.querySelector('.rev-step-list');
+        const steps = document.querySelector('.rev-chips');
         return {
           titleInside: inside(document.querySelector('.rev-header__title')),
           activeTabInside: activeTab ? inside(activeTab) : false,
@@ -229,7 +265,10 @@ try {
       assert(fit.activeTabInside, `${route} @${vw}x${vh} hides the active section tab`);
       assert(fit.gapBelowFooter <= 1, `${route} @${vw}x${vh} leaves ${fit.gapBelowFooter}px below the footer`);
       if (vw === 390 && route === '/maps/revelations') {
-        assert(fit.stepSelectorHeight <= 90, `Phone step selector is ${fit.stepSelectorHeight}px tall; it should be one swipeable row`);
+        assert(fit.stepSelectorHeight <= 130, `Phone step picker is ${fit.stepSelectorHeight}px tall; it should be two rows of six`);
+      }
+      if (vh === 390 && route === '/maps/revelations') {
+        assert(fit.stepSelectorHeight <= 70, `Landscape step picker is ${fit.stepSelectorHeight}px tall; it should be one row of twelve`);
       }
     }
     results.push({ width: vw, height: vh, check: 'all sections fit, unclipped title/tabs, pinned footer', passed: true });

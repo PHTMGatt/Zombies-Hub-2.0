@@ -139,79 +139,33 @@
   color: var(--rev-cyan);
 }
 
-/* Egg Locations: map areas as a segmented control. */
-.revelations-module .rev-segment {
+/* Hunt pages: one island picker. The area you picked reads above the ring; its spots list below. */
+.revelations-module .rev-area {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.3rem;
-  padding: 0.3rem;
-  border: 1px solid var(--rev-line);
-  border-radius: 14px;
-  background: rgba(0, 0, 0, 0.25);
+  gap: 0.35rem;
 }
 
-.revelations-module .rev-segment button {
-  min-height: 44px;
-  padding: 0.4rem 0.55rem;
-  border: 1px solid transparent;
-  border-radius: 10px;
-  background: transparent;
-  color: var(--rev-muted);
-  font: inherit;
-  font-size: 0.76rem;
-  font-weight: 700;
-  line-height: 1.25;
-  cursor: pointer;
-  transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+.revelations-module .rev-area__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0 0.15rem;
 }
 
-.revelations-module .rev-segment button:hover {
+.revelations-module .rev-area__head .rev-kicker {
+  flex: none;
+  white-space: nowrap;
+}
+
+.revelations-module .rev-area__head strong {
   color: var(--rev-ink);
-  background: rgba(255, 255, 255, 0.04);
-}
-
-.revelations-module .rev-segment button.active {
-  border-color: rgba(109, 214, 255, 0.45);
-  background: linear-gradient(180deg, rgba(56, 196, 255, 0.22), rgba(56, 196, 255, 0.1));
-  color: #fff;
-}
-
-/* Sound Step: region switcher. */
-.revelations-module .rev-area-switch {
-  display: grid;
-  grid-template-columns: 44px minmax(0, 1fr) 44px;
-  gap: 0.6rem;
-  align-items: center;
-  padding: 0.35rem;
-  border: 1px solid var(--rev-line);
-  border-radius: 14px;
-  background: rgba(0, 0, 0, 0.25);
-  text-align: center;
-}
-
-.revelations-module .rev-area-switch strong {
-  display: block;
-  margin-top: 0.15rem;
-  color: var(--rev-ink);
-  font-size: 0.92rem;
+  font-size: 0.95rem;
   line-height: 1.25;
+  text-align: right;
 }
 
-.revelations-module .rev-area-switch button {
-  height: 44px;
-  border: 1px solid rgba(109, 214, 255, 0.3);
-  border-radius: 10px;
-  background: rgba(56, 196, 255, 0.08);
-  color: #cdefff;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background 0.18s ease, border-color 0.18s ease;
-}
-
-.revelations-module .rev-area-switch button:hover {
-  border-color: rgba(109, 214, 255, 0.65);
-  background: rgba(56, 196, 255, 0.2);
-}
+.revelations-module .rev-area .rev-isles__caption { font-size: 0.82rem; }
 
 @media (max-width: 980px) {
   .revelations-module .rev-workspace {

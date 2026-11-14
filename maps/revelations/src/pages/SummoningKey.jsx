@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import GuideVideoPlayer from '../components/GuideVideoPlayer';
 import RevSectionHeader from '../components/RevSectionHeader';
 import RevOptionList, { formatRange } from '../components/RevOptionList';
+import { RevAreaPicker } from '../components/RevIslandMap';
 import SummoningKeyData from '../data/SummoningKey';
 import '../styles/Reference.css';
 
@@ -12,6 +13,13 @@ const options = SummoningKeyData.map((entry) => ({
   title: entry.name.replace(/^Throw \d+:\s*/, ''),
   meta: formatRange(entry.start, entry.end),
 }));
+
+// Each throw's target sits on one island; the map name leads each title ("Mob Cell Poster").
+const ISLAND_BY_MAP = { Kino: 'kino', DE: 'de', 'Shangri-La': 'shang', Origins: 'origins', Mob: 'mob', Verrückt: 'verruckt', Nacht: 'nacht' };
+const islandOf = (option) => ISLAND_BY_MAP[option.title.split(' ')[0]];
+const areas = options.map((option) => ({ key: option.key, label: option.title, islands: [islandOf(option)] }));
+// The throw order, as a small number on each island.
+const throwOrder = Object.fromEntries(options.map((option, index) => [islandOf(option), index + 1]));
 
 function SummoningKey() {
   const videoRef = useRef(null);
@@ -42,6 +50,15 @@ function SummoningKey() {
           </div>
 
           <aside className="rev-workspace__panel">
+            <RevAreaPicker
+              kicker="Throw target"
+              areas={areas}
+              current={selected?.name}
+              counts={throwOrder}
+              hint="Tap an island to play its throw. Numbers are the throw order."
+              onPick={(key) => handleTimestampClick(options.find((option) => option.key === key))}
+            />
+
             <div className="rev-panel-head">
               <span className="rev-kicker">Throw order</span>
               <span className="rev-panel-count">{options.length}</span>

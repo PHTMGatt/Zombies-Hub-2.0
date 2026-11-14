@@ -1,5 +1,5 @@
-/* For The Good Of All: a slim cosmic title strip, then the tracked guide straight on the Apothicon
-   backdrop (no glass shell around it, and no backdrop blur to cost the GPU during play). */
+/* For The Good Of All: a slim cosmic title strip, then the step picker: the steps (chips on phones, a
+   list on wide screens) and one step card. Solid surfaces, no backdrop blur to cost the GPU in play. */
 .revelations-module .rev-main-guide {
   padding-top: 1rem;
 }
@@ -39,50 +39,207 @@
   margin-top: 1rem;
 }
 
-/* Revelations theme for the shared step guide: Apothicon cyan into nebula violet. */
-.revelations-module .rev-guide .guide {
+/* ---- The picker: step list | one step card ---- */
+.revelations-module .rev-picker {
+  display: grid;
+  grid-template-columns: minmax(250px, 300px) minmax(0, 1fr);
+  align-items: start;
+  gap: 1.25rem;
+  margin-top: 1rem;
+  scroll-margin-top: calc(var(--hub-pin-height, var(--hub-nav-height)) + 0.75rem);
+}
+
+.revelations-module .rev-chips {
+  position: sticky;
+  top: calc(var(--hub-pin-height, var(--hub-nav-height)) + 0.75rem);
+  display: grid;
+  gap: 2px;
+  padding: 0.4rem;
+  border: 1px solid var(--rev-line);
+  border-radius: 14px;
+  background: rgba(4, 9, 20, 0.88);
+}
+
+.revelations-module .rev-chip {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr);
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 46px;
+  padding: 0.35rem 0.6rem;
+  border: 0;
+  border-radius: 10px;
+  background: none;
+  color: var(--rev-text);
+  font: 500 0.95rem/1.25 'Poppins', 'Segoe UI', sans-serif;
+  text-align: left;
+  cursor: pointer;
+}
+
+.revelations-module .rev-chip:hover { background: rgba(109, 214, 255, 0.07); color: var(--rev-ink); }
+
+/* The number sits in a small rift ring: the chip's one bit of Revelations flair. */
+.revelations-module .rev-chip__n {
+  width: 2rem;
+  height: 2rem;
+  display: grid;
+  place-items: center;
+  border: 1.5px solid rgba(109, 214, 255, 0.45);
+  border-radius: 50%;
+  color: var(--rev-cyan);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.revelations-module .rev-chip[aria-selected='true'] {
+  background: linear-gradient(90deg, rgba(56, 196, 255, 0.22), rgba(56, 196, 255, 0.04));
+  box-shadow: inset 3px 0 0 var(--rev-cyan);
+  color: #fff;
+  font-weight: 600;
+}
+
+.revelations-module .rev-chip[aria-selected='true'] .rev-chip__n {
+  border-color: var(--rev-cyan);
+  background: var(--rev-cyan);
+  color: #031424;
+}
+
+.revelations-module .rev-chip:focus-visible { outline: 3px solid var(--rev-cyan); outline-offset: 1px; }
+
+/* ---- The step card ---- */
+.revelations-module .rev-card {
   --guide-accent: #6dd6ff;
   --guide-accent-ink: #031424;
   --guide-ink: #f2f8ff;
   --guide-text: #d9e6f4;
   --guide-muted: #a7b9cc;
-  --guide-surface: rgba(6, 11, 24, 0.86);
+  --guide-surface: transparent;
   --guide-surface-2: rgba(109, 214, 255, 0.07);
   --guide-line: rgba(109, 214, 255, 0.2);
-  --guide-done: #b9a2ff;
-  --guide-sticky-top: calc(var(--hub-nav-height) + 0.75rem);
+  --guide-warn: #ffb24d;
+  position: relative;
+  min-width: 0;
+  display: grid;
+  gap: 1rem;
+  padding: 0.4rem 0 1.1rem;
+  border: 1px solid var(--rev-line);
+  border-top: 3px solid var(--rev-cyan);
+  border-radius: 14px;
+  background: rgba(5, 10, 22, 0.92);
+  color: var(--guide-text);
+  line-height: 1.5;
 }
 
-.revelations-module .rev-guide .guide-step {
-  border-top: 0;
-  background:
-    radial-gradient(ellipse 70% 50% at 100% 0%, rgba(169, 139, 255, 0.14), transparent 70%),
-    radial-gradient(ellipse 60% 50% at 0% 100%, rgba(56, 196, 255, 0.1), transparent 70%),
-    var(--guide-surface);
-  box-shadow: inset 0 3px 0 0 var(--guide-accent), 0 18px 40px rgba(0, 0, 0, 0.5);
+/* The step's number, big and hollow, like a rift opening behind the title. */
+.revelations-module .rev-card__mark {
+  position: absolute;
+  top: 0.4rem;
+  right: 1.1rem;
+  color: transparent;
+  font: 700 4.6rem/1 'Poppins', 'Segoe UI', sans-serif;
+  -webkit-text-stroke: 1.5px rgba(109, 214, 255, 0.5);
+  pointer-events: none;
 }
 
-.revelations-module .rev-guide .guide-rail__step.is-current {
-  background: linear-gradient(90deg, rgba(109, 214, 255, 0.24), rgba(80, 60, 160, 0.35) 60%, var(--guide-surface));
+.revelations-module .rev-card__step {
+  border: 0;
+  background: none;
 }
 
-.revelations-module .rev-guide .guide-actions__done:not(.is-done) {
-  background: linear-gradient(135deg, #8fe3ff, #a98bff);
+.revelations-module .rev-card__step .guide-seq__step {
+  padding-right: 5.5rem;
+  padding-bottom: 0.4rem;
+}
+
+.revelations-module .rev-card__step .guide-seq__step h3 {
+  font-size: 1.45rem;
+  line-height: 1.2;
+}
+
+.revelations-module .rev-card__step .guide-seq__step h3::before { content: none; }
+.revelations-module .rev-card__step .guide-seq__step:target { box-shadow: none; }
+.revelations-module .rev-card__step .guide-seq__goal { font-size: 1.06rem; }
+
+.revelations-module .rev-card__isles {
+  margin: 0 clamp(1rem, 3vw, 1.75rem);
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--rev-line);
+}
+
+.revelations-module .rev-card__walk {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin: 0 clamp(1rem, 3vw, 1.75rem);
+}
+
+.revelations-module .rev-card__walk button {
+  display: grid;
+  gap: 0.1rem;
+  min-height: 52px;
+  padding: 0.45rem 0.8rem;
+  border: 1px solid var(--rev-line-strong);
+  border-radius: 12px;
+  background: rgba(109, 214, 255, 0.05);
+  color: var(--rev-ink);
+  font: 600 0.92rem/1.25 'Poppins', 'Segoe UI', sans-serif;
+  text-align: left;
+  cursor: pointer;
+}
+
+.revelations-module .rev-card__walk .rev-card__next { text-align: right; }
+.revelations-module .rev-card__walk small { color: var(--rev-muted); font-size: 0.78rem; font-weight: 500; }
+.revelations-module .rev-card__walk button:hover { border-color: var(--rev-cyan); }
+
+.revelations-module .rev-run__done { margin-top: 1rem; }
+
+/* ---- Phones and narrow windows: the steps become a block of numbered chips above the card ---- */
+@media (max-width: 899px) {
+  .revelations-module .rev-picker {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.75rem;
+  }
+
+  .revelations-module .rev-chips {
+    position: static;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 6px;
+    padding: 6px;
+  }
+
+  .revelations-module .rev-chip {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    min-height: 48px;
+    padding: 0;
+  }
+
+  .revelations-module .rev-chip__n { width: 2.4rem; height: 2.4rem; font-size: 1.02rem; }
+
+  .revelations-module .rev-chip__title {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .revelations-module .rev-chip[aria-selected='true'] { box-shadow: none; background: rgba(56, 196, 255, 0.16); }
+  .revelations-module .rev-card__mark { font-size: 3.6rem; right: 0.8rem; }
+  .revelations-module .rev-card__step .guide-seq__step { padding-right: 4.4rem; }
+  .revelations-module .rev-card__step .guide-seq__step h3 { font-size: 1.28rem; }
 }
 
 @media (max-width: 760px) {
-  .revelations-module .rev-main-guide {
-    padding-top: 0.6rem;
-  }
+  .revelations-module .rev-main-guide { padding-top: 0.6rem; }
 
   .revelations-module .rev-run-header {
     display: block;
     padding: 0.65rem 0.8rem;
   }
 
-  .revelations-module .rev-run-header h2 {
-    font-size: 1.55rem;
-  }
+  .revelations-module .rev-run-header h2 { font-size: 1.55rem; }
 
   .revelations-module .rev-run-header > p {
     margin-top: 0.3rem;
@@ -90,15 +247,15 @@
     text-align: left;
   }
 
-  .revelations-module .rev-guide {
-    margin-top: 0.6rem;
-  }
+  .revelations-module .rev-card__walk { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+  .revelations-module .rev-card__walk button { font-size: 0.84rem; }
+  .revelations-module .rev-card__mark { top: 0.55rem; right: 0.7rem; font-size: 2.8rem; }
+  .revelations-module .rev-card__step .guide-seq__step { padding-right: 3.4rem; }
 }
 
+/* Short landscape phones: all twelve chips on one row. */
 @media (max-height: 500px) and (orientation: landscape) {
-  .revelations-module .rev-run-header {
-    padding-block: 0.4rem;
-  }
+  .revelations-module .rev-run-header { padding-block: 0.4rem; }
 
   .revelations-module .rev-run-header h2 {
     position: absolute;
@@ -113,4 +270,8 @@
     font-size: 0.82rem;
     text-align: left;
   }
+
+  .revelations-module .rev-chips { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+  .revelations-module .rev-chip { min-height: 44px; }
+  .revelations-module .rev-chip__n { width: 2.2rem; height: 2.2rem; }
 }
