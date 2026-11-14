@@ -1,6 +1,7 @@
 /*
- * Origins Main Guide, the OG layout cleaned up: Main Steps on the left, Tips on the right, both as one
- * translucent dark panel each over the robot. Shared by the staff pages: .origins-page and .origins-panel.
+ * Origins Main Guide: the quest as it is shaped in game. Eight numbered quest steps on one spine, the
+ * builds they need as unnumbered prep (a diamond, "Needed for step N"), and the map: beside the steps
+ * on wide screens, inside the step on phones. Shared by the staff pages: .origins-page and .origins-panel.
  */
 .origins-module .origins-page {
   width: min(1240px, 100% - 2.5rem);
@@ -39,65 +40,155 @@
   object-fit: contain;
 }
 
-/* ---- Layout ---- */
+/* ---- Layout: steps | map, with Speed Run and Tips under the steps ---- */
 .origins-module .origins-guide {
   display: grid;
-  grid-template-columns: minmax(0, 1.9fr) minmax(300px, 1fr);
-  grid-template-areas: 'steps side';
+  grid-template-columns: minmax(0, 1.5fr) minmax(340px, 1fr);
+  grid-template-areas: 'steps map' 'more map';
   align-items: start;
   gap: 1.75rem;
 }
 
 .origins-module .origins-steps { grid-area: steps; }
+.origins-module .origins-guide__more { grid-area: more; display: grid; gap: 1rem; }
 
-.origins-module .origins-guide__side {
-  grid-area: side;
+/* The map stays in view while the steps scroll past it. */
+.origins-module .origins-guide__map {
+  grid-area: map;
+  position: sticky;
+  top: calc(var(--hub-pin-height, var(--hub-nav-height)) + var(--o-pin) + 16px);
   display: grid;
-  gap: 1rem;
+  gap: 0.8rem;
+  padding: 1.1rem 1.2rem 1.2rem;
+  border: 1px solid var(--o-hair);
+  border-top: 3px solid var(--o-blue);
+  border-radius: 12px;
+  background: #04121f;
 }
 
-/* ---- Main Steps: number, name, one action ---- */
+.origins-module .origins-guide__map h2 {
+  margin: 0;
+  color: #fff;
+  font: 700 1.4rem/1.15 var(--o-font);
+}
+
+/* ---- The quest spine: number, name, one action ---- */
 .origins-module .run-sheet__steps {
   margin: 0;
   padding: 0;
   list-style: none;
-  counter-reset: origins-step;
 }
 
 .origins-module .run-step {
   position: relative;
-  padding: 0.95rem 0 0.95rem 3.1rem;
+  padding: 0.95rem 0.5rem 0.95rem 3.3rem;
   border-bottom: 1px solid var(--o-hair);
-  counter-increment: origins-step;
   scroll-margin-top: calc(var(--hub-pin-height, var(--hub-nav-height)) + var(--o-pin) + 16px);
 }
 
 .origins-module .run-step:last-child { border-bottom: 0; }
 
-.origins-module .run-step::before {
-  content: counter(origins-step);
+/* The spine joins each marker to the next, so the quest reads as one chain. */
+.origins-module .run-step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 1.1rem;
+  top: 3.35rem;
+  bottom: -0.95rem;
+  border-left: 2px solid rgba(109, 194, 255, 0.22);
+}
+
+.origins-module .run-step__mark {
   position: absolute;
   left: 0;
-  top: 0.85rem;
-  width: 2.1rem;
-  height: 2.1rem;
+  top: 0.8rem;
+  width: 2.2rem;
+  height: 2.2rem;
   display: grid;
   place-items: center;
+  color: var(--o-ink);
+  font: 700 1.1rem/1 var(--o-font);
+}
+
+/* Quest steps: the number inside two rings, like the Excavation's. */
+.origins-module .run-step--quest .run-step__mark {
   border: 2px solid var(--o-blue);
   border-radius: 50%;
   background: rgba(109, 194, 255, 0.14);
-  color: var(--o-ink);
-  font: 700 1.05rem/1 var(--o-font);
+  box-shadow: 0 0 0 3px #04121f, 0 0 0 4.5px rgba(109, 194, 255, 0.45);
+}
+
+/* Prep: an unnumbered diamond. */
+.origins-module .run-step--prep .run-step__mark::before {
+  content: '';
+  width: 0.95rem;
+  height: 0.95rem;
+  border: 2px solid var(--o-muted);
+  background: #04121f;
+  transform: rotate(45deg);
+}
+
+.origins-module .run-step--prep h3 { color: #e3f1ff; }
+
+.origins-module .run-step__for {
+  margin: 0 0 0.2rem;
+  color: var(--o-muted);
+  font-size: 0.98rem;
+  font-weight: 600;
+}
+
+.origins-module .run-step.is-mapped { background: linear-gradient(90deg, rgba(109, 194, 255, 0.09), transparent 80%); }
+.origins-module .run-step--quest.is-mapped .run-step__mark { background: var(--o-blue); color: #04121f; }
+.origins-module .run-step--prep.is-mapped .run-step__mark::before { background: var(--o-blue); border-color: var(--o-blue); }
+
+.origins-module .run-step__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  min-height: 2.2rem;
 }
 
 .origins-module .run-step h3 {
-  margin: 0 0 0.15rem;
+  margin: 0;
   color: #fff;
   font: 700 1.25rem/1.25 var(--o-font);
 }
 
+.origins-module .run-step__map {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 44px;
+  margin: -0.4rem 0;
+  padding: 0 0.85rem;
+  border: 1px solid var(--o-line);
+  border-radius: 999px;
+  background: rgba(4, 18, 31, 0.6);
+  color: var(--o-link);
+  font: 700 1rem/1 var(--o-font);
+  cursor: pointer;
+}
+
+.origins-module .run-step__map svg {
+  width: 13px;
+  height: 16px;
+  fill: currentColor;
+}
+
+.origins-module .run-step__map:hover { border-color: var(--o-blue); }
+
+.origins-module .run-step__map[aria-pressed='true'] {
+  border-color: var(--o-blue);
+  background: var(--o-blue);
+  color: #04121f;
+}
+
+.origins-module .run-step__inline-map { margin-top: 0.8rem; }
+
 .origins-module .run-step__goal {
-  margin: 0;
+  margin: 0.15rem 0 0;
   color: var(--o-text);
   font-size: 1.1rem;
   line-height: 1.45;
@@ -294,23 +385,21 @@
 .origins-module .origins-speedrun:hover { border-color: rgba(150, 210, 255, 0.45); border-left-color: var(--o-warn); }
 .origins-module .origins-speedrun__label { color: #fff; font-weight: 700; font-size: 1.1rem; }
 .origins-module .origins-speedrun__desc { color: var(--o-muted); font-size: 0.98rem; }
-.origins-module .origins-speedrun--phone { display: none; }
 
-/* ---- Phones and narrow windows: one column, Main Steps → Speed Run → Tips ---- */
+/* ---- Below the wide layout: one column, Main Steps → Speed Run → Tips; the map opens inside a step ---- */
+@media (max-width: 999px) {
+  .origins-module .origins-guide {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: 'steps' 'more';
+    gap: 1rem;
+  }
+}
+
 @media (max-width: 900px) {
   .origins-module .origins-page {
     width: min(100% - 1.1rem, 680px);
     padding: 1rem 0 2.5rem;
   }
-
-  .origins-module .origins-guide {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas: 'steps' 'speed' 'side';
-    gap: 1rem;
-  }
-
-  .origins-module .origins-speedrun--phone { display: grid; grid-area: speed; }
-  .origins-module .origins-speedrun--wide { display: none; }
 
   .origins-module .origins-panel {
     padding: 1.1rem 0.95rem 1.25rem;
@@ -318,25 +407,27 @@
   }
 
   .origins-module .origins-panel > :is(h2, h3) { font-size: 1.45rem; }
-  .origins-module .run-step { padding-left: 2.75rem; }
-  .origins-module .run-step::before { width: 1.95rem; height: 1.95rem; font-size: 1rem; }
+  .origins-module .run-step { padding-left: 2.95rem; padding-right: 0; }
+  .origins-module .run-step__mark { width: 2.05rem; height: 2.05rem; font-size: 1.02rem; }
+  .origins-module .run-step:not(:last-child)::after { left: 1.02rem; top: 3.2rem; }
   .origins-module .run-step h3 { font-size: 1.18rem; }
   .origins-module .run-step__goal { font-size: 1.07rem; }
 }
 
-/* ---- Short landscape phones: steps and tips side by side ---- */
+/* ---- Short landscape phones: use the width ---- */
 @media (max-height: 500px) and (orientation: landscape) {
   .origins-module .origins-page {
     width: calc(100% - 2rem);
     max-width: none;
     padding-top: 1rem;
   }
+}
 
-  .origins-module .origins-guide {
-    grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
-    grid-template-areas: 'steps side';
+/* Phones: the map opened inside a step takes the step's full width, over the spine. */
+@media (max-width: 900px) {
+  .origins-module .run-step__inline-map {
+    position: relative;
+    z-index: 1;
+    margin-left: -2.95rem;
   }
-
-  .origins-module .origins-speedrun--phone { display: none; }
-  .origins-module .origins-speedrun--wide { display: grid; }
 }

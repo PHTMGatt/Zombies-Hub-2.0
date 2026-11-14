@@ -2,13 +2,15 @@ import React from 'react';
 import ZoomImage from '../../../../shared/ui/ZoomImage';
 import useHashLanding from '../../../../shared/guide/useHashLanding';
 import ExcavationRings from './ExcavationRings';
+import OriginsMap from './OriginsMap';
+import { staffPlaces } from '../data/originsPlaces';
 import SkullIcon from '../assets/images/Skull2.png';
 import '../Styles/PageStyles/StaffPage.css';
 
 /*
- * One Origins staff, OG layout cleaned up: Build and Puzzle in the wide left column, Upgrade beside them
- * (held in view on tall desktop screens). Phones read Build → Puzzle → Upgrade in one column.
- * Every line comes from originsStaffPages.js.
+ * One Origins staff, OG layout cleaned up: Build, Map and Puzzle in the wide left column, Upgrade beside
+ * them (held in view on tall desktop screens). Phones read Build → Map → Puzzle → Upgrade in one column.
+ * Every line comes from originsStaffPages.js; the Map's spots come from originsPlaces.js.
  */
 const Step = ({ item }) => (typeof item === 'string'
   ? <li>{item}</li>
@@ -20,14 +22,16 @@ const PanelTitle = ({ id, children }) => (
 
 export default function StaffPage({ staff, tools = null, extra = null }) {
   const { id, name, build, puzzle, upgrade, ring } = staff;
-  // Section links (#build, #puzzle, #upgrade, Lightning's #switches) land clear of the pinned tab row.
-  useHashLanding(['build', 'puzzle', 'upgrade', 'switches']);
+  // Section links (#build, #map, #puzzle, #upgrade, Lightning's #switches) land clear of the pinned tab row.
+  useHashLanding(['build', 'map', 'puzzle', 'upgrade', 'switches']);
+  const places = staffPlaces[id];
 
   return (
     <div className={`origins-page staff-page${tools ? ' staff-page--tools' : ''}`} data-staff={id}>
       <h2 className="visually-hidden">{name} Staff</h2>
       <nav className="staff-page__jump" aria-label={`${name} Staff sections`}>
         <a href="#build">Build</a>
+        <a href="#map">Map</a>
         <a href="#puzzle">Puzzle</a>
         <a href="#upgrade">Upgrade</a>
       </nav>
@@ -43,6 +47,12 @@ export default function StaffPage({ staff, tools = null, extra = null }) {
               </div>
             ))}
           </dl>
+        </section>
+
+        {/* Every spot this staff needs, from its parts to its upgrade, on the Origins sketch. */}
+        <section className="origins-panel staff-block staff-map" id="map" aria-labelledby="map-title">
+          <PanelTitle id="map-title">Map</PanelTitle>
+          <OriginsMap title={`${name} Staff spots`} pins={places.pins} layers={places.layers} />
         </section>
 
         <section className="origins-panel staff-block" id="puzzle" aria-labelledby="puzzle-title">

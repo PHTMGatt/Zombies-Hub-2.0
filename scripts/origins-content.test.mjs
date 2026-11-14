@@ -32,7 +32,8 @@ test('no tracker-only task lines remain in Origins', () => {
 
 test('the facts behind removed tracker lines are still in the steps', () => {
   const facts = ['Odin · middle robot', 'Freya · Church / Gen 6 robot', 'Thor · spawn / Gen 1–3 robot', 'Pedestal at the bottom of the mound',
-    'Gen 5 footprint', 'Mound footprint', 'Gen 6 footprint', 'Footprint behind Juggernog'];
+    'Gen 5 footprint', 'Mound footprint', 'Church path footprint', 'Footprint behind Juggernog'];
+  // 'Gen 6 footprint' was corrected to 'Church path footprint' (approved-removals.json).
   assert.deepEqual(facts.filter((fact) => !strings.includes(fact)), []);
 });
 

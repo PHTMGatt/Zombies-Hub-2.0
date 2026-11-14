@@ -7,7 +7,7 @@ import { chromium } from 'playwright';
 import { VIEWPORTS } from './smoke-viewports.mjs';
 import { loadModules } from './guide-content.mjs';
 
-const [{ default: originsGuide }, { default: staffPages }] = await loadModules(['maps/origins/src/data/originsGuide.jsx', 'maps/origins/src/data/originsStaffPages.js']);
+const [{ default: originsGuide }, { default: staffPages }, { stepPlaces, staffPlaces }] = await loadModules(['maps/origins/src/data/originsGuide.jsx', 'maps/origins/src/data/originsStaffPages.js', 'maps/origins/src/data/originsPlaces.js']);
 const staffLines = JSON.parse((await import('node:fs')).readFileSync(new URL('./fixtures/origins-staff-pages.baseline.json', import.meta.url), 'utf8'));
 const TRACKER_LABELS = ['Ice built', 'Fire built', 'Wind built', 'Lightning built', 'Ice upgraded', 'Fire upgraded', 'Wind upgraded', 'Lightning upgraded',
   'Wind → Odin', 'Ice → Freya', 'Lightning → Thor', 'Fire → mound', 'Gen 5 chest', 'Mound chest', 'Gen 6 chest', 'Juggernog chest'];
@@ -130,10 +130,45 @@ try {
       const top = (selector) => [...document.querySelectorAll(selector)].find((el) => el.checkVisibility()).getBoundingClientRect();
       return { steps: top('.origins-steps'), speed: top('a.origins-speedrun'), tips: top('.origins-tips') };
     });
-    if (name === 'phone') {
-      assert(order.steps.bottom <= order.speed.top && order.speed.bottom <= order.tips.top, 'phone: Main Steps, then Speed Run, then Tips');
+    // Every size reads Main Steps, then Speed Run, then Tips; on desktop the map has the column beside them.
+    assert(order.steps.bottom <= order.speed.top && order.speed.bottom <= order.tips.top, `${name}: Main Steps, then Speed Run, then Tips`);
+
+    // The quest's shape: eight numbered steps, the three builds as unnumbered prep naming the step they unlock.
+    const marks = await page.locator('li.run-step').evaluateAll((items) => items.map((item) => ({
+      id: item.id,
+      quest: item.classList.contains('run-step--quest'),
+      number: item.querySelector('.run-step__mark').textContent.trim(),
+      forStep: item.querySelector('.run-step__for')?.textContent.trim() ?? null,
+    })));
+    assert.deepEqual(marks.filter((mark) => mark.quest).map((mark) => mark.number), ['1', '2', '3', '4', '5', '6', '7', '8'], 'quest steps numbered 1-8');
+    assert.deepEqual(marks.filter((mark) => !mark.quest).map((mark) => [mark.id, mark.forStep]),
+      [['build-staffs', 'Needed for step 1'], ['thunder-fists', 'Needed for step 6'], ['g-strike', 'Needed for step 3']], 'prep steps name the step they unlock');
+
+    // The map: one Map button per step that happens somewhere; beside the steps on desktop, inside the step below it.
+    const mapIds = Object.keys(stepPlaces);
+    assert.deepEqual(await page.locator('.run-step__map').evaluateAll((buttons) => buttons.map((b) => b.closest('li').id)), originsGuide.map((s) => s.id).filter((id) => mapIds.includes(id)), 'Map buttons on the located steps');
+    const mapButton = page.locator('#thunder-fists .run-step__map');
+    assert((await mapButton.boundingBox()).height >= 44, 'Map is a 44px target');
+    if (name === 'desktop') {
+      assert.equal(await page.locator('.origins-guide__map .omap__pins .omap__pin').count(), 0, 'desktop map starts as the overview');
+      const side = await page.locator('.origins-guide__map').boundingBox();
+      assert(side.x >= order.steps.right, 'desktop: the map sits beside the steps');
+      await mapButton.click();
+      assert.equal(await mapButton.getAttribute('aria-pressed'), 'true', 'Map button shows it is on');
+      assert.equal(await page.locator('.origins-guide__map h2').innerText(), 'Thunder Fists', 'the side map names its step');
+      assert.equal(await page.locator('.origins-guide__map .omap__pins .omap__pin').count(), stepPlaces['thunder-fists'].pins.length, 'one pin per soul chest and the reward box');
+      assert.equal(await page.locator('.origins-guide__map .omap__key li').count(), stepPlaces['thunder-fists'].pins.length, 'every pin is in the key, in words');
+      assert.equal(await page.locator('.run-step__inline-map').count(), 0, 'desktop never opens a map inside a step');
     } else {
-      assert(order.speed.left >= order.steps.right && order.speed.top >= order.tips.bottom, `${name}: Speed Run sits under Tips, beside the steps`);
+      assert.equal(await page.locator('.origins-guide__map').count(), 0, `${name}: no side map`);
+      await mapButton.click();
+      const inline = page.locator('#thunder-fists .run-step__inline-map');
+      assert.equal(await inline.locator('.omap__pins .omap__pin').count(), stepPlaces['thunder-fists'].pins.length, `${name}: the map opens inside the step with its pins`);
+      const box = await inline.locator('svg.omap__svg').boundingBox();
+      assert(box.width >= Math.min(width, 900) * 0.3 && box.height <= height, `${name}: the sketch fits the screen (${Math.round(box.width)}×${Math.round(box.height)})`);
+      await assertNoHorizontalOverflow(page, `Main Guide with a map open at ${name}`);
+      await mapButton.click();
+      assert.equal(await page.locator('.run-step__inline-map').count(), 0, `${name}: Map again closes it`);
     }
 
     const type = await page.evaluate(() => {
@@ -148,7 +183,7 @@ try {
       const reading = await page.locator('.origins-steps').evaluate((el) => el.getBoundingClientRect().width);
       assert(reading >= 640, `Main Steps keep ${Math.round(reading)}px of reading width`);
     }
-    results.push(`${name}: Main Steps (lean staff steps, warnings, closed Details), Tips, Speed Run placement, type and contrast`);
+    results.push(`${name}: Main Steps (quest numbers, prep, lean staff steps, warnings, closed Details), the map, Tips, Speed Run placement, type and contrast`);
 
     // ---- Speed Run: a way back to the Main Guide ----
     await page.goto(`${base}/maps/origins/speed-run`, { waitUntil: 'networkidle' });
@@ -173,6 +208,13 @@ try {
         assert(text.includes(line.text), `${route}: keeps "${line.text}"`);
         if (line.label && line.label !== 'Excavation') assert(lower.includes(line.label.toLowerCase()), `${route}: keeps the label "${line.label}"`);
       }
+
+      // The staff's Map: every spot pinned and said in words, between Build and Puzzle.
+      const mapTop = await page.evaluate(() => document.getElementById('map')?.getBoundingClientRect().top + window.scrollY);
+      assert(mapTop > order[0] && mapTop < order[1], `${route}: Map sits between Build and Puzzle`);
+      assert.equal(await page.locator('#map .omap__pins .omap__pin').count(), staffPlaces[staff].pins.length, `${route}: one pin per spot`);
+      assert.deepEqual(await page.locator('#map .omap__key li').evaluateAll((items) => items.map((li) => li.textContent.trim())),
+        staffPlaces[staff].pins.map((pin, i) => `${i + 1}${pin.text}`), `${route}: the key lists every spot in order`);
 
       // The chart opens full screen and closes again (button, Esc), returning focus to the chart.
       const open = page.locator('#puzzle .zoom-image__open');
@@ -253,7 +295,7 @@ try {
       });
       assert(landing.top >= landing.pinned && landing.top <= landing.pinned + 48, `#rain-fire lands at ${Math.round(landing.top)}px under ${Math.round(landing.pinned)}px of chrome`);
     }
-    results.push(`${name}: four staff pages — order, every line, zoomable chart, ring reference, Ice order rules, Lightning tools`);
+    results.push(`${name}: four staff pages — order, every line, the staff map, zoomable chart, ring reference, Ice order rules, Lightning tools`);
 
     assert.deepEqual(errors, [], `${name}: page errors: ${errors.join('; ')}`);
     await context.close();

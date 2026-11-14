@@ -245,3 +245,14 @@
     background: #000;
   }
 }
+
+/* ---- Map: the staff's spots in its own colour; sketch beside its key once there is room ---- */
+.origins-module .staff-page .omap { --pin: var(--staff); }
+
+@media (min-width: 700px) {
+  .origins-module .staff-map .omap {
+    grid-template-columns: minmax(0, 340px) minmax(0, 1fr);
+    align-items: start;
+    gap: 1.1rem;
+  }
+}

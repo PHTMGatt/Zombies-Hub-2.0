@@ -6,6 +6,12 @@
     "spec": "§3, §4.4"
   },
   {
+    "text": "Gen 6 footprint",
+    "layer": "data",
+    "reason": "Wrong location, corrected to \"Church path footprint\": the Call of Duty Wiki and both video guides put no soul chest at Generator 6; the church-side chest is on the path from the Excavation to the Church. Bryen asked for every step to be verified against sources before writing.",
+    "spec": "brief:zombies-origins-revelations:2026-11-12 part 2; research:zombies:2026-11-13 (origins.md disagreement 5)"
+  },
+  {
     "pattern": "^(0[1-9]|1[0-2])$",
     "layer": "rendered",
     "routes": [

@@ -48,7 +48,9 @@ const originsGuide = [
     title: 'Thunder Fists',
     goal: 'Fill the four soul chests in the giant robot footprints, then take One Inch Punch from the reward chest.',
     refs: [
-      { type: 'chips', label: 'Soul chests', items: ['Gen 5 footprint', 'Mound footprint', 'Gen 6 footprint', 'Footprint behind Juggernog'] },
+      // 2026-11-14: "Gen 6 footprint" corrected to the Church path footprint. Wiki and both video guides
+      // agree no chest is at Generator 6 (research:zombies:2026-11-13, origins.md disagreement 5).
+      { type: 'chips', label: 'Soul chests', items: ['Gen 5 footprint', 'Mound footprint', 'Church path footprint', 'Footprint behind Juggernog'] },
     ],
   },
   {
@@ -56,12 +58,17 @@ const originsGuide = [
     title: 'G-Strike',
     goal: 'Purify the stone tablet with melee kills in the church, bring it back without touching mud.',
     refs: [
-      { type: 'sequence', items: ['Tablet', 'Church melee kills', 'Return — no mud', 'G-Strikes'] },
+      { type: 'sequence', items: ['Tablet', 'Church melee kills', 'Return — no mud', 'Table melee kills', 'G-Strikes'] },
     ],
     critical: ['Do not step in mud on the way back with the tablet.'],
     how: [
+      // 2026-11-14, from the Wiki + MrRoflWaffles cross-check (research:zombies:2026-11-13): where the
+      // tablet starts, and the second melee batch the old text left out.
+      'Take the dirty stone tablet from the Tank Station table by Generator 2, left of the back door.',
       'Complete the stone-tablet melee purification step in the church.',
+      'In the church, put it in the holy-water basin and get about 20 melee kills next to it.',
       'Return the tablet without stepping in mud to finish the G-Strike setup.',
+      'Back at the Tank Station, put it on the table and get about 20 more melee kills next to it. The G-Strikes appear on the table.',
       'Have the G-Strike grenades before Rain Fire.',
     ],
   },
@@ -77,7 +84,11 @@ const originsGuide = [
       'Enter the middle robot through an open foot and press the red button.',
       'Immediately throw a G-Strike onto the seal by Generator 5.',
     ],
-    problems: ['Have the Maxis Drone built and ready before you attempt Rain Fire — the next step needs it at once.'],
+    problems: [
+      'Have the Maxis Drone built and ready before you attempt Rain Fire — the next step needs it at once.',
+      // 2026-11-14, Wiki + MrRoflWaffles (research:zombies:2026-11-13, disagreement 15).
+      'Co-op: any robot works, one player presses and another throws. Solo: use the middle robot (Odin), press, drop out and throw.',
+    ],
   },
   {
     id: 'unleash-horde',
