@@ -97,6 +97,30 @@ try {
     const shot = page.locator('#servant .gref--image img').first();
     await shot.scrollIntoViewIfNeeded();
     assert(await shot.evaluate(img => img.complete && img.naturalWidth > 0), 'Servant rock capture loads');
+    // The rock tabs follow the tabs pattern: one tab stop, arrows (wrapping) / Home / End move the pick and
+    // focus with it, and the panel is the one every tab controls, named by the picked tab.
+    const rockTabs = page.locator('#servant [role="tab"]');
+    const rockPanel = page.locator('#servant [role="tabpanel"]');
+    const rocks = () => rockTabs.evaluateAll((tabs) => tabs.map((tab) => ({
+      label: tab.textContent, stop: tab.tabIndex === 0, picked: tab.getAttribute('aria-selected') === 'true',
+      focused: tab === document.activeElement, controls: tab.getAttribute('aria-controls'), id: tab.id,
+    })));
+    const rockState = async () => {
+      const tabs = await rocks();
+      const picked = tabs.filter((tab) => tab.picked);
+      const panel = { id: await rockPanel.getAttribute('id'), name: await rockPanel.getAttribute('aria-labelledby') };
+      assert.equal(picked.length, 1, 'One rock tab is picked');
+      assert.deepEqual(tabs.filter((tab) => tab.stop).map((tab) => tab.label), [picked[0].label], 'Only the picked rock tab is a tab stop');
+      assert(panel.id && tabs.every((tab) => tab.controls === panel.id), 'Every rock tab controls the rock panel');
+      assert.equal(panel.name, picked[0].id, 'The rock panel is named by the picked tab');
+      return { picked: picked[0].label, focused: tabs.find((tab) => tab.focused)?.label };
+    };
+    assert.equal((await rockState()).picked, 'Mob of the Dead');
+    await rockTabs.nth(3).focus();
+    for (const [key, rock] of [['ArrowRight', 'Nacht'], ['ArrowRight', 'Spawn'], ['ArrowLeft', 'Nacht'], ['Home', 'Spawn'], ['End', 'Nacht']]) {
+      await page.keyboard.press(key);
+      assert.deepEqual(await rockState(), { picked: rock, focused: rock }, `${key} on the rock tabs picks and focuses ${rock}`);
+    }
 
     await show('eggs');
     let stepText = await page.locator('#eggs').innerText();

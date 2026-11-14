@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useId, useRef, useState } from 'react';
 import './guide.css';
 
 /*
@@ -96,21 +96,43 @@ function WarningRef({ text }) {
   );
 }
 
+// Arrow keys walk the tabs (wrapping), Home / End jump to the ends; the tab under focus is selected.
+const TAB_MOVES = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 };
+
 function TabsRef({ label, tabs, activeTab, onTab }) {
   const [localTab, setLocalTab] = useState(tabs[0]?.id);
+  const base = useId();
+  const listRef = useRef(null);
   const selected = activeTab ?? localTab;
   const tab = tabs.find((item) => item.id === selected) ?? tabs[0];
   const choose = (id) => (onTab ? onTab(id) : setLocalTab(id));
+  const tabId = (item) => `${base}-tab-${item.id}`;
+  const panelId = `${base}-panel`;
+
+  // One tab stop for the row (the selected tab), as the tabs pattern expects.
+  const onKey = (event) => {
+    const index = tabs.indexOf(tab);
+    const target = event.key === 'Home' ? 0
+      : event.key === 'End' ? tabs.length - 1
+        : TAB_MOVES[event.key] ? (index + TAB_MOVES[event.key] + tabs.length) % tabs.length : null;
+    if (target === null) return;
+    event.preventDefault();
+    choose(tabs[target].id);
+    listRef.current?.querySelectorAll('[role="tab"]')[target]?.focus();
+  };
 
   return (
     <div className="gref gref--tabs">
-      <div className="gref-tabs" role="tablist" aria-label={label ?? 'Variants'}>
+      <div className="gref-tabs" role="tablist" aria-label={label ?? 'Variants'} ref={listRef} onKeyDown={onKey}>
         {tabs.map((item) => (
           <button
             key={item.id}
+            id={tabId(item)}
             type="button"
             role="tab"
             aria-selected={item.id === tab.id}
+            aria-controls={panelId}
+            tabIndex={item.id === tab.id ? 0 : -1}
             className="gref-tabs__tab"
             style={item.tone ? { '--gref-tone': item.tone } : undefined}
             onClick={() => choose(item.id)}
@@ -119,7 +141,7 @@ function TabsRef({ label, tabs, activeTab, onTab }) {
           </button>
         ))}
       </div>
-      <div className="gref-tabs__panel" role="tabpanel" style={tab.tone ? { '--gref-tone': tab.tone } : undefined}>
+      <div className="gref-tabs__panel" role="tabpanel" id={panelId} aria-labelledby={tabId(tab)} style={tab.tone ? { '--gref-tone': tab.tone } : undefined}>
         <GuideReferences refs={tab.refs} />
       </div>
     </div>
