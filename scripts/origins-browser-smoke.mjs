@@ -274,6 +274,10 @@ try {
       await open.click();
       const dialog = page.locator('dialog.zoom-image__dialog[open]');
       await dialog.waitFor();
+      await page.waitForFunction(() => {
+        const img = document.querySelector('dialog.zoom-image__dialog[open] img');
+        return img?.complete && img.naturalWidth > 0;
+      }, null, { timeout: 5000 });
       const shown = await dialog.locator('img').boundingBox();
       if (name === 'phone') assert(shown.width >= width * 0.9, `${route}: full-screen chart is ${Math.round(shown.width)}px wide`);
       await page.keyboard.press('Escape');
@@ -360,6 +364,29 @@ try {
     results.push(`${name}: four staff pages — order, every line, the staff map, zoomable chart, ring reference, Ice order rules, Lightning tools`);
 
     assert.deepEqual(errors, [], `${name}: page errors: ${errors.join('; ')}`);
+    await context.close();
+  }
+  // A first visit on a phone fetches no staff chart until it is near the screen: the chart's closed
+  // full-screen copy waits too (it was eager and pulled every chart, ~250–350 KB, on page load).
+  {
+    const context = await browser.newContext({ viewport: { width: 390, height: 844 } });
+    const page = await context.newPage();
+    let checked = 0;
+    for (const staff of STAFFS) {
+      await page.goto(`${base}/maps/origins/${staff}-staff`, { waitUntil: 'networkidle' });
+      const chart = await page.locator('#puzzle .zoom-image__open img').evaluate((img) => ({ file: img.getAttribute('src').split('/').pop(), top: img.getBoundingClientRect().top }));
+      const fetched = () => page.evaluate((file) => performance.getEntriesByType('resource').some((entry) => entry.name.endsWith(file)), chart.file);
+      // Only meaningful while the chart is beyond the browser's lazy-load distance (1250px under the fold).
+      if (chart.top > 844 + 1300) {
+        assert(!(await fetched()), `${staff}: the chart (${chart.file}) loads before it is near the screen`);
+        checked += 1;
+      }
+      await page.locator('#puzzle .zoom-image__open img').scrollIntoViewIfNeeded();
+      await page.waitForFunction(() => document.querySelector('#puzzle .zoom-image__open img').complete, null, { timeout: 5000 });
+      assert(await fetched(), `${staff}: the chart loads once it is on screen`);
+    }
+    assert(checked >= 2, `only ${checked} staff charts sit far enough down to check`);
+    results.push('390x844 first visit: staff charts wait until they are near the screen');
     await context.close();
   }
   // Short desktop (1280x720): a pinned Upgrade column must fit under the pinned chrome, or not be pinned.

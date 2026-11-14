@@ -34,11 +34,14 @@ const assertNoHorizontalOverflow = async (page, route) => {
 };
 
 const assertImagesLoaded = async (page, route, selector) => {
-  const brokenImages = await page.locator(selector).evaluateAll(images =>
-    images
+  // Lazy images, and the closed full-screen copies that only load when opened, are told to load now:
+  // this looks for broken images, not ones that are simply off screen.
+  const brokenImages = await page.locator(selector).evaluateAll(async images => {
+    await Promise.all(images.map(image => { image.loading = 'eager'; return image.decode().catch(() => {}); }));
+    return images
       .filter(image => !image.complete || image.naturalWidth === 0)
-      .map(image => image.getAttribute('alt') || image.getAttribute('src') || 'unnamed image'),
-  );
+      .map(image => image.getAttribute('alt') || image.getAttribute('src') || 'unnamed image');
+  });
   assert.deepEqual(brokenImages, [], `${route} has broken images: ${brokenImages.join(', ')}`);
 };
 

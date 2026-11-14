@@ -22,8 +22,10 @@ export default function ZoomImage({ src, alt, width, height, caption, className 
         <span className="zoom-image__hint" aria-hidden="true">Tap to enlarge</span>
       </button>
       {caption && <figcaption>{caption}</figcaption>}
+      {/* Lazy too: a closed dialog is never on screen, so its copy waits until it opens (by then the
+          button's image is cached). An eager copy would fetch every chart on page load. */}
       <dialog ref={dialogRef} className="zoom-image__dialog" aria-label={alt} onClick={onDialogClick}>
-        <img src={src} alt={alt} width={width} height={height} />
+        <img src={src} alt={alt} width={width} height={height} loading="lazy" decoding="async" />
         <button type="button" className="zoom-image__close" onClick={close}>Close</button>
       </dialog>
     </figure>

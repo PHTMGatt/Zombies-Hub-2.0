@@ -41,8 +41,9 @@ function ImageRef({ src, alt, caption, width, height }) {
         <span className="gref-image__zoom" aria-hidden="true">⤢</span>
       </button>
       {caption && <figcaption>{caption}</figcaption>}
+      {/* Lazy and sized like the thumbnail: the closed lightbox's copy waits until it opens. */}
       <dialog ref={dialogRef} className="gref-lightbox" onClick={close} aria-label={alt}>
-        <img src={src} alt={alt} />
+        <img src={src} alt={alt} width={width} height={height} loading="lazy" decoding="async" />
         <button type="button" className="gref-lightbox__close" onClick={close}>Close</button>
       </dialog>
     </figure>

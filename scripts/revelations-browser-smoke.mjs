@@ -84,6 +84,14 @@ try {
     assert.match(await page.locator('.rev-card .rev-isles__caption').textContent(),
       /Islands: Spawn, Shangri-La, Verrückt, Mob of the Dead, Nacht der Untoten\./, 'The ring names its lit islands for screen readers');
 
+    // A capture's full-screen copy waits until it is opened (it was fetched with the page), then shows.
+    await page.locator('#servant .gref-image__open').first().click();
+    await page.waitForFunction(() => {
+      const img = document.querySelector('#servant dialog.gref-lightbox[open] img');
+      return img?.complete && img.naturalWidth > 0;
+    }, null, { timeout: 5000 });
+    await page.keyboard.press('Escape');
+    assert.equal(await page.locator('#servant dialog.gref-lightbox[open]').count(), 0, 'Esc closes the full-screen capture');
     // Servant step: the in-game captures for each blue rock, one tab per map.
     await page.locator('#servant').getByRole('tab', { name: 'Mob of the Dead' }).click();
     const shot = page.locator('#servant .gref--image img').first();
