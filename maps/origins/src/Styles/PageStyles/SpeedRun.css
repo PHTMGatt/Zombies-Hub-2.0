@@ -565,6 +565,9 @@
 }
 
 .origins-module .speedrun-alt-foot a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   color: #d3b0ff;
   font-weight: 700;
 }
@@ -580,6 +583,13 @@
   justify-content: space-between;
   gap: 1rem;
   padding-top: 0.25rem;
+}
+
+/* Full-height tap targets with the same text: the links were 23px tall. */
+.origins-module .speedrun-foot a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
 }
 
 @media (max-width: 900px) {
@@ -705,9 +715,11 @@
     -webkit-line-clamp: 2;
   }
 
+  /* Stacked 44px targets touch, so the gap goes: about the same rhythm as the old 23px links + gap. */
   .origins-module .speedrun-foot {
     flex-direction: column;
     align-items: flex-start;
+    gap: 0;
   }
 }
 

@@ -262,7 +262,14 @@ try {
     results.push(`${name}: Main Steps (quest numbers, prep, lean staff steps, warnings, closed Details), the map, Tips, Speed Run placement, type and contrast`);
 
     // ---- Speed Run: a way back to the Main Guide ----
+    // The switch strip is named for screen readers, and its demo link is a full tap target.
+    await page.goto(`${base}/maps/origins/speed-run/lightning`, { waitUntil: 'networkidle' });
+    assert.equal(await page.getByRole('group', { name: 'All seven switches at a glance' }).count(), 1, 'the switch strip is a named group');
+    assert((await page.locator('.speedrun-alt-foot a').boundingBox()).height >= 44, 'the hildaless demo link is a 44px target');
     await page.goto(`${base}/maps/origins/speed-run`, { waitUntil: 'networkidle' });
+    for (const link of await page.locator('.speedrun-foot a').all()) {
+      assert((await link.boundingBox()).height >= 44, `Speed Run footer link "${await link.innerText()}" is a 44px target`);
+    }
     const back = page.locator('a.speedrun-back');
     assert.equal(await back.getAttribute('href'), '/maps/origins', 'Speed Run leads back to the Main Guide');
     assert((await back.boundingBox()).height >= 44, 'Back to Main Guide is a 44px target');
