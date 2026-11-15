@@ -61,7 +61,10 @@ const robotLabelClashes = (page, figure) => page.locator(figure).evaluate((root)
     .map((mark) => `${label.textContent} under ${mark.textContent ? `pin ${mark.textContent}` : mark.getAttribute('class')}`));
 });
 
-const browser = await chromium.launch({ headless: true });
+// Chromium starts lazy images closer to the screen on a fast connection (1250px on 4G) than on an unknown or
+// slow one (2500px+), and a CI runner may report either. Pin 4G so the lazy-chart check below means the same
+// everywhere.
+const browser = await chromium.launch({ headless: true, args: ['--force-effective-connection-type=4G'] });
 try {
   for (const { name, width, height } of VIEWPORTS) {
     const context = await browser.newContext({ viewport: { width, height } });
@@ -246,6 +249,8 @@ try {
   {
     const context = await browser.newContext({ viewport: { width: 390, height: 844 } });
     const page = await context.newPage();
+    await page.goto(`${base}/maps/origins`, { waitUntil: 'domcontentloaded' });
+    assert.equal(await page.evaluate(() => navigator.connection?.effectiveType), '4g', 'the browser runs as 4G, so lazy images start 1250px under the fold');
     let checked = 0;
     for (const staff of STAFFS) {
       await page.goto(`${base}/maps/origins/${staff}-staff`, { waitUntil: 'networkidle' });
