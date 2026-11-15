@@ -1938,5 +1938,26 @@
     "layer": "data",
     "reason": "Wrong colour, corrected to \"Shoot the glowing plane\": the plane glows yellow, not red (Call of Duty Wiki: Little Lost Girl step 5).",
     "spec": "audit:zombies:2026-11-14 origins-open-facts.md #2, origins-revelations-audit.md Origins #5; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Routing, robot and snow timing, staff dupes, and skips for a fast Black Ops III Origins run, built from the advanced route in the linked walkthrough. Puzzle solutions stay on the staff tabs.",
+    "layer": "rendered",
+    "routes": [
+      "/side-easter-eggs/origins-speedrun",
+      "/maps/origins/speed-run",
+      "/maps/origins/speed-run/prep",
+      "/maps/origins/speed-run/lightning"
+    ],
+    "reason": "Creator not credited, reworded: \"the linked walkthrough\" is Freckleston's \"How To Speedrun: Origins Easter Egg\" (YouTube oEmbed). Nothing else in the line changed.",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Origins #12; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Optional advanced first-piece route that uses movement and death-barrier timing instead of the tank or Boomhilda.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/speed-run/lightning"
+    ],
+    "reason": "Creator not credited, reworded: the hildaless demo is Aiden Ross's video (YouTube oEmbed). Nothing else in the line changed.",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Origins #12; protected change approved by Bryen 2026-11-14"
   }
 ]
