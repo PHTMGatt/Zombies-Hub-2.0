@@ -148,7 +148,7 @@ try {
     assert.equal(await page.locator('.run-step__details[open]').count(), 0, 'Details start closed');
     const details = page.locator('#rain-fire .run-step__details');
     await details.locator('summary').click();
-    assert.match(await details.innerText(), /open foot/, 'Details opens the rest of the step');
+    assert.match(await details.innerText(), /lit foot/, 'Details opens the rest of the step');
     assert((await details.locator('summary').boundingBox()).height >= 44, 'Details is a 44px target');
     const mainText = await page.locator('main').innerText();
     assert.equal(await page.locator('.switch-board, .staff-board').count(), 0, 'no switch board or staff board on the Main Guide');
