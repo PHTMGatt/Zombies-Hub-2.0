@@ -61,10 +61,7 @@ const robotLabelClashes = (page, figure) => page.locator(figure).evaluate((root)
     .map((mark) => `${label.textContent} under ${mark.textContent ? `pin ${mark.textContent}` : mark.getAttribute('class')}`));
 });
 
-// Chromium starts lazy images closer to the screen on a fast connection (1250px on 4G) than on an unknown or
-// slow one (2500px+), and a CI runner may report either. Pin 4G so the lazy-chart check below means the same
-// everywhere.
-const browser = await chromium.launch({ headless: true, args: ['--force-effective-connection-type=4G'] });
+const browser = await chromium.launch({ headless: true });
 try {
   for (const { name, width, height } of VIEWPORTS) {
     const context = await browser.newContext({ viewport: { width, height } });
@@ -246,26 +243,39 @@ try {
   }
   // A first visit on a phone fetches no staff chart until it is near the screen: the chart's closed
   // full-screen copy waits too (it was eager and pulled every chart, ~250–350 KB, on page load).
+  // How far below the fold Chromium starts a lazy image depends on the build and the network it detects:
+  // desktop Chrome on 4G uses 1250px, CI's headless Chromium starts the charts on first paint (they sit about
+  // 1400–2600px down). So the test, not the page, puts the puzzle 8000px down, past every Chromium distance
+  // (the longest is 4000px), before the page renders: the check reads the page's real markup on any browser.
   {
     const context = await browser.newContext({ viewport: { width: 390, height: 844 } });
+    // Runs before any page script, so the first layout already has the puzzle far down.
+    await context.addInitScript(() => {
+      const add = () => {
+        if (!document.head) return false;
+        const style = document.createElement('style');
+        style.textContent = '#puzzle { margin-top: 8000px !important; }';
+        document.head.append(style);
+        return true;
+      };
+      if (add()) return;
+      const watch = new MutationObserver(() => { if (add()) watch.disconnect(); });
+      watch.observe(document, { childList: true, subtree: true });
+    });
     const page = await context.newPage();
-    await page.goto(`${base}/maps/origins`, { waitUntil: 'domcontentloaded' });
-    assert.equal(await page.evaluate(() => navigator.connection?.effectiveType), '4g', 'the browser runs as 4G, so lazy images start 1250px under the fold');
     let checked = 0;
     for (const staff of STAFFS) {
       await page.goto(`${base}/maps/origins/${staff}-staff`, { waitUntil: 'networkidle' });
       const chart = await page.locator('#puzzle .zoom-image__open img').evaluate((img) => ({ file: img.getAttribute('src').split('/').pop(), top: img.getBoundingClientRect().top }));
       const fetched = () => page.evaluate((file) => performance.getEntriesByType('resource').some((entry) => entry.name.endsWith(file)), chart.file);
-      // Only meaningful while the chart is beyond the browser's lazy-load distance (1250px under the fold).
-      if (chart.top > 844 + 1300) {
-        assert(!(await fetched()), `${staff}: the chart (${chart.file}) loads before it is near the screen`);
-        checked += 1;
-      }
+      assert(chart.top > 844 + 4000, `${staff}: the chart sits ${Math.round(chart.top)}px down, inside some browser's lazy-load distance`);
+      assert(!(await fetched()), `${staff}: the chart (${chart.file}) loads before it is near the screen`);
+      checked += 1;
       await page.locator('#puzzle .zoom-image__open img').scrollIntoViewIfNeeded();
       await page.waitForFunction(() => document.querySelector('#puzzle .zoom-image__open img').complete, null, { timeout: 5000 });
       assert(await fetched(), `${staff}: the chart loads once it is on screen`);
     }
-    assert(checked >= 2, `only ${checked} staff charts sit far enough down to check`);
+    assert.equal(checked, STAFFS.length, 'every staff chart was checked');
     results.push('390x844 first visit: staff charts wait until they are near the screen');
     await context.close();
   }
