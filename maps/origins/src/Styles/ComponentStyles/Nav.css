@@ -1,91 +1,162 @@
-/*
- * Row 2 of the band: the guide and the four staffs as OG pills, cleaned up. Each tab carries its staff
- * colour on the icon; the open tab fills with it and gets an underline, so it reads at a glance.
- * Phones restore the OG stack: Main Guide across the top, then Ice | Fire, then Wind | Lightning.
- */
-.origins-module .origins-plates {
+.origins-module .origins-nav {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.origins-module .origins-nav-links {
+  width: 100%;
+  max-width: 720px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  width: min(100% - 32px, 1000px);
-  height: var(--o-tabs-height);
-  margin: 0 auto;
-  align-items: center;
-  padding: 6px 0 14px;
+  justify-content: flex-end;
+  gap: 0.45rem;
+  padding: 0;
 }
 
-.origins-module .origins-plate {
+.origins-module .origins-nav-link {
+  --origin-link-accent: #8ed7ff;
+  --origin-link-soft: rgba(109, 194, 255, 0.08);
+
+  position: relative;
+  min-height: 40px;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: 8px;
-  min-height: 44px;
-  padding: 0 18px;
-  border: 1px solid rgba(170, 224, 255, 0.16);
-  border-radius: 999px;
-  background: rgba(2, 12, 22, 0.66);
-  color: var(--o-ink);
-  font: 700 0.98rem/1 var(--o-font);
-  letter-spacing: 0.01em;
+  gap: 0.42rem;
+  padding: 0.42rem 0.72rem;
+  color: #eaf6ff;
+  font-size: 0.82rem;
+  font-weight: 700;
   text-decoration: none;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
-  transition: border-color 0.15s ease, background-color 0.15s ease;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  background: rgba(2, 10, 18, 0.58);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  transition: transform 0.2s ease, color 0.2s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
 }
 
-.origins-module .origins-plate svg {
-  flex: 0 0 auto;
-  width: 18px;
-  height: 18px;
-  color: var(--staff);
+.origins-module .origins-nav-link.main {
+  --origin-link-accent: #6dc2ff;
+  --origin-link-soft: rgba(109, 194, 255, 0.13);
 }
 
-.origins-module .origins-plate:hover {
-  border-color: color-mix(in srgb, var(--staff) 60%, transparent);
+.origins-module .origins-nav-link.ice {
+  --origin-link-accent: #78e8e1;
+  --origin-link-soft: rgba(120, 232, 225, 0.11);
 }
 
-.origins-module .origins-plate.active {
-  border-color: var(--staff);
-  background: linear-gradient(135deg, color-mix(in srgb, var(--staff) 24%, transparent), rgba(2, 12, 22, 0.74));
-  box-shadow: inset 0 -3px 0 var(--staff);
-  color: #fff;
+.origins-module .origins-nav-link.fire {
+  --origin-link-accent: #ff7844;
+  --origin-link-soft: rgba(255, 120, 68, 0.11);
 }
 
-@media (max-width: 900px) {
-  .origins-module .origins-plates {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 8px;
-    height: auto;
-    width: min(100% - 20px, 560px);
-    padding: 8px 0 12px;
+.origins-module .origins-nav-link.wind {
+  --origin-link-accent: #ffe657;
+  --origin-link-soft: rgba(255, 230, 87, 0.1);
+}
+
+.origins-module .origins-nav-link.lightning {
+  --origin-link-accent: #d8a8ff;
+  --origin-link-soft: rgba(216, 168, 255, 0.11);
+}
+
+.origins-module .origins-nav-link.speedrun {
+  --origin-link-accent: #f0c56b;
+  --origin-link-soft: rgba(240, 197, 107, 0.12);
+}
+
+.origins-module .origins-nav-link:hover,
+.origins-module .origins-nav-link.active {
+  transform: translateY(-1px);
+  color: var(--origin-link-accent);
+  border-color: color-mix(in srgb, var(--origin-link-accent) 55%, transparent);
+  background: linear-gradient(135deg, var(--origin-link-soft), rgba(2, 10, 18, 0.7));
+  box-shadow: 0 0 16px color-mix(in srgb, var(--origin-link-accent) 14%, transparent);
+}
+
+.origins-module .origins-nav-link svg {
+  color: var(--origin-link-accent);
+  font-size: 17px;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.origins-module .origins-nav-link:hover svg,
+.origins-module .origins-nav-link.active svg {
+  transform: scale(1.08);
+  filter: drop-shadow(0 0 6px color-mix(in srgb, var(--origin-link-accent) 55%, transparent));
+}
+
+.origins-module .origins-nav-link::after {
+  display: none;
+}
+
+.origins-module .main-active { color: #6dc2ff; }
+.origins-module .ice-active { color: #78e8e1; }
+.origins-module .fire-active { color: #ff7844; }
+.origins-module .wind-active { color: #ffe657; }
+.origins-module .lightning-active { color: #d8a8ff; }
+.origins-module .speedrun-active { color: #f0c56b; }
+
+@media (max-width: 1040px) {
+  .origins-module .origins-nav-links {
+    justify-content: center;
+    max-width: 860px;
   }
-
-  .origins-module .origins-plate {
-    min-height: 46px;
-    padding: 0 10px;
-    border-radius: 12px;
-  }
-
-  .origins-module .origins-plate[data-staff='guide'] {
-    grid-column: 1 / -1;
-  }
 }
 
-/* Short landscape phones: all five fit on one row under the title. */
-@media (max-height: 500px) and (orientation: landscape) {
-  .origins-module .origins-plates {
-    display: flex;
+/* Phones: one swipeable row of staff chips instead of three to five stacked rows in a sticky header. */
+@media (max-width: 620px), (max-height: 500px) and (orientation: landscape) {
+  .origins-module .origins-nav-links {
+    max-width: none;
     flex-wrap: nowrap;
-    width: calc(100% - 24px);
-    gap: 6px;
-    padding: 6px 0 10px;
+    justify-content: flex-start;
+    gap: 0.4rem;
+    padding: 2px 14px;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-snap-type: x proximity;
+    scroll-padding-inline: 14px;
+    scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 14px, #000 calc(100% - 14px), transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 14px, #000 calc(100% - 14px), transparent);
   }
 
-  .origins-module .origins-plate {
+  .origins-module .origins-nav-links::-webkit-scrollbar {
+    display: none;
+  }
+
+  .origins-module .origins-nav-link {
+    flex: 0 0 auto;
     min-height: 44px;
-    padding: 0 12px;
-    border-radius: 999px;
-    font-size: 0.9rem;
+    padding: 0.4rem 0.75rem;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    scroll-snap-align: start;
+  }
+
+  .origins-module .origins-nav-link:hover,
+  .origins-module .origins-nav-link.active {
+    transform: none;
+  }
+}
+
+/* Temporary OG/UI version switch in the current Origins nav. */
+.origins-module .origins-nav-modes {display:inline-flex;align-items:center;gap:.2rem;padding:.2rem;border:1px solid rgba(142,215,255,.22);border-radius:999px;background:rgba(0,8,17,.46);white-space:nowrap}
+.origins-module .origins-nav-modes .origins-nav-link {min-height:40px;padding:.35rem .7rem}
+.origins-module .origins-nav-link.og {--origin-link-accent:#f1f8ff;--origin-link-soft:rgba(109,194,255,.15)}
+.origins-module .og-active {color:#f1f8ff}
+@media(max-width:620px),(max-height:500px) and (orientation:landscape){.origins-module .origins-nav-modes{flex:0 0 auto;scroll-snap-align:start}.origins-module .origins-nav-modes .origins-nav-link{min-height:44px}}
+
+/* Desktop: OG/UI adds one extra link; keep the whole header to one row. */
+@media (min-width: 1181px) {
+  .origins-module .origins-nav-links {
+    max-width: none;
+    flex-wrap: nowrap;
+    gap: 0.3rem;
+  }
+  .origins-module .origins-nav-link {
+    padding-inline: 0.55rem;
+    white-space: nowrap;
   }
 }

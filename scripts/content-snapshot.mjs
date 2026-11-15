@@ -44,7 +44,16 @@ export async function captureSegments(page, route) {
   await page.goto(`${base}${route}`, { waitUntil: 'networkidle' });
   const seen = new Set();
   const collect = async () => {
-    await page.evaluate(() => document.querySelectorAll('main details:not([open])').forEach((item) => { item.open = true; }));
+    const details = page.locator('main details');
+    const count = await details.count();
+    for (let index = 0; index < count; index += 1) {
+      await details.nth(index).evaluate((item) => {
+        const chain = [];
+        for (let detail = item; detail; detail = detail.parentElement?.closest('details')) chain.unshift(detail);
+        chain.forEach((detail) => { detail.open = true; });
+      });
+      (await page.evaluate(visibleText)).forEach((text) => seen.add(text));
+    }
     (await page.evaluate(visibleText)).forEach((text) => seen.add(text));
   };
   await collect();
@@ -74,6 +83,17 @@ export async function captureSegments(page, route) {
   const picks = page.locator('main [data-area-picker] button');
   for (let index = 0; index < await picks.count(); index += 1) {
     await picks.nth(index).click();
+    await collect();
+  }
+  // The Origins UI still contains the original staff text; its controls are
+  // expandable buttons rather than tab roles, so visit every staff option.
+  const staffOptions = page.locator('main .gref-tabs button[aria-expanded]');
+  for (let index = 0; index < await staffOptions.count(); index += 1) {
+    await staffOptions.nth(index).evaluate((button) => {
+      const disclosure = button.closest('details');
+      if (disclosure) disclosure.open = true;
+    });
+    await staffOptions.nth(index).click();
     await collect();
   }
   return [...seen];

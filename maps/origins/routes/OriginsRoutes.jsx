@@ -7,6 +7,7 @@ import { Route, Routes } from 'react-router-dom';
 import Header from '../src/components/Header';
 import Footer from '../src/components/Footer';
 import MainGuide from '../src/Pages/MainGuide';
+import OGGuide from '../src/Pages/OGGuide';
 import FireStaff from '../src/Pages/FireStaff';
 import IceStaff from '../src/Pages/IceStaff';
 import WindStaff from '../src/Pages/WindStaff';
@@ -15,16 +16,19 @@ import SpeedRunLayout from '../src/Pages/SpeedRun/SpeedRunLayout';
 import SpeedRunRoute from '../src/Pages/SpeedRun/SpeedRunRoute';
 import SpeedRunPrep from '../src/Pages/SpeedRun/SpeedRunPrep';
 import SpeedRunLightning from '../src/Pages/SpeedRun/SpeedRunLightning';
+import RobotBg from '../public/images/Robot.webp?url';
 import '../src/Styles/origins-tokens.css';
 import '../styles/origins-shell.css';
 
 export default function OriginsRoutes() {
   return (
-    <section className="map-module origins-module">
+    // Main's Main Guide and OG pages paint the robot backdrop from --origins-bg (merge with main, 2026-11-15).
+    <section className="map-module origins-module" style={{ '--origins-bg': `url(${RobotBg})` }}>
       <Header />
       <div className="origins-route-content">
         <Routes>
           <Route index element={<MainGuide />} />
+          <Route path="og" element={<OGGuide />} />
           <Route path="fire-staff" element={<FireStaff />} />
           <Route path="ice-staff" element={<IceStaff />} />
           <Route path="wind-staff" element={<WindStaff />} />

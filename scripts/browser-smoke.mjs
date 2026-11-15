@@ -136,32 +136,38 @@ try {
     await page.waitForLoadState('networkidle');
     assert.equal(new URL(page.url()).pathname, originsTarget, 'Origins guide navigation reaches its intended route');
 
-    // Origins guide: one sequence. Each step's action is on the page; the rest of the step sits under Details.
+    // OG is a separate, historical read-only route; the new UI guide stays at the canonical address.
+    await page.goto(`${base}/maps/origins/og`, { waitUntil: 'networkidle' });
+    assert(await page.locator('.origins-og .guide-grid').isVisible(), 'OG restores its original two-column guide structure');
+    assert.match(await page.locator('.origins-og').innerText(), /Rain Fire/, 'OG preserves named historical steps');
+
+    // Origins guide: one sequence. Each step's answer is on the page; its how-to sits under "More on this step".
     await page.goto(`${base}/maps/origins`, { waitUntil: 'networkidle' });
     await page.evaluate(() => window.localStorage.clear());
     await page.reload({ waitUntil: 'networkidle' });
     assert.equal(await page.locator('#secure-keys h3').innerText(), 'Ascend from Darkness');
     assert.equal(await page.locator('#thunder-fists h3').innerText(), 'Thunder Fists');
     assert.match(await page.locator('#secure-keys').innerText(), /Odin · middle robot/, 'Staff placement answer is visible without opening anything');
-    await page.locator('#secure-keys .run-step__details > summary').click();
-    assert.match(await page.locator('#secure-keys .run-step__details').innerText(), /any order/, 'Details shows the rest of the step');
-    // Speed Run is always open: a small link on the Main Guide (not a tab), reachable with empty storage, no lock copy anywhere.
+    await page.locator('#secure-keys .guide-seq__step-summary').click();
+    await page.locator('#secure-keys .guide-seq__more > summary').click();
+    assert(await page.locator('#secure-keys .guide-how').isVisible(), '"More on this step" shows the how-to');
+    // Speed Run is always open: the last Origins nav item, reachable with empty storage, no lock copy anywhere.
     await page.evaluate(() => window.localStorage.clear());
     await page.goto(`${base}/maps/origins`, { waitUntil: 'networkidle' });
-    assert.equal(await page.locator('.origins-plates a[href="/maps/origins/speed-run"]').count(), 0, 'Speed Run is not an Origins tab');
-    const speedLink = page.locator('a.origins-speedrun:visible');
-    assert.equal(await speedLink.count(), 1, 'the Main Guide shows one Speed Run link');
-    await speedLink.scrollIntoViewIfNeeded();
-    const navBox = await speedLink.boundingBox();
-    assert(navBox && navBox.x >= 0 && navBox.x + navBox.width <= width + 1, 'Speed Run link sits fully inside the viewport');
-    await assertNoHorizontalOverflow(page, '/maps/origins (Speed Run link)');
+    const navLinks = page.locator('.origins-nav-link');
+    const lastNav = navLinks.last();
+    assert.equal((await lastNav.innerText()).trim(), 'Speed Run', 'Speed Run is the last Origins nav item');
+    await lastNav.scrollIntoViewIfNeeded();
+    const navBox = await lastNav.boundingBox();
+    assert(navBox && navBox.x >= 0 && navBox.x + navBox.width <= width + 1, 'Speed Run nav item can sit fully inside the viewport');
+    await assertNoHorizontalOverflow(page, '/maps/origins (nav scrolled)');
     await page.goto(`${base}/side-easter-eggs/origins-speedrun`, { waitUntil: 'networkidle' });
     assert.equal(new URL(page.url()).pathname, '/maps/origins/speed-run', 'Old Origins Speed Run address redirects into the Origins guide');
     await page.getByRole('heading', { name: 'Origins Speed Run', level: 2 }).waitFor();
     assert.equal(await page.locator('.speedrun-gate').count(), 0, 'no Speed Run lock screen');
     assert.doesNotMatch(await page.locator('main').innerText(), /to unlock Speedrun/i);
 
-    // The Electrical Panel is a hidden achievement only: solving it records "Circuit Complete" and links to Speed Run.
+    // The Electrical Panel is a hidden achievement only: solving it records "Electrical Panel Solved" and links to Speed Run.
     // A finished run of the old tracker set the same legacy flag; that must not mark the panel solved.
     await page.evaluate(() => localStorage.setItem('zh-origins-speedrun-unlocked', 'true'));
     await page.goto(`${base}/maps/origins/lightning-staff`, { waitUntil: 'networkidle' });
@@ -174,7 +180,7 @@ try {
     for (const [index, turns] of turnsNeeded.entries()) {
       for (let turn = 0; turn < turns; turn += 1) await panelSwitches.nth(index).click();
     }
-    assert.equal(await page.locator('.electrical-panel__reward strong').innerText(), 'Circuit Complete');
+    assert.equal(await page.locator('.electrical-panel__reward strong').innerText(), 'Electrical Panel Solved');
     const lightningText = await page.locator('main').innerText();
     assert.doesNotMatch(lightningText, /Speedrun mode/i, 'no Speedrun-mode copy on the Lightning page');
     assert.doesNotMatch(lightningText, /unlock/i, 'nothing on the Lightning page claims to unlock');
@@ -193,22 +199,18 @@ try {
     await assertNoHorizontalOverflow(page, '/maps/origins/speed-run/lightning');
     await page.evaluate(() => window.localStorage.clear());
 
-    // The Origins band: the OG title over its five tabs; at most the tab row stays pinned, with the active tab in view.
+    // The sticky Origins header must stay compact on phones, with an unclipped title and the active staff in view.
     await page.goto(`${base}/maps/origins/lightning-staff`, { waitUntil: 'networkidle' });
-    await page.evaluate(() => window.scrollTo(0, 600));
     const originsHeader = await page.evaluate(() => {
-      const active = document.querySelector('.origins-plates a[aria-current="page"]').getBoundingClientRect();
-      const title = document.querySelector('.origins-head h1').getBoundingClientRect();
-      const hub = document.querySelector('.hub-header');
-      const hubBottom = ['fixed', 'sticky'].includes(getComputedStyle(hub).position) ? hub.getBoundingClientRect().bottom : 0;
-      const band = document.querySelector('.origins-top').getBoundingClientRect();
+      const active = document.querySelector('.origins-nav-link.active').getBoundingClientRect();
+      const title = document.querySelector('.origins-map-header .header-title').getBoundingClientRect();
       return {
-        pinned: Math.max(0, band.bottom - Math.max(hubBottom, 0)),
+        height: document.querySelector('.origins-map-header').offsetHeight,
         activeInView: active.left >= 0 && active.right <= window.innerWidth,
         titleInView: title.left >= 0 && title.right <= window.innerWidth,
       };
     });
-    assert(originsHeader.pinned <= 72, `Origins keeps ${originsHeader.pinned}px pinned at ${width}px`);
+    assert(originsHeader.height <= { phone: 130, landscape: 130, desktop: 100 }[viewportName], `Origins sticky header is ${originsHeader.height}px tall at ${width}px`);
     assert(originsHeader.activeInView, 'Origins keeps the active staff tab in view');
     assert(originsHeader.titleInView, 'Origins header title is not clipped');
 

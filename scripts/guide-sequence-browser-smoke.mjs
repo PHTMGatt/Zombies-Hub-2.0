@@ -74,22 +74,23 @@ try {
     }
     results.push(`${name}: Gorod, DE and Shadows guides link to their Side Easter Egg videos`);
 
-    // Tabs stay reachable: every tab of every tabbed step shows its own facts, list lines and sequence items.
-    let tabCount = 0;
-    for (const { guide, route, steps } of guides.filter((entry) => entry.guide !== 'origins')) {
-      for (const tabbed of steps.filter((step) => step.refs?.some((ref) => ref.type === 'tabs'))) {
-        await page.goto(`${base}${route}#${tabbed.id}`, { waitUntil: 'networkidle' });
-        const step = page.locator(`#${tabbed.id}`);
-        for (const tab of tabbed.refs.find((ref) => ref.type === 'tabs').tabs) {
-          await step.getByRole('tab', { name: tab.label, exact: true }).click();
-          const panel = (await step.locator('[role="tabpanel"]').first().textContent()).replace(/\s+/g, ' ');
-          for (const text of tabStrings(tab)) assert(panel.includes(text), `${guide} ${tabbed.id}/${tab.id} tab shows "${text}"`);
-          tabCount += 1;
-        }
-      }
+    // Tabs stay reachable: every staff tab in "Build the four staffs" shows its own facts.
+    const origins = guides.find((entry) => entry.guide === 'origins');
+    const buildStep = origins.steps.find((step) => step.id === 'build-staffs');
+    const tabsRef = buildStep.refs.find((ref) => ref.type === 'tabs');
+    await page.goto(`${base}/maps/origins`, { waitUntil: 'networkidle' });
+    const step = page.locator('#build-staffs');
+    const stepDisclosure = step.locator('details.guide-seq__step-disclosure');
+    assert.equal(await stepDisclosure.getAttribute('open'), null, 'Origins steps start collapsed');
+    await stepDisclosure.locator('summary.guide-seq__step-summary').click();
+    for (const tab of tabsRef.tabs) {
+      await step.getByRole('button', { name: tab.label, exact: true }).click();
+      const panel = (await step.locator('[role="region"]').first().textContent()).replace(/\s+/g, ' ');
+      for (const fact of tabStrings(tab)) assert(panel.includes(fact), `Origins ${tab.label} reference shows "${fact}"`);
     }
-    assert(tabCount > 0, 'some tabbed steps were checked');
-    results.push(`${name}: all ${tabCount} tabs on tabbed steps reachable with their own content`);
+    await step.getByRole('button', { name: tabsRef.tabs.at(-1).label, exact: true }).click();
+    assert.equal(await step.locator('[role="region"]').count(), 0, 'Clicking the selected staff collapses its panel');
+    results.push(`${name}: Origins staff quick references expand individually and can collapse`);
     assert.deepEqual(errors, [], `${name}: page errors: ${errors.join('; ')}`);
     await context.close();
 
@@ -114,7 +115,7 @@ try {
     const brokenErrors = [];
     coldPage.on('pageerror', (error) => brokenErrors.push(error.message));
     await coldPage.goto(`${base}/maps/origins#100%`, { waitUntil: 'networkidle' });
-    assert.equal(await coldPage.locator('li.run-step').count(), 11, `${name}: guide still renders with a malformed #fragment`);
+    assert.equal(await coldPage.locator('li.guide-seq__step').count(), 11, `${name}: guide still renders with a malformed #fragment`);
     assert.deepEqual(brokenErrors, [], `${name}: malformed #fragment errors: ${brokenErrors.join('; ')}`);
     results.push(`${name}: malformed #fragment is harmless`);
     await cold.close();

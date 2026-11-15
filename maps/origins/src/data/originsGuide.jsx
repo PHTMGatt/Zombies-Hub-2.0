@@ -3,8 +3,11 @@
  * original Easter Egg (Secure the Keys, Ascend from Darkness, Rain Fire, Unleash the Horde, Skewer the
  * Winged Beast, Wield a Fist of Iron, Raise Hell, Freedom); Build the Staffs, Thunder Fists and G-Strike
  * are the prerequisites that sit between them. Everything about building or upgrading a staff lives on
- * that staff's page (originsStaffPages.js), never here.
+ * that staff's page (originsStaffPages.js). Main's Main Guide shows them as quick-reference tabs, which
+ * originsStaffQuickRefs.jsx reads from that same data (merge with main, 2026-11-15).
  */
+import { staffQuickRefs } from './originsStaffQuickRefs';
+
 // Staff colours for the placement facts in Ascend from Darkness.
 const TONE = {
   ice: '#78e8e1',
@@ -13,11 +16,22 @@ const TONE = {
   lightning: '#d8a8ff',
 };
 
+const STAFF_REFS = staffQuickRefs(TONE);
+
+/* Run strategy: advice, not requirements (requirements live in their step). */
+const TIP_EARLY = 'Build and upgrade the staffs as early as the run allows.';
+const TIP_SOULS = 'Fill the soul chests during setup instead of leaving all four until the end.';
+const TIP_ZOMBIE = 'Save a zombie when you need uninterrupted time for staff puzzles or map setup.';
+export const originsTips = [TIP_EARLY, TIP_SOULS, TIP_ZOMBIE];
+
 const originsGuide = [
   {
     id: 'build-staffs',
     title: 'Build the Staffs',
     goal: 'Build all four elemental staffs before continuing.',
+    refs: STAFF_REFS.build,
+    // Where main's live Main Guide showed these two tips.
+    problems: [TIP_EARLY, TIP_ZOMBIE],
   },
   {
     id: 'upgrade-staffs',
@@ -25,6 +39,7 @@ const originsGuide = [
     goal: 'Upgrade all four staffs before continuing.',
     // User-provided source (Origins Easter Egg guide), 2026-11-02.
     critical: ['After every staff is built, all generators must be on at the same time at least once, or the next step will not start.'],
+    refs: STAFF_REFS.upgrade,
   },
   {
     id: 'secure-keys',
@@ -152,13 +167,6 @@ const originsGuide = [
       'Going for the ending cutscene? Keep all generators active when you recover the upgraded Maxis Drone from the pilot sequence.',
     ],
   },
-];
-
-/* Run strategy for the Tips column: advice, not requirements (requirements live in their step). */
-export const originsTips = [
-  'Build and upgrade the staffs as early as the run allows.',
-  'Fill the soul chests during setup instead of leaving all four until the end.',
-  'Save a zombie when you need uninterrupted time for staff puzzles or map setup.',
 ];
 
 export default originsGuide;

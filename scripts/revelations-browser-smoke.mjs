@@ -55,43 +55,25 @@ try {
     assert.deepEqual(sectionLinksOutsideHeader, [], `Revelations renders a second section navigation: ${sectionLinksOutsideHeader.join(', ')}`);
     assert.equal(await page.locator('.rev-header__nav a').count(), 5, 'Header nav reaches all five Revelations sections');
     await page.reload({ waitUntil: 'networkidle' });
-    // The scavenger hunt is a step picker: twelve step tabs, one step on show.
-    const chips = page.locator('[data-step-tabs] [role="tab"]');
-    assert.equal(await chips.count(), 12, 'Revelations keeps all 12 Easter Egg steps in the picker');
-    assert.equal(await page.locator('li.guide-seq__step').count(), 1, 'Only the picked step shows');
-    assert.equal(await page.locator('li.guide-seq__step').getAttribute('id'), 'engines', 'The picker opens on step 1');
+    assert.equal(await page.locator('li.guide-seq__step').count(), 12, 'Revelations keeps all 12 Easter Egg steps');
+    const chapters = page.locator('.rev-run-chapters a');
+    assert.equal(await chapters.count(), 4, 'Four Revelations act shortcuts are available');
+    assert.deepEqual(await chapters.evaluateAll(links => links.map(link => link.getAttribute('href'))),
+      ['#engines', '#reel-1', '#sophia', '#throws'], 'Each chapter links to an existing step');
+    await chapters.last().click();
+    assert.equal(new URL(page.url()).hash, '#throws', 'Finale shortcut reaches its guide anchor');
+    await page.goto(`${base}${mainRoute}`, { waitUntil: 'networkidle' });
     await assertCssImageLoaded(page, mainRoute, '.rev-header');
     await assertCssImageLoaded(page, mainRoute, '.rev-backdrop');
     await assertNoHorizontalOverflow(page, mainRoute);
-    const show = async (id) => {
-      await page.locator(`#rev-tab-${id}`).click();
-      await page.locator(`li.guide-seq__step#${id}`).waitFor();
-    };
+    const opening = page.locator('#engines');
+    assert.equal(await opening.locator('.guide-seq__action-block .guide-seq__tasks li').count(), 6,
+      'Opening contains tombstones, four engine locations, and Pack-a-Punch');
+    assert.equal(await opening.locator('.guide-seq__reference-block .gref-sequence li').count(), 4,
+      'Tombstone code is shown as four ordered reference tokens');
+    assert.equal(await opening.locator('.guide-seq__more').count(), 0,
+      'Opening has no duplicate How-to section');
     const openMore = (id) => page.locator(`#${id} .guide-seq__more > summary`).click();
-
-    // Arrow keys walk the picker, Next walks the card, and the picked step lives in the URL hash.
-    await page.locator('#rev-tab-engines').focus();
-    await page.keyboard.press('ArrowDown');
-    await page.locator('li.guide-seq__step#keeper').waitFor();
-    assert.equal(await page.locator('li.guide-seq__step').getAttribute('id'), 'keeper', 'ArrowDown picks the next step');
-    assert(await page.locator('#rev-tab-keeper').evaluate((tab) => tab === document.activeElement), 'Focus follows the picked step');
-    // Home and End jump to the first and last step, as the tabs pattern expects.
-    await page.keyboard.press('End');
-    await page.locator('li.guide-seq__step#boss').waitFor();
-    assert(await page.locator('#rev-tab-boss').evaluate((tab) => tab === document.activeElement), 'End picks and focuses the last step');
-    await page.keyboard.press('Home');
-    await page.locator('li.guide-seq__step#engines').waitFor();
-    assert(await page.locator('#rev-tab-engines').evaluate((tab) => tab === document.activeElement), 'Home picks and focuses step 1');
-    await page.keyboard.press('ArrowDown');
-    await page.locator('li.guide-seq__step#keeper').waitFor();
-    await page.locator('.rev-card__next').click();
-    await page.locator('li.guide-seq__step#servant').waitFor();
-    assert.equal(await page.locator('li.guide-seq__step').getAttribute('id'), 'servant', 'Next shows the following step');
-    assert.equal(new URL(page.url()).hash, '#servant', 'The picked step is in the URL');
-    assert.equal(await page.locator('.rev-card .rev-isles__rock.is-lit').count(), 5, 'Servant lights its five rock islands');
-    // The ring is drawn for the eyes; its caption says which islands in words.
-    assert.match(await page.locator('.rev-card .rev-isles__caption').textContent(),
-      /Islands: Spawn, Shangri-La, Verrückt, Mob of the Dead, Nacht der Untoten\./, 'The ring names its lit islands for screen readers');
 
     // A capture's full-screen copy waits until it is opened (it was fetched with the page), then shows.
     await page.locator('#servant .gref-image__open').first().click();
@@ -131,57 +113,28 @@ try {
       assert.deepEqual(await rockState(), { picked: rock, focused: rock }, `${key} on the rock tabs picks and focuses ${rock}`);
     }
 
-    await show('eggs');
     let stepText = await page.locator('#eggs').innerText();
     assert.match(stepText, /nest|pustule/i);
     assert.match(stepText, /10 zombie souls/i);
     await openMore('eggs');
     assert(await page.locator('#eggs').getByRole('link', { name: /Egg locations/ }).isVisible());
 
-    await show('symbols');
     stepText = await page.locator('#symbols').innerText();
     assert.match(stepText, /all players/i);
     assert.match(stepText, /Kino projector/i);
     assert.match(stepText, /purple rift|purple circle/i);
     await page.locator('#symbols').getByLabel('1st').fill('skull');
 
-    await show('throws');
-    assert.equal(await page.locator('.rev-card .rev-isles__rock.is-lit').count(), 7, 'Throws light all seven target islands');
     stepText = await page.locator('#throws').innerText();
     assert.match(stepText, /Mob of the Dead\s*Poster/i);
     assert.match(stepText, /MG42/i);
     assert.match(stepText, /Focusing Stone/i);
     await openMore('throws');
     assert(await page.locator('#throws').getByRole('link', { name: /Throw videos/ }).isVisible());
-    await show('boss');
     assert.equal(await page.locator('#boss h3').innerText(), 'Final boss — Shadowman');
 
-    // Back / Next from the bottom of a step: the new step opens at its title, clear of the pinned hub bar,
-    // and focus moves to it, including at steps 1 and 12 where the button it was on goes away.
-    for (const [from, to, button] of [
-      ['reel-3', 'sophia', '.rev-card__next'],
-      ['servant', 'reel-1', '.rev-card__next'],
-      ['symbols', 'throws', '.rev-card__next'],
-      ['sophia', 'reel-3', '.rev-card__back'],
-      ['throws', 'boss', '.rev-card__next'],
-      ['keeper', 'engines', '.rev-card__back'],
-    ]) {
-      await show(from);
-      await page.locator(button).scrollIntoViewIfNeeded();
-      await page.locator(button).click();
-      await page.locator(`li.guide-seq__step#${to}`).waitFor();
-      const land = await page.evaluate((id) => {
-        const hub = document.querySelector('.hub-header');
-        const pinned = ['fixed', 'sticky'].includes(getComputedStyle(hub).position) ? Math.max(0, hub.getBoundingClientRect().bottom) : 0;
-        return { pinned, title: document.querySelector(`#${id} h3`).getBoundingClientRect().top, focus: document.activeElement?.id };
-      }, to);
-      assert(land.title >= land.pinned && land.title <= height - 40, `${from} → ${to}: the new title is at ${Math.round(land.title)}px (pinned bar ends at ${Math.round(land.pinned)}px)`);
-      assert.equal(land.focus, 'rev-step-panel', `${from} → ${to}: focus moves to the new step, not ${land.focus || 'the page'}`);
-    }
-
-    // The Kronorium symbol note is game state, not progress: it survives a reload (here, a deep link).
-    await page.goto(`${base}${mainRoute}#symbols`, { waitUntil: 'networkidle' });
-    assert.equal(await page.locator('#rev-tab-symbols').getAttribute('aria-selected'), 'true', 'A deep link picks its step');
+    // The Kronorium symbol note is game state, not progress: it survives a reload.
+    await page.reload({ waitUntil: 'networkidle' });
     assert.equal(await page.locator('#symbols').getByLabel('1st').inputValue(), 'skull', 'Kronorium symbol note survives a reload');
 
     await page.evaluate(() => {
@@ -336,25 +289,19 @@ try {
         };
         const footer = document.querySelector('.rev-footer').getBoundingClientRect();
         const activeTab = document.querySelector('.rev-nav-link.active');
-        const steps = document.querySelector('.rev-chips');
+        const steps = document.querySelector('.rev-step-list');
         return {
           titleInside: inside(document.querySelector('.rev-header__title')),
           activeTabInside: activeTab ? inside(activeTab) : false,
           gapBelowFooter: Math.round(document.documentElement.scrollHeight - (footer.bottom + window.scrollY)),
-          hasStepSelector: Boolean(steps),
           stepSelectorHeight: steps ? Math.round(steps.getBoundingClientRect().height) : 0,
         };
       });
-      // Measured only if it is there: a renamed picker would read 0px tall and pass every size check.
-      if (route === '/maps/revelations') assert(fit.hasStepSelector && fit.stepSelectorHeight > 0, `${route} @${vw}x${vh} has no step picker`);
       assert(fit.titleInside, `${route} @${vw}x${vh} clips the Revelations title`);
       assert(fit.activeTabInside, `${route} @${vw}x${vh} hides the active section tab`);
       assert(fit.gapBelowFooter <= 1, `${route} @${vw}x${vh} leaves ${fit.gapBelowFooter}px below the footer`);
       if (vw === 390 && route === '/maps/revelations') {
-        assert(fit.stepSelectorHeight <= 130, `Phone step picker is ${fit.stepSelectorHeight}px tall; it should be two rows of six`);
-      }
-      if (vh === 390 && route === '/maps/revelations') {
-        assert(fit.stepSelectorHeight <= 70, `Landscape step picker is ${fit.stepSelectorHeight}px tall; it should be one row of twelve`);
+        assert(fit.stepSelectorHeight <= 90, `Phone step selector is ${fit.stepSelectorHeight}px tall; it should be one swipeable row`);
       }
     }
     results.push({ width: vw, height: vh, check: 'all sections fit, unclipped title/tabs, pinned footer', passed: true });

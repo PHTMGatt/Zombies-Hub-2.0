@@ -288,3 +288,24 @@
     padding-inline: 0.25rem;
   }
 }
+
+/* Focusable map-only reset selector; destructive actions stay behind Reset options. */
+.ach-danger label {
+  margin-top: 0.4rem;
+  color: var(--zh-text);
+  font-weight: 700;
+}
+.ach-danger select {
+  width: min(100%, 320px);
+  min-height: 44px;
+  padding: 0.55rem 0.8rem;
+  border: 1px solid var(--zh-border);
+  border-radius: 10px;
+  background: #17212e;
+  color: var(--zh-text);
+  font: inherit;
+}
+.ach-danger select:focus-visible {
+  outline: 2px solid var(--zh-accent);
+  outline-offset: 2px;
+}

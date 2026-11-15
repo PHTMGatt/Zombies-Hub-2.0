@@ -1,97 +1,229 @@
-/*
- * The OG Origins band, given room: row 1 is the title between two Revive icons, row 2 the five tabs.
- * The snowy robot shows through the blue between and around them.
- */
-.origins-module .origins-top {
-  position: relative;
-  z-index: 40;
+
+.origins-module .site-header.origins-map-header {
+  position: sticky;
+  top: var(--hub-nav-height);
+  z-index: 9000;
+  width: 100%;
+  min-height: 82px;
+  padding: 0;
+  overflow: hidden;
+  color: #fff;
+  font-family: 'Rajdhani', sans-serif;
+  border-bottom: 1px solid rgba(170, 224, 255, 0.18);
+  background: linear-gradient(to right, #0a4b78, #1c7ed6, #0a4b78);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
   isolation: isolate;
-  color: var(--o-ink);
-  border-bottom: 1px solid rgba(170, 224, 255, 0.2);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.32);
+}
+
+.origins-module .origins-header__backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
   background:
-    linear-gradient(90deg, rgba(10, 75, 120, 0.95) 0%, rgba(17, 104, 166, 0.74) 32%, rgba(6, 32, 54, 0.6) 70%, rgba(4, 20, 34, 0.84) 100%),
-    url('../../../public/images/Robot.webp') center 38% / cover no-repeat,
-    var(--o-blue-deep);
+    linear-gradient(90deg, rgba(10, 75, 120, 0.96) 0%, rgba(15, 96, 153, 0.78) 30%, rgba(5, 27, 45, 0.6) 72%, rgba(4, 20, 34, 0.82) 100%),
+    url('../../../public/images/Robot.webp') center 40% / cover no-repeat;
 }
 
-/* Wide, tall screens: the band pins with only its tab row showing; the title row slides under the hub bar.
-   The pinned height (--o-pin) is set for the same query in origins-tokens.css. */
-@media (min-width: 901px) and (min-height: 600px) {
-  .origins-module .origins-top {
-    position: sticky;
-    top: calc(var(--hub-pin-height, var(--hub-nav-height)) - var(--o-title-height));
-  }
-
-  .origins-module .origins-head {
-    height: var(--o-title-height);
-  }
-}
-
-.origins-module .origins-head {
+.origins-module .origins-header__content {
+  width: min(1460px, calc(100% - 32px));
+  min-height: 82px;
+  margin: 0 auto;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 12px;
-  padding: 18px 16px 6px;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding: 0.45rem 0;
 }
 
-.origins-module .origins-head__title {
+.origins-module .header-left,
+.origins-module .header-right {
+  display: flex;
+  align-items: center;
+}
+
+.origins-module .header-left {
+  flex: 0 0 auto;
+  min-width: 0;
+}
+
+.origins-module .title-box {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+
+.origins-module .header-title {
+  display: flex;
+  align-items: center;
+  gap: 0.28rem;
   margin: 0;
-  font: 700 2rem/1 var(--o-font);
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
   letter-spacing: 0;
-  text-align: center;
-  text-shadow: 0 0 6px #6dc2ff, 0 0 10px rgba(255, 255, 255, 0.6);
+  text-shadow: 0 0 6px #6dc2ff, 0 0 10px rgba(255, 255, 255, 0.7);
+  white-space: nowrap;
 }
 
-/* The OG two-tone title: the map line in black against the glow, the Easter Egg in white. */
-.origins-module .origins-head__map { color: #05080b; }
-.origins-module .origins-head__ee { color: #fff; }
+.origins-module .black-text {
+  color: #05080b;
+}
 
-.origins-module .origins-head__revive {
-  width: 34px;
-  height: 34px;
-  flex: 0 0 34px;
+.origins-module .white-text {
+  color: #fff;
+}
+
+.origins-module .revive-header-icon {
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
   object-fit: contain;
 }
 
+.origins-module .header-right {
+  flex: 1 1 auto;
+  justify-content: flex-end;
+  min-width: 0;
+}
+
+@media (max-width: 1180px) {
+  .origins-module .header-title {
+    font-size: 1.7rem;
+  }
+
+  .origins-module .revive-header-icon {
+    width: 28px;
+    height: 28px;
+    flex-basis: 28px;
+  }
+
+  .origins-module .origins-header__content {
+    width: min(100% - 20px, 1120px);
+    gap: 0.8rem;
+  }
+}
+
+@media (max-width: 980px) {
+  .origins-module .site-header.origins-map-header {
+    min-height: 0;
+  }
+
+  /* The title centers over the backdrop's dark middle here; light a blue pool behind it so the
+     dark-glow "Origins Easter Egg" keeps the contrast it has on the desktop's lit left edge. */
+  .origins-module .origins-header__backdrop {
+    background:
+      radial-gradient(ellipse 62% 78% at 50% 22%, rgba(28, 126, 214, 0.9), rgba(16, 98, 160, 0.55) 55%, transparent 100%),
+      linear-gradient(180deg, rgba(10, 75, 120, 0.7), rgba(4, 20, 34, 0.86)),
+      url('../../../public/images/Robot.webp') center 40% / cover no-repeat;
+  }
+
+  .origins-module .origins-header__content {
+    min-height: 0;
+    flex-direction: column;
+    gap: 0.45rem;
+    padding: 0.62rem 0;
+  }
+
+  .origins-module .header-right {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .origins-module .title-box {
+    justify-content: center;
+  }
+}
+
 @media (max-width: 620px) {
-  .origins-module .origins-head {
-    gap: 8px;
-    padding: 14px 10px 4px;
+  .origins-module .origins-header__content {
+    width: 100%;
+    gap: 0.5rem;
+    padding: 0.6rem 0 0.55rem;
   }
 
-  .origins-module .origins-head__title {
-    font-size: 1.3rem;
+  .origins-module .header-title {
+    font-size: 1.34rem;
+  }
+
+  .origins-module .revive-header-icon {
+    width: 23px;
+    height: 23px;
+    flex-basis: 23px;
+  }
+
+  .origins-module .title-box {
+    gap: 6px;
+    padding-inline: 10px;
+  }
+}
+
+/* Narrow phones: one short line ("Origins · Little Lost Girl") so the header stays under ~90px and the
+   current step starts higher. The revive icons are decoration and go. */
+@media (max-width: 460px) {
+  .origins-module .header-title {
+    gap: 0.4rem;
+    font-size: 1.22rem;
     white-space: nowrap;
   }
 
-  .origins-module .origins-head__revive {
-    width: 22px;
-    height: 22px;
-    flex-basis: 22px;
+  .origins-module .header-title__ee {
+    display: none;
+  }
+
+  .origins-module .black-text::after {
+    content: ' ·';
+  }
+
+  .origins-module .revive-header-icon {
+    display: none;
+  }
+
+  .origins-module .origins-header__content {
+    gap: 0.35rem;
+    padding: 0.45rem 0 0.4rem;
   }
 }
 
-@media (max-width: 360px) {
-  .origins-module .origins-head__title { font-size: 1.12rem; }
-}
-
-/* Short landscape phones: the band scrolls away (it never pins here), with tighter rows. */
+/* Landscape phones: title and staff chips share one row. */
 @media (max-height: 500px) and (orientation: landscape) {
-  .origins-module .origins-head {
-    padding: 10px 12px 4px;
-    gap: 8px;
+  .origins-module .origins-header__content {
+    width: 100%;
+    flex-direction: row;
+    gap: 0.25rem;
+    padding: 0.4rem 0 0.4rem 12px;
   }
 
-  .origins-module .origins-head__title {
-    font-size: 1.25rem;
-    white-space: nowrap;
+  .origins-module .origins-header__backdrop {
+    background:
+      radial-gradient(ellipse 48% 130% at 18% 50%, rgba(28, 126, 214, 0.92), rgba(16, 98, 160, 0.5) 60%, transparent 100%),
+      linear-gradient(90deg, rgba(10, 75, 120, 0.6), rgba(4, 20, 34, 0.86)),
+      url('../../../public/images/Robot.webp') center 40% / cover no-repeat;
   }
 
-  .origins-module .origins-head__revive {
-    width: 22px;
-    height: 22px;
-    flex-basis: 22px;
+  .origins-module .header-title {
+    font-size: 1.2rem;
+  }
+
+  .origins-module .revive-header-icon {
+    display: none;
+  }
+
+  .origins-module .header-right {
+    width: auto;
+    min-width: 0;
+  }
+}
+
+/* Short landscape phones: the map header scrolls away instead of pinning under the hub bar. */
+@media (max-height: 500px) and (orientation: landscape) {
+  .origins-module {
+    --origins-header-height: 0px;
+  }
+
+  .origins-module .site-header.origins-map-header {
+    position: relative;
+    top: auto;
   }
 }

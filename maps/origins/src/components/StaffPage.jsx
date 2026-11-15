@@ -5,6 +5,7 @@ import ExcavationRings from './ExcavationRings';
 import OriginsMap from './OriginsMap';
 import { staffPlaces } from '../data/originsPlaces';
 import SkullIcon from '../assets/images/Skull2.png';
+import '../Styles/PageStyles/OriginsPanels.css';
 import '../Styles/PageStyles/StaffPage.css';
 
 /*

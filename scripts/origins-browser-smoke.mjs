@@ -7,35 +7,21 @@ import { chromium } from 'playwright';
 import { VIEWPORTS } from './smoke-viewports.mjs';
 import { loadModules } from './guide-content.mjs';
 
-const [{ default: originsGuide }, { default: staffPages }, { stepPlaces, staffPlaces }] = await loadModules(['maps/origins/src/data/originsGuide.jsx', 'maps/origins/src/data/originsStaffPages.js', 'maps/origins/src/data/originsPlaces.js']);
+const [{ default: staffPages }, { staffPlaces }] = await loadModules(['maps/origins/src/data/originsStaffPages.js', 'maps/origins/src/data/originsPlaces.js']);
 const staffLines = JSON.parse((await import('node:fs')).readFileSync(new URL('./fixtures/origins-staff-pages.baseline.json', import.meta.url), 'utf8'));
-const TRACKER_LABELS = ['Ice built', 'Fire built', 'Wind built', 'Lightning built', 'Ice upgraded', 'Fire upgraded', 'Wind upgraded', 'Lightning upgraded',
-  'Wind → Odin', 'Ice → Freya', 'Lightning → Thor', 'Fire → mound', 'Gen 5 chest', 'Mound chest', 'Gen 6 chest', 'Juggernog chest'];
 const STAFFS = ['ice', 'fire', 'wind', 'lightning'];
-
-// WCAG contrast of two computed rgb() colours.
-const contrastScript = () => {
-  window.__contrast = (fg, bg) => {
-    const parse = (c) => c.match(/[\d.]+/g).slice(0, 3).map(Number);
-    const lum = (rgb) => {
-      const [r, g, b] = rgb.map((v) => { const s = v / 255; return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4; });
-      return 0.2126 * r + 0.7152 * g + 0.0722 * b;
-    };
-    const [a, b] = [lum(parse(fg)), lum(parse(bg))].sort((x, y) => y - x);
-    return (a + 0.05) / (b + 0.05);
-  };
-};
 
 const base = process.env.SMOKE_BASE_URL || 'http://127.0.0.1:4173';
 const ROUTES = [
-  ['/maps/origins', 'Main Guide'],
+  ['/maps/origins', 'UI Main Guide'],
+  ['/maps/origins/og', 'OG'],
   ['/maps/origins/ice-staff', 'Ice Staff'],
   ['/maps/origins/fire-staff', 'Fire Staff'],
   ['/maps/origins/wind-staff', 'Wind Staff'],
   ['/maps/origins/lightning-staff', 'Lightning Staff'],
-  ['/maps/origins/speed-run', null],
+  ['/maps/origins/speed-run', 'Speed Run'],
 ];
-const TABS = ['Main Guide', 'Ice Staff', 'Fire Staff', 'Wind Staff', 'Lightning Staff'];
+const TABS = ['UI Main Guide', 'OG', 'Ice Staff', 'Fire Staff', 'Wind Staff', 'Lightning Staff', 'Speed Run'];
 const results = [];
 
 const assertNoHorizontalOverflow = async (page, label) => {
@@ -83,183 +69,21 @@ try {
     const errors = [];
     page.on('pageerror', (error) => errors.push(error.message));
 
-    // ---- Shell: the OG band (title row, then the five tabs) over the robot ----
+    // ---- Shell: main's Origins header and nav over the robot (merge with main, 2026-11-15) ----
+    // Header height and the active link in view are checked in browser-smoke.mjs; this covers every route.
     for (const [route, current] of ROUTES) {
       await page.goto(`${base}${route}`, { waitUntil: 'networkidle' });
-      assert.equal((await page.locator('.origins-head h1').innerText()).replace(/\s+/g, ' ').trim(), 'Origins Easter Egg Little Lost Girl', `${route}: OG title`);
-      assert.equal(await page.locator('.origins-head img.origins-head__revive').count(), 2, `${route}: Revive icon either side of the title`);
-      const tabs = await page.locator('.origins-plates a').evaluateAll((links) => links.map((link) => {
+      const tabs = await page.locator('.origins-nav-link').evaluateAll((links) => links.map((link) => {
         const box = link.getBoundingClientRect();
-        return { label: link.textContent.trim(), current: link.getAttribute('aria-current'), top: Math.round(box.top), left: box.left, right: box.right, width: box.width, height: box.height };
+        return { label: link.textContent.trim(), current: link.getAttribute('aria-current'), left: box.left, right: box.right };
       }));
-      assert.deepEqual(tabs.map((tab) => tab.label), TABS, `${route}: five tabs in order, no Speed Run tab`);
-      assert.deepEqual(tabs.filter((tab) => tab.current === 'page').map((tab) => tab.label), current ? [current] : [], `${route}: the current tab is marked`);
-      for (const tab of tabs) {
-        assert(tab.height >= 44, `${route}: ${tab.label} tab is ${Math.round(tab.height)}px tall`);
-        assert(tab.left >= -1 && tab.right <= width + 1, `${route}: ${tab.label} tab is clipped at ${width}px`);
-      }
-      const rows = [...new Set(tabs.map((tab) => tab.top))];
-      if (name === 'phone') {
-        // The OG phone stack: Main Guide across, then Ice | Fire, then Wind | Lightning.
-        assert.equal(rows.length, 3, `${route}: three tab rows on phones`);
-        assert(tabs[0].width > tabs[1].width * 1.8, `${route}: Main Guide spans the first row`);
-        assert.deepEqual(tabs.map((tab) => rows.indexOf(tab.top)), [0, 1, 1, 2, 2], `${route}: Ice | Fire, then Wind | Lightning`);
-      } else {
-        assert.equal(rows.length, 1, `${route}: tabs sit on one row at ${name}`);
-      }
-      const band = await page.evaluate(() => {
-        const title = document.querySelector('.origins-head h1').getBoundingClientRect();
-        const firstTab = document.querySelector('.origins-plates a').getBoundingClientRect();
-        return { gap: firstTab.top - title.bottom, robot: /Robot/.test(getComputedStyle(document.querySelector('.origins-module')).backgroundImage) };
-      });
-      assert(band.gap >= 8, `${route}: title row and tab row are ${Math.round(band.gap)}px apart`);
-      assert(band.robot, `${route}: the robot artwork is the page background`);
-      // What stays pinned under the hub bar once the page scrolls: only the tab row on desktop, nothing on phones.
-      await page.evaluate(() => window.scrollTo(0, 600));
-      const pinned = await page.evaluate(() => {
-        const hub = document.querySelector('.hub-header');
-        const hubPinned = ['fixed', 'sticky'].includes(getComputedStyle(hub).position);
-        const hubBottom = hubPinned ? hub.getBoundingClientRect().bottom : 0;
-        const top = document.querySelector('.origins-top').getBoundingClientRect();
-        return { hubPinned, visibleBand: Math.max(0, top.bottom - Math.max(hubBottom, 0)) };
-      });
-      if (name === 'landscape') assert(!pinned.hubPinned, `${route}: the hub bar scrolls away in short landscape`);
-      assert(pinned.visibleBand <= (name === 'desktop' ? 72 : 0), `${route}: ${Math.round(pinned.visibleBand)}px of the band stays pinned at ${name}`);
+      assert.deepEqual(tabs.map((tab) => tab.label), TABS, `${route}: Origins nav items in order`);
+      assert.deepEqual(tabs.filter((tab) => tab.current === 'page').map((tab) => tab.label), [current], `${route}: the current nav item is marked`);
+      const robot = await page.evaluate(() => /Robot/.test(getComputedStyle(document.querySelector('.origins-module')).backgroundImage));
+      assert(robot, `${route}: the robot artwork is the page background`);
       await assertNoHorizontalOverflow(page, `${route} at ${name}`);
     }
-    results.push(`${name}: OG title row, five tabs (${name === 'phone' ? 'phone stack 1 / 2 / 2' : 'one row'}), robot background, pinned band on every Origins route`);
-
-    // ---- Main Guide: the sequence, lean ----
-    await page.addInitScript(contrastScript);
-    await page.goto(`${base}/maps/origins`, { waitUntil: 'networkidle' });
-    const rendered = await page.locator('li.run-step').evaluateAll((items) => items.map((item) => ({ id: item.id, title: item.querySelector('h3')?.textContent.trim() })));
-    assert.deepEqual(rendered.map((item) => item.id), originsGuide.map((step) => step.id), 'Main Steps keep the 11 steps in order');
-    assert.deepEqual(rendered.map((item) => item.title), originsGuide.map((step) => step.title), 'step names match the data');
-    for (const step of originsGuide) {
-      const goal = page.locator(`#${step.id} .run-step__goal`);
-      assert(await goal.isVisible(), `${step.id}: action visible without opening anything`);
-      assert.equal((await goal.innerText()).trim(), step.goal, `${step.id}: action is the step goal`);
-      assert.equal(await page.locator(`#${step.id} .run-step__warn`).count(), step.critical?.length ?? 0, `${step.id}: one warning line per critical note`);
-    }
-    for (const id of ['build-staffs', 'upgrade-staffs']) {
-      assert.equal(await page.locator(`#${id} :is(details, .gref-stack, a, button)`).count(), 0, `${id}: one line, nothing behind it`);
-    }
-    assert.equal(await page.locator('.run-sheet__steps a[href*="-staff"]').count(), 0, 'no staff buttons or links under the Main Steps');
-    assert.equal(await page.locator('.run-step__details[open]').count(), 0, 'Details start closed');
-    const details = page.locator('#rain-fire .run-step__details');
-    await details.locator('summary').click();
-    assert.match(await details.innerText(), /lit foot/, 'Details opens the rest of the step');
-    assert((await details.locator('summary').boundingBox()).height >= 44, 'Details is a 44px target');
-    const mainText = await page.locator('main').innerText();
-    assert.equal(await page.locator('.switch-board, .staff-board').count(), 0, 'no switch board or staff board on the Main Guide');
-    assert.deepEqual(TRACKER_LABELS.filter((label) => mainText.includes(label)), [], 'no tracker-only lines on the Main Guide');
-    assert.equal(await page.locator('.origins-tips li').count(), 3, 'Tips hold the three strategy tips');
-    assert.equal(await page.locator('.origins-tips audio[aria-label]').count(), 2, 'Tips keep both named audio clips');
-    assert.equal(await page.getByRole('button', { name: 'I completed this Easter Egg' }).count(), 1, 'completion action present');
-    const speed = page.locator('a.origins-speedrun:visible');
-    assert.equal(await speed.count(), 1, 'one visible Speed Run link');
-    const order = await page.evaluate(() => {
-      const top = (selector) => [...document.querySelectorAll(selector)].find((el) => el.checkVisibility()).getBoundingClientRect();
-      return { steps: top('.origins-steps'), speed: top('a.origins-speedrun'), tips: top('.origins-tips') };
-    });
-    // Every size reads Main Steps, then Speed Run, then Tips; on desktop the map has the column beside them.
-    assert(order.steps.bottom <= order.speed.top && order.speed.bottom <= order.tips.top, `${name}: Main Steps, then Speed Run, then Tips`);
-
-    // The quest's shape: eight numbered steps, the three builds as unnumbered prep naming the step they unlock.
-    const marks = await page.locator('li.run-step').evaluateAll((items) => items.map((item) => ({
-      id: item.id,
-      quest: item.classList.contains('run-step--quest'),
-      number: item.querySelector('.run-step__mark').textContent.trim(),
-      forStep: item.querySelector('.run-step__for')?.textContent.trim() ?? null,
-    })));
-    assert.deepEqual(marks.filter((mark) => mark.quest).map((mark) => mark.number), ['1', '2', '3', '4', '5', '6', '7', '8'], 'quest steps numbered 1-8');
-    assert.deepEqual(marks.filter((mark) => !mark.quest).map((mark) => [mark.id, mark.forStep]),
-      [['build-staffs', 'Needed for step 1'], ['thunder-fists', 'Needed for step 6'], ['g-strike', 'Needed for step 3']], 'prep steps name the step they unlock');
-
-    // The map: one Map button per step that happens somewhere; beside the steps on desktop, inside the step below it.
-    const mapIds = Object.keys(stepPlaces);
-    assert.deepEqual(await page.locator('.run-step__map').evaluateAll((buttons) => buttons.map((b) => b.closest('li').id)), originsGuide.map((s) => s.id).filter((id) => mapIds.includes(id)), 'Map buttons on the located steps');
-    const mapButton = page.locator('#thunder-fists .run-step__map');
-    assert((await mapButton.boundingBox()).height >= 44, 'Map is a 44px target');
-    if (name === 'desktop') {
-      assert.equal(await page.locator('.origins-guide__map .omap__pins .omap__pin').count(), 0, 'desktop map starts as the overview');
-      const side = await page.locator('.origins-guide__map').boundingBox();
-      assert(side.x >= order.steps.right, 'desktop: the map sits beside the steps');
-      await mapButton.click();
-      assert.equal(await mapButton.getAttribute('aria-pressed'), 'true', 'Map button shows it is on');
-      assert.equal(await mapButton.getAttribute('aria-controls'), 'origins-map', 'Map button points at the side map');
-      assert.equal(await page.locator('#origins-map h2').getAttribute('aria-live'), 'polite', 'the side map announces the step it now shows');
-      assert.equal(await page.locator('.origins-guide__map h2').innerText(), 'Thunder Fists', 'the side map names its step');
-      assert.equal(await page.locator('.origins-guide__map .omap__pins .omap__pin').count(), stepPlaces['thunder-fists'].pins.length, 'one pin per soul chest and the reward box');
-      assert.equal(await page.locator('.origins-guide__map .omap__key li').count(), stepPlaces['thunder-fists'].pins.length, 'every pin is in the key, in words');
-      assert.equal(await page.locator('.run-step__inline-map').count(), 0, 'desktop never opens a map inside a step');
-      // Every view, with the page scrolled: the side map's title clears the pinned hub bar and tab row, and
-      // the whole panel (sketch and key) fits the screen without scrolling inside itself.
-      for (const id of mapIds) {
-        const button = page.locator(`#${id} .run-step__map`);
-        if ((await button.getAttribute('aria-pressed')) !== 'true') await button.click();
-        await page.evaluate(() => window.scrollTo(0, 900));
-        const side = await pinnedPanel(page, '.origins-guide__map');
-        assert(side.sticky && side.heading >= side.pinned, `${id}: side map title at ${Math.round(side.heading)}px, under ${Math.round(side.pinned)}px of pinned chrome`);
-        assert(side.bottom <= height && side.inner <= 1, `${id}: side map runs to ${Math.round(side.bottom)}px (${side.inner}px hidden inside) on a ${height}px screen`);
-        if (stepPlaces[id].layers?.includes('robots')) assert.deepEqual(await robotLabelClashes(page, '.origins-guide__map figure'), [], `${id}: robot names covered`);
-      }
-      await page.locator(`#${mapIds.at(-1)} .run-step__map`).click();
-    } else {
-      assert.equal(await page.locator('.origins-guide__map').count(), 0, `${name}: no side map`);
-      // Below the wide layout the Map button is a disclosure for the map it opens inside its step.
-      assert.equal(await mapButton.getAttribute('aria-expanded'), 'false', `${name}: Map starts collapsed`);
-      assert.equal(await mapButton.getAttribute('aria-pressed'), null, `${name}: Map is a disclosure, not a toggle`);
-      const fill = () => mapButton.evaluate((button) => getComputedStyle(button).backgroundColor);
-      const offFill = await fill();
-      await mapButton.click();
-      const inline = page.locator('#thunder-fists .run-step__inline-map');
-      assert.equal(await mapButton.getAttribute('aria-expanded'), 'true', `${name}: Map says it is open`);
-      assert.notEqual(await fill(), offFill, `${name}: an open Map button looks on`);
-      assert.equal(await inline.getAttribute('id'), await mapButton.getAttribute('aria-controls'), `${name}: Map controls the map it opened`);
-      assert.equal(await inline.locator('.omap__pins .omap__pin').count(), stepPlaces['thunder-fists'].pins.length, `${name}: the map opens inside the step with its pins`);
-      const box = await inline.locator('svg.omap__svg').boundingBox();
-      assert(box.width >= Math.min(width, 900) * 0.3 && box.height <= height, `${name}: the sketch fits the screen (${Math.round(box.width)}×${Math.round(box.height)})`);
-      await assertNoHorizontalOverflow(page, `Main Guide with a map open at ${name}`);
-      await mapButton.click();
-      assert.equal(await page.locator('.run-step__inline-map').count(), 0, `${name}: Map again closes it`);
-      // The map opens at the end of its step: pressed from low on the screen, it is brought fully into view
-      // (on a landscape phone most of them opened below the fold), clear of the pinned hub bar.
-      for (const id of mapIds) {
-        const button = page.locator(`#${id} .run-step__map`);
-        await button.evaluate((el) => el.scrollIntoView({ block: 'end', behavior: 'instant' }));
-        await button.click();
-        await settle(page);
-        const seen = await page.evaluate((mapId) => {
-          const hub = document.querySelector('.hub-header');
-          const pinned = ['fixed', 'sticky'].includes(getComputedStyle(hub).position) ? Math.max(0, hub.getBoundingClientRect().bottom) : 0;
-          const box = document.getElementById(mapId).getBoundingClientRect();
-          return { pinned, top: box.top, bottom: box.bottom };
-        }, `map-${id}`);
-        assert(seen.top >= seen.pinned - 1 && seen.bottom <= height + 1, `${name} ${id}: the opened map sits at ${Math.round(seen.top)}–${Math.round(seen.bottom)}px on a ${height}px screen (pinned bar ${Math.round(seen.pinned)}px)`);
-        await button.click();
-      }
-      for (const id of mapIds.filter((step) => stepPlaces[step].layers?.includes('robots'))) {
-        const button = page.locator(`#${id} .run-step__map`);
-        await button.click();
-        assert.deepEqual(await robotLabelClashes(page, `#${id} .run-step__inline-map`), [], `${name} ${id}: robot names covered`);
-        await button.click();
-      }
-    }
-
-    const type = await page.evaluate(() => {
-      const goal = getComputedStyle(document.querySelector('.run-step__goal'));
-      const warn = getComputedStyle(document.querySelector('.run-step__warn'));
-      const panel = 'rgb(4, 15, 27)';
-      return { size: parseFloat(goal.fontSize), goal: window.__contrast(goal.color, panel), warn: window.__contrast(warn.color, panel) };
-    });
-    assert(type.size >= 16, `actions are ${type.size}px`);
-    assert(type.goal >= 4.5 && type.warn >= 4.5, `contrast action ${type.goal.toFixed(2)} / warning ${type.warn.toFixed(2)}`);
-    if (name === 'desktop') {
-      const reading = await page.locator('.origins-steps').evaluate((el) => el.getBoundingClientRect().width);
-      assert(reading >= 640, `Main Steps keep ${Math.round(reading)}px of reading width`);
-    }
-    results.push(`${name}: Main Steps (quest numbers, prep, lean staff steps, warnings, closed Details), the map, Tips, Speed Run placement, type and contrast`);
+    results.push(`${name}: Origins nav in order with the current item marked, robot background, no overflow on every Origins route`);
 
     // ---- Speed Run: a way back to the Main Guide ----
     // The switch strip is named for screen readers, and its demo link is a full tap target.
@@ -411,22 +235,7 @@ try {
     assert.equal(await page.getByRole('button', { name: /Electrical Panel/ }).count(), 1, 'Electrical Panel present');
     const switchesTop = await page.locator('#switches').evaluate((el) => el.getBoundingClientRect().top);
     assert(switchesTop >= 0 && switchesTop < height * 0.6, `#switches deep link lands near the top (${Math.round(switchesTop)}px)`);
-    if (name === 'landscape') {
-      // Nothing is pinned at 844x390, so a deep link should land near the very top.
-      await page.goto(`${base}/maps/origins#rain-fire`, { waitUntil: 'networkidle' });
-      await page.waitForTimeout(150);
-      const top = await page.locator('#rain-fire').evaluate((el) => el.getBoundingClientRect().top);
-      assert(top >= 0 && top <= 32, `landscape #rain-fire lands at ${Math.round(top)}px`);
-    } else {
-      // Deep links land clear of whatever is pinned (the hub bar, plus the tab row on desktop).
-      await page.goto(`${base}/maps/origins#rain-fire`, { waitUntil: 'networkidle' });
-      await page.waitForTimeout(150);
-      const landing = await page.evaluate(() => {
-        const pinned = Math.max(...[...document.querySelectorAll('.hub-header, .origins-plates')].map((el) => el.getBoundingClientRect().bottom).filter((bottom) => bottom > 0), 0);
-        return { top: document.getElementById('rain-fire').getBoundingClientRect().top, pinned };
-      });
-      assert(landing.top >= landing.pinned && landing.top <= landing.pinned + 48, `#rain-fire lands at ${Math.round(landing.top)}px under ${Math.round(landing.pinned)}px of chrome`);
-    }
+    // Main Guide deep links (#rain-fire) are main's page now; guide-sequence-browser-smoke.mjs checks its landing.
     results.push(`${name}: four staff pages — order, every line, the staff map, zoomable chart, ring reference, Ice order rules, Lightning tools`);
 
     assert.deepEqual(errors, [], `${name}: page errors: ${errors.join('; ')}`);
@@ -463,20 +272,14 @@ try {
       await page.goto(`${base}/maps/origins/${staff}-staff`, { waitUntil: 'networkidle' });
       const fit = await page.evaluate(() => {
         const side = document.querySelector('.staff-page__side');
-        const pinned = document.querySelector('.hub-header').offsetHeight + document.querySelector('.origins-plates').offsetHeight;
+        const pinned = Math.max(0, ...[...document.querySelectorAll('.hub-header, .origins-map-header')]
+          .filter((el) => ['fixed', 'sticky'].includes(getComputedStyle(el).position))
+          .map((el) => el.getBoundingClientRect().bottom));
         return { sticky: getComputedStyle(side).position === 'sticky', height: side.offsetHeight, room: window.innerHeight - pinned - 20 };
       });
       assert(!fit.sticky || fit.height <= fit.room, `${staff}: pinned Upgrade (${fit.height}px) is taller than the room (${fit.room}px) at 1280x720`);
     }
-    // The Main Guide's side map, on its longest key: clear of the pinned chrome and never cut off at the
-    // bottom (on a screen this short it may scroll inside itself instead).
-    await page.goto(`${base}/maps/origins`, { waitUntil: 'networkidle' });
-    await page.locator('#thunder-fists .run-step__map').click();
-    await page.evaluate(() => window.scrollTo(0, 900));
-    const side = await pinnedPanel(page, '.origins-guide__map');
-    assert(side.sticky && side.heading >= side.pinned, `1280x720: side map title at ${Math.round(side.heading)}px, under ${Math.round(side.pinned)}px of chrome`);
-    assert(side.bottom <= 720, `1280x720: side map runs to ${Math.round(side.bottom)}px`);
-    results.push('1280x720: Upgrade columns are only pinned when they fit; the side map fits under the pinned chrome');
+    results.push('1280x720: Upgrade columns are only pinned when they fit');
     await context.close();
   }
 } finally {

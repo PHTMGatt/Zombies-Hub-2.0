@@ -99,18 +99,24 @@ function WarningRef({ text }) {
 // Arrow keys walk the tabs (wrapping), Home / End jump to the ends; the tab under focus is selected.
 const TAB_MOVES = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 };
 
-function TabsRef({ label, tabs, activeTab, onTab }) {
-  const [localTab, setLocalTab] = useState(tabs[0]?.id);
+// Tabs: one panel at a time, WAI-ARIA tabs pattern. Collapsible (Origins compact guide): each button
+// opens or closes its own reference, so they are disclosure buttons rather than tabs.
+function TabsRef({ label, tabs, activeTab, onTab, collapsible = false }) {
+  const [localTab, setLocalTab] = useState(collapsible ? null : tabs[0]?.id);
   const base = useId();
   const listRef = useRef(null);
-  const selected = activeTab ?? localTab;
-  const tab = tabs.find((item) => item.id === selected) ?? tabs[0];
-  const choose = (id) => (onTab ? onTab(id) : setLocalTab(id));
+  const selected = onTab ? activeTab : localTab;
+  const tab = tabs.find((item) => item.id === selected) ?? (collapsible ? null : tabs[0]);
+  const choose = (id) => {
+    const next = collapsible && selected === id ? null : id;
+    return onTab ? onTab(next) : setLocalTab(next);
+  };
   const tabId = (item) => `${base}-tab-${item.id}`;
   const panelId = `${base}-panel`;
 
   // One tab stop for the row (the selected tab), as the tabs pattern expects.
   const onKey = (event) => {
+    if (collapsible) return;
     const index = tabs.indexOf(tab);
     const target = event.key === 'Home' ? 0
       : event.key === 'End' ? tabs.length - 1
@@ -123,16 +129,15 @@ function TabsRef({ label, tabs, activeTab, onTab }) {
 
   return (
     <div className="gref gref--tabs">
-      <div className="gref-tabs" role="tablist" aria-label={label ?? 'Variants'} ref={listRef} onKeyDown={onKey}>
+      <div className="gref-tabs" role={collapsible ? 'group' : 'tablist'} aria-label={label ?? 'Variants'} ref={listRef} onKeyDown={onKey}>
         {tabs.map((item) => (
           <button
             key={item.id}
             id={tabId(item)}
             type="button"
-            role="tab"
-            aria-selected={item.id === tab.id}
-            aria-controls={panelId}
-            tabIndex={item.id === tab.id ? 0 : -1}
+            {...(collapsible
+              ? { 'aria-expanded': item.id === tab?.id, 'aria-controls': item.id === tab?.id ? panelId : undefined }
+              : { role: 'tab', 'aria-selected': item.id === tab?.id, 'aria-controls': panelId, tabIndex: item.id === tab?.id ? 0 : -1 })}
             className="gref-tabs__tab"
             style={item.tone ? { '--gref-tone': item.tone } : undefined}
             onClick={() => choose(item.id)}
@@ -141,9 +146,16 @@ function TabsRef({ label, tabs, activeTab, onTab }) {
           </button>
         ))}
       </div>
-      <div className="gref-tabs__panel" role="tabpanel" id={panelId} aria-labelledby={tabId(tab)} style={tab.tone ? { '--gref-tone': tab.tone } : undefined}>
-        <GuideReferences refs={tab.refs} />
-      </div>
+      {tab && (
+        <div
+          className="gref-tabs__panel"
+          id={panelId}
+          {...(collapsible ? { role: 'region', 'aria-label': `${tab.label} reference` } : { role: 'tabpanel', 'aria-labelledby': tabId(tab) })}
+          style={tab.tone ? { '--gref-tone': tab.tone } : undefined}
+        >
+          <GuideReferences refs={tab.refs} />
+        </div>
+      )}
     </div>
   );
 }
@@ -158,7 +170,7 @@ const RENDERERS = {
   tabs: TabsRef,
 };
 
-export default function GuideReferences({ refs = [], tabState }) {
+export default function GuideReferences({ refs = [], tabState, collapsibleTabs = false }) {
   return (
     <div className="gref-stack">
       {refs.map((ref, index) => {
@@ -166,7 +178,7 @@ export default function GuideReferences({ refs = [], tabState }) {
         if (ref.type === 'custom') return <div className="gref gref--custom" key={key}>{ref.render()}</div>;
         const Renderer = RENDERERS[ref.type];
         if (!Renderer) return null;
-        const extra = ref.type === 'tabs' && tabState ? { activeTab: tabState.value, onTab: tabState.set } : {};
+        const extra = ref.type === 'tabs' ? { ...(tabState ? { activeTab: tabState.value, onTab: tabState.set } : {}), collapsible: collapsibleTabs } : {};
         return <Renderer key={key} {...ref} {...extra} />;
       })}
     </div>
