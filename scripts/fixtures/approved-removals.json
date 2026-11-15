@@ -1842,5 +1842,23 @@
     ],
     "reason": "Speed Run is no longer an Origins tab; it is linked from the Main Guide (and from the Lightning switch board).",
     "spec": "§8, §21 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "TheRealGamer",
+    "layer": "rendered",
+    "routes": [
+      "/maps/der-eisendrache/bows/fire"
+    ],
+    "reason": "Wrong credit, corrected to \"SBZ vSylent\": the Fire Bow video 2lA6-UH6Qjo is \"DER EISENDRACHE - FIRE BOW FAST GUIDE W/ SHORTCUTS\" by SBZ vSylent (YouTube oEmbed). Changed in ce49bb8.",
+    "spec": "audit:zombies:2026-11-14 other-maps-audit.md Der Eisendrache #1; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Fill the egg with dragon-fire zombie kills, penetration kills, and shield kills.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/gorod-krovi/buildables"
+    ],
+    "reason": "Wrong trials, corrected to \"Napalm Zombie kills, penetration multi-kills, then melee kills\", in that order, matching the guide's own run sheet (Call of Duty Wiki: Gauntlet of Siegfried; Gameranx). Changed in ce49bb8.",
+    "spec": "audit:zombies:2026-11-14 other-maps-audit.md Gorod Krovi #2; protected change approved by Bryen 2026-11-14"
   }
 ]
