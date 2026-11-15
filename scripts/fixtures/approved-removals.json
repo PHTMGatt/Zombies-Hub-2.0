@@ -2055,5 +2055,50 @@
     "layer": "data",
     "reason": "Solo-only count, extended with \"(one more per wave in co-op)\" (Call of Duty Wiki: For The Good Of All step 7). Nothing else in the line changed.",
     "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Revelations #9; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Verrückt / Shangri-La Stairs",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/apothicon-upgrade"
+    ],
+    "reason": "Wrong pairing, corrected: the Shangri-La staircase is the second place to hit the Der Eisendrache rock, so clip 2 is now \"Der Eisendrache / Shangri-La Stairs\" and clip 3 \"Verrückt\" (Call of Duty Wiki: Apothicon Servant).",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Revelations #5; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Verruckt",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/egg-locations"
+    ],
+    "reason": "Spelling, corrected to \"Verrückt\" with its umlaut, as every other page of the guide writes it.",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Revelations #11; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Buckets Near Wonderfizz Machine",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/egg-locations"
+    ],
+    "reason": "Spelling, corrected to \"Wunderfizz\" (Call of Duty Wiki: Der Wunderfizz). The two other \"Wonderfizz\" spots on this page were corrected the same way.",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Revelations #11; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Seven throws, in order. Tap the target you need and jump straight to that throw.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/summoning-key"
+    ],
+    "reason": "Wrong rule, corrected to \"Seven throws, any order. Leave Nacht for last.\": the targets can be hit in any order; only the Nacht portal must wait until the red barrel is the last target (Call of Duty Wiki step 8; Gameranx).",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Revelations #6; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Throw order",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/summoning-key"
+    ],
+    "reason": "Wrong rule implied, corrected to \"Suggested order\": the listed order works but is not required (Call of Duty Wiki step 8; Gameranx).",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Revelations #6; protected change approved by Bryen 2026-11-14"
   }
 ]

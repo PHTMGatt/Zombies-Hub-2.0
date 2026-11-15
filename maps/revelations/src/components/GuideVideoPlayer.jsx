@@ -2,9 +2,14 @@ import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } f
 import YouTube from 'react-youtube';
 import { formatTime } from './RevOptionList';
 
+// Every hunt page plays clips of one video: CodeNamePizza's "REVELATIONS EASTER EGG GUIDE [2022]"
+// (YouTube oEmbed, 2026-11-14 audit). The credit is on the YouTube link's name and tooltip; a visible
+// credit line is a look change and waits for Bryen's approval.
+const GUIDE_VIDEO = { id: 'tt3mpH7Rrfo', author: 'CodeNamePizza' };
+
 const GuideVideoPlayer = forwardRef(function GuideVideoPlayer(
   {
-    videoId = 'tt3mpH7Rrfo',
+    videoId = GUIDE_VIDEO.id,
     title = 'Revelations guide video',
     caption = 'Choose a section to jump directly to that part of the guide.',
     nowPlaying = null,
@@ -81,6 +86,7 @@ const GuideVideoPlayer = forwardRef(function GuideVideoPlayer(
     },
   };
 
+  const credited = videoId === GUIDE_VIDEO.id;
   const youtubeHref = `https://www.youtube.com/watch?v=${encodeURIComponent(videoId)}&t=${Math.floor(selectedStart)}s`;
 
   return (
@@ -125,7 +131,8 @@ const GuideVideoPlayer = forwardRef(function GuideVideoPlayer(
           href={youtubeHref}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label={`Watch ${selectedStart ? 'the selected timestamp' : 'the guide'} on YouTube`}
+          aria-label={`Watch ${selectedStart ? 'the selected timestamp' : credited ? `${GUIDE_VIDEO.author}’s guide` : 'the guide'} on YouTube`}
+          title={credited ? `Video: ${GUIDE_VIDEO.author}` : undefined}
         >
           {selectedStart ? `YouTube at ${formatTime(selectedStart)}` : 'Open on YouTube'} <span aria-hidden="true">↗</span>
         </a>

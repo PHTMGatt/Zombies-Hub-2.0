@@ -21,7 +21,7 @@ export const STEP_ISLANDS = {
 export const EGG_ISLANDS = {
   'Kino der Toten / Der Eisendrache': ['kino', 'de'],
   'Spawn / Shangri-La': ['spawn', 'shang'],
-  Verruckt: ['verruckt'],
+  Verrückt: ['verruckt'],
   'Mob of the Dead / Origins': ['mob', 'origins'],
 };
 
