@@ -60,7 +60,7 @@ const T = {
   KEEPER: 'Keeper Protector + Required Weapons',
   SERVANT: 'Upgrade the Apothicon Servant',
   REEL1: 'Audio Reel 1 — Keeper Ritual',
-  REEL2: 'Audio Reel 2 — Little Arnie Holes',
+  REEL2: 'Audio Reel 2 — Li’l Arnie Holes',
   REEL3: 'Audio Reel 3 — Six Bones',
   SOPHIA: 'Materialize S.O.P.H.I.A.',
   EGGS: 'Kronorium + Four Eggs',
@@ -89,12 +89,12 @@ const revGuideSteps = [
   {
     id: 'keeper',
     title: 'Keeper parts + weapons',
-    goal: 'Collect the three Keeper Protector parts. Make sure the run has Little Arnies and the Apothicon Servant.',
+    goal: 'Collect the three Keeper Protector parts. Make sure the run has Li’l Arnies and the Apothicon Servant.',
     tasks: [
       { id: 'gem', label: 'Gemstone' },
       { id: 'head', label: 'Keeper head' },
       { id: 'flag', label: 'Flag' },
-      { id: 'arnies', label: 'Little Arnies' },
+      { id: 'arnies', label: 'Li’l Arnies' },
       { id: 'servant', label: 'Apothicon Servant' },
     ],
     how: how(T.KEEPER),
@@ -128,7 +128,7 @@ const revGuideSteps = [
   {
     id: 'reel-1',
     title: 'Reel 1 — Keeper ritual',
-    goal: 'Find the triangular ritual rock, bring the Keeper to it, protect it for three minutes, take the reel to Nacht’s radio.',
+    goal: 'Find the triangular ritual rock, crouch on it while the jump pad is off so the Keeper starts the ritual, protect the Keeper for three minutes, take the reel to Nacht’s radio.',
     refs: [{ type: 'chips', label: 'Triangle rock: one of', items: ['Shangri-La', 'Mob of the Dead', 'Verrückt'] }],
     tasks: [
       { id: 'ritual', label: 'Keeper protected (3 min)' },
@@ -139,7 +139,7 @@ const revGuideSteps = [
   {
     id: 'reel-2',
     title: 'Reel 2 — Arnie holes',
-    goal: 'In the Apothicon, throw Little Arnies into all nine wall holes, never the same one twice. Kill the Margwas after each three.',
+    goal: 'In the Apothicon, throw Li’l Arnies into all nine wall holes, never the same one twice. Kill the Margwas after each three.',
     tasks: [
       { id: 'set1', label: 'Holes 1–3 + Margwas' },
       { id: 'set2', label: 'Holes 4–6 + Margwas' },
@@ -179,7 +179,7 @@ const revGuideSteps = [
   {
     id: 'sophia',
     title: 'Materialize S.O.P.H.I.A.',
-    goal: 'At each Corruption Engine, hit the blue rock behind its rift with the laser turret. Then activate S.O.P.H.I.A. at Nacht.',
+    goal: 'At each Corruption Engine, hit the left of the two blue rocks above it with the laser turret (left as you face the Nacht portal). Then activate S.O.P.H.I.A. at Nacht.',
     critical: [line(T.SOPHIA, /kicks you off/)],
     refs: [{ type: 'image', src: turretBeam, alt: 'Laser turret firing at the blue rock behind a rift', caption: 'Turret shot', ...IMG }],
     tasks: [
@@ -194,10 +194,10 @@ const revGuideSteps = [
   {
     id: 'eggs',
     title: 'Kronorium + four eggs',
-    goal: 'Get the Kronorium from Samantha’s bed, place it on the Kino altar, then hatch all four eggs in the Apothicon’s nests.',
+    goal: 'Get the Kronorium from Samantha’s bed, place it on the podium on the Kino stage, then hatch all four eggs in the Apothicon’s nests.',
     refs: [{ type: 'sequence', label: 'Each egg', items: ['Into a yellow nest / pustule', '10 zombie souls', 'Gateworm'] }],
     tasks: [
-      { id: 'book', label: 'Kronorium on the altar' },
+      { id: 'book', label: 'Kronorium on the stage podium' },
       { id: 'e1', label: 'Gateworm 1' },
       { id: 'e2', label: 'Gateworm 2' },
       { id: 'e3', label: 'Gateworm 3' },

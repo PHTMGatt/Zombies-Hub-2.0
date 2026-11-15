@@ -1959,5 +1959,101 @@
     ],
     "reason": "Creator not credited, reworded: the hildaless demo is Aiden Ross's video (YouTube oEmbed). Nothing else in the line changed.",
     "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Origins #12; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Collect the three Keeper Protector parts. Make sure the run has Little Arnies and the Apothicon Servant.",
+    "layer": "data",
+    "reason": "Wrong item name, corrected to the in-game name \"Li’l Arnies\" (Call of Duty Wiki: Li'l Arnie). Nothing else in the line changed.",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Revelations #11; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Little Arnies",
+    "layer": "data",
+    "reason": "Wrong item name, corrected to the in-game name \"Li’l Arnies\" (Call of Duty Wiki: Li'l Arnie).",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Revelations #11; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Collect the three Keeper Protector parts and make sure the run has Little Arnies plus the Apothicon Servant. Build the Keeper at Verrückt, Kino, or Der Eisendrache for 5,000 points when the ritual step is ready.",
+    "layer": "data",
+    "reason": "Incomplete, reworded: there are four altar spots (Origins was missing), the altar is built and the Keeper is then summoned for 5,000 points (Call of Duty Wiki: Keeper Protector; Accelerated Ideas); \"Little Arnies\" is \"Li’l Arnies\" in game.",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Revelations #7 and #11; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Little Arnies are required for the nine-hole step.",
+    "layer": "data",
+    "reason": "Wrong item name, corrected to the in-game name \"Li’l Arnies\" (Call of Duty Wiki: Li'l Arnie). Nothing else in the line changed.",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Revelations #11; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Find the triangular ritual rock, bring the Keeper to it, protect it for three minutes, take the reel to Nacht’s radio.",
+    "layer": "data",
+    "reason": "Missing action, reworded: the ritual starts when the player crouches on the triangle stone while the jump pad is off, not by bringing the Keeper close (Call of Duty Wiki: For The Good Of All, reel 1).",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Revelations #1; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Find the triangular ritual rock on one of the three possible jump pads, summon the Keeper Protector, and bring it close enough to begin the ritual. Protect it for three full minutes.",
+    "layer": "data",
+    "reason": "Missing action, reworded: the ritual starts when the player crouches on the triangle stone at the back of the switched-off jump pad (Call of Duty Wiki: For The Good Of All, reel 1). Every other fact in the line is kept.",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Revelations #1; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "The Keeper starts the ritual by standing close to the triangular rock.",
+    "layer": "data",
+    "reason": "Wrong trigger, replaced: the Keeper does not start the ritual by standing close; the player crouches on the stone (now in the step's first line) and steps off before the pad switches back on (Call of Duty Wiki: For The Good Of All, reel 1).",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Revelations #1; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "In the Apothicon, throw Little Arnies into all nine wall holes, never the same one twice. Kill the Margwas after each three.",
+    "layer": "data",
+    "reason": "Wrong item name, corrected to the in-game name \"Li’l Arnies\" (Call of Duty Wiki: Li'l Arnie). Nothing else in the line changed.",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Revelations #11; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Inside the Giant Apothicon, throw Little Arnies into all nine wall holes without repeating one. Every set of three holes spawns three Margwas.",
+    "layer": "data",
+    "reason": "Wrong item name, corrected to the in-game name \"Li’l Arnies\" (Call of Duty Wiki: Li'l Arnie). Nothing else in the line changed.",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Revelations #11; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "At each Corruption Engine, hit the blue rock behind its rift with the laser turret. Then activate S.O.P.H.I.A. at Nacht.",
+    "layer": "data",
+    "reason": "Wrong target implied, reworded: two blue rocks float above each engine and only the left one (facing the Nacht portal from the turret) counts (Call of Duty Wiki: For The Good Of All step 3; Accelerated Ideas agrees only one rock works).",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Revelations #3; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Use the laser turret at each Corruption Engine to hit the blue rock behind its teleporting rift. Once all four are complete, return to Nacht and activate S.O.P.H.I.A.",
+    "layer": "data",
+    "reason": "Wrong target implied, reworded: two blue rocks float above each engine and only the left one (facing the Nacht portal from the turret) counts; sweep the laser over it until the turret kicks you off (Call of Duty Wiki: For The Good Of All step 3).",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Revelations #3; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Get the Kronorium from Samantha’s bed, place it on the Kino altar, then hatch all four eggs in the Apothicon’s nests.",
+    "layer": "data",
+    "reason": "Wrong object, corrected to \"the podium on the Kino stage\": Kino also has a Keeper Summoning Altar, so \"altar\" pointed at the wrong thing (Call of Duty Wiki step 4; Accelerated Ideas; Gameranx).",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Revelations #2; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Kronorium on the altar",
+    "layer": "data",
+    "reason": "Wrong object, corrected to \"Kronorium on the stage podium\": Kino also has a Keeper Summoning Altar (Call of Duty Wiki step 4; Accelerated Ideas; Gameranx).",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Revelations #2; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Follow S.O.P.H.I.A. to the Kino teleporter, enter Samantha’s room, collect the book from the bed, and place it on the Kino altar. Four eggs now spawn around the map.",
+    "layer": "data",
+    "reason": "Wrong object, corrected to \"the podium on the Kino stage\": Kino also has a Keeper Summoning Altar (Call of Duty Wiki step 4; Accelerated Ideas; Gameranx). Nothing else in the line changed.",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Revelations #2; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Have all players stand on the purple rift / circle in the Kino projector room to enter the boss arena. Interact with the Kronorium, memorize the randomized four-symbol order it shows, enter that same order at the back of the room, then survive four sets of two Margwas.",
+    "layer": "data",
+    "reason": "Solo-only count, extended with \"(one more per wave in co-op)\" (Call of Duty Wiki: For The Good Of All step 7). Nothing else in the line changed.",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Revelations #9; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Clear four Margwa waves with two Margwas per wave to spawn the Summoning Key.",
+    "layer": "data",
+    "reason": "Solo-only count, extended with \"(one more per wave in co-op)\" (Call of Duty Wiki: For The Good Of All step 7). Nothing else in the line changed.",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Revelations #9; protected change approved by Bryen 2026-11-14"
   }
 ]
