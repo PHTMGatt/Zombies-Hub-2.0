@@ -30,6 +30,8 @@ const originsGuide = [
     id: 'secure-keys',
     title: 'Ascend from Darkness',
     goal: 'Put each upgraded staff in its robot, and Fire in the mound pedestal.',
+    // 2026-11-15, audit Origins #4 (Wiki, Little Lost Girl step 2 note).
+    critical: ['All six generators must be on when the last staff goes in, or the staffs stay locked in their holders. Retake any generator the Templars took first.'],
     refs: [
       { type: 'facts', label: 'Staff → place', items: [
         { k: 'Wind', v: 'Odin · middle robot', tone: TONE.wind },
@@ -79,11 +81,12 @@ const originsGuide = [
     // goal and the always-shown warning no longer ask a solo player to be in two places at once.
     goal: 'Press the red button in a robot’s head, then land a G-Strike on the seal behind Generator 5 straight away.',
     refs: [
-      { type: 'sequence', items: ['Middle robot · open foot', 'Red button', 'G-Strike the seal at Gen 5'] },
+      // 2026-11-15, origins-open-facts.md #4: the way in is the one lit foot, shot open; Odin is the solo route only.
+      { type: 'sequence', items: ['A robot’s lit foot (solo: Odin)', 'Red button', 'G-Strike the seal at Gen 5'] },
     ],
     critical: ['The G-Strike must land right after the press: in co-op, have the thrower waiting at the seal; solo, use Odin, then drop out, run and throw. A miss wastes the G-Strike.'],
     how: [
-      'Enter the middle robot through an open foot and press the red button.',
+      'Shoot open the lit foot of a robot and let it step on you (solo: Odin, the Stamin-Up-side footprint is easiest), then press the red button.',
       'Immediately throw a G-Strike onto the seal by Generator 5.',
     ],
     problems: [
@@ -104,9 +107,11 @@ const originsGuide = [
   {
     id: 'winged-beast',
     title: 'Skewer the Winged Beast',
-    goal: 'In Zombie Blood, shoot down the glowing red plane and kill the invisible pilot.',
+    // 2026-11-15, origins-open-facts.md #2 and audit Origins #5, #7: the plane glows yellow (Wiki; not
+    // frame-checked), and the Maxis Drone that went into the pit in step 4 only comes back from the pilot.
+    goal: 'In Zombie Blood, shoot down the plane glowing yellow, kill the invisible pilot, then pick up the Maxis Drone the pilot drops.',
     refs: [
-      { type: 'sequence', items: ['Zombie Blood', 'Shoot the red plane', 'Kill the pilot'] },
+      { type: 'sequence', items: ['Zombie Blood', 'Shoot the glowing plane', 'Kill the pilot', 'Take the drone'] },
       { type: 'facts', items: [{ k: 'Pilot', v: 'Invisible · runs clockwise · stay in Zombie Blood' }] },
     ],
     problems: ['No Zombie Blood from the Panzers? The Ice Staff bonfire method can produce a free one near Pack-a-Punch.'],

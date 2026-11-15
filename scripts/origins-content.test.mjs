@@ -43,6 +43,15 @@ test('the Main Guide carries the canonical Easter Egg names in order', () => {
   assert.deepEqual(titles.filter((title) => canonical.includes(title)), canonical);
 });
 
+// 2026-11-15 accuracy audit (origins-open-facts.md #2 and #4, audit Origins #4, #5, #7).
+test('Rain Fire, the winged beast and the staff placement follow the audited facts', () => {
+  assert(strings.includes('A robot’s lit foot (solo: Odin)'), 'Rain Fire names the lit foot, with Odin as the solo route');
+  assert.doesNotMatch(strings.join(' | '), /red plane|Middle robot · open foot/i);
+  assert.match(step('winged-beast').goal, /plane glowing yellow/);
+  assert.match(step('winged-beast').goal, /Maxis Drone the pilot drops/);
+  assert.match(step('secure-keys').critical.join(' '), /All six generators must be on when the last staff goes in/);
+});
+
 test('the two staff steps are one line each, with no staff how-to behind them', () => {
   assert.equal(step('build-staffs').goal, 'Build all four elemental staffs before continuing.');
   assert.equal(step('upgrade-staffs').goal, 'Upgrade all four staffs before continuing.');

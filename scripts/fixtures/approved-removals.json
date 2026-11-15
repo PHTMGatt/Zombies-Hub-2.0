@@ -1914,5 +1914,29 @@
     ],
     "reason": "Page and map pin disagreed, both now use the Wiki wording: \"jump right onto the cut-off wooden stairs before the trench to Generator 2\" (Call of Duty Wiki: Staff of Lightning).",
     "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Origins #11; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Middle robot · open foot",
+    "layer": "data",
+    "reason": "Solo-only route stated as the only one, corrected to \"A robot’s lit foot (solo: Odin)\": any robot works in co-op and the way in is the one lit foot (Call of Duty Wiki: Little Lost Girl step 3, Giant Robot).",
+    "spec": "audit:zombies:2026-11-14 origins-open-facts.md #4, origins-revelations-audit.md Origins #6; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Enter the middle robot through an open foot and press the red button.",
+    "layer": "data",
+    "reason": "Solo-only route and no way in stated, reworded: shoot open the lit foot of any robot and get stepped on; Odin is the solo route (Call of Duty Wiki: Little Lost Girl step 3, Giant Robot).",
+    "spec": "audit:zombies:2026-11-14 origins-open-facts.md #4, origins-revelations-audit.md Origins #6; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "In Zombie Blood, shoot down the glowing red plane and kill the invisible pilot.",
+    "layer": "data",
+    "reason": "Wrong colour and a missing pickup, reworded: the plane glows yellow, not red, and the Maxis Drone only comes back when the pilot drops it (Call of Duty Wiki: Little Lost Girl step 5; callofdutyzombies.com). The colour is not frame-checked.",
+    "spec": "audit:zombies:2026-11-14 origins-open-facts.md #2, origins-revelations-audit.md Origins #5 and #7; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Shoot the red plane",
+    "layer": "data",
+    "reason": "Wrong colour, corrected to \"Shoot the glowing plane\": the plane glows yellow, not red (Call of Duty Wiki: Little Lost Girl step 5).",
+    "spec": "audit:zombies:2026-11-14 origins-open-facts.md #2, origins-revelations-audit.md Origins #5; protected change approved by Bryen 2026-11-14"
   }
 ]
