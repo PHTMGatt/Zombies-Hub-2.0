@@ -237,7 +237,7 @@ try {
       {
         route: '/maps/origins/wind-staff',
         heading: 'Wind Staff',
-        required: [/Wind Tunnel/i, /Generator 4/i, /smoking chimneys/i],
+        required: [/Wind Tunnel/i, /Generator 4/i, /smoking stone balls/i],
       },
       {
         route: '/maps/origins/lightning-staff',

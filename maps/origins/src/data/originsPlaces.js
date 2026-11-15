@@ -154,7 +154,7 @@ export const staffPlaces = {
   lightning: {
     layers: ['tank'],
     pins: [
-      { kind: 'part', x: 196, y: 262, text: 'Part: tank Church → Generator 2, jump right before the trench to Generator 2' },
+      { kind: 'part', x: 196, y: 262, text: 'Part: tank Church → Generator 2, jump right onto the cut-off wooden stairs before the trench to Generator 2' },
       { kind: 'part', x: 214, y: 196, text: 'Part: tank Generator 2 → Church, jump left onto the Excavation scaffolding' },
       { kind: 'part', x: 236, y: 64, text: 'Part: tank Generator 2 → Church, jump right just before the Church' },
       { kind: 'record', x: 34, y: 202, text: 'Purple record: Generator 4 / Juggernog / Wind tunnel area' },

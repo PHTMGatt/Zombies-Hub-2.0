@@ -1860,5 +1860,59 @@
     ],
     "reason": "Wrong trials, corrected to \"Napalm Zombie kills, penetration multi-kills, then melee kills\", in that order, matching the guide's own run sheet (Call of Duty Wiki: Gauntlet of Siegfried; Gameranx). Changed in ce49bb8.",
     "spec": "audit:zombies:2026-11-14 other-maps-audit.md Gorod Krovi #2; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Activate all six generators, then collect the staff part from the reward chest beside Generator 6.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/fire-staff"
+    ],
+    "reason": "Wrong requirement, corrected to \"Power Generator 6, then take the part from the reward chest beside it.\": the box opens when Generator 6 is powered; capturing all six generators pays out a Max Ammo, not the staff part (Call of Duty Wiki: Staff of Fire, Rituals of the Ancients).",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Origins #8; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "In the Crazy Place, kill zombies on the metal grates beside the Fire area until all four fire cauldrons are lit.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/fire-staff"
+    ],
+    "reason": "Missing requirement, reworded: only kills made with the Fire Staff count toward the cauldrons, about 30 of them (Call of Duty Wiki: Staff of Fire). Every fact the old line held is kept.",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Origins #2; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Read the illuminated fire symbols and use the code chart to translate them into the numbered torches in the Church.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/fire-staff"
+    ],
+    "reason": "Wrong place implied, reworded: the line followed \"In the Crazy Place\" and read as if the lit symbols were there; they are upstairs in the Church on the far wall (Call of Duty Wiki: Staff of Fire; Accelerated Ideas).",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Origins #3; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Go to the Church and shoot the matching numbered torches with the Fire Staff before the puzzle resets.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/fire-staff"
+    ],
+    "reason": "Location made exact, reworded: the torches are in the Church basement where the tank parks, and 4 is always one of them (Call of Duty Wiki: Staff of Fire; Accelerated Ideas). \"before the puzzle resets\" is kept unchanged because the audit could not confirm or rule out a reset.",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Origins #3; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Return to the main map and use the Wind Staff on all three smoking chimneys so their smoke points toward the Excavation Site.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/wind-staff"
+    ],
+    "reason": "Wrong name, corrected to \"smoking stone balls\": the page's own map key calls them smoke balls and the Call of Duty Wiki says \"three smoking stone balls\" (Staff of Wind).",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Origins #9; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Church → Gen 2, jump right after Generator 4.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/lightning-staff"
+    ],
+    "reason": "Page and map pin disagreed, both now use the Wiki wording: \"jump right onto the cut-off wooden stairs before the trench to Generator 2\" (Call of Duty Wiki: Staff of Lightning).",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Origins #11; protected change approved by Bryen 2026-11-14"
   }
 ]

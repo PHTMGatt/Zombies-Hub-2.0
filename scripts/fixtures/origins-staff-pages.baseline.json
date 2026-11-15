@@ -18,6 +18,14 @@
         "text": "Check the three spawn points inside the Tank Station by Generator 2."
       },
       {
+        "label": "Gramophone",
+        "text": "On the floor inside the Excavation, next to a table."
+      },
+      {
+        "label": "Black Record",
+        "text": "Around the outside of the Excavation: by the Excavation sign, in the wheelbarrow by Pack-a-Punch, or in the trench by the church debris. Play it on the table inside the Excavation to open the stairs down to the staff pedestals."
+      },
+      {
         "label": "Crystal",
         "text": "Take the blue record and Gramophone to the Ice Tunnel by Generator 6, enter the Crazy Place, and collect the blue crystal."
       },
@@ -55,7 +63,7 @@
     "lines": [
       {
         "label": "Part 1",
-        "text": "Activate all six generators, then collect the staff part from the reward chest beside Generator 6."
+        "text": "Power Generator 6, then take the part from the reward chest beside it."
       },
       {
         "label": "Part 2",
@@ -70,6 +78,14 @@
         "text": "Check its three spawn points in the Church / Generator 6 area."
       },
       {
+        "label": "Gramophone",
+        "text": "On the floor inside the Excavation, next to a table."
+      },
+      {
+        "label": "Black Record",
+        "text": "Around the outside of the Excavation: by the Excavation sign, in the wheelbarrow by Pack-a-Punch, or in the trench by the church debris. Play it on the table inside the Excavation to open the stairs down to the staff pedestals."
+      },
+      {
         "label": "Crystal",
         "text": "Take the red record and Gramophone to the Fire Tunnel near spawn, enter the Crazy Place, and collect the red crystal."
       },
@@ -78,13 +94,13 @@
         "text": "Use the red pedestal beneath the Excavation Site."
       },
       {
-        "text": "In the Crazy Place, kill zombies on the metal grates beside the Fire area until all four fire cauldrons are lit."
+        "text": "In the Crazy Place, kill about 30 zombies with the Fire Staff while they stand on the metal grates, until all four cauldrons are lit."
       },
       {
-        "text": "Read the illuminated fire symbols and use the code chart to translate them into the numbered torches in the Church."
+        "text": "Go upstairs in the Church: four symbols are lit on the far wall. Turn each into a number with the chart."
       },
       {
-        "text": "Go to the Church and shoot the matching numbered torches with the Fire Staff before the puzzle resets."
+        "text": "In the Church basement (where the tank parks), light the four matching numbered torches with the Fire Staff before the puzzle resets. 4 is always one of them; its torch has a bloodstain instead of a chalk number."
       },
       {
         "text": "At the Excavation Site, use the four levers to align every ring to RED."
@@ -119,6 +135,14 @@
         "text": "Check the Generator 5 area, including Stamin-Up and the Lightning Tunnel entrance."
       },
       {
+        "label": "Gramophone",
+        "text": "On the floor inside the Excavation, next to a table."
+      },
+      {
+        "label": "Black Record",
+        "text": "Around the outside of the Excavation: by the Excavation sign, in the wheelbarrow by Pack-a-Punch, or in the trench by the church debris. Play it on the table inside the Excavation to open the stairs down to the staff pedestals."
+      },
+      {
         "label": "Crystal",
         "text": "Take the yellow record and Gramophone to the Wind Tunnel near Generator 4, enter the Crazy Place, and collect the yellow crystal."
       },
@@ -130,7 +154,7 @@
         "text": "In the Crazy Place, shoot the four ceiling rings with the Wind Staff until the symbols match the Wind puzzle code."
       },
       {
-        "text": "Return to the main map and use the Wind Staff on all three smoking chimneys so their smoke points toward the Excavation Site."
+        "text": "Return to the main map and use the Wind Staff on all three smoking stone balls so their smoke points toward the Excavation Site."
       },
       {
         "text": "At the Excavation Site, use the four levers to align every ring to YELLOW."
@@ -150,7 +174,7 @@
     "lines": [
       {
         "label": "Part 1",
-        "text": "Church → Gen 2, jump right after Generator 4."
+        "text": "Church → Gen 2, jump right onto the cut-off wooden stairs before the trench to Generator 2."
       },
       {
         "label": "Part 2",
@@ -163,6 +187,14 @@
       {
         "label": "Purple Record",
         "text": "Generator 4 / Jug / Wind Tunnel area."
+      },
+      {
+        "label": "Gramophone",
+        "text": "On the floor inside the Excavation, next to a table."
+      },
+      {
+        "label": "Black Record",
+        "text": "Around the outside of the Excavation: by the Excavation sign, in the wheelbarrow by Pack-a-Punch, or in the trench by the church debris. Play it on the table inside the Excavation to open the stairs down to the staff pedestals."
       },
       {
         "label": "Crystal",
@@ -196,5 +228,5 @@
       }
     ]
   },
-  "_note": "Captured from the four Origins staff .tsx pages at 0f44766 (before the Phase 2 redesign). The composite piano-code line is stored as its three chords."
+  "_note": "Captured from the four Origins staff .tsx pages at 0f44766 (before the Phase 2 redesign). The composite piano-code line is stored as its three chords. On 2026-11-15 the lines the accuracy audit corrected were updated in place and the Gramophone and Black Record rows were added to every staff (audit:zombies:2026-11-14; each old line is in approved-removals.json)."
 }

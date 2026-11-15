@@ -71,3 +71,27 @@ test('Origins and Revelations CSS read only custom properties that something def
     [...read(file).matchAll(/var\((--[\w-]+)/g)].map((match) => match[1]).filter((name) => !defined.has(name)).map((name) => `${file}: ${name}`));
   assert.deepEqual([...new Set(unset)], [], 'custom properties read but never set');
 });
+
+// 2026-11-15 accuracy audit (Origins #1): no staff can be built without the Gramophone and the black
+// record, and no page said where either one is.
+test('every Origins staff page says where the Gramophone and the black record are, before the crystal', () => {
+  for (const [id, page] of Object.entries(staffPages)) {
+    const rows = Object.fromEntries(page.build.map((row) => [row.k, row.v]));
+    const labels = page.build.map((row) => row.k);
+    assert.match(rows.Gramophone ?? '', /inside the Excavation/i, `${id}: where the Gramophone is`);
+    assert.match(rows['Black Record'] ?? '', /outside of the Excavation/i, `${id}: where the black record is`);
+    assert.match(rows['Black Record'] ?? '', /stairs down to the staff pedestals/i, `${id}: what the black record opens`);
+    assert(labels.indexOf('Gramophone') < labels.indexOf('Crystal'), `${id}: the Gramophone row comes before the crystal`);
+  }
+});
+
+// Audit Origins #2, #3 and #8: Fire Staff kills only, symbols upstairs, torches in the basement, and the
+// part chest opens on Generator 6 alone.
+test('Origins Fire page: Generator 6 chest, Fire Staff kills, and the right Church floors', () => {
+  const { build, puzzle } = staffPages.fire;
+  assert.doesNotMatch(build.find((row) => row.k === 'Part 1').v, /all six generators/i);
+  const [kills, symbols, torches] = puzzle.steps;
+  assert.match(kills, /with the Fire Staff/);
+  assert.match(symbols, /upstairs in the Church/);
+  assert.match(torches, /Church basement/);
+});
