@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './step-details.css';
+import useHashFocus from './useHashFocus';
 
 /*
  * "Step details" tab: plain text, one anchored section per Easter Egg step (#step-1, #step-2 …), no media.
@@ -41,6 +42,7 @@ function RefText({ ref_ }) {
 }
 
 export default function StepDetails({ steps, guidePath, title = 'Step details' }) {
+  useHashFocus();
   return (
     <div className="step-details">
       <h2 className="step-details__title">{title}</h2>

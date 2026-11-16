@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './flat-guide.css';
 import { stepLinkHref } from './stepLinks';
+import useHashFocus from './useHashFocus';
 
 /*
  * The main guide for an Easter Egg: a flat, ordered list. Each step is visible at once and shows only
@@ -15,6 +16,7 @@ const grouped = (links) => links.length > 1 && links.every((l) => l.label.includ
 const linkText = (link, group) => (group ? link.label.split(': ')[0] : link.label);
 
 export default function FlatGuide({ steps, label, footer, className = '' }) {
+  useHashFocus();
   return (
     <div className={`flat-guide ${className}`.trim()}>
       <ol className="flat-guide__list" aria-label={label}>
