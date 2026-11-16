@@ -69,9 +69,43 @@ The tabs are video-clip pages (`ApothiconUpgradeData.js`, `eggData.js`, `SoundSt
 | G-Strike | 5-line `how` | **Stays**: no tab owns it | Long for a lean step; trim to goal plus the two melee batches. |
 | Rain Fire, Unleash the Horde, Skewer the Winged Beast, Fist of Iron, Raise Hell, Freedom | `how`, `problems`, `critical` | Stay (EE steps) | `problems` (tips) are the candidates to fold away. |
 
-### Not yet audited
+### Gorod Krovi (`gorodGuideSteps.jsx`)
 
-Gorod Krovi, Der Eisendrache, Zetsubou No Shima, Mob of the Dead, Shadows of Evil.
+| Step | Embedded today | Belongs in | Notes |
+| --- | --- | --- | --- |
+| Valve network | `valve-solver` (compact solver) and the valve-locations map image | **Valve Solver** tab | The step already links "Full-size Valve Solver". Move the compact solver and the map out; keep the critical warning (power the Hatchery generator first) and the two tasks. |
+| Six silver trophies, S.O.P.H.I.A. challenges | `how` repeats every trophy method / challenge objective; per-task `hint` lines | Trophies tab (same data, `gorodTrophies`, `gorodChallenges`) | Text duplicate, not an embed: the shape test does not flag it. Trimming it removes rendered text, which needs `approved-removals.json` and Bryen's OK. |
+| Kill the dragon, Defeat Nikolai | `how` repeats the boss phases | Boss Fight tab | Same as above. |
+| Guard of Fafnir, Power + Dragon Network | part-area chips, `how` | Buildables tab owns the part list | Same as above. |
+
+### Der Eisendrache (`deGuideSteps.jsx`)
+
+| Step | Embedded today | Belongs in | Notes |
+| --- | --- | --- | --- |
+| Upgrade your bow | the four-bow `tabs` ref | **Bows** tab (Storm / Fire / Wolf / Void sub-pages) | Replace with four `links`, one per bow page. |
+| Past lab: canister, fuses, safe code; Death Ray + safe | `safe-code` and `safe-code-entry` per-game tools | **No tab owns it** | The safe combination changes every game, so it is per-game state like Revelations' symbol note and Shadows' "Your game" panel. Recommend it stays in the main guide; Bryen to confirm. |
+| Gear up: Shield + Ragnaroks | step text | **Gear** tab | The step sits third in the guide though its phase is late (see the earlier cross-check). Candidate to become one line plus a link. |
+
+### Zetsubou No Shima, Mob of the Dead
+
+No embedded images, solvers or tab sets (the shape test lists none). The only overlap is text: Zetsubou's cog steps against the Cogs tab, and Mob's plane parts, Retriever + skulls and codes steps against their tabs. These are `how` duplicates, handled like Gorod's: trimming needs Bryen's approval.
+
+### Shadows of Evil
+
+`train-note` (rituals, sword steps) and the character → Keeper picker (upgrade step) are the per-game "Your game" panel that spec §6 Phase 7 approves for the main page. SoE has no tabs. Recommend they stay.
+
+## Move patches prepared (not applied)
+
+Base commit `e716e29`. Files in the shared notes folder, `zombies-guide-moves/`:
+
+| File | Replaces / adds | Effect |
+| --- | --- | --- |
+| `originsGuide.jsx` | `maps/origins/src/data/originsGuide.jsx` | Build the Staffs and Secure the Keys drop the embedded staff `tabs`/images/Lightning switches and link to each staff page's `#build` and `#puzzle` sections. The staff pages already hold every one of those lines (same data). |
+| `revGuideSteps.jsx` | `maps/revelations/src/data/revGuideSteps.jsx` | Servant, Reel 3 and S.O.P.H.I.A. steps drop their screenshots and link to `#servant-rocks` (Apothicon Upgrade), `#bone-spots` and `#turret-shot` (Egg Locations). |
+| `revReferenceShots.js` (new) | `maps/revelations/src/data/revReferenceShots.js` | The same captures, alt texts and captions, exported as `servantRocks`, `boneSpots`, `turretShot` for the tab pages. |
+| `main-guide-embedded.json` | `scripts/fixtures/main-guide-embedded.json` | Drops the Origins entries and all Revelations entries except `symbols:custom:symbol-note`. |
+
+Apply order: the tab sections (ALPHA) must exist first, otherwise the screenshots disappear from the site. Then copy the four files, run `npm test`, refresh the content baseline and rendered fixtures, and list the removed main-guide lines in `approved-removals.json` (only with Bryen's OK; Gandalf's call of 2026-11-16 is the standing instruction).
 
 ## Proposed method for the moves
 
