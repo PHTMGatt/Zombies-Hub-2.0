@@ -13,7 +13,9 @@ export default function useHashFocus(ready = true) {
   useEffect(() => {
     if (!ready || !hash || hash.length < 2) return undefined;
     const frame = requestAnimationFrame(() => {
-      const target = document.getElementById(decodeURIComponent(hash.slice(1)));
+      let id = hash.slice(1);
+      try { id = decodeURIComponent(id); } catch { /* a malformed fragment (%E0%A4%A) just has no target */ }
+      const target = document.getElementById(id);
       if (!target) return;
       if (!target.hasAttribute('tabindex') && !/^(A|BUTTON|INPUT|SELECT|TEXTAREA)$/.test(target.tagName)) {
         target.setAttribute('tabindex', '-1');
