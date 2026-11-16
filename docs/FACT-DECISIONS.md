@@ -2,6 +2,16 @@
 
 Written by DELTA · Sonnet, 2026-11-16, from Grey's Notion fact check ("Zombies fact check (Grey)", 18 rows) compared with DELTA's pass-1 list and the current guide data. Grey's sources are fan guides, not fresh in-game runs. Nothing below has been changed in the guide: no number is stated that is not confirmed.
 
+## Short version (for Bryen)
+
+1. **SoE ritual length.** Guide says "roughly 30 seconds" (also Canals flag "about 30 seconds"); no source confirms a fixed time. Options: soften to "survive until it ends" (recommended) / keep / remove.
+2. **DE dragon feed.** Guide says eight zombies per dragon; most sources agree, one says six. Options: keep eight plus "until the dragon crumbles" (recommended) / drop the number.
+3. **SoE Margwa.** Guide ties the Margwa to the Footlight (fourth) ritual; Grey says the 2nd and 4th completed ritual. Options: keep / reword by completion order.
+4. **Rev wave counts.** "Two Margwas per wave, one more in co-op" is from one unverified source. Options: keep / soften to "four Margwa waves".
+5. **Zetsubou 20 Keepers solo.** Not in the guide and unconfirmed. Option: keep it out (default).
+
+Everything Grey marked High already matches the guide, nothing was changed.
+
 ## Applied: High-confidence rows
 
 None needed. Every High row either already matches the guide or is not stated in it:
