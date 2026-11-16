@@ -27,6 +27,7 @@ export const criticalRoutes = [
   ['mob-final-step', '/maps/mob-of-the-dead/final-step'],
 
   ['shadows-main', '/maps/shadows-of-evil'],
+  ['soe-step-details', '/maps/shadows-of-evil/step-details'],
 
   ['de-main', '/maps/der-eisendrache'],
   ['de-parts', '/maps/der-eisendrache/parts'],

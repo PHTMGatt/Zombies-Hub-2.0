@@ -14,6 +14,7 @@ function RefText({ ref_ }) {
   const items = ref_.items ?? [];
   // 'custom' refs hold per-game state (e.g. the Revelations symbol-order note): rendered as-is, as on the old main guide.
   if (ref_.type === 'custom') return ref_.render ? <div className="step-details__ref">{ref_.render()}</div> : null;
+  if (ref_.type === 'warning') return ref_.text ? <p className="step-details__warn"><strong>Watch out:</strong> {ref_.text}</p> : null;
   if (!items.length || !['facts', 'chips', 'sequence'].includes(ref_.type)) return null;
   return (
     <div className="step-details__ref">
