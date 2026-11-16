@@ -1,3 +1,4 @@
+import { mainEggStatus } from '../data/guideStatus';
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { IoArrowForward } from 'react-icons/io5';
@@ -61,6 +62,9 @@ export default function MapCard({
         'aria-label': badge ? `${name} — ${badge}` : `Open ${name} map guide`,
       };
   const eeAvailable = Boolean(hasEasterEgg ?? isEasterEgg);
+  // Honest chip: only a map with a full guide says "Main EE"; video-only says "Video guide"; no guide is muted "Coming soon".
+  const eeStatus = eeAvailable ? mainEggStatus(map) : null;
+  const eeChip = eeStatus && { text: { tracked: 'Main EE', video: 'Video guide', none: 'Coming soon' }[eeStatus.kind], kind: eeStatus.kind };
 
   return (
     <Wrapper
@@ -85,7 +89,7 @@ export default function MapCard({
         {game && <span className="map-game-chip">{game.replace('Black Ops ', 'BO')}</span>}
         {badge
           ? <span className={`map-ee-chip map-ee-chip--${badgeKind}`}>{badge}</span>
-          : eeAvailable && <span className="map-ee-chip">Main EE</span>}
+          : eeChip && <span className={`map-ee-chip map-ee-chip--${eeChip.kind}`}>{eeChip.text}</span>}
       </div>
 
       <div className="map-info">

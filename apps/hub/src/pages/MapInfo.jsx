@@ -5,6 +5,7 @@ import mapInfo from '../data/mapInfo';
 import mapData from '../data/mapData';
 import { getDedicatedGuideRoute } from '../data/dedicatedGuides';
 import { sameMapSlugs } from '../data/sameMap';
+import { mainEggStatus } from '../data/guideStatus';
 import '../styles/pageStyles/MapInfo.css';
 
 export default function MapInfo() {
@@ -65,7 +66,7 @@ export default function MapInfo() {
             {releasedLabel && <span><strong>Released:</strong> {releasedLabel}</span>}
             {hasMainQuest ? (
               <Link to={guideRoute} className="badge">
-                {dedicatedRoute ? '📖 Open Easter Egg Guide' : '🎁 Main Easter Egg'}
+                {dedicatedRoute ? '📖 Open Easter Egg Guide' : { video: '🎬 Video guide', none: '🕒 Main guide coming soon' }[mainEggStatus(meta).kind] ?? '🎁 Main Easter Egg'}
               </Link>
             ) : (
               <span className="badge no-egg">No Main Easter Egg</span>
