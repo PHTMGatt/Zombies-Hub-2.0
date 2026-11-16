@@ -1,0 +1,25 @@
+/* Step details tab (shared): plain text, one column, no boxes. Palette via --flat-* like the flat guide. */
+.step-details {
+  --flat-accent: #8fd8ff;
+  --flat-ink: #f4f8fb;
+  --flat-text: #dbe4ea;
+  --flat-line: rgba(255, 255, 255, 0.16);
+  width: min(100%, 46rem);
+  margin: 0 auto;
+  color: var(--flat-text);
+  font-size: 1.0625rem;
+  line-height: 1.55;
+}
+.step-details__title { margin: 0 0 0.5rem; font-size: 1.75rem; color: var(--flat-ink); }
+.step-details__step { padding: 1.25rem 0; border-top: 1px solid var(--flat-line); scroll-margin-top: 5rem; }
+.step-details__step:target h3 { color: var(--flat-accent); }
+.step-details__step h3 { margin: 0 0 0.4rem; font-size: 1.375rem; line-height: 1.2; color: var(--flat-ink); }
+.step-details__num { margin-right: 0.6rem; color: var(--flat-accent); font-variant-numeric: tabular-nums; }
+.step-details__step p, .step-details__step ul, .step-details__step ol { margin: 0.5rem 0 0; }
+.step-details__step ul, .step-details__step ol { padding-left: 1.4rem; }
+.step-details__step li { margin: 0.25rem 0; }
+.step-details__ref h4 { margin: 0.9rem 0 0; font-size: 1rem; color: var(--flat-accent); }
+.step-details__warn strong { color: #ffd27a; }
+.step-details__back a { display: inline-flex; align-items: center; min-height: 44px; color: var(--flat-accent); font-weight: 600; text-decoration: none; }
+.step-details__back a:hover { text-decoration: underline; }
+.step-details__back a:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
