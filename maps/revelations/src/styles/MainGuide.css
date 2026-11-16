@@ -268,11 +268,55 @@
     padding: 0.3rem;
     border-radius: 10px;
     scrollbar-width: none;
+    /* Fade only the edge with more steps past it (zh-edge-fade, shared/ui/tokens.css). */
+    --zh-fade: 2.25rem;
+    --zh-fade-end: var(--zh-fade);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 var(--zh-fade-start), #000 calc(100% - var(--zh-fade-end)), transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 var(--zh-fade-start), #000 calc(100% - var(--zh-fade-end)), transparent);
+  }
+  @supports (animation-timeline: scroll()) {
+    .revelations-module .rev-step-list {
+      --zh-fade-end: 0px;
+      animation: zh-edge-fade linear both;
+      animation-timeline: scroll(self inline);
+    }
   }
   .revelations-module .rev-step-list ol { display: flex; gap: 0.25rem; width: max-content; }
   .revelations-module .rev-step-list li { flex: 0 0 auto; }
   .revelations-module .rev-step-button { display: flex; gap: 0.5rem; min-height: 44px; width: auto; max-width: 200px; padding: 0.45rem 0.6rem; }
   .revelations-module .rev-step-button__title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+}
+/* Narrow desktop windows (half-screen or zoomed) with a mouse: a swipe strip can't be dragged,
+   so all twelve steps wrap into a grid that can be picked at a glance. Touch keeps the strip. */
+@media (min-width: 641px) and (max-width: 850px) and (min-height: 501px) and (hover: hover) and (pointer: fine) {
+  .revelations-module .rev-step-list {
+    overflow: visible;
+    -webkit-mask-image: none;
+    mask-image: none;
+    animation: none;
+  }
+  .revelations-module .rev-step-list ol {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(12.5rem, 1fr));
+    width: auto;
+  }
+  .revelations-module .rev-step-button { width: 100%; max-width: none; }
+}
+/* Landscape phones: title and intro share one line so the step strip and step start higher. */
+@media (max-height: 500px) and (orientation: landscape) {
+  .revelations-module .rev-main-guide { padding-top: 0.45rem; }
+  .revelations-module .rev-run-header {
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: baseline;
+    column-gap: 0.85rem;
+    row-gap: 0.1rem;
+    margin-bottom: 0.6rem;
+    padding-bottom: 0.5rem;
+  }
+  .revelations-module .rev-run-header__kicker { grid-column: 1 / -1; }
+  .revelations-module .rev-run-header h2 { font-size: 1.3rem; }
+  .revelations-module .rev-run-header p { font-size: 0.84rem; }
+  .revelations-module .rev-step-button { max-width: 270px; }
 }
 @media (max-width: 480px) {
   .revelations-module .rev-run-header { padding-bottom: 0.6rem; }
