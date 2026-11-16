@@ -72,7 +72,7 @@ test('values are escaped, and a map image replaces the shared card only when giv
   }
 });
 
-test('prerender writes <route>.html and <route>/index.html next to the shell and leaves the shell generic', async () => {
+test('prerender writes <route>.html and <route>/index.html, sitemap.xml and robots.txt, and leaves the shell generic', async () => {
   const dist = await mkdtemp(path.join(tmpdir(), 'zh-prerender-'));
   try {
     await writeFile(path.join(dist, 'index.html'), shell);
@@ -97,6 +97,20 @@ test('prerender writes <route>.html and <route>/index.html next to the shell and
     assert.equal(meta(origins, 'property', 'og:image'), `${origin}/og-image.png`, 'others keep the shared card');
     assert.equal(meta(origins, 'property', 'og:image:type'), 'image/png');
     assert.equal((origins.match(/og:image:type/g) ?? []).length, 1, 'one og:image:type');
+    // Search engines: every canonical page once in sitemap.xml, each matching its page's canonical link; robots.txt points there.
+    const sitemap = await readFile(path.join(dist, 'sitemap.xml'), 'utf8');
+    const locs = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
+    assert.equal(new Set(locs).size, locs.length, 'no page is listed twice');
+    assert.deepEqual(locs, ['/', ...routes.filter((route) => route !== '/maps')].map((route) => `${origin}${route}`), 'Home and every canonical page, no alias');
+    for (const route of routes) {
+      const page = await readFile(path.join(dist, ...route.split('/').filter(Boolean), 'index.html'), 'utf8');
+      assert(locs.includes(page.match(/<link rel="canonical" href="([^"]+)"/)[1]), `${route}: its canonical URL is in the sitemap`);
+    }
+    assert.equal(await readFile(path.join(dist, 'robots.txt'), 'utf8'), `User-agent: *
+Allow: /
+
+Sitemap: ${origin}/sitemap.xml
+`);
   } finally {
     await rm(dist, { recursive: true, force: true });
   }
@@ -123,6 +137,7 @@ test('a prerender failure fails CI, but on Render it warns and leaves the plain 
     assert.equal(await runPrerender(dist, { env: { RENDER: 'true' }, log: quiet().log }), 0);
     assert.equal(existsSync(path.join(dist, 'allmaps.html')), false, 'files written before the failure are removed');
     assert.equal(existsSync(path.join(dist, 'allmaps', 'index.html')), false);
+    assert.equal(existsSync(path.join(dist, 'sitemap.xml')), false, 'no sitemap for pages that are not there');
   } finally {
     await rm(dist, { recursive: true, force: true });
   }

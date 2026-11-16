@@ -137,6 +137,17 @@ export function headFor(html, route, { origin = siteOrigin(html), image } = {}) 
   return out;
 }
 
+export const sitemapFor = (origin, routes) => `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${routes.map((route) => `  <url><loc>${escapeText(`${origin}${route}`)}</loc></url>`).join('\n')}
+</urlset>
+`;
+
+export const robotsFor = (origin) => `User-agent: *
+Allow: /
+
+Sitemap: ${origin}/sitemap.xml
+`;
 
 // Builds every head first, then writes: a bad route fails before any file exists. If a write still fails,
 // the files already written are removed, so the host serves the plain SPA index.html for every path.
@@ -152,6 +163,10 @@ export async function prerender(distDir = path.join(root, 'dist'), readSource) {
     // Both spellings a static host may look up for /a/b: a/b.html (no trailing slash) and a/b/index.html.
     return { html: headFor(shell, route, { origin, image }), targets: [`${path.join(distDir, ...parts)}.html`, path.join(distDir, ...parts, 'index.html')] };
   });
+  // Search engines get Home (the shell itself) and the canonical pages only (an alias's canonical URL is its destination's).
+  const canonical = ['/', ...routes.filter((route) => !ALIASES[route])];
+  pages.push({ html: sitemapFor(origin, canonical), targets: [path.join(distDir, 'sitemap.xml')] });
+  pages.push({ html: robotsFor(origin), targets: [path.join(distDir, 'robots.txt')] });
   const written = [];
   try {
     for (const { html, targets } of pages) {
@@ -173,7 +188,7 @@ export async function prerender(distDir = path.join(root, 'dist'), readSource) {
 export async function runPrerender(distDir, { env = process.env, log = console, readSource } = {}) {
   try {
     const routes = await prerender(distDir, readSource);
-    log.log(`prerender-meta: wrote share-preview heads for ${routes.length} routes`);
+    log.log(`prerender-meta: wrote share-preview heads for ${routes.length} routes, sitemap.xml and robots.txt`);
     return 0;
   } catch (error) {
     if (env.RENDER) {

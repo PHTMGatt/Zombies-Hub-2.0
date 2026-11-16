@@ -4,7 +4,8 @@
  * Runs, in order, and prints a PASS/FAIL table (exit 1 on any FAIL):
  *   unit tests (incl. flat-guide shape, content preservation, CSS scope, prerender + budget tests)
  *   source verification · production build · per-route share heads · bundle budget · build info
- *   per-route meta check on the built dist (every prerendered page: title, description, og:url, og:image file)
+ *   per-route meta check on the built dist (every prerendered page: title, description, og:url, canonical in
+ *   sitemap.xml, og:image file; robots.txt points at the sitemap)
  *   every browser smoke in `npm run test:browser` (7 maps, Coming Soon / empty maps, step links, offline,
  *   content preservation, …) plus the link/anchor check and the a11y smoke, against a local preview of dist.
  * A failing step does not stop the run: you get the whole table. Each step's last lines are printed on FAIL.
@@ -59,6 +60,11 @@ const escapeAttr = (value) => escapeText(value).replace(/"/g, '&quot;');
 async function metaProblems() {
   const problems = [];
   const cards = new Map(); // og:image path → '' when fine, else what is wrong (each card is read once)
+  const sitemapFile = path.join(dist, 'sitemap.xml');
+  const sitemap = existsSync(sitemapFile) ? new Set([...readFileSync(sitemapFile, 'utf8').matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1])) : null;
+  if (!sitemap) problems.push('no sitemap.xml in dist');
+  const robots = existsSync(path.join(dist, 'robots.txt')) ? readFileSync(path.join(dist, 'robots.txt'), 'utf8') : '';
+  if (!/^Sitemap: https?:\/\/\S+\/sitemap\.xml$/m.test(robots)) problems.push('robots.txt is missing or does not point at the sitemap');
   for (const route of prerenderRoutes()) {
     const page = ALIASES[route] ?? route;
     const file = path.join(dist, ...route.split('/').filter(Boolean), 'index.html');
@@ -68,6 +74,9 @@ async function metaProblems() {
     if (!html.includes(`name="description" content="${escapeAttr(routeDescription(page))}"`)) problems.push(`${route}: description does not match the route`);
     const url = html.match(/property="og:url" content="([^"]+)"/)?.[1];
     if (!url || new URL(url).pathname !== page) problems.push(`${route}: og:url is ${url ?? 'missing'}`);
+    const canonical = html.match(/<link rel="canonical" href="([^"]+)"/)?.[1];
+    if (canonical !== url) problems.push(`${route}: canonical is ${canonical ?? 'missing'}, not its og:url`);
+    else if (sitemap && !sitemap.has(canonical)) problems.push(`${route}: ${canonical} is not in sitemap.xml`);
     const image = html.match(/property="og:image" content="([^"]+)"/)?.[1];
     if (!image) problems.push(`${route}: no og:image`);
     else {

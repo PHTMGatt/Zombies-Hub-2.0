@@ -6,6 +6,12 @@ export default function NotFound() {
   const Heading = /^\/maps\/(origins|mob-of-the-dead|shadows-of-evil|der-eisendrache|zetsubou-no-shima|gorod-krovi|revelations)\//.test(pathname) ? 'h2' : 'h1';
   useEffect(() => {
     document.title = 'Page not found | Zombies Hub 2.0';
+    // The host answers every path with 200 (SPA rewrite): keep this soft 404 out of search results.
+    const robots = document.createElement('meta');
+    robots.name = 'robots';
+    robots.content = 'noindex';
+    document.head.appendChild(robots);
+    return () => robots.remove();
   }, []);
 
   return (
