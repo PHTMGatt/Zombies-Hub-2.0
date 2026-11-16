@@ -53,8 +53,8 @@ try {
     await page.evaluate(() => window.localStorage.clear());
     await page.reload({ waitUntil: 'networkidle' });
     assert.equal(await page.locator('li.guide-seq__step, li.flat-guide__step').count(), 11, 'Gorod guide keeps all 11 steps');
-    assert.match(await visibleTitle(page.locator('#valves h3')), /Valve network/);
-    assert.match(await visibleTitle(page.locator('#kronos h3')), /KRONOS/);
+    assert.match(await visibleTitle(page.locator('#valves :is(h2, h3)')), /Valve network/);
+    assert.match(await visibleTitle(page.locator('#kronos :is(h2, h3)')), /KRONOS/);
     assert.equal(await page.locator('#valves a[data-step-link][href*="/maps/gorod-krovi/valves"]').count(), 1, 'the valve step links to the Valve Solver');
     assert.match(await (await stepDetails(page, base, mainRoute, 'challenges')).innerText(), /Group 935 keycard lockdown/i);
     await page.goto(`${base}/maps/gorod-krovi/valves`, { waitUntil: 'networkidle' });

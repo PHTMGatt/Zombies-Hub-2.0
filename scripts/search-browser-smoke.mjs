@@ -65,7 +65,7 @@ try {
       await page.waitForURL(`**${map}`);
       await assertStepInView(id);
       // The flat guide's titles start with a screen-reader-only "Step N:".
-      assert.equal((await page.locator(`#${id} h3`).innerText()).replace(/^Step \d+:\s*/, ''), title);
+      assert.equal((await page.locator(`#${id} :is(h2, h3)`).innerText()).replace(/^Step \d+:\s*/, ''), title);
       results.push(`${viewport.name}: "${query}" → ${title}`);
     }
 
@@ -87,6 +87,36 @@ try {
     await page.waitForURL('**/maps/mob-of-the-dead#codes');
     await assertStepInView('codes');
     results.push(`${viewport.name}: legacy ?ref=codes redirects to #codes`);
+
+    // Step details tabs and the hub-only maps (video cards, Coming Soon, World at War) are findable:
+    // the first result is the right page, and it opens (no 404).
+    const decoded = (href) => decodeURIComponent(new URL(href, base).pathname + new URL(href, base).search);
+    for (const [query, expected] of [
+      ['ascension', '/easter-eggs/ascension'],
+      ['tranzit', '/easter-eggs/tranzit'],
+      ['die rise', '/easter-eggs/die-rise'],
+      ['the giant', '/easter-eggs/the-giant'],
+      ['der riese', '/info/der-riese?game=Black Ops 1'],
+      ['waw nacht', '/info/nacht-der-untoten?game=World at War'],
+      ['shangri la bo3', '/easter-eggs/shangri-la-chronicles'],
+      ['shangri la', '/easter-eggs/shangri-la'],
+      ['gorod step details', '/maps/gorod-krovi/step-details'],
+    ]) {
+      await page.goto(`${base}/search?q=${encodeURIComponent(query)}`, { waitUntil: 'networkidle' });
+      const first = page.locator('.zh-search__results a').first();
+      await first.waitFor();
+      assert.equal(decoded(await first.getAttribute('href')), expected, `"${query}": first result`);
+      await first.click();
+      await page.waitForURL((url) => decoded(url.href) === expected);
+      await page.locator('h1, h2').first().waitFor();
+      assert.equal(await page.locator('[data-page-not-found]').count(), 0, `"${query}": ${expected} opens`);
+      results.push(`${viewport.name}: "${query}" → ${expected}`);
+    }
+    await page.goto(`${base}/search?q=${encodeURIComponent('world at war')}`, { waitUntil: 'networkidle' });
+    await page.locator('.zh-search__results a').first().waitFor();
+    const wawHrefs = (await page.locator('.zh-search__results a').evaluateAll((links) => links.map((link) => link.getAttribute('href'))))
+      .map(decoded).filter((href) => href.includes('game=World at War'));
+    assert(new Set(wawHrefs).size >= 4, `"world at war" lists the four World at War entries (got ${wawHrefs.join(', ')})`);
 
     // Unknown words say so instead of showing junk.
     await page.goto(`${base}/search?q=zzqx`, { waitUntil: 'networkidle' });

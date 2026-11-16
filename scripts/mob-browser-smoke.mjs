@@ -90,7 +90,7 @@ try {
     await page.goto(`${base}/maps/mob-of-the-dead`, { waitUntil: 'networkidle' });
     await page.locator('li.guide-seq__step, li.flat-guide__step').first().waitFor();
     assert.equal(await page.locator('li.guide-seq__step, li.flat-guide__step').count(), 12, 'Mob guide should list 12 steps');
-    assert.equal(await visibleTitle(page.locator('#codes h3')), 'Afterlife codes');
+    assert.equal(await visibleTitle(page.locator('#codes :is(h2, h3)')), 'Afterlife codes');
     // The codes and the audio trail live on the Step details tab (flat main guide).
     const codesText = await (await stepDetails(page, base, '/maps/mob-of-the-dead', 'codes')).innerText();
     for (const code of ['101', '386', '872', '481']) assert.match(codesText, new RegExp(`\\b${code}\\b`), `Afterlife codes step shows ${code}`);

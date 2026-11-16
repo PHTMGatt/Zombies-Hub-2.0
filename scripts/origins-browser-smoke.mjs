@@ -53,15 +53,6 @@ const settle = (page) => page.evaluate(() => new Promise((resolve) => {
   tick();
 }));
 
-// Robot names on a sketch that no pin or tunnel covers (an "Odin" read as "Udin" under the Wind tunnel).
-const robotLabelClashes = (page, figure) => page.locator(figure).evaluate((root) => {
-  const hit = (a, b) => a.left < b.right - 0.5 && b.left < a.right - 0.5 && a.top < b.bottom - 0.5 && b.top < a.bottom - 0.5;
-  const marks = [...root.querySelectorAll('.omap__pins .omap__pin, .omap__tunnels path')];
-  return [...root.querySelectorAll('.omap__robots text')].flatMap((label) => marks
-    .filter((mark) => hit(label.getBoundingClientRect(), mark.getBoundingClientRect()))
-    .map((mark) => `${label.textContent} under ${mark.textContent ? `pin ${mark.textContent}` : mark.getAttribute('class')}`));
-});
-
 const browser = await chromium.launch({ headless: true });
 try {
   for (const { name, width, height } of VIEWPORTS) {
@@ -144,7 +135,7 @@ try {
       if (name === 'phone') {
         assert(order[0] < order[1] && order[1] < order[2], `${route}: Build, Puzzle, Upgrade read in order on phones`);
         const jumps = await page.locator('.staff-page__jump a').evaluateAll((links) => links.map((link) => ({ label: link.textContent.trim(), top: Math.round(link.getBoundingClientRect().top) })));
-        assert.deepEqual(jumps.map((jump) => jump.label), ['Build', 'Map', 'Puzzle', 'Upgrade'], `${route}: four section jumps`);
+        assert.deepEqual(jumps.map((jump) => jump.label), ['Build', 'Spots', 'Puzzle', 'Upgrade'], `${route}: four section jumps`);
         assert.equal(new Set(jumps.map((jump) => jump.top)).size, 1, `${route}: the section jumps share one row`);
       }
       const text = (await page.locator('main').innerText()).replace(/\s+/g, ' ');
@@ -154,13 +145,13 @@ try {
         if (line.label && line.label !== 'Excavation') assert(lower.includes(line.label.toLowerCase()), `${route}: keeps the label "${line.label}"`);
       }
 
-      // The staff's Map: every spot pinned and said in words, between Build and Puzzle.
+      // The staff's Spots (#map): every spot said in words, in order, between Build and Puzzle. Text only,
+      // no mini-map on the staff pages (the Lightning switch map is checked on its own).
       const mapTop = await page.evaluate(() => document.getElementById('map')?.getBoundingClientRect().top + window.scrollY);
-      assert(mapTop > order[0] && mapTop < order[1], `${route}: Map sits between Build and Puzzle`);
-      assert.equal(await page.locator('#map .omap__pins .omap__pin').count(), staffPlaces[staff].pins.length, `${route}: one pin per spot`);
-      assert.deepEqual(await page.locator('#map .omap__key li').evaluateAll((items) => items.map((li) => li.textContent.trim())),
-        staffPlaces[staff].pins.map((pin, i) => `${i + 1}${pin.text}`), `${route}: the key lists every spot in order`);
-      if (staffPlaces[staff].layers?.includes('robots')) assert.deepEqual(await robotLabelClashes(page, '#map figure'), [], `${route}: robot names covered`);
+      assert(mapTop > order[0] && mapTop < order[1], `${route}: Spots sit between Build and Puzzle`);
+      assert.deepEqual(await page.locator('#map ol.staff-page__spots > li').evaluateAll((items) => items.map((li) => li.textContent.trim())),
+        staffPlaces[staff].pins.map((pin) => pin.text), `${route}: Spots lists every spot in order`);
+      assert.equal(await page.locator('#map .omap').count(), 0, `${route}: no mini-map diagram on the staff page`);
 
       // The chart opens full screen and closes again (button, Esc), returning focus to the chart.
       const open = page.locator('#puzzle .zoom-image__open');
@@ -192,7 +183,7 @@ try {
       // The shared Excavation reference: four rings in the staff's colour, no lever-to-ring labels.
       const rings = page.locator('#upgrade .excavation-rings');
       assert.equal(await rings.count(), 1, `${route}: one Excavation ring reference`);
-      assert.equal(await rings.locator('svg ellipse.excavation-rings__ring').count(), 4, `${route}: four rings drawn`);
+      assert.match(await rings.innerText(), /Four levers, four rings/, `${route}: the four-ring finish is said in words`);
       const ringText = await rings.innerText();
       assert.match(ringText, new RegExp(data.ring.word), `${route}: rings set to ${data.ring.word}`);
       assert.doesNotMatch(ringText, /Mule Kick|staircase|wooden platform/i, `${route}: no lever-to-ring mapping in the shared reference`);
@@ -228,7 +219,6 @@ try {
       }
       const body = await page.evaluate(() => parseFloat(getComputedStyle(document.querySelector('#build dd')).fontSize));
       assert(body >= 16, `${route}: build facts are ${body}px`);
-      assert.equal(await page.locator('#upgrade .excavation-rings__levers > g').count(), 4, `${route}: four levers drawn`);
       await assertNoHorizontalOverflow(page, `${route} at ${name}`);
     }
 

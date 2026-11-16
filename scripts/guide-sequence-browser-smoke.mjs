@@ -27,7 +27,7 @@ try {
     // or (Revelations) a step picker that shows the same sequence one step at a time.
     // A flat main guide (FlatGuide) lists the same steps; its titles carry a screen-reader "Step N:" prefix.
     const readSteps = () => page.locator('li.guide-seq__step, li.flat-guide__step').evaluateAll((items) => items.map((item) => {
-      const title = item.querySelector('h3')?.cloneNode(true);
+      const title = item.querySelector('h2, h3')?.cloneNode(true);
       title?.querySelector('.flat-guide__sr')?.remove();
       return { id: item.id, title: title?.textContent.trim() };
     }));

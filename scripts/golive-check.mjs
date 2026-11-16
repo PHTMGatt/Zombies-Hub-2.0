@@ -1,0 +1,122 @@
+/*
+ * npm run golive-check: one command that says whether claude-forge is safe to merge to main.
+ *
+ * Runs, in order, and prints a PASS/FAIL table (exit 1 on any FAIL):
+ *   unit tests (incl. flat-guide shape, content preservation, CSS scope, prerender + budget tests)
+ *   source verification · production build · per-route share heads · bundle budget · build info
+ *   per-route meta check on the built dist (every prerendered page: title, description, og:url, og:image file)
+ *   every browser smoke in `npm run test:browser` (7 maps, Coming Soon / empty maps, step links, offline,
+ *   content preservation, …) plus the link/anchor check and the a11y smoke, against a local preview of dist.
+ * A failing step does not stop the run: you get the whole table. Each step's last lines are printed on FAIL.
+ *
+ * Options: ZH_BROWSER_CHANNEL=chrome uses the installed Chrome for the smokes (see playwright-channel.mjs).
+ *          GOLIVE_SKIP_BUILD=1 reuses an existing build (faster re-runs; the build rows show SKIP).
+ *          GOLIVE_DIST=artifacts/golive builds and serves that folder instead of dist/.
+ */
+import { spawnSync } from 'node:child_process';
+import { readFileSync, existsSync } from 'node:fs';
+import { readFile } from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { routeDescription, routeTitle } from '../apps/hub/src/app/routeMetadata.js';
+import { ALIASES, prerenderRoutes } from './prerender-meta.mjs';
+import { freePort, startPreview } from './smoke-helpers.mjs';
+
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+// GOLIVE_DIST builds into another folder (e.g. artifacts/golive) so a dev preview of dist/ keeps running.
+const dist = path.resolve(root, process.env.GOLIVE_DIST || 'dist');
+const defaultDist = dist === path.join(root, 'dist');
+const rows = [];
+
+function run(label, args, env = {}) {
+  const started = Date.now();
+  const result = spawnSync(process.execPath, args, { cwd: root, env: { ...process.env, ...env }, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
+  const ok = result.status === 0;
+  const output = `${result.stdout ?? ''}${result.stderr ?? ''}`.trim();
+  rows.push({ label, status: ok ? 'PASS' : 'FAIL', seconds: (Date.now() - started) / 1000, detail: ok ? '' : output.split('\n').slice(-15).join('\n') });
+  process.stdout.write(`${ok ? 'PASS' : 'FAIL'}  ${label}\n`);
+  return ok;
+}
+
+function skip(label, why) {
+  rows.push({ label, status: 'SKIP', seconds: 0, detail: why });
+  process.stdout.write(`SKIP  ${label} (${why})\n`);
+}
+
+async function check(label, fn) {
+  const started = Date.now();
+  let problems;
+  try { problems = await fn(); } catch (error) { problems = [error.message]; }
+  rows.push({ label, status: problems.length ? 'FAIL' : 'PASS', seconds: (Date.now() - started) / 1000, detail: problems.slice(0, 15).join('\n') });
+  process.stdout.write(`${problems.length ? 'FAIL' : 'PASS'}  ${label}\n`);
+}
+
+const escapeText = (value) => String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+const escapeAttr = (value) => escapeText(value).replace(/"/g, '&quot;');
+
+// Every prerendered page in dist carries its own head, and its og:image is a file that was built.
+async function metaProblems() {
+  const problems = [];
+  for (const route of prerenderRoutes()) {
+    const page = ALIASES[route] ?? route;
+    const file = path.join(dist, ...route.split('/').filter(Boolean), 'index.html');
+    if (!existsSync(file)) { problems.push(`${route}: no ${path.relative(root, file)}`); continue; }
+    const html = await readFile(file, 'utf8');
+    if (!html.includes(`<title>${escapeText(routeTitle(page))}</title>`)) problems.push(`${route}: title is not "${routeTitle(page)}"`);
+    if (!html.includes(`name="description" content="${escapeAttr(routeDescription(page))}"`)) problems.push(`${route}: description does not match the route`);
+    const url = html.match(/property="og:url" content="([^"]+)"/)?.[1];
+    if (!url || new URL(url).pathname !== page) problems.push(`${route}: og:url is ${url ?? 'missing'}`);
+    const image = html.match(/property="og:image" content="([^"]+)"/)?.[1];
+    if (!image) problems.push(`${route}: no og:image`);
+    else if (!existsSync(path.join(dist, new URL(image).pathname))) problems.push(`${route}: og:image ${new URL(image).pathname} is not in dist`);
+    if (!/<script type="module"[^>]*src="\/assets\//.test(html)) problems.push(`${route}: the app script is missing`);
+  }
+  return problems;
+}
+
+const smokes = JSON.parse(readFileSync(path.join(root, 'package.json'), 'utf8')).scripts['test:browser']
+  .split('&&').map((part) => part.trim().replace(/^node\s+/, ''));
+smokes.push('scripts/links-browser-smoke.mjs', 'scripts/a11y-browser-smoke.mjs');
+const smokeArgs = (script) => ['--import', './scripts/playwright-channel.mjs', script];
+
+// Same set as `npm test` (node expands the glob itself).
+run('unit tests (flat shape, content, CSS scope, prerender, budget)', ['--test', 'scripts/*.test.mjs']);
+
+if (process.env.GOLIVE_SKIP_BUILD) {
+  for (const label of ['source verification', 'production build', 'per-route share heads', 'bundle budget', 'build info']) skip(label, 'GOLIVE_SKIP_BUILD');
+} else {
+  run('source verification', ['scripts/verify.mjs']);
+  const built = run('production build', ['node_modules/vite/bin/vite.js', 'build', '--outDir', dist, '--emptyOutDir']);
+  if (built) {
+    run('per-route share heads', ['scripts/prerender-meta.mjs', dist], { RENDER: '' });
+    run('bundle budget', ['scripts/bundle-budget.mjs', dist], { RENDER: '' });
+    if (defaultDist) run('build info', ['scripts/write-build-info.mjs']);
+    else skip('build info', 'writes dist/ only');
+  } else {
+    for (const label of ['per-route share heads', 'bundle budget', 'build info']) skip(label, 'build failed');
+  }
+}
+
+if (!existsSync(path.join(dist, 'index.html'))) {
+  skip('per-route meta in dist', 'no dist/');
+  for (const script of smokes) skip(script, 'no dist/');
+} else {
+  await check(`per-route meta in dist (${prerenderRoutes().length} routes)`, metaProblems);
+  const server = await startPreview(await freePort(), dist);
+  try {
+    for (const script of smokes) run(script.replace(/^scripts\//, ''), smokeArgs(script), { SMOKE_BASE_URL: server.base, SMOKE_DIST: dist });
+  } finally {
+    await server.stop();
+  }
+}
+
+const width = Math.max(...rows.map((row) => row.label.length));
+const line = '─'.repeat(width + 18);
+console.log(`\n${line}\n${'CHECK'.padEnd(width)}  RESULT    TIME\n${line}`);
+for (const row of rows) console.log(`${row.label.padEnd(width)}  ${row.status.padEnd(6)}  ${row.seconds.toFixed(0).padStart(4)}s`);
+console.log(line);
+const failed = rows.filter((row) => row.status === 'FAIL');
+const skipped = rows.filter((row) => row.status === 'SKIP');
+for (const row of failed) console.log(`\n✖ ${row.label}\n${row.detail.replace(/^/gm, '    ')}`);
+console.log(`\n${failed.length ? 'NOT READY' : skipped.length ? 'PASS WITH SKIPS' : 'READY'}: ${rows.length - failed.length - skipped.length} pass, ${failed.length} fail, ${skipped.length} skipped`);
+process.exit(failed.length ? 1 : 0);

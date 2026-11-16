@@ -1,0 +1,156 @@
+/*
+ * Per-route share previews for a single-page app.
+ *
+ * Link previews (Discord, iMessage, X, Facebook) never run JavaScript, so they only ever saw the one
+ * index.html head. After `vite build`, this writes dist/<route>.html and dist/<route>/index.html for every static route: the
+ * same shell (same scripts, same assets) with that route's title, description, og:/twitter: tags and
+ * canonical URL. Text comes from apps/hub/src/app/routeMetadata.js, the same source the app's head sync
+ * uses at runtime, so the prerendered head and the live head agree. dist/index.html stays the generic
+ * shell: the host's /* → /index.html rewrite still serves every other path, as before.
+ *
+ * og:image: /og/<map>.png when that file exists in dist (drop one into public/og/ to give a map its own
+ * card), otherwise the shared /og-image.png.
+ *
+ * Usage: node scripts/prerender-meta.mjs [distDir]
+ */
+import { existsSync, readFileSync } from 'node:fs';
+import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { routeDescription, routeTitle } from '../apps/hub/src/app/routeMetadata.js';
+import { dedicatedGuideSlugs } from '../apps/hub/src/data/dedicatedGuides.js';
+
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+
+// Hub pages with a fixed path (apps/hub/src/app/AppRoutes.jsx). /maps redirects to /allmaps in the app,
+// but a shared /maps link still deserves the All Maps card.
+export const HUB_ROUTES = ['/allmaps', '/maps', '/easter-eggs', '/side-easter-eggs', '/achievements', '/search', '/coming-soon'];
+
+// Each dedicated map's routes file lists its tabs as <Route path="…">: keep the static ones.
+const ROUTE_FILES = {
+  origins: 'maps/origins/routes/OriginsRoutes.jsx',
+  'mob-of-the-dead': 'maps/mob-of-the-dead/routes/MobRoutes.jsx',
+  'shadows-of-evil': 'maps/shadows-of-evil/routes/ShadowsRoutes.jsx',
+  'der-eisendrache': 'maps/der-eisendrache/routes/DerEisendracheRoutes.jsx',
+  'zetsubou-no-shima': 'maps/zetsubou-no-shima/routes/ZetsubouRoutes.jsx',
+  'gorod-krovi': 'maps/gorod-krovi/routes/GorodRoutes.jsx',
+  revelations: 'maps/revelations/routes/RevelationsRoutes.jsx',
+};
+
+// Walks <Route> tags in order, joining nested paths (<Route path="speed-run"><Route path="prep" />…).
+// Skips catch-alls, params, and redirects (element={<Navigate …>}: the destination has its own head).
+export function tabPaths(source) {
+  const paths = [];
+  const stack = [];
+  for (const [tag] of source.matchAll(/<\/Route>|<Route\b(?:[^>{]|\{(?:[^{}]|\{[^{}]*\})*\})*>/g)) {
+    if (tag === '</Route>') { stack.pop(); continue; }
+    const own = (tag.match(/\bpath="([^"]+)"/)?.[1] ?? '').replace(/^\/+|\/+$/g, '');
+    const full = [...stack, own].filter(Boolean).join('/');
+    if (!tag.endsWith('/>')) stack.push(own);
+    if (own && !full.includes('*') && !full.includes(':') && !/<Navigate\b/.test(tag)) paths.push(full);
+  }
+  return [...new Set(paths)];
+}
+
+export function mapRoutes(readSource = (file) => readFileSync(path.join(root, file), 'utf8')) {
+  return dedicatedGuideSlugs.flatMap((slug) => {
+    const file = ROUTE_FILES[slug];
+    if (!file) throw new Error(`prerender-meta: no routes file listed for /maps/${slug}`);
+    return [`/maps/${slug}`, ...tabPaths(readSource(file)).map((tab) => `/maps/${slug}/${tab}`)];
+  });
+}
+
+export const prerenderRoutes = (readSource) => [...HUB_ROUTES, ...mapRoutes(readSource)];
+
+export const escapeAttr = (value) => String(value).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+export const escapeText = (value) => String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+// Sets <tag attrName="attrValue" … field="value">, replacing the existing tag or adding it before </head>.
+function setTag(html, tag, [attrName, attrValue], field, value) {
+  const escapedKey = attrValue.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const pattern = new RegExp(`<${tag}\\b[^>]*\\b${attrName}="${escapedKey}"[^>]*>`, 'i');
+  const element = `<${tag} ${attrName}="${attrValue}" ${field}="${escapeAttr(value)}" />`;
+  if (pattern.test(html)) return html.replace(pattern, element);
+  return html.replace(/<\/head>/i, `  ${element}\n  </head>`);
+}
+
+// The site's public origin, read from the shell's absolute og:image URL (one source of truth).
+export function siteOrigin(html) {
+  const match = html.match(/<meta\b[^>]*property="og:image"[^>]*content="(https?:\/\/[^/"]+)/i);
+  if (!match) throw new Error('prerender-meta: index.html needs an absolute og:image URL to know the site origin');
+  return match[1];
+}
+
+// Paths the app redirects: their card (and canonical URL) is the destination's.
+export const ALIASES = { '/maps': '/allmaps' };
+
+export function headFor(html, route, { origin = siteOrigin(html), image } = {}) {
+  const page = ALIASES[route] ?? route;
+  const title = routeTitle(page);
+  const description = routeDescription(page);
+  const url = `${origin}${page}`;
+  let out = html.replace(/<title>[\s\S]*?<\/title>/i, `<title>${escapeText(title)}</title>`);
+  out = setTag(out, 'meta', ['name', 'description'], 'content', description);
+  out = setTag(out, 'meta', ['property', 'og:title'], 'content', title);
+  out = setTag(out, 'meta', ['property', 'og:description'], 'content', description);
+  out = setTag(out, 'meta', ['property', 'og:url'], 'content', url);
+  out = setTag(out, 'link', ['rel', 'canonical'], 'href', url);
+  if (image) {
+    out = setTag(out, 'meta', ['property', 'og:image'], 'content', `${origin}${image}`);
+    out = setTag(out, 'meta', ['name', 'twitter:image'], 'content', `${origin}${image}`);
+  }
+  return out;
+}
+
+const mapSlug = (route) => route.match(/^\/maps\/([^/]+)/)?.[1];
+
+// Builds every head first, then writes: a bad route fails before any file exists. If a write still fails,
+// the files already written are removed, so the host serves the plain SPA index.html for every path.
+export async function prerender(distDir = path.join(root, 'dist'), readSource) {
+  const shell = await readFile(path.join(distDir, 'index.html'), 'utf8');
+  const origin = siteOrigin(shell);
+  const routes = prerenderRoutes(readSource);
+  const pages = routes.map((route) => {
+    const slug = mapSlug(route);
+    const own = slug && `/og/${slug}.png`;
+    const image = own && existsSync(path.join(distDir, own)) ? own : undefined;
+    const parts = route.split('/').filter(Boolean);
+    // Both spellings a static host may look up for /a/b: a/b.html (no trailing slash) and a/b/index.html.
+    return { html: headFor(shell, route, { origin, image }), targets: [`${path.join(distDir, ...parts)}.html`, path.join(distDir, ...parts, 'index.html')] };
+  });
+  const written = [];
+  try {
+    for (const { html, targets } of pages) {
+      for (const target of targets) {
+        await mkdir(path.dirname(target), { recursive: true });
+        await writeFile(target, html);
+        written.push(target);
+      }
+    }
+  } catch (error) {
+    await Promise.all(written.map((file) => rm(file, { force: true })));
+    throw error;
+  }
+  return routes;
+}
+
+// The CLI step. A failure fails CI and golive-check (exit 1). On Render's production build (RENDER is set)
+// it warns and continues: the deploy ships the plain SPA shell, exactly as before this step existed.
+export async function runPrerender(distDir, { env = process.env, log = console, readSource } = {}) {
+  try {
+    const routes = await prerender(distDir, readSource);
+    log.log(`prerender-meta: wrote share-preview heads for ${routes.length} routes`);
+    return 0;
+  } catch (error) {
+    if (env.RENDER) {
+      log.warn(`prerender-meta: WARNING on the Render build, serving the plain SPA index.html (${error.message})`);
+      return 0;
+    }
+    log.error(`prerender-meta: FAILED (${error.message})`);
+    return 1;
+  }
+}
+
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  process.exitCode = await runPrerender(path.resolve(process.argv[2] || path.join(root, 'dist')));
+}

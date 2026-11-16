@@ -65,8 +65,8 @@ try {
     await page.evaluate(() => window.localStorage.clear());
     await page.reload({ waitUntil: 'networkidle' });
     assert.equal(await page.locator('li.guide-seq__step, li.flat-guide__step').count(), 12, 'Der guide keeps all 12 steps');
-    assert.match(await page.locator('#past-lab-1 h3').innerText(), /Past lab/);
-    assert.match(await page.locator('#death-ray-safe h3').innerText(), /Death Ray/);
+    assert.match(await page.locator('#past-lab-1 :is(h2, h3)').innerText(), /Past lab/);
+    assert.match(await page.locator('#death-ray-safe :is(h2, h3)').innerText(), /Death Ray/);
     // Flat main guide: the how-to and the per-game safe-code note live on the Step details tab.
     const pastLab = await stepDetails(page, base, '/maps/der-eisendrache', 'past-lab-1');
     assert.equal(await pastLab.locator('.step-details__how').count(), 1, 'Step details shows the how-to');

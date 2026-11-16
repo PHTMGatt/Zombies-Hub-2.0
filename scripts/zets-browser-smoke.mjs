@@ -54,7 +54,7 @@ try {
     // One sequence: 11 steps, the Trials listed as facts on the first step, nothing to tick.
     await page.reload({ waitUntil: 'networkidle' });
     assert.equal(await page.locator('li.guide-seq__step, li.flat-guide__step').count(), 11, 'Zetsubou guide should list 11 steps');
-    assert.equal(await visibleTitle(page.locator('#skulls h3')), 'Clean the four skulls');
+    assert.equal(await visibleTitle(page.locator('#skulls :is(h2, h3)')), 'Clean the four skulls');
     // The Trials facts live on the Step details tab (flat main guide).
     const trialsText = await (await stepDetails(page, base, mainRoute, 'trials')).innerText();
     for (const trial of ['Trial 1', 'Trial 2', 'Trial 3']) assert.match(trialsText, new RegExp(trial), `Trials step details list ${trial}`);
@@ -62,11 +62,10 @@ try {
     assert.equal(errors.length, 0, `${mainRoute} guide errors: ${errors.join('; ')}`);
 
     if (viewportName === 'phone') {
-      const toggle = page.getByRole('button', { name: 'Toggle Zetsubou guide navigation' });
-      await toggle.click();
-      assert.equal(await toggle.getAttribute('aria-expanded'), 'true', 'Zetsubou mobile guide menu expands');
-      assert(await page.locator('.zets-nav.open').isVisible(), 'Zetsubou mobile navigation becomes visible');
-      await page.getByRole('link', { name: 'Prerequisites' }).click();
+      // One tab bar on every map: on phones the Zetsubou tabs are a single scrolling row, always shown (no menu toggle).
+      assert.equal(await page.getByRole('button', { name: 'Toggle Zetsubou guide navigation' }).isVisible(), false, 'no menu toggle on phones');
+      assert(await page.locator('.zets-nav').isVisible(), 'Zetsubou tabs are visible on phones');
+      await page.locator('.zets-nav').getByRole('link', { name: 'Prerequisites' }).click();
       await page.waitForURL('**/maps/zetsubou-no-shima/prerequisites');
     }
     results.push({ width, route: mainRoute, passed: true });

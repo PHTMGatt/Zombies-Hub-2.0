@@ -219,7 +219,7 @@ try {
     await page.evaluate(() => window.localStorage.clear());
     await page.reload({ waitUntil: 'networkidle' });
     // The flat guide's titles start with a screen-reader-only "Step N:".
-    const stepTitle = async (id) => (await page.locator(`#${id} h3`).innerText()).replace(/^Step \d+:\s*/, '');
+    const stepTitle = async (id) => (await page.locator(`#${id} :is(h2, h3)`).innerText()).replace(/^Step \d+:\s*/, '');
     assert.equal(await stepTitle('secure-keys'), 'Ascend from Darkness');
     assert.equal(await stepTitle('thunder-fists'), 'Thunder Fists');
     // The staff placement answer is one tap away, on the Step details tab (flat main guide).
@@ -390,7 +390,7 @@ try {
     const headline = await page.locator('h1').boundingBox();
     assert(headline && headline.y + headline.height <= 390, `Home headline ends at ${Math.round(headline.y + headline.height)}px, below the 390px landscape viewport`);
     await page.goto(`${base}/side-easter-eggs/kino`, { waitUntil: 'networkidle' });
-    const kinoStep = await page.locator('li.guide-seq__step h3, li.flat-guide__step h3').first().boundingBox();
+    const kinoStep = await page.locator('li.guide-seq__step h3, li.flat-guide__step h2').first().boundingBox();
     assert(kinoStep && kinoStep.y + kinoStep.height <= 390, `Kino's first step title ends at ${Math.round(kinoStep ? kinoStep.y + kinoStep.height : NaN)}px; it must be fully on the 390px landscape screen`);
     results.push({ width: 844, height: 390, check: 'no pinned headers; Home headline and Kino first step in the first screen', passed: true });
 
@@ -407,7 +407,7 @@ try {
     // Measured, not asserted until each map's own redesign: where the first step title starts.
     for (const route of routes.filter((item) => item.startsWith('/maps/'))) {
       await page.goto(`${base}${route}`, { waitUntil: 'networkidle' });
-      const first = await page.locator('li.guide-seq__step h3, li.flat-guide__step h3, li.run-step h3').first().boundingBox({ timeout: 5000 }).catch(() => null);
+      const first = await page.locator('li.guide-seq__step h3, li.flat-guide__step h2, li.run-step h3').first().boundingBox({ timeout: 5000 }).catch(() => null);
       results.push({ width: 844, height: 390, route, metric: 'first step title top (px)', value: first ? Math.round(first.y) : null, passed: true });
     }
     await context.close();
