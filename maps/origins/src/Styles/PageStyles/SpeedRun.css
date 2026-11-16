@@ -671,8 +671,19 @@
     scroll-snap-type: x proximity;
     scroll-padding-inline: 0.6rem;
     scrollbar-width: none;
-    -webkit-mask-image: linear-gradient(90deg, transparent, #000 0.6rem, #000 calc(100% - 0.6rem), transparent);
-    mask-image: linear-gradient(90deg, transparent, #000 0.6rem, #000 calc(100% - 0.6rem), transparent);
+    /* Fade only the edge with more checkpoints past it (zh-edge-fade, shared/ui/tokens.css). */
+    --zh-fade: 2rem;
+    --zh-fade-end: var(--zh-fade);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 var(--zh-fade-start), #000 calc(100% - var(--zh-fade-end)), transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 var(--zh-fade-start), #000 calc(100% - var(--zh-fade-end)), transparent);
+  }
+
+  @supports (animation-timeline: scroll()) {
+    .origins-module .speedrun-rail ol {
+      --zh-fade-end: 0px;
+      animation: zh-edge-fade linear both;
+      animation-timeline: scroll(self inline);
+    }
   }
 
   .origins-module .speedrun-rail ol::-webkit-scrollbar {
