@@ -75,8 +75,10 @@
   border-color: var(--map-tab-accent) !important;
 }
 
-/* Phones: only the hub header stays pinned. A second pinned map header ate ~20% of the screen on Origins and Gorod. */
+/* Phones: only the hub header stays pinned. A second pinned map header ate ~20% of the screen on Origins and Gorod.
+   "relative", not "static": the header art overlay is absolutely positioned and must stay inside its header, or it covers
+   the page below (dimmed content, taps on the Back to step link swallowed). */
 @media (max-width: 700px) {
   .origins-module .site-header,
-  .gorod-module .gorod-header { position: static !important; }
+  .gorod-module .gorod-header { position: relative !important; top: auto !important; }
 }
