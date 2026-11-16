@@ -19,3 +19,9 @@
 .step-details__back a { display: inline-flex; align-items: center; min-height: 44px; color: var(--flat-accent, #8fd8ff); font-weight: 600; text-decoration: none; }
 .step-details__back a:hover { text-decoration: underline; }
 .step-details__back a:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+/* Links inside a step section (bow routes, videos) keep a 44px tap target. */
+.step-details__ref a, .step-details__video a { display: inline-flex; align-items: center; min-height: 44px; margin-right: 1rem; color: var(--flat-accent); font-weight: 600; text-decoration: none; }
+.step-details__ref a:hover, .step-details__video a:hover { text-decoration: underline; }
+.step-details__ref a:focus-visible, .step-details__video a:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+/* 16px side gutter on phones, even where the map's page shell has none. */
+.step-details { box-sizing: border-box; padding-inline: 1rem; }
