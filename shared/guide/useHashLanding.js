@@ -21,15 +21,16 @@ const pinnedBottom = () => Math.max(0, ...[...document.querySelectorAll('.hub-he
  * hash scroll runs before the map chunk exists, so this finishes the job: it waits for web fonts (a late
  * font swap moves the target after the scroll), jumps without animating, and nudges the target clear of
  * anything pinned. An old ?ref=<id> link counts too: the app shell rewrites it to #<id>, but this may
- * render first. Only ids in `ids` are handled.
+ * render first. Only ids in `ids` are handled; with no `ids`, any element on the page with that id (a tab
+ * page's sections, reached from a main-guide step link). It stands down once the reader scrolls or taps.
  */
 export default function useHashLanding(ids) {
   const { hash, search } = useLocation();
-  const key = ids.join('|');
+  const key = ids ? ids.join('|') : null;
 
   useEffect(() => {
     const id = fragmentId(hash) || new URLSearchParams(search).get('ref');
-    if (!id || !key.split('|').includes(id)) return undefined;
+    if (!id || (key !== null && !key.split('|').includes(id))) return undefined;
     let cancelled = false;
     const land = () => {
       const target = document.getElementById(id);
@@ -39,7 +40,13 @@ export default function useHashLanding(ids) {
       if (overlap > 0) window.scrollBy({ top: -overlap, behavior: 'instant' });
     };
     land();
+    const stop = () => { cancelled = true; };
+    const inputs = ['wheel', 'touchstart', 'keydown', 'pointerdown'];
+    inputs.forEach((type) => window.addEventListener(type, stop, { once: true, passive: true }));
     (document.fonts?.ready ?? Promise.resolve()).then(() => requestAnimationFrame(land));
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+      inputs.forEach((type) => window.removeEventListener(type, stop));
+    };
   }, [hash, search, key]);
 }
