@@ -222,3 +222,7 @@
   background: rgba(16, 6, 6, 0.93);
 }
 .gorod-module .gorod-content .zh-guide-hero { background: none; border: 0; }
+.gorod-module .gorod-content :is(p, li, small, summary, dd) { font-size: 1.0625rem; line-height: 1.5; }
+.gorod-module .gorod-content :is(strong, h4) { font-size: max(1.0625rem, 1em); }
+.gorod-module .gorod-content span:not([class*="number"]):not([class*="marker"]):not([class*="dot"]) { font-size: max(0.95rem, 1em); letter-spacing: 0; text-transform: none; }
+.gorod-module .gorod-content :is(section, article, details):not(.gorod-valve-solver):not([class*="solver"]) { box-shadow: none; }
