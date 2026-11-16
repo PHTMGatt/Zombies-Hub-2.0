@@ -22,7 +22,7 @@ export default function FlatGuide({ steps, label, footer, className = '' }) {
           <li className="flat-guide__step" id={step.id} key={step.id}>
             <span className="flat-guide__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
             <div className="flat-guide__body">
-              <h3 className="flat-guide__title"><span className="flat-guide__sr">Step {i + 1}: </span>{step.title}</h3>
+              <h2 className="flat-guide__title"><span className="flat-guide__sr">Step {i + 1}: </span>{step.title}</h2>
               {step.goal && <p className="flat-guide__line">{step.goal}</p>}
               {step.links?.length > 0 && (
                 <p className="flat-guide__links">

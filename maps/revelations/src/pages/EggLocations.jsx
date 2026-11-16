@@ -53,7 +53,7 @@ const EggLocations = () => {
             />
           </div>
 
-          <aside className="rev-workspace__panel">
+          <div className="rev-workspace__panel">
             <RevAreaPicker
               kicker="Map area"
               noun="egg spots"
@@ -72,7 +72,7 @@ const EggLocations = () => {
               activeKey={selectedLocation}
               onSelect={handleLocation}
             />
-          </aside>
+          </div>
         </div>
 
         <RevShotSection

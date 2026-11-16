@@ -51,7 +51,7 @@ function SummoningKey() {
             />
           </div>
 
-          <aside className="rev-workspace__panel">
+          <div className="rev-workspace__panel">
             <RevAreaPicker
               kicker="Throw target"
               areas={areas}
@@ -72,7 +72,7 @@ function SummoningKey() {
               activeKey={selected?.name}
               onSelect={handleTimestampClick}
             />
-          </aside>
+          </div>
         </div>
       </section>
     </div>

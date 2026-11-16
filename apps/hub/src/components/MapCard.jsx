@@ -94,7 +94,7 @@ export default function MapCard({
 
       <div className="map-info">
         <div>
-          <h3>{name}</h3>
+          <h2>{name}</h2>
           <p
             className="map-dlc"
             onMouseEnter={event => {

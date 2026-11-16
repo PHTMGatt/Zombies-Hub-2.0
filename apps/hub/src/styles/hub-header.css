@@ -230,3 +230,7 @@
     position: absolute;
   }
 }
+
+/* The brand link gets the same 44px tap band as the nav links (no visual change). */
+.hub-header__brand { position: relative; }
+.hub-header__brand::before { content: ''; position: absolute; inset: 50% 0 auto 0; height: 44px; transform: translateY(-50%); }

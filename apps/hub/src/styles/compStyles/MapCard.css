@@ -135,7 +135,7 @@
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.72);
 }
 
-.map-info h3 {
+.map-info :is(h2, h3) {
   margin: 0;
   font-size: 1rem;
   line-height: 1.15;
@@ -175,7 +175,7 @@
     aspect-ratio: 16 / 9;
   }
 
-  .map-info h3 {
+  .map-info :is(h2, h3) {
     font-size: 1.05rem;
   }
 }

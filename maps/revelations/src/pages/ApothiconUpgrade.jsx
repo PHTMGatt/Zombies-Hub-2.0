@@ -42,7 +42,7 @@ const ApothiconUpgrade = () => {
             />
           </div>
 
-          <aside className="rev-workspace__panel">
+          <div className="rev-workspace__panel">
             <div className="rev-panel-head">
               <span className="rev-kicker">Rock locations</span>
               <span className="rev-panel-count">{options.length}</span>
@@ -53,7 +53,7 @@ const ApothiconUpgrade = () => {
               activeKey={selected?.name}
               onSelect={handlePlay}
             />
-          </aside>
+          </div>
         </div>
 
         <RevShotSection
