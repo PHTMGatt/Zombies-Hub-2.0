@@ -70,3 +70,7 @@
   visibility: visible;
   transform: translateX(-50%) scale(1);
 }
+
+/* Calm pass: readable tabs, 44px taps. */
+.mob-module .nav a { min-height: 44px; font-size: 1rem !important; }
+.mob-module .mob-header__identity small { font-size: 1rem; }
