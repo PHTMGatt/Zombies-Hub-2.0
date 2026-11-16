@@ -20,6 +20,7 @@ export const criticalRoutes = [
   ['origins-step-details', '/maps/origins/step-details'],
 
   ['mob-main', '/maps/mob-of-the-dead'],
+  ['mob-step-details', '/maps/mob-of-the-dead/step-details'],
   ['mob-plane', '/maps/mob-of-the-dead/plane'],
   ['mob-retriever-skulls', '/maps/mob-of-the-dead/retriever-skulls'],
   ['mob-codes', '/maps/mob-of-the-dead/codes'],
