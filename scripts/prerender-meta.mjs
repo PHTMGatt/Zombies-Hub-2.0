@@ -24,7 +24,14 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
 // Hub pages with a fixed path (apps/hub/src/app/AppRoutes.jsx). /maps redirects to /allmaps in the app,
 // but a shared /maps link still deserves the All Maps card.
-export const HUB_ROUTES = ['/allmaps', '/maps', '/easter-eggs', '/side-easter-eggs', '/achievements', '/search', '/coming-soon'];
+// Video guide pages and side Easter Egg pages are shared too (apps/hub/src/data/EasterEggGuides.js, sideEE): kept in step by
+// scripts/prerender-share-routes.test.mjs. Shangri-La BO1 is the Coming Soon page; its share card is the same generic head.
+export const SHARED_PAGES = [
+  '/easter-eggs/ascension', '/easter-eggs/call-of-the-dead', '/easter-eggs/moon', '/easter-eggs/tranzit', '/easter-eggs/die-rise',
+  '/easter-eggs/buried', '/easter-eggs/the-giant', '/easter-eggs/shangri-la-chronicles',
+  '/side-easter-eggs/kino', '/side-easter-eggs/gk', '/side-easter-eggs/de', '/side-easter-eggs/soe', '/side-easter-eggs/origins-speedrun',
+];
+export const HUB_ROUTES = ['/allmaps', '/maps', '/easter-eggs', '/side-easter-eggs', '/achievements', '/search', '/coming-soon', ...SHARED_PAGES];
 
 // Each dedicated map's routes file lists its tabs as <Route path="…">: keep the static ones.
 const ROUTE_FILES = {
