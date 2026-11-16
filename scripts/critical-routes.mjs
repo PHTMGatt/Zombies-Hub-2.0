@@ -56,6 +56,7 @@ export const criticalRoutes = [
   ['gorod-boss', '/maps/gorod-krovi/boss'],
 
   ['revelations-main', '/maps/revelations'],
+  ['rev-step-details', '/maps/revelations/step-details'],
   ['revelations-apothicon', '/maps/revelations/apothicon-upgrade'],
   ['revelations-eggs', '/maps/revelations/egg-locations'],
   ['revelations-key', '/maps/revelations/summoning-key'],

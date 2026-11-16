@@ -2175,5 +2175,218 @@
     ],
     "reason": "Step 1 text consolidated into code + ordered actions rather than repeated UI slots.",
     "spec": "User UX feedback (Nov 6, 2026)"
+  },
+  {
+    "text": "Blue rocks",
+    "layer": "data",
+    "reason": "Screenshot label, alt text or caption moved verbatim from the Main Guide step to the tab section that now owns the image (maps/revelations/src/data/revReferenceShots.js: Apothicon Upgrade #servant-rocks, Egg Locations #bone-spots, #turret-shot). Removal of the Servant, bones and turret images from the Main Guide approved by Bryen.",
+    "spec": "Bryen 2026-11-16 flat main-guide spec"
+  },
+  {
+    "text": "Spawn",
+    "layer": "data",
+    "reason": "Screenshot label, alt text or caption moved verbatim from the Main Guide step to the tab section that now owns the image (maps/revelations/src/data/revReferenceShots.js: Apothicon Upgrade #servant-rocks, Egg Locations #bone-spots, #turret-shot). Removal of the Servant, bones and turret images from the Main Guide approved by Bryen.",
+    "spec": "Bryen 2026-11-16 flat main-guide spec"
+  },
+  {
+    "text": "Aiming the Apothicon Servant at the blue rock — Spawn",
+    "layer": "data",
+    "reason": "Screenshot label, alt text or caption moved verbatim from the Main Guide step to the tab section that now owns the image (maps/revelations/src/data/revReferenceShots.js: Apothicon Upgrade #servant-rocks, Egg Locations #bone-spots, #turret-shot). Removal of the Servant, bones and turret images from the Main Guide approved by Bryen.",
+    "spec": "Bryen 2026-11-16 flat main-guide spec"
+  },
+  {
+    "text": "Aim here",
+    "layer": "data",
+    "reason": "Screenshot label, alt text or caption moved verbatim from the Main Guide step to the tab section that now owns the image (maps/revelations/src/data/revReferenceShots.js: Apothicon Upgrade #servant-rocks, Egg Locations #bone-spots, #turret-shot). Removal of the Servant, bones and turret images from the Main Guide approved by Bryen.",
+    "spec": "Bryen 2026-11-16 flat main-guide spec"
+  },
+  {
+    "text": "Blue rock in the sky — Spawn",
+    "layer": "data",
+    "reason": "Screenshot label, alt text or caption moved verbatim from the Main Guide step to the tab section that now owns the image (maps/revelations/src/data/revReferenceShots.js: Apothicon Upgrade #servant-rocks, Egg Locations #bone-spots, #turret-shot). Removal of the Servant, bones and turret images from the Main Guide approved by Bryen.",
+    "spec": "Bryen 2026-11-16 flat main-guide spec"
+  },
+  {
+    "text": "Where you stand",
+    "layer": "data",
+    "reason": "Screenshot label, alt text or caption moved verbatim from the Main Guide step to the tab section that now owns the image (maps/revelations/src/data/revReferenceShots.js: Apothicon Upgrade #servant-rocks, Egg Locations #bone-spots, #turret-shot). Removal of the Servant, bones and turret images from the Main Guide approved by Bryen.",
+    "spec": "Bryen 2026-11-16 flat main-guide spec"
+  },
+  {
+    "text": "Aiming the Apothicon Servant at the blue rock — Shangri-La",
+    "layer": "data",
+    "reason": "Screenshot label, alt text or caption moved verbatim from the Main Guide step to the tab section that now owns the image (maps/revelations/src/data/revReferenceShots.js: Apothicon Upgrade #servant-rocks, Egg Locations #bone-spots, #turret-shot). Removal of the Servant, bones and turret images from the Main Guide approved by Bryen.",
+    "spec": "Bryen 2026-11-16 flat main-guide spec"
+  },
+  {
+    "text": "Blue rock in the sky — Shangri-La",
+    "layer": "data",
+    "reason": "Screenshot label, alt text or caption moved verbatim from the Main Guide step to the tab section that now owns the image (maps/revelations/src/data/revReferenceShots.js: Apothicon Upgrade #servant-rocks, Egg Locations #bone-spots, #turret-shot). Removal of the Servant, bones and turret images from the Main Guide approved by Bryen.",
+    "spec": "Bryen 2026-11-16 flat main-guide spec"
+  },
+  {
+    "text": "Aiming the Apothicon Servant at the blue rock — Verrückt",
+    "layer": "data",
+    "reason": "Screenshot label, alt text or caption moved verbatim from the Main Guide step to the tab section that now owns the image (maps/revelations/src/data/revReferenceShots.js: Apothicon Upgrade #servant-rocks, Egg Locations #bone-spots, #turret-shot). Removal of the Servant, bones and turret images from the Main Guide approved by Bryen.",
+    "spec": "Bryen 2026-11-16 flat main-guide spec"
+  },
+  {
+    "text": "Blue rock in the sky — Verrückt",
+    "layer": "data",
+    "reason": "Screenshot label, alt text or caption moved verbatim from the Main Guide step to the tab section that now owns the image (maps/revelations/src/data/revReferenceShots.js: Apothicon Upgrade #servant-rocks, Egg Locations #bone-spots, #turret-shot). Removal of the Servant, bones and turret images from the Main Guide approved by Bryen.",
+    "spec": "Bryen 2026-11-16 flat main-guide spec"
+  },
+  {
+    "text": "Aiming the Apothicon Servant at the blue rock — Mob of the Dead",
+    "layer": "data",
+    "reason": "Screenshot label, alt text or caption moved verbatim from the Main Guide step to the tab section that now owns the image (maps/revelations/src/data/revReferenceShots.js: Apothicon Upgrade #servant-rocks, Egg Locations #bone-spots, #turret-shot). Removal of the Servant, bones and turret images from the Main Guide approved by Bryen.",
+    "spec": "Bryen 2026-11-16 flat main-guide spec"
+  },
+  {
+    "text": "Blue rock in the sky — Mob of the Dead",
+    "layer": "data",
+    "reason": "Screenshot label, alt text or caption moved verbatim from the Main Guide step to the tab section that now owns the image (maps/revelations/src/data/revReferenceShots.js: Apothicon Upgrade #servant-rocks, Egg Locations #bone-spots, #turret-shot). Removal of the Servant, bones and turret images from the Main Guide approved by Bryen.",
+    "spec": "Bryen 2026-11-16 flat main-guide spec"
+  },
+  {
+    "text": "Nacht",
+    "layer": "data",
+    "reason": "Screenshot label, alt text or caption moved verbatim from the Main Guide step to the tab section that now owns the image (maps/revelations/src/data/revReferenceShots.js: Apothicon Upgrade #servant-rocks, Egg Locations #bone-spots, #turret-shot). Removal of the Servant, bones and turret images from the Main Guide approved by Bryen.",
+    "spec": "Bryen 2026-11-16 flat main-guide spec"
+  },
+  {
+    "text": "Aiming the Apothicon Servant at the blue rock — Nacht",
+    "layer": "data",
+    "reason": "Screenshot label, alt text or caption moved verbatim from the Main Guide step to the tab section that now owns the image (maps/revelations/src/data/revReferenceShots.js: Apothicon Upgrade #servant-rocks, Egg Locations #bone-spots, #turret-shot). Removal of the Servant, bones and turret images from the Main Guide approved by Bryen.",
+    "spec": "Bryen 2026-11-16 flat main-guide spec"
+  },
+  {
+    "text": "Blue rock in the sky — Nacht",
+    "layer": "data",
+    "reason": "Screenshot label, alt text or caption moved verbatim from the Main Guide step to the tab section that now owns the image (maps/revelations/src/data/revReferenceShots.js: Apothicon Upgrade #servant-rocks, Egg Locations #bone-spots, #turret-shot). Removal of the Servant, bones and turret images from the Main Guide approved by Bryen.",
+    "spec": "Bryen 2026-11-16 flat main-guide spec"
+  },
+  {
+    "text": "Bone spot — Spawn",
+    "layer": "data",
+    "reason": "Screenshot label, alt text or caption moved verbatim from the Main Guide step to the tab section that now owns the image (maps/revelations/src/data/revReferenceShots.js: Apothicon Upgrade #servant-rocks, Egg Locations #bone-spots, #turret-shot). Removal of the Servant, bones and turret images from the Main Guide approved by Bryen.",
+    "spec": "Bryen 2026-11-16 flat main-guide spec"
+  },
+  {
+    "text": "Spawn: shoot it with a Pack-a-Punched bullet weapon",
+    "layer": "data",
+    "reason": "Screenshot label, alt text or caption moved verbatim from the Main Guide step to the tab section that now owns the image (maps/revelations/src/data/revReferenceShots.js: Apothicon Upgrade #servant-rocks, Egg Locations #bone-spots, #turret-shot). Removal of the Servant, bones and turret images from the Main Guide approved by Bryen.",
+    "spec": "Bryen 2026-11-16 flat main-guide spec"
+  },
+  {
+    "text": "Bone spot — Shangri-La",
+    "layer": "data",
+    "reason": "Screenshot label, alt text or caption moved verbatim from the Main Guide step to the tab section that now owns the image (maps/revelations/src/data/revReferenceShots.js: Apothicon Upgrade #servant-rocks, Egg Locations #bone-spots, #turret-shot). Removal of the Servant, bones and turret images from the Main Guide approved by Bryen.",
+    "spec": "Bryen 2026-11-16 flat main-guide spec"
+  },
+  {
+    "text": "Shangri-La: shoot it with a Pack-a-Punched bullet weapon",
+    "layer": "data",
+    "reason": "Screenshot label, alt text or caption moved verbatim from the Main Guide step to the tab section that now owns the image (maps/revelations/src/data/revReferenceShots.js: Apothicon Upgrade #servant-rocks, Egg Locations #bone-spots, #turret-shot). Removal of the Servant, bones and turret images from the Main Guide approved by Bryen.",
+    "spec": "Bryen 2026-11-16 flat main-guide spec"
+  },
+  {
+    "text": "Bone spot — Origins",
+    "layer": "data",
+    "reason": "Screenshot label, alt text or caption moved verbatim from the Main Guide step to the tab section that now owns the image (maps/revelations/src/data/revReferenceShots.js: Apothicon Upgrade #servant-rocks, Egg Locations #bone-spots, #turret-shot). Removal of the Servant, bones and turret images from the Main Guide approved by Bryen.",
+    "spec": "Bryen 2026-11-16 flat main-guide spec"
+  },
+  {
+    "text": "Origins: shoot it with a Pack-a-Punched bullet weapon",
+    "layer": "data",
+    "reason": "Screenshot label, alt text or caption moved verbatim from the Main Guide step to the tab section that now owns the image (maps/revelations/src/data/revReferenceShots.js: Apothicon Upgrade #servant-rocks, Egg Locations #bone-spots, #turret-shot). Removal of the Servant, bones and turret images from the Main Guide approved by Bryen.",
+    "spec": "Bryen 2026-11-16 flat main-guide spec"
+  },
+  {
+    "text": "Bone spot — Verrückt",
+    "layer": "data",
+    "reason": "Screenshot label, alt text or caption moved verbatim from the Main Guide step to the tab section that now owns the image (maps/revelations/src/data/revReferenceShots.js: Apothicon Upgrade #servant-rocks, Egg Locations #bone-spots, #turret-shot). Removal of the Servant, bones and turret images from the Main Guide approved by Bryen.",
+    "spec": "Bryen 2026-11-16 flat main-guide spec"
+  },
+  {
+    "text": "Verrückt: shoot it with a Pack-a-Punched bullet weapon",
+    "layer": "data",
+    "reason": "Screenshot label, alt text or caption moved verbatim from the Main Guide step to the tab section that now owns the image (maps/revelations/src/data/revReferenceShots.js: Apothicon Upgrade #servant-rocks, Egg Locations #bone-spots, #turret-shot). Removal of the Servant, bones and turret images from the Main Guide approved by Bryen.",
+    "spec": "Bryen 2026-11-16 flat main-guide spec"
+  },
+  {
+    "text": "Bone spot — Der Eisendrache",
+    "layer": "data",
+    "reason": "Screenshot label, alt text or caption moved verbatim from the Main Guide step to the tab section that now owns the image (maps/revelations/src/data/revReferenceShots.js: Apothicon Upgrade #servant-rocks, Egg Locations #bone-spots, #turret-shot). Removal of the Servant, bones and turret images from the Main Guide approved by Bryen.",
+    "spec": "Bryen 2026-11-16 flat main-guide spec"
+  },
+  {
+    "text": "Der Eisendrache: shoot it with a Pack-a-Punched bullet weapon",
+    "layer": "data",
+    "reason": "Screenshot label, alt text or caption moved verbatim from the Main Guide step to the tab section that now owns the image (maps/revelations/src/data/revReferenceShots.js: Apothicon Upgrade #servant-rocks, Egg Locations #bone-spots, #turret-shot). Removal of the Servant, bones and turret images from the Main Guide approved by Bryen.",
+    "spec": "Bryen 2026-11-16 flat main-guide spec"
+  },
+  {
+    "text": "Bone spot — Nacht",
+    "layer": "data",
+    "reason": "Screenshot label, alt text or caption moved verbatim from the Main Guide step to the tab section that now owns the image (maps/revelations/src/data/revReferenceShots.js: Apothicon Upgrade #servant-rocks, Egg Locations #bone-spots, #turret-shot). Removal of the Servant, bones and turret images from the Main Guide approved by Bryen.",
+    "spec": "Bryen 2026-11-16 flat main-guide spec"
+  },
+  {
+    "text": "Nacht: shoot it with a Pack-a-Punched bullet weapon",
+    "layer": "data",
+    "reason": "Screenshot label, alt text or caption moved verbatim from the Main Guide step to the tab section that now owns the image (maps/revelations/src/data/revReferenceShots.js: Apothicon Upgrade #servant-rocks, Egg Locations #bone-spots, #turret-shot). Removal of the Servant, bones and turret images from the Main Guide approved by Bryen.",
+    "spec": "Bryen 2026-11-16 flat main-guide spec"
+  },
+  {
+    "text": "Absorbing",
+    "layer": "data",
+    "reason": "Screenshot label, alt text or caption moved verbatim from the Main Guide step to the tab section that now owns the image (maps/revelations/src/data/revReferenceShots.js: Apothicon Upgrade #servant-rocks, Egg Locations #bone-spots, #turret-shot). Removal of the Servant, bones and turret images from the Main Guide approved by Bryen.",
+    "spec": "Bryen 2026-11-16 flat main-guide spec"
+  },
+  {
+    "text": "Absorbing a revealed bone with the upgraded Apothicon Servant",
+    "layer": "data",
+    "reason": "Screenshot label, alt text or caption moved verbatim from the Main Guide step to the tab section that now owns the image (maps/revelations/src/data/revReferenceShots.js: Apothicon Upgrade #servant-rocks, Egg Locations #bone-spots, #turret-shot). Removal of the Servant, bones and turret images from the Main Guide approved by Bryen.",
+    "spec": "Bryen 2026-11-16 flat main-guide spec"
+  },
+  {
+    "text": "Then absorb it with the upgraded Servant",
+    "layer": "data",
+    "reason": "Screenshot label, alt text or caption moved verbatim from the Main Guide step to the tab section that now owns the image (maps/revelations/src/data/revReferenceShots.js: Apothicon Upgrade #servant-rocks, Egg Locations #bone-spots, #turret-shot). Removal of the Servant, bones and turret images from the Main Guide approved by Bryen.",
+    "spec": "Bryen 2026-11-16 flat main-guide spec"
+  },
+  {
+    "text": "Laser turret firing at the blue rock behind a rift",
+    "layer": "data",
+    "reason": "Screenshot label, alt text or caption moved verbatim from the Main Guide step to the tab section that now owns the image (maps/revelations/src/data/revReferenceShots.js: Apothicon Upgrade #servant-rocks, Egg Locations #bone-spots, #turret-shot). Removal of the Servant, bones and turret images from the Main Guide approved by Bryen.",
+    "spec": "Bryen 2026-11-16 flat main-guide spec"
+  },
+  {
+    "text": "Servant upgrade videos",
+    "layer": "data",
+    "reason": "Link relabelled \"Servant rocks and videos\" and pointed at the #servant-rocks section of the same Apothicon Upgrade tab; the videos stay on that tab.",
+    "spec": "Bryen 2026-11-16 flat main-guide spec"
+  },
+  {
+    "tabs": "revelations/servant",
+    "layer": "data",
+    "reason": "The blue-rock screenshots left the Main Guide for the Apothicon Upgrade tab (#servant-rocks), unchanged.",
+    "spec": "Bryen 2026-11-16 flat main-guide spec"
+  },
+  {
+    "tabs": "revelations/reel-3",
+    "layer": "data",
+    "reason": "The six bone-spot screenshots and the absorbing screenshot left the Main Guide for the Egg Locations tab (#bone-spots), unchanged.",
+    "spec": "Bryen 2026-11-16 flat main-guide spec"
+  },
+  {
+    "text": "Twelve steps across every old map. Screenshots show where to aim.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations"
+    ],
+    "reason": "Intro line of the Main Guide header bar (no guide fact). The flat main guide has no header bar and no screenshots; the screenshots live on the Apothicon Upgrade and Egg Locations tabs.",
+    "spec": "Bryen 2026-11-16 flat main-guide spec"
   }
 ]
