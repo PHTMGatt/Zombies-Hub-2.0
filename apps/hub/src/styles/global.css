@@ -222,3 +222,21 @@ body .maps-empty-state :is(span, p) { font-size: 1rem !important; }
 body .maps-empty-state strong { font-size: 1.125rem; }
 /* Astral review: control labels and map metadata read at 16px (chips and badges stay 14px). */
 body :is(.map-filter__legend, .map-filter__count, .map-dlc, .game-count) { font-size: 1rem !important; }
+
+/* Print (2026-11-16): a guide prints as plain black-on-white text: no header, tabs, footer or art. */
+@media print {
+  .hub-header, .zh-skip-link, .hub-footer, footer, .guide-back-to-step,
+  .map-module header nav, [class*="-header"] nav, .origins-nav-links, .rev-header__tabs, .de-nav, .zets-nav, .soe-tabs,
+  .gorod-header__nav, .mob-header .nav, [class*="bg-blur"], [class*="bg-tint"], video, iframe, audio { display: none !important; }
+  html, body, .map-module, [class*="-page"], .flat-guide, .step-details,
+  .origins-guide__inner, .rev-run, .de-home-flat, .zets-main-flat, .gorod-main-flat, .mob-main-flat, .soe-main-flat {
+    background: #fff !important;
+    color: #000 !important;
+    box-shadow: none !important;
+  }
+  .flat-guide, .step-details { --flat-ink: #000; --flat-text: #111; --flat-accent: #000; --flat-line: #999; width: 100% !important; }
+  .flat-guide__step, .step-details__step { break-inside: avoid; }
+  .map-module > header, .site-header, .de-header, .zets-header, .gorod-header, .mob-header, .rev-header, [class*="soe-"][class*="header"] { display: none !important; }
+  .main-guide, .map-route-host, .app-main, main { background: #fff !important; background-image: none !important; }
+  .flat-guide .flat-guide__links { display: none !important; }
+}
