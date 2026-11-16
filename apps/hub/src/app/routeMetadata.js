@@ -29,7 +29,7 @@ export function routeTitle(pathname) {
   return 'Page not found | Zombies Hub 2.0';
 }
 
-export const SITE_DESCRIPTION = 'Zombies Hub 2.0 is a unified Call of Duty Zombies companion with map guides, Easter eggs, side quests, speedrun references, and resources for Black Ops 1–3.';
+export const SITE_DESCRIPTION = 'Zombies Hub 2.0 is a Call of Duty Zombies companion with map guides, Easter eggs, side quests, speedrun references and resources, World at War to Black Ops 3.';
 const pageDescriptions = {
   '/allmaps': 'Every Call of Duty Zombies map from World at War to Black Ops 3, with map info and links to each guide.',
   '/easter-eggs': 'Main Easter Egg guides for Call of Duty Zombies maps, from World at War to Black Ops 3.',

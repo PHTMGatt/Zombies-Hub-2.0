@@ -40,7 +40,7 @@ export default function AllMaps() {
         <span className="maps-kicker">Map archive</span>
         <h1 className="page-title">All Zombies Maps</h1>
         <p className="page-subtitle">
-          Browse the Black Ops 1–3 map catalog, DLC releases, and Easter Egg coverage.
+          Browse the map catalog from World at War to Black Ops 3, DLC releases, and Easter Egg coverage.
         </p>
 
         <label className="map-search" htmlFor="map-search-input">

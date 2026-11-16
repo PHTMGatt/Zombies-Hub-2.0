@@ -2451,5 +2451,14 @@
     ],
     "reason": "Title of the separate Electrical Panel box, removed in 036e3f8 when it merged into the one switches panel (\"Final positions\" / \"Practice turns\"). The panel itself stays: solving every switch in Practice turns still shows \"Electrical Panel solved\" and records the \"Electrical Panel Solved\" achievement.",
     "spec": "§4.4"
+  },
+  {
+    "text": "Browse the Black Ops 1–3 map catalog, DLC releases, and Easter Egg coverage.",
+    "layer": "rendered",
+    "routes": [
+      "/allmaps"
+    ],
+    "reason": "Reworded to \"Browse the map catalog from World at War to Black Ops 3, DLC releases, and Easter Egg coverage.\" now that the World at War originals are indexed (Bryen added them, 2026-11-16); no other change.",
+    "spec": "Bryen 2026-11-16 World at War entries"
   }
 ]
