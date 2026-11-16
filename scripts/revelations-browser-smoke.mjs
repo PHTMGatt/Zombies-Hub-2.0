@@ -285,6 +285,17 @@ try {
   }
   await tall.close();
 
+  // A blocked YouTube never fires the player's ready or error events: the page still says so in time.
+  const blocked = await browser.newContext({ viewport: { width: 390, height: 844 } });
+  await blocked.route(/^https:\/\/([a-z0-9-]+\.)?(youtube\.com|youtube-nocookie\.com|ytimg\.com)\//, (route) => route.abort());
+  const blockedPage = await blocked.newPage();
+  await blockedPage.goto(`${base}/maps/revelations/sound-step`, { waitUntil: 'domcontentloaded' });
+  await blockedPage.getByRole('heading', { name: 'Sound Step', level: 2 }).waitFor();
+  await blockedPage.locator('.rev-video__warning').waitFor({ timeout: 15000 });
+  assert.match(await blockedPage.locator('.rev-video__now').innerText(), /Player unavailable here/, 'Blocked YouTube shows the unavailable note');
+  assert(await blockedPage.locator('.rev-video__external').isVisible(), 'Blocked YouTube keeps the YouTube link');
+  results.push({ width: 390, route: '/maps/revelations/sound-step', check: 'blocked YouTube shows the unavailable note', passed: true });
+  await blocked.close();
 
   // The four target viewports: every section fits, nothing clips, and the phone step selector stays compact.
   const routes = ['', '/apothicon-upgrade', '/egg-locations', '/summoning-key', '/sound-step'].map(path => `/maps/revelations${path}`);

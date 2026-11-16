@@ -6,6 +6,9 @@ import { formatTime } from './RevOptionList';
 // (YouTube oEmbed, 2026-11-14 audit). The credit is on the YouTube link's name and tooltip; a visible
 // credit line is a look change and waits for Bryen's approval.
 const GUIDE_VIDEO = { id: 'tt3mpH7Rrfo', author: 'CodeNamePizza' };
+// A blocked YouTube (an ad blocker, a school or work network) never fires onReady or onError:
+// past this wait with no player, say so and point to the YouTube link instead.
+export const PLAYER_READY_TIMEOUT_MS = 10000;
 
 const GuideVideoPlayer = forwardRef(function GuideVideoPlayer(
   {
@@ -67,6 +70,13 @@ const GuideVideoPlayer = forwardRef(function GuideVideoPlayer(
       return playSegment(start);
     },
   }));
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      if (!playerRef.current) setFailed(true);
+    }, PLAYER_READY_TIMEOUT_MS);
+    return () => window.clearTimeout(timer);
+  }, [videoId]);
 
   useEffect(() => () => {
     clearStopTimer();
