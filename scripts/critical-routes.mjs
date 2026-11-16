@@ -53,6 +53,7 @@ export const criticalRoutes = [
   ['zets-extras', '/maps/zetsubou-no-shima/extras'],
 
   ['gorod-main', '/maps/gorod-krovi'],
+  ['gorod-step-details', '/maps/gorod-krovi/step-details'],
   ['gorod-trophies', '/maps/gorod-krovi/trophies'],
   ['gorod-valves', '/maps/gorod-krovi/valves'],
   ['gorod-buildables', '/maps/gorod-krovi/buildables'],

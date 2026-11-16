@@ -2388,5 +2388,41 @@
     ],
     "reason": "Intro line of the Main Guide header bar (no guide fact). The flat main guide has no header bar and no screenshots; the screenshots live on the Apothicon Upgrade and Egg Locations tabs.",
     "spec": "Bryen 2026-11-16 flat main-guide spec"
+  },
+  {
+    "text": "Gorod Krovi map with the six valve locations marked",
+    "layer": "data",
+    "reason": "Valve map image left the Main Guide step; the same image with this exact alt text is on the Valve Solver tab (maps/gorod-krovi/src/pages/ValveSolver.jsx).",
+    "spec": "Bryen 2026-11-16 flat main-guide spec"
+  },
+  {
+    "text": "Valve locations — tap to enlarge",
+    "layer": "data",
+    "reason": "Caption of the valve map that was embedded in the Main Guide step; the flat guide embeds no images, the map and the full solver are on the Valve Solver tab.",
+    "spec": "Bryen 2026-11-16 flat main-guide spec"
+  },
+  {
+    "text": "Full-size Valve Solver",
+    "layer": "data",
+    "reason": "Link label shortened to \"Valve Solver\" now that the step no longer embeds a compact solver; it opens the same tab.",
+    "spec": "Bryen 2026-11-16 flat main-guide spec"
+  },
+  {
+    "text": "MAIN EASTER EGG",
+    "layer": "rendered",
+    "routes": [
+      "/maps/gorod-krovi"
+    ],
+    "reason": "Kicker of the Main Guide header bar (no guide fact); the flat main guide has no header bar.",
+    "spec": "Bryen 2026-11-16 flat main-guide spec"
+  },
+  {
+    "text": "Eleven steps from the Dragon Shield to Nikolai. The Group 935 keycard lockdown is always the last S.O.P.H.I.A. challenge.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/gorod-krovi"
+    ],
+    "reason": "Header-bar intro of the Main Guide. Its one fact (the Group 935 keycard lockdown always comes last) stays in step 9, shown on the Step details tab.",
+    "spec": "Bryen 2026-11-16 flat main-guide spec"
   }
 ]
