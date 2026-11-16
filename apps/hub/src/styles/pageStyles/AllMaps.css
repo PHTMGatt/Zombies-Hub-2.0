@@ -234,3 +234,23 @@
     min-height: 44px;
   }
 }
+
+/* Search polish: 16px input (no iOS zoom), a real 44px clear button instead of the tiny native mark. */
+.map-search input { font-size: 1rem; }
+.map-search input::-webkit-search-cancel-button { -webkit-appearance: none; appearance: none; display: none; }
+.map-search__clear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  margin: -6px -8px -6px 0;
+  border: 0;
+  background: none;
+  color: var(--zh-muted, #b9cbd9);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.map-search__clear:hover { color: #fff; }
+.map-search:has(.map-search__clear) { grid-template-columns: auto minmax(0, 1fr) auto auto; gap: 0.5rem; }

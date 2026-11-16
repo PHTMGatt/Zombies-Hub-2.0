@@ -55,6 +55,16 @@ export default function AllMaps() {
             autoComplete="off"
           />
           <span>{filteredMaps.length} maps</span>
+          {query && (
+            <button
+              type="button"
+              className="map-search__clear"
+              aria-label="Clear search"
+              onClick={(event) => { event.preventDefault(); setQuery(''); document.getElementById('map-search-input')?.focus(); }}
+            >
+              ×
+            </button>
+          )}
         </label>
 
         <MapFilter page="allmaps" value={show} onChange={setShow} counts={counts} />
