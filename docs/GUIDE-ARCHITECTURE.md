@@ -1,6 +1,6 @@
 # Guide architecture: what the main guide owns, what the tabs own
 
-Status: draft by DELTA · Sonnet, 2026-11-16. Written from Bryen's notes in MongoDB `mithrandir.notes`, the redesign spec, and the session transcripts. Where Bryen's own words conflict over time, both are shown and the conflict is flagged.
+Status: implemented 2026-11-16 for all seven maps (see "As built" at the end). Draft written by DELTA · Sonnet, 2026-11-16. Written from Bryen's notes in MongoDB `mithrandir.notes`, the redesign spec, and the session transcripts. Where Bryen's own words conflict over time, both are shown and the conflict is flagged.
 
 ## The rule
 
@@ -112,3 +112,14 @@ Apply order: the tab sections (ALPHA) must exist first, otherwise the screenshot
 1. **Data first, no content loss.** Move a block into the owning tab's data file; leave a `links` entry on the step. Run `node scripts/guide-content.mjs --write-baseline` and refresh the rendered fixtures; name them in the commit and flag them to Bryen, because the content-preservation test treats a removed line as a removal. Moved content is listed in `scripts/fixtures/approved-removals.json` only with Bryen's OK.
 2. **The tab pages must exist before the step lets go.** Revelations screenshots (Servant, bones, turret) need a page section to land in. That is ALPHA's markup, and CHARLIE's routing for the deep links.
 3. **One map at a time**, Revelations then Origins, each checked at 1440 / 390 / 844 before the next.
+
+## As built (2026-11-16)
+
+Every map's main guide is a flat list rendered by `shared/guide/FlatGuide.jsx`: each step is `{ id, title, goal, links }` (goal about one short line, at most two links). Everything a step used to carry (warnings, how-to lines, task lines, reference lists, tips, video links, bow routes) moved, with the same field names, to that map's **Step details** tab:
+
+- data: `maps/<map>/src/data/stepDetails.js` (same step ids and order; old task lines became a plain "Checklist")
+- page: `maps/<map>/src/pages/StepDetailsPage.jsx` (`Pages/StepDetails.tsx` for Origins) rendering `shared/guide/StepDetails.jsx`, one section per step with anchor `#step-N`
+- route: `/maps/<map>/step-details`, a nav tab named "Step details"; each flat step links to its own section
+- screenshots stayed on their tabs: Revelations blue rocks go to Apothicon Upgrade `#servant-rocks`, bone spots and turret shot to Egg Locations; Gorod valve solver and map to Valve Solver
+- per-game state widgets (Revelations symbol-order note, Shadows of Evil train note and Keeper picker, Der Eisendrache safe-code note) render inside the Step details sections
+- lines with no home appear only in `scripts/fixtures/approved-removals.json` (reason: Bryen 2026-11-16 flat main-guide spec); content is checked by `guide-content.test.mjs` and `content-browser-smoke.mjs` (text that moved to another page of the same map counts as kept)
