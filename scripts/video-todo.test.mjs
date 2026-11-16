@@ -11,5 +11,6 @@ const [maps, guides, todo, dedicated] = await loadModules([
 test('every video-less main Easter Egg map is on the video TODO list, and only those', () => {
   const hasVideo = (slug) => Boolean(guides.default.find((guide) => guide.slug === slug)?.videoUrl);
   const wanted = [...new Set(maps.default.filter((map) => map.isEasterEgg && !dedicated.dedicatedGuideSet.has(map.slug) && !hasVideo(map.slug)).map((map) => map.slug))];
-  assert.deepEqual([...todo.videoTodoSlugs].sort(), wanted.sort());
+  assert.deepEqual([...todo.videoTodoSlugs, ...todo.comingSoonSlugs].sort(), wanted.sort());
+  assert.deepEqual(todo.videoTodoSlugs.filter((slug) => todo.comingSoonSlugs.includes(slug)), [], 'a slug is either TODO or intentionally empty');
 });

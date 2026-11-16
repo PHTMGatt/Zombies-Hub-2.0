@@ -15,19 +15,19 @@ DELTA/CHARLIE · Sonnet, 2026-11-16. Source: `apps/hub/src/data` (mapData, mapIn
 | Map | Route | Was | Now |
 | --- | --- | --- | --- |
 | Shangri-La (BO1, also BO3 Chronicles) | `/easter-eggs/shangri-la` | entry in `EasterEggGuides.js` with an empty `videoUrl`, showed the generic "Coming Soon" screen | **intentionally left empty** (Bryen, 2026-11-16): keeps the "Coming Soon" page, its card keeps "No guide yet" |
-| TranZit (BO2) | `/easter-eggs/tranzit` | no guide entry, generic "Coming Soon" | small card |
+| TranZit (BO2) | `/easter-eggs/tranzit` | no guide entry, generic "Coming Soon" | **intentionally left empty** (Bryen, 2026-11-16), same as Shangri-La |
 | Die Rise (BO2) | `/easter-eggs/die-rise` | same | small card |
 | Buried (BO2) | `/easter-eggs/buried` | same | small card |
 | The Giant (BO3) | `/easter-eggs/the-giant` | same | small card |
 
 Their cards on the Main EEs list already said "No guide yet" and opened the map's info page; the info page's "Main Easter Egg" badge led to the dead "Coming Soon" screen.
 
-> **Shangri-La is the intentional empty one.** Bryen wants one map to keep the Coming Soon page. `comingSoonSlugs` in `apps/hub/src/data/videoTodo.js` holds it; `scripts/coming-soon-browser-smoke.mjs` checks the route, the card and the way back.
+> **Shangri-La and TranZit are the intentional empty ones.** Bryen wants them to keep the original Coming Soon page and "No guide yet" on their cards. `comingSoonSlugs` in `apps/hub/src/data/videoTodo.js` holds them (no TODO for them); `scripts/coming-soon-browser-smoke.mjs` checks the route, the card and the way back.
 
 ## The small page (same flat pattern, no maps, no big blocks)
 
-`/easter-eggs/<slug>` for the other four (TranZit, Die Rise, Buried, The Giant) now shows: title, one line (first sentence of the map's own description in `mapData`/`mapInfo`), one empty video card ("Video guide coming soon"), game and DLC, up to four related Easter Egg maps of the same game, and a back link. No video id is invented.
+`/easter-eggs/<slug>` for the other three (Die Rise, Buried, The Giant) now shows: title, one line (first sentence of the map's own description in `mapData`/`mapInfo`), one empty video card ("Video guide coming soon"), game and DLC, up to four related Easter Egg maps of the same game, and a back link. No video id is invented.
 
 ## TODO: video ids
 
-`apps/hub/src/data/videoTodo.js` lists the five slugs. Once Grey's research ticket (grey-32) delivers verified YouTube ids, add each id as `videoUrl` in `EasterEggGuides.js` (a new entry for the four that have none) and remove the slug from `videoTodoSlugs`. The page then switches to the normal video guide automatically. `scripts/video-todo.test.mjs` fails if a video-less main Easter Egg map is missing from that list, or a map with a video is still on it.
+`apps/hub/src/data/videoTodo.js` lists the three slugs that get a video (`videoTodoSlugs`: Die Rise, Buried, The Giant). Once Grey's research ticket (grey-32) delivers verified YouTube ids, add each id as `videoUrl` in `EasterEggGuides.js` (a new entry for each, after checking the id with the oEmbed endpoint) and remove the slug from `videoTodoSlugs`. The page then switches to the normal video guide automatically. `scripts/video-todo.test.mjs` fails if a video-less main Easter Egg map is on neither list, or a map with a video is still on it.

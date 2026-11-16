@@ -1,14 +1,11 @@
 /*
- * Main Easter Egg maps that have no video guide yet. Their /easter-eggs/<slug> page is a small card
- * (title, one line, related maps) with a "video guide coming soon" note.
- * TODO(grey-32): add each verified YouTube video id to EasterEggGuides.js (videoUrl) once Grey's research ticket
- * delivers it, then remove the slug here. Never add an id that has not been verified.
+ * Main Easter Egg maps with no dedicated guide and no video guide yet. Two kinds:
+ *
+ * - videoTodoSlugs: get the small card (title, one line, related maps) with a "video guide coming soon" note on
+ *   /easter-eggs/<slug>. TODO(grey-32): add each verified YouTube video id to EasterEggGuides.js (videoUrl; check it
+ *   with the oEmbed endpoint first), then remove the slug here. Never add an id that has not been verified.
+ * - comingSoonSlugs: deliberately left empty (Bryen, 2026-11-16): the route keeps the original "Coming Soon" page and
+ *   the card on /easter-eggs keeps "No guide yet". No TODO. Remove a slug only when Bryen wants it filled in.
  */
-export const videoTodoSlugs = ['shangri-la', 'tranzit', 'die-rise', 'buried', 'the-giant'];
-
-/*
- * Shangri-La is deliberately left without a guide (Bryen, 2026-11-16): its /easter-eggs/shangri-la route keeps the
- * "Coming Soon" page and its card keeps "No guide yet". Slugs here skip the small card even though they are on the
- * TODO list above. Remove it from here only when Bryen wants Shangri-La filled in.
- */
-export const comingSoonSlugs = ['shangri-la'];
+export const videoTodoSlugs = ['die-rise', 'buried', 'the-giant'];
+export const comingSoonSlugs = ['shangri-la', 'tranzit'];

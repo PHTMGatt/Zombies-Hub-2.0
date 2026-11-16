@@ -1,6 +1,6 @@
 // Shangri-La is the deliberately empty main Easter Egg (Bryen, 2026-11-16): its guide route keeps the "Coming Soon"
-// page, its card on /easter-eggs keeps "No guide yet", and the way back works. A filled-in empty map
-// (TranZit) shows the small video card instead; Ascension keeps its video guide.
+// page, its card on /easter-eggs keeps "No guide yet", and the way back works. TranZit is the second deliberate
+// empty map. A filled-in empty map (Die Rise) shows the small video card instead; Ascension keeps its video guide.
 import { chromium } from 'playwright';
 import assert from 'node:assert/strict';
 import { VIEWPORTS } from './smoke-viewports.mjs';
@@ -27,8 +27,11 @@ try {
     assert.match(await card.innerText(), /no guide yet/i, `${name}: Shangri-La card still says "No guide yet"`);
 
     await page.goto(`${base}/easter-eggs/tranzit`, { waitUntil: 'networkidle' });
-    assert.equal(await page.locator('h1').first().textContent(), 'TranZit', `${name}: TranZit has its small card`);
-    assert((await page.locator('.egg-guide__pending').innerText()).includes('Video guide coming soon'), `${name}: TranZit card says video coming soon`);
+    assert.equal(await page.locator('h1').first().textContent(), 'Coming Soon', `${name}: TranZit (second deliberate empty map) shows Coming Soon`);
+
+    await page.goto(`${base}/easter-eggs/die-rise`, { waitUntil: 'networkidle' });
+    assert.equal(await page.locator('h1').first().textContent(), 'Die Rise', `${name}: Die Rise has its small card`);
+    assert((await page.locator('.egg-guide__pending').innerText()).includes('Video guide coming soon'), `${name}: Die Rise card says video coming soon`);
 
     await page.goto(`${base}/easter-eggs/ascension`, { waitUntil: 'networkidle' });
     assert.equal(await page.locator('iframe').count(), 1, `${name}: Ascension keeps its video`);
