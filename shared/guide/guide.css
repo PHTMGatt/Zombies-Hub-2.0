@@ -683,3 +683,6 @@
 .pick-tool__answer strong {
   color: var(--guide-accent);
 }
+
+/* Map footers read at 15px+ (the per-map footers set 12–13px). */
+footer[class*="footer"] :is(span, strong, small, a, p) { font-size: max(0.95rem, 1em); }

@@ -762,3 +762,7 @@
 .origins-module .speedrun-foot {
   flex-wrap: wrap;
 }
+
+/* Calm pass: 16px body, no micro-text. */
+.origins-module .speedrun-page :is(p, li, small, summary, dd) { font-size: max(1.0625rem, 1em); line-height: 1.5; }
+.origins-module .speedrun-page span:not([class*="number"]):not([class*="index"]):not([class*="badge"]) { font-size: max(0.95rem, 1em); letter-spacing: 0; text-transform: none; }
