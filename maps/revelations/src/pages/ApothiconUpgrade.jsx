@@ -2,6 +2,8 @@ import React, { useRef, useState } from 'react';
 import GuideVideoPlayer from '../components/GuideVideoPlayer';
 import RevSectionHeader from '../components/RevSectionHeader';
 import RevOptionList, { formatRange } from '../components/RevOptionList';
+import RevShotSection from '../components/RevShotSection';
+import { servantRocks } from '../data/revReferenceShots';
 import upgradeData from '../data/ApothiconUpgradeData';
 import '../styles/Reference.css';
 
@@ -53,6 +55,13 @@ const ApothiconUpgrade = () => {
             />
           </aside>
         </div>
+
+        <RevShotSection
+          id="servant-rocks"
+          title="Servant rock spots"
+          intro="Each rock: where to aim, and where to stand."
+          groups={servantRocks}
+        />
       </section>
     </div>
   );
