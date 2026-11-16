@@ -30,6 +30,7 @@ export const criticalRoutes = [
   ['soe-step-details', '/maps/shadows-of-evil/step-details'],
 
   ['de-main', '/maps/der-eisendrache'],
+  ['de-step-details', '/maps/der-eisendrache/step-details'],
   ['de-parts', '/maps/der-eisendrache/parts'],
   ['de-wisps', '/maps/der-eisendrache/wisps'],
   ['de-boss', '/maps/der-eisendrache/boss'],

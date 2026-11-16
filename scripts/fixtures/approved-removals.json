@@ -2424,5 +2424,14 @@
     ],
     "reason": "Header-bar intro of the Main Guide. Its one fact (the Group 935 keycard lockdown always comes last) stays in step 9, shown on the Step details tab.",
     "spec": "Bryen 2026-11-16 flat main-guide spec"
+  },
+  {
+    "text": "MAIN EASTER EGG",
+    "layer": "rendered",
+    "routes": [
+      "/maps/der-eisendrache"
+    ],
+    "reason": "Kicker of the Main Guide header bar (no guide fact); the flat main guide has no header bar.",
+    "spec": "Bryen 2026-11-16 flat main-guide spec"
   }
 ]

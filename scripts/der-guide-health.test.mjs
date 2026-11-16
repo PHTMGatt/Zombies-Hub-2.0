@@ -8,7 +8,8 @@ const read = path => readFileSync(resolve(root, path), 'utf8');
 
 test('Der rendered setup guidance explicitly warns local/offline or unranked games require all four bows', () => {
   const landing = read('maps/der-eisendrache/src/pages/bows/BowLanding.tsx');
-  const home = read('maps/der-eisendrache/src/pages/Home.tsx');
+  // The upgrade-bow step's line holds this warning; the flat main guide renders it (2026-11-16).
+  const home = read('maps/der-eisendrache/src/data/deGuideSteps.jsx');
   for (const source of [landing, home]) {
     assert.match(source, /(local|offline)/i);
     assert.match(source, /unranked/i);
