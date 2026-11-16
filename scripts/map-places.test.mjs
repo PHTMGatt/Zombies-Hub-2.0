@@ -9,6 +9,7 @@ import { loadModules } from './guide-content.mjs';
  */
 const [
   { default: originsGuide },
+  { default: originsDetails },
   { stepPlaces, staffPlaces, TUNNELS },
   { default: staffPages },
   { originsLightningSwitches },
@@ -20,6 +21,7 @@ const [
   { default: summoningKey },
 ] = await loadModules([
   'maps/origins/src/data/originsGuide.jsx',
+  'maps/origins/src/data/stepDetails.js',
   'maps/origins/src/data/originsPlaces.js',
   'maps/origins/src/data/originsStaffPages.js',
   'shared/data/originsLightning.js',
@@ -75,7 +77,7 @@ test('every Lightning switch on the board has its own pin on the Lightning map',
 });
 
 test('Thunder Fists: each soul-chest chip is named the same, in the same order, in the map key', () => {
-  const chips = originsGuide.find((step) => step.id === 'thunder-fists').refs.find((ref) => ref.type === 'chips').items;
+  const chips = originsDetails.find((step) => step.id === 'thunder-fists').refs.find((ref) => ref.type === 'chips').items; // Step details tab, section #step-4
   const chests = stepPlaces['thunder-fists'].pins.slice(0, chips.length).map((pin) => pin.text);
   chips.forEach((chip, i) => assert(chests[i].startsWith(`${chip}: `), `pin ${i + 1} is "${chests[i]}", not the "${chip}" chip`));
 });

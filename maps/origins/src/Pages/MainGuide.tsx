@@ -14,7 +14,7 @@ const MainGuide = () => (
     <div className="origins-guide__inner">
       <FlatGuide label="Little Lost Girl" steps={originsGuide} footer={<CompleteEasterEgg mapId="origins" />} />
       <p className="origins-guide__credits credits">
-        Staff images: MrRoflWaffles · <a href={KRONORIUM_URL} target="_blank" rel="noreferrer">Kronorium.com</a>
+        <em>MrRoflWaffles – Staff Images</em> · <a href={KRONORIUM_URL} target="_blank" rel="noreferrer">Kronorium.com</a>
       </p>
       <div className="audio-players">
         <audio controls aria-label="Origins robot radio message" src={Audio1} preload="none"></audio>

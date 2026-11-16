@@ -8,11 +8,14 @@ import { BASELINE_PATH, guideStrings, loadModules } from './guide-content.mjs';
 const root = resolve(import.meta.dirname, '..');
 const baseline = JSON.parse(readFileSync(BASELINE_PATH, 'utf8')).origins;
 const staffBaseline = JSON.parse(readFileSync(resolve(root, 'scripts/fixtures/origins-staff-pages.baseline.json'), 'utf8'));
-const [guideModule, staffModule] = await loadModules(['maps/origins/src/data/originsGuide.jsx', 'maps/origins/src/data/originsStaffPages.js']);
+const [guideModule, staffModule, detailsModule] = await loadModules(['maps/origins/src/data/originsGuide.jsx', 'maps/origins/src/data/originsStaffPages.js', 'maps/origins/src/data/stepDetails.js']);
 const steps = guideModule.default;
 const staffPages = staffModule.default;
-const strings = guideStrings({ steps });
+// 2026-11-16 flat main guide: the short line stays on the step; warnings, how-to, refs and tips live in the Step details tab.
+const details = detailsModule.default;
+const strings = guideStrings({ steps, details });
 const step = (id) => steps.find((item) => item.id === id);
+const detail = (id) => details.find((item) => item.id === id);
 
 const TRACKER_LABELS = [
   'Ice built', 'Fire built', 'Wind built', 'Lightning built',
@@ -26,7 +29,7 @@ test('origins keeps 11 steps in order', () => {
 });
 
 test('no tracker-only task lines remain in Origins', () => {
-  assert.deepEqual(steps.filter((item) => item.tasks).map((item) => item.id), []);
+  assert.deepEqual([...steps, ...details].filter((item) => item.tasks).map((item) => item.id), []);
   assert.deepEqual(TRACKER_LABELS.filter((label) => strings.includes(label)), []);
 });
 
@@ -45,11 +48,11 @@ test('the Main Guide carries the canonical Easter Egg names in order', () => {
 
 // 2026-11-15 accuracy audit (origins-open-facts.md #2 and #4, audit Origins #4, #5, #7).
 test('Rain Fire, the winged beast and the staff placement follow the audited facts', () => {
-  assert(strings.includes('A robot’s lit foot (solo: Odin)'), 'Rain Fire names the lit foot, with Odin as the solo route');
+  assert(strings.includes('A robot’s lit foot (solo: Odin)'), 'Rain Fire details name the lit foot, with Odin as the solo route');
   assert.doesNotMatch(strings.join(' | '), /red plane|Middle robot · open foot/i);
   assert.match(step('winged-beast').goal, /plane glowing yellow/);
   assert.match(step('winged-beast').goal, /Maxis Drone the pilot drops/);
-  assert.match(step('secure-keys').critical.join(' '), /All six generators must be on when the last staff goes in/);
+  assert.match(detail('secure-keys').critical.join(' '), /All six generators must be on when the last staff goes in/);
 });
 
 // 2026-11-16 core rule (Bryen via Gandalf): the Main Guide is the Easter Egg steps only; the staff pages own
@@ -57,16 +60,22 @@ test('Rain Fire, the winged beast and the staff placement follow the audited fac
 // staff fact exists on its staff page only.
 test('the two staff steps are one line each and link to the staff pages', () => {
   assert.equal(step('build-staffs').goal, 'Build all four elemental staffs before continuing.');
-  assert.equal(step('upgrade-staffs').goal, 'Upgrade all four staffs before continuing.');
-  const routes = ['ice-staff', 'fire-staff', 'wind-staff', 'lightning-staff'];
+  assert.match(step('upgrade-staffs').goal, /^Upgrade all four staffs./);
   for (const [id, section] of [['build-staffs', 'build'], ['upgrade-staffs', 'puzzle']]) {
-    assert.equal(step(id).how, undefined, `${id} has how`);
-    assert.equal(step(id).refs, undefined, `${id} embeds staff content`);
-    assert.deepEqual(step(id).links.map((link) => link.to), routes.map((route) => `/maps/origins/${route}`), `${id}: one link per staff page`);
-    for (const link of step(id).links) assert.equal(link.section, section, `${id}: links to the staff page's #${section}`);
+    for (const field of ['how', 'refs', 'critical', 'problems', 'tasks']) assert.equal(step(id)[field], undefined, `${id} has ${field}`);
+    const staffLinks = step(id).links.filter((link) => link.to.startsWith('/maps/origins/') && link.to.endsWith('-staff'));
+    assert.equal(staffLinks.length, 1, `${id}: one link into the staff pages`);
+    assert.equal(staffLinks[0].section, section, `${id}: links to the staff page's #${section}`);
   }
   // Build's two tips are the run tips, not a second copy of them.
-  assert.deepEqual(step('build-staffs').problems.filter((tip) => !guideModule.originsTips.includes(tip)), []);
+  assert.deepEqual(detail('build-staffs').problems.filter((tip) => !guideModule.originsTips.includes(tip)), []);
+});
+
+test('every step has a Step details section, in the same order, and links to it', () => {
+  assert.deepEqual(details.map((item) => item.id), steps.map((item) => item.id));
+  steps.forEach((item, i) => {
+    assert(item.links.some((link) => link.to === '/maps/origins/step-details' && link.section === `step-${i + 1}`), `${item.id} links to #step-${i + 1}`);
+  });
 });
 
 test('no staff mechanics in the Main Guide outside the staff tabs', () => {

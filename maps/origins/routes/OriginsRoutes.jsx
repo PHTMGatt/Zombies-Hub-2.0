@@ -19,6 +19,9 @@ import SpeedRunLightning from '../src/Pages/SpeedRun/SpeedRunLightning';
 import RobotBg from '../public/images/Robot.webp?url';
 import '../src/Styles/origins-tokens.css';
 import '../styles/origins-shell.css';
+import BackToStep from '../../../shared/guide/BackToStep';
+import originsGuide from '../src/data/originsGuide';
+import StepDetails from '../src/Pages/StepDetails';
 
 export default function OriginsRoutes() {
   return (
@@ -26,9 +29,11 @@ export default function OriginsRoutes() {
     <section className="map-module origins-module" style={{ '--origins-bg': `url(${RobotBg})` }}>
       <Header />
       <div className="origins-route-content">
+        <BackToStep guidePath="/maps/origins" steps={originsGuide} />
         <Routes>
           <Route index element={<MainGuide />} />
           <Route path="og" element={<OGGuide />} />
+          <Route path="step-details" element={<StepDetails />} />
           <Route path="fire-staff" element={<FireStaff />} />
           <Route path="ice-staff" element={<IceStaff />} />
           <Route path="wind-staff" element={<WindStaff />} />

@@ -17,6 +17,7 @@ export const criticalRoutes = [
   ['origins-ice', '/maps/origins/ice-staff'],
   ['origins-wind', '/maps/origins/wind-staff'],
   ['origins-lightning', '/maps/origins/lightning-staff'],
+  ['origins-step-details', '/maps/origins/step-details'],
 
   ['mob-main', '/maps/mob-of-the-dead'],
   ['mob-plane', '/maps/mob-of-the-dead/plane'],
