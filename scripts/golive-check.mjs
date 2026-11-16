@@ -20,7 +20,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { routeDescription, routeTitle } from '../apps/hub/src/app/routeMetadata.js';
 import { ALIASES, prerenderRoutes } from './prerender-meta.mjs';
-import { freePort, startPreview } from './smoke-helpers.mjs';
+import { freePort, startPreview, viteBin } from './smoke-helpers.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 // GOLIVE_DIST builds into another folder (e.g. artifacts/golive) so a dev preview of dist/ keeps running.
@@ -86,7 +86,7 @@ if (process.env.GOLIVE_SKIP_BUILD) {
   for (const label of ['source verification', 'production build', 'per-route share heads', 'bundle budget', 'build info']) skip(label, 'GOLIVE_SKIP_BUILD');
 } else {
   run('source verification', ['scripts/verify.mjs']);
-  const built = run('production build', ['node_modules/vite/bin/vite.js', 'build', '--outDir', dist, '--emptyOutDir']);
+  const built = run('production build', [viteBin(root), 'build', '--outDir', dist, '--emptyOutDir']);
   if (built) {
     run('per-route share heads', ['scripts/prerender-meta.mjs', dist], { RENDER: '' });
     run('bundle budget', ['scripts/bundle-budget.mjs', dist], { RENDER: '' });
