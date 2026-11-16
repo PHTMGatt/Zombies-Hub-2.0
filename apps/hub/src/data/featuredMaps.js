@@ -15,12 +15,12 @@ const featuredMaps = [
   { name: 'All Maps', route: '/allmaps', image: AllMapsImg },
   { name: 'Origins', route: getDedicatedGuideRoute('origins'), image: OriginsImg },
   { name: 'Revelations', route: getDedicatedGuideRoute('revelations'), image: RevelationsImg },
-  { name: 'Mob of the Dead', route: getDedicatedGuideRoute('mob-of-the-dead'), image: MobOfTheDeadImg },
+  { name: 'Mob of the Dead', route: getDedicatedGuideRoute('mob-of-the-dead'), image: MobOfTheDeadImg, art: { size: '125%', position: 'center 90%' } },
   { name: 'Der Eisendrache', route: getDedicatedGuideRoute('der-eisendrache'), image: DerEisendracheImg },
   { name: 'Gorod Krovi', route: getDedicatedGuideRoute('gorod-krovi'), image: GorodKroviImg },
   { name: 'Zetsubou No Shima', route: getDedicatedGuideRoute('zetsubou-no-shima'), image: coverOf('zetsubou-no-shima') },
   { name: 'Shadows of Evil', route: getDedicatedGuideRoute('shadows-of-evil'), image: coverOf('shadows-of-evil') },
-  { name: 'Side Easter Eggs', route: '/side-easter-eggs', image: SideEEImg },
+  { name: 'Side Easter Eggs', route: '/side-easter-eggs', image: SideEEImg, art: { size: '135%', position: '90% 85%' } },
 ];
 
 export default featuredMaps;

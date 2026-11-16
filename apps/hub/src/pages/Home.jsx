@@ -72,12 +72,12 @@ export default function Home() {
           </div>
 
           <div className="home-grid">
-            {featuredRoutes.map(({ name, route, image }) => (
+            {featuredRoutes.map(({ name, route, image, art }) => (
               <Link
                 key={name}
                 to={route}
                 className="home-card"
-                style={{ backgroundImage: `url(${image})` }}
+                style={{ backgroundImage: `url(${image})`, ...(art && { '--art-size': `${art.size} auto`, '--art-pos': art.position }) }}
               >
                 <div className="home-card-overlay" />
                 <div className="home-card-content">
