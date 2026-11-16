@@ -6,9 +6,9 @@
  *
  * - videoTodoSlugs: get the small card (title, one line, related maps) with a "video guide coming soon" note on
  *   /easter-eggs/<slug>. TODO(grey-32): add each verified YouTube video id to EasterEggGuides.js (videoUrl; check it
- *   with the oEmbed endpoint first), then remove the slug here. Never add an id that has not been verified.
- * - comingSoonSlugs: deliberately left empty (Bryen, 2026-11-16): the route keeps the original "Coming Soon" page and
+ *   with the oEmbed endpoint first; creator priority: 1 CodeNamePizza, 2 MrTLexify, 3 MrRoflWaffles), then remove the slug here. Never add an id that has not been verified.
+ * - comingSoonSlugs: deliberately left empty (Bryen, 2026-11-16; Shangri-La BO1 only, TranZit went back to a small card): the route keeps the original "Coming Soon" page and
  *   the card on /easter-eggs keeps "No guide yet". No TODO. Remove a slug only when Bryen wants it filled in.
  */
-export const videoTodoSlugs = ['die-rise', 'buried', 'the-giant', 'shangri-la-chronicles'];
-export const comingSoonSlugs = ['shangri-la', 'tranzit'];
+export const videoTodoSlugs = ['tranzit', 'die-rise', 'buried', 'the-giant', 'shangri-la-chronicles'];
+export const comingSoonSlugs = ['shangri-la'];

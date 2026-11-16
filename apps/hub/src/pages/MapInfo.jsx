@@ -4,6 +4,7 @@ import NotFound from '../../../../shared/ui/NotFound';
 import mapInfo from '../data/mapInfo';
 import mapData from '../data/mapData';
 import { getDedicatedGuideRoute } from '../data/dedicatedGuides';
+import { sameMapSlugs } from '../data/sameMap';
 import '../styles/pageStyles/MapInfo.css';
 
 export default function MapInfo() {
@@ -32,6 +33,12 @@ export default function MapInfo() {
     : meta.dlc === 'DLC 4 – Rezurrection'
       ? 'Black Ops: Rezurrection DLC (2011)'
       : info.releasedIn;
+
+  // The same map in another game: other game versions of this slug, plus renamed remakes (Der Riese / The Giant).
+  const otherGames = [
+    ...variants.filter(m => m.game !== meta.game).map(m => ({ key: `${m.slug}-${m.game}`, label: `${m.name} · ${m.game}`, to: `/info/${m.slug}?game=${encodeURIComponent(m.game)}` })),
+    ...sameMapSlugs(canonicalSlug).flatMap(other => mapData.filter(m => m.slug === other)).map(m => ({ key: `${m.slug}-${m.game}`, label: `${m.name} · ${m.game}`, to: `/info/${m.slug}?game=${encodeURIComponent(m.game)}` })),
+  ];
 
   return (
     <div className="map-info-container">
@@ -66,6 +73,15 @@ export default function MapInfo() {
           </div>
 
           {info.description && <p className="description">{info.description}</p>}
+
+          {otherGames.length > 0 && (
+            <p className="same-map">
+              <strong>Same map in other games:</strong>{' '}
+              {otherGames.map((item, index) => (
+                <React.Fragment key={item.key}>{index > 0 && ' · '}<Link to={item.to}>{item.label}</Link></React.Fragment>
+              ))}
+            </p>
+          )}
 
           <Link to="/allmaps" className="back-link">
             ← Back to Map list

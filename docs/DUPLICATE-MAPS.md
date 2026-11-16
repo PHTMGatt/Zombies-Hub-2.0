@@ -1,5 +1,13 @@
 # Maps that exist in more than one game
 
+**Status 2026-11-16:** the World at War originals (Nacht der Untoten, Verrückt, Shi No Numa, Der Riese) are now entries in the hub (see "Added"); Ascension for BO3 Chronicles and the other pairs below are still only proposals. Der Riese / The Giant and Dead Ops Arcade / II are cross-linked on their info pages ("Same map in other games").
+
+## Added (World at War originals, entries without a guide)
+
+Each is its own `mapData` entry (same slug as the later versions, `?game=World at War`), shown under a "World at War" section on `/allmaps`, same cover art as the Black Ops version. Fields used are only the ones the hub already holds in `mapInfo.releasedIn`: Verrückt "Map Pack 1", Shi No Numa "Map Pack 2", Der Riese "Map Pack 3" (all 2009), Nacht "World at War (2008)" shown as DLC "Base Game" (derived, **confirm** wording). No Easter Egg flag, so no guide route is needed.
+
+**Confirm list (not asserted in the hub):** (1) Ascension is a Zombies Chronicles map (Black Ops 3, 2017); (2) Call of the Dead is not in Zombies Chronicles; (3) Nacht der Untoten was part of the World at War base game; (4) the existing BO1 info pages for Verrückt, Shi No Numa and Der Riese still show the World at War release line ("World at War: Map Pack N (2009)") because `mapInfo.releasedIn` is per slug, not per game: should the BO1 entries say Rezurrection DLC instead?
+
 CHARLIE · Sonnet, 2026-11-16. Audit only: nothing here has been added to the hub. Source: `apps/hub/src/data/mapData.js` and `mapInfo.js` (each game version is its own `mapData` entry and `/info/<slug>` or `/info/<slug>-chronicles` page). Items marked **(confirm)** are from general knowledge, not from the hub's own data, and must be checked before anyone adds them.
 
 ## The pattern (Bryen, 2026-11-16): original-game entry = Coming Soon, BO3 remaster = guide

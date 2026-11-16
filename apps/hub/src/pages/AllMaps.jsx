@@ -6,7 +6,7 @@ import MapFilter, { useMapFilter } from '../components/MapFilter';
 import { applyFilter, filterCounts, MAP_FILTERS } from '../data/mapFilters';
 import '../styles/pageStyles/AllMaps.css';
 
-const games = ['Black Ops 1', 'Black Ops 2', 'Black Ops 3'];
+const games = ['World at War', 'Black Ops 1', 'Black Ops 2', 'Black Ops 3'];
 
 const normalizeMap = map => ({
   ...map,
