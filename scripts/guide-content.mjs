@@ -5,8 +5,9 @@
  *
  *   node scripts/guide-content.mjs --write-baseline   # rewrite scripts/fixtures/guide-content.baseline.json
  */
-import { writeFileSync } from 'node:fs';
-import { resolve } from 'node:path';
+import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { createServer } from 'vite';
 
@@ -26,9 +27,13 @@ export const GUIDES = [
 ];
 
 // Loads repo modules (JSX, image imports, CSS imports) exactly as the app resolves them.
+// Each call gets its own dependency cache: `node --test` runs test files in parallel, and Vite servers
+// sharing node_modules/.vite race on renaming deps_temp_* into deps (ENOTEMPTY in CI).
 export async function loadModules(files) {
+  const cacheDir = mkdtempSync(join(tmpdir(), 'zh-guide-vite-'));
   const server = await createServer({
     root,
+    cacheDir,
     logLevel: 'error',
     appType: 'custom',
     server: { middlewareMode: true, hmr: false },
@@ -40,6 +45,7 @@ export async function loadModules(files) {
     return modules;
   } finally {
     await server.close();
+    rmSync(cacheDir, { recursive: true, force: true });
   }
 }
 
