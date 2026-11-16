@@ -56,3 +56,8 @@ Rev four turrets "8,000 points in total", Mob "does not activate on Easy", SoE A
 - **Revelations "four turrets, 8,000 points in total":** the four-turret, four-rock structure is confirmed by several guides (CoD Zombies guide "Materializing Sophia", SegmentNext). The **8,000 total appears in one source only** ([CheatCC](https://www.cheatcc.com/?p=165447)), which matches our line. Options: keep, or soften to "the turrets cost points" until a second source. Not changed.
 - **Zetsubou "Skull of Nan Sapwe unlocked after the Keeper encounter":** consistent with Grey's row 16 (four skulls cleansed, then survive the Keeper chamber); the search added nothing new. Treat as confirmed by Grey's sources.
 - **DE Keeper Stone at the Double Tap circle:** not re-searched; stays on the unverified list.
+
+## Pass 4: Grey's fact verification 2 (grey-40), applied
+
+- **Mob "Original difficulty / does not activate on Easy":** confirmed ([Call of Duty Wiki](https://callofduty.fandom.com/wiki/Pop_Goes_the_Weasel): cannot be completed on Easy; the finale needs at least two players including Weasel; a July 2023 player report agrees). Guide text already says exactly this; no change. Removed from the unconfirmed list.
+- **Gorod "5-minute window":** two independent community sources agree on about five minutes after the Hatchery generator starts (r/CODZombies valve-step guide, Zombies Codex); no official timer. Applied the softer wording: "You get **about** 5 minutes" in the Gorod Step details (step 6). The restart-button line stays; Grey asks to test the exact reset behaviour in game before anyone states a precise retry rule.

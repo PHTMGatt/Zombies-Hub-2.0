@@ -98,7 +98,7 @@ const gorodGuideSteps = [
     id: 'valves',
     title: 'Valve network',
     goal: 'Find the green-lit valve and the Master Code Cylinder, set the other five valves, take the cylinder to S.O.P.H.I.A.',
-    critical: ['Power the Hatchery generator first (basement, under a tarp by the incubators): destroy a Valkyrie Drone next to it. You get 5 minutes; the green light only shows while it is on. If time runs out, press the button beside the generator to restart.'],
+    critical: ['Power the Hatchery generator first (basement, under a tarp by the incubators): destroy a Valkyrie Drone next to it. You get about 5 minutes; the green light only shows while it is on. If time runs out, press the button beside the generator to restart.'],
     // The compact solver and the valve map are on the Valve Solver tab (/maps/gorod-krovi/valves).
     checklist: ['Five valves set', 'Cylinder at Dragon Command'],
     how: how('Solve the Valve Network'),
