@@ -18,7 +18,7 @@ const directionAt = (angle) => DIRECTIONS[(((angle / 90) % 4) + 4) % 4];
  *   and the chosen in-game turn direction — and every click turns it a quarter. If the starting dials
  *   match what you see untouched in-game, that turn direction is the right one.
  */
-export default function LightningSwitchBoard({ extraSlot = null, showLocations = false }) {
+export default function LightningSwitchBoard({ extraSlot = null, showLocations = false, id }) {
   const [mode, setMode] = useState('final');
   const [spin, setSpin] = useState('cw');
   const [clicks, setClicks] = useState({});
@@ -46,7 +46,7 @@ export default function LightningSwitchBoard({ extraSlot = null, showLocations =
   };
 
   return (
-    <section className={`switch-board${practising ? ' is-practice' : ''}`} aria-label="Lightning Staff switch positions">
+    <section id={id} className={`switch-board${practising ? ' is-practice' : ''}`} aria-label="Lightning Staff switch positions">
       <header className="switch-board__head">
         <h3>Switch Positions</h3>
         <div className="switch-board__modes" role="group" aria-label="Switch view">

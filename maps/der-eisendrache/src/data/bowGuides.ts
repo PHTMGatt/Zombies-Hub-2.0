@@ -47,7 +47,7 @@ export const bowGuides = {
     accent: 'fire',
     difficulty: 'Hard',
     start: 'Red symbol at the top of the Clock Tower spiral stairs',
-    video: { id: '2lA6-UH6Qjo', start: 0, author: 'TheRealGamer', link: 'https://youtube.com/@therealgamer' },
+    video: { id: '2lA6-UH6Qjo', start: 0, author: 'SBZ vSylent', link: 'https://youtube.com/@sbzvsylent' },
     intro: 'The precision path. The airborne circle shots and fireplace route are the parts most runs lose time on.',
     steps: [
       { title: 'Start the quest', detail: 'Shoot the glowing red symbol near the top of the Clock Tower spiral stairs with the base bow and collect the broken arrow.' },

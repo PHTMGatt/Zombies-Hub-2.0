@@ -18,7 +18,9 @@ test('Only Origins opts into collapsible existing staff diagrams', () => {
   assert.ok(read('maps/origins/src/Pages/MainGuide.tsx').includes('collapsibleReferences'));
   assert.ok(read('shared/guide/GuideSteps.jsx').includes('collapsibleReferences = false'));
   assert.ok(read('shared/guide/GuideReferences.jsx').includes('collapsibleTabs = false'));
-  for(const name of ['ice','fire','wind','lightning']) assert.ok(read('maps/origins/src/data/originsGuide.jsx').includes(name+'_staff_code.webp'));
+  // Merge with main, 2026-11-15: claude-forge moved the staff charts off the Main Guide onto each staff page
+  // (approved-removals.json, Origins handoff §9–§13), so the four charts are checked where they now live.
+  for(const name of ['ice','fire','wind','lightning']) assert.ok(read('maps/origins/src/data/originsStaffPages.js').includes(name+'_staff_code.webp'));
 });
 
 test('Only Origins UI gets the compact step accordion; original pages stay independent', () => {

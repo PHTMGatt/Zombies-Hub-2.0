@@ -47,6 +47,8 @@ export const ACHIEVEMENTS = [
   {
     id: 'origins/speedrun-unlocked',
     map: 'origins',
+    // Merge with main, 2026-11-15: main's live entry (a visible bonus) wins, so the Super Easter Egg stays
+    // the only hidden medal (scripts/achievements-super.test.mjs).
     kind: 'bonus',
     hidden: false,
     title: 'Electrical Panel Solved',

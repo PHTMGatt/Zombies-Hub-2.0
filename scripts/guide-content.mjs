@@ -5,8 +5,9 @@
  *
  *   node scripts/guide-content.mjs --write-baseline   # rewrite scripts/fixtures/guide-content.baseline.json
  */
-import { writeFileSync } from 'node:fs';
-import { resolve } from 'node:path';
+import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { createServer } from 'vite';
 
@@ -25,24 +26,32 @@ export const GUIDES = [
   { guide: 'kino-side', route: '/side-easter-eggs/kino', file: 'apps/hub/src/data/sideEE/Kino.js', exportName: 'kinoSteps' },
 ];
 
-export async function loadGuides() {
+// Loads repo modules (JSX, image imports, CSS imports) exactly as the app resolves them.
+// Each call gets its own dependency cache: `node --test` runs test files in parallel, and Vite servers
+// sharing node_modules/.vite race on renaming deps_temp_* into deps (ENOTEMPTY in CI).
+export async function loadModules(files) {
+  const cacheDir = mkdtempSync(join(tmpdir(), 'zh-guide-vite-'));
   const server = await createServer({
     root,
+    cacheDir,
     logLevel: 'error',
     appType: 'custom',
     server: { middlewareMode: true, hmr: false },
     optimizeDeps: { noDiscovery: true, include: [] },
   });
   try {
-    const guides = [];
-    for (const { guide, route, file, exportName = 'default' } of GUIDES) {
-      const module = await server.ssrLoadModule(`/${file}`);
-      guides.push({ guide, route, steps: module[exportName] });
-    }
-    return guides;
+    const modules = [];
+    for (const file of files) modules.push(await server.ssrLoadModule(`/${file}`));
+    return modules;
   } finally {
     await server.close();
+    rmSync(cacheDir, { recursive: true, force: true });
   }
+}
+
+export async function loadGuides() {
+  const modules = await loadModules(GUIDES.map((entry) => entry.file));
+  return GUIDES.map(({ guide, route, exportName = 'default' }, index) => ({ guide, route, steps: modules[index][exportName] }));
 }
 
 const clean = (value) => (typeof value === 'string' ? value.replace(/\s+/g, ' ').trim() : '');

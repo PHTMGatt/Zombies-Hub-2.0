@@ -144,8 +144,6 @@
   .revelations-module .rev-header__tabs {
     margin: 0 0.6rem;
     overflow-x: auto;
-    -webkit-mask-image: linear-gradient(90deg, transparent, #000 1rem, #000 calc(100% - 1rem), transparent);
-    mask-image: linear-gradient(90deg, transparent, #000 1rem, #000 calc(100% - 1rem), transparent);
     overscroll-behavior-inline: contain;
     scroll-snap-type: x proximity;
     scrollbar-width: none;
@@ -225,5 +223,23 @@
 @media (pointer: coarse), (max-width: 720px), (max-height: 500px) and (orientation: landscape) {
   .revelations-module .rev-nav-link {
     min-height: 44px;
+  }
+}
+
+/* Swipeable tab row: fade only the edge with more tabs past it (zh-edge-fade, shared/ui/tokens.css). */
+@media (max-width: 640px), (max-height: 500px) and (orientation: landscape) {
+  .revelations-module .rev-header__tabs {
+    --zh-fade: 2rem;
+    --zh-fade-end: var(--zh-fade);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 var(--zh-fade-start), #000 calc(100% - var(--zh-fade-end)), transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 var(--zh-fade-start), #000 calc(100% - var(--zh-fade-end)), transparent);
+  }
+
+  @supports (animation-timeline: scroll()) {
+    .revelations-module .rev-header__tabs {
+      --zh-fade-end: 0px;
+      animation: zh-edge-fade linear both;
+      animation-timeline: scroll(self inline);
+    }
   }
 }

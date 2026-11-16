@@ -88,6 +88,12 @@
   outline: none;
 }
 
+/* Keyboard focus must differ from the active tab, which already wears the hover look. */
+.gorod-module .gorod-nav-link:focus-visible {
+  outline: 2px solid #ffb199;
+  outline-offset: 2px;
+}
+
 @media (max-width: 980px) {
   .gorod-module .gorod-header {
     min-height: 0;
@@ -137,8 +143,19 @@
     scroll-snap-type: x proximity;
     scroll-padding-inline: 0.75rem;
     scrollbar-width: none;
-    -webkit-mask-image: linear-gradient(90deg, transparent, #000 0.75rem, #000 calc(100% - 0.75rem), transparent);
-    mask-image: linear-gradient(90deg, transparent, #000 0.75rem, #000 calc(100% - 0.75rem), transparent);
+    /* Fade only the edge with more links past it (zh-edge-fade, shared/ui/tokens.css). */
+    --zh-fade: 2rem;
+    --zh-fade-end: var(--zh-fade);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 var(--zh-fade-start), #000 calc(100% - var(--zh-fade-end)), transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 var(--zh-fade-start), #000 calc(100% - var(--zh-fade-end)), transparent);
+  }
+
+  @supports (animation-timeline: scroll()) {
+    .gorod-module .gorod-header__nav {
+      --zh-fade-end: 0px;
+      animation: zh-edge-fade linear both;
+      animation-timeline: scroll(self inline);
+    }
   }
 
   .gorod-module .gorod-header__nav::-webkit-scrollbar {

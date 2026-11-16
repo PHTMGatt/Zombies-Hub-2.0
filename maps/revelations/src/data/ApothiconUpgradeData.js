@@ -5,12 +5,12 @@ const ApothiconUpgradeData = [
     end: 134,
   },
   {
-    name: 'Der Eisendrache',
+    name: 'Der Eisendrache / Shangri-La Stairs',
     start: 134,
     end: 141,
   },
   {
-    name: 'Verrückt / Shangri-La Stairs',
+    name: 'Verrückt',
     start: 141,
     end: 144,
   },

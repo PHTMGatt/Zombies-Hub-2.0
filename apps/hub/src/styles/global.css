@@ -164,6 +164,22 @@ summary:focus-visible,
   cursor: pointer;
 }
 
+/* The secondary text link beside the action: 44px-tall tap area without moving the layout. */
+.zh-status-page > a:not(.zh-status-page__action) {
+  position: relative;
+  display: inline-block;
+}
+
+.zh-status-page > a:not(.zh-status-page__action)::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: max(44px, 100%);
+  transform: translateY(-50%);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

@@ -1,3 +1,9 @@
+/*
+ * 2026-11-15: corrected against the accuracy audit (claude-command-center
+ * docs/research/zombies/origins-revelations-audit.md, Revelations #1-#4, #7, #9, #11). Each old line is in
+ * scripts/fixtures/approved-removals.json. Left as they were, because the audit could not settle them:
+ * the "inventory/menu" symbol line (#10) and the Focusing Stone colour.
+ */
 const apothiconSteps = [
   {
     title: 'Tombstones + Corruption Engines',
@@ -11,10 +17,10 @@ const apothiconSteps = [
   },
   {
     title: 'Keeper Protector + Required Weapons',
-    detail: 'Collect the three Keeper Protector parts and make sure the run has Little Arnies plus the Apothicon Servant. Build the Keeper at Verrückt, Kino, or Der Eisendrache for 5,000 points when the ritual step is ready.',
+    detail: 'Collect the three Keeper Protector parts and make sure the run has Li’l Arnies plus the Apothicon Servant. Build the altar at Verrückt, Kino, Der Eisendrache or Origins, then summon the Keeper for 5,000 points when the ritual step is ready.',
     bullets: [
       'Keeper parts: gemstone, Keeper head, and flag.',
-      'Little Arnies are required for the nine-hole step.',
+      'Li’l Arnies are required for the nine-hole step.',
       'The upgraded Apothicon Servant is required later for the bone step.',
       'A strong Pack-a-Punched bullet weapon is useful for the bone rocks and final fight.',
     ],
@@ -30,20 +36,22 @@ const apothiconSteps = [
   },
   {
     title: 'Audio Reel 1 — Keeper Ritual',
-    detail: 'Find the triangular ritual rock on one of the three possible jump pads, summon the Keeper Protector, and bring it close enough to begin the ritual. Protect it for three full minutes.',
+    detail: 'Find the triangular ritual rock on one of the three possible jump pads and summon the Keeper Protector. Stand at the back of the jump pad and crouch on the triangle stone while the pad is off; the Keeper walks over and starts chanting. Protect it for three full minutes.',
     bullets: [
       'Triangle-rock jump pads: Shangri-La, Mob of the Dead, or Verrückt.',
-      'The Keeper starts the ritual by standing close to the triangular rock.',
+      'Step off the triangle stone before the pad switches back on. It can take a few tries.',
+      'Do it before the first Margwa (rounds 11-13): a Margwa that reaches the Keeper ends the attempt.',
       'Protect the Keeper for three full minutes.',
       'Pick up the dropped reel and place it in the Nacht der Untoten radio.',
     ],
   },
   {
-    title: 'Audio Reel 2 — Little Arnie Holes',
-    detail: 'Inside the Giant Apothicon, throw Little Arnies into all nine wall holes without repeating one. Every set of three holes spawns three Margwas.',
+    title: 'Audio Reel 2 — Li’l Arnie Holes',
+    detail: 'Inside the Giant Apothicon, throw Li’l Arnies into all nine wall holes without repeating one. Every set of three holes spawns three Margwas.',
     bullets: [
       'Complete three sets of three holes.',
       'Kill the Margwas after each set; use Max Ammo or GobbleGums if you run out of Arnies.',
+      'Stay inside the Apothicon until that set’s three Margwas are dead. Leaving (or going down in solo) resets those three holes.',
       'After all nine Margwas are cleared, collect the reel from the bridge inside the Apothicon.',
       'Place this reel in the radio on the Kino der Toten stage.',
     ],
@@ -60,16 +68,17 @@ const apothiconSteps = [
   },
   {
     title: 'Materialize S.O.P.H.I.A.',
-    detail: 'Use the laser turret at each Corruption Engine to hit the blue rock behind its teleporting rift. Once all four are complete, return to Nacht and activate S.O.P.H.I.A.',
+    detail: 'Use the laser turret at each Corruption Engine. Two blue rocks float above each engine: shoot the left one as you face the Nacht portal from the turret, and sweep the laser over it until the turret kicks you off. Once all four are complete, return to Nacht and activate S.O.P.H.I.A.',
     bullets: [
       'You need one successful turret shot from each of the four Corruption Engine areas.',
+      'The four turrets cost 8,000 points in total.',
       'The turret aim can be picky; the game kicks you off when the shot registers.',
       'After the fourth hit, activate S.O.P.H.I.A. on Nacht’s upper floor.',
     ],
   },
   {
     title: 'Kronorium + Four Eggs',
-    detail: 'Follow S.O.P.H.I.A. to the Kino teleporter, enter Samantha’s room, collect the book from the bed, and place it on the Kino altar. Four eggs now spawn around the map.',
+    detail: 'Follow S.O.P.H.I.A. to the Kino teleporter, enter Samantha’s room, collect the book from the bed, and place it on the podium on the Kino stage. Four eggs now spawn around the map.',
     bullets: [
       'One egg belongs to each major map region.',
       'Take each egg into the Giant Apothicon and place it in one of the yellow incubation nests / pustules.',
@@ -88,13 +97,13 @@ const apothiconSteps = [
   },
   {
     title: 'Symbol Room + Summoning Key',
-    detail: 'Have all players stand on the purple rift / circle in the Kino projector room to enter the boss arena. Interact with the Kronorium, memorize the randomized four-symbol order it shows, enter that same order at the back of the room, then survive four sets of two Margwas.',
+    detail: 'Have all players stand on the purple rift / circle in the Kino projector room to enter the boss arena. Interact with the Kronorium, memorize the randomized four-symbol order it shows, enter that same order at the back of the room, then survive four sets of two Margwas (one more per wave in co-op).',
     bullets: [
       'Every player must enter through the Kino projector-room purple rift / circle together.',
       'The symbol order changes every game; read the Kronorium after entering the arena.',
       'Use the four symbols shown in your inventory/menu as the reference set.',
       'After entering the correct sequence, drop to the center arena.',
-      'Clear four Margwa waves with two Margwas per wave to spawn the Summoning Key.',
+      'Clear four Margwa waves with two Margwas per wave (one more per wave in co-op) to spawn the Summoning Key.',
     ],
   },
   {

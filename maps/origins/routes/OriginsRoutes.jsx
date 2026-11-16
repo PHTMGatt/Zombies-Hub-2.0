@@ -1,4 +1,5 @@
 import React from 'react';
+import '@fontsource/rajdhani/latin-500.css';
 import '@fontsource/rajdhani/latin-600.css';
 import '@fontsource/rajdhani/latin-700.css';
 import NotFound from '../../../shared/ui/NotFound';
@@ -16,14 +17,13 @@ import SpeedRunRoute from '../src/Pages/SpeedRun/SpeedRunRoute';
 import SpeedRunPrep from '../src/Pages/SpeedRun/SpeedRunPrep';
 import SpeedRunLightning from '../src/Pages/SpeedRun/SpeedRunLightning';
 import RobotBg from '../public/images/Robot.webp?url';
+import '../src/Styles/origins-tokens.css';
 import '../styles/origins-shell.css';
 
 export default function OriginsRoutes() {
   return (
-    <section
-      className="map-module origins-module"
-      style={{ '--origins-bg': `url(${RobotBg})` }}
-    >
+    // Main's Main Guide and OG pages paint the robot backdrop from --origins-bg (merge with main, 2026-11-15).
+    <section className="map-module origins-module" style={{ '--origins-bg': `url(${RobotBg})` }}>
       <Header />
       <div className="origins-route-content">
         <Routes>

@@ -13,7 +13,8 @@ const hildaless = originsSpeedRun.hildalessLightning;
 export default function SpeedRunLightning() {
   return (
     <div className="speedrun-lightning">
-      <p className="speedrun-glance" aria-label="All seven switches at a glance">
+      {/* A group, so its name is read: ARIA does not allow naming a plain paragraph. */}
+      <p className="speedrun-glance" role="group" aria-label="All seven switches at a glance">
         {originsLightningSwitchRoute.map((item) => (
           <span key={item.id}>
             {item.shortLabel} <strong>×{item.turnsFromUntouched} {item.arrow}</strong>

@@ -1,15 +1,19 @@
+/* The Origins ground: the snowy robot under a blue-black veil, visible around and through every panel. */
 .origins-module {
-  --origins-bg: none;
   min-height: calc(100vh - var(--hub-nav-height));
   width: 100%;
-  color: #fff;
-  font-family: 'Rajdhani', 'Segoe UI', sans-serif;
-  background: #06192a;
+  color: var(--o-text);
+  font-family: var(--o-font);
+  font-weight: 500;
+  background:
+    linear-gradient(rgba(3, 17, 30, 0.5), rgba(3, 17, 30, 0.7)),
+    url('../public/images/Robot.webp') center / cover fixed no-repeat,
+    var(--o-night);
   isolation: isolate;
-  /* Column layout so the content area can grow and keep the footer pinned on short pages. */
+  /* Column layout so short pages still pin the footer to the bottom. */
   display: flex;
   flex-direction: column;
-  /* clip, not hidden: hidden would make this a scroll container and break sticky headers/rails. */
+  /* clip, not hidden: hidden would make this a scroll container and break sticky elements. */
   overflow-x: clip;
 }
 
@@ -19,8 +23,31 @@
 }
 
 .origins-module .origins-route-content {
-  /* Fill the module column so short pages still pin the footer to the bottom. */
   flex: 1 0 auto;
   min-height: 60vh;
   width: 100%;
+}
+
+.origins-module :is(a, button, summary):focus-visible {
+  outline: var(--zh-focus-width, 3px) solid var(--o-link);
+  outline-offset: 3px;
+}
+
+.origins-module .visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Fixed backgrounds stutter or fail on phones. */
+@media (max-width: 900px), (hover: none) {
+  .origins-module {
+    background-attachment: scroll, scroll, scroll;
+  }
 }

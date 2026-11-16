@@ -8,6 +8,10 @@ const baseline = JSON.parse(readFileSync(BASELINE_PATH, 'utf8'));
 const approvedDataRemovals = new Set(
   JSON.parse(readFileSync(REMOVALS_PATH, 'utf8')).filter((entry) => entry.layer === 'data').map((entry) => entry.text),
 );
+// A whole tabs block may leave a step only with an approved entry naming it: { tabs: '<guide>/<step>' }.
+const approvedTabRemovals = new Set(
+  JSON.parse(readFileSync(REMOVALS_PATH, 'utf8')).filter((entry) => entry.layer === 'data' && entry.tabs).map((entry) => entry.tabs),
+);
 const guides = await loadGuides();
 
 test('every baseline guide string is still in the step data', () => {
@@ -37,6 +41,7 @@ test('tabs keep every tab and its own problems/links', () => {
   for (const entry of guides) {
     const current = guideTabs(entry);
     for (const before of baseline[entry.guide].tabs) {
+      if (approvedTabRemovals.has(`${entry.guide}/${before.step}`)) continue;
       const now = current.find((tabs) => tabs.step === before.step && tabs.tabIds.join() === before.tabIds.join());
       assert(now, `${entry.guide} step ${before.step} lost tabs ${before.tabIds.join(', ')}`);
       for (const [tabId, strings] of Object.entries(before.perTab)) {

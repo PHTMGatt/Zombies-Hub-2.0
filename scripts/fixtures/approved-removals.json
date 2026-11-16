@@ -6,6 +6,60 @@
     "spec": "§3, §4.4"
   },
   {
+    "text": "Gen 6 footprint",
+    "layer": "data",
+    "reason": "Wrong location, corrected to \"Church path footprint\": the Call of Duty Wiki and both video guides put no soul chest at Generator 6; the church-side chest is on the path from the Excavation to the Church. Bryen asked for every step to be verified against sources before writing.",
+    "spec": "brief:zombies-origins-revelations:2026-11-12 part 2; research:zombies:2026-11-13 (origins.md disagreement 5)"
+  },
+  {
+    "text": "Purify the stone tablet with melee kills in the church, bring it back without touching mud.",
+    "layer": "data",
+    "reason": "G-Strike goal left out the second melee batch at the Tank Station table, so a player following it waits at the table with no beacon. Reworded to the full route (take, purify at the basin, carry back with no mud, melee again at the table); every fact it held is kept.",
+    "spec": "review:zombies:2026-11-14 M4; research:zombies:2026-11-13 (origins.md G-Strike, disagreement 2)"
+  },
+  {
+    "text": "Complete the stone-tablet melee purification step in the church.",
+    "layer": "data",
+    "reason": "Duplicate of the next line (\"In the church, put it in the holy-water basin and get about 20 melee kills next to it.\"), which keeps the fact with the count.",
+    "spec": "review:zombies:2026-11-14 M4"
+  },
+  {
+    "text": "Return the tablet without stepping in mud to finish the G-Strike setup.",
+    "layer": "data",
+    "reason": "Wrong since the second melee batch was added: carrying the tablet back does not finish the setup. Reworded to \"Carry it back to the Tank Station without stepping in mud (mud means rinsing it at the basin again).\"; the no-mud fact is kept.",
+    "spec": "review:zombies:2026-11-14 M4; research:zombies:2026-11-13 (origins.md G-Strike step 4)"
+  },
+  {
+    "text": "Press the button inside the middle robot, then G-Strike the seal by Generator 5 straight away.",
+    "layer": "data",
+    "reason": "Rain Fire goal made the middle robot required; any robot works in co-op and Odin only matters solo. Reworded to \"Press the red button in a robot’s head, then land a G-Strike on the seal behind Generator 5 straight away.\"",
+    "spec": "review:zombies:2026-11-14 M5; research:zombies:2026-11-13 (origins.md step 3, disagreement 15)"
+  },
+  {
+    "text": "Be at Generator 5 the moment you press the button — the seal must be active when the G-Strike lands.",
+    "layer": "data",
+    "reason": "The always-shown warning told a solo player to be at Generator 5 while pressing a button inside a robot. Reworded to the co-op and solo ways to land the G-Strike right after the press; the timing fact is kept.",
+    "spec": "review:zombies:2026-11-14 M5; research:zombies:2026-11-13 (origins.md step 3, disagreement 15)"
+  },
+  {
+    "text": "←",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/sound-step"
+    ],
+    "reason": "Arrow glyphs of the removed Sound Step region rotator; regions are now picked by tapping an island on the ring.",
+    "spec": "brief:zombies-origins-revelations:2026-11-12 (Revelations: one unified picker on the hunt pages)"
+  },
+  {
+    "text": "→",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/sound-step"
+    ],
+    "reason": "Arrow glyphs of the removed Sound Step region rotator; regions are now picked by tapping an island on the ring.",
+    "spec": "brief:zombies-origins-revelations:2026-11-12 (Revelations: one unified picker on the hunt pages)"
+  },
+  {
     "pattern": "^(0[1-9]|1[0-2])$",
     "layer": "rendered",
     "routes": [
@@ -458,13 +512,1594 @@
     "spec": "§4.4"
   },
   {
+    "text": "Ice built",
+    "layer": "data",
+    "reason": "Tracker-only line from the retired step tracker; user decision 2026-10-31 / 2026-11-01. The underlying fact stays in the step refs (robot placements, footprint locations).",
+    "spec": "§4.1; Phase 2 decisions"
+  },
+  {
+    "text": "Fire built",
+    "layer": "data",
+    "reason": "Tracker-only line from the retired step tracker; user decision 2026-10-31 / 2026-11-01. The underlying fact stays in the step refs (robot placements, footprint locations).",
+    "spec": "§4.1; Phase 2 decisions"
+  },
+  {
+    "text": "Wind built",
+    "layer": "data",
+    "reason": "Tracker-only line from the retired step tracker; user decision 2026-10-31 / 2026-11-01. The underlying fact stays in the step refs (robot placements, footprint locations).",
+    "spec": "§4.1; Phase 2 decisions"
+  },
+  {
+    "text": "Lightning built",
+    "layer": "data",
+    "reason": "Tracker-only line from the retired step tracker; user decision 2026-10-31 / 2026-11-01. The underlying fact stays in the step refs (robot placements, footprint locations).",
+    "spec": "§4.1; Phase 2 decisions"
+  },
+  {
+    "text": "Ice upgraded",
+    "layer": "data",
+    "reason": "Tracker-only line from the retired step tracker; user decision 2026-10-31 / 2026-11-01. The underlying fact stays in the step refs (robot placements, footprint locations).",
+    "spec": "§4.1; Phase 2 decisions"
+  },
+  {
+    "text": "Fire upgraded",
+    "layer": "data",
+    "reason": "Tracker-only line from the retired step tracker; user decision 2026-10-31 / 2026-11-01. The underlying fact stays in the step refs (robot placements, footprint locations).",
+    "spec": "§4.1; Phase 2 decisions"
+  },
+  {
+    "text": "Wind upgraded",
+    "layer": "data",
+    "reason": "Tracker-only line from the retired step tracker; user decision 2026-10-31 / 2026-11-01. The underlying fact stays in the step refs (robot placements, footprint locations).",
+    "spec": "§4.1; Phase 2 decisions"
+  },
+  {
+    "text": "Lightning upgraded",
+    "layer": "data",
+    "reason": "Tracker-only line from the retired step tracker; user decision 2026-10-31 / 2026-11-01. The underlying fact stays in the step refs (robot placements, footprint locations).",
+    "spec": "§4.1; Phase 2 decisions"
+  },
+  {
+    "text": "Wind → Odin",
+    "layer": "data",
+    "reason": "Tracker-only line from the retired step tracker; user decision 2026-10-31 / 2026-11-01. The underlying fact stays in the step refs (robot placements, footprint locations).",
+    "spec": "§4.1; Phase 2 decisions"
+  },
+  {
+    "text": "Ice → Freya",
+    "layer": "data",
+    "reason": "Tracker-only line from the retired step tracker; user decision 2026-10-31 / 2026-11-01. The underlying fact stays in the step refs (robot placements, footprint locations).",
+    "spec": "§4.1; Phase 2 decisions"
+  },
+  {
+    "text": "Lightning → Thor",
+    "layer": "data",
+    "reason": "Tracker-only line from the retired step tracker; user decision 2026-10-31 / 2026-11-01. The underlying fact stays in the step refs (robot placements, footprint locations).",
+    "spec": "§4.1; Phase 2 decisions"
+  },
+  {
+    "text": "Fire → mound",
+    "layer": "data",
+    "reason": "Tracker-only line from the retired step tracker; user decision 2026-10-31 / 2026-11-01. The underlying fact stays in the step refs (robot placements, footprint locations).",
+    "spec": "§4.1; Phase 2 decisions"
+  },
+  {
+    "text": "Gen 5 chest",
+    "layer": "data",
+    "reason": "Tracker-only line from the retired step tracker; user decision 2026-10-31 / 2026-11-01. The underlying fact stays in the step refs (robot placements, footprint locations).",
+    "spec": "§4.1; Phase 2 decisions"
+  },
+  {
+    "text": "Mound chest",
+    "layer": "data",
+    "reason": "Tracker-only line from the retired step tracker; user decision 2026-10-31 / 2026-11-01. The underlying fact stays in the step refs (robot placements, footprint locations).",
+    "spec": "§4.1; Phase 2 decisions"
+  },
+  {
+    "text": "Gen 6 chest",
+    "layer": "data",
+    "reason": "Tracker-only line from the retired step tracker; user decision 2026-10-31 / 2026-11-01. The underlying fact stays in the step refs (robot placements, footprint locations).",
+    "spec": "§4.1; Phase 2 decisions"
+  },
+  {
+    "text": "Juggernog chest",
+    "layer": "data",
+    "reason": "Tracker-only line from the retired step tracker; user decision 2026-10-31 / 2026-11-01. The underlying fact stays in the step refs (robot placements, footprint locations).",
+    "spec": "§4.1; Phase 2 decisions"
+  },
+  {
+    "text": "Ice built",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins"
+    ],
+    "reason": "Tracker-only task line (user decision 2026-10-31); build facts stay in the staff board / step refs.",
+    "spec": "Phase 2 decisions"
+  },
+  {
+    "text": "Fire built",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins"
+    ],
+    "reason": "Tracker-only task line (user decision 2026-10-31); build facts stay in the staff board / step refs.",
+    "spec": "Phase 2 decisions"
+  },
+  {
+    "text": "Wind built",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins"
+    ],
+    "reason": "Tracker-only task line (user decision 2026-10-31); build facts stay in the staff board / step refs.",
+    "spec": "Phase 2 decisions"
+  },
+  {
+    "text": "Lightning built",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins"
+    ],
+    "reason": "Tracker-only task line (user decision 2026-10-31); build facts stay in the staff board / step refs.",
+    "spec": "Phase 2 decisions"
+  },
+  {
     "text": "Low",
     "layer": "rendered",
     "routes": [
       "/maps/origins"
     ],
-    "reason": "Removed the legacy Low / Medium / High guide-depth switch. The main guide still contains the original staff instructions and accessible expandable diagrams.",
-    "spec": "Origins UI simplification approved on Nov 5, 2026."
+    "reason": "Label of the removed Origins Low/Medium/High depth switch (previously matched inside other text).",
+    "spec": "§4.1"
+  },
+  {
+    "text": "Main Guide",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins",
+      "/maps/origins/ice-staff",
+      "/maps/origins/fire-staff",
+      "/maps/origins/wind-staff",
+      "/maps/origins/lightning-staff",
+      "/maps/origins/speed-run",
+      "/maps/origins/speed-run/prep",
+      "/maps/origins/speed-run/lightning",
+      "/side-easter-eggs/origins-speedrun"
+    ],
+    "reason": "Old Origins nav label; the elemental nav plates read Guide / Ice / Fire / Wind / Lightning / Speed Run (full names kept as accessible labels).",
+    "spec": "Phase 2 Task 2.3"
+  },
+  {
+    "text": "Ice Staff",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins",
+      "/maps/origins/ice-staff",
+      "/maps/origins/fire-staff",
+      "/maps/origins/wind-staff",
+      "/maps/origins/lightning-staff",
+      "/maps/origins/speed-run",
+      "/maps/origins/speed-run/prep",
+      "/maps/origins/speed-run/lightning",
+      "/side-easter-eggs/origins-speedrun"
+    ],
+    "reason": "Old Origins nav label; the elemental nav plates read Guide / Ice / Fire / Wind / Lightning / Speed Run (full names kept as accessible labels).",
+    "spec": "Phase 2 Task 2.3"
+  },
+  {
+    "text": "Fire Staff",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins",
+      "/maps/origins/ice-staff",
+      "/maps/origins/fire-staff",
+      "/maps/origins/wind-staff",
+      "/maps/origins/lightning-staff",
+      "/maps/origins/speed-run",
+      "/maps/origins/speed-run/prep",
+      "/maps/origins/speed-run/lightning",
+      "/side-easter-eggs/origins-speedrun"
+    ],
+    "reason": "Old Origins nav label; the elemental nav plates read Guide / Ice / Fire / Wind / Lightning / Speed Run (full names kept as accessible labels).",
+    "spec": "Phase 2 Task 2.3"
+  },
+  {
+    "text": "Wind Staff",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins",
+      "/maps/origins/ice-staff",
+      "/maps/origins/fire-staff",
+      "/maps/origins/wind-staff",
+      "/maps/origins/lightning-staff",
+      "/maps/origins/speed-run",
+      "/maps/origins/speed-run/prep",
+      "/maps/origins/speed-run/lightning",
+      "/side-easter-eggs/origins-speedrun"
+    ],
+    "reason": "Old Origins nav label; the elemental nav plates read Guide / Ice / Fire / Wind / Lightning / Speed Run (full names kept as accessible labels).",
+    "spec": "Phase 2 Task 2.3"
+  },
+  {
+    "text": "Lightning Staff",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins",
+      "/maps/origins/ice-staff",
+      "/maps/origins/fire-staff",
+      "/maps/origins/wind-staff",
+      "/maps/origins/lightning-staff",
+      "/maps/origins/speed-run",
+      "/maps/origins/speed-run/prep",
+      "/maps/origins/speed-run/lightning",
+      "/side-easter-eggs/origins-speedrun"
+    ],
+    "reason": "Old Origins nav label; the elemental nav plates read Guide / Ice / Fire / Wind / Lightning / Speed Run (full names kept as accessible labels).",
+    "spec": "Phase 2 Task 2.3"
+  },
+  {
+    "text": "Fire Staff Parts",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/fire-staff"
+    ],
+    "reason": "Old staff-page section heading; sections are now Build / Puzzle / Upgrade with the same lines.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Fire Staff Upgrade Puzzle",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/fire-staff"
+    ],
+    "reason": "Old staff-page section heading; sections are now Build / Puzzle / Upgrade with the same lines.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Fire Staff Upgrade",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/fire-staff"
+    ],
+    "reason": "Old staff-page section heading; sections are now Build / Puzzle / Upgrade with the same lines.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Red Record:",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/fire-staff"
+    ],
+    "reason": "Same label without its trailing colon (now a Build row label, shown uppercase by CSS); the value text is unchanged.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Part 1:",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/fire-staff"
+    ],
+    "reason": "Same label without its trailing colon (now a Build row label, shown uppercase by CSS); the value text is unchanged.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Part 2:",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/fire-staff"
+    ],
+    "reason": "Same label without its trailing colon (now a Build row label, shown uppercase by CSS); the value text is unchanged.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Part 3:",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/fire-staff"
+    ],
+    "reason": "Same label without its trailing colon (now a Build row label, shown uppercase by CSS); the value text is unchanged.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Crystal:",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/fire-staff"
+    ],
+    "reason": "Same label without its trailing colon (now a Build row label, shown uppercase by CSS); the value text is unchanged.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Build:",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/fire-staff"
+    ],
+    "reason": "Same label without its trailing colon (now a Build row label, shown uppercase by CSS); the value text is unchanged.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Ice Staff Parts",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/ice-staff"
+    ],
+    "reason": "Old staff-page section heading; sections are now Build / Puzzle / Upgrade with the same lines.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Crazy Place & Code",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/ice-staff"
+    ],
+    "reason": "Old staff-page section heading; sections are now Build / Puzzle / Upgrade with the same lines.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Ice Staff Upgrade",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/ice-staff"
+    ],
+    "reason": "Old staff-page section heading; sections are now Build / Puzzle / Upgrade with the same lines.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Blue Record:",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/ice-staff"
+    ],
+    "reason": "Same label without its trailing colon (now a Build row label, shown uppercase by CSS); the value text is unchanged.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Part 1:",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/ice-staff"
+    ],
+    "reason": "Same label without its trailing colon (now a Build row label, shown uppercase by CSS); the value text is unchanged.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Part 2:",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/ice-staff"
+    ],
+    "reason": "Same label without its trailing colon (now a Build row label, shown uppercase by CSS); the value text is unchanged.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Part 3:",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/ice-staff"
+    ],
+    "reason": "Same label without its trailing colon (now a Build row label, shown uppercase by CSS); the value text is unchanged.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Crystal:",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/ice-staff"
+    ],
+    "reason": "Same label without its trailing colon (now a Build row label, shown uppercase by CSS); the value text is unchanged.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Build:",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/ice-staff"
+    ],
+    "reason": "Same label without its trailing colon (now a Build row label, shown uppercase by CSS); the value text is unchanged.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Wind Staff Parts",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/wind-staff"
+    ],
+    "reason": "Old staff-page section heading; sections are now Build / Puzzle / Upgrade with the same lines.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Wind Puzzle Code",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/wind-staff"
+    ],
+    "reason": "Old staff-page section heading; sections are now Build / Puzzle / Upgrade with the same lines.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Wind Staff Upgrade",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/wind-staff"
+    ],
+    "reason": "Old staff-page section heading; sections are now Build / Puzzle / Upgrade with the same lines.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Yellow Record:",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/wind-staff"
+    ],
+    "reason": "Same label without its trailing colon (now a Build row label, shown uppercase by CSS); the value text is unchanged.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Part 1:",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/wind-staff"
+    ],
+    "reason": "Same label without its trailing colon (now a Build row label, shown uppercase by CSS); the value text is unchanged.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Part 2:",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/wind-staff"
+    ],
+    "reason": "Same label without its trailing colon (now a Build row label, shown uppercase by CSS); the value text is unchanged.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Part 3:",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/wind-staff"
+    ],
+    "reason": "Same label without its trailing colon (now a Build row label, shown uppercase by CSS); the value text is unchanged.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Crystal:",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/wind-staff"
+    ],
+    "reason": "Same label without its trailing colon (now a Build row label, shown uppercase by CSS); the value text is unchanged.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Build:",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/wind-staff"
+    ],
+    "reason": "Same label without its trailing colon (now a Build row label, shown uppercase by CSS); the value text is unchanged.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Lightning Staff Parts",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/lightning-staff"
+    ],
+    "reason": "Old staff-page section heading; sections are now Build / Puzzle / Upgrade with the same lines.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Piano Code Chart",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/lightning-staff"
+    ],
+    "reason": "Old staff-page section heading; sections are now Build / Puzzle / Upgrade with the same lines.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Lightning Staff Upgrade",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/lightning-staff"
+    ],
+    "reason": "Old staff-page section heading; sections are now Build / Puzzle / Upgrade with the same lines.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Purple Record:",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/lightning-staff"
+    ],
+    "reason": "Same label without its trailing colon (now a Build row label, shown uppercase by CSS); the value text is unchanged.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Part 1:",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/lightning-staff"
+    ],
+    "reason": "Same label without its trailing colon (now a Build row label, shown uppercase by CSS); the value text is unchanged.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Part 2:",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/lightning-staff"
+    ],
+    "reason": "Same label without its trailing colon (now a Build row label, shown uppercase by CSS); the value text is unchanged.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Part 3:",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/lightning-staff"
+    ],
+    "reason": "Same label without its trailing colon (now a Build row label, shown uppercase by CSS); the value text is unchanged.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Crystal:",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/lightning-staff"
+    ],
+    "reason": "Same label without its trailing colon (now a Build row label, shown uppercase by CSS); the value text is unchanged.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Build:",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/lightning-staff"
+    ],
+    "reason": "Same label without its trailing colon (now a Build row label, shown uppercase by CSS); the value text is unchanged.",
+    "spec": "Phase 2 Task 2.5"
+  },
+  {
+    "text": "Build the four staffs",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Three parts + the coloured record + the crystal for each staff, then build under Excavation.",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Staff",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Parts",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Snowy dig sites — spawn trenches, Excavation, Church",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Blue record",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Tank Station by Gen 2 (3 spawns)",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Crystal",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Ice Tunnel · Gen 6",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Part 1",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Gen 6 reward chest (all six generators on)",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Part 2",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "First Panzer drop (normally Round 8)",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Part 3",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Shoot the orange plane → part lands near the mound",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Red record",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Church / Gen 6 (3 spawns)",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Fire Tunnel · near spawn",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Inside the robots — Thor (spawn), Odin (middle), Freya (Church)",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Yellow record",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Gen 5 · Stamin-Up · Lightning Tunnel entrance",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Wind Tunnel · Gen 4",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Tank Church → Gen 2: jump right after Gen 4",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Tank Gen 2 → Church: jump left onto Excavation scaffolding",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Tank Gen 2 → Church: jump right just before Church",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Purple record",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Gen 4 / Jug / Wind Tunnel area",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Lightning Tunnel · Gen 5",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Build",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Matching coloured pedestal beneath the Excavation Site",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Collect the three parts for a staff (each staff hides them differently — see the staff tabs).",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Find that staff's coloured record, then carry it with the Gramophone to the matching tunnel.",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Play the record to open the tunnel, enter the Crazy Place, and take the matching crystal.",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Build the staff on its coloured pedestal beneath the Excavation Site.",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Build and upgrade the staffs as early as the run allows.",
+    "layer": "data",
+    "reason": "Moved to the Main Guide Tips panel (originsTips in originsGuide.jsx); still shown on /maps/origins.",
+    "spec": "§19 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Save a zombie when you need uninterrupted time for staff puzzles or map setup.",
+    "layer": "data",
+    "reason": "Moved to the Main Guide Tips panel (originsTips in originsGuide.jsx); still shown on /maps/origins.",
+    "spec": "§19 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Upgrade the staffs",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Solve each staff puzzle, line the Excavation rings to its colour, shoot the orb, charge it in the Crazy Place.",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Ice Staff code: blue-dot pillar symbols and their matching ceiling stones",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Crazy Place: match blue-dot pillar → ceiling stone, shoot it",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Freeze 3 gravestones → shatter with bullets",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Excavation rings all BLUE → shoot the orb",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Blue pedestal → kill zombies to charge",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Fire Staff code: cauldron symbols and their Church torch numbers",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Kill zombies on the Crazy Place grates → light 4 cauldrons",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Read the symbols → shoot those numbered Church torches",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Excavation rings all RED → shoot the orb",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Red pedestal → kill zombies to charge",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Wind Staff code: outer to inner ceiling ring symbols",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Crazy Place: shoot the 4 ceiling rings to match the code",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Blow all 3 chimneys' smoke toward Excavation",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Excavation rings all YELLOW → shoot the orb",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Yellow pedestal → kill zombies to charge",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Piano code",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "1 · 3 · 6",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "3 · 5 · 7",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "2 · 4 · 6",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Lightning Staff piano chart: first, second and third chords",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Play the 3 chords, set the 7 switches",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Excavation rings all PURPLE → shoot the orb",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Purple pedestal → kill zombies to charge",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Solve the staff's own puzzle using its code chart (each tab shows the chart and the extra steps).",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "At the Excavation Site, use the four levers to align every ring to the staff's colour.",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Go below the rings and shoot the orb of that colour with the staff.",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Return to the Crazy Place, place the staff on its coloured pedestal, and kill zombies around it until it is fully charged.",
+    "layer": "data",
+    "reason": "Staff how-to: the Main Guide owns the sequence only; this staff detail lives on that staff's page (originsStaffPages.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Can't tell which lever turns which Excavation ring? Coming down toward the staff chamber, take the right-side route toward Mule Kick: that lever controls the top ring. The lever to the left of the large staircase down into the staff chamber controls the second ring. The two levers on the wooden platforms directly above Mule Kick control the bottom two rings.",
+    "layer": "data",
+    "reason": "Unverified lever → ring mapping removed; staff pages keep only \"use the four levers to align every ring\" and the ring diagram.",
+    "spec": "§17 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Lightning: switches can be set before the piano step; once that step is active, a correct switch stops sparking. The current remembers.",
+    "layer": "data",
+    "reason": "Already on the Lightning Staff page as the switch board note (shared/data/originsLightning.js).",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Use the staff pages for full-size puzzle images instead of memorising every code.",
+    "layer": "data",
+    "reason": "Redundant with the five Origins tabs, which own the staff pages.",
+    "spec": "§8, §19 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Secure the keys",
+    "layer": "data",
+    "reason": "Step renamed to its canonical Easter Egg name, Ascend from Darkness; \"Secure the Keys\" now names the upgrade step, as in the original Easter Egg.",
+    "spec": "§11 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Place Wind in Odin (middle robot), Ice in Freya (church / Gen 6 robot), and Lightning in Thor (spawn / Gen 1–3 robot).",
+    "layer": "data",
+    "reason": "Restated by the step's own action line, warning or glance facts, which stay; one fact, one home.",
+    "spec": "§12, §19 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Place Fire in the pedestal at the bottom of the mound.",
+    "layer": "data",
+    "reason": "Restated by the step's own action line, warning or glance facts, which stay; one fact, one home.",
+    "spec": "§12, §19 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Fill all four soul chests in the giant robot footprints.",
+    "layer": "data",
+    "reason": "Restated by the step's own action line, warning or glance facts, which stay; one fact, one home.",
+    "spec": "§12, §19 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Collect the One Inch Punch / Thunder Fists from the reward chest.",
+    "layer": "data",
+    "reason": "Restated by the step's own action line, warning or glance facts, which stay; one fact, one home.",
+    "spec": "§12, §19 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Fill the soul chests during setup instead of leaving all four until the end.",
+    "layer": "data",
+    "reason": "Moved to the Main Guide Tips panel (originsTips in originsGuide.jsx); still shown on /maps/origins.",
+    "spec": "§19 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Enter Zombie Blood and shoot down the glowing red plane.",
+    "layer": "data",
+    "reason": "Restated by the step's own action line, warning or glance facts, which stay; one fact, one home.",
+    "spec": "§12, §19 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Locate and kill the invisible, clockwise-running pilot while still in Zombie Blood.",
+    "layer": "data",
+    "reason": "Restated by the step's own action line, warning or glance facts, which stay; one fact, one home.",
+    "spec": "§12, §19 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Return all four upgraded staffs to their Crazy Place holders and earn the required 100 kills without removing the staffs.",
+    "layer": "data",
+    "reason": "Restated by the step's own action line, warning or glance facts, which stay; one fact, one home.",
+    "spec": "§12, §19 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "tabs": "origins/build-staffs",
+    "layer": "data",
+    "reason": "The per-staff tabs left the Main Guide: each staff's build and upgrade detail is on its own staff page, reached from the Origins tabs.",
+    "spec": "§8–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "tabs": "origins/upgrade-staffs",
+    "layer": "data",
+    "reason": "The per-staff tabs left the Main Guide: each staff's build and upgrade detail is on its own staff page, reached from the Origins tabs.",
+    "spec": "§8–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "steps",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins"
+    ],
+    "reason": "Leftover label of the removed depth switch (Low codes / Medium steps / High full); the page no longer has a lowercase match for it.",
+    "spec": "§4.1"
+  },
+  {
+    "text": "full",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins"
+    ],
+    "reason": "Leftover label of the removed depth switch (Low codes / Medium steps / High full); the page no longer has a lowercase match for it.",
+    "spec": "§4.1"
+  },
+  {
+    "text": "Build the four staffs",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins"
+    ],
+    "reason": "Step renamed: Build the Staffs, Secure the Keys (the upgrade step, its canonical name) and Ascend from Darkness (the placement step, its canonical name).",
+    "spec": "§10, §11 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Upgrade the staffs",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins"
+    ],
+    "reason": "Step renamed: Build the Staffs, Secure the Keys (the upgrade step, its canonical name) and Ascend from Darkness (the placement step, its canonical name).",
+    "spec": "§10, §11 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Secure the keys",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins"
+    ],
+    "reason": "Step renamed: Build the Staffs, Secure the Keys (the upgrade step, its canonical name) and Ascend from Darkness (the placement step, its canonical name).",
+    "spec": "§10, §11 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Not working?",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins"
+    ],
+    "reason": "The nested \"Not working?\" disclosure became one closed Details per step; its lines are inside it.",
+    "spec": "§12 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Credits + radio audio",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins"
+    ],
+    "reason": "The credits and both radio clips are shown in the Tips panel instead of behind this disclosure.",
+    "spec": "§19, §23 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Parts",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins"
+    ],
+    "reason": "Staff build detail left the Main Guide; the same facts are on that staff's page (Build), reached from the Origins tabs.",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Snowy dig sites — spawn trenches, Excavation, Church",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins"
+    ],
+    "reason": "Staff build detail left the Main Guide; the same facts are on that staff's page (Build), reached from the Origins tabs.",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Blue record",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins"
+    ],
+    "reason": "Staff build detail left the Main Guide; the same facts are on that staff's page (Build), reached from the Origins tabs.",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Tank Station by Gen 2 (3 spawns)",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins"
+    ],
+    "reason": "Staff build detail left the Main Guide; the same facts are on that staff's page (Build), reached from the Origins tabs.",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Crystal",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins"
+    ],
+    "reason": "Staff build detail left the Main Guide; the same facts are on that staff's page (Build), reached from the Origins tabs.",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Ice Tunnel · Gen 6",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins"
+    ],
+    "reason": "Staff build detail left the Main Guide; the same facts are on that staff's page (Build), reached from the Origins tabs.",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Matching coloured pedestal beneath the Excavation Site",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins"
+    ],
+    "reason": "Staff build detail left the Main Guide; the same facts are on that staff's page (Build), reached from the Origins tabs.",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Part 1",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins"
+    ],
+    "reason": "Staff build detail left the Main Guide; the same facts are on that staff's page (Build), reached from the Origins tabs.",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Gen 6 reward chest (all six generators on)",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins"
+    ],
+    "reason": "Staff build detail left the Main Guide; the same facts are on that staff's page (Build), reached from the Origins tabs.",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Part 2",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins"
+    ],
+    "reason": "Staff build detail left the Main Guide; the same facts are on that staff's page (Build), reached from the Origins tabs.",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "First Panzer drop (normally Round 8)",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins"
+    ],
+    "reason": "Staff build detail left the Main Guide; the same facts are on that staff's page (Build), reached from the Origins tabs.",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Part 3",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins"
+    ],
+    "reason": "Staff build detail left the Main Guide; the same facts are on that staff's page (Build), reached from the Origins tabs.",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Shoot the orange plane → part lands near the mound",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins"
+    ],
+    "reason": "Staff build detail left the Main Guide; the same facts are on that staff's page (Build), reached from the Origins tabs.",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Red record",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins"
+    ],
+    "reason": "Staff build detail left the Main Guide; the same facts are on that staff's page (Build), reached from the Origins tabs.",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Church / Gen 6 (3 spawns)",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins"
+    ],
+    "reason": "Staff build detail left the Main Guide; the same facts are on that staff's page (Build), reached from the Origins tabs.",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Fire Tunnel · near spawn",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins"
+    ],
+    "reason": "Staff build detail left the Main Guide; the same facts are on that staff's page (Build), reached from the Origins tabs.",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Inside the robots — Thor (spawn), Odin (middle), Freya (Church)",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins"
+    ],
+    "reason": "Staff build detail left the Main Guide; the same facts are on that staff's page (Build), reached from the Origins tabs.",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Yellow record",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins"
+    ],
+    "reason": "Staff build detail left the Main Guide; the same facts are on that staff's page (Build), reached from the Origins tabs.",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Gen 5 · Stamin-Up · Lightning Tunnel entrance",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins"
+    ],
+    "reason": "Staff build detail left the Main Guide; the same facts are on that staff's page (Build), reached from the Origins tabs.",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Wind Tunnel · Gen 4",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins"
+    ],
+    "reason": "Staff build detail left the Main Guide; the same facts are on that staff's page (Build), reached from the Origins tabs.",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Tank Church → Gen 2: jump right after Gen 4",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins"
+    ],
+    "reason": "Staff build detail left the Main Guide; the same facts are on that staff's page (Build), reached from the Origins tabs.",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Tank Gen 2 → Church: jump left onto Excavation scaffolding",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins"
+    ],
+    "reason": "Staff build detail left the Main Guide; the same facts are on that staff's page (Build), reached from the Origins tabs.",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Tank Gen 2 → Church: jump right just before Church",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins"
+    ],
+    "reason": "Staff build detail left the Main Guide; the same facts are on that staff's page (Build), reached from the Origins tabs.",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Purple record",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins"
+    ],
+    "reason": "Staff build detail left the Main Guide; the same facts are on that staff's page (Build), reached from the Origins tabs.",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Gen 4 / Jug / Wind Tunnel area",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins"
+    ],
+    "reason": "Staff build detail left the Main Guide; the same facts are on that staff's page (Build), reached from the Origins tabs.",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Lightning Tunnel · Gen 5",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins"
+    ],
+    "reason": "Staff build detail left the Main Guide; the same facts are on that staff's page (Build), reached from the Origins tabs.",
+    "spec": "§9–§13 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "Speed Run",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/fire-staff",
+      "/maps/origins/ice-staff",
+      "/maps/origins/wind-staff"
+    ],
+    "reason": "Speed Run is no longer an Origins tab; it is linked from the Main Guide (and from the Lightning switch board).",
+    "spec": "§8, §21 (Origins handoff, 2026-11-02)"
+  },
+  {
+    "text": "TheRealGamer",
+    "layer": "rendered",
+    "routes": [
+      "/maps/der-eisendrache/bows/fire"
+    ],
+    "reason": "Wrong credit, corrected to \"SBZ vSylent\": the Fire Bow video 2lA6-UH6Qjo is \"DER EISENDRACHE - FIRE BOW FAST GUIDE W/ SHORTCUTS\" by SBZ vSylent (YouTube oEmbed). Changed in ce49bb8.",
+    "spec": "audit:zombies:2026-11-14 other-maps-audit.md Der Eisendrache #1; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Fill the egg with dragon-fire zombie kills, penetration kills, and shield kills.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/gorod-krovi/buildables"
+    ],
+    "reason": "Wrong trials, corrected to \"Napalm Zombie kills, penetration multi-kills, then melee kills\", in that order, matching the guide's own run sheet (Call of Duty Wiki: Gauntlet of Siegfried; Gameranx). Changed in ce49bb8.",
+    "spec": "audit:zombies:2026-11-14 other-maps-audit.md Gorod Krovi #2; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Activate all six generators, then collect the staff part from the reward chest beside Generator 6.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/fire-staff"
+    ],
+    "reason": "Wrong requirement, corrected to \"Power Generator 6, then take the part from the reward chest beside it.\": the box opens when Generator 6 is powered; capturing all six generators pays out a Max Ammo, not the staff part (Call of Duty Wiki: Staff of Fire, Rituals of the Ancients).",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Origins #8; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "In the Crazy Place, kill zombies on the metal grates beside the Fire area until all four fire cauldrons are lit.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/fire-staff"
+    ],
+    "reason": "Missing requirement, reworded: only kills made with the Fire Staff count toward the cauldrons, about 30 of them (Call of Duty Wiki: Staff of Fire). Every fact the old line held is kept.",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Origins #2; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Read the illuminated fire symbols and use the code chart to translate them into the numbered torches in the Church.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/fire-staff"
+    ],
+    "reason": "Wrong place implied, reworded: the line followed \"In the Crazy Place\" and read as if the lit symbols were there; they are upstairs in the Church on the far wall (Call of Duty Wiki: Staff of Fire; Accelerated Ideas).",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Origins #3; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Go to the Church and shoot the matching numbered torches with the Fire Staff before the puzzle resets.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/fire-staff"
+    ],
+    "reason": "Location made exact, reworded: the torches are in the Church basement where the tank parks, and 4 is always one of them (Call of Duty Wiki: Staff of Fire; Accelerated Ideas). \"before the puzzle resets\" is kept unchanged because the audit could not confirm or rule out a reset.",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Origins #3; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Return to the main map and use the Wind Staff on all three smoking chimneys so their smoke points toward the Excavation Site.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/wind-staff"
+    ],
+    "reason": "Wrong name, corrected to \"smoking stone balls\": the page's own map key calls them smoke balls and the Call of Duty Wiki says \"three smoking stone balls\" (Staff of Wind).",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Origins #9; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Church → Gen 2, jump right after Generator 4.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/lightning-staff"
+    ],
+    "reason": "Page and map pin disagreed, both now use the Wiki wording: \"jump right onto the cut-off wooden stairs before the trench to Generator 2\" (Call of Duty Wiki: Staff of Lightning).",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Origins #11; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Middle robot · open foot",
+    "layer": "data",
+    "reason": "Solo-only route stated as the only one, corrected to \"A robot’s lit foot (solo: Odin)\": any robot works in co-op and the way in is the one lit foot (Call of Duty Wiki: Little Lost Girl step 3, Giant Robot).",
+    "spec": "audit:zombies:2026-11-14 origins-open-facts.md #4, origins-revelations-audit.md Origins #6; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Enter the middle robot through an open foot and press the red button.",
+    "layer": "data",
+    "reason": "Solo-only route and no way in stated, reworded: shoot open the lit foot of any robot and get stepped on; Odin is the solo route (Call of Duty Wiki: Little Lost Girl step 3, Giant Robot).",
+    "spec": "audit:zombies:2026-11-14 origins-open-facts.md #4, origins-revelations-audit.md Origins #6; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "In Zombie Blood, shoot down the glowing red plane and kill the invisible pilot.",
+    "layer": "data",
+    "reason": "Wrong colour and a missing pickup, reworded: the plane glows yellow, not red, and the Maxis Drone only comes back when the pilot drops it (Call of Duty Wiki: Little Lost Girl step 5; callofdutyzombies.com). The colour is not frame-checked.",
+    "spec": "audit:zombies:2026-11-14 origins-open-facts.md #2, origins-revelations-audit.md Origins #5 and #7; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Shoot the red plane",
+    "layer": "data",
+    "reason": "Wrong colour, corrected to \"Shoot the glowing plane\": the plane glows yellow, not red (Call of Duty Wiki: Little Lost Girl step 5).",
+    "spec": "audit:zombies:2026-11-14 origins-open-facts.md #2, origins-revelations-audit.md Origins #5; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Routing, robot and snow timing, staff dupes, and skips for a fast Black Ops III Origins run, built from the advanced route in the linked walkthrough. Puzzle solutions stay on the staff tabs.",
+    "layer": "rendered",
+    "routes": [
+      "/side-easter-eggs/origins-speedrun",
+      "/maps/origins/speed-run",
+      "/maps/origins/speed-run/prep",
+      "/maps/origins/speed-run/lightning"
+    ],
+    "reason": "Creator not credited, reworded: \"the linked walkthrough\" is Freckleston's \"How To Speedrun: Origins Easter Egg\" (YouTube oEmbed). Nothing else in the line changed.",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Origins #12; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Optional advanced first-piece route that uses movement and death-barrier timing instead of the tank or Boomhilda.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/speed-run/lightning"
+    ],
+    "reason": "Creator not credited, reworded: the hildaless demo is Aiden Ross's video (YouTube oEmbed). Nothing else in the line changed.",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Origins #12; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Collect the three Keeper Protector parts. Make sure the run has Little Arnies and the Apothicon Servant.",
+    "layer": "data",
+    "reason": "Wrong item name, corrected to the in-game name \"Li’l Arnies\" (Call of Duty Wiki: Li'l Arnie). Nothing else in the line changed.",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Revelations #11; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Little Arnies",
+    "layer": "data",
+    "reason": "Wrong item name, corrected to the in-game name \"Li’l Arnies\" (Call of Duty Wiki: Li'l Arnie).",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Revelations #11; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Collect the three Keeper Protector parts and make sure the run has Little Arnies plus the Apothicon Servant. Build the Keeper at Verrückt, Kino, or Der Eisendrache for 5,000 points when the ritual step is ready.",
+    "layer": "data",
+    "reason": "Incomplete, reworded: there are four altar spots (Origins was missing), the altar is built and the Keeper is then summoned for 5,000 points (Call of Duty Wiki: Keeper Protector; Accelerated Ideas); \"Little Arnies\" is \"Li’l Arnies\" in game.",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Revelations #7 and #11; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Little Arnies are required for the nine-hole step.",
+    "layer": "data",
+    "reason": "Wrong item name, corrected to the in-game name \"Li’l Arnies\" (Call of Duty Wiki: Li'l Arnie). Nothing else in the line changed.",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Revelations #11; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Find the triangular ritual rock, bring the Keeper to it, protect it for three minutes, take the reel to Nacht’s radio.",
+    "layer": "data",
+    "reason": "Missing action, reworded: the ritual starts when the player crouches on the triangle stone while the jump pad is off, not by bringing the Keeper close (Call of Duty Wiki: For The Good Of All, reel 1).",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Revelations #1; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Find the triangular ritual rock on one of the three possible jump pads, summon the Keeper Protector, and bring it close enough to begin the ritual. Protect it for three full minutes.",
+    "layer": "data",
+    "reason": "Missing action, reworded: the ritual starts when the player crouches on the triangle stone at the back of the switched-off jump pad (Call of Duty Wiki: For The Good Of All, reel 1). Every other fact in the line is kept.",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Revelations #1; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "The Keeper starts the ritual by standing close to the triangular rock.",
+    "layer": "data",
+    "reason": "Wrong trigger, replaced: the Keeper does not start the ritual by standing close; the player crouches on the stone (now in the step's first line) and steps off before the pad switches back on (Call of Duty Wiki: For The Good Of All, reel 1).",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Revelations #1; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "In the Apothicon, throw Little Arnies into all nine wall holes, never the same one twice. Kill the Margwas after each three.",
+    "layer": "data",
+    "reason": "Wrong item name, corrected to the in-game name \"Li’l Arnies\" (Call of Duty Wiki: Li'l Arnie). Nothing else in the line changed.",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Revelations #11; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Inside the Giant Apothicon, throw Little Arnies into all nine wall holes without repeating one. Every set of three holes spawns three Margwas.",
+    "layer": "data",
+    "reason": "Wrong item name, corrected to the in-game name \"Li’l Arnies\" (Call of Duty Wiki: Li'l Arnie). Nothing else in the line changed.",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Revelations #11; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "At each Corruption Engine, hit the blue rock behind its rift with the laser turret. Then activate S.O.P.H.I.A. at Nacht.",
+    "layer": "data",
+    "reason": "Wrong target implied, reworded: two blue rocks float above each engine and only the left one (facing the Nacht portal from the turret) counts (Call of Duty Wiki: For The Good Of All step 3; Accelerated Ideas agrees only one rock works).",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Revelations #3; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Use the laser turret at each Corruption Engine to hit the blue rock behind its teleporting rift. Once all four are complete, return to Nacht and activate S.O.P.H.I.A.",
+    "layer": "data",
+    "reason": "Wrong target implied, reworded: two blue rocks float above each engine and only the left one (facing the Nacht portal from the turret) counts; sweep the laser over it until the turret kicks you off (Call of Duty Wiki: For The Good Of All step 3).",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Revelations #3; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Get the Kronorium from Samantha’s bed, place it on the Kino altar, then hatch all four eggs in the Apothicon’s nests.",
+    "layer": "data",
+    "reason": "Wrong object, corrected to \"the podium on the Kino stage\": Kino also has a Keeper Summoning Altar, so \"altar\" pointed at the wrong thing (Call of Duty Wiki step 4; Accelerated Ideas; Gameranx).",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Revelations #2; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Kronorium on the altar",
+    "layer": "data",
+    "reason": "Wrong object, corrected to \"Kronorium on the stage podium\": Kino also has a Keeper Summoning Altar (Call of Duty Wiki step 4; Accelerated Ideas; Gameranx).",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Revelations #2; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Follow S.O.P.H.I.A. to the Kino teleporter, enter Samantha’s room, collect the book from the bed, and place it on the Kino altar. Four eggs now spawn around the map.",
+    "layer": "data",
+    "reason": "Wrong object, corrected to \"the podium on the Kino stage\": Kino also has a Keeper Summoning Altar (Call of Duty Wiki step 4; Accelerated Ideas; Gameranx). Nothing else in the line changed.",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Revelations #2; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Have all players stand on the purple rift / circle in the Kino projector room to enter the boss arena. Interact with the Kronorium, memorize the randomized four-symbol order it shows, enter that same order at the back of the room, then survive four sets of two Margwas.",
+    "layer": "data",
+    "reason": "Solo-only count, extended with \"(one more per wave in co-op)\" (Call of Duty Wiki: For The Good Of All step 7). Nothing else in the line changed.",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Revelations #9; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Clear four Margwa waves with two Margwas per wave to spawn the Summoning Key.",
+    "layer": "data",
+    "reason": "Solo-only count, extended with \"(one more per wave in co-op)\" (Call of Duty Wiki: For The Good Of All step 7). Nothing else in the line changed.",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Revelations #9; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Verrückt / Shangri-La Stairs",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/apothicon-upgrade"
+    ],
+    "reason": "Wrong pairing, corrected: the Shangri-La staircase is the second place to hit the Der Eisendrache rock, so clip 2 is now \"Der Eisendrache / Shangri-La Stairs\" and clip 3 \"Verrückt\" (Call of Duty Wiki: Apothicon Servant).",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Revelations #5; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Verruckt",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/egg-locations"
+    ],
+    "reason": "Spelling, corrected to \"Verrückt\" with its umlaut, as every other page of the guide writes it.",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Revelations #11; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Buckets Near Wonderfizz Machine",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/egg-locations"
+    ],
+    "reason": "Spelling, corrected to \"Wunderfizz\" (Call of Duty Wiki: Der Wunderfizz). The two other \"Wonderfizz\" spots on this page were corrected the same way.",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Revelations #11; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Seven throws, in order. Tap the target you need and jump straight to that throw.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/summoning-key"
+    ],
+    "reason": "Wrong rule, corrected to \"Seven throws, any order. Leave Nacht for last.\": the targets can be hit in any order; only the Nacht portal must wait until the red barrel is the last target (Call of Duty Wiki step 8; Gameranx).",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Revelations #6; protected change approved by Bryen 2026-11-14"
+  },
+  {
+    "text": "Throw order",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/summoning-key"
+    ],
+    "reason": "Wrong rule implied, corrected to \"Suggested order\": the listed order works but is not required (Call of Duty Wiki step 8; Gameranx).",
+    "spec": "audit:zombies:2026-11-14 origins-revelations-audit.md Revelations #6; protected change approved by Bryen 2026-11-14"
   },
   {
     "text": "Shoot the spawn tombstones 2-3-1-4, activate all four Corruption Engines, then open Pack-a-Punch inside the Apothicon.",

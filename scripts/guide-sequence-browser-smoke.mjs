@@ -3,6 +3,7 @@
  * task fact as text, and none of the old run machinery (modes, progress, Mark done, swipe rail, Quick refs).
  */
 import assert from 'node:assert/strict';
+import { settled } from './smoke-helpers.mjs';
 import { chromium } from 'playwright';
 import { loadGuides } from './guide-content.mjs';
 import { VIEWPORTS } from './smoke-viewports.mjs';
@@ -13,7 +14,11 @@ const MACHINERY_SELECTORS = '.guide-mode, .guide-progress, .guide-actions, .guid
 const MACHINERY_TEXT = ['Mark step done', 'Walkthrough', 'Quick refs', 'Track it', 'Progress options', 'SWIPE', 'Swipe', '???'];
 const results = [];
 
-const tabFacts = (tab) => (tab.refs ?? []).flatMap((ref) => (ref.type === 'facts' ? ref.items.map((item) => item.v) : []));
+const tabStrings = (tab) => (tab.refs ?? []).flatMap((ref) => {
+  if (ref.type === 'facts') return ref.items.map((item) => item.v);
+  if (ref.type === 'list' || ref.type === 'sequence' || ref.type === 'chips') return ref.items;
+  return [];
+}).map((text) => text.replace(/\s+/g, ' '));
 
 const browser = await chromium.launch({ headless: true });
 try {
@@ -23,16 +28,32 @@ try {
     const errors = [];
     page.on('pageerror', (error) => errors.push(error.message));
 
-    for (const { guide, route, steps } of guides) {
+    // Origins has its own run sheet (origins-browser-smoke.mjs); every other guide is a plain sequence,
+    // or (Revelations) a step picker that shows the same sequence one step at a time.
+    const readSteps = () => page.locator('li.guide-seq__step').evaluateAll((items) => items.map((item) => ({
+      id: item.id,
+      title: item.querySelector('h3')?.textContent.trim(),
+    })));
+    const readText = async () => (await page.locator('section.guide').textContent()).replace(/\s+/g, ' ');
+    for (const { guide, route, steps } of guides.filter((entry) => entry.guide !== 'origins')) {
       await page.goto(`${base}${route}`, { waitUntil: 'networkidle' });
-      const rendered = await page.locator('li.guide-seq__step').evaluateAll((items) => items.map((item) => ({
-        id: item.id,
-        title: item.querySelector('h3')?.textContent.trim(),
-      })));
+      const picks = page.locator('[data-step-tabs] [role="tab"]');
+      const rendered = [];
+      let guideText = '';
+      if (await picks.count()) {
+        for (let index = 0; index < await picks.count(); index += 1) {
+          await picks.nth(index).click();
+          await page.locator(`[role="tabpanel"][aria-labelledby="${await picks.nth(index).getAttribute('id')}"]`).waitFor();
+          rendered.push(...await readSteps());
+          guideText += ` ${await readText()}`;
+        }
+      } else {
+        rendered.push(...await readSteps());
+        guideText = await readText();
+      }
       assert.deepEqual(rendered.map((item) => item.id), steps.map((step) => step.id), `${route}: every step renders in data order with its anchor`);
       assert.deepEqual(rendered.map((item) => item.title), steps.map((step) => step.title), `${route}: step titles match the guide data`);
 
-      const guideText = (await page.locator('section.guide').textContent()).replace(/\s+/g, ' ');
       const missingTasks = steps.flatMap((step) => (step.tasks ?? []).flatMap((task) => [task.label, task.hint]))
         .filter(Boolean)
         .filter((text) => !guideText.includes(text.replace(/\s+/g, ' ')));
@@ -42,7 +63,7 @@ try {
       const leftover = MACHINERY_TEXT.filter((text) => guideText.includes(text));
       assert.deepEqual(leftover, [], `${route}: no guide machinery text remains`);
 
-      const duplicateIds = await page.evaluate((ids) => ids.filter((id) => document.querySelectorAll(`[id="${id}"]`).length !== 1), steps.map((step) => step.id));
+      const duplicateIds = await page.evaluate((ids) => ids.filter((id) => document.querySelectorAll(`[id="${id}"]`).length > 1), steps.map((step) => step.id));
       assert.deepEqual(duplicateIds, [], `${route}: no element id collides with a step id`);
       results.push(`${name}: ${guide} — ${steps.length} steps in order, tasks as text, no machinery`);
     }
@@ -66,7 +87,7 @@ try {
     for (const tab of tabsRef.tabs) {
       await step.getByRole('button', { name: tab.label, exact: true }).click();
       const panel = (await step.locator('[role="region"]').first().textContent()).replace(/\s+/g, ' ');
-      for (const fact of tabFacts(tab)) assert(panel.includes(fact), `Origins ${tab.label} reference shows "${fact}"`);
+      for (const fact of tabStrings(tab)) assert(panel.includes(fact), `Origins ${tab.label} reference shows "${fact}"`);
     }
     await step.getByRole('button', { name: tabsRef.tabs.at(-1).label, exact: true }).click();
     assert.equal(await step.locator('[role="region"]').count(), 0, 'Clicking the selected staff collapses its panel');
@@ -78,11 +99,11 @@ try {
     const cold = await browser.newContext({ viewport: { width, height } });
     const coldPage = await cold.newPage();
     await coldPage.goto(`${base}/maps/origins#upgrade-staffs`, { waitUntil: 'networkidle' });
-    await coldPage.waitForTimeout(150);
+    await settled(coldPage);
     // Every pinned bar counts: the hub bar and the map's own header (Origins pins one under the hub bar).
     const position = await coldPage.evaluate(() => {
       const target = document.getElementById('upgrade-staffs').getBoundingClientRect();
-      const headerBottom = Math.max(0, ...[...document.querySelectorAll('.hub-header, .map-module header')]
+      const headerBottom = Math.max(0, ...[...document.querySelectorAll('.hub-header, .map-module header, .map-module [data-pinned]')]
         .filter((el) => ['fixed', 'sticky'].includes(getComputedStyle(el).position))
         .map((el) => el.getBoundingClientRect().bottom));
       return { top: target.top, headerBottom, viewport: window.innerHeight };

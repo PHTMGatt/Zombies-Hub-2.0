@@ -33,3 +33,27 @@ test('Revelations Summoning Key reference names the exact old-map targets', () =
     assert.match(source, /(Focusing Stone|focusing crystal)/i);
   }
 });
+
+// 2026-11-15 accuracy audit (Revelations #1, #2, #11).
+test('Revelations reel 1 has the player crouch on the triangle stone while the jump pad is off', () => {
+  const source = read('maps/revelations/src/data/ApothiconSteps.js');
+  assert.match(source, /crouch on the triangle stone while the pad is off/i);
+  assert.doesNotMatch(source, /starts the ritual by standing close/i);
+});
+
+test('Revelations puts the Kronorium on the Kino stage podium, never on "the altar"', () => {
+  for (const file of ['maps/revelations/src/data/ApothiconSteps.js', 'maps/revelations/src/data/revGuideSteps.jsx']) {
+    const source = read(file);
+    assert.match(source, /podium/i, `${file} names the podium`);
+    assert.doesNotMatch(source, /Kino altar|Kronorium on the altar/i, `${file} still says altar`);
+  }
+});
+
+test('Revelations uses the in-game names: Li’l Arnie, Wunderfizz, Verrückt', () => {
+  for (const file of ['maps/revelations/src/data/ApothiconSteps.js', 'maps/revelations/src/data/revGuideSteps.jsx']) {
+    assert.doesNotMatch(read(file), /Little Arnie/i, `${file} says Little Arnie`);
+  }
+  const eggs = read('maps/revelations/src/data/eggData.js');
+  assert.doesNotMatch(eggs, /Wonderfizz/i);
+  assert.doesNotMatch(eggs, /Verruckt/);
+});

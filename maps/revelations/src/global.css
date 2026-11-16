@@ -112,9 +112,9 @@
 .revelations-module .rev-kicker {
   display: block;
   color: var(--rev-cyan);
-  font-size: 0.66rem;
+  font-size: 0.74rem;
   font-weight: 800;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
@@ -196,9 +196,9 @@
 .revelations-module .rev-video__label {
   margin-right: 0.55rem;
   color: var(--rev-cyan);
-  font-size: 0.62rem;
+  font-size: 0.72rem;
   font-weight: 800;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 

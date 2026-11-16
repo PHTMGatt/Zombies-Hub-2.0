@@ -80,6 +80,18 @@
   transition: color 0.16s ease, background 0.16s ease;
 }
 
+/* Invisible 44px-tall tap band (like the footer Source pill): the links keep
+   their compact look, but a thumb that lands just above or below still hits. */
+.hub-header__nav a::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: max(44px, 100%);
+  transform: translateY(-50%);
+}
+
 .hub-header__nav a:hover {
   color: var(--zh-text);
   background: rgba(255, 255, 255, 0.035);
@@ -148,8 +160,18 @@
     gap: 0.2rem;
     overflow-x: auto;
     overscroll-behavior-inline: contain;
+    /* The strip scrolls sideways, which clips overflow: pad it so the links'
+       44px tap bands fit, and pull the padding back so nothing moves. */
+    padding-block: 7px;
+    margin-block: -7px;
     scrollbar-width: none;
     white-space: nowrap;
+  }
+
+  /* ...but keep the active underline's glow cut at the link's bottom edge,
+     exactly as the unpadded strip used to clip it. */
+  .hub-header__nav a.active::after {
+    clip-path: inset(-24px -24px -0.35rem -24px);
   }
 
   .hub-header__nav::-webkit-scrollbar {
@@ -164,6 +186,7 @@
   /* Icon links match the text links' height here so the bar stays exactly --hub-nav-height tall. */
   .hub-header__nav a.hub-header__icon,
   .hub-header__nav a.hub-header__ach {
+    align-self: stretch;
     min-height: 0;
     min-width: 40px;
     padding: 0.3rem 0.6rem;

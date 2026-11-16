@@ -44,15 +44,18 @@ export default function RunNote({ storageKey, mapId, label, hint, slots, placeho
     window.dispatchEvent(new CustomEvent(SYNC_EVENT, { detail: { key: storageKey } }));
   };
 
+  // Clearing removes the Clear button itself, so focus goes to the first slot, ready for the new game.
   const clear = () => {
     setValues(empty);
     write(storageKey, empty);
     window.dispatchEvent(new CustomEvent(SYNC_EVENT, { detail: { key: storageKey } }));
+    document.getElementById(`${id}-0`)?.focus();
   };
 
+  // A named group, so each slot is heard with the note it belongs to ("Kronorium order, 1st").
   return (
-    <div className="run-note">
-      <span className="gref__label">{label} {hint && <small>{hint}</small>}</span>
+    <div className="run-note" role="group" aria-labelledby={`${id}-label`}>
+      <span className="gref__label" id={`${id}-label`}>{label} {hint && <small>{hint}</small>}</span>
       <ol className="run-note__slots">
         {slots.map((slotLabel, index) => (
           <li key={slotLabel}>

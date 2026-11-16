@@ -1,13 +1,17 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { loadModules } from './guide-content.mjs';
 
 const root = resolve(import.meta.dirname, '..');
 const read = path => readFileSync(resolve(root, path), 'utf8');
+// Staff-page facts live in one data module; check each staff's own text so one page cannot cover another.
+const [{ default: staffPages }] = await loadModules(['maps/origins/src/data/originsStaffPages.js']);
+const staffText = id => JSON.stringify(staffPages[id]);
 
 test('Origins Fire guide uses the three actual staff-part sources and church torch upgrade', () => {
-  const source = read('maps/origins/src/Pages/FireStaff.tsx');
+  const source = staffText('fire');
   assert.match(source, /Generator 6/i);
   assert.match(source, /glowing plane/i);
   assert.match(source, /Panzer/i);
@@ -16,14 +20,14 @@ test('Origins Fire guide uses the three actual staff-part sources and church tor
 });
 
 test('Origins Ice guide separates the blue record from the Gen 6 tunnel and includes gravestones', () => {
-  const source = read('maps/origins/src/Pages/IceStaff.tsx');
+  const source = staffText('ice');
   assert.match(source, /(Tank Station|Generator 2)/i);
   assert.match(source, /gravestone/i);
-  assert.doesNotMatch(source, /Blue Record:\s*In the Ice Tunnel/i);
+  assert.doesNotMatch(source, /"Blue Record","v":"In the Ice Tunnel/i);
 });
 
 test('Origins Wind guide identifies the Gen 4 tunnel and smoke-orb upgrade phase', () => {
-  const source = read('maps/origins/src/Pages/WindStaff.tsx');
+  const source = staffText('wind');
   assert.match(source, /Wind Tunnel[^\n]*Generator 4|Generator 4[^\n]*Wind Tunnel/i);
   assert.match(source, /smok/i);
 });
@@ -32,4 +36,53 @@ test('Origins main guide names both audio controls for assistive technology', ()
   const source = read('maps/origins/src/Pages/MainGuide.tsx');
   assert.match(source, /<audio\s+controls\s+aria-label="[^"]+"\s+src=\{Audio1\}/);
   assert.match(source, /<audio\s+controls\s+aria-label="[^"]+"\s+src=\{Audio2\}/);
+});
+
+// --o-pin is how far sticky panels and anchors clear the pinned tab row. Set on .origins-module in a file
+// imported before the tokens, it is reset to 0 by the base token and everything slides under the tabs.
+test('Origins: only the tokens file sets the pinned-row height', () => {
+  const files = ['maps/origins/src/Styles/ComponentStyles/Header.css', 'maps/origins/src/Styles/PageStyles/MainGuide.css', 'maps/origins/src/Styles/PageStyles/StaffPage.css', 'maps/origins/src/Styles/ComponentStyles/OriginsMap.css', 'maps/origins/styles/origins-shell.css'];
+  for (const file of files) assert.doesNotMatch(read(file), /--o-pin\s*:/, `${file} sets --o-pin`);
+  assert.match(read('maps/origins/src/Styles/origins-tokens.css'), /@media \(min-width: 901px\) and \(min-height: 600px\) \{\s*\.origins-module \{ --o-pin: var\(--o-tabs-height\); \}/);
+});
+
+// A token that is read but never set only ever gives its fallback: Speed Run kept clearing an 84px
+// "--origins-header-height" long after the header token was removed, instead of the real --o-pin.
+test('Origins and Revelations CSS read only custom properties that something defines', () => {
+  const walk = (dir) => readdirSync(resolve(root, dir), { withFileTypes: true }).flatMap((entry) => {
+    const path = `${dir}/${entry.name}`;
+    if (entry.isDirectory()) return ['node_modules', 'dist'].includes(entry.name) ? [] : walk(path);
+    return /\.(css|jsx?|tsx?)$/.test(entry.name) ? [path] : [];
+  });
+  const files = ['apps', 'maps', 'shared'].flatMap(walk);
+  const source = files.map(read).join('\n');
+  // Set in CSS (--x: …) or from code (style={{ '--x': … }}, setProperty('--x', …)).
+  const defined = new Set([...source.matchAll(/(--[\w-]+)\s*:/g), ...source.matchAll(/['"](--[\w-]+)['"]/g)].map((match) => match[1]));
+  const unset = files.filter((file) => /^maps\/(origins|revelations)\/.*\.css$/.test(file)).flatMap((file) =>
+    [...read(file).matchAll(/var\((--[\w-]+)/g)].map((match) => match[1]).filter((name) => !defined.has(name)).map((name) => `${file}: ${name}`));
+  assert.deepEqual([...new Set(unset)], [], 'custom properties read but never set');
+});
+
+// 2026-11-15 accuracy audit (Origins #1): no staff can be built without the Gramophone and the black
+// record, and no page said where either one is.
+test('every Origins staff page says where the Gramophone and the black record are, before the crystal', () => {
+  for (const [id, page] of Object.entries(staffPages)) {
+    const rows = Object.fromEntries(page.build.map((row) => [row.k, row.v]));
+    const labels = page.build.map((row) => row.k);
+    assert.match(rows.Gramophone ?? '', /inside the Excavation/i, `${id}: where the Gramophone is`);
+    assert.match(rows['Black Record'] ?? '', /outside of the Excavation/i, `${id}: where the black record is`);
+    assert.match(rows['Black Record'] ?? '', /stairs down to the staff pedestals/i, `${id}: what the black record opens`);
+    assert(labels.indexOf('Gramophone') < labels.indexOf('Crystal'), `${id}: the Gramophone row comes before the crystal`);
+  }
+});
+
+// Audit Origins #2, #3 and #8: Fire Staff kills only, symbols upstairs, torches in the basement, and the
+// part chest opens on Generator 6 alone.
+test('Origins Fire page: Generator 6 chest, Fire Staff kills, and the right Church floors', () => {
+  const { build, puzzle } = staffPages.fire;
+  assert.doesNotMatch(build.find((row) => row.k === 'Part 1').v, /all six generators/i);
+  const [kills, symbols, torches] = puzzle.steps;
+  assert.match(kills, /with the Fire Staff/);
+  assert.match(symbols, /upstairs in the Church/);
+  assert.match(torches, /Church basement/);
 });

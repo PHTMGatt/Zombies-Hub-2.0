@@ -1,0 +1,40 @@
+/*
+ * Origins tokens: the OG guide's icy blue over blue-black, Revive yellow for warnings, and each staff's
+ * own colour inside the blue (tab, upper edge, numbers, labels). Rajdhani throughout, as the OG.
+ */
+.origins-module {
+  --o-night: #04121f;
+  --o-panel: rgba(4, 15, 27, 0.8);
+  --o-ink: #f4fbff;
+  --o-text: #d6e6f5;
+  --o-muted: #9fbfdc;
+  --o-hair: rgba(150, 210, 255, 0.13);
+  --o-line: rgba(150, 210, 255, 0.2);
+  --o-blue: #6dc2ff;
+  --o-blue-deep: #0a4b78;
+  --o-link: #8ed7ff;
+  --o-warn: #ffc94d;
+  --o-ice: #78e8e1;
+  --o-fire: #ff7844;
+  --o-wind: #ffe657;
+  --o-lightning: #d8a8ff;
+  --o-font: 'Rajdhani', 'Segoe UI', sans-serif;
+  /* Height of the tab row, which is all of the band that stays pinned on wide screens. */
+  --o-tabs-height: 68px;
+  --o-title-height: 76px;
+  --o-pin: 0px;
+  --staff: var(--o-blue);
+}
+
+/* Wide, tall screens pin the tab row under the hub bar (Header.css), so sticky offsets and anchor margins
+   clear it. It lives here, after the base token: a later file with the same selector would reset it. */
+@media (min-width: 901px) and (min-height: 600px) {
+  .origins-module { --o-pin: var(--o-tabs-height); }
+}
+
+/* Each staff sets --staff on its own elements. */
+.origins-module [data-staff='guide'] { --staff: var(--o-blue); }
+.origins-module [data-staff='ice'] { --staff: var(--o-ice); }
+.origins-module [data-staff='fire'] { --staff: var(--o-fire); }
+.origins-module [data-staff='wind'] { --staff: var(--o-wind); }
+.origins-module [data-staff='lightning'] { --staff: var(--o-lightning); }

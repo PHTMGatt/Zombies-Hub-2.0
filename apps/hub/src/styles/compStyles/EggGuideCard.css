@@ -74,6 +74,21 @@
   color: #60c4ff;
 }
 
+/* 44px-tall tap area without moving the layout. */
+.egg-card__link {
+  position: relative;
+}
+
+.egg-card__link::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: max(44px, 100%);
+  transform: translateY(-50%);
+}
+
 /* Compact full-page video guide */
 .egg-card.guide-page {
   width: min(calc(100% - 2rem), 1080px);
@@ -95,7 +110,7 @@
 .egg-guide__header > span {
   flex: 0 0 auto;
   color: #60a5fa;
-  font-size: 0.58rem;
+  font-size: 0.7rem;
   font-weight: 850;
   letter-spacing: 0.14em;
 }
@@ -160,7 +175,7 @@
 .egg-guide__meta-row span {
   margin-bottom: 0.08rem;
   color: #8093a7;
-  font-size: 0.58rem;
+  font-size: 0.68rem;
   font-weight: 800;
   letter-spacing: 0.1em;
   text-transform: uppercase;

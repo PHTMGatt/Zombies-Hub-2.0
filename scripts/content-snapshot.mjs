@@ -1,6 +1,7 @@
 /*
- * Rendered-text baselines: what each page actually shows, with every <details> opened and every tab
- * visited. content-browser-smoke.mjs checks that each captured piece of text is still on the page.
+ * Rendered-text baselines: what each page actually shows, with every <details> opened and every tab,
+ * picked step and picked area visited. content-browser-smoke.mjs checks that each captured piece of text
+ * is still on the page.
  *
  *   node scripts/content-snapshot.mjs                    # every critical route (needs the preview on :4173)
  *   node scripts/content-snapshot.mjs --route /maps/x    # one route
@@ -56,9 +57,43 @@ export async function captureSegments(page, route) {
     (await page.evaluate(visibleText)).forEach((text) => seen.add(text));
   };
   await collect();
-  const tabs = page.locator('main [role="tab"]');
-  for (let index = 0; index < await tabs.count(); index += 1) {
-    await tabs.nth(index).click();
+  // Tabs inside the page (a step's map tabs, a staff's parts); step pickers are walked separately below.
+  // Only visible tabs: a split guide (Revelations) keeps unselected steps mounted but hidden.
+  const visitTabs = async () => {
+    const tabs = page.locator('main [role="tab"]:visible');
+    for (let index = 0; index < await tabs.count(); index += 1) {
+      if (await tabs.nth(index).evaluate((tab) => Boolean(tab.closest('[data-step-tabs]')))) continue;
+      await tabs.nth(index).click();
+      await collect();
+    }
+  };
+  // A step picker shows one step at a time: visit every step, and every tab inside it.
+  // Revelations' split guide uses a left rail of step buttons; other pickers use step tabs.
+  const railSteps = page.locator('main .rev-step-list .rev-step-button');
+  const steps = page.locator('main [data-step-tabs] [role="tab"]');
+  const railCount = await railSteps.count();
+  const stepCount = await steps.count();
+  if (railCount) {
+    for (let index = 0; index < railCount; index += 1) {
+      await railSteps.nth(index).click();
+      await page.locator(`#${await railSteps.nth(index).getAttribute('aria-controls')}`).waitFor({ state: 'visible' });
+      await collect();
+      await visitTabs();
+    }
+  } else if (stepCount) {
+    for (let index = 0; index < stepCount; index += 1) {
+      await steps.nth(index).click();
+      await page.locator(`[role="tabpanel"][aria-labelledby="${await steps.nth(index).getAttribute('id')}"]`).waitFor();
+      await collect();
+      await visitTabs();
+    }
+  } else {
+    await visitTabs();
+  }
+  // An area picker (the Revelations island ring) shows one area's spots at a time: visit every area.
+  const picks = page.locator('main [data-area-picker] button');
+  for (let index = 0; index < await picks.count(); index += 1) {
+    await picks.nth(index).click();
     await collect();
   }
   // The Origins UI still contains the original staff text; its controls are

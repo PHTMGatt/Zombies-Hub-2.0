@@ -1,5 +1,5 @@
 import React from 'react';
-import soeCover from '../../../../apps/hub/src/assets/images/Maps/Shadows_Of_Evil.jpg';
+import soeCover from '../../../../apps/hub/src/assets/images/Maps/Shadows_Of_Evil.webp';
 import '../styles/Shadows.css';
 
 export default function Footer() {

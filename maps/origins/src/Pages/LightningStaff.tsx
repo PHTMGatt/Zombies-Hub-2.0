@@ -1,75 +1,28 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import ReviveIcon from "../assets/images/Skull.png";
-import LightningCode from "../assets/images/lightning_staff_code.webp";
+import StaffPage from "../components/StaffPage";
 import LightningSwitchBoard from "../components/LightningSwitchBoard";
 import ElectricalPanel from "../components/ElectricalPanel";
-import "../Styles/PageStyles/LightningStaff.css";
+import originsStaffPages from "../data/originsStaffPages";
 
-const LightningStaff = () => {
-  return (
-    <div className="lightning-staff">
-      <div className="staff-grid">
-        <div className="left-column">
-          <section className="staff-section">
-            <h2>
-              <img src={ReviveIcon} className="revive-icon" alt="" /> Lightning Staff Parts
-            </h2>
-            <ul>
-              <li><strong>Part 1:</strong> Church → Gen 2, jump right after Generator 4.</li>
-              <li><strong>Part 2:</strong> Gen 2 → Church, jump left onto Excavation scaffolding.</li>
-              <li><strong>Part 3:</strong> Gen 2 → Church, jump right just before Church.</li>
-              <li><strong>Purple Record:</strong> Generator 4 / Jug / Wind Tunnel area.</li>
-              <li><strong>Crystal:</strong> Open the Lightning Tunnel beside Generator 5 with the Gramophone + purple record, then grab the purple crystal in the Crazy Place.</li>
-              <li><strong>Build:</strong> Under Excavation.</li>
-            </ul>
-          </section>
-
-          <section className="staff-section image-section">
-            <h2>
-              <img src={ReviveIcon} className="revive-icon" alt="" /> Piano Code Chart
-            </h2>
-            <img src={LightningCode} alt="Lightning Staff piano code" className="lightning-code" />
-          </section>
-        </div>
-
-        <div className="right-column">
-          <section className="staff-section">
-            <h2>
-              <img src={ReviveIcon} className="revive-icon" alt="" /> Lightning Staff Upgrade
-            </h2>
-            <ul>
-              <li className="piano-code-step">
-                <span className="piano-code-label">Piano code</span>
-                <span className="piano-code-values" aria-label="1 3 6, 3 5 7, 2 4 6">
-                  <strong>1-3-6</strong>
-                  <span className="piano-code-dot" aria-hidden="true">•</span>
-                  <strong>3-5-7</strong>
-                  <span className="piano-code-dot" aria-hidden="true">•</span>
-                  <strong>2-4-6</strong>
-                </span>
-              </li>
-              <li>Set the seven switches using the dials below.</li>
-              <li><strong>Excavation:</strong> line all four rings purple → shoot the orb with the Lightning Staff.</li>
-              <li>Place the staff on the purple Crazy Place pedestal → kill zombies to fill it with souls.</li>
-            </ul>
-          </section>
-
-          <LightningSwitchBoard
-            showLocations
-            extraSlot={(
-              <Link to="/maps/origins/speed-run/lightning">
-                <strong>Speed Run route →</strong>
-                <small>Switch order, turn counts, and skips</small>
-              </Link>
-            )}
-          />
-
-          <ElectricalPanel />
-        </div>
-      </div>
-    </div>
-  );
-};
+// Lightning's puzzle is the piano chords plus the seven switches; the switch board's only home is here.
+const LightningStaff = () => (
+  <StaffPage
+    staff={originsStaffPages.lightning}
+    tools={(
+      <LightningSwitchBoard
+        id="switches"
+        showLocations
+        extraSlot={(
+          <Link to="/maps/origins/speed-run/lightning">
+            <strong>Speed Run route →</strong>
+            <small>Switch order, turn counts, and skips</small>
+          </Link>
+        )}
+      />
+    )}
+    extra={<ElectricalPanel />}
+  />
+);
 
 export default LightningStaff;

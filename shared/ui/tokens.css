@@ -1,0 +1,30 @@
+/* The few cross-map tokens: tap-target minimum and focus ring width. Maps own their colours and type. */
+:root {
+  --zh-tap: 48px;
+  --zh-focus-width: 3px;
+}
+
+/* Swipeable strips (map tabs, step rails) fade only the edge that still has items past it.
+   A map strip opts in with:
+     --zh-fade-end: var(--zh-fade);   (trailing-edge fade when scroll-driven animations are missing)
+     mask-image: linear-gradient(90deg, transparent, #000 var(--zh-fade-start), #000 calc(100% - var(--zh-fade-end)), transparent);
+   and, inside @supports (animation-timeline: scroll()):
+     --zh-fade-end: 0px; animation: zh-edge-fade linear both; animation-timeline: scroll(self inline);
+   The scroll timeline is inactive when the strip fits, so nothing fades then. */
+@property --zh-fade-start {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
+}
+
+@property --zh-fade-end {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
+}
+
+@keyframes zh-edge-fade {
+  0% { --zh-fade-start: 0px; --zh-fade-end: var(--zh-fade, 2rem); }
+  6%, 94% { --zh-fade-start: var(--zh-fade, 2rem); --zh-fade-end: var(--zh-fade, 2rem); }
+  100% { --zh-fade-start: var(--zh-fade, 2rem); --zh-fade-end: 0px; }
+}

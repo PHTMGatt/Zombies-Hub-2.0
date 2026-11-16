@@ -87,7 +87,7 @@
 
 .gorod-valve-fields select:focus {
   border-color: rgba(255, 133, 98, 0.65);
-  box-shadow: 0 0 0 3px rgba(255, 112, 77, 0.1);
+  box-shadow: 0 0 0 3px rgba(255, 112, 77, 0.4);
 }
 
 .gorod-valve-reset {

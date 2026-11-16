@@ -1,4 +1,5 @@
-import React, { useRef, useState } from 'react';
+import React, { useId, useRef, useState } from 'react';
+import './guide.css';
 
 /*
  * Glanceable reference blocks for a guide step. Each answers "what do I need right now?" visually:
@@ -40,8 +41,9 @@ function ImageRef({ src, alt, caption, width, height }) {
         <span className="gref-image__zoom" aria-hidden="true">⤢</span>
       </button>
       {caption && <figcaption>{caption}</figcaption>}
+      {/* Lazy and sized like the thumbnail: the closed lightbox's copy waits until it opens. */}
       <dialog ref={dialogRef} className="gref-lightbox" onClick={close} aria-label={alt}>
-        <img src={src} alt={alt} />
+        <img src={src} alt={alt} width={width} height={height} loading="lazy" decoding="async" />
         <button type="button" className="gref-lightbox__close" onClick={close}>Close</button>
       </dialog>
     </figure>
@@ -94,25 +96,48 @@ function WarningRef({ text }) {
   );
 }
 
+// Arrow keys walk the tabs (wrapping), Home / End jump to the ends; the tab under focus is selected.
+const TAB_MOVES = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 };
+
+// Tabs: one panel at a time, WAI-ARIA tabs pattern. Collapsible (Origins compact guide): each button
+// opens or closes its own reference, so they are disclosure buttons rather than tabs.
 function TabsRef({ label, tabs, activeTab, onTab, collapsible = false }) {
   const [localTab, setLocalTab] = useState(collapsible ? null : tabs[0]?.id);
+  const base = useId();
+  const listRef = useRef(null);
   const selected = onTab ? activeTab : localTab;
   const tab = tabs.find((item) => item.id === selected) ?? (collapsible ? null : tabs[0]);
   const choose = (id) => {
     const next = collapsible && selected === id ? null : id;
     return onTab ? onTab(next) : setLocalTab(next);
   };
+  const tabId = (item) => `${base}-tab-${item.id}`;
+  const panelId = `${base}-panel`;
+
+  // One tab stop for the row (the selected tab), as the tabs pattern expects.
+  const onKey = (event) => {
+    if (collapsible) return;
+    const index = tabs.indexOf(tab);
+    const target = event.key === 'Home' ? 0
+      : event.key === 'End' ? tabs.length - 1
+        : TAB_MOVES[event.key] ? (index + TAB_MOVES[event.key] + tabs.length) % tabs.length : null;
+    if (target === null) return;
+    event.preventDefault();
+    choose(tabs[target].id);
+    listRef.current?.querySelectorAll('[role="tab"]')[target]?.focus();
+  };
 
   return (
     <div className="gref gref--tabs">
-      <div className="gref-tabs" role={collapsible ? "group" : "tablist"} aria-label={label ?? "Variants"}>
+      <div className="gref-tabs" role={collapsible ? 'group' : 'tablist'} aria-label={label ?? 'Variants'} ref={listRef} onKeyDown={onKey}>
         {tabs.map((item) => (
           <button
             key={item.id}
+            id={tabId(item)}
             type="button"
-            role={collapsible ? undefined : "tab"}
-            aria-selected={collapsible ? undefined : item.id === tab?.id}
-            aria-expanded={collapsible ? item.id === tab?.id : undefined}
+            {...(collapsible
+              ? { 'aria-expanded': item.id === tab?.id, 'aria-controls': item.id === tab?.id ? panelId : undefined }
+              : { role: 'tab', 'aria-selected': item.id === tab?.id, 'aria-controls': panelId, tabIndex: item.id === tab?.id ? 0 : -1 })}
             className="gref-tabs__tab"
             style={item.tone ? { '--gref-tone': item.tone } : undefined}
             onClick={() => choose(item.id)}
@@ -122,7 +147,12 @@ function TabsRef({ label, tabs, activeTab, onTab, collapsible = false }) {
         ))}
       </div>
       {tab && (
-        <div className="gref-tabs__panel" role={collapsible ? "region" : "tabpanel"} aria-label={collapsible ? `${tab.label} reference` : undefined} style={tab.tone ? { '--gref-tone': tab.tone } : undefined}>
+        <div
+          className="gref-tabs__panel"
+          id={panelId}
+          {...(collapsible ? { role: 'region', 'aria-label': `${tab.label} reference` } : { role: 'tabpanel', 'aria-labelledby': tabId(tab) })}
+          style={tab.tone ? { '--gref-tone': tab.tone } : undefined}
+        >
           <GuideReferences refs={tab.refs} />
         </div>
       )}

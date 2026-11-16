@@ -2,8 +2,12 @@ import React, { useRef, useState } from 'react';
 import GuideVideoPlayer from '../components/GuideVideoPlayer';
 import RevSectionHeader from '../components/RevSectionHeader';
 import RevOptionList, { formatRange } from '../components/RevOptionList';
+import { RevAreaPicker } from '../components/RevIslandMap';
 import eggData from '../data/eggData';
+import { EGG_ISLANDS } from '../data/revIslands';
 import '../styles/Reference.css';
+
+const areas = eggData.map((section) => ({ key: section.section, label: section.section, islands: EGG_ISLANDS[section.section] }));
 
 const EggLocations = () => {
   const videoRef = useRef(null);
@@ -48,23 +52,13 @@ const EggLocations = () => {
           </div>
 
           <aside className="rev-workspace__panel">
-            <div className="rev-panel-head">
-              <span className="rev-kicker">Map area</span>
-              <span className="rev-panel-count">{eggData.length}</span>
-            </div>
-            <div className="rev-segment" role="group" aria-label="Revelations map areas">
-              {eggData.map((section) => (
-                <button
-                  type="button"
-                  key={section.section}
-                  className={section.section === currentCard.section ? 'active' : ''}
-                  aria-pressed={section.section === currentCard.section}
-                  onClick={() => handleSelectCard(section)}
-                >
-                  {section.section}
-                </button>
-              ))}
-            </div>
+            <RevAreaPicker
+              kicker="Map area"
+              noun="egg spots"
+              areas={areas}
+              current={currentCard.section}
+              onPick={(key) => handleSelectCard(eggData.find((section) => section.section === key))}
+            />
 
             <div className="rev-panel-head">
               <span className="rev-kicker">Spawn spots</span>

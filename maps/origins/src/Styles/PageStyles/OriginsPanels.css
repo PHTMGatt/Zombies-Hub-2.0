@@ -1,0 +1,64 @@
+/*
+ * Origins sub-page frame and panels, used by the staff pages (StaffPage.jsx) and the Electrical Panel.
+ * Moved verbatim from claude-forge's MainGuide.css when main's Main Guide (and its CSS) came in with the
+ * merge of main on 2026-11-15; main's MainGuide.css does not style these classes.
+ */
+.origins-module .origins-page {
+  width: min(1240px, 100% - 2.5rem);
+  margin: 0 auto;
+  padding: 2.25rem 0 3.5rem;
+}
+
+.origins-module .origins-panel {
+  min-width: 0;
+  padding: 1.6rem 1.9rem 1.8rem;
+  border: 1px solid var(--o-hair);
+  border-top: 3px solid var(--staff);
+  border-radius: 12px;
+  background: var(--o-panel);
+  backdrop-filter: blur(3px);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.38);
+  scroll-margin-top: calc(var(--hub-pin-height, var(--hub-nav-height)) + var(--o-pin) + 16px);
+}
+
+.origins-module .origins-panel > :is(h2, h3) {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0 0 0.5rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 2px solid var(--staff);
+  color: #d8eeff;
+  font: 700 1.65rem/1.1 var(--o-font);
+  letter-spacing: 0.01em;
+}
+
+.origins-module .origins-panel__icon {
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  object-fit: contain;
+}
+
+@media (max-width: 900px) {
+  .origins-module .origins-page {
+    width: min(100% - 1.1rem, 680px);
+    padding: 1rem 0 2.5rem;
+  }
+
+  .origins-module .origins-panel {
+    padding: 1.1rem 0.95rem 1.25rem;
+    border-radius: 10px;
+  }
+
+  .origins-module .origins-panel > :is(h2, h3) { font-size: 1.45rem; }
+}
+
+/* ---- Short landscape phones: use the width ---- */
+@media (max-height: 500px) and (orientation: landscape) {
+  .origins-module .origins-page {
+    width: calc(100% - 2rem);
+    max-width: none;
+    padding-top: 1rem;
+  }
+}

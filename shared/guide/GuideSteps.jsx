@@ -13,7 +13,7 @@ import './guide.css';
  * Step shape: { id, title, goal, refs, tasks: [{ id, label, hint? }], how, problems, critical, video, links }.
  * A tabs ref's tabs may add their own `problems` and `links`, shown only while that tab is selected.
  */
-function StepItem({ step, nextStep, accordionName, collapsibleReferences = false, compactAccordion = false, presentation = 'standard' }) {
+export function StepItem({ step, nextStep, accordionName, collapsibleReferences = false, compactAccordion = false, presentation = 'standard', hidden = false }) {
   const [variant, setVariant] = useState(null);
   const tabsRef = step.refs?.find((ref) => ref.type === 'tabs');
   const activeTab = tabsRef ? (tabsRef.tabs.find((tab) => tab.id === variant) ?? (collapsibleReferences ? null : tabsRef.tabs[0])) : null;
@@ -162,7 +162,7 @@ function StepItem({ step, nextStep, accordionName, collapsibleReferences = false
   }
 
   return (
-    <li className={presentation === 'runbook' ? 'guide-seq__step guide-seq__step--runbook' : 'guide-seq__step'} id={step.id}>
+    <li className={presentation === 'runbook' ? 'guide-seq__step guide-seq__step--runbook' : 'guide-seq__step'} id={step.id} hidden={hidden}>
       <h3>{step.title}</h3>
       {step.goal && <p className="guide-seq__goal">{step.goal}</p>}
       {stepDetails}
@@ -184,7 +184,7 @@ const pinnedBottom = () => Math.max(0, ...[...document.querySelectorAll('.hub-he
   .filter((element) => ['fixed', 'sticky'].includes(getComputedStyle(element).position))
   .map((element) => element.getBoundingClientRect().bottom));
 
-export default function GuideSteps({ label, steps, footer, collapsibleReferences = false, compactAccordion = false, accordionName = 'origins-main-guide-steps', presentation = 'standard' }) {
+export default function GuideSteps({ label, steps, footer, collapsibleReferences = false, compactAccordion = false, accordionName = 'origins-main-guide-steps', presentation = 'standard', activeStepId = null }) {
   const { hash, search } = useLocation();
 
   // The map chunk loads after the app shell has already tried to scroll to #<step>; finish the job here.
@@ -208,14 +208,21 @@ export default function GuideSteps({ label, steps, footer, collapsibleReferences
       if (overlap > 0) window.scrollBy({ top: -overlap, behavior: 'instant' });
     };
     land();
+    // Someone who starts scrolling or typing before the fonts arrive has moved on: don't yank them back.
+    const stop = () => { cancelled = true; };
+    const inputs = ['wheel', 'touchstart', 'keydown', 'pointerdown'];
+    inputs.forEach((type) => window.addEventListener(type, stop, { once: true, passive: true }));
     (document.fonts?.ready ?? Promise.resolve()).then(() => requestAnimationFrame(land));
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+      inputs.forEach((type) => window.removeEventListener(type, stop));
+    };
   }, [hash, search, steps, compactAccordion]);
 
   return (
     <section className="guide" aria-label={`${label} guide`}>
       <ol className="guide-seq">
-        {steps.map((step, index) => <StepItem key={step.id} step={step} nextStep={steps[index + 1]} accordionName={accordionName} collapsibleReferences={collapsibleReferences} compactAccordion={compactAccordion} presentation={presentation} />)}
+        {steps.map((step, index) => <StepItem key={step.id} step={step} nextStep={steps[index + 1]} accordionName={accordionName} collapsibleReferences={collapsibleReferences} compactAccordion={compactAccordion} presentation={presentation} hidden={Boolean(activeStepId) && activeStepId !== step.id} />)}
       </ol>
       {footer && <div className="guide-seq__footer">{footer}</div>}
     </section>

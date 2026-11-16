@@ -1,14 +1,16 @@
 const videoId = '-li89mVRqSY';
 
+// Audit Origins #12 (YouTube oEmbed): the route is Freckleston's video, the hildaless demo is Aiden Ross's.
 export const originsSpeedRunVideo = {
-  title: 'BO3 Origins Speedrun Route',
+  title: 'How To Speedrun: Origins Easter Egg',
+  author: 'Freckleston',
   url: `https://youtu.be/${videoId}`,
   timestampUrl: (seconds) => `https://youtu.be/${videoId}?t=${seconds}`,
 };
 
 export const originsSpeedRun = {
   intro:
-    'Routing, robot and snow timing, staff dupes, and skips for a fast Black Ops III Origins run, built from the advanced route in the linked walkthrough. Puzzle solutions stay on the staff tabs.',
+    'Routing, robot and snow timing, staff dupes, and skips for a fast Black Ops III Origins run, built from the advanced route in Freckleston’s walkthrough, How To Speedrun: Origins Easter Egg. Puzzle solutions stay on the staff tabs.',
 
   loadout: [
     'GobbleGums: Raindrops, Extra Credit, Nukes, Perkaholic, Self-Medication.',
@@ -39,8 +41,9 @@ export const originsSpeedRun = {
   hildalessLightning: {
     title: 'Hildaless First Lightning Piece',
     videoUrl: 'https://youtu.be/zUwv9CWpNck',
+    videoAuthor: 'Aiden Ross',
     summary:
-      'Optional advanced first-piece route that uses movement and death-barrier timing instead of the tank or Boomhilda.',
+      'Optional advanced first-piece route, demonstrated by Aiden Ross, that uses movement and death-barrier timing instead of the tank or Boomhilda.',
     steps: [
       'Set max FPS below 110; the demonstrated setup uses about 100 FPS and notes that lower values can make the movement easier.',
       'Run straight at the wall near the first Lightning-piece area. Near the corner, jump and hold the movement input to climb onto the edge.',

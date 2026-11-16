@@ -1,6 +1,8 @@
 import { chromium } from 'playwright';
+import { settled } from './smoke-helpers.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
 
 const base = process.env.SMOKE_BASE_URL || 'http://127.0.0.1:4173';
 const artifactsDir = new URL('../artifacts/', import.meta.url);
@@ -33,11 +35,14 @@ const assertNoHorizontalOverflow = async (page, route) => {
 };
 
 const assertImagesLoaded = async (page, route, selector) => {
-  const brokenImages = await page.locator(selector).evaluateAll(images =>
-    images
+  // Lazy images, and the closed full-screen copies that only load when opened, are told to load now:
+  // this looks for broken images, not ones that are simply off screen.
+  const brokenImages = await page.locator(selector).evaluateAll(async images => {
+    await Promise.all(images.map(image => { image.loading = 'eager'; return image.decode().catch(() => {}); }));
+    return images
       .filter(image => !image.complete || image.naturalWidth === 0)
-      .map(image => image.getAttribute('alt') || image.getAttribute('src') || 'unnamed image'),
-  );
+      .map(image => image.getAttribute('alt') || image.getAttribute('src') || 'unnamed image');
+  });
   assert.deepEqual(brokenImages, [], `${route} has broken images: ${brokenImages.join(', ')}`);
 };
 
@@ -53,6 +58,18 @@ try {
       const response = await page.goto(`${base}${route}`, { waitUntil: 'networkidle' });
       assert(response?.ok(), `${route} returned ${response?.status()}`);
       assert.equal(errors.length, 0, `${route} page errors: ${errors.join('; ')}`);
+      // The head follows the route: one description, OG copies of title and description, a canonical URL.
+      const head = await page.evaluate(() => ({
+        title: document.title,
+        descriptions: [...document.querySelectorAll('meta[name="description"]')].map((meta) => meta.content),
+        ogTitle: document.querySelector('meta[property="og:title"]')?.content,
+        ogDescription: document.querySelector('meta[property="og:description"]')?.content,
+        canonical: document.querySelector('link[rel="canonical"]')?.href,
+      }));
+      assert.equal(head.descriptions.length, 1, `${route} has exactly one meta description`);
+      assert.equal(head.ogTitle, head.title, `${route} og:title matches the page title`);
+      assert.equal(head.ogDescription, head.descriptions[0], `${route} og:description matches the description`);
+      assert.equal(head.canonical, new URL(route, base).href, `${route} canonical is its own URL`);
       if (route.startsWith('/maps/')) {
         // Short guides must still pin the map footer to the bottom edge, with no dead band beneath it.
         const gapBelowFooter = await page.evaluate(() => {
@@ -72,6 +89,26 @@ try {
       }
       results.push({ width, route, passed: true });
     }
+
+    // Card art loads as cards near the screen, not all 30 covers up front; every card's art still loads.
+    await page.goto(`${base}/allmaps`, { waitUntil: 'networkidle' });
+    const cardArt = () => page.locator('.map-card .bg-main').evaluateAll((layers) => layers.map((layer) => layer.style.backgroundImage));
+    let art = await cardArt();
+    assert(art[0].startsWith('url('), 'the first map card shows its art');
+    assert.equal(art.at(-1), '', 'the last map card waits to load its art');
+    for (const card of await page.locator('.map-card').all()) await card.scrollIntoViewIfNeeded();
+    await page.waitForFunction(() => [...document.querySelectorAll('.map-card .bg-main')].every((layer) => layer.style.backgroundImage.startsWith('url(')),
+      null, { timeout: 5000 }).catch(() => {});
+    art = await cardArt();
+    const missingArt = art.filter((value) => !value.startsWith('url(')).length;
+    assert.equal(missingArt, 0, `${missingArt} map cards never loaded their art`);
+    const brokenArt = await page.evaluate(async (urls) => (await Promise.all(urls.map((url) => new Promise((done) => {
+      const image = new Image();
+      image.onload = () => done(null);
+      image.onerror = () => done(url);
+      image.src = url;
+    })))).filter(Boolean), [...new Set(art.map((value) => value.slice(5, -2)))]);
+    assert.deepEqual(brokenArt, [], `map card art fails to load: ${brokenArt.join(', ')}`);
 
     await page.goto(`${base}/allmaps`);
     await page.getByRole('searchbox').fill('Origins');
@@ -104,7 +141,7 @@ try {
     assert.equal(sideColumns, { phone: 1, landscape: 3, desktop: 3 }[viewportName], `Side Easter Eggs uses the expected ${width}px grid`);
     await assertNoHorizontalOverflow(page, '/side-easter-eggs');
     await page.screenshot({
-      path: new URL(`../artifacts/side-easter-eggs-${width}.png`, import.meta.url).pathname,
+      path: fileURLToPath(new URL(`../artifacts/side-easter-eggs-${width}.png`, import.meta.url)),
       fullPage: true,
     });
     const firstSideTarget = await sideCards.first().getAttribute('href');
@@ -141,7 +178,7 @@ try {
     await page.goto(`${base}/maps/origins`, { waitUntil: 'networkidle' });
     await page.evaluate(() => window.localStorage.clear());
     await page.reload({ waitUntil: 'networkidle' });
-    assert.equal(await page.locator('#secure-keys h3').innerText(), 'Secure the keys');
+    assert.equal(await page.locator('#secure-keys h3').innerText(), 'Ascend from Darkness');
     assert.equal(await page.locator('#thunder-fists h3').innerText(), 'Thunder Fists');
     assert.match(await page.locator('#secure-keys').innerText(), /Odin · middle robot/, 'Staff placement answer is visible without opening anything');
     await page.locator('#secure-keys .guide-seq__step-summary').click();
@@ -224,29 +261,29 @@ try {
     const originsStaffGuides = [
       {
         route: '/maps/origins/fire-staff',
-        heading: 'Fire Staff Parts',
+        heading: 'Fire Staff',
         required: [/Generator 6/i, /glowing plane/i, /torch/i],
       },
       {
         route: '/maps/origins/ice-staff',
-        heading: 'Ice Staff Parts',
+        heading: 'Ice Staff',
         required: [/(Tank Station|Generator 2)/i, /gravestone/i],
       },
       {
         route: '/maps/origins/wind-staff',
-        heading: 'Wind Staff Parts',
-        required: [/Wind Tunnel/i, /Generator 4/i, /smoking chimneys/i],
+        heading: 'Wind Staff',
+        required: [/Wind Tunnel/i, /Generator 4/i, /smoking stone balls/i],
       },
       {
         route: '/maps/origins/lightning-staff',
-        heading: 'Lightning Staff Parts',
+        heading: 'Lightning Staff',
         required: [/Purple Record/i, /Lightning Tunnel/i, /Generator 5/i],
       },
     ];
 
     for (const guide of originsStaffGuides) {
       await page.goto(`${base}${guide.route}`, { waitUntil: 'networkidle' });
-      await page.getByRole('heading', { name: guide.heading }).waitFor();
+      await page.getByRole('heading', { name: guide.heading, exact: true, level: 2 }).waitFor();
       const guideText = await page.locator('.origins-route-content').innerText();
       for (const requiredText of guide.required) {
         assert.match(guideText, requiredText, `${guide.route} is missing ${requiredText}`);
@@ -314,7 +351,7 @@ try {
     // With the hub bar scrolled away, sticky panels must not keep an empty band where it used to be.
     await page.goto(`${base}/maps/revelations/apothicon-upgrade`, { waitUntil: 'networkidle' });
     await page.evaluate(() => window.scrollTo(0, 700));
-    await page.waitForTimeout(100);
+    await settled(page);
     const stickyTops = await page.evaluate(() => [...document.querySelectorAll('main *')]
       .filter((el) => getComputedStyle(el).position === 'sticky' && el.getBoundingClientRect().height > 0)
       .map((el) => ({ el: el.className, top: Math.round(el.getBoundingClientRect().top), cssTop: getComputedStyle(el).top })));
@@ -324,7 +361,7 @@ try {
     // Measured, not asserted until each map's own redesign: where the first step title starts.
     for (const route of routes.filter((item) => item.startsWith('/maps/'))) {
       await page.goto(`${base}${route}`, { waitUntil: 'networkidle' });
-      const first = await page.locator('li.guide-seq__step h3').first().boundingBox();
+      const first = await page.locator('li.guide-seq__step h3, li.run-step h3').first().boundingBox();
       results.push({ width: 844, height: 390, route, metric: 'first step title top (px)', value: first ? Math.round(first.y) : null, passed: true });
     }
     await context.close();

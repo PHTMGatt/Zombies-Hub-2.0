@@ -113,6 +113,21 @@
   color: #a3cfff;
 }
 
+/* 44px-tall tap area without moving the layout. */
+.back-link {
+  position: relative;
+}
+
+.back-link::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: max(44px, 100%);
+  transform: translateY(-50%);
+}
+
 /* Empty-card fallback */
 .map-info-card.no-info {
   padding: 2rem;

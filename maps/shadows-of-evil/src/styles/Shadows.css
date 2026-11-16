@@ -88,7 +88,7 @@
   position: absolute;
   inset: -24px;
   z-index: -2;
-  background: url('../../../../apps/hub/src/assets/images/Maps/Shadows_Of_Evil.jpg') center / cover no-repeat;
+  background: url('../../../../apps/hub/src/assets/images/Maps/Shadows_Of_Evil.webp') center / cover no-repeat;
   filter: blur(16px) brightness(0.22) saturate(0.7);
   transform: scale(1.05);
 }
