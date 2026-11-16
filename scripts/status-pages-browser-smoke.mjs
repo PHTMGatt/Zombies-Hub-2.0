@@ -45,10 +45,13 @@ try {
     await page.goto(`${base}/no-such-page`, { waitUntil: 'networkidle' });
     await page.locator('[data-page-not-found]').getByRole('link', { name: 'Find a map' }).click();
     await page.waitForURL('**/allmaps');
-    await page.locator('h1').first().waitFor();
-    assert.equal(await page.locator('[data-page-not-found]').count(), 0, '/allmaps opens');
+    // React Router moves the URL at once but keeps the 404 on screen while the All Maps chunk loads (a
+    // transition), and the 404 has its own h1: wait for All Maps itself and for the 404 to leave.
+    await page.locator('.map-card').first().waitFor({ timeout: 15000 }).catch(() => assert.fail('/allmaps opens: no map cards'));
+    await page.locator('[data-page-not-found]').waitFor({ state: 'detached', timeout: 15000 }).catch(() => assert.fail('/allmaps opens: the 404 stays'));
     assert.equal(await page.locator('meta[name="robots"]').count(), 0, 'a real page carries no noindex');
-    assert.notEqual(await page.title(), 'Page not found | Zombies Hub 2.0', 'the title moves on');
+    await page.waitForFunction(() => document.title !== 'Page not found | Zombies Hub 2.0', null, { timeout: 15000 })
+      .catch(() => assert.fail('the title moves on'));
     results.push(`${viewport.name}: "Find a map" opens All Maps and drops the noindex`);
 
     assert.deepEqual(errors, [], `page errors: ${errors.join('; ')}`);
