@@ -56,12 +56,16 @@ try {
     assert.equal(await page.locator('.rev-header__nav a').count(), 5, 'Header nav reaches all five Revelations sections');
     await page.reload({ waitUntil: 'networkidle' });
     assert.equal(await page.locator('li.guide-seq__step').count(), 12, 'Revelations keeps all 12 Easter Egg steps');
-    const chapters = page.locator('.rev-run-chapters a');
-    assert.equal(await chapters.count(), 4, 'Four Revelations act shortcuts are available');
-    assert.deepEqual(await chapters.evaluateAll(links => links.map(link => link.getAttribute('href'))),
-      ['#engines', '#reel-1', '#sophia', '#throws'], 'Each chapter links to an existing step');
-    await chapters.last().click();
-    assert.equal(new URL(page.url()).hash, '#throws', 'Finale shortcut reaches its guide anchor');
+    const stepButtons = page.locator('.rev-step-list .rev-step-button');
+    assert.equal(await stepButtons.count(), 12, 'Original left-rail layout lists all twelve steps');
+    assert.equal(await page.locator('li.guide-seq__step:visible').count(), 1, 'Only one guide step is displayed at a time');
+    const selectStep = async (id) => {
+      await page.locator(`.rev-step-list button[aria-controls="${id}"]`).click();
+      assert.equal(new URL(page.url()).hash, `#${id}`, `Step selector reaches ${id}`);
+      await page.locator(`#${id}`).waitFor({ state: 'visible' });
+      assert.equal(await page.locator('li.guide-seq__step:visible').count(), 1, `Only selected step ${id} is visible`);
+    };
+    await selectStep('throws');
     await page.goto(`${base}${mainRoute}`, { waitUntil: 'networkidle' });
     await assertCssImageLoaded(page, mainRoute, '.rev-header');
     await assertCssImageLoaded(page, mainRoute, '.rev-backdrop');
@@ -75,6 +79,8 @@ try {
       'Opening has no duplicate How-to section');
     const openMore = (id) => page.locator(`#${id} .guide-seq__more > summary`).click();
 
+    // Servant step: original split navigation keeps full screenshots reachable.
+    await selectStep('servant');
     // A capture's full-screen copy waits until it is opened (it was fetched with the page), then shows.
     await page.locator('#servant .gref-image__open').first().click();
     await page.waitForFunction(() => {
@@ -113,28 +119,33 @@ try {
       assert.deepEqual(await rockState(), { picked: rock, focused: rock }, `${key} on the rock tabs picks and focuses ${rock}`);
     }
 
+    await selectStep('eggs');
     let stepText = await page.locator('#eggs').innerText();
     assert.match(stepText, /nest|pustule/i);
     assert.match(stepText, /10 zombie souls/i);
     await openMore('eggs');
     assert(await page.locator('#eggs').getByRole('link', { name: /Egg locations/ }).isVisible());
 
+    await selectStep('symbols');
     stepText = await page.locator('#symbols').innerText();
     assert.match(stepText, /all players/i);
     assert.match(stepText, /Kino projector/i);
     assert.match(stepText, /purple rift|purple circle/i);
     await page.locator('#symbols').getByLabel('1st').fill('skull');
 
+    await selectStep('throws');
     stepText = await page.locator('#throws').innerText();
     assert.match(stepText, /Mob of the Dead\s*Poster/i);
     assert.match(stepText, /MG42/i);
     assert.match(stepText, /Focusing Stone/i);
     await openMore('throws');
     assert(await page.locator('#throws').getByRole('link', { name: /Throw videos/ }).isVisible());
+    await selectStep('boss');
     assert.equal(await page.locator('#boss h3').innerText(), 'Final boss — Shadowman');
 
     // The Kronorium symbol note is game state, not progress: it survives a reload.
     await page.reload({ waitUntil: 'networkidle' });
+    await selectStep('symbols');
     assert.equal(await page.locator('#symbols').getByLabel('1st').inputValue(), 'skull', 'Kronorium symbol note survives a reload');
 
     await page.evaluate(() => {
@@ -273,6 +284,7 @@ try {
     results.push({ width: 820, route, check: 'footer boundary + top-aligned content', passed: true });
   }
   await tall.close();
+
 
   // The four target viewports: every section fits, nothing clips, and the phone step selector stays compact.
   const routes = ['', '/apothicon-upgrade', '/egg-locations', '/summoning-key', '/sound-step'].map(path => `/maps/revelations${path}`);

@@ -1,102 +1,137 @@
-/* Revelations Main Guide: one action-led runbook, not nested decorative cards.
-   Original map imagery and shared reference screenshots are unchanged. */
-.revelations-module .rev-main-guide { padding-top: clamp(0.55rem, 1.4vw, 1rem); }
+/* Revelations main guide — restored September 2026 split-guide design.
+ * Original Apothicon artwork remains in global.css; 12 current steps & in-game media preserved.
+ */
+.revelations-module .rev-main-guide { padding-top: clamp(0.6rem, 1.4vw, 1rem); }
 .revelations-module .rev-run {
-  width: min(100%, 1280px);
+  width: min(100%, 1290px);
   margin: 0 auto;
-  overflow: hidden;
-  border: 1px solid rgba(126, 155, 220, 0.28);
-  border-radius: 16px;
-  background: linear-gradient(152deg, rgba(8, 14, 31, 0.92), rgba(6, 9, 22, 0.9) 65%, rgba(17, 12, 34, 0.87));
   color: var(--rev-ink);
-  box-shadow: 0 20px 56px rgba(0, 0, 0, 0.36);
 }
 .revelations-module .rev-run-header {
-  display: block;
-  padding: clamp(0.95rem, 2vw, 1.4rem) clamp(1rem, 2.5vw, 1.8rem);
-  border-bottom: 1px solid rgba(111, 169, 232, 0.22);
-  background: linear-gradient(95deg, rgba(41, 96, 142, 0.17), rgba(98, 60, 146, 0.12) 85%);
+  display: grid;
+  gap: 0.3rem;
+  margin: 0 0 clamp(0.85rem, 1.5vw, 1.35rem);
+  padding: 0.25rem 0.3rem 0.9rem;
+  border-bottom: 1px solid rgba(125, 209, 251, 0.25);
 }
-.revelations-module .rev-run-header__identity { max-width: 72ch; }
 .revelations-module .rev-run-header__kicker {
-  display: block;
-  margin-bottom: 0.35rem;
-  color: #a6c7eb;
-  font-size: 0.71rem;
+  color: #92d9ff;
+  font-size: 0.7rem;
   font-weight: 800;
-  line-height: 1.3;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  letter-spacing: 0.14em;
 }
 .revelations-module .rev-run-header h2 {
   margin: 0;
-  color: #f1f5ff;
-  font-size: clamp(1.6rem, 2.65vw, 2.12rem);
-  font-weight: 800;
-  line-height: 1.13;
-  letter-spacing: -0.015em;
+  color: #eaf6ff;
+  font-size: clamp(1.5rem, 2.55vw, 2.1rem);
+  line-height: 1.15;
+  text-shadow: 0 0 16px rgba(87, 181, 248, 0.23);
 }
 .revelations-module .rev-run-header p {
-  margin: 0.32rem 0 0;
-  color: #b5c5dc;
+  margin: 0;
+  color: #b3c8dc;
   font-size: 0.89rem;
   line-height: 1.4;
 }
-
-/* Navigation is a compact step-range index, not a second set of giant cards. */
-.revelations-module .rev-run-chapters {
-  display: flex;
+.revelations-module .rev-main-grid {
+  display: grid;
+  grid-template-columns: minmax(220px, 290px) minmax(0, 1fr);
+  align-items: start;
+  gap: clamp(0.75rem, 1.8vw, 1.35rem);
+}
+.revelations-module .rev-step-list {
+  position: sticky;
+  top: calc(var(--hub-nav-height) + 0.75rem);
   min-width: 0;
-  overflow-x: auto;
-  border-bottom: 1px solid rgba(111, 169, 232, 0.19);
-  background: rgba(6, 11, 25, 0.76);
+  max-height: calc(100vh - var(--hub-nav-height) - 1.25rem);
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0.45rem;
+  border: 1px solid rgba(123, 208, 255, 0.23);
+  border-radius: 14px;
+  background: linear-gradient(140deg, rgba(9, 25, 44, 0.91), rgba(6, 10, 25, 0.88));
+  box-shadow: 0 13px 40px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
   scrollbar-width: thin;
 }
-.revelations-module .rev-run-chapters a {
-  flex: 1 0 auto;
-  min-width: 0;
-  min-height: 48px;
-  display: inline-flex;
+.revelations-module .rev-step-list ol {
+  display: grid;
+  gap: 0.15rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.revelations-module .rev-step-button {
+  display: grid;
+  grid-template-columns: 2.1rem minmax(0, 1fr);
   align-items: center;
-  justify-content: center;
-  gap: 0.6rem;
-  padding: 0.5rem 0.75rem;
-  border-right: 1px solid rgba(135, 157, 222, 0.15);
-  border-bottom: 2px solid transparent;
-  color: #e5ecfc;
-  text-decoration: none;
-  transition: background-color 140ms ease, border-color 140ms ease;
+  gap: 0.45rem;
+  width: 100%;
+  min-height: 43px;
+  padding: 0.38rem 0.5rem;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: #bbcde1;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 150ms ease, border-color 150ms ease;
 }
-.revelations-module .rev-run-chapters a:last-child { border-right: 0; }
-.revelations-module .rev-run-chapters a:hover,
-.revelations-module .rev-run-chapters a:focus-visible {
-  background: rgba(113, 123, 221, 0.15);
-  border-bottom-color: #aa96fa;
+.revelations-module .rev-step-button:hover {
+  border-color: rgba(101, 203, 252, 0.19);
+  background: rgba(90, 177, 224, 0.13);
+  color: #f0f9ff;
 }
-.revelations-module .rev-run-chapters__number {
-  color: #a8a2e9;
-  font-size: 0.78rem;
+.revelations-module .rev-step-button[aria-current='step'] {
+  border-color: rgba(112, 212, 255, 0.47);
+  background: linear-gradient(95deg, rgba(49, 163, 232, 0.26), rgba(129, 97, 217, 0.13));
+  color: #fff;
+  box-shadow: inset 3px 0 0 #87ddff;
+}
+.revelations-module .rev-step-button__num {
+  color: #8dcdf0;
+  font-size: 0.79rem;
   font-weight: 800;
   font-variant-numeric: tabular-nums;
 }
-.revelations-module .rev-run-chapters a strong {
-  color: #ecf2ff;
-  font-size: 0.9rem;
-  font-weight: 800;
-  white-space: nowrap;
+.revelations-module .rev-step-button[aria-current='step'] .rev-step-button__num { color: #d2f2ff; }
+.revelations-module .rev-step-button__title {
+  min-width: 0;
+  font-size: 0.83rem;
+  font-weight: 700;
+  line-height: 1.25;
 }
-
-.revelations-module .rev-guide { margin: 0; }
+.revelations-module .rev-step-panel {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid rgba(117, 207, 249, 0.27);
+  border-radius: 14px;
+  background: linear-gradient(155deg, rgba(6, 23, 42, 0.92), rgba(5, 10, 27, 0.92) 65%, rgba(17, 12, 38, 0.9));
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.39);
+  backdrop-filter: blur(11px);
+}
+.revelations-module .rev-step-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem clamp(0.85rem, 2.2vw, 1.3rem) 0.6rem;
+  border-bottom: 1px solid rgba(145, 178, 227, 0.13);
+  color: #9fc5e6;
+  font-size: 0.77rem;
+  font-weight: 800;
+  letter-spacing: 0.11em;
+  font-variant-numeric: tabular-nums;
+}
 .revelations-module .rev-guide .guide {
-  --guide-accent: #8ad6ff;
-  --guide-accent-ink: #031424;
-  --guide-ink: #f0f6ff;
-  --guide-text: #d8e7f6;
-  --guide-muted: #a5b9d1;
+  --guide-accent: #90dafa;
+  --guide-accent-ink: #041424;
+  --guide-ink: #f4f8ff;
+  --guide-text: #dae8f8;
+  --guide-muted: #a9c0d9;
   --guide-surface: transparent;
-  --guide-surface-2: rgba(119, 162, 223, 0.065);
-  --guide-line: rgba(137, 170, 229, 0.13);
-  --guide-sticky-top: calc(var(--hub-nav-height) + 0.7rem);
+  --guide-surface-2: rgba(93, 170, 226, 0.075);
+  --guide-line: rgba(131, 194, 232, 0.16);
   gap: 0;
 }
 .revelations-module .rev-guide .guide-seq {
@@ -104,71 +139,48 @@
   border-radius: 0;
   background: transparent;
 }
+.revelations-module .rev-guide .guide-seq__step[hidden] { display: none !important; }
 .revelations-module .rev-guide .guide-seq__step--runbook {
   display: grid;
   gap: 0.75rem;
-  padding: clamp(1.1rem, 2.2vw, 1.55rem) clamp(0.9rem, 2.5vw, 1.75rem);
+  padding: clamp(0.9rem, 2.5vw, 1.5rem);
+  border: 0;
+  box-shadow: none;
 }
-.revelations-module .rev-guide .guide-seq__step--runbook:nth-child(even) {
-  background: rgba(51, 57, 111, 0.045);
+.revelations-module .rev-guide .guide-seq__step--runbook h3 {
+  color: #f0f8ff;
+  font-size: clamp(1.23rem, 1.65vw, 1.57rem);
+  line-height: 1.25;
 }
-.revelations-module .rev-guide .guide-seq__step--runbook:target {
-  box-shadow: inset 3px 0 0 #ad9aff;
-  background: rgba(112, 104, 191, 0.085);
-}
-.revelations-module .rev-guide .guide-seq__step--runbook > h3 {
-  align-items: center;
-  gap: 0.8rem;
-  margin: 0;
-  color: #f0f4ff;
-  font-size: clamp(1.1rem, 1.55vw, 1.37rem);
-  font-weight: 800;
-  line-height: 1.24;
-}
-.revelations-module .rev-guide .guide-seq__step--runbook > h3::before {
-  flex: 0 0 auto;
-  display: grid;
-  place-items: center;
-  width: 2.15rem;
-  min-width: 2.15rem;
-  height: 2.15rem;
-  border: 1px solid rgba(158, 152, 248, 0.4);
-  border-radius: 7px;
-  background: rgba(110, 96, 193, 0.16);
-  color: #cbbcff;
-  font-size: 0.93rem;
-  font-weight: 800;
-}
+.revelations-module .rev-guide .guide-seq__step--runbook h3::before { display: none; }
 .revelations-module .rev-guide .guide-seq__goal {
-  max-width: 84ch;
-  margin: -0.2rem 0 0 2.9rem;
-  color: #c7d8eb;
+  margin: 0;
+  color: #d0e2f2;
   font-size: 0.98rem;
-  line-height: 1.48;
+  line-height: 1.46;
 }
-
-/* Each fact has exactly one job: ordered actions on the left, code/media on the right. */
 .revelations-module .rev-guide .guide-seq__runbook-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
-  gap: clamp(0.75rem, 1.8vw, 1.15rem);
-  align-items: start;
-  margin-top: 0.25rem;
-}
-.revelations-module .rev-guide .guide-seq__runbook-grid:has(> :only-child) {
   grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
+  align-items: start;
 }
-.revelations-module .rev-guide :is(.guide-seq__action-block, .guide-seq__reference-block) {
-  min-width: 0;
-}
+.revelations-module .rev-guide .guide-seq__action-block,
+.revelations-module .rev-guide .guide-seq__reference-block { min-width: 0; }
 .revelations-module .rev-guide .guide-seq__runbook-grid h4 {
-  margin: 0 0 0.55rem;
-  color: #a8c4ed;
+  margin: 0 0 0.5rem;
+  color: #9fcae9;
   font-size: 0.75rem;
   font-weight: 800;
+  line-height: 1.2;
   letter-spacing: 0.12em;
-  line-height: 1.3;
   text-transform: uppercase;
+}
+.revelations-module .rev-guide .guide-seq__reference-block {
+  padding: 0.8rem;
+  border: 1px solid rgba(140, 189, 235, 0.16);
+  border-radius: 9px;
+  background: rgba(50, 99, 137, 0.07);
 }
 .revelations-module .rev-guide .guide-seq__tasks--ordered {
   display: grid;
@@ -180,86 +192,96 @@
 }
 .revelations-module .rev-guide .guide-seq__tasks--ordered li {
   position: relative;
-  min-width: 0;
   margin: 0;
-  padding: 0.58rem 0.4rem 0.58rem 2.35rem;
-  border-top: 1px solid rgba(132, 157, 222, 0.14);
-  color: #e5effd;
-  font-size: 0.98rem;
-  font-weight: 650;
+  padding: 0.55rem 0.4rem 0.55rem 2.35rem;
+  border-bottom: 1px solid rgba(141, 182, 228, 0.12);
+  color: #e7f3ff;
+  font-size: 0.94rem;
   line-height: 1.35;
   counter-increment: rev-action;
 }
 .revelations-module .rev-guide .guide-seq__tasks--ordered li::before {
   content: counter(rev-action, decimal-leading-zero);
   position: absolute;
-  top: 0.61rem;
-  left: 0;
-  color: #aaa4ed;
-  font-size: 0.82rem;
+  top: 0.55rem;
+  left: 0.15rem;
+  color: #93d4f6;
+  font-size: 0.78rem;
   font-weight: 800;
-  font-variant-numeric: tabular-nums;
 }
 .revelations-module .rev-guide .guide-seq__tasks--ordered small {
   display: block;
-  margin-top: 0.18rem;
-  color: #aec5db;
-  font-size: 0.89rem;
+  margin-top: 0.15rem;
+  color: #b0c8de;
+  font-size: 0.85rem;
   font-weight: 500;
-  line-height: 1.4;
-}
-.revelations-module .rev-guide .guide-seq__reference-block {
-  padding: 0.85rem;
-  border: 1px solid rgba(132, 165, 225, 0.19);
-  border-radius: 10px;
-  background: rgba(39, 48, 93, 0.13);
-}
-.revelations-module .rev-guide .guide-seq__reference-block .gref-stack { gap: 0.55rem; }
-.revelations-module .rev-guide .gref__label {
-  color: #a7bcda;
-  font-size: 0.74rem;
-}
-.revelations-module .rev-guide .gref-sequence li span {
-  min-height: 43px;
-  padding: 0.45rem 0.8rem;
-  border-color: rgba(158, 140, 252, 0.43);
-  background: rgba(139, 117, 237, 0.14);
-  font-variant-numeric: tabular-nums;
 }
 .revelations-module .rev-guide .guide-seq__more {
-  padding-top: 0.3rem;
-  border-top: 1px solid rgba(132, 165, 225, 0.15);
+  padding-top: 0.2rem;
+  border-top: 1px solid rgba(131, 194, 232, 0.15);
 }
-.revelations-module .rev-guide .guide-seq__more > summary { color: #a5dfff; }
+.revelations-module .rev-guide .guide-seq__more > summary { color: #9fdafa; }
 .revelations-module .rev-guide .guide-seq__footer {
-  padding: 1rem clamp(0.9rem, 2.5vw, 1.75rem);
-  border-top: 1px solid rgba(132, 165, 225, 0.18);
-  background: rgba(24, 19, 50, 0.3);
+  padding: 0.95rem 1.1rem;
+  border-top: 1px solid rgba(134, 182, 226, 0.17);
+  background: rgba(14, 28, 54, 0.25);
 }
-@media (max-width: 930px) {
-  .revelations-module .rev-guide .guide-seq__runbook-grid {
-    grid-template-columns: minmax(0, 1fr);
+.revelations-module .rev-step-controls {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  padding: 0.85rem clamp(0.85rem, 2.5vw, 1.5rem);
+  border-top: 1px solid rgba(135, 186, 227, 0.17);
+}
+.revelations-module .rev-step-controls button {
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  gap: 0.2rem;
+  min-height: 51px;
+  min-width: 0;
+  padding: 0.6rem 0.85rem;
+  border: 1px solid rgba(111, 191, 238, 0.27);
+  border-radius: 9px;
+  background: rgba(89, 160, 212, 0.085);
+  color: #e8f6ff;
+  font: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+.revelations-module .rev-step-controls button:last-child { justify-items: end; text-align: right; }
+.revelations-module .rev-step-controls button:not(:disabled):hover {
+  border-color: #90dafa;
+  background: rgba(89, 160, 212, 0.16);
+}
+.revelations-module .rev-step-controls button:disabled { opacity: 0.42; cursor: not-allowed; }
+.revelations-module .rev-step-controls button small { color: #8dd5f7; font-size: 0.74rem; font-weight: 700; text-transform: uppercase; }
+.revelations-module .rev-step-controls button strong { font-size: 0.91rem; line-height: 1.2; }
+@media (max-width: 850px) {
+  .revelations-module .rev-main-grid { grid-template-columns: minmax(0, 1fr); gap: 0.65rem; }
+  .revelations-module .rev-step-list {
+    position: relative;
+    top: 0;
+    display: block;
+    max-height: none;
+    overflow: auto hidden;
+    padding: 0.3rem;
+    border-radius: 10px;
+    scrollbar-width: none;
   }
-  /* At phone/tablet widths, show the tombstone code before asking players to use it. */
-  .revelations-module .rev-guide #engines .guide-seq__reference-block { grid-row: 1; }
-  .revelations-module .rev-guide #engines .guide-seq__action-block { grid-row: 2; }
+  .revelations-module .rev-step-list ol { display: flex; gap: 0.25rem; width: max-content; }
+  .revelations-module .rev-step-list li { flex: 0 0 auto; }
+  .revelations-module .rev-step-button { display: flex; gap: 0.5rem; min-height: 43px; width: auto; max-width: 200px; padding: 0.45rem 0.6rem; }
+  .revelations-module .rev-step-button__title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 }
-@media (max-width: 620px) {
-  .revelations-module .rev-main-guide { padding-top: 0.45rem; }
-  .revelations-module .rev-run { border-radius: 12px; }
-  .revelations-module .rev-run-header { padding: 0.9rem 0.8rem; }
-  .revelations-module .rev-run-header h2 { font-size: 1.46rem; }
-  .revelations-module .rev-run-chapters a { min-height: 44px; padding: 0.5rem 0.75rem; }
-  .revelations-module .rev-run-chapters__number { font-size: 0.73rem; }
-  .revelations-module .rev-run-chapters a strong { font-size: 0.84rem; }
-  .revelations-module .rev-guide .guide-seq__step--runbook { padding: 0.95rem 0.85rem; }
-  .revelations-module .rev-guide .guide-seq__goal { margin-left: 2.9rem; font-size: 0.94rem; }
-}
-@media (max-height: 500px) and (orientation: landscape) {
-  .revelations-module .rev-main-guide { padding-top: 0.35rem; }
-  .revelations-module .rev-run-header { padding: 0.65rem 0.9rem; }
-  .revelations-module .rev-run-chapters a { min-height: 40px; }
+@media (max-width: 480px) {
+  .revelations-module .rev-run-header { padding-bottom: 0.6rem; }
+  .revelations-module .rev-step-meta { padding: 0.65rem 0.8rem; }
+  .revelations-module .rev-guide .guide-seq__step--runbook { padding: 0.8rem; }
+  .revelations-module .rev-step-controls { padding: 0.6rem 0.75rem; gap: 0.45rem; }
+  .revelations-module .rev-step-controls button { padding: 0.55rem; }
+  .revelations-module .rev-step-controls button strong { font-size: 0.79rem; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .revelations-module .rev-run-chapters a { transition: none; }
+  .revelations-module .rev-step-button { transition: none; }
 }

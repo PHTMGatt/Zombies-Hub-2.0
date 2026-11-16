@@ -58,18 +58,29 @@ export async function captureSegments(page, route) {
   };
   await collect();
   // Tabs inside the page (a step's map tabs, a staff's parts); step pickers are walked separately below.
+  // Only visible tabs: a split guide (Revelations) keeps unselected steps mounted but hidden.
   const visitTabs = async () => {
-    const tabs = page.locator('main [role="tab"]');
+    const tabs = page.locator('main [role="tab"]:visible');
     for (let index = 0; index < await tabs.count(); index += 1) {
       if (await tabs.nth(index).evaluate((tab) => Boolean(tab.closest('[data-step-tabs]')))) continue;
       await tabs.nth(index).click();
       await collect();
     }
   };
-  // A step picker (Revelations) shows one step at a time: visit every step, and every tab inside it.
+  // A step picker shows one step at a time: visit every step, and every tab inside it.
+  // Revelations' split guide uses a left rail of step buttons; other pickers use step tabs.
+  const railSteps = page.locator('main .rev-step-list .rev-step-button');
   const steps = page.locator('main [data-step-tabs] [role="tab"]');
+  const railCount = await railSteps.count();
   const stepCount = await steps.count();
-  if (stepCount) {
+  if (railCount) {
+    for (let index = 0; index < railCount; index += 1) {
+      await railSteps.nth(index).click();
+      await page.locator(`#${await railSteps.nth(index).getAttribute('aria-controls')}`).waitFor({ state: 'visible' });
+      await collect();
+      await visitTabs();
+    }
+  } else if (stepCount) {
     for (let index = 0; index < stepCount; index += 1) {
       await steps.nth(index).click();
       await page.locator(`[role="tabpanel"][aria-labelledby="${await steps.nth(index).getAttribute('id')}"]`).waitFor();
