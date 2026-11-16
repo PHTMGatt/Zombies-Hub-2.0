@@ -160,6 +160,12 @@ jobs:
         if: inputs.build-command != ''
         run: ${{ inputs.build-command }}
 
+      - name: Build and test is required
+        if: inputs.build-command == ''
+        run: |
+          echo "::error::build-command is empty, so the advertised build and test stage would be skipped. Set it in the caller workflow."
+          exit 1
+
   med:
     name: med (history, dependency review, red-team)
     if: inputs.level == 'med' || inputs.level == 'high'
