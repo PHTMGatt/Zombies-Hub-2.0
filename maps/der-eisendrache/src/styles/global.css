@@ -140,3 +140,25 @@
     scroll-margin-top: 14px;
   }
 }
+
+/*
+ * Calm pass (2026-11-16), all Der Eisendrache tab pages (global, loaded by the DE routes):
+ * body text reads at 16px+, tab pages sit on one panel, cards lose their borders (no box-in-box).
+ */
+.de-module .de-page-shell :is(p, li, small, summary, dd, dt) { font-size: 1.0625rem; line-height: 1.5; }
+.de-module .de-page-shell :is(strong, h4) { font-size: max(1.0625rem, 1em); }
+.de-module .de-page-shell span:not([class*="number"]):not([class*="marker"]) { font-size: max(0.95rem, 1em); letter-spacing: 0; text-transform: none; }
+.de-module .de-page-shell > div:not(.bows-page) {
+  width: min(100% - 1rem, 56rem);
+  margin: 0 auto 2rem;
+  padding: 0.5rem clamp(1rem, 3vw, 1.75rem) 1rem;
+  border-radius: 12px;
+  background: rgba(3, 10, 18, 0.92);
+}
+.de-module .de-page-shell > div:not(.bows-page) :is(section, article, details) {
+  border: 0;
+  border-top: 1px solid rgba(123, 207, 255, 0.16);
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
