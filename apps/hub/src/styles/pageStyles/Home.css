@@ -409,7 +409,8 @@
   }
 
   .home-stats span {
-    font-size: 0.58rem;
+    font-size: 0.66rem;
+    letter-spacing: 0.02em;
   }
 
   .home-featured {
