@@ -48,6 +48,21 @@
   transition: border-color 0.16s ease, background 0.16s ease;
 }
 
+/* 44px-tall tap area without changing the pill. */
+.hub-footer__meta a {
+  position: relative;
+}
+
+.hub-footer__meta a::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: max(44px, 100%);
+  transform: translateY(-50%);
+}
+
 .hub-footer__meta a:hover {
   border-color: var(--zh-border-strong);
   background: var(--zh-accent-soft);

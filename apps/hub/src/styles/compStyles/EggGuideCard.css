@@ -74,6 +74,21 @@
   color: #60c4ff;
 }
 
+/* 44px-tall tap area without moving the layout. */
+.egg-card__link {
+  position: relative;
+}
+
+.egg-card__link::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: max(44px, 100%);
+  transform: translateY(-50%);
+}
+
 /* Compact full-page video guide */
 .egg-card.guide-page {
   width: min(calc(100% - 2rem), 1080px);

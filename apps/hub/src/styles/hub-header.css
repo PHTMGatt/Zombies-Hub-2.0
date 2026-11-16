@@ -164,6 +164,7 @@
   /* Icon links match the text links' height here so the bar stays exactly --hub-nav-height tall. */
   .hub-header__nav a.hub-header__icon,
   .hub-header__nav a.hub-header__ach {
+    align-self: stretch;
     min-height: 0;
     min-width: 40px;
     padding: 0.3rem 0.6rem;

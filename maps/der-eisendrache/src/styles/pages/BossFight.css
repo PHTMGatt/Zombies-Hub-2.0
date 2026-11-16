@@ -208,10 +208,23 @@
 }
 
 .de-boss-backlink a {
+  position: relative;
+  display: inline-block;
   color: #cbbcff;
   font-size: 0.74rem;
   font-weight: 750;
   text-decoration: none;
+}
+
+/* 44px-tall tap area without moving the layout. */
+.de-boss-backlink a::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: max(44px, 100%);
+  transform: translateY(-50%);
 }
 
 @media (max-width: 820px) {
