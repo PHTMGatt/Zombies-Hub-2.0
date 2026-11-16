@@ -22,7 +22,7 @@
 import { originsLightningSwitches } from '../../../../shared/data/originsLightning';
 
 // Where each Lightning switch sits on the sketch, by the switch board's ids.
-const SWITCH_POINTS = {
+export const SWITCH_POINTS = {
   spawn: { x: 130, y: 360 },
   'gen-2': { x: 284, y: 320 },
   'gen-5': { x: 246, y: 214 },

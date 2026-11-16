@@ -1,5 +1,6 @@
 import React, { useId } from 'react';
-import { TUNNELS } from '../data/originsPlaces';
+import { TUNNELS, SWITCH_POINTS } from '../data/originsPlaces';
+import SwitchDial from './SwitchDial';
 import '../Styles/ComponentStyles/OriginsMap.css';
 
 /*
@@ -68,7 +69,7 @@ const ROBOTS = [
   ['Thor', 262, 222, 256],
 ];
 
-export default function OriginsMap({ pins = [], layers = [], title, empty = null, className = '', id }) {
+export default function OriginsMap({ pins = [], layers = [], title, empty = null, className = "", id, switches = null }) {
   const titleId = useId();
   const show = new Set(layers);
   return (
@@ -131,6 +132,33 @@ export default function OriginsMap({ pins = [], layers = [], title, empty = null
         <g className="omap__pins">
           {pins.map((pin, i) => <Pin key={`${pin.x}-${pin.y}-${pin.text}`} pin={pin} n={i + 1} />)}
         </g>
+
+        {switches && (
+          <g className="omap__switches">
+            {switches.map((sw) => {
+              const { x, y } = SWITCH_POINTS[sw.id];
+              const interactive = typeof sw.onTurn === 'function';
+              return (
+                <g
+                  key={sw.id}
+                  className={`omap__switch${sw.done ? ' is-set' : ''}${interactive ? ' is-tappable' : ''}`}
+                  transform={`translate(${x} ${y})`}
+                  {...(interactive ? {
+                    role: 'button',
+                    tabIndex: 0,
+                    'aria-label': sw.ariaLabel,
+                    onClick: sw.onTurn,
+                    onKeyDown: (event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); sw.onTurn(); } },
+                  } : {})}
+                >
+                  <circle r="23" className="omap__switch-hit" />
+                  <g transform="translate(-16 -16)"><SwitchDial angle={sw.angle} size={32} className={sw.done ? 'is-set' : ''} /></g>
+                  <text y="31" className="omap__switch-label">{sw.label}</text>
+                </g>
+              );
+            })}
+          </g>
+        )}
       </svg>
 
       <figcaption className="omap__key">

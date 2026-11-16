@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import SwitchDial, { DIRECTION_ANGLE } from './SwitchDial';
+import OriginsMap from './OriginsMap';
 import { playSet, playTurn } from './switchSounds';
 import { useSpeedrunUnlock } from './speedrunUnlock';
 import {
@@ -84,6 +85,20 @@ export default function LightningSwitchBoard({ extraSlot = null, showLocations =
       ) : (
         <p className="switch-board__help">The arrow is where the rounded inner end points; the flat handle sticks out the opposite side.</p>
       )}
+
+      <OriginsMap
+        className="switch-board__map"
+        title="Lightning Staff switches"
+        switches={switchStates.map(({ item, angle, count, remaining }) => ({
+          id: item.id,
+          label: item.shortLabel,
+          angle,
+          done: practising && remaining === 0,
+          onTurn: practising ? () => turn(item, remaining) : undefined,
+          ariaLabel: `${item.shortLabel}: turned ${count} time${count === 1 ? '' : 's'}, ${remaining === 0 ? 'set' : `${remaining} more to go`}`,
+        }))}
+      />
+      <p className="switch-board__note">Switch spots on the sketch are estimated from where each one is in-game.</p>
 
       <ul className="switch-board__grid">
         {switchStates.map(({ item, angle, count, remaining, startDirection }) => {
