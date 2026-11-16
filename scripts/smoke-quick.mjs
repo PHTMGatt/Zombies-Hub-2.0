@@ -6,8 +6,8 @@
 //   ZH_BROWSER_CHANNEL=chrome npm run smoke:quick   # use installed Chrome instead of Playwright's Chromium
 import { spawn } from 'node:child_process';
 import { existsSync, readFileSync } from 'node:fs';
-import { createServer } from 'node:net';
 import { resolve } from 'node:path';
+import { freePort, startPreview } from './smoke-helpers.mjs';
 
 const root = resolve(import.meta.dirname, '..');
 const args = process.argv.slice(2);
@@ -16,33 +16,14 @@ const run = (command, commandArgs, options = {}) => new Promise((done, fail) => 
   const child = spawn(command, commandArgs, { cwd: root, stdio: 'inherit', shell: process.platform === 'win32', ...options });
   child.on('exit', (code) => (code === 0 ? done() : fail(new Error(`${command} ${commandArgs.join(' ')} exited with ${code}`))));
 });
-const freePort = () => new Promise((done) => {
-  const server = createServer().listen(0, '127.0.0.1', () => {
-    const { port } = server.address();
-    server.close(() => done(port));
-  });
-});
-const waitForServer = async (url, timeoutMs = 60000) => {
-  const deadline = Date.now() + timeoutMs;
-  while (Date.now() < deadline) {
-    try {
-      const response = await fetch(url);
-      if (response.ok && (await response.text()).includes('id="root"')) return;
-    } catch { /* not up yet */ }
-    await new Promise((done) => setTimeout(done, 250));
-  }
-  throw new Error(`preview server did not answer at ${url} within ${timeoutMs / 1000}s`);
-};
-
 if (args.includes('--build') || !existsSync(resolve(root, 'dist/index.html'))) await run(npm, ['run', 'build']);
 
 const port = Number(process.env.SMOKE_PORT) || await freePort();
-const base = `http://127.0.0.1:${port}`;
-const preview = spawn(process.execPath, [resolve(root, 'node_modules/vite/bin/vite.js'), 'preview', '--host', '127.0.0.1', '--port', String(port), '--strictPort'],
-  { cwd: root, stdio: ['ignore', 'pipe', 'inherit'] });
 let failed = false;
+let preview;
 try {
-  await waitForServer(`${base}/`);
+  preview = await startPreview(port);
+  const { base } = preview;
   const scripts = args.includes('--all')
     ? [...JSON.parse(readFileSync(resolve(root, 'package.json'), 'utf8')).scripts['test:browser'].matchAll(/scripts\/[\w-]+\.mjs/g)].map(([path]) => path)
     : ['scripts/browser-smoke.mjs'];
@@ -56,6 +37,6 @@ try {
   failed = true;
   console.error(`\n✘ ${error.message}`);
 } finally {
-  preview.kill();
+  await preview?.stop();
 }
 process.exit(failed ? 1 : 0);

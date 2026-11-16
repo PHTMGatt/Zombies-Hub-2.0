@@ -1,10 +1,15 @@
 // Offline support (public/sw.js): a guide opened once still loads with no connection; a guide never opened
 // shows the "couldn't load" page instead of a blank screen; back online, everything works again.
+// "Offline" is real: this smoke runs its own preview server (dist/, or SMOKE_DIST) and stops it. Browser
+// offline emulation is not used because Playwright's Chromium does not apply it to service-worker fetches.
 import { chromium } from 'playwright';
 import assert from 'node:assert/strict';
 import { VIEWPORTS } from './smoke-viewports.mjs';
+import { freePort, startPreview } from './smoke-helpers.mjs';
 
-const base = process.env.SMOKE_BASE_URL || 'http://127.0.0.1:4173';
+const port = await freePort();
+let server = await startPreview(port);
+const { base } = server;
 const visited = [
   ['/maps/origins', 'Origins'],
   ['/maps/revelations', 'Revelations'],
@@ -30,7 +35,7 @@ try {
   for (const [route] of visited) await page.goto(`${base}${route}`, { waitUntil: 'networkidle' });
   results.push('worker installed and controlling');
 
-  await context.setOffline(true);
+  await server.stop();
   for (const [route, name] of visited) {
     await page.goto(`${base}${route}`, { waitUntil: 'load' });
     await page.locator('li.guide-seq__step').first().waitFor({ timeout: 15000 });
@@ -54,7 +59,7 @@ try {
   assert(await page.getByRole('button', { name: 'Reload guide' }).isVisible(), 'unopened guide offline: a reload button');
   results.push('unopened guide offline shows the load-error page');
 
-  await context.setOffline(false);
+  server = await startPreview(port);
   await page.getByRole('button', { name: 'Reload guide' }).click();
   await page.locator('li.guide-seq__step').first().waitFor({ timeout: 15000 });
   results.push('back online, the guide loads');
@@ -64,6 +69,7 @@ try {
   await context.close();
 } finally {
   await browser.close();
+  await server.stop();
 }
 results.forEach((line) => console.log(`- ${line}`));
 console.log(`${results.length}/${results.length} offline checks passed.`);
