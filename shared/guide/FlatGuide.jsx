@@ -34,6 +34,7 @@ export default function FlatGuide({ steps, label, footer, className = '' }) {
                       key={`${link.to}#${link.section ?? ''}`}
                       to={stepLinkHref(link, step.id)}
                       data-step-link={link.section ?? ''}
+                      aria-label={`${linkText(link, grouped(step.links))}, step ${i + 1}: ${step.title}`}
                       style={link.tone ? { '--flat-tone': link.tone } : undefined}
                     >
                       {linkText(link, grouped(step.links))} <span aria-hidden="true">→</span>
