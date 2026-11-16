@@ -67,3 +67,4 @@
 @media (prefers-reduced-motion: reduce) {
   .map-module :is(.origins-nav-links a, .rev-header__tabs a, .de-nav a, .zets-nav a, .soe-tabs a, .gorod-header__nav a, .mob-header .nav a) { transition: none; }
 }
+.map-module .origins-nav-links a[aria-current="page"] img { filter: brightness(0.12); }

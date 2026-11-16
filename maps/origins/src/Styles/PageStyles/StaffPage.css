@@ -304,3 +304,14 @@
 @media (max-width: 480px) {
   .origins-module .staff-page .staff-page__facts > div { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* Staff sub-nav variants for side-by-side testing: ?nav=3 today, ?nav=2 none, ?nav=1 plain text links. */
+.origins-module .staff-page--nav-2 .staff-page__jump { display: none !important; }
+.origins-module .staff-page--nav-1 .staff-page__jump { display: flex !important; flex-wrap: wrap; gap: 0 1.25rem; margin: 0.5rem 0 0; }
+.origins-module .staff-page--nav-1 .staff-page__jump a {
+  display: inline-flex; min-height: 44px; align-items: center; padding: 0; border: 0; border-radius: 0; background: none;
+  color: var(--staff); font-weight: 700; text-decoration: underline;
+}
+.origins-module .excavation-rings { margin: 1rem 0 0; }
+.origins-module .excavation-rings p { margin: 0; font-size: 1.0625rem; }
+.origins-module .staff-page .staff-page__spots li { font-size: 1.0625rem; }
