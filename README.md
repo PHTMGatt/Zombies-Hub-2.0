@@ -23,6 +23,7 @@ Open a map and answer one question fast: **“what do I do next?”** Short step
 - **Side Easter Eggs and a 31-map index** across three Black Ops eras.
 - **Search** across guides (try “gorod valves” or “ice staff code”) and an **achievements** view.
 - **Videos and timestamps** where seeing the spot beats reading about it.
+- **Fast and shareable**: WebP cover art, map-card art that loads as it nears the screen, and a page title and meta description that follow every route.
 
 <p align="center">
   <img src="docs/images/guide-revelations-desktop.jpg" alt="Revelations guide on desktop: step list on the left, current step with its checklist on the right" width="620" />
