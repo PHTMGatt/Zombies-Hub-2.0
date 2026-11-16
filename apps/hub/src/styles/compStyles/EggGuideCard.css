@@ -243,3 +243,16 @@
     grid-column: auto;
   }
 }
+
+/* Main Easter Egg with no video yet: a small empty card instead of a player, related maps stacked below. */
+.egg-guide__pending {
+  display: grid;
+  place-items: center;
+  min-height: 9rem;
+  border: 1px dashed rgba(255, 255, 255, 0.28);
+  border-radius: 10px;
+  color: #aab4bd;
+  font-size: 1rem;
+}
+.egg-guide__related { display: flex; flex-direction: column; margin: 0.5rem 0; }
+.egg-guide__related a { display: flex; align-items: center; min-height: 44px; }
