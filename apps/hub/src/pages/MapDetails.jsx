@@ -28,6 +28,9 @@ export default function MapDetails() {
     return <NotFound />;
   }
 
+  const hasVideo = map.isEasterEgg && mainEggStatus(map).kind === 'video';
+  const soon = (guide) => `/coming-soon?map=${encodeURIComponent(map.slug)}${map.game ? `&game=${encodeURIComponent(map.game)}` : ''}&guide=${guide}`;
+
   return (
     <div className="map-details-wrapper">
       <div className="map-details-header">
@@ -36,15 +39,24 @@ export default function MapDetails() {
 
       <MapCard map={map} isPreview={false} disableLink />
 
-      {/* Never a dead end: the map's info, and its main Easter Egg when there is something to open. */}
+      {/* Two clear buttons, never a dead end: a guide that is not ready opens the Coming Soon page. */}
+      <div className="map-details-guides">
+        <Link className="map-details-guide-btn" to={hasVideo ? `/easter-eggs/${map.slug}` : soon('video')}>
+          <strong>Video guide</strong>
+          <span>{hasVideo ? 'Watch the walkthrough' : 'Coming soon'}</span>
+        </Link>
+        <Link className="map-details-guide-btn" to={soon('main')}>
+          <strong>Main guide</strong>
+          <span>Coming soon</span>
+        </Link>
+      </div>
+
       <nav className="map-details-actions" aria-label={`${map.name} pages`}>
         <Link to={`/info/${map.slug}${map.game ? `?game=${encodeURIComponent(map.game)}` : ''}`}>Map info</Link>
-        {map.isEasterEgg && mainEggStatus(map).kind === 'video' && (
-          <Link to={`/easter-eggs/${map.slug}`}>Main Easter Egg video</Link>
-        )}
         {SIDE_EE[map.slug] && <Link to={`/side-easter-eggs/${SIDE_EE[map.slug]}`}>Side Easter Eggs</Link>}
         <Link to="/allmaps">← All maps</Link>
       </nav>
+
     </div>
   );
 }

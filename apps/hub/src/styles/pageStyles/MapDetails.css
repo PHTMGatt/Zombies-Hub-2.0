@@ -76,3 +76,29 @@
   outline: 2px solid var(--zh-accent, #6dc2ff);
   outline-offset: 2px;
 }
+
+/* Two clear guide buttons (Video guide / Main guide), then quiet text links. */
+.map-details-guides {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  width: min(700px, 100%);
+  margin: 1.25rem auto 0;
+}
+.map-details-guide-btn {
+  display: grid;
+  gap: 0.15rem;
+  align-content: center;
+  min-height: 64px;
+  padding: 0.6rem 1.1rem;
+  border-radius: 12px;
+  border: 1px solid rgba(121, 207, 255, 0.45);
+  background: rgba(7, 16, 25, 0.9);
+  color: #f4f8fb;
+  text-decoration: none;
+}
+.map-details-guide-btn strong { font-size: 1.1875rem; }
+.map-details-guide-btn span { font-size: 1rem; color: #b9cbd9; }
+.map-details-guide-btn:hover { border-color: #79cfff; background: rgba(121, 207, 255, 0.14); }
+@media (max-width: 520px) { .map-details-guides { grid-template-columns: minmax(0, 1fr); } }
+.map-details-actions a { min-height: 44px; display: inline-flex; align-items: center; }

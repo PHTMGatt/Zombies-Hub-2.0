@@ -1,91 +1,53 @@
-/* src/styles/pageStyles/ComingSoon.css */
-
-/* Full-screen wrapper with a soft radial gradient background */
+/* Coming Soon: a calm, intentional "in progress" page with an honest progress-saving teaser. */
 .coming-soon {
-  min-height: 100vh;
   display: flex;
   justify-content: center;
+  padding: clamp(1.5rem, 6vw, 4rem) 1rem 4rem;
+}
+
+.coming-soon__panel {
+  width: min(100%, 40rem);
+  padding: clamp(1.25rem, 4vw, 2.25rem);
+  border-radius: 12px;
+  background: rgba(7, 16, 25, 0.92);
+  color: #dbe7f0;
+  font-size: 1.0625rem;
+  line-height: 1.5;
+}
+
+.coming-soon__kicker { margin: 0; color: #79cfff; font-weight: 700; }
+.coming-soon h1 { margin: 0.25rem 0 0.25rem; color: #f4f8fb; font-size: clamp(1.75rem, 5vw, 2.5rem); line-height: 1.15; }
+.coming-soon__map { margin: 0 0 0.75rem; color: #b9cbd9; font-weight: 600; }
+.coming-soon__text { margin: 0.75rem 0 1.25rem; }
+
+.coming-soon__teaser {
+  padding: 1rem 0;
+  border-top: 1px dashed rgba(121, 207, 255, 0.4);
+  border-bottom: 1px dashed rgba(121, 207, 255, 0.4);
+}
+.coming-soon__teaser-head { display: flex; justify-content: space-between; gap: 1rem; align-items: baseline; }
+.coming-soon__teaser-head strong { color: #f4f8fb; }
+.coming-soon__teaser-head span { color: #ffd27a; font-weight: 700; }
+.coming-soon__bar { height: 10px; margin: 0.75rem 0; border-radius: 999px; border: 1px dashed rgba(121, 207, 255, 0.5); overflow: hidden; }
+.coming-soon__bar i {
+  display: block;
+  width: 35%;
+  height: 100%;
+  background: repeating-linear-gradient(135deg, rgba(121, 207, 255, 0.55) 0 10px, rgba(121, 207, 255, 0.25) 10px 20px);
+  animation: coming-soon-slide 2.4s ease-in-out infinite alternate;
+}
+.coming-soon__teaser p { margin: 0; color: #b9cbd9; }
+
+.coming-soon__links { display: flex; flex-wrap: wrap; gap: 0 1.5rem; margin: 1rem 0 0; }
+.coming-soon__links a {
+  display: inline-flex;
   align-items: center;
-  padding: 2rem;
-  background: radial-gradient(circle at top left,
-    rgba(10, 15, 25, 0.8),
-    rgba(0, 0, 0, 1)) fixed;
-}
-
-/* Card with fade-in and slight scale-up */
-.coming-soon__card {
-  background: rgba(20, 25, 32, 0.95);
-  backdrop-filter: blur(8px);
-  padding: 2.5rem 2rem;
-  border-radius: 0.75rem;
-  max-width: 420px;
-  width: 100%;
-  text-align: center;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5);
-
-  /* Entrance animation */
-  opacity: 0;
-  transform: scale(0.95);
-  animation: fadeInScale 0.5s ease-out forwards;
-}
-
-@keyframes fadeInScale {
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-/* Title */
-.coming-soon__card h1 {
-  margin-bottom: 1rem;
-  color: var(--text-primary, #fff);
-  font-size: 2.25rem;
-  letter-spacing: 0.5px;
-}
-
-/* Description */
-.coming-soon__card p {
-  margin-bottom: 2rem;
-  color: var(--text-secondary, #ccc);
-  font-size: 1rem;
-  line-height: 1.6;
-}
-
-/* Styled link */
-.coming-soon__link {
-  display: inline-block;
-  padding: 0.6rem 1.2rem;
-  border: 2px solid var(--link-color, #38a6ff);
-  border-radius: 0.5rem;
-  color: var(--link-color, #38a6ff);
-  text-decoration: none;
+  min-height: 44px;
+  color: #79cfff;
   font-weight: 600;
-  transition: background 0.2s ease, color 0.2s ease;
-}
-
-.coming-soon__link:hover {
-  background: var(--link-color, #38a6ff);
-  color: var(--bg-page, #0f0f0f);
   text-decoration: none;
 }
+.coming-soon__links a:hover { text-decoration: underline; }
 
-/* Mobile responsiveness */
-@media (max-width: 480px) {
-  .coming-soon__card {
-    padding: 2rem 1.25rem;
-  }
-
-  .coming-soon__card h1 {
-    font-size: 1.75rem;
-  }
-
-  .coming-soon__card p {
-    font-size: 0.95rem;
-  }
-
-  .coming-soon__link {
-    padding: 0.5rem 1rem;
-    font-size: 0.95rem;
-  }
-}
+@keyframes coming-soon-slide { from { transform: translateX(0); } to { transform: translateX(185%); } }
+@media (prefers-reduced-motion: reduce) { .coming-soon__bar i { animation: none; } }
