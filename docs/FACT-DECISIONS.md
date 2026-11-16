@@ -44,3 +44,9 @@ For each: keep, soften (remove the number, keep the instruction) or remove.
 ## From DELTA's pass 1, still unverified (not in Grey's list)
 
 Rev four turrets "8,000 points in total", Mob "does not activate on Easy", SoE Arch-Ovum character-to-room map, DE Keeper Stone slot at Double Tap and boss stun count, Gorod valve "5-minute window", Zetsubou Nan Sapwe "unlocked after the Keeper encounter" and KT-4 parts list. Full list: `delta-zombies-factcheck-pass1-2026-11-16.md` in the shared notes folder.
+
+## Pass 2 (CHARLIE · Sonnet, 2026-11-16, two web searches)
+
+- **Mob of the Dead "Original difficulty only / does not activate on Easy":** one source, [Trophy Hunters](https://trophieshunter.com/games/call-of-duty-black-ops-ii-xbox/achievements/pop-goes-the-weasel), says to start on original difficulty (not Easy). Needs a second source before it is called confirmed. Guide text unchanged.
+- **Gorod Krovi "5-minute window" for the Hatchery generator:** the generator under the tarp and the Valkyrie drone are confirmed by guides; **no source gave a 5-minute timer**. Options: keep, soften to "you have a limited time; press the button beside the generator to restart" (the restart button is in the same line), remove the number. Not changed.
+- Mob "Weasel for 2–3 players" and "solo stops before the finale": consistent with the SegmentNext and co-op guide notes found (full quest needs two or more players).
