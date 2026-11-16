@@ -256,3 +256,51 @@
     gap: 1.1rem;
   }
 }
+
+/*
+ * Calm pass (2026-11-16): one readable column on one panel, plain section headings divided by a rule,
+ * no box-in-box, no icons, plain step numbers. Build, Map, Puzzle, Upgrade read top to bottom.
+ */
+.origins-module .origins-page.staff-page {
+  display: block;
+  width: min(100% - 1.5rem, 54rem);
+  margin: 1rem auto 2.5rem;
+  padding: 0.5rem clamp(1rem, 3vw, 2rem) 1.5rem;
+  border-radius: 12px;
+  background: rgba(2, 12, 22, 0.93);
+}
+.origins-module .staff-page .staff-page__main,
+.origins-module .staff-page .staff-page__side { display: block; position: static; }
+.origins-module .staff-page .origins-panel {
+  padding: 1.25rem 0 0.75rem;
+  border: 0;
+  border-top: 1px solid var(--o-hair);
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+.origins-module .staff-page .staff-page__main > .origins-panel:first-child { border-top: 0; }
+.origins-module .staff-page .origins-panel > :is(h2, h3) {
+  margin: 0 0 0.6rem;
+  padding: 0;
+  border: 0;
+  color: var(--staff);
+  font-size: 1.6rem;
+}
+.origins-module .staff-page .origins-panel__icon { display: none; }
+.origins-module .staff-page .staff-page__steps li { padding-left: 2.4rem; }
+.origins-module .staff-page .staff-page__steps li::before {
+  width: auto;
+  height: auto;
+  border: 0;
+  background: none;
+  border-radius: 0;
+  place-items: start;
+  color: var(--staff);
+  font-size: 1.25rem;
+}
+.origins-module .staff-page .staff-page__facts > div { grid-template-columns: 8rem minmax(0, 1fr); }
+@media (max-width: 480px) {
+  .origins-module .staff-page .staff-page__facts > div { grid-template-columns: minmax(0, 1fr); }
+}
