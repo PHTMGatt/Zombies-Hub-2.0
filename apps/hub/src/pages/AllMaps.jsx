@@ -2,6 +2,8 @@ import React, { useMemo, useState } from 'react';
 import { IoSearchOutline } from 'react-icons/io5';
 import mapData from '../data/mapData';
 import MapCard from '../components/MapCard';
+import MapFilter, { useMapFilter } from '../components/MapFilter';
+import { applyFilter, filterCounts, MAP_FILTERS } from '../data/mapFilters';
 import '../styles/pageStyles/AllMaps.css';
 
 const games = ['Black Ops 1', 'Black Ops 2', 'Black Ops 3'];
@@ -14,9 +16,11 @@ const normalizeMap = map => ({
 
 export default function AllMaps() {
   const [query, setQuery] = useState('');
+  const [show, setShow] = useMapFilter('allmaps');
   const normalizedMaps = useMemo(() => mapData.map(normalizeMap), []);
 
-  const filteredMaps = useMemo(() => {
+  // Search narrows first, so each Show count says how many cards that choice would leave.
+  const searchedMaps = useMemo(() => {
     const search = query.trim().toLowerCase();
     if (!search) return normalizedMaps;
 
@@ -26,6 +30,9 @@ export default function AllMaps() {
         .some(value => value.toLowerCase().includes(search))
     );
   }, [normalizedMaps, query]);
+  const counts = useMemo(() => filterCounts('allmaps', searchedMaps), [searchedMaps]);
+  const filteredMaps = useMemo(() => applyFilter('allmaps', show, searchedMaps), [searchedMaps, show]);
+  const showLabel = MAP_FILTERS.allmaps.find(option => option.id === show)?.label;
 
   return (
     <div className="maps-wrapper">
@@ -48,6 +55,8 @@ export default function AllMaps() {
           />
           <span>{filteredMaps.length} maps</span>
         </label>
+
+        <MapFilter page="allmaps" value={show} onChange={setShow} counts={counts} />
       </header>
 
       <div className="maps-content" aria-live="polite">
@@ -75,9 +84,10 @@ export default function AllMaps() {
 
         {filteredMaps.length === 0 && (
           <div className="maps-empty-state">
-            <strong>No maps matched “{query}”.</strong>
-            <span>Try a map name, game title, or DLC name.</span>
-            <button type="button" onClick={() => setQuery('')}>Clear search</button>
+            <strong>{query ? `No maps matched “${query}”` : 'No maps here'}{show !== 'all' ? ` in ${showLabel}` : ''}.</strong>
+            <span>Try a map name, game title, or DLC name{show !== 'all' ? ', or show all maps' : ''}.</span>
+            {query && <button type="button" onClick={() => setQuery('')}>Clear search</button>}
+            {show !== 'all' && <button type="button" onClick={() => setShow('all')}>Show all maps</button>}
           </div>
         )}
       </div>

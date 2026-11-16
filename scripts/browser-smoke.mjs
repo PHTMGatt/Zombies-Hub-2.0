@@ -117,6 +117,45 @@ try {
     await page.getByRole('searchbox').fill('no-map-can-match-this');
     await page.getByText(/No maps matched/).waitFor();
 
+    // Show filter: All / Easter Eggs / Full guides. It filters the cards, lives in the link (?show=), is
+    // remembered on this device, works with arrow keys, and every option is a 44px target.
+    await page.goto(`${base}/allmaps`, { waitUntil: 'networkidle' });
+    assert.equal(await page.getByRole('group', { name: 'Show' }).count(), 1, 'the Show options are one named group');
+    const cards = page.locator('.map-card');
+    const allCount = await cards.count();
+    const optionHeights = await page.locator('.map-filter__option').evaluateAll((options) => options.map((option) => option.getBoundingClientRect().height));
+    assert(optionHeights.length === 3 && optionHeights.every((h) => h >= 44), `Show options are 44px targets: ${optionHeights.join(', ')}`);
+    await page.getByRole('radio', { name: /Full guides/ }).check();
+    await page.waitForURL(/[?&]show=full-guides/);
+    assert.equal(await cards.count(), 8, 'Full guides: the seven full guides (Origins is listed for BO2 and BO3)');
+    assert((await cards.allTextContents()).every((text) => !/Nacht|Five|TranZit/i.test(text)), 'Full guides hides maps without one');
+    await page.reload({ waitUntil: 'networkidle' });
+    assert(await page.getByRole('radio', { name: /Full guides/ }).isChecked(), 'the link keeps the choice');
+    await page.goto(`${base}/allmaps`, { waitUntil: 'networkidle' });
+    await page.waitForURL(/[?&]show=full-guides/);
+    assert(await page.getByRole('radio', { name: /Full guides/ }).isChecked(), 'the choice is remembered on this device');
+    await page.getByRole('radio', { name: /Full guides/ }).focus();
+    await page.keyboard.press('ArrowLeft');
+    assert(await page.getByRole('radio', { name: /Easter Eggs/ }).isChecked(), 'arrow keys move the choice');
+    await page.waitForURL(/[?&]show=easter-eggs/);
+    const eggCount = await cards.count();
+    assert(eggCount > 8 && eggCount < allCount, `Easter Eggs shows the quest maps (${eggCount} of ${allCount})`);
+    await page.getByRole('radio', { name: /All maps/ }).check();
+    await page.waitForURL((url) => !url.searchParams.has('show'));
+    assert.equal(await cards.count(), allCount, 'All maps brings every card back');
+    assert.equal(await page.evaluate(() => localStorage.getItem('zh-map-filter:allmaps')), null, 'All is the default, nothing stored');
+    await page.goto(`${base}/allmaps?show=not-a-filter`, { waitUntil: 'networkidle' });
+    await page.waitForURL((url) => !url.searchParams.has('show'));
+    assert(await page.getByRole('radio', { name: /All maps/ }).isChecked(), 'an unknown ?show= falls back to All');
+    await page.goto(`${base}/easter-eggs?show=video-guides`, { waitUntil: 'networkidle' });
+    const badges = await page.locator('.map-card .map-ee-chip').allTextContents();
+    assert(badges.length > 0 && badges.every((badge) => badge === 'Video guide'), `Video guides shows only video-guide cards: ${[...new Set(badges)].join(', ')}`);
+    await page.getByRole('radio', { name: /Full guides/ }).check();
+    await page.waitForURL(/[?&]show=full-guides/);
+    const fullBadges = await page.locator('.map-card .map-ee-chip').allTextContents();
+    assert(fullBadges.every((badge) => /Full guide|Complete/.test(badge)), `Full guides shows only full-guide cards: ${[...new Set(fullBadges)].join(', ')}`);
+    await page.evaluate(() => localStorage.removeItem('zh-map-filter:easter-eggs'));
+
     // Side Easter Eggs is a visually sensitive hub page. Protect its card count,
     // responsive grid, navigation, overflow, and capture both target viewports.
     await page.goto(`${base}/side-easter-eggs`, { waitUntil: 'networkidle' });
@@ -134,11 +173,12 @@ try {
       `Side Easter Egg cards use clean widescreen artwork instead of catalog strips: ${sideArtworkRatios.join(', ')}`,
     );
     // Count cards in the first visual row (the grid uses extra tracks to center a short last row).
+    // offsetTop ignores the hover lift, so a pointer left over a card cannot skew the row count.
     const sideColumns = await sideCards.evaluateAll(cards => {
-      const firstTop = Math.round(cards[0].getBoundingClientRect().top);
-      return cards.filter(card => Math.round(card.getBoundingClientRect().top) === firstTop).length;
+      const firstTop = cards[0].offsetTop;
+      return cards.filter(card => card.offsetTop === firstTop).length;
     });
-    assert.equal(sideColumns, { phone: 1, landscape: 3, desktop: 3 }[viewportName], `Side Easter Eggs uses the expected ${width}px grid`);
+    assert.equal(sideColumns, { phone: 1, landscape: 3, desktop: 3 }[viewportName], `Side Easter Eggs uses the expected ${width}px grid (got ${sideColumns})`);
     await assertNoHorizontalOverflow(page, '/side-easter-eggs');
     await page.screenshot({
       path: fileURLToPath(new URL(`../artifacts/side-easter-eggs-${width}.png`, import.meta.url)),

@@ -1,13 +1,18 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import mapData from '../data/mapData';
 import MapCard from '../components/MapCard';
-import { mainEggStatus } from '../data/guideStatus';
+import MapFilter, { useMapFilter } from '../components/MapFilter';
+import { mainEggStatus, hasVideo } from '../data/guideStatus';
+import { applyFilter, filterCounts } from '../data/mapFilters';
 import '../styles/pageStyles/AllMaps.css';
 
 const games = ['Black Ops 1', 'Black Ops 2', 'Black Ops 3'];
 
 export default function EasterEggs() {
-  const easterEggMaps = mapData.filter(map => map.isEasterEgg);
+  const allQuests = useMemo(() => mapData.filter(map => map.isEasterEgg), []);
+  const [show, setShow] = useMapFilter('easter-eggs');
+  const counts = useMemo(() => filterCounts('easter-eggs', allQuests, { hasVideo }), [allQuests]);
+  const easterEggMaps = useMemo(() => applyFilter('easter-eggs', show, allQuests, { hasVideo }), [allQuests, show]);
 
   return (
     <div className="maps-wrapper">
@@ -17,10 +22,11 @@ export default function EasterEggs() {
         <p className="page-subtitle">
           Full guides walk every step; the rest link to a video or the map’s info.
         </p>
-        <div className="maps-summary-pill">{easterEggMaps.length} quest-enabled maps</div>
+        <div className="maps-summary-pill">{allQuests.length} quest-enabled maps</div>
+        <MapFilter page="easter-eggs" value={show} onChange={setShow} counts={counts} />
       </header>
 
-      <div className="maps-content">
+      <div className="maps-content" aria-live="polite">
         {games.map(game => {
           const section = easterEggMaps.filter(map => map.game === game);
           if (!section.length) return null;
