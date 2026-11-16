@@ -686,3 +686,6 @@
 
 /* Map footers read at 15px+ (the per-map footers set 12–13px). */
 footer[class*="footer"] :is(span, strong, small, a, p) { font-size: max(0.95rem, 1em); }
+
+/* Tab-style pickers (character tabs etc.) meet the 44px tap target. */
+.gref-tabs__tab { min-height: 44px; }

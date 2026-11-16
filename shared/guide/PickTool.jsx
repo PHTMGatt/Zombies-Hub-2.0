@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import './guide.css';
 import { PROGRESS_RESET_EVENT } from '../achievements/achievements';
 import { read, write } from '../storage';
 

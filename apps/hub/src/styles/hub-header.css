@@ -234,3 +234,20 @@
 /* The brand link gets the same 44px tap band as the nav links (no visual change). */
 .hub-header__brand { position: relative; }
 .hub-header__brand::before { content: ''; position: absolute; inset: 50% 0 auto 0; height: 44px; transform: translateY(-50%); }
+
+/* Real 44px boxes for the header links on phones (smokes and assistive tech measure the box, not the
+   ::before band). The negative block margin keeps the header exactly as tall as before. */
+@media (max-width: 700px), (max-height: 500px) and (orientation: landscape) {
+  .hub-header__nav a,
+  .hub-header__nav a.hub-header__icon,
+  .hub-header__nav a.hub-header__ach {
+    display: inline-flex;
+    align-items: center;
+    align-self: center;
+    min-height: 44px;
+    margin-block: -7px;
+  }
+}
+@media (max-width: 700px), (max-height: 500px) and (orientation: landscape) {
+  .hub-header__brand { min-height: 44px; margin-block: -6px; }
+}
