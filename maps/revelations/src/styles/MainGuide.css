@@ -67,7 +67,7 @@
   align-items: center;
   gap: 0.45rem;
   width: 100%;
-  min-height: 43px;
+  min-height: 44px;
   padding: 0.38rem 0.5rem;
   border: 1px solid transparent;
   border-radius: 8px;
@@ -271,7 +271,7 @@
   }
   .revelations-module .rev-step-list ol { display: flex; gap: 0.25rem; width: max-content; }
   .revelations-module .rev-step-list li { flex: 0 0 auto; }
-  .revelations-module .rev-step-button { display: flex; gap: 0.5rem; min-height: 43px; width: auto; max-width: 200px; padding: 0.45rem 0.6rem; }
+  .revelations-module .rev-step-button { display: flex; gap: 0.5rem; min-height: 44px; width: auto; max-width: 200px; padding: 0.45rem 0.6rem; }
   .revelations-module .rev-step-button__title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 }
 @media (max-width: 480px) {
