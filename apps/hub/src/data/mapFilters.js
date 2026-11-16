@@ -18,7 +18,7 @@ export const MAP_FILTERS = {
   'easter-eggs': [
     { id: 'all', label: 'All quests', matches: () => true },
     { id: 'full-guides', label: 'Full guides', matches: isFullGuide },
-    { id: 'video-guides', label: 'Video guides', matches: (map, { hasVideo } = {}) => !isFullGuide(map) && Boolean(hasVideo?.(map.slug)) },
+    { id: 'video-guides', label: 'Video guides', matches: (map, { hasVideo } = {}) => !isFullGuide(map) && Boolean(hasVideo?.(map.slug, map)) },
   ],
 };
 

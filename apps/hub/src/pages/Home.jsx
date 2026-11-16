@@ -9,7 +9,8 @@ import '../styles/pageStyles/Home.css';
 export default function Home() {
   const [allMapsEntry, ...featuredRoutes] = featuredMaps;
   const easterEggCount = mapData.filter(map => map.isEasterEgg).length;
-  const gameCount = new Set(mapData.map(map => map.game)).size;
+  // "Black Ops eras": the World at War originals are indexed too but are not a Black Ops era.
+  const gameCount = new Set(mapData.map(map => map.game).filter(game => game.startsWith('Black Ops'))).size;
 
   return (
     <section className="home">

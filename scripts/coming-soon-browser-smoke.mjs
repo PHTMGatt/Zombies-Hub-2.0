@@ -29,16 +29,17 @@ try {
     assert.match(await card.innerText(), /no guide yet/i, `${name}: Shangri-La card still says "No guide yet"`);
 
     await page.goto(`${base}/easter-eggs/shangri-la-chronicles`, { waitUntil: 'networkidle' });
-    assert.equal(await page.locator('h1').first().textContent(), 'Shangri-La', `${name}: the BO3 Shangri-La entry has its own small card`);
-    assert.match(await page.locator('.egg-guide__header span').innerText(), /Black Ops 3/, `${name}: the BO3 card is labelled Black Ops 3`);
-    assert((await page.locator('.egg-guide__pending').innerText()).includes('Video guide coming soon'), `${name}: BO3 Shangri-La says video coming soon`);
+    assert.equal(await page.locator('h1').first().textContent(), 'Shangri-La', `${name}: the BO3 Shangri-La entry has its own page`);
+    assert.match(await page.locator('.egg-guide__header span').innerText(), /Black Ops 3/, `${name}: the BO3 page is labelled Black Ops 3`);
+    assert.match(await page.locator('.egg-guide__video iframe').getAttribute('src'), /tctR5oCbxWk/, `${name}: BO3 Shangri-La embeds its verified video`);
 
     await page.goto(`${base}/easter-eggs/tranzit`, { waitUntil: 'networkidle' });
-    assert.equal(await page.locator('h1').first().textContent(), 'TranZit', `${name}: TranZit has the small card (not Coming Soon)`);
+    assert.equal(await page.locator('h1').first().textContent(), 'TranZit', `${name}: TranZit has its video page`);
+    assert.match(await page.locator('.egg-guide__video iframe').getAttribute('src'), /0thNmxkIYH0/, `${name}: TranZit embeds its verified video`);
 
     await page.goto(`${base}/easter-eggs/die-rise`, { waitUntil: 'networkidle' });
-    assert.equal(await page.locator('h1').first().textContent(), 'Die Rise', `${name}: Die Rise has its small card`);
-    assert((await page.locator('.egg-guide__pending').innerText()).includes('Video guide coming soon'), `${name}: Die Rise card says video coming soon`);
+    assert.equal(await page.locator('h1').first().textContent(), 'Die Rise', `${name}: Die Rise has its video page`);
+    assert.match(await page.locator('.egg-guide__video iframe').getAttribute('src'), /kpMbNt_dyME/, `${name}: Die Rise embeds its verified video`);
 
     await page.goto(`${base}/easter-eggs/ascension`, { waitUntil: 'networkidle' });
     assert.equal(await page.locator('iframe').count(), 1, `${name}: Ascension keeps its video`);

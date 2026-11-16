@@ -15,10 +15,10 @@ DELTA/CHARLIE · Sonnet, 2026-11-16. Source: `apps/hub/src/data` (mapData, mapIn
 | Map | Route | Was | Now |
 | --- | --- | --- | --- |
 | Shangri-La (BO1, also BO3 Chronicles) | `/easter-eggs/shangri-la` | entry in `EasterEggGuides.js` with an empty `videoUrl`, showed the generic "Coming Soon" screen | **intentionally left empty** (Bryen, 2026-11-16): keeps the "Coming Soon" page, its card keeps "No guide yet" |
-| TranZit (BO2) | `/easter-eggs/tranzit` | no guide entry, generic "Coming Soon" | small video card (Bryen: "that way TranZit can get a quick something"); briefly intentional Coming Soon, reverted |
-| Die Rise (BO2) | `/easter-eggs/die-rise` | same | small card |
-| Buried (BO2) | `/easter-eggs/buried` | same | small card |
-| The Giant (BO3) | `/easter-eggs/the-giant` | same | small card |
+| TranZit (BO2) | `/easter-eggs/tranzit` | no guide entry, generic "Coming Soon" | video guide page (CodeNamePizza, `0thNmxkIYH0`) |
+| Die Rise (BO2) | `/easter-eggs/die-rise` | same | video guide page (MrRoflWaffles, `kpMbNt_dyME`) |
+| Buried (BO2) | `/easter-eggs/buried` | same | video guide page (MrTLexify, `EnFU6GZ2HmM`) |
+| The Giant (BO3) | `/easter-eggs/the-giant` | same | video guide page (Mar&Justin, `IUfV1egeI3Y`) |
 
 Their cards on the Main EEs list already said "No guide yet" and opened the map's info page; the info page's "Main Easter Egg" badge led to the dead "Coming Soon" screen.
 
@@ -46,3 +46,7 @@ Their cards on the Main EEs list already said "No guide yet" and opened the map'
 | Side EE: Der Eisendrache | BfBoWcDIg7s | **GregFPS** | not on the list |
 
 No swap is proposed yet: that needs a priority creator's full guide for the same map, with the id verified by oEmbed. Candidates to look for: a CodeNamePizza or MrTLexify full Moon guide; CodeNamePizza side-EE videos for Gorod Krovi and Der Eisendrache. Other video links inside the dedicated map data (Revelations, Origins and so on) were not part of this check.
+
+## Video ids added (2026-11-16, from Grey's grey-32)
+
+Each id was checked by CHARLIE · Sonnet with the YouTube oEmbed endpoint (HTTP 200, title and channel as Grey listed) and the watch page (public, status OK, playable in embed). Runtimes from the watch page: TranZit 7:15, Die Rise 24:20, Buried 12:21, The Giant 10:08, Shangri-La BO3 18:22. The BO3 Shangri-La entry is `/easter-eggs/shangri-la-chronicles` (a `shangri-la-chronicles` entry in `EasterEggGuides.js`); the BO1 entry stays Coming Soon. The pages credit the creator ("Video by"). Creator priority note: no CodeNamePizza or MrTLexify full guide surfaced for Die Rise, The Giant and BO3 Shangri-La (Grey's notes), so MrRoflWaffles / Mar&Justin are used there; swap if Bryen prefers an alternate from Grey's page. TranZit's CodeNamePizza video is 7 minutes, a quick guide.

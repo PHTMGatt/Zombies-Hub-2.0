@@ -13,7 +13,9 @@ test('every video-less main Easter Egg map is on the video TODO list, and only t
   // A map in two games has one route per game: `<slug>` (original) and `<slug>-chronicles` (BO3 remaster).
   const inTwoGames = (slug) => maps.default.filter((map) => map.slug === slug).length > 1;
   const routeSlug = (map) => (map.game === 'Black Ops 3' && inTwoGames(map.slug) ? `${map.slug}-chronicles` : map.slug);
-  const wanted = [...new Set(maps.default.filter((map) => map.isEasterEgg && !dedicated.dedicatedGuideSet.has(map.slug) && !hasVideo(map.slug)).map(routeSlug))];
+  // A BO3 remaster uses its own `<slug>-chronicles` guide entry when there is one, otherwise the original's video.
+  const videoFor = (map) => hasVideo(routeSlug(map)) || (!guides.default.some((guide) => guide.slug === routeSlug(map)) && hasVideo(map.slug));
+  const wanted = [...new Set(maps.default.filter((map) => map.isEasterEgg && !dedicated.dedicatedGuideSet.has(map.slug) && !videoFor(map)).map(routeSlug))];
   assert.deepEqual([...todo.videoTodoSlugs, ...todo.comingSoonSlugs].sort(), wanted.sort());
   assert.deepEqual(todo.videoTodoSlugs.filter((slug) => todo.comingSoonSlugs.includes(slug)), [], 'a slug is either TODO or intentionally empty');
 });

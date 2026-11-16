@@ -63,7 +63,8 @@ export default function EasterEggGuide() {
   if (comingSoonSlugs.includes(requestedSlug)) return <ComingSoon map={variant} />;
   if (videoTodoSlugs.includes(requestedSlug) && variant?.isEasterEgg) return <VideoPending map={variant} slug={slug} />;
 
-  const guide = guides.find(g => g.slug === slug);
+  // The BO3 remaster has its own guide entry (`<slug>-chronicles`); otherwise the entry for the original slug.
+  const guide = guides.find(g => g.slug === requestedSlug) ?? guides.find(g => g.slug === slug);
   if (!guide) {
     const map = mapData.find(item => item.slug === slug && item.isEasterEgg);
     return map ? <VideoPending map={map} slug={slug} /> : <NotFound />;
@@ -79,7 +80,7 @@ export default function EasterEggGuide() {
   return (
     <div className="egg-card guide-page">
       <header className="egg-guide__header">
-        <span>VIDEO GUIDE</span>
+        <span>VIDEO GUIDE · {guide.game}</span>
         <h1>{guide.title}</h1>
         <p>{guide.description}</p>
       </header>
@@ -103,10 +104,18 @@ export default function EasterEggGuide() {
             <span>DLC</span>
             <strong>{guide.dlc}</strong>
           </div>
-          <div className="egg-guide__meta-row">
-            <span>Released</span>
-            <strong>{guide.released}</strong>
-          </div>
+          {guide.released && (
+            <div className="egg-guide__meta-row">
+              <span>Released</span>
+              <strong>{guide.released}</strong>
+            </div>
+          )}
+          {guide.author && (
+            <div className="egg-guide__meta-row">
+              <span>Video by</span>
+              <strong>{guide.author}</strong>
+            </div>
+          )}
 
           <Link to="/easter-eggs" className="egg-card__link">
             ← Easter Egg Maps

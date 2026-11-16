@@ -41,7 +41,7 @@ export default function MapDetails() {
 
       {/* Two clear buttons, never a dead end: a guide that is not ready opens the Coming Soon page. */}
       <div className="map-details-guides">
-        <Link className="map-details-guide-btn" to={hasVideo ? `/easter-eggs/${map.slug}` : soon('video')}>
+        <Link className="map-details-guide-btn" to={hasVideo ? mainEggStatus(map).to : soon('video')}>
           <strong>Video guide</strong>
           <span>{hasVideo ? 'Watch the walkthrough' : 'Coming soon'}</span>
         </Link>
