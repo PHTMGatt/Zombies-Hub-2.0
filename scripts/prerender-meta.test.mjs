@@ -6,7 +6,7 @@ import path from 'node:path';
 import test from 'node:test';
 import { dedicatedGuideSlugs } from '../apps/hub/src/data/dedicatedGuides.js';
 import { routeDescription, routeTitle } from '../apps/hub/src/app/routeMetadata.js';
-import { HUB_ROUTES, escapeAttr, escapeText, headFor, prerender, prerenderRoutes, runPrerender, siteOrigin, tabPaths } from './prerender-meta.mjs';
+import { HUB_ROUTES, OG_IMAGE, escapeAttr, escapeText, headFor, imageSize, prerender, prerenderRoutes, runPrerender, siteOrigin, tabPaths } from './prerender-meta.mjs';
 
 const shell = await readFile(new URL('../index.html', import.meta.url), 'utf8');
 const origin = siteOrigin(shell);
@@ -77,7 +77,7 @@ test('prerender writes <route>.html and <route>/index.html next to the shell and
   try {
     await writeFile(path.join(dist, 'index.html'), shell);
     await mkdir(path.join(dist, 'og'), { recursive: true });
-    await writeFile(path.join(dist, 'og', 'revelations.png'), '');
+    await writeFile(path.join(dist, 'og', 'revelations.jpg'), '');
     const routes = await prerender(dist);
     assert.equal(await readFile(path.join(dist, 'index.html'), 'utf8'), shell, 'dist/index.html is unchanged');
     for (const route of routes) {
@@ -87,7 +87,11 @@ test('prerender writes <route>.html and <route>/index.html next to the shell and
       assert.match(flat, /<script type="module"/, `${route} keeps the app scripts`);
     }
     const rev = await readFile(path.join(dist, 'maps', 'revelations', 'index.html'), 'utf8');
-    assert.equal(meta(rev, 'property', 'og:image'), `${origin}/og/revelations.png`, 'a map with its own card uses it');
+    assert.equal(meta(rev, 'property', 'og:image'), `${origin}/og/revelations.jpg`, 'a map with its own card uses it');
+    assert.equal(meta(rev, 'name', 'twitter:image'), `${origin}/og/revelations.jpg`);
+    assert.equal(unescape(meta(rev, 'property', 'og:image:alt')), routeTitle('/maps/revelations'), 'the card is described as that map');
+    const revTab = await readFile(path.join(dist, 'maps', 'revelations', 'step-details', 'index.html'), 'utf8');
+    assert.equal(meta(revTab, 'property', 'og:image'), `${origin}/og/revelations.jpg`, "a map's tabs share its card");
     const origins = await readFile(path.join(dist, 'maps', 'origins', 'index.html'), 'utf8');
     assert.equal(meta(origins, 'property', 'og:image'), `${origin}/og-image.png`, 'others keep the shared card');
   } finally {
@@ -118,5 +122,14 @@ test('a prerender failure fails CI, but on Render it warns and leaves the plain 
     assert.equal(existsSync(path.join(dist, 'allmaps', 'index.html')), false);
   } finally {
     await rm(dist, { recursive: true, force: true });
+  }
+});
+
+test('every dedicated map has a share card in public/og: 1200x630 JPEG, under 300 KB; the shared card too', async () => {
+  const cards = [...dedicatedGuideSlugs.map((slug) => `public/og/${slug}.jpg`), 'public/og-image.png'];
+  for (const card of cards) {
+    const buffer = await readFile(new URL(`../${card}`, import.meta.url));
+    assert(buffer.length <= OG_IMAGE.maxBytes, `${card} is ${Math.round(buffer.length / 1024)} KB (max ${OG_IMAGE.maxBytes / 1024})`);
+    assert.deepEqual(imageSize(buffer), { width: OG_IMAGE.width, height: OG_IMAGE.height }, `${card} is ${OG_IMAGE.width}x${OG_IMAGE.height}`);
   }
 });

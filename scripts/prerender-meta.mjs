@@ -8,8 +8,8 @@
  * uses at runtime, so the prerendered head and the live head agree. dist/index.html stays the generic
  * shell: the host's /* → /index.html rewrite still serves every other path, as before.
  *
- * og:image: /og/<map>.png when that file exists in dist (drop one into public/og/ to give a map its own
- * card), otherwise the shared /og-image.png.
+ * og:image: /og/<map>.jpg (1200x630, public/og/) on the map and every one of its tabs when that file exists
+ * in dist, otherwise the shared /og-image.png.
  *
  * Usage: node scripts/prerender-meta.mjs [distDir]
  */
@@ -88,6 +88,28 @@ export function siteOrigin(html) {
   return match[1];
 }
 
+const mapSlug = (route) => route.match(/^\/maps\/([^/]+)/)?.[1];
+
+// Width and height of a JPEG or PNG, read from its header (no image library needed).
+export function imageSize(buffer) {
+  if (buffer.length > 24 && buffer.readUInt32BE(0) === 0x89504e47) return { width: buffer.readUInt32BE(16), height: buffer.readUInt32BE(20) };
+  if (buffer[0] === 0xff && buffer[1] === 0xd8) {
+    for (let at = 2; at + 9 < buffer.length;) {
+      if (buffer[at] !== 0xff) { at += 1; continue; }
+      const marker = buffer[at + 1];
+      // SOF0-SOF15 (not DHT C4, JPG C8, DAC CC) carry the frame size.
+      if (marker >= 0xc0 && marker <= 0xcf && ![0xc4, 0xc8, 0xcc].includes(marker)) {
+        return { height: buffer.readUInt16BE(at + 5), width: buffer.readUInt16BE(at + 7) };
+      }
+      at += 2 + buffer.readUInt16BE(at + 2);
+    }
+  }
+  return null;
+}
+
+// Share cards: what the networks render well (1200x630) and small enough to fetch fast.
+export const OG_IMAGE = { width: 1200, height: 630, maxBytes: 300 * 1024 };
+
 // Paths the app redirects: their card (and canonical URL) is the destination's.
 export const ALIASES = { '/maps': '/allmaps' };
 
@@ -105,11 +127,12 @@ export function headFor(html, route, { origin = siteOrigin(html), image } = {}) 
   if (image) {
     out = setTag(out, 'meta', ['property', 'og:image'], 'content', `${origin}${image}`);
     out = setTag(out, 'meta', ['name', 'twitter:image'], 'content', `${origin}${image}`);
+    const slug = mapSlug(route);
+    if (slug) out = setTag(out, 'meta', ['property', 'og:image:alt'], 'content', routeTitle(`/maps/${slug}`));
   }
   return out;
 }
 
-const mapSlug = (route) => route.match(/^\/maps\/([^/]+)/)?.[1];
 
 // Builds every head first, then writes: a bad route fails before any file exists. If a write still fails,
 // the files already written are removed, so the host serves the plain SPA index.html for every path.
@@ -119,7 +142,7 @@ export async function prerender(distDir = path.join(root, 'dist'), readSource) {
   const routes = prerenderRoutes(readSource);
   const pages = routes.map((route) => {
     const slug = mapSlug(route);
-    const own = slug && `/og/${slug}.png`;
+    const own = slug && `/og/${slug}.jpg`;
     const image = own && existsSync(path.join(distDir, own)) ? own : undefined;
     const parts = route.split('/').filter(Boolean);
     // Both spellings a static host may look up for /a/b: a/b.html (no trailing slash) and a/b/index.html.

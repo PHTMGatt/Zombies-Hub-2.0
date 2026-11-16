@@ -19,7 +19,7 @@ import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { routeDescription, routeTitle } from '../apps/hub/src/app/routeMetadata.js';
-import { ALIASES, prerenderRoutes } from './prerender-meta.mjs';
+import { ALIASES, OG_IMAGE, imageSize, prerenderRoutes } from './prerender-meta.mjs';
 import { freePort, startPreview, viteBin } from './smoke-helpers.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -54,9 +54,11 @@ async function check(label, fn) {
 const escapeText = (value) => String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const escapeAttr = (value) => escapeText(value).replace(/"/g, '&quot;');
 
-// Every prerendered page in dist carries its own head, and its og:image is a file that was built.
+// Every prerendered page in dist carries its own head; its og:image is a built 1200x630 card under 300 KB,
+// and a map's pages use that map's own card.
 async function metaProblems() {
   const problems = [];
+  const cards = new Map(); // og:image path → '' when fine, else what is wrong (each card is read once)
   for (const route of prerenderRoutes()) {
     const page = ALIASES[route] ?? route;
     const file = path.join(dist, ...route.split('/').filter(Boolean), 'index.html');
@@ -68,7 +70,20 @@ async function metaProblems() {
     if (!url || new URL(url).pathname !== page) problems.push(`${route}: og:url is ${url ?? 'missing'}`);
     const image = html.match(/property="og:image" content="([^"]+)"/)?.[1];
     if (!image) problems.push(`${route}: no og:image`);
-    else if (!existsSync(path.join(dist, new URL(image).pathname))) problems.push(`${route}: og:image ${new URL(image).pathname} is not in dist`);
+    else {
+      const imagePath = new URL(image).pathname;
+      const slug = route.match(/^\/maps\/([^/]+)/)?.[1];
+      if (slug && imagePath !== `/og/${slug}.jpg`) problems.push(`${route}: og:image is ${imagePath}, not the map's card /og/${slug}.jpg`);
+      const file = path.join(dist, imagePath);
+      if (!existsSync(file)) problems.push(`${route}: og:image ${imagePath} is not in dist`);
+      else if (!cards.has(imagePath)) {
+        const buffer = readFileSync(file);
+        const size = imageSize(buffer);
+        cards.set(imagePath, buffer.length > OG_IMAGE.maxBytes ? `${Math.round(buffer.length / 1024)} KB (max ${OG_IMAGE.maxBytes / 1024})`
+          : size?.width !== OG_IMAGE.width || size?.height !== OG_IMAGE.height ? `${size ? `${size.width}x${size.height}` : 'unreadable'}, not ${OG_IMAGE.width}x${OG_IMAGE.height}` : '');
+      }
+      if (cards.get(imagePath)) problems.push(`${route}: og:image ${imagePath} is ${cards.get(imagePath)}`);
+    }
     if (!/<script type="module"[^>]*src="\/assets\//.test(html)) problems.push(`${route}: the app script is missing`);
   }
   return problems;
