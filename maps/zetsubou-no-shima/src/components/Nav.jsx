@@ -13,6 +13,7 @@ const Nav = ({ isOpen }) => {
       <NavLink to={`${BASE}/cogs`}>Cogs</NavLink>
       <NavLink to={`${BASE}/elevator-battle`}>Boss Fight</NavLink>
       <NavLink to={`${BASE}/buildables`}>Buildables</NavLink>
+      <NavLink to={`${BASE}/step-details`}>Step details</NavLink>
     </nav>
   );
 };

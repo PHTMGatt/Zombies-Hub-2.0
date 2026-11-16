@@ -10,16 +10,20 @@ import Cogs from '../src/pages/Cogs';
 import Buildables from '../src/pages/Buildables';
 import ElevatorBattle from '../src/pages/ElevatorBattle';
 import Extras from '../src/pages/Extras';
+import StepDetailsPage from '../src/pages/StepDetailsPage';
 import CogOne from '../src/components/CogSteps/CogOne';
 import CogTwo from '../src/components/CogSteps/CogTwo';
 import CogThree from '../src/components/CogSteps/CogThree';
 import '../src/styles/Global.css';
 import '../src/styles/DetailCompact.css';
+import BackToStep from '../../../shared/guide/BackToStep';
+import zetsGuideSteps from '../src/data/zetsGuideSteps';
 
 export default function ZetsubouRoutes() {
   return (
     <section className="map-module zets-module">
       <Header />
+      <BackToStep guidePath="/maps/zetsubou-no-shima" steps={zetsGuideSteps} />
       <Routes>
         <Route index element={<MainGuide />} />
         <Route path="prerequisites" element={<Prerequisites />} />
@@ -31,6 +35,7 @@ export default function ZetsubouRoutes() {
         <Route path="buildables" element={<Buildables />} />
         <Route path="elevator-battle" element={<ElevatorBattle />} />
         <Route path="extras" element={<Extras />} />
+        <Route path="step-details" element={<StepDetailsPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />

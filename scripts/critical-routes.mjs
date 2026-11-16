@@ -41,6 +41,7 @@ export const criticalRoutes = [
   ['de-bow-void', '/maps/der-eisendrache/bows/void'],
 
   ['zets-main', '/maps/zetsubou-no-shima'],
+  ['zets-step-details', '/maps/zetsubou-no-shima/step-details'],
   ['zets-prerequisites', '/maps/zetsubou-no-shima/prerequisites'],
   ['zets-blueprint', '/maps/zetsubou-no-shima/reveal-blueprint'],
   ['zets-cogs', '/maps/zetsubou-no-shima/cogs'],
