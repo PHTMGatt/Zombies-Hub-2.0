@@ -52,23 +52,18 @@ test('Rain Fire, the winged beast and the staff placement follow the audited fac
   assert.match(step('secure-keys').critical.join(' '), /All six generators must be on when the last staff goes in/);
 });
 
-// Merge with main, 2026-11-15: main's Main Guide keeps its staff quick-reference tabs, but they are read
-// from the staff pages' data (originsStaffQuickRefs.jsx), so a staff fact still exists in one place only.
-test('the two staff steps are one line each; their staff tabs come from the staff pages', () => {
+// 2026-11-16 core rule (Bryen via Gandalf): the Main Guide is the Easter Egg steps only; the staff pages own
+// Build / Puzzle / Upgrade. The two staff steps are one line each and link to each staff page's section, so a
+// staff fact exists on its staff page only.
+test('the two staff steps are one line each and link to the staff pages', () => {
   assert.equal(step('build-staffs').goal, 'Build all four elemental staffs before continuing.');
   assert.equal(step('upgrade-staffs').goal, 'Upgrade all four staffs before continuing.');
-  for (const id of ['build-staffs', 'upgrade-staffs']) {
-    for (const key of ['how', 'links']) assert.equal(step(id)[key], undefined, `${id} has ${key}`);
-  }
-  const tabs = (id) => step(id).refs.find((ref) => ref.type === 'tabs').tabs;
-  for (const id of ['build-staffs', 'upgrade-staffs']) {
-    assert.deepEqual(tabs(id).map((tab) => tab.label), ['Ice', 'Fire', 'Wind', 'Lightning'], `${id}: one tab per staff`);
-  }
-  // Same objects as the staff pages, not copies: editing a staff fact edits the tab.
-  for (const tab of tabs('build-staffs')) assert.equal(tab.refs[0].items, staffPages[tab.id].build, `${tab.id}: Build tab is the staff page's Build list`);
-  for (const tab of tabs('upgrade-staffs')) {
-    const list = tab.refs.find((ref) => ref.type === 'list').items;
-    for (const line of staffPages[tab.id].puzzle.steps) assert(list.includes(line), `${tab.id}: Upgrade tab has the puzzle line "${line}"`);
+  const routes = ['ice-staff', 'fire-staff', 'wind-staff', 'lightning-staff'];
+  for (const [id, section] of [['build-staffs', 'build'], ['upgrade-staffs', 'puzzle']]) {
+    assert.equal(step(id).how, undefined, `${id} has how`);
+    assert.equal(step(id).refs, undefined, `${id} embeds staff content`);
+    assert.deepEqual(step(id).links.map((link) => link.to), routes.map((route) => `/maps/origins/${route}`), `${id}: one link per staff page`);
+    for (const link of step(id).links) assert.equal(link.section, section, `${id}: links to the staff page's #${section}`);
   }
   // Build's two tips are the run tips, not a second copy of them.
   assert.deepEqual(step('build-staffs').problems.filter((tip) => !guideModule.originsTips.includes(tip)), []);
@@ -77,7 +72,7 @@ test('the two staff steps are one line each; their staff tabs come from the staf
 test('no staff mechanics in the Main Guide outside the staff tabs', () => {
   const outside = guideStrings({ steps: steps.map(({ refs, ...rest }) => ({ ...rest, refs: refs?.filter((ref) => ref.type !== 'tabs') })) }).join('\n');
   for (const word of [/\brecords?\b/i, /crystal/i, /gramophone/i, /\bpuzzle\b/i, /\bchords?\b/i, /\bswitch(es)?\b/i, /excavation rings?/i, /\borb\b/i]) {
-    assert.doesNotMatch(outside, word, `Main Guide mentions ${word} outside the staff tabs`);
+    assert.doesNotMatch(outside, word, `Main Guide mentions ${word} in the Main Guide`);
   }
 });
 

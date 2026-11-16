@@ -6,8 +6,6 @@
  * that staff's page (originsStaffPages.js). Main's Main Guide shows them as quick-reference tabs, which
  * originsStaffQuickRefs.jsx reads from that same data (merge with main, 2026-11-15).
  */
-import { staffQuickRefs } from './originsStaffQuickRefs';
-
 // Staff colours for the placement facts in Ascend from Darkness.
 const TONE = {
   ice: '#78e8e1',
@@ -15,8 +13,6 @@ const TONE = {
   wind: '#ffe657',
   lightning: '#d8a8ff',
 };
-
-const STAFF_REFS = staffQuickRefs(TONE);
 
 /* Run strategy: advice, not requirements (requirements live in their step). */
 const TIP_EARLY = 'Build and upgrade the staffs as early as the run allows.';
@@ -29,7 +25,12 @@ const originsGuide = [
     id: 'build-staffs',
     title: 'Build the Staffs',
     goal: 'Build all four elemental staffs before continuing.',
-    refs: STAFF_REFS.build,
+    links: [
+      { to: '/maps/origins/ice-staff', section: 'build', label: 'Ice Staff: build', tone: TONE.ice },
+      { to: '/maps/origins/fire-staff', section: 'build', label: 'Fire Staff: build', tone: TONE.fire },
+      { to: '/maps/origins/wind-staff', section: 'build', label: 'Wind Staff: build', tone: TONE.wind },
+      { to: '/maps/origins/lightning-staff', section: 'build', label: 'Lightning Staff: build', tone: TONE.lightning },
+    ],
     // Where main's live Main Guide showed these two tips.
     problems: [TIP_EARLY, TIP_ZOMBIE],
   },
@@ -39,7 +40,12 @@ const originsGuide = [
     goal: 'Upgrade all four staffs before continuing.',
     // User-provided source (Origins Easter Egg guide), 2026-11-02.
     critical: ['After every staff is built, all generators must be on at the same time at least once, or the next step will not start.'],
-    refs: STAFF_REFS.upgrade,
+    links: [
+      { to: '/maps/origins/ice-staff', section: 'puzzle', label: 'Ice Staff: upgrade steps', tone: TONE.ice },
+      { to: '/maps/origins/fire-staff', section: 'puzzle', label: 'Fire Staff: upgrade steps', tone: TONE.fire },
+      { to: '/maps/origins/wind-staff', section: 'puzzle', label: 'Wind Staff: upgrade steps', tone: TONE.wind },
+      { to: '/maps/origins/lightning-staff', section: 'puzzle', label: 'Lightning Staff: upgrade steps', tone: TONE.lightning },
+    ],
   },
   {
     id: 'secure-keys',
