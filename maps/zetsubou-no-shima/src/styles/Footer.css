@@ -9,7 +9,7 @@
   border-top: 0;
   background:
     linear-gradient(to bottom, rgba(3, 12, 8, 0.74), rgba(2, 8, 6, 0.98)),
-    url('../assets/images/Zets_banner.jpg') center 72% / cover no-repeat;
+    url('../assets/images/Zets_banner.webp') center 72% / cover no-repeat;
   box-shadow: 0 -8px 28px rgba(0, 0, 0, 0.2);
   isolation: isolate;
 }

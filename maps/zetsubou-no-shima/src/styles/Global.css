@@ -13,7 +13,7 @@
   font-family: 'Segoe UI', sans-serif;
   background:
     linear-gradient(rgba(2, 9, 6, 0.48), rgba(2, 12, 8, 0.66)),
-    url('../assets/images/Zetsubou.jpg') center / cover fixed no-repeat;
+    url('../assets/images/Zetsubou.webp') center / cover fixed no-repeat;
   overflow-x: hidden;
   isolation: isolate;
 }

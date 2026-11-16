@@ -11,7 +11,7 @@
   font-family: 'Segoe UI', sans-serif;
   background:
     linear-gradient(rgba(4, 4, 5, 0.38), rgba(7, 4, 4, 0.56)),
-    url('../assets/GK_BG.jpg') center / cover fixed no-repeat;
+    url('../assets/GK_BG.webp') center / cover fixed no-repeat;
   isolation: isolate;
 }
 
