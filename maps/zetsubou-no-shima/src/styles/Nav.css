@@ -36,32 +36,7 @@
   transform: translateY(-1px);
 }
 
-@media (max-width: 768px) {
-  .zets-module .zets-nav {
-    display: none;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.45rem;
-    width: min(100% - 0.5rem, 620px);
-    padding-top: 0.45rem;
-  }
-
-  .zets-module .zets-nav.open {
-    display: grid;
-  }
-
-  .zets-module .zets-nav a {
-    width: 100%;
-    min-height: 42px;
-    padding-inline: 0.5rem;
-    box-sizing: border-box;
-  }
-}
-
-@media (max-width: 430px) {
-  .zets-module .zets-nav {
-    grid-template-columns: 1fr;
-  }
-}
+/* Phone behaviour comes from shared/ui/map-tabs.css: one scrolling row of pills, no menu. */
 
 @media (pointer: coarse), (max-height: 500px) and (orientation: landscape) {
   .zets-module .zets-nav a {
