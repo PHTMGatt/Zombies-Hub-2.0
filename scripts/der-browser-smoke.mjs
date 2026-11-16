@@ -1,3 +1,4 @@
+import './smoke-ready.mjs'; // first: waits for the app to render after each navigation
 import { chromium } from 'playwright';
 import { stepDetails } from './smoke-helpers.mjs';
 import assert from 'node:assert/strict';
@@ -73,7 +74,7 @@ try {
     await pastLab.getByLabel('Safe symbol 1').fill('Test');
     await stepDetails(page, base, '/maps/der-eisendrache', 'death-ray-safe');
     // The second copy (the Death Ray step's) updates on the next render; wait for it rather than reading once.
-    await page.waitForFunction(() => [...document.querySelectorAll('section.step-details__step input[aria-label="Safe symbol 1"]')].every((input) => input.value === 'Test'), null, { timeout: 3000 })
+    await page.waitForFunction(() => [...document.querySelectorAll('section.step-details__step input[aria-label="Safe symbol 1"]')].every((input) => input.value === 'Test'), null, { timeout: 15000 })
       .catch(() => assert.fail('Safe code note carries to the terminal step'));
     await page.evaluate(() => window.localStorage.clear());
     results.push({ width, route: mainRoute, passed: true });

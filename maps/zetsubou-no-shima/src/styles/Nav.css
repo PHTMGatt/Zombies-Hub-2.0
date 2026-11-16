@@ -3,12 +3,19 @@
   z-index: 2;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 0.45rem;
   width: min(100%, 920px);
   margin: 0 auto;
   padding: 0;
 }
+
+/* Centred with auto margins, not justify-content: center. The tab row scrolls sideways when it is wider than
+   the screen (shared/ui/map-tabs.css), and a centred row that overflows pushes its first tabs off the left
+   edge where they cannot be scrolled to (Overview and Prerequisites at 390px). Auto margins centre a row
+   that fits and start at the left edge when it does not. */
+.zets-module .zets-nav > :first-child { margin-inline-start: auto; }
+.zets-module .zets-nav > :last-child { margin-inline-end: auto; }
 
 .zets-module .zets-nav a {
   min-height: 38px;

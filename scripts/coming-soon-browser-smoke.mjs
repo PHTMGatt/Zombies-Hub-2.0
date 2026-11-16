@@ -1,3 +1,4 @@
+import './smoke-ready.mjs'; // first: waits for the app to render after each navigation
 // Shangri-La is the deliberately empty main Easter Egg (Bryen, 2026-11-16): its guide route keeps the "Coming Soon"
 // page, its card on /easter-eggs keeps "No guide yet", and the way back works. TranZit and Die Rise show the small video card instead; Ascension keeps its video guide.
 import { chromium } from 'playwright';

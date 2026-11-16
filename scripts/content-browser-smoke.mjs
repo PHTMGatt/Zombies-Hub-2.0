@@ -1,3 +1,4 @@
+import './smoke-ready.mjs'; // first: waits for the app to render after each navigation
 /*
  * Every piece of text a page showed before the guide redesign must still be on that page, unless it is
  * listed in scripts/fixtures/approved-removals.json (layer "rendered") with a reason and spec section.

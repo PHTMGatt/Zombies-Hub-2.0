@@ -1,3 +1,4 @@
+import './smoke-ready.mjs'; // first: waits for the app to render after each navigation
 import { VIEWPORTS } from './smoke-viewports.mjs';
 import { chromium } from 'playwright';
 import assert from 'node:assert/strict';

@@ -1,3 +1,4 @@
+import './smoke-ready.mjs'; // first: waits for the app to render after each navigation
 /*
  * Every Easter Egg guide is one plain sequence: every step on the page, in order, with its anchor, every
  * task fact as text, and none of the old run machinery (modes, progress, Mark done, swipe rail, Quick refs).

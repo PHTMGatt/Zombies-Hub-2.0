@@ -1,3 +1,4 @@
+import './smoke-ready.mjs'; // first: waits for the app to render after each navigation
 /*
  * Search finds the pages added on 2026-11-16: every Step details tab, the hub-only maps, the World at War originals
  * and the video / Coming Soon maps. Each query's first result must point at the right route, and opening it must

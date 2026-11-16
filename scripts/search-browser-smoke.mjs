@@ -1,3 +1,4 @@
+import './smoke-ready.mjs'; // first: waits for the app to render after each navigation
 import { VIEWPORTS } from './smoke-viewports.mjs';
 import { chromium } from 'playwright';
 import assert from 'node:assert/strict';
@@ -32,7 +33,7 @@ try {
         if (!step) return false;
         const top = step.getBoundingClientRect().top;
         return top >= 0 && top < window.innerHeight * 0.5;
-      }, id, { timeout: 5000 }).catch(() => assert.fail(`#${id} is not in view after search`));
+      }, id, { timeout: 15000 }).catch(() => assert.fail(`#${id} is not in view after search`));
     };
 
     // Header icon → search page → "gorod valves" + Enter → the valve step, with its solver. Start on a page

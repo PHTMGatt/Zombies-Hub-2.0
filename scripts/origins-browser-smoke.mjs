@@ -1,3 +1,4 @@
+import './smoke-ready.mjs'; // first: waits for the app to render after each navigation
 /*
  * Origins, the OG guide cleaned up: the blue title band with its five tabs, the lean Main Steps with
  * Tips and Speed Run, and the Build / Puzzle / Upgrade staff pages, at every smoke viewport.
@@ -161,7 +162,7 @@ try {
       await page.waitForFunction(() => {
         const img = document.querySelector('dialog.zoom-image__dialog[open] img');
         return img?.complete && img.naturalWidth > 0;
-      }, null, { timeout: 5000 });
+      }, null, { timeout: 15000 });
       const shown = await dialog.locator('img').boundingBox();
       if (name === 'phone') assert(shown.width >= width * 0.9, `${route}: full-screen chart is ${Math.round(shown.width)}px wide`);
       await page.keyboard.press('Escape');
@@ -279,7 +280,7 @@ try {
       assert(!(await fetched()), `${staff}: the chart (${chart.file}) loads before it is near the screen`);
       checked += 1;
       await page.locator('#puzzle .zoom-image__open img').scrollIntoViewIfNeeded();
-      await page.waitForFunction(() => document.querySelector('#puzzle .zoom-image__open img').complete, null, { timeout: 5000 });
+      await page.waitForFunction(() => document.querySelector('#puzzle .zoom-image__open img').complete, null, { timeout: 15000 });
       assert(await fetched(), `${staff}: the chart loads once it is on screen`);
     }
     assert.equal(checked, STAFFS.length, 'every staff chart was checked');

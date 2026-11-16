@@ -1,3 +1,4 @@
+import './smoke-ready.mjs'; // first: waits for the app to render after each navigation
 import { chromium } from 'playwright';
 import { stepDetails, visibleTitle } from './smoke-helpers.mjs';
 import assert from 'node:assert/strict';

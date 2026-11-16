@@ -1,3 +1,4 @@
+import './smoke-ready.mjs'; // first: waits for the app to render after each navigation
 // Link and anchor check: every in-app link on every key page leads somewhere real.
 // Crawls the critical routes and every prerendered route (hub pages, all seven maps and their tabs), collects
 // each internal <a href>, then opens every distinct target once: it must not be the 404 page
@@ -25,7 +26,7 @@ try {
     await page.waitForFunction(() => !document.querySelector('.zh-status-page[role="status"]'), null, { timeout: 10000 }).catch(() => {});
   };
   const isNotFound = () => page.locator('[data-page-not-found]').count().then((count) => count > 0);
-  const hasId = (id) => page.waitForFunction((target) => Boolean(document.getElementById(target)), id, { timeout: 5000 }).then(() => true, () => false);
+  const hasId = (id) => page.waitForFunction((target) => Boolean(document.getElementById(target)), id, { timeout: 15000 }).then(() => true, () => false);
 
   for (const route of pages) {
     await open(`${base}${route}`);

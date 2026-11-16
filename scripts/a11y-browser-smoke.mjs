@@ -1,3 +1,4 @@
+import './smoke-ready.mjs'; // first: waits for the app to render after each navigation
 // Accessibility smoke (no extra dependencies): the checks a screen-reader or thumb user trips over first,
 // on every critical and prerendered route, on a 390×844 phone.
 // - <html lang>, at least one <h1>, no duplicate ids (aria references and #links break on them).

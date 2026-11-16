@@ -1,3 +1,4 @@
+import './smoke-ready.mjs'; // first: waits for the app to render after each navigation
 // Main guide ↔ tab round trip: every step link on a main guide carries ?from=<its step> (and #section when
 // it targets one); the tab page opens, lands on that section, and its "Back to step N" link returns to the
 // main guide with that step open. Opened any other way, a tab shows no back link.

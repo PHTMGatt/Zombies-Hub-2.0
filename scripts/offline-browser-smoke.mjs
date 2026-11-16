@@ -1,3 +1,4 @@
+import './smoke-ready.mjs'; // first: waits for the app to render after each navigation
 // Offline support (public/sw.js): a guide opened once still loads with no connection; a guide never opened
 // shows the "couldn't load" page instead of a blank screen; back online, everything works again.
 // "Offline" is real: this smoke runs its own preview server (dist/, or SMOKE_DIST) and stops it. Browser
