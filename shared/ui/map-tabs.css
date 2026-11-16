@@ -68,3 +68,9 @@
   .map-module :is(.origins-nav-links a, .rev-header__tabs a, .de-nav a, .zets-nav a, .soe-tabs a, .gorod-header__nav a, .mob-header .nav a) { transition: none; }
 }
 .map-module .origins-nav-links a[aria-current="page"] img { filter: brightness(0.12); }
+/* The active fill must win over each map's own .active styling (dark text needs the light fill). */
+.map-module :is(.origins-nav-links a, .rev-header__tabs a, .de-nav a, .zets-nav a, .soe-tabs a, .gorod-header__nav a, .mob-header .nav a)[aria-current="page"] {
+  background: var(--map-tab-accent) !important;
+  background-image: none !important;
+  border-color: var(--map-tab-accent) !important;
+}
