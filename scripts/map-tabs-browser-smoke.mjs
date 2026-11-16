@@ -11,7 +11,9 @@ import assert from 'node:assert/strict';
 const base = process.env.SMOKE_BASE_URL || 'http://127.0.0.1:4173';
 const MAPS = ['origins', 'mob-of-the-dead', 'shadows-of-evil', 'der-eisendrache', 'zetsubou-no-shima', 'gorod-krovi', 'revelations'];
 const ROW = '.origins-nav-links, .rev-header__tabs, .de-nav, .zets-nav, .soe-tabs, .gorod-header__nav, .mob-header .nav ul';
-const SIZES = [[390, 844], [844, 390], [1440, 900], [360, 800], [768, 1024], [1024, 768], [1100, 900], [1280, 900], [1920, 1080]];
+const ALL_SIZES = [[390, 844], [844, 390], [1440, 900], [360, 800], [768, 1024], [1024, 768], [1100, 900], [1280, 900], [1920, 1080]];
+// CI (time-limited job) checks the three approved sizes; a local run checks every width (MAP_TABS_ALL=1 forces it).
+const SIZES = process.env.CI && !process.env.MAP_TABS_ALL ? ALL_SIZES.slice(0, 3) : ALL_SIZES;
 const results = [];
 
 const browser = await chromium.launch({ headless: true });

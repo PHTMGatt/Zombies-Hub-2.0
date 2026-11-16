@@ -22,6 +22,7 @@ import { fileURLToPath } from 'node:url';
 import { routeDescription, routeTitle } from '../apps/hub/src/app/routeMetadata.js';
 import { ALIASES, OG_IMAGE, imageSize, prerenderRoutes } from './prerender-meta.mjs';
 import { freePort, startPreview, viteBin } from './smoke-helpers.mjs';
+import { BROWSER_SMOKES } from './smoke-list.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 // GOLIVE_DIST builds into another folder (e.g. artifacts/golive) so a dev preview of dist/ keeps running.
@@ -101,8 +102,7 @@ async function metaProblems() {
   return problems;
 }
 
-const smokes = JSON.parse(readFileSync(path.join(root, 'package.json'), 'utf8')).scripts['test:browser']
-  .split('&&').map((part) => part.trim().replace(/^node\s+/, ''));
+const smokes = [...BROWSER_SMOKES];
 smokes.push('scripts/links-browser-smoke.mjs', 'scripts/a11y-browser-smoke.mjs');
 const smokeArgs = (script) => ['--import', './scripts/playwright-channel.mjs', script];
 

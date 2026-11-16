@@ -5,9 +5,10 @@
 //   npm run smoke:quick -- --build        # rebuild dist/ first
 //   ZH_BROWSER_CHANNEL=chrome npm run smoke:quick   # use installed Chrome instead of Playwright's Chromium
 import { spawn } from 'node:child_process';
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { freePort, startPreview } from './smoke-helpers.mjs';
+import { BROWSER_SMOKES } from './smoke-list.mjs';
 
 const root = resolve(import.meta.dirname, '..');
 const args = process.argv.slice(2);
@@ -25,7 +26,7 @@ try {
   preview = await startPreview(port);
   const { base } = preview;
   const scripts = args.includes('--all')
-    ? [...JSON.parse(readFileSync(resolve(root, 'package.json'), 'utf8')).scripts['test:browser'].matchAll(/scripts\/[\w-]+\.mjs/g)].map(([path]) => path)
+    ? BROWSER_SMOKES
     : ['scripts/browser-smoke.mjs'];
   const env = { ...process.env, SMOKE_BASE_URL: base };
   for (const script of scripts) {
