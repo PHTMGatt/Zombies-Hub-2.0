@@ -1,0 +1,12 @@
+/* Der Eisendrache main guide: flat list on one calm panel (list styles: shared/guide/flat-guide.css). */
+.de-home-page.de-home-flat {
+  --flat-accent: #79cfff;
+  --flat-ink: #f2f9ff;
+  --flat-text: #d8e6f0;
+  width: min(100%, 50rem);
+  padding: 0.75rem clamp(1rem, 3vw, 2rem) 1.5rem;
+  border-radius: 12px;
+  background: rgba(3, 10, 18, 0.92);
+}
+.de-home-flat .flat-guide { width: 100%; }
+.de-home-flat__related { display: inline-flex; align-items: center; min-height: 44px; margin-top: 0.75rem; color: #79cfff; font-weight: 600; }
