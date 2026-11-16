@@ -3,6 +3,7 @@
  * task fact as text, and none of the old run machinery (modes, progress, Mark done, swipe rail, Quick refs).
  */
 import assert from 'node:assert/strict';
+import { settled } from './smoke-helpers.mjs';
 import { chromium } from 'playwright';
 import { loadGuides } from './guide-content.mjs';
 import { VIEWPORTS } from './smoke-viewports.mjs';
@@ -98,7 +99,7 @@ try {
     const cold = await browser.newContext({ viewport: { width, height } });
     const coldPage = await cold.newPage();
     await coldPage.goto(`${base}/maps/origins#upgrade-staffs`, { waitUntil: 'networkidle' });
-    await coldPage.waitForTimeout(150);
+    await settled(coldPage);
     // Every pinned bar counts: the hub bar and the map's own header (Origins pins one under the hub bar).
     const position = await coldPage.evaluate(() => {
       const target = document.getElementById('upgrade-staffs').getBoundingClientRect();

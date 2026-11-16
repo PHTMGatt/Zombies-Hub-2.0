@@ -1,4 +1,5 @@
 import { chromium } from 'playwright';
+import { settled } from './smoke-helpers.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
@@ -350,7 +351,7 @@ try {
     // With the hub bar scrolled away, sticky panels must not keep an empty band where it used to be.
     await page.goto(`${base}/maps/revelations/apothicon-upgrade`, { waitUntil: 'networkidle' });
     await page.evaluate(() => window.scrollTo(0, 700));
-    await page.waitForTimeout(100);
+    await settled(page);
     const stickyTops = await page.evaluate(() => [...document.querySelectorAll('main *')]
       .filter((el) => getComputedStyle(el).position === 'sticky' && el.getBoundingClientRect().height > 0)
       .map((el) => ({ el: el.className, top: Math.round(el.getBoundingClientRect().top), cssTop: getComputedStyle(el).top })));
