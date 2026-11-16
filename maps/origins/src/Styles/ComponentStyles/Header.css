@@ -67,8 +67,15 @@
   white-space: nowrap;
 }
 
+/* Black letters keep the Origins title look; a tight bright halo gives
+   them an edge against the blue band (was ~2.2:1 and mushy). */
 .origins-module .black-text {
   color: #05080b;
+  text-shadow:
+    0 0 1px #cfeeff,
+    0 0 2px #9fdcff,
+    0 0 5px #6dc2ff,
+    0 0 12px rgba(109, 194, 255, 0.55);
 }
 
 .origins-module .white-text {
