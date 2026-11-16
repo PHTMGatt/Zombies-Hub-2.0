@@ -68,3 +68,6 @@
     min-height: 44px;
   }
 }
+
+/* Calm pass: readable tabs, 44px taps. */
+.zets-module .zets-nav a, .zets-module .zets-nav__link { min-height: 44px; font-size: 1rem; }
