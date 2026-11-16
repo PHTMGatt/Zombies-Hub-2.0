@@ -5,6 +5,8 @@ import { getDedicatedGuideRoute } from '../data/dedicatedGuides';
 import NotFound from '../../../../shared/ui/NotFound';
 import mapData from '../data/mapData';
 import mapInfo from '../data/mapInfo';
+import ComingSoon from './ComingSoon';
+import { comingSoonSlugs } from '../data/videoTodo';
 import '../styles/compStyles/EggGuideCard.css';
 
 // A main Easter Egg with no video guide yet: title, one line, a clearly empty video card and related maps.
@@ -54,6 +56,8 @@ export default function EasterEggGuide() {
   if (dedicatedRoute) {
     return <Navigate to={dedicatedRoute} replace />;
   }
+
+  if (comingSoonSlugs.includes(slug)) return <ComingSoon />;
 
   const guide = guides.find(g => g.slug === slug);
   if (!guide) {

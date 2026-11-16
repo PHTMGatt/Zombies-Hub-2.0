@@ -14,7 +14,7 @@ DELTA/CHARLIE · Sonnet, 2026-11-16. Source: `apps/hub/src/data` (mapData, mapIn
 
 | Map | Route | Was | Now |
 | --- | --- | --- | --- |
-| Shangri-La (BO1, also BO3 Chronicles) | `/easter-eggs/shangri-la` | entry in `EasterEggGuides.js` with an empty `videoUrl`, showed the generic "Coming Soon" screen | small card (below) |
+| Shangri-La (BO1, also BO3 Chronicles) | `/easter-eggs/shangri-la` | entry in `EasterEggGuides.js` with an empty `videoUrl`, showed the generic "Coming Soon" screen | **intentionally left empty** (Bryen, 2026-11-16): keeps the "Coming Soon" page, its card keeps "No guide yet" |
 | TranZit (BO2) | `/easter-eggs/tranzit` | no guide entry, generic "Coming Soon" | small card |
 | Die Rise (BO2) | `/easter-eggs/die-rise` | same | small card |
 | Buried (BO2) | `/easter-eggs/buried` | same | small card |
@@ -22,9 +22,11 @@ DELTA/CHARLIE · Sonnet, 2026-11-16. Source: `apps/hub/src/data` (mapData, mapIn
 
 Their cards on the Main EEs list already said "No guide yet" and opened the map's info page; the info page's "Main Easter Egg" badge led to the dead "Coming Soon" screen.
 
+> **Shangri-La is the intentional empty one.** Bryen wants one map to keep the Coming Soon page. `comingSoonSlugs` in `apps/hub/src/data/videoTodo.js` holds it; `scripts/coming-soon-browser-smoke.mjs` checks the route, the card and the way back.
+
 ## The small page (same flat pattern, no maps, no big blocks)
 
-`/easter-eggs/<slug>` for these five now shows: title, one line (first sentence of the map's own description in `mapData`/`mapInfo`), one empty video card ("Video guide coming soon"), game and DLC, up to four related Easter Egg maps of the same game, and a back link. No video id is invented.
+`/easter-eggs/<slug>` for the other four (TranZit, Die Rise, Buried, The Giant) now shows: title, one line (first sentence of the map's own description in `mapData`/`mapInfo`), one empty video card ("Video guide coming soon"), game and DLC, up to four related Easter Egg maps of the same game, and a back link. No video id is invented.
 
 ## TODO: video ids
 
