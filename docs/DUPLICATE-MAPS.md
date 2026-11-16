@@ -2,6 +2,12 @@
 
 CHARLIE · Sonnet, 2026-11-16. Audit only: nothing here has been added to the hub. Source: `apps/hub/src/data/mapData.js` and `mapInfo.js` (each game version is its own `mapData` entry and `/info/<slug>` or `/info/<slug>-chronicles` page). Items marked **(confirm)** are from general knowledge, not from the hub's own data, and must be checked before anyone adds them.
 
+## The pattern (Bryen, 2026-11-16): original-game entry = Coming Soon, BO3 remaster = guide
+
+Shangri-La is the first pair set up this way, live in the hub: `/easter-eggs/shangri-la` is the **Black Ops 1** entry (original Coming Soon page, labelled "Shangri-La · Black Ops 1", card keeps "No guide yet") and `/easter-eggs/shangri-la-chronicles` is the **Black Ops 3 (Zombies Chronicles)** entry (small video card, labelled "MAIN EASTER EGG · Black Ops 3", "Video guide coming soon" until Grey's grey-32 delivers a verified id). The cards, the info pages and the pages all show the game. Rule in code: `<slug>` = original, `<slug>-chronicles` = BO3 remaster; `apps/hub/src/data/videoTodo.js` lists which routes get the card or stay Coming Soon.
+
+Proposed for the other pairs, same way (not added, Bryen picks): Moon (BO1 empty / BO3 guide), Kino, Nacht der Untoten, Verrückt, Shi No Numa (no main EE, so both are plain info entries already), Origins (BO2 original empty / BO3 remaster guide; today the dedicated step guide serves both), Der Riese (original empty) / The Giant (BO3 remake gets the card), Ascension (BO1 empty / new BO3 entry gets the card). Today Moon's BO3 entry shows the BO1 video page; with the pattern it would need its own video.
+
 ## Already has one entry per game (7)
 
 | Map | BO1 entry | BO3 entry | Notes |

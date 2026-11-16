@@ -25,7 +25,7 @@ export default function MapInfo() {
 
   const banner = meta.coverImage || meta.layoutImage;
   const dedicatedRoute = getDedicatedGuideRoute(canonicalSlug);
-  const guideRoute = dedicatedRoute || `/easter-eggs/${canonicalSlug}`;
+  const guideRoute = dedicatedRoute || `/easter-eggs/${slug}`;
   const hasMainQuest = Boolean(meta.isEasterEgg);
   const releasedLabel = meta.dlc === 'Zombies Chronicles'
     ? 'Black Ops III: Zombies Chronicles (2017)'

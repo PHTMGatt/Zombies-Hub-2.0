@@ -18,6 +18,7 @@ try {
     await settled(page);
     assert.equal(await page.locator('h1').first().textContent(), 'Coming Soon', `${name}: Shangri-La route shows Coming Soon`);
     assert.equal(await page.locator('iframe').count(), 0, `${name}: no video player on Coming Soon`);
+    assert.match(await page.locator('.coming-soon__map').innerText(), /Shangri-La · Black Ops 1/, `${name}: the empty entry says it is the Black Ops 1 version`);
     await page.locator('.coming-soon__link').click();
     await page.waitForURL(`${base}/easter-eggs`);
 
@@ -25,6 +26,11 @@ try {
     await card.waitFor({ timeout: 10000 }).catch(() => {});
     assert(await card.count(), `${name}: Shangri-La card is listed`);
     assert.match(await card.innerText(), /no guide yet/i, `${name}: Shangri-La card still says "No guide yet"`);
+
+    await page.goto(`${base}/easter-eggs/shangri-la-chronicles`, { waitUntil: 'networkidle' });
+    assert.equal(await page.locator('h1').first().textContent(), 'Shangri-La', `${name}: the BO3 Shangri-La entry has its own small card`);
+    assert.match(await page.locator('.egg-guide__header span').innerText(), /Black Ops 3/, `${name}: the BO3 card is labelled Black Ops 3`);
+    assert((await page.locator('.egg-guide__pending').innerText()).includes('Video guide coming soon'), `${name}: BO3 Shangri-La says video coming soon`);
 
     await page.goto(`${base}/easter-eggs/tranzit`, { waitUntil: 'networkidle' });
     assert.equal(await page.locator('h1').first().textContent(), 'Coming Soon', `${name}: TranZit (second deliberate empty map) shows Coming Soon`);

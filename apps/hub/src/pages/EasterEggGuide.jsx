@@ -6,7 +6,7 @@ import NotFound from '../../../../shared/ui/NotFound';
 import mapData from '../data/mapData';
 import mapInfo from '../data/mapInfo';
 import ComingSoon from './ComingSoon';
-import { comingSoonSlugs } from '../data/videoTodo';
+import { comingSoonSlugs, videoTodoSlugs } from '../data/videoTodo';
 import '../styles/compStyles/EggGuideCard.css';
 
 // A main Easter Egg with no video guide yet: title, one line, a clearly empty video card and related maps.
@@ -23,7 +23,7 @@ function VideoPending({ map, slug, guide }) {
   return (
     <div className="egg-card guide-page">
       <header className="egg-guide__header">
-        <span>MAIN EASTER EGG</span>
+        <span>MAIN EASTER EGG{game ? ` · ${game}` : ''}</span>
         <h1>{title}</h1>
         {line && <p>{line}</p>}
       </header>
@@ -57,7 +57,11 @@ export default function EasterEggGuide() {
     return <Navigate to={dedicatedRoute} replace />;
   }
 
-  if (comingSoonSlugs.includes(slug)) return <ComingSoon />;
+  // One route per game for a map in two games: `<slug>` is the original, `<slug>-chronicles` the BO3 remaster.
+  const isRemaster = requestedSlug !== slug;
+  const variant = mapData.find(item => item.slug === slug && (isRemaster ? item.game === 'Black Ops 3' : true));
+  if (comingSoonSlugs.includes(requestedSlug)) return <ComingSoon map={variant} />;
+  if (videoTodoSlugs.includes(requestedSlug) && variant?.isEasterEgg) return <VideoPending map={variant} slug={slug} />;
 
   const guide = guides.find(g => g.slug === slug);
   if (!guide) {
