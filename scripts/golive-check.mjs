@@ -83,6 +83,9 @@ async function metaProblems() {
           : size?.width !== OG_IMAGE.width || size?.height !== OG_IMAGE.height ? `${size ? `${size.width}x${size.height}` : 'unreadable'}, not ${OG_IMAGE.width}x${OG_IMAGE.height}` : '');
       }
       if (cards.get(imagePath)) problems.push(`${route}: og:image ${imagePath} is ${cards.get(imagePath)}`);
+      const type = html.match(/property="og:image:type" content="([^"]+)"/)?.[1];
+      const expected = /\.jpe?g$/i.test(imagePath) ? 'image/jpeg' : /\.png$/i.test(imagePath) ? 'image/png' : null;
+      if (expected && type !== expected) problems.push(`${route}: og:image:type is ${type ?? 'missing'}, not ${expected}`);
     }
     if (!/<script type="module"[^>]*src="\/assets\//.test(html)) problems.push(`${route}: the app script is missing`);
   }

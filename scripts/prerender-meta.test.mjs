@@ -89,11 +89,14 @@ test('prerender writes <route>.html and <route>/index.html next to the shell and
     const rev = await readFile(path.join(dist, 'maps', 'revelations', 'index.html'), 'utf8');
     assert.equal(meta(rev, 'property', 'og:image'), `${origin}/og/revelations.jpg`, 'a map with its own card uses it');
     assert.equal(meta(rev, 'name', 'twitter:image'), `${origin}/og/revelations.jpg`);
+    assert.equal(meta(rev, 'property', 'og:image:type'), 'image/jpeg');
     assert.equal(unescape(meta(rev, 'property', 'og:image:alt')), routeTitle('/maps/revelations'), 'the card is described as that map');
     const revTab = await readFile(path.join(dist, 'maps', 'revelations', 'step-details', 'index.html'), 'utf8');
     assert.equal(meta(revTab, 'property', 'og:image'), `${origin}/og/revelations.jpg`, "a map's tabs share its card");
     const origins = await readFile(path.join(dist, 'maps', 'origins', 'index.html'), 'utf8');
     assert.equal(meta(origins, 'property', 'og:image'), `${origin}/og-image.png`, 'others keep the shared card');
+    assert.equal(meta(origins, 'property', 'og:image:type'), 'image/png');
+    assert.equal((origins.match(/og:image:type/g) ?? []).length, 1, 'one og:image:type');
   } finally {
     await rm(dist, { recursive: true, force: true });
   }

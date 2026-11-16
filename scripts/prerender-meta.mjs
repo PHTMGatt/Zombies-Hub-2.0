@@ -124,6 +124,10 @@ export function headFor(html, route, { origin = siteOrigin(html), image } = {}) 
   out = setTag(out, 'meta', ['property', 'og:description'], 'content', description);
   out = setTag(out, 'meta', ['property', 'og:url'], 'content', url);
   out = setTag(out, 'link', ['rel', 'canonical'], 'href', url);
+  // The card's type, from whichever image the head ends up with (a map's .jpg, or the shared .png).
+  const finalImage = image ?? out.match(/property="og:image" content="([^"]+)"/)?.[1] ?? '';
+  const type = /\.jpe?g$/i.test(finalImage) ? 'image/jpeg' : /\.png$/i.test(finalImage) ? 'image/png' : '';
+  if (type) out = setTag(out, 'meta', ['property', 'og:image:type'], 'content', type);
   if (image) {
     out = setTag(out, 'meta', ['property', 'og:image'], 'content', `${origin}${image}`);
     out = setTag(out, 'meta', ['name', 'twitter:image'], 'content', `${origin}${image}`);
