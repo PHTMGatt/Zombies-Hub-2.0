@@ -125,32 +125,40 @@ try {
     const allCount = await cards.count();
     const optionHeights = await page.locator('.map-filter__option').evaluateAll((options) => options.map((option) => option.getBoundingClientRect().height));
     assert(optionHeights.length === 3 && optionHeights.every((h) => h >= 44), `Show options are 44px targets: ${optionHeights.join(', ')}`);
-    await page.getByRole('radio', { name: /Full guides/ }).check();
+    // The radios follow the URL, and React Router applies ?show= as a transition: on a slow machine (CI) the
+    // new choice is checked, and the cards filtered, a moment after the click or key press. So wait for the
+    // checked radio (same render as the cards) instead of reading it at once; Playwright's check() would
+    // also throw on the brief flip back.
+    const showIs = (value, message) => page.waitForFunction((id) => document.querySelector(`.map-filter input[value="${id}"]`)?.checked, value, { timeout: 5000 })
+      .catch(() => assert.fail(message ?? `Show: ${value} is chosen`));
+    const choose = async (name, value) => { await page.getByRole('radio', { name }).click(); await showIs(value); };
+    await choose(/Full guides/, 'full-guides');
     await page.waitForURL(/[?&]show=full-guides/);
     assert.equal(await cards.count(), 8, 'Full guides: the seven full guides (Origins is listed for BO2 and BO3)');
     assert((await cards.allTextContents()).every((text) => !/Nacht|Five|TranZit/i.test(text)), 'Full guides hides maps without one');
     await page.reload({ waitUntil: 'networkidle' });
-    assert(await page.getByRole('radio', { name: /Full guides/ }).isChecked(), 'the link keeps the choice');
+    await showIs('full-guides', 'the link keeps the choice');
     await page.goto(`${base}/allmaps`, { waitUntil: 'networkidle' });
     await page.waitForURL(/[?&]show=full-guides/);
-    assert(await page.getByRole('radio', { name: /Full guides/ }).isChecked(), 'the choice is remembered on this device');
+    await showIs('full-guides', 'the choice is remembered on this device');
     await page.getByRole('radio', { name: /Full guides/ }).focus();
     await page.keyboard.press('ArrowLeft');
-    assert(await page.getByRole('radio', { name: /Easter Eggs/ }).isChecked(), 'arrow keys move the choice');
+    await showIs('easter-eggs', 'arrow keys move the choice');
     await page.waitForURL(/[?&]show=easter-eggs/);
     const eggCount = await cards.count();
     assert(eggCount > 8 && eggCount < allCount, `Easter Eggs shows the quest maps (${eggCount} of ${allCount})`);
-    await page.getByRole('radio', { name: /All maps/ }).check();
+    await choose(/All maps/, 'all');
     await page.waitForURL((url) => !url.searchParams.has('show'));
     assert.equal(await cards.count(), allCount, 'All maps brings every card back');
     assert.equal(await page.evaluate(() => localStorage.getItem('zh-map-filter:allmaps')), null, 'All is the default, nothing stored');
     await page.goto(`${base}/allmaps?show=not-a-filter`, { waitUntil: 'networkidle' });
     await page.waitForURL((url) => !url.searchParams.has('show'));
-    assert(await page.getByRole('radio', { name: /All maps/ }).isChecked(), 'an unknown ?show= falls back to All');
+    await showIs('all', 'an unknown ?show= falls back to All');
     await page.goto(`${base}/easter-eggs?show=video-guides`, { waitUntil: 'networkidle' });
+    await showIs('video-guides');
     const badges = await page.locator('.map-card .map-ee-chip').allTextContents();
     assert(badges.length > 0 && badges.every((badge) => badge === 'Video guide'), `Video guides shows only video-guide cards: ${[...new Set(badges)].join(', ')}`);
-    await page.getByRole('radio', { name: /Full guides/ }).check();
+    await choose(/Full guides/, 'full-guides');
     await page.waitForURL(/[?&]show=full-guides/);
     const fullBadges = await page.locator('.map-card .map-ee-chip').allTextContents();
     assert(fullBadges.every((badge) => /Full guide|Complete/.test(badge)), `Full guides shows only full-guide cards: ${[...new Set(fullBadges)].join(', ')}`);
