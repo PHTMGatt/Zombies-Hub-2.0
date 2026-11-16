@@ -220,3 +220,5 @@ body .home-kicker, body .maps-kicker { text-transform: none !important; font-wei
 .zh-status-page__action { font-size: 1rem; }
 body .maps-empty-state :is(span, p) { font-size: 1rem !important; }
 body .maps-empty-state strong { font-size: 1.125rem; }
+/* Astral review: control labels and map metadata read at 16px (chips and badges stay 14px). */
+body :is(.map-filter__legend, .map-filter__count, .map-dlc, .game-count) { font-size: 1rem !important; }
