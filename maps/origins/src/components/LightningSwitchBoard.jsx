@@ -60,7 +60,7 @@ export default function LightningSwitchBoard({ extraSlot = null, showLocations =
   return (
     <section id={id} className={`switch-board${practising ? ' is-practice' : ''}`} aria-label="Lightning Staff switches">
       <div className="switch-board__head">
-        <h3>Switches</h3>
+        <h3>Switch Positions</h3>
         <div className="switch-board__modes" role="group" aria-label="Switch view">
           <button type="button" aria-pressed={!practising} onClick={() => setMode('final')}>Final positions</button>
           <button type="button" aria-pressed={practising} onClick={() => { resetClicks(); setMode('practice'); }}>Practice turns</button>
@@ -69,7 +69,7 @@ export default function LightningSwitchBoard({ extraSlot = null, showLocations =
 
       {practising ? (
         <div className="switch-board__practice">
-          <p className="switch-board__help">Tap a switch to turn it a quarter. Match the untouched positions you see in-game; if they differ, change the turn direction.</p>
+          <p className="switch-board__help">Dials start untouched. Tap one to turn it a quarter. If these starting dials don&apos;t match the untouched dials in-game, switch the turn direction.</p>
           <div className="switch-board__controls">
             <span>Each tap turns</span>
             <button type="button" aria-pressed={spin === 'cw'} onClick={() => { setSpin('cw'); resetClicks(); }}>Clockwise</button>
@@ -83,7 +83,7 @@ export default function LightningSwitchBoard({ extraSlot = null, showLocations =
           </p>
         </div>
       ) : (
-        <p className="switch-board__help">The arrow is where the rounded inner end points; the flat handle sticks out the opposite side.</p>
+        <p className="switch-board__help"><strong>Arrow = where the rounded inner end points.</strong> The flat handle sticks out of the ring on the opposite side.</p>
       )}
 
       <OriginsMap
