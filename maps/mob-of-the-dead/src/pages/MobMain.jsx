@@ -1,25 +1,13 @@
 import React from 'react';
-import GuideSteps from '../../../../shared/guide/GuideSteps';
+import FlatGuide from '../../../../shared/guide/FlatGuide';
 import CompleteEasterEgg from '../../../../shared/achievements/CompleteEasterEgg';
-import { mobPrerequisites } from '../data/mobGuide';
 import mobGuideSteps from '../data/mobGuideSteps';
-import '../styles/MobMain.css';
+import '../styles/MobMainFlat.css';
 
+// Mob of the Dead main guide: the Easter Egg steps in order, one line each. Detail lives on the tabs.
 const MobMain = () => (
-  <div className="mobmain-page">
-    <header className="mob-run-header">
-      <h2>Pop Goes the Weasel</h2>
-      <p>Original difficulty only. Solo can go as far as the final flight; the finale needs two or more players.</p>
-    </header>
-
-    <details className="mob-run-alert">
-      <summary>Before you start</summary>
-      <ul>{mobPrerequisites.map((item) => <li key={item}>{item}</li>)}</ul>
-    </details>
-
-    <div className="mob-guide">
-      <GuideSteps label="Pop Goes the Weasel" steps={mobGuideSteps} footer={<CompleteEasterEgg mapId="mob-of-the-dead" />} />
-    </div>
+  <div className="mobmain-page mob-main-flat">
+    <FlatGuide label="Pop Goes the Weasel" steps={mobGuideSteps} footer={<CompleteEasterEgg mapId="mob-of-the-dead" />} />
   </div>
 );
 

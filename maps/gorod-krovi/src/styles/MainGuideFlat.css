@@ -1,0 +1,13 @@
+/* Gorod Krovi main guide: flat list on one calm panel (list styles: shared/guide/flat-guide.css). */
+.gorod-main-guide.gorod-main-flat {
+  --flat-accent: #ff6a5c;
+  --flat-ink: #fff4f2;
+  --flat-text: #ecdcd9;
+  width: min(100% - 1.5rem, 50rem);
+  margin: 1rem auto 2rem;
+  padding: 0.75rem clamp(1rem, 3vw, 2rem) 1.5rem;
+  border-radius: 12px;
+  background: rgba(16, 6, 6, 0.93);
+}
+.gorod-main-flat .flat-guide { width: 100%; }
+.gorod-main-flat__related { display: inline-flex; align-items: center; min-height: 44px; margin-top: 0.75rem; color: #ff6a5c; font-weight: 600; }
