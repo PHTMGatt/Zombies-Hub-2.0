@@ -78,7 +78,9 @@ const revStepDetails = [
     title: 'Reel 2 — Arnie holes',
     goal: 'In the Apothicon, throw Li’l Arnies into all nine wall holes, never the same one twice. Kill the Margwas after each three.',
     checklist: ['Holes 1–3 + Margwas', 'Holes 4–6 + Margwas', 'Holes 7–9 + Margwas', 'Reel in the Kino stage radio'],
-    how: how(T.REEL2),
+    how: how(T.REEL2, /Max Ammo/, /resets those three holes/),
+    // Recovery lines from ApothiconSteps.js, shown as "Not working?" tips (same text, moved out of the how-to list).
+    problems: [line(T.REEL2, /Max Ammo/), line(T.REEL2, /resets those three holes/)],
   },
   {
     id: 'reel-3',
