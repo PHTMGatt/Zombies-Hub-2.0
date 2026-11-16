@@ -46,7 +46,7 @@ try {
     // World at War originals are their own entries, and a map in two games links its other versions.
     await page.goto(`${base}/allmaps`, { waitUntil: 'networkidle' });
     const wawSection = page.locator('.game-section', { has: page.locator('.game-title', { hasText: 'World at War' }) });
-    assert.equal(await wawSection.locator('h3').count(), 4, `${name}: four World at War entries on /allmaps`);
+    assert.equal(await wawSection.locator('h2, h3').count(), 4, `${name}: four World at War entries on /allmaps`);
     await page.goto(`${base}/info/der-riese`, { waitUntil: 'networkidle' });
     const same = await page.locator('.same-map').innerText();
     assert(/The Giant · Black Ops 3/.test(same) && /World at War/.test(same), `${name}: Der Riese links The Giant and its World at War entry`);
