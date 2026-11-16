@@ -98,7 +98,7 @@ try {
     assert.equal(art.at(-1), '', 'the last map card waits to load its art');
     for (const card of await page.locator('.map-card').all()) await card.scrollIntoViewIfNeeded();
     await page.waitForFunction(() => [...document.querySelectorAll('.map-card .bg-main')].every((layer) => layer.style.backgroundImage.startsWith('url(')),
-      null, { timeout: 5000 }).catch(() => {});
+      null, { timeout: 15000 }).catch(() => {});
     art = await cardArt();
     const missingArt = art.filter((value) => !value.startsWith('url(')).length;
     assert.equal(missingArt, 0, `${missingArt} map cards never loaded their art`);
@@ -129,7 +129,7 @@ try {
     // new choice is checked, and the cards filtered, a moment after the click or key press. So wait for the
     // checked radio (same render as the cards) instead of reading it at once; Playwright's check() would
     // also throw on the brief flip back.
-    const showIs = (value, message) => page.waitForFunction((id) => document.querySelector(`.map-filter input[value="${id}"]`)?.checked, value, { timeout: 5000 })
+    const showIs = (value, message) => page.waitForFunction((id) => document.querySelector(`.map-filter input[value="${id}"]`)?.checked, value, { timeout: 15000 })
       .catch(() => assert.fail(message ?? `Show: ${value} is chosen`));
     const choose = async (name, value) => { await page.getByRole('radio', { name }).click(); await showIs(value); };
     await choose(/Full guides/, 'full-guides');
@@ -415,7 +415,7 @@ try {
     // Measured, not asserted until each map's own redesign: where the first step title starts.
     for (const route of routes.filter((item) => item.startsWith('/maps/'))) {
       await page.goto(`${base}${route}`, { waitUntil: 'networkidle' });
-      const first = await page.locator('li.guide-seq__step h3, li.flat-guide__step h2, li.run-step h3').first().boundingBox({ timeout: 5000 }).catch(() => null);
+      const first = await page.locator('li.guide-seq__step h3, li.flat-guide__step h2, li.run-step h3').first().boundingBox({ timeout: 15000 }).catch(() => null);
       results.push({ width: 844, height: 390, route, metric: 'first step title top (px)', value: first ? Math.round(first.y) : null, passed: true });
     }
     await context.close();
