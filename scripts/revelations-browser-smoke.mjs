@@ -148,6 +148,9 @@ try {
     await selectStep('symbols');
     assert.equal(await page.locator('#symbols').getByLabel('1st').inputValue(), 'skull', 'Kronorium symbol note survives a reload');
 
+    // The reload kept #symbols, so the guide lands on that step once fonts load; let that finish first,
+    // or a slow runner's late landing undoes the scroll to the top (CI TimeoutError on a28a3c1).
+    await page.evaluate(() => document.fonts.ready.then(() => new Promise((done) => requestAnimationFrame(() => requestAnimationFrame(done)))));
     await page.evaluate(() => {
       document.activeElement?.blur();
       window.scrollTo({ top: 0, left: 0, behavior: 'instant' });

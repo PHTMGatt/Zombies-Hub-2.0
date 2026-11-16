@@ -208,8 +208,15 @@ export default function GuideSteps({ label, steps, footer, collapsibleReferences
       if (overlap > 0) window.scrollBy({ top: -overlap, behavior: 'instant' });
     };
     land();
+    // Someone who starts scrolling or typing before the fonts arrive has moved on: don't yank them back.
+    const stop = () => { cancelled = true; };
+    const inputs = ['wheel', 'touchstart', 'keydown', 'pointerdown'];
+    inputs.forEach((type) => window.addEventListener(type, stop, { once: true, passive: true }));
     (document.fonts?.ready ?? Promise.resolve()).then(() => requestAnimationFrame(land));
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+      inputs.forEach((type) => window.removeEventListener(type, stop));
+    };
   }, [hash, search, steps, compactAccordion]);
 
   return (
