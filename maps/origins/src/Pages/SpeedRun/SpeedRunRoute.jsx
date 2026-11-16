@@ -105,11 +105,11 @@ export default function SpeedRunRoute() {
           )}
 
           <div className="speedrun-panel__nav">
-            <button type="button" aria-label="Previous checkpoint" disabled={!previous} onClick={() => walk(index - 1)}>
+            <button type="button" aria-label={previous ? `Previous checkpoint: ${previous.title}` : 'Previous checkpoint'} disabled={!previous} onClick={() => walk(index - 1)}>
               <small>← Previous</small>
               <span>{previous ? previous.title : 'Start of the run'}</span>
             </button>
-            <button type="button" aria-label="Next checkpoint" disabled={!next} onClick={() => walk(index + 1)}>
+            <button type="button" aria-label={next ? `Next checkpoint: ${next.title}` : 'Next checkpoint'} disabled={!next} onClick={() => walk(index + 1)}>
               <small>Next →</small>
               <span>{next ? next.title : 'End of the route'}</span>
             </button>

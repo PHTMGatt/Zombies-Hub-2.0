@@ -104,6 +104,8 @@ try {
     const checkpoint = () => page.locator('.speedrun-panel__meta > span').textContent();
     for (let n = 2; n <= 8; n += 1) {
       const next = page.getByRole('button', { name: 'Next checkpoint' });
+      const upcoming = await page.locator('.speedrun-checkpoint strong').nth(n - 1).textContent();
+      assert.equal(await next.getAttribute('aria-label'), `Next checkpoint: ${upcoming}`, `Next names checkpoint ${n} as its destination`);
       await next.evaluate((el) => el.scrollIntoView({ block: 'end', behavior: 'instant' }));
       await next.focus();
       await page.keyboard.press('Enter');
