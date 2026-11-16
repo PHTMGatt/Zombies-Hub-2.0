@@ -133,3 +133,13 @@
     border-radius: 8px;
   }
 }
+
+/* Calm pass: one column, 16px+, cards become a divided list (no box-in-box). */
+.gorod-trophy-grid, .gorod-challenge-grid { grid-template-columns: minmax(0, 1fr) !important; gap: 0 !important; }
+.gorod-reference-card { border: 0; border-top: 1px solid rgba(255, 112, 77, 0.22); border-radius: 0; background: none; padding-left: 0; padding-right: 0; }
+.gorod-reference-number { width: 32px; height: 32px; font-size: 1rem; }
+.gorod-reference-card h3 { font-size: 1.1875rem; }
+.gorod-reference-card p { font-size: 1.0625rem; line-height: 1.5; color: #ecdcd9; }
+.gorod-reference-tip { font-size: 1rem; }
+.gorod-reference-toggle { background: none; border: 0; }
+.gorod-reference-toggle button { min-height: 44px; font-size: 1rem; }

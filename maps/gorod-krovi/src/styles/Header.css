@@ -209,3 +209,16 @@
     top: auto;
   }
 }
+
+/* Calm pass: readable tabs, 44px taps. */
+.gorod-module .gorod-nav-link { min-height: 44px; display: inline-flex; align-items: center; font-size: 1rem; letter-spacing: 0; }
+.gorod-module .gorod-header__subtitle { font-size: 1rem; }
+/* Tab pages sit on one dark panel so text never rides on the artwork. */
+.gorod-module .gorod-content > :not(.gorod-main-flat) {
+  width: min(100% - 1.5rem, 56rem);
+  margin: 1rem auto 2rem;
+  padding: 0.75rem clamp(1rem, 3vw, 2rem) 1.5rem;
+  border-radius: 12px;
+  background: rgba(16, 6, 6, 0.93);
+}
+.gorod-module .gorod-content .zh-guide-hero { background: none; border: 0; }
