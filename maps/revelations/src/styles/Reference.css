@@ -233,3 +233,20 @@
 .revelations-module .rev-shots__fig { margin: 0; }
 .revelations-module .rev-shots__fig img { display: block; width: 100%; height: auto; border-radius: 6px; }
 .revelations-module .rev-shots__fig figcaption { margin-top: 0.35rem; font-size: 1rem; color: var(--rev-text); }
+
+/* Calm pass (2026-11-16): 16px+, no micro-caps, option list as plain divided rows. */
+.revelations-module .rev-kicker { font-size: 1rem; letter-spacing: 0; text-transform: none; font-weight: 700; }
+.revelations-module .rev-section-intro { font-size: 1.0625rem; line-height: 1.5; }
+.revelations-module .rev-panel-count { font-size: 1rem; }
+.revelations-module .rev-option__title { font-size: 1.125rem; }
+.revelations-module .rev-option__meta, .revelations-module .rev-option__play { font-size: 1rem; }
+.revelations-module .rev-video__hint, .revelations-module .rev-video__external { font-size: 1rem; }
+.revelations-module .rev-isle { font-size: 0.95rem; }
+.revelations-module .rev-isle__name, .revelations-module .rev-isles__caption, .revelations-module .rev-area .rev-isles__caption { font-size: 0.95rem; }
+.revelations-module .rev-option { min-height: 48px; }
+.revelations-module :is(.rev-section-head, .rev-area__head, .rev-panel-head) .rev-kicker,
+.revelations-module .rev-shell .rev-kicker { font-size: 1rem !important; letter-spacing: 0 !important; text-transform: none !important; }
+.revelations-module .rev-video__external { font-size: 1rem !important; min-height: 44px; }
+/* One panel (the shell): the side panel and the media caption sit on it without their own boxes. */
+.revelations-module .rev-workspace__panel { border: 0; background: none; box-shadow: none; padding-left: 0; padding-right: 0; }
+.revelations-module .rev-video__bar span, .revelations-module .rev-video__bar p { display: block; -webkit-line-clamp: unset; overflow: visible; }

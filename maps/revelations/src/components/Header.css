@@ -243,3 +243,6 @@
     }
   }
 }
+
+/* Calm pass: readable tabs, 44px taps. */
+.revelations-module .rev-nav-link { min-height: 44px; font-size: 1rem; letter-spacing: 0; text-transform: none; }
