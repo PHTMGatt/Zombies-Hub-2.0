@@ -74,3 +74,9 @@
   background-image: none !important;
   border-color: var(--map-tab-accent) !important;
 }
+
+/* Phones: only the hub header stays pinned. A second pinned map header ate ~20% of the screen on Origins and Gorod. */
+@media (max-width: 700px) {
+  .origins-module .site-header,
+  .gorod-module .gorod-header { position: static !important; }
+}

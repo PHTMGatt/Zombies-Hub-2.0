@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { IoSearchOutline } from 'react-icons/io5';
 import mapData from '../data/mapData';
 import MapCard from '../components/MapCard';
+import { getDedicatedGuideRoute } from '../data/dedicatedGuides';
 import MapFilter, { useMapFilter } from '../components/MapFilter';
 import { applyFilter, filterCounts, MAP_FILTERS } from '../data/mapFilters';
 import '../styles/pageStyles/AllMaps.css';
@@ -75,7 +76,7 @@ export default function AllMaps() {
 
               <div className="maps-grid">
                 {section.map(map => (
-                  <MapCard key={`${map.game}-${map.slug}`} map={map} />
+                  <MapCard key={`${map.game}-${map.slug}`} map={map} to={getDedicatedGuideRoute(map.slug) ?? undefined} />
                 ))}
               </div>
             </section>
