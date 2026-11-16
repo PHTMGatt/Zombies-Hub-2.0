@@ -102,3 +102,9 @@
 .map-details-guide-btn:hover { border-color: #79cfff; background: rgba(121, 207, 255, 0.14); }
 @media (max-width: 520px) { .map-details-guides { grid-template-columns: minmax(0, 1fr); } }
 .map-details-actions a { min-height: 44px; display: inline-flex; align-items: center; }
+/* Ready guides are the obvious action; links below stay quiet. */
+.map-details-guide-btn.is-ready { background: #79cfff; border-color: #79cfff; color: #06121c; }
+.map-details-guide-btn.is-ready span { color: #0b2233; }
+.map-details-guide-btn.is-ready:hover { background: #a7e0ff; }
+.map-details-wrapper .map-details-actions a { background: none; border: 0; color: #79cfff; padding: 0 0.75rem; }
+.map-details-wrapper .map-details-actions a:hover { text-decoration: underline; }
