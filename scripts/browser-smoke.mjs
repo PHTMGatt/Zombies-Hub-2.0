@@ -57,6 +57,18 @@ try {
       const response = await page.goto(`${base}${route}`, { waitUntil: 'networkidle' });
       assert(response?.ok(), `${route} returned ${response?.status()}`);
       assert.equal(errors.length, 0, `${route} page errors: ${errors.join('; ')}`);
+      // The head follows the route: one description, OG copies of title and description, a canonical URL.
+      const head = await page.evaluate(() => ({
+        title: document.title,
+        descriptions: [...document.querySelectorAll('meta[name="description"]')].map((meta) => meta.content),
+        ogTitle: document.querySelector('meta[property="og:title"]')?.content,
+        ogDescription: document.querySelector('meta[property="og:description"]')?.content,
+        canonical: document.querySelector('link[rel="canonical"]')?.href,
+      }));
+      assert.equal(head.descriptions.length, 1, `${route} has exactly one meta description`);
+      assert.equal(head.ogTitle, head.title, `${route} og:title matches the page title`);
+      assert.equal(head.ogDescription, head.descriptions[0], `${route} og:description matches the description`);
+      assert.equal(head.canonical, new URL(route, base).href, `${route} canonical is its own URL`);
       if (route.startsWith('/maps/')) {
         // Short guides must still pin the map footer to the bottom edge, with no dead band beneath it.
         const gapBelowFooter = await page.evaluate(() => {
@@ -76,6 +88,26 @@ try {
       }
       results.push({ width, route, passed: true });
     }
+
+    // Card art loads as cards near the screen, not all 30 covers up front; every card's art still loads.
+    await page.goto(`${base}/allmaps`, { waitUntil: 'networkidle' });
+    const cardArt = () => page.locator('.map-card .bg-main').evaluateAll((layers) => layers.map((layer) => layer.style.backgroundImage));
+    let art = await cardArt();
+    assert(art[0].startsWith('url('), 'the first map card shows its art');
+    assert.equal(art.at(-1), '', 'the last map card waits to load its art');
+    for (const card of await page.locator('.map-card').all()) await card.scrollIntoViewIfNeeded();
+    await page.waitForFunction(() => [...document.querySelectorAll('.map-card .bg-main')].every((layer) => layer.style.backgroundImage.startsWith('url(')),
+      null, { timeout: 5000 }).catch(() => {});
+    art = await cardArt();
+    const missingArt = art.filter((value) => !value.startsWith('url(')).length;
+    assert.equal(missingArt, 0, `${missingArt} map cards never loaded their art`);
+    const brokenArt = await page.evaluate(async (urls) => (await Promise.all(urls.map((url) => new Promise((done) => {
+      const image = new Image();
+      image.onload = () => done(null);
+      image.onerror = () => done(url);
+      image.src = url;
+    })))).filter(Boolean), [...new Set(art.map((value) => value.slice(5, -2)))]);
+    assert.deepEqual(brokenArt, [], `map card art fails to load: ${brokenArt.join(', ')}`);
 
     await page.goto(`${base}/allmaps`);
     await page.getByRole('searchbox').fill('Origins');

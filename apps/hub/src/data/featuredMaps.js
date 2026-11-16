@@ -1,10 +1,10 @@
-import AllMapsImg        from '../assets/images/Featured/AllMaps.jpg';
+import AllMapsImg        from '../assets/images/Featured/AllMaps.webp';
 import OriginsImg        from '../assets/images/Featured/Origins.webp';
-import RevelationsImg    from '../assets/images/Featured/Rev.jpg';
-import MobOfTheDeadImg   from '../assets/images/Featured/MOTD.jpg';
+import RevelationsImg    from '../assets/images/Featured/Rev.webp';
+import MobOfTheDeadImg   from '../assets/images/Featured/MOTD.webp';
 import DerEisendracheImg from '../assets/images/Featured/DE.webp';
 import GorodKroviImg     from '../assets/images/Featured/GK.webp';
-import SideEEImg         from '../assets/images/Featured/SideEE.jpg';
+import SideEEImg         from '../assets/images/Featured/SideEE.webp';
 import { getDedicatedGuideRoute } from './dedicatedGuides';
 
 const featuredMaps = [

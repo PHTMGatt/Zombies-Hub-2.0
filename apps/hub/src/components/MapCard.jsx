@@ -1,7 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { IoArrowForward } from 'react-icons/io5';
 import '../styles/compStyles/MapCard.css';
+
+// Card art is a CSS background, which the browser never lazy-loads: a catalog of 30 cards fetched every
+// cover up front. A card attaches its art only once it is within a screen or so of the viewport.
+function useNearViewport() {
+  const ref = useRef(null);
+  const [near, setNear] = useState(() => typeof IntersectionObserver === 'undefined');
+  useEffect(() => {
+    if (near || !ref.current) return undefined;
+    const observer = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) {
+        setNear(true);
+        observer.disconnect();
+      }
+    }, { rootMargin: '600px 0px' });
+    observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [near]);
+  return [ref, near];
+}
 
 export default function MapCard({
   map,
@@ -25,10 +44,12 @@ export default function MapCard({
 
   const [cardHover, setCardHover] = useState(false);
   const [dlcHover, setDlcHover] = useState(false);
+  const [cardRef, nearViewport] = useNearViewport();
 
   let bg = coverImage;
   if (cardHover && layoutImage) bg = layoutImage;
   if (dlcHover && hoverImage) bg = hoverImage;
+  const artStyle = nearViewport && bg ? { backgroundImage: `url(${bg})` } : undefined;
 
   const Wrapper = disableLink ? 'div' : Link;
   const search = game ? `?game=${encodeURIComponent(game)}` : '';
@@ -44,6 +65,7 @@ export default function MapCard({
   return (
     <Wrapper
       {...wrapperProps}
+      ref={cardRef}
       className={`map-card ${isPreview ? 'preview-card' : 'lore-card'}`}
       onMouseEnter={() => setCardHover(true)}
       onMouseLeave={() => {
@@ -56,8 +78,8 @@ export default function MapCard({
         setDlcHover(false);
       }}
     >
-      <div className="bg-blur" style={{ backgroundImage: `url(${bg})` }} aria-hidden="true" />
-      <div className="bg-main" style={{ backgroundImage: `url(${bg})` }} aria-hidden="true" />
+      <div className="bg-blur" style={artStyle} aria-hidden="true" />
+      <div className="bg-main" style={artStyle} aria-hidden="true" />
 
       <div className="map-card__meta" aria-hidden="true">
         {game && <span className="map-game-chip">{game.replace('Black Ops ', 'BO')}</span>}
