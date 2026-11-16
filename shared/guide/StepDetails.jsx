@@ -45,7 +45,7 @@ export default function StepDetails({ steps, guidePath, title = 'Step details' }
     <div className="step-details">
       <h2 className="step-details__title">{title}</h2>
       {steps.map((step, i) => (
-        <section className="step-details__step" id={stepAnchor(i)} key={step.id} aria-labelledby={`${stepAnchor(i)}-h`}>
+        <section className="step-details__step" id={stepAnchor(i)} data-step={step.id} key={step.id} aria-labelledby={`${stepAnchor(i)}-h`}>
           <h3 id={`${stepAnchor(i)}-h`}><span className="step-details__num">{String(i + 1).padStart(2, '0')}</span>{step.title}</h3>
           {step.goal && <p className="step-details__goal">{step.goal}</p>}
           {step.critical?.map((t) => <p className="step-details__warn" key={t}><strong>Watch out:</strong> {t}</p>)}

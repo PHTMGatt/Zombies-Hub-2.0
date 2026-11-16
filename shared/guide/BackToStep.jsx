@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { stepOrigin } from './stepLinks';
+import './back-to-step.css';
 
 /*
  * "Back to step N" on a tab page opened from a main-guide step (?from=<step id>). Renders nothing when

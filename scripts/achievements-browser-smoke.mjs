@@ -52,8 +52,13 @@ try {
     await page.reload({ waitUntil: 'networkidle' });
     const button = page.getByRole('button', { name: COMPLETE });
     assert.equal(await button.count(), 1, 'one completion action');
-    assert(await page.locator('.guide-seq__footer').evaluate((footer) => footer === footer.parentElement.lastElementChild), 'completion action follows the last step');
-    assert(await button.evaluate((el) => el.closest('.guide-seq__footer') !== null), 'completion action lives in the guide footer');
+    // GuideSteps puts it in .guide-seq__footer after the steps; the flat guide (FlatGuide) right after its list.
+    assert(await button.evaluate((el) => {
+      const footer = el.closest('.guide-seq__footer');
+      if (footer) return footer === footer.parentElement.lastElementChild;
+      const flat = el.closest('.flat-guide');
+      return Boolean(flat) && el === flat.lastElementChild && el.previousElementSibling?.matches('.flat-guide__list');
+    }), 'completion action is the last thing in the guide, after the last step');
     const box = await button.boundingBox();
     assert(box.height >= 44, `completion action is a usable tap target (${box.height}px)`);
     assert.notEqual(await button.evaluate((el) => getComputedStyle(el).position), 'sticky', 'completion action is not pinned');
@@ -65,7 +70,7 @@ try {
     assert.match(toastText, /For The Good Of All/);
     assert(await page.evaluate(() => window.__chimes) > 0, 'chime plays with sound on');
     assert((await unlocked(page))['revelations/main'], 'revelations/main recorded');
-    await page.locator('.guide-seq__footer').getByText('Completed').waitFor();
+    await page.locator(':is(.guide-seq__footer, .flat-guide)').getByText('Completed').waitFor();
     assert.equal(await page.getByRole('button', { name: COMPLETE }).count(), 0, 'the button is replaced by a quiet note');
     assert.deepEqual(await pageShape(page), before, 'completing changes no steps and no navigation');
     check(`${label}: completion action records the achievement and changes nothing else`);
@@ -178,7 +183,7 @@ try {
 
     // Old mode keys are harmless.
     await page.goto(`${base}/maps/origins`, { waitUntil: 'networkidle' });
-    assert.equal(await page.locator('li.guide-seq__step').count(), 11, 'Origins renders its sequence with old mode keys present');
+    assert.equal(await page.locator('li.guide-seq__step, li.flat-guide__step').count(), 11, 'Origins renders its sequence with old mode keys present');
     assert.deepEqual(errors, [], `page errors: ${errors.join('; ')}`);
     check('old guide-mode / origins-depth keys are harmless');
     await context.close();
@@ -195,7 +200,7 @@ try {
     page.on('pageerror', (error) => errors.push(error.message));
     await page.goto(MOB, { waitUntil: 'networkidle' });
     await page.getByRole('button', { name: COMPLETE }).click();
-    await page.locator('.guide-seq__footer').getByText('Completed').waitFor();
+    await page.locator(':is(.guide-seq__footer, .flat-guide)').getByText('Completed').waitFor();
     assert.deepEqual(errors, [], `page errors with blocked storage: ${errors.join('; ')}`);
     check('blocked storage: completion shows as earned, no errors');
     await context.close();

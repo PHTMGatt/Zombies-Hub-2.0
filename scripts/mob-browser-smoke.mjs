@@ -1,4 +1,5 @@
 import { chromium } from 'playwright';
+import { stepDetails, visibleTitle } from './smoke-helpers.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 
@@ -87,12 +88,14 @@ try {
     // The guide is one sequence: 12 steps in order, the codes and audio trail readable without any clicks.
     errors.length = 0;
     await page.goto(`${base}/maps/mob-of-the-dead`, { waitUntil: 'networkidle' });
-    await page.getByRole('heading', { name: 'Pop Goes the Weasel', level: 2 }).waitFor();
-    assert.equal(await page.locator('li.guide-seq__step').count(), 12, 'Mob guide should list 12 steps');
-    assert.equal(await page.locator('#codes h3').innerText(), 'Afterlife codes');
-    const codesText = await page.locator('#codes').innerText();
+    await page.locator('li.guide-seq__step, li.flat-guide__step').first().waitFor();
+    assert.equal(await page.locator('li.guide-seq__step, li.flat-guide__step').count(), 12, 'Mob guide should list 12 steps');
+    assert.equal(await visibleTitle(page.locator('#codes h3')), 'Afterlife codes');
+    // The codes and the audio trail live on the Step details tab (flat main guide).
+    const codesText = await (await stepDetails(page, base, '/maps/mob-of-the-dead', 'codes')).innerText();
     for (const code of ['101', '386', '872', '481']) assert.match(codesText, new RegExp(`\\b${code}\\b`), `Afterlife codes step shows ${code}`);
-    assert.match(await page.locator('#audio').innerText(), /walkway, Warden.s Office ↔ Cafeteria/i);
+    assert.match(await (await stepDetails(page, base, '/maps/mob-of-the-dead', 'audio')).innerText(), /walkway, Warden.s Office ↔ Cafeteria/i);
+    await page.goto(`${base}/maps/mob-of-the-dead`, { waitUntil: 'networkidle' });
     assert.equal(errors.length, 0, `Mob guide page errors: ${errors.join('; ')}`);
     await assertNoHorizontalOverflow(page, '/maps/mob-of-the-dead');
     results.push({ width, route: '/maps/mob-of-the-dead (step sequence)', passed: true });

@@ -8,6 +8,7 @@ import { routeDescription, routeTitle } from './routeMetadata';
 import RouteBoundary from '../../../../shared/ui/RouteBoundary';
 import AchievementToast from '../../../../shared/achievements/AchievementToast';
 import { backfillLegacyMainAchievements } from '../../../../shared/achievements/achievements';
+import { useTabSectionLanding } from '../../../../shared/guide/useHashLanding';
 
 // Keeps the head in step with the route: search engines that run JS and in-app link previews read these.
 function setHeadTag(tag, key, value, attribute = 'content') {
@@ -50,6 +51,7 @@ function RootLayout() {
   const mainRef = useRef(null);
   const previousPathRef = useRef(pathname);
   const [routeLoading, setRouteLoading] = useState(false);
+  useTabSectionLanding();
 
   // Links from before step anchors (/maps/<map>?ref=<stepId>) land on the same step.
   useLayoutEffect(() => {

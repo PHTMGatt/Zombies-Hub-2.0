@@ -48,3 +48,16 @@ export async function startPreview(port, outDir = process.env.SMOKE_DIST || 'dis
   });
   return { base, stop };
 }
+
+// Flat main guides: a step's detail lives on the map's Step details tab, one section per step
+// (section[data-step=<step id>]). Opens that tab (if needed) and returns the step's section.
+export async function stepDetails(page, base, mapRoute, stepId) {
+  const url = `${base}${mapRoute}/step-details`;
+  if (!page.url().startsWith(url)) await page.goto(url, { waitUntil: 'networkidle' });
+  const section = page.locator(`section.step-details__step[data-step="${stepId}"]`);
+  await section.waitFor();
+  return section;
+}
+
+// Flat guide titles start with a screen-reader-only "Step N:"; this is the visible title.
+export const visibleTitle = async (locator) => (await locator.innerText()).replace(/^Step \d+:\s*/, '');

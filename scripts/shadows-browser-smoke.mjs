@@ -1,4 +1,5 @@
 import { chromium } from 'playwright';
+import { stepDetails } from './smoke-helpers.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 
@@ -38,32 +39,37 @@ try {
     const response = await page.goto(`${base}${route}`, { waitUntil: 'networkidle' });
     assert(response?.ok(), `${route} returned ${response?.status()}`);
     assert.equal(errors.length, 0, `${route} page errors: ${errors.join('; ')}`);
-    await page.getByRole('heading', { name: 'Shadows of Evil', level: 2 }).waitFor();
+    // Flat main guide: no Easter Egg heading on the list; the name stays in the map header.
+    await page.locator('li.flat-guide__step').first().waitFor();
+    assert.match(await page.locator('body').innerText(), /Shadows of Evil/, 'the Easter Egg name is still on the page');
     await page.evaluate(() => {
       ['zh-guide-progress:shadows-of-evil', 'zh-soe-train-symbols', 'zh-soe-character'].forEach((key) => localStorage.removeItem(key));
     });
     await page.reload({ waitUntil: 'networkidle' });
-    assert.match(await page.locator('.soe-run-header').innerText(), /full ending require four players/i);
-    assert.equal(await page.locator('li.guide-seq__step').count(), 7, 'Shadows guide should list 7 steps');
+    assert.equal(await page.locator('li.guide-seq__step, li.flat-guide__step').count(), 7, 'Shadows guide should list 7 steps');
 
+    // Flat main guide: the detail and the per-game tools live on the Step details tab.
+    const ritualsDetails = await stepDetails(page, base, route, 'rituals');
+    assert.match(await page.locator('body').innerText(), /full ending require four players/i);
     // Step 1: the train rides that give the sword symbols, and a notepad for them that persists.
-    let text = await page.locator('#rituals').innerText();
+    let text = await ritualsDetails.innerText();
     assert.match(text, /Waterfront\s*→\s*Footlight/i);
     assert.match(text, /Footlight\s*→\s*Canals/i);
-    await page.locator('#rituals').getByLabel('Symbol 1').fill('eye');
+    await ritualsDetails.getByLabel('Symbol 1').fill('eye');
     await page.reload({ waitUntil: 'networkidle' });
-    assert.equal(await page.locator('#rituals').getByLabel('Symbol 1').inputValue(), 'eye', 'train symbol note survives a reload');
+    assert.equal(await (await stepDetails(page, base, route, 'rituals')).getByLabel('Symbol 1').inputValue(), 'eye', 'train symbol note survives a reload');
 
     // Step 4: pick your character, get your Keeper room.
-    await page.locator('#upgrade').getByRole('button', { name: 'Jackie Vincent' }).click();
-    assert.match(await page.locator('#upgrade .pick-tool__answer').innerText(), /Ruby Rabbit/);
+    const upgrade = await stepDetails(page, base, route, 'upgrade');
+    await upgrade.getByRole('button', { name: 'Jackie Vincent' }).click();
+    assert.match(await upgrade.locator('.pick-tool__answer').innerText(), /Ruby Rabbit/);
 
     // Finale: team setup and the train-caller rule are on the step; the full how-to is under "More on this step".
-    text = await page.locator('#finale').innerText();
+    text = await (await stepDetails(page, base, route, 'finale')).innerText();
     assert.match(text, /Team setup/i);
     assert.match(text, /train caller/i);
-    await page.locator('#finale .guide-seq__more > summary').click();
-    assert.match(await page.locator('#finale').innerText(), /fourth player waits near the center Gateworm/i);
+    assert.match(text, /fourth player waits near the center Gateworm/i);
+    await page.goto(`${base}${route}`, { waitUntil: 'networkidle' });
     assert.equal(errors.length, 0, `${route} guide errors: ${errors.join('; ')}`);
     await assertImagesLoaded(page, route);
     await assertNoHorizontalOverflow(page, route);
@@ -77,16 +83,18 @@ try {
       localStorage.setItem('zh-soe-train-symbols', JSON.stringify(['stale', '', '']));
       localStorage.setItem('zh-soe-character', JSON.stringify('floyd'));
     });
-    await page.reload({ waitUntil: 'networkidle' });
-    assert.equal(await page.locator('#rituals').getByLabel('Symbol 1').inputValue(), 'stale', 'stored note loads before storage becomes read-only');
+    await page.goto(`${base}${route}/step-details`, { waitUntil: 'networkidle' });
+    const blockedRituals = await stepDetails(page, base, route, 'rituals');
+    assert.equal(await blockedRituals.getByLabel('Symbol 1').inputValue(), 'stale', 'stored note loads before storage becomes read-only');
     await page.evaluate(() => {
       Storage.prototype.setItem = () => { throw new DOMException('Storage blocked', 'SecurityError'); };
     });
-    await page.locator('#rituals').getByLabel('Symbol 1').fill('eye');
-    assert.equal(await page.locator('#rituals').getByLabel('Symbol 1').inputValue(), 'eye', 'blocked storage keeps the latest note for this session');
+    await blockedRituals.getByLabel('Symbol 1').fill('eye');
+    assert.equal(await blockedRituals.getByLabel('Symbol 1').inputValue(), 'eye', 'blocked storage keeps the latest note for this session');
 
-    await page.locator('#upgrade').getByRole('button', { name: 'Jackie Vincent' }).click();
-    assert.match(await page.locator('#upgrade .pick-tool__answer').innerText(), /Ruby Rabbit/, 'blocked storage keeps the latest picker choice for this session');
+    const blockedUpgrade = await stepDetails(page, base, route, 'upgrade');
+    await blockedUpgrade.getByRole('button', { name: 'Jackie Vincent' }).click();
+    assert.match(await blockedUpgrade.locator('.pick-tool__answer').innerText(), /Ruby Rabbit/, 'blocked storage keeps the latest picker choice for this session');
     results.push({ width, route: `${route} (blocked storage tools)`, passed: true });
 
     errors.length = 0;

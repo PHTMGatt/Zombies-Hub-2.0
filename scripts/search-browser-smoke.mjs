@@ -46,8 +46,12 @@ try {
     await page.getByRole('searchbox').press('Enter');
     await page.waitForURL('**/maps/gorod-krovi#valves');
     await assertStepInView('valves');
-    assert.equal(await page.locator('#valves .gorod-valve-fields select').count(), 2, 'the solver is in the valve step');
-    results.push(`${viewport.name}: "gorod valves" lands on the valve step with its solver`);
+    // Flat main guide: the valve step links to the Valve Solver tab, where the solver lives.
+    await page.locator('#valves a[data-step-link][href*="/maps/gorod-krovi/valves"]').first().click();
+    await page.waitForURL('**/maps/gorod-krovi/valves**');
+    await page.locator('.gorod-valve-fields select').first().waitFor();
+    assert.equal(await page.locator('.gorod-valve-fields select').count(), 2, 'the valve step links to its solver');
+    results.push(`${viewport.name}: "gorod valves" lands on the valve step, one tap from its solver`);
 
     // Home search box: other maps, player phrasing.
     for (const [query, map, id, title] of [
@@ -60,7 +64,8 @@ try {
       await page.locator('.home-search .zh-search__results a', { hasText: /./ }).first().click();
       await page.waitForURL(`**${map}`);
       await assertStepInView(id);
-      assert.equal(await page.locator(`#${id} h3`).innerText(), title);
+      // The flat guide's titles start with a screen-reader-only "Step N:".
+      assert.equal((await page.locator(`#${id} h3`).innerText()).replace(/^Step \d+:\s*/, ''), title);
       results.push(`${viewport.name}: "${query}" → ${title}`);
     }
 

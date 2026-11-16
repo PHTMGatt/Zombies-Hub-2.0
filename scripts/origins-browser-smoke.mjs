@@ -15,13 +15,14 @@ const base = process.env.SMOKE_BASE_URL || 'http://127.0.0.1:4173';
 const ROUTES = [
   ['/maps/origins', 'UI Main Guide'],
   ['/maps/origins/og', 'OG'],
+  ['/maps/origins/step-details', 'Step details'],
   ['/maps/origins/ice-staff', 'Ice Staff'],
   ['/maps/origins/fire-staff', 'Fire Staff'],
   ['/maps/origins/wind-staff', 'Wind Staff'],
   ['/maps/origins/lightning-staff', 'Lightning Staff'],
   ['/maps/origins/speed-run', 'Speed Run'],
 ];
-const TABS = ['UI Main Guide', 'OG', 'Ice Staff', 'Fire Staff', 'Wind Staff', 'Lightning Staff', 'Speed Run'];
+const TABS = ['UI Main Guide', 'OG', 'Step details', 'Ice Staff', 'Fire Staff', 'Wind Staff', 'Lightning Staff', 'Speed Run'];
 const results = [];
 
 const assertNoHorizontalOverflow = async (page, label) => {
@@ -202,12 +203,22 @@ try {
         // Pinned beside the long column, Upgrade stays clear of the pinned chrome and whole on screen.
         await page.evaluate(() => window.scrollTo(0, 600));
         const side = await pinnedPanel(page, '.staff-page__side');
-        if (side.sticky) {
+        // Only a side panel that sits beside the main column pins (the calm pass is one column: no pin).
+        const besideMain = await page.evaluate(() => document.querySelector('.staff-page__side').getBoundingClientRect().left
+          >= document.querySelector('.staff-page__main').getBoundingClientRect().right - 1);
+        if (side.sticky && besideMain) {
           assert(side.heading >= side.pinned, `${route}: pinned Upgrade title at ${Math.round(side.heading)}px, under ${Math.round(side.pinned)}px of chrome`);
           assert(side.bottom <= height, `${route}: pinned Upgrade runs to ${Math.round(side.bottom)}px on a ${height}px screen`);
         }
       }
-      if (name === 'phone') assert(chart.width >= 340, `${route}: chart is ${Math.round(chart.width)}px wide on phones`);
+      if (name === 'phone') {
+        // The chart fills the staff page's reading column (its content box), whatever the page padding.
+        const column = await page.locator('.staff-page').evaluate((el) => {
+          const cs = getComputedStyle(el);
+          return el.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+        });
+        assert(chart.width >= column - 2 && chart.width >= 320, `${route}: chart is ${Math.round(chart.width)}px wide on phones (column ${Math.round(column)}px)`);
+      }
       if (name === 'landscape') {
         // The chart follows its steps, so it is checked where it sits: whole on the short screen.
         await page.evaluate(() => document.querySelector('#puzzle .zoom-image').scrollIntoView({ block: 'start', behavior: 'instant' }));
@@ -228,13 +239,17 @@ try {
     assert.match(await anyOrder.innerText(), /three gravestones/, 'the "Any order" group holds the gravestone line');
     assert.match(await page.locator('#puzzle').innerText(), /Follow the order the game shows/, 'Ice puzzle explains the game-dependent order');
 
-    // Lightning: chords, the switch board (its only home), the Speed Run link and the Electrical Panel.
+    // Lightning: chords, the switches panel (its only home) and the Speed Run link.
     await page.goto(`${base}/maps/origins/lightning-staff#switches`, { waitUntil: 'networkidle' });
     assert.equal(await page.locator('#switches .switch-card .switch-dial').count(), 7, 'Lightning page has the seven switch dials');
     const lightningText = await page.locator('#puzzle').innerText();
     for (const chord of ['1-3-6', '3-5-7', '2-4-6']) assert(lightningText.includes(chord), `Lightning chord ${chord}`);
     assert.equal(await page.locator('a[href="/maps/origins/speed-run/lightning"]').count(), 1, 'Lightning page links to the Speed Run switch route');
-    assert.equal(await page.getByRole('button', { name: /Electrical Panel/ }).count(), 1, 'Electrical Panel present');
+    // One compact switches panel (036e3f8): final positions and practice in one place; the old Electrical Panel is gone.
+    for (const mode of ['Final positions', 'Practice turns']) {
+      assert.equal(await page.locator('#switches').getByRole('button', { name: mode }).count(), 1, `the switches panel offers "${mode}"`);
+    }
+    assert.equal(await page.getByRole('button', { name: /Electrical Panel/ }).count(), 0, 'the separate Electrical Panel stays removed');
     const switchesTop = await page.locator('#switches').evaluate((el) => el.getBoundingClientRect().top);
     assert(switchesTop >= 0 && switchesTop < height * 0.6, `#switches deep link lands near the top (${Math.round(switchesTop)}px)`);
     // Main Guide deep links (#rain-fire) are main's page now; guide-sequence-browser-smoke.mjs checks its landing.

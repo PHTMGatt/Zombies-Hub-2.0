@@ -2433,5 +2433,23 @@
     ],
     "reason": "Kicker of the Main Guide header bar (no guide fact); the flat main guide has no header bar.",
     "spec": "Bryen 2026-11-16 flat main-guide spec"
+  },
+  {
+    "text": "⚡",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/lightning-staff"
+    ],
+    "reason": "Title of the separate Electrical Panel box, removed in 036e3f8 when it merged into the one switches panel (\"Final positions\" / \"Practice turns\"). The panel itself stays: solving every switch in Practice turns still shows \"Electrical Panel solved\" and records the \"Electrical Panel Solved\" achievement.",
+    "spec": "§4.4"
+  },
+  {
+    "text": "Electrical Panel",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/lightning-staff"
+    ],
+    "reason": "Title of the separate Electrical Panel box, removed in 036e3f8 when it merged into the one switches panel (\"Final positions\" / \"Practice turns\"). The panel itself stays: solving every switch in Practice turns still shows \"Electrical Panel solved\" and records the \"Electrical Panel Solved\" achievement.",
+    "spec": "§4.4"
   }
 ]

@@ -1,4 +1,5 @@
 import { chromium } from 'playwright';
+import { stepDetails, visibleTitle } from './smoke-helpers.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 
@@ -39,7 +40,9 @@ try {
     const mainRoute = '/maps/zetsubou-no-shima';
     let response = await page.goto(`${base}${mainRoute}`, { waitUntil: 'domcontentloaded' });
     assert(response?.ok(), `${mainRoute} returned ${response?.status()}`);
-    await page.getByRole('heading', { name: 'Seeds of Doubt', level: 2 }).waitFor();
+    // Flat main guide: no Easter Egg heading on the list; the name stays in the map header.
+    await page.locator('li.flat-guide__step').first().waitFor();
+    assert.match(await page.locator('body').innerText(), /Seeds of Doubt/, 'the Easter Egg name is still on the page');
     assert.equal(errors.length, 0, `${mainRoute} page errors: ${errors.join('; ')}`);
     const mainText = await page.locator('.zets-main-guide').innerText();
     assert.match(mainText, /every player/i);
@@ -50,10 +53,12 @@ try {
 
     // One sequence: 11 steps, the Trials listed as facts on the first step, nothing to tick.
     await page.reload({ waitUntil: 'networkidle' });
-    assert.equal(await page.locator('li.guide-seq__step').count(), 11, 'Zetsubou guide should list 11 steps');
-    const trialsText = await page.locator('#trials').innerText();
-    for (const trial of ['Trial 1', 'Trial 2', 'Trial 3']) assert.match(trialsText, new RegExp(trial), `Trials step lists ${trial}`);
-    assert.equal(await page.locator('#skulls h3').innerText(), 'Clean the four skulls');
+    assert.equal(await page.locator('li.guide-seq__step, li.flat-guide__step').count(), 11, 'Zetsubou guide should list 11 steps');
+    assert.equal(await visibleTitle(page.locator('#skulls h3')), 'Clean the four skulls');
+    // The Trials facts live on the Step details tab (flat main guide).
+    const trialsText = await (await stepDetails(page, base, mainRoute, 'trials')).innerText();
+    for (const trial of ['Trial 1', 'Trial 2', 'Trial 3']) assert.match(trialsText, new RegExp(trial), `Trials step details list ${trial}`);
+    await page.goto(`${base}${mainRoute}`, { waitUntil: 'networkidle' });
     assert.equal(errors.length, 0, `${mainRoute} guide errors: ${errors.join('; ')}`);
 
     if (viewportName === 'phone') {

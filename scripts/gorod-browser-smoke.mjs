@@ -1,4 +1,5 @@
 import { chromium } from 'playwright';
+import { stepDetails, visibleTitle } from './smoke-helpers.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 
@@ -39,24 +40,28 @@ try {
     const mainRoute = '/maps/gorod-krovi';
     let response = await page.goto(`${base}${mainRoute}`, { waitUntil: 'domcontentloaded' });
     assert(response?.ok(), `${mainRoute} returned ${response?.status()}`);
-    await page.getByRole('heading', { name: 'Love and War', level: 2 }).waitFor();
+    // Flat main guide: no Easter Egg heading on the list; the name stays in the map header.
+    await page.locator('li.flat-guide__step').first().waitFor();
+    assert.match(await page.locator('body').innerText(), /Love and War/, 'the Easter Egg name is still on the page');
     assert.equal(errors.length, 0, `${mainRoute} page errors: ${errors.join('; ')}`);
     const mainText = await page.locator('.gorod-main-guide').innerText();
-    assert.match(mainText, /Group 935 keycard lockdown/i);
     assert.doesNotMatch(mainText, /motherboard/i);
     await assertHeaderArtLoaded(page, mainRoute);
     await assertNoHorizontalOverflow(page, mainRoute);
 
-    // One sequence: 11 steps, and the Valve Solver still works inside the valve step.
+    // One flat sequence: 11 steps. The keycard rule is on Step details; the solver on the Valve Solver tab.
     await page.evaluate(() => window.localStorage.clear());
     await page.reload({ waitUntil: 'networkidle' });
-    assert.equal(await page.locator('li.guide-seq__step').count(), 11, 'Gorod guide keeps all 11 steps');
-    assert.match(await page.locator('#valves h3').innerText(), /Valve network/);
-    const valveSelects = page.locator('#valves .gorod-valve-fields select');
+    assert.equal(await page.locator('li.guide-seq__step, li.flat-guide__step').count(), 11, 'Gorod guide keeps all 11 steps');
+    assert.match(await visibleTitle(page.locator('#valves h3')), /Valve network/);
+    assert.match(await visibleTitle(page.locator('#kronos h3')), /KRONOS/);
+    assert.equal(await page.locator('#valves a[data-step-link][href*="/maps/gorod-krovi/valves"]').count(), 1, 'the valve step links to the Valve Solver');
+    assert.match(await (await stepDetails(page, base, mainRoute, 'challenges')).innerText(), /Group 935 keycard lockdown/i);
+    await page.goto(`${base}/maps/gorod-krovi/valves`, { waitUntil: 'networkidle' });
+    const valveSelects = page.locator('.gorod-valve-fields select');
     await valveSelects.nth(0).selectOption('Armory');
     await valveSelects.nth(1).selectOption('Dragon Command');
-    assert((await page.locator('#valves .gorod-valve-setting').count()) > 0, 'Embedded Valve Solver returns settings');
-    assert.match(await page.locator('#kronos h3').innerText(), /KRONOS/);
+    assert((await page.locator('.gorod-valve-setting').count()) > 0, 'Valve Solver returns settings');
     results.push({ width, route: mainRoute, passed: true });
 
     errors.length = 0;

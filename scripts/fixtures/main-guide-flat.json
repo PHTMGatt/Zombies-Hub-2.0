@@ -1,0 +1,10 @@
+{
+  "_note": "What still keeps each main guide from being a flat list (Bryen, 2026-11-16: number, title, one short line, optional details link; no expanding cards, chips, staff blocks, images or maps). One entry per step and field. Moving that content to the tab that owns it (DELTA data, ALPHA markup) removes the entry; nothing may be added. Content leaving the rendered page still follows approved-removals.json. Checked by scripts/main-guide-shape.test.mjs.",
+  "origins": [],
+  "revelations": [],
+  "gorod-krovi": [],
+  "der-eisendrache": [],
+  "zetsubou-no-shima": [],
+  "shadows-of-evil": [],
+  "mob-of-the-dead": []
+}

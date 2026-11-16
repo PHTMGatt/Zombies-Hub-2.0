@@ -38,19 +38,19 @@ try {
   await server.stop();
   for (const [route, name] of visited) {
     await page.goto(`${base}${route}`, { waitUntil: 'load' });
-    await page.locator('li.guide-seq__step').first().waitFor({ timeout: 15000 });
+    await page.locator('li.guide-seq__step, li.flat-guide__step').first().waitFor({ timeout: 15000 });
     assert.equal(await page.locator('[data-route-error]').count(), 0, `${route} offline: no load error`);
     assert.match(await page.title(), new RegExp(name), `${route} offline: the right page`);
     results.push(`${route} reads offline`);
   }
   // Moving between guides inside the app also works offline.
   await page.goto(`${base}/maps/origins`, { waitUntil: 'load' });
-  await page.locator('li.guide-seq__step').first().waitFor({ timeout: 15000 });
+  await page.locator('li.guide-seq__step, li.flat-guide__step').first().waitFor({ timeout: 15000 });
   await page.evaluate(() => {
     window.history.pushState({}, '', '/maps/revelations');
     window.dispatchEvent(new PopStateEvent('popstate'));
   });
-  await page.locator('.rev-step-list').waitFor({ timeout: 15000 });
+  await page.locator('.rev-step-list, .flat-guide__list').first().waitFor({ timeout: 15000 });
   results.push('in-app move between opened guides works offline');
 
   // A guide never opened can't come from the cache: the app still starts and says so.
@@ -61,7 +61,7 @@ try {
 
   server = await startPreview(port);
   await page.getByRole('button', { name: 'Reload guide' }).click();
-  await page.locator('li.guide-seq__step').first().waitFor({ timeout: 15000 });
+  await page.locator('li.guide-seq__step, li.flat-guide__step').first().waitFor({ timeout: 15000 });
   results.push('back online, the guide loads');
 
   const chunkErrors = errors.filter((message) => !/Failed to fetch dynamically imported module|Importing a module script failed|error loading dynamically imported module/i.test(message));

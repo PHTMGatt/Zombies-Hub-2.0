@@ -1,4 +1,5 @@
 import { chromium } from 'playwright';
+import { stepDetails } from './smoke-helpers.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 
@@ -47,10 +48,12 @@ try {
     const mainRoute = '/maps/der-eisendrache';
     let response = await page.goto(`${base}${mainRoute}`, { waitUntil: 'domcontentloaded' });
     assert(response?.ok(), `${mainRoute} returned ${response?.status()}`);
-    await page.getByRole('heading', { name: 'My Brother’s Keeper', level: 2 }).waitFor();
+    // Flat main guide: no Easter Egg heading on the list; the name stays in the map header.
+    await page.locator('li.flat-guide__step').first().waitFor();
+    assert.match(await page.locator('body').innerText(), /My Brother’s Keeper/, 'the Easter Egg name is still on the page');
     assert.equal(errors.length, 0, `${mainRoute} page errors: ${errors.join('; ')}`);
     const mainText = await page.locator('.de-home-page').innerText();
-    assert.match(mainText, /local\/offline/i);
+    assert.match(mainText, /local\s*\/\s*offline/i);
     assert.match(mainText, /unranked/i);
     assert.match(mainText, /all four bows/i);
     await assertHeaderArtLoaded(page, mainRoute);
@@ -61,14 +64,16 @@ try {
     // One sequence: 12 steps, how-to under "More", and the safe-code note shared by the two steps that need it.
     await page.evaluate(() => window.localStorage.clear());
     await page.reload({ waitUntil: 'networkidle' });
-    assert.equal(await page.locator('li.guide-seq__step').count(), 12, 'Der guide keeps all 12 steps');
+    assert.equal(await page.locator('li.guide-seq__step, li.flat-guide__step').count(), 12, 'Der guide keeps all 12 steps');
     assert.match(await page.locator('#past-lab-1 h3').innerText(), /Past lab/);
-    await page.locator('#past-lab-1 .guide-seq__more > summary').click();
-    assert.equal(await page.locator('#past-lab-1 .guide-how').count(), 1, '"More on this step" shows the how-to');
-    await page.locator('#past-lab-1').getByLabel('Safe symbol 1').fill('Test');
     assert.match(await page.locator('#death-ray-safe h3').innerText(), /Death Ray/);
-    // The second copy updates on the next render; wait for it rather than reading once.
-    await page.waitForFunction(() => document.querySelector('#death-ray-safe input[aria-label="Safe symbol 1"]')?.value === 'Test', null, { timeout: 3000 })
+    // Flat main guide: the how-to and the per-game safe-code note live on the Step details tab.
+    const pastLab = await stepDetails(page, base, '/maps/der-eisendrache', 'past-lab-1');
+    assert.equal(await pastLab.locator('.step-details__how').count(), 1, 'Step details shows the how-to');
+    await pastLab.getByLabel('Safe symbol 1').fill('Test');
+    await stepDetails(page, base, '/maps/der-eisendrache', 'death-ray-safe');
+    // The second copy (the Death Ray step's) updates on the next render; wait for it rather than reading once.
+    await page.waitForFunction(() => [...document.querySelectorAll('section.step-details__step input[aria-label="Safe symbol 1"]')].every((input) => input.value === 'Test'), null, { timeout: 3000 })
       .catch(() => assert.fail('Safe code note carries to the terminal step'));
     await page.evaluate(() => window.localStorage.clear());
     results.push({ width, route: mainRoute, passed: true });
@@ -80,7 +85,7 @@ try {
     await page.getByRole('heading', { name: 'Choose Your Bow', level: 2 }).waitFor();
     assert.equal(await page.locator('.bow-choice-card').count(), 5, 'Der bow landing keeps base + four upgrade cards');
     const bowLandingText = await page.locator('.bow-landing').innerText();
-    assert.match(bowLandingText, /local\/offline/i);
+    assert.match(bowLandingText, /local\s*\/\s*offline/i);
     assert.match(bowLandingText, /all four bows/i);
     assert.equal(errors.length, 0, `${bowsRoute} page errors: ${errors.join('; ')}`);
     await assertNoHorizontalOverflow(page, bowsRoute);

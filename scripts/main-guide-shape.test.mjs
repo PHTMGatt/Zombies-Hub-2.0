@@ -1,6 +1,8 @@
-// Main guide shape: the main guide is the Easter Egg steps A→Z and nothing else; the map tabs own the
-// detail (media, solvers, per-staff/per-bow sets) and the steps link to them. These checks keep it that way:
-// - no new tab content embedded in main-guide data (known leftovers: fixtures/main-guide-embedded.json);
+// Main guide shape (Bryen, 2026-11-16): the main guide is a FLAT, simple list of the Easter Egg steps:
+// number, title, one short explanation, an optional small "details" link to the tab that owns the depth.
+// No expanding cards, chips, staff blocks, images or maps. These checks hold that line:
+// - a flat step is { id, title, goal (≤ GOAL_MAX characters, about two short lines), links (≤ 2) };
+//   anything else a step still carries is listed in fixtures/main-guide-flat.json and may only shrink;
 // - every step link goes to a real tab route of that map, with a well-formed section id;
 // - stepLinkHref / stepOrigin build and read the step ↔ tab round trip safely.
 import test from 'node:test';
@@ -8,21 +10,14 @@ import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { loadGuides, loadModules } from './guide-content.mjs';
+import { notFlat, readFlatDebt } from './main-guide-shape.mjs';
 
 const root = resolve(import.meta.dirname, '..');
-const EMBEDDED = new Set(['image', 'custom', 'tabs']);
 const SECTION_ID = /^[a-z0-9][a-z0-9-]*$/i;
-const allowed = JSON.parse(readFileSync(resolve(root, 'scripts/fixtures/main-guide-embedded.json'), 'utf8'));
+const allowed = readFlatDebt();
 const guides = (await loadGuides()).filter(({ route }) => route.startsWith('/maps/'));
 const [{ stepLinkHref, stepOrigin, FROM_PARAM }] = await loadModules(['shared/guide/stepLinks.js']);
 
-const embedded = (refs = [], path, hits = []) => {
-  refs.forEach((ref) => {
-    if (EMBEDDED.has(ref.type)) hits.push(`${path}:${ref.type}${ref.key ? `:${ref.key}` : ref.label ? `:${ref.label}` : ''}`);
-    (ref.tabs ?? []).forEach((tab) => embedded(tab.refs, `${path}>${tab.id ?? tab.label}`, hits));
-  });
-  return hits;
-};
 const stepLinks = (step) => [
   ...(step.links ?? []),
   ...(step.refs ?? []).flatMap((ref) => (ref.tabs ?? []).flatMap((tab) => tab.links ?? [])),
@@ -33,16 +28,15 @@ const routePaths = (slug) => {
   const source = readdirSync(dir).map((file) => readFileSync(resolve(dir, file), 'utf8')).join('\n');
   return new Set([...source.matchAll(/path="([^"*]+)"/g)].map(([, path]) => path));
 };
-const countBy = (list) => list.reduce((counts, item) => counts.set(item, (counts.get(item) ?? 0) + 1), new Map());
 
-test('main-guide data embeds no new tab content (media, solvers, variant sets)', () => {
+test('main guides are flat step lists (known leftovers may only shrink)', () => {
   for (const { guide, steps } of guides) {
-    const found = countBy(steps.flatMap((step) => embedded(step.refs, step.id)));
-    const known = countBy(allowed[guide] ?? []);
-    const added = [...found].filter(([item, n]) => n > (known.get(item) ?? 0)).map(([item]) => item);
-    const moved = [...known].filter(([item, n]) => n > (found.get(item) ?? 0)).map(([item]) => item);
-    assert.deepEqual(added, [], `${guide}: tab content added to the main guide; put it in the map's tab and link the step to it: ${added.join(', ')}`);
-    assert.deepEqual(moved, [], `${guide}: content no longer embedded; remove it from scripts/fixtures/main-guide-embedded.json: ${moved.join(', ')}`);
+    const found = new Set(steps.flatMap(notFlat));
+    const known = new Set(allowed[guide] ?? []);
+    const added = [...found].filter((item) => !known.has(item));
+    const fixed = [...known].filter((item) => !found.has(item));
+    assert.deepEqual(added, [], `${guide}: the main guide stays flat (title, one short line, a details link); move this to the tab that owns it: ${added.join(', ')}`);
+    assert.deepEqual(fixed, [], `${guide}: now flat; remove from scripts/fixtures/main-guide-flat.json: ${fixed.join(', ')}`);
   }
 });
 
