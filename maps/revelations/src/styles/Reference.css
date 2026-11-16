@@ -250,3 +250,8 @@
 /* One panel (the shell): the side panel and the media caption sit on it without their own boxes. */
 .revelations-module .rev-workspace__panel { border: 0; background: none; box-shadow: none; padding-left: 0; padding-right: 0; }
 .revelations-module .rev-video__bar span, .revelations-module .rev-video__bar p { display: block; -webkit-line-clamp: unset; overflow: visible; }
+
+/* Tab look pass: readable intro, divided rows instead of a box per option, legible number badges. */
+.revelations-module .rev-section-head .rev-section-intro { font-size: 1.0625rem !important; line-height: 1.5; color: #d6e4ee; }
+.revelations-module .rev-option { border-radius: 0; border-width: 0 0 1px 0; background: none; box-shadow: none; }
+.revelations-module .rev-option__index { width: 30px; height: 30px; font-size: 0.95rem; }
