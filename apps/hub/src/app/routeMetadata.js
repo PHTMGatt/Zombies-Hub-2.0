@@ -8,6 +8,11 @@ const names = {
   kino: 'Kino der Toten', gk: 'Gorod Krovi', de: 'Der Eisendrache', soe: 'Shadows of Evil',
   'fire-staff': 'Fire Staff', 'ice-staff': 'Ice Staff', 'wind-staff': 'Wind Staff',
   'lightning-staff': 'Lightning Staff', '1': 'Cog One', '2': 'Cog Two', '3': 'Cog Three',
+  // Hub maps without a dedicated guide, spelled as the hub spells them (a slug title-cased gives "Call Of The Dead", "Tranzit").
+  'call-of-the-dead': 'Call of the Dead', tranzit: 'TranZit', 'die-rise': 'Die Rise', 'the-giant': 'The Giant', 'shangri-la': 'Shangri-La',
+  'shangri-la-chronicles': 'Shangri-La (Black Ops 3)', 'nacht-der-untoten': 'Nacht der Untoten', 'kino-der-toten': 'Kino der Toten',
+  'shi-no-numa': 'Shi No Numa', 'verrückt': 'Verrückt', 'der-riese': 'Der Riese', 'nuketown-zombies': 'Nuketown Zombies',
+  'dead-ops-arcade': 'Dead Ops Arcade', 'dead-ops-arcade-ii': 'Dead Ops Arcade II',
 };
 const labels = {
   '/': 'Call of Duty Zombies Easter Egg Guides', '/allmaps': 'All Call of Duty Zombies Maps',

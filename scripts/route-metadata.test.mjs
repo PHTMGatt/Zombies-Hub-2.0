@@ -11,7 +11,10 @@ test('route metadata handles hub, deep links, trailing slashes and unknown paths
   assert.equal(routeTitle('/maps/origins'), 'Origins Easter Egg Guide | Zombies Hub 2.0');
   assert.equal(routeTitle('/maps/der-eisendrache/bows/electric'), 'Der Eisendrache Storm Bow | Zombies Hub 2.0', 'tab names follow the guide navigation (Storm, not Electric)');
   assert.equal(routeTitle('/maps/gorod-krovi/valves'), 'Gorod Krovi Valve Solver | Zombies Hub 2.0');
-  assert.equal(routeTitle('/info/nacht-der-untoten'), 'Nacht Der Untoten | Zombies Hub 2.0');
+  assert.equal(routeTitle('/easter-eggs/call-of-the-dead'), 'Call of the Dead | Zombies Hub 2.0');
+  assert.equal(routeTitle('/easter-eggs/tranzit'), 'TranZit | Zombies Hub 2.0');
+  assert.equal(routeTitle('/easter-eggs/shangri-la-chronicles'), 'Shangri-La (Black Ops 3) | Zombies Hub 2.0');
+  assert.equal(routeTitle('/info/nacht-der-untoten'), 'Nacht der Untoten | Zombies Hub 2.0');
   assert.equal(routeTitle('/unknown'), 'Page not found | Zombies Hub 2.0');
 });
 
@@ -23,7 +26,7 @@ test('route descriptions are per page and only promise a guide where one exists'
   assert.match(routeDescription('/maps/origins/ice-staff'), /^Ice Staff: part of the Origins Easter Egg guide/);
   assert.match(routeDescription('/maps/revelations/sound-step'), /^Sound Step: part of the Revelations/);
   assert.doesNotMatch(routeDescription('/maps/nacht-der-untoten'), /Easter Egg guide/, 'maps without a dedicated guide get map-info wording');
-  assert.match(routeDescription('/info/nacht-der-untoten'), /^Nacht Der Untoten map info/);
+  assert.match(routeDescription('/info/nacht-der-untoten'), /^Nacht der Untoten map info/);
   assert.match(routeDescription('/side-easter-eggs/kino'), /^Kino der Toten side Easter Eggs/);
   const routes = ['/', '/allmaps', '/easter-eggs', '/side-easter-eggs', '/search', '/achievements',
     '/maps/origins', '/maps/mob-of-the-dead', '/maps/shadows-of-evil', '/maps/der-eisendrache',
