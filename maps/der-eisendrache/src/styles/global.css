@@ -162,3 +162,5 @@
   background: none;
   box-shadow: none;
 }
+.de-module :is(.zh-guide-kicker, .zh-guide-hero span, .de-bow-guide header span) { text-transform: none !important; letter-spacing: 0 !important; font-size: 1rem !important; }
+.de-module .de-header__identity small, .de-module .de-header__title-row small { text-transform: none; letter-spacing: 0; font-size: 1rem; }
