@@ -8,10 +8,10 @@
 .coming-soon__panel {
   width: min(100%, 40rem);
   padding: clamp(1.25rem, 4vw, 2.25rem);
-  border-radius: 12px;
+  border-radius: var(--zh-radius-panel);
   background: rgba(7, 16, 25, 0.92);
   color: #dbe7f0;
-  font-size: 1.0625rem;
+  font-size: var(--zh-fs-body);
   line-height: 1.5;
 }
 
@@ -28,7 +28,7 @@
 .coming-soon__teaser-head { display: flex; justify-content: space-between; gap: 1rem; align-items: baseline; }
 .coming-soon__teaser-head strong { color: #f4f8fb; }
 .coming-soon__teaser-head span { color: #ffd27a; font-weight: 700; }
-.coming-soon__bar { height: 10px; margin: 0.75rem 0; border-radius: 999px; border: 1px dashed rgba(121, 207, 255, 0.5); overflow: hidden; }
+.coming-soon__bar { height: 10px; margin: 0.75rem 0; border-radius: var(--zh-radius-pill); border: 1px dashed rgba(121, 207, 255, 0.5); overflow: hidden; }
 .coming-soon__bar i {
   display: block;
   width: 35%;
@@ -42,7 +42,7 @@
 .coming-soon__links a {
   display: inline-flex;
   align-items: center;
-  min-height: 44px;
+  min-height: var(--zh-target);
   color: #79cfff;
   font-weight: 600;
   text-decoration: none;

@@ -9,7 +9,7 @@
   width: min(100%, 50rem);
   margin: 0 auto;
   padding: 1rem clamp(1rem, 3vw, 2rem) 1.5rem;
-  border-radius: 12px;
+  border-radius: var(--zh-radius-panel);
   background: rgba(2, 12, 22, 0.93);
   color: #dbe8f2;
 }

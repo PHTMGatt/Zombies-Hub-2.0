@@ -1,5 +1,14 @@
 /* The few cross-map tokens: tap-target minimum and focus ring width. Maps own their colours and type. */
 :root {
+  /* Shared guide/tab/hub scale (2026-11-16): one place for body size, tap size, radii, reading width, focus ring. */
+  --zh-fs-body: 1.0625rem;
+  --zh-fs-label: 1rem;
+  --zh-target: 44px;
+  --zh-radius-panel: 12px;
+  --zh-radius-pill: 999px;
+  --zh-panel-width: 50rem;
+  --zh-focus-ring: 3px solid #fff;
+  --zh-focus-offset: 2px;
   --zh-tap: 48px;
   --zh-focus-width: 3px;
 }

@@ -35,10 +35,10 @@
   align-items: center;
   justify-content: center;
   flex: 0 0 auto;
-  min-height: 44px;
+  min-height: var(--zh-target);
   padding: 0 1rem;
   border: 1px solid color-mix(in srgb, var(--map-tab-accent) 40%, transparent);
-  border-radius: 999px;
+  border-radius: var(--zh-radius-pill);
   background: rgba(2, 8, 14, 0.62);
   color: #f4f8fb !important;
   font-size: 1rem !important;
@@ -60,8 +60,8 @@
   box-shadow: none;
 }
 .map-module :is(.origins-nav-links a, .rev-header__tabs a, .de-nav a, .zets-nav a, .soe-tabs a, .gorod-header__nav a, .mob-header .nav a):focus-visible {
-  outline: 3px solid #fff;
-  outline-offset: 2px;
+  outline: var(--zh-focus-ring);
+  outline-offset: var(--zh-focus-offset);
 }
 .map-module .zets-nav-toggle { display: none !important; }
 @media (prefers-reduced-motion: reduce) {

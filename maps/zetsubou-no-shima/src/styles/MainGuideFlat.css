@@ -3,10 +3,10 @@
   --flat-accent: #5ee6c8;
   --flat-ink: #f1fbf8;
   --flat-text: #d6e8e3;
-  width: min(100% - 1.5rem, 50rem);
+  width: min(100% - 1.5rem, var(--zh-panel-width));
   margin: 1rem auto 2rem;
   padding: 0.75rem clamp(1rem, 3vw, 2rem) 1.5rem;
-  border-radius: 12px;
+  border-radius: var(--zh-radius-panel);
   background: rgba(3, 14, 14, 0.92);
 }
 .zets-main-flat .flat-guide { width: 100%; }
