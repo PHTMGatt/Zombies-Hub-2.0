@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from 'react';
+import React from 'react';
 import NotFound from '../../../shared/ui/NotFound';
 import { Route, Routes } from 'react-router-dom';
 import Header from '../src/components/Header';
@@ -12,14 +12,8 @@ import StepDetailsPage from '../src/pages/StepDetailsPage';
 import '../src/global.css';
 import BackToStep from '../../../shared/guide/BackToStep';
 import revGuideSteps from '../src/data/revGuideSteps';
-import useDesign from '../../../shared/sys/useDesign';
-
-// Candidate page systems, preview only (?design=a|b|c). Loaded on demand so the live pages pay nothing.
-const RevSys = lazy(() => import('../src/sys/RevSys'));
 
 export default function RevelationsRoutes() {
-  const design = useDesign();
-  if (design) return <Suspense fallback={null}><RevSys design={design} /></Suspense>;
   return (
     <section className="map-module revelations-module">
       <Header />
