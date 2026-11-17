@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import '@fontsource/rajdhani/latin-500.css';
 import '@fontsource/rajdhani/latin-600.css';
 import '@fontsource/rajdhani/latin-700.css';
 import NotFound from '../../../shared/ui/NotFound';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import Header from '../src/components/Header';
 import Footer from '../src/components/Footer';
 import MainGuide from '../src/Pages/MainGuide';
@@ -22,8 +22,17 @@ import '../styles/origins-shell.css';
 import BackToStep from '../../../shared/guide/BackToStep';
 import originsGuide from '../src/data/originsGuide';
 import StepDetails from '../src/Pages/StepDetails';
+import useDesign from '../../../shared/sys/useDesign';
+
+// Candidate page systems, preview only (?design=a|b|c): the main guide and three staff pages. Loaded on demand so the live pages pay nothing.
+const OriginsSys = lazy(() => import('../src/sys/OriginsSys'));
 
 export default function OriginsRoutes() {
+  const design = useDesign();
+  const { pathname } = useLocation();
+  const here = pathname.endsWith('/') ? pathname.slice(0, -1) : pathname;
+  const inPreview = ['/maps/origins', '/maps/origins/ice-staff', '/maps/origins/fire-staff', '/maps/origins/wind-staff'].includes(here);
+  if (design && inPreview) return <Suspense fallback={null}><OriginsSys design={design} /></Suspense>;
   return (
     // Main's Main Guide and OG pages paint the robot backdrop from --origins-bg (merge with main, 2026-11-15).
     <section className="map-module origins-module" style={{ '--origins-bg': `url(${RobotBg})` }}>
