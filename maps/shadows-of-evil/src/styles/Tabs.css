@@ -1,0 +1,20 @@
+/* Two plain tabs under the header. Colours reuse the flat guide variables so the map palette applies. */
+.shadows-module .soe-tabs {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  padding: 0.75rem 1rem 0;
+}
+.shadows-module .soe-tabs a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 1rem;
+  border: 1px solid var(--flat-line, rgba(255, 255, 255, 0.2));
+  border-radius: 8px;
+  color: var(--flat-text, #dbe4ea);
+  font-weight: 600;
+  text-decoration: none;
+}
+.shadows-module .soe-tabs a.active { color: var(--flat-ink, #fff); border-color: var(--flat-accent, #8fd8ff); }
+.shadows-module .soe-tabs a:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }

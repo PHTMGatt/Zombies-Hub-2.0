@@ -68,8 +68,8 @@ export async function captureSegments(page, route) {
     }
   };
   // A step picker shows one step at a time: visit every step, and every tab inside it.
-  // Revelations' split guide uses a left rail of step buttons; other pickers use step tabs.
-  const railSteps = page.locator('main .rev-step-list .rev-step-button');
+  // A rail of step buttons (Revelations' split guide, the shared GuideRunbook); other pickers use step tabs.
+  const railSteps = page.locator('main .rev-step-list .rev-step-button, main .runbook__rail .runbook__step');
   const steps = page.locator('main [data-step-tabs] [role="tab"]');
   const railCount = await railSteps.count();
   const stepCount = await steps.count();

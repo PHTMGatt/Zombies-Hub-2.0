@@ -17,10 +17,12 @@ Open a map and answer one question fast: **“what do I do next?”** Short step
 ## What you get
 
 - **Seven dedicated Easter Egg guides**: Origins, Mob of the Dead, Shadows of Evil, Der Eisendrache, Zetsubou No Shima, Gorod Krovi and Revelations. Each has its own look, and its own page structure where the mechanics differ.
-- **Built for a phone mid-game**: a step-by-step flow with a tracker, big tap-friendly strips, and layouts tuned for 390×844 portrait, 844×390 landscape and 1440 desktop.
+- **Built for a phone mid-game**: each map's main guide is a flat list (number, title, one short line) you can read in a glance. The depth is one tap away: staff, bow, buildable and solver tabs, plus a **Step details** tab with every warning and how-to line, one section per step. Layouts are tuned for 390×844 portrait, 844×390 landscape and 1440 desktop.
 - **Tools, not just text**: Gorod Krovi valve solver, Origins staff puzzle codes and Lightning dial cheat sheet, Der Eisendrache bow upgrades and wisp guide, Zetsubou cog routes, Revelations Apothicon upgrade, egg locations, summoning-key throws and sound-step references.
+- **Works offline once opened**: a guide you have visited still loads with no connection (service worker); one you never opened shows a clear "couldn't load" page instead of a blank screen.
+- **Show filter** on the map catalog (All maps / Easter Eggs / Full guides) and the Easter Egg list (All quests / Full guides / Video guides).
 - **Origins Speed Run companion** in Side EEs: robot and snow routing, cycle strategy, tank and Lightning skips, staff duplication and ending setup.
-- **Side Easter Eggs and a 31-map index** across three Black Ops eras.
+- **Side Easter Eggs and a 35-entry map index** from World at War through Black Ops 3.
 - **Search** across guides (try “gorod valves” or “ice staff code”) and an **achievements** view.
 - **Videos and timestamps** where seeing the spot beats reading about it.
 - **Fast and shareable**: WebP cover art, map-card art that loads as it nears the screen, and a page title and meta description that follow every route.

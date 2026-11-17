@@ -150,3 +150,15 @@
     padding: 0.72rem 0.78rem;
   }
 }
+
+/* Calm pass: buildables sit on one dark panel like the other tab pages; labels readable. */
+.zets-module .zets-buildables-page {
+  width: min(100% - 1.5rem, 56rem);
+  margin: 1rem auto 2rem;
+  padding: 0.75rem clamp(1rem, 3vw, 2rem) 1.5rem;
+  border-radius: 12px;
+  background: rgba(3, 14, 14, 0.93);
+}
+.zets-module .zets-buildables-page :is(p, li, small, summary) { font-size: 1.0625rem; line-height: 1.5; }
+.zets-module .zets-buildables-page span:not([class*="number"]) { font-size: max(0.95rem, 1em); letter-spacing: 0; text-transform: none; }
+.zets-module .zets-buildables-page .zh-guide-hero { background: none; border: 0; }

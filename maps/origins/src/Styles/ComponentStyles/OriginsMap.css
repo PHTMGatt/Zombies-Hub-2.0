@@ -211,3 +211,10 @@
 @media (max-width: 699px) and (orientation: portrait) {
   .origins-module .omap__svg { max-height: none; min-height: 0; }
 }
+
+/* Lightning switches drawn on the map (practice: tap to turn). */
+.origins-module .omap__switch-hit { fill: transparent; }
+.origins-module .omap__switch.is-tappable { cursor: pointer; }
+.origins-module .omap__switch.is-tappable:focus-visible .omap__switch-hit { stroke: #d8a8ff; stroke-width: 2; }
+.origins-module .omap__switch-label { fill: #fff; font-size: 9px; font-weight: 700; text-anchor: middle; paint-order: stroke; stroke: rgba(2, 10, 18, 0.9); stroke-width: 3px; }
+.origins-module .omap__switch.is-set .omap__switch-label { fill: #7dffbf; }

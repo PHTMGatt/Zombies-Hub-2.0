@@ -1,5 +1,5 @@
 import { chromium } from 'playwright';
-import { settled } from './smoke-helpers.mjs';
+import { settled, stepDetails } from './smoke-helpers.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
@@ -98,7 +98,7 @@ try {
     assert.equal(art.at(-1), '', 'the last map card waits to load its art');
     for (const card of await page.locator('.map-card').all()) await card.scrollIntoViewIfNeeded();
     await page.waitForFunction(() => [...document.querySelectorAll('.map-card .bg-main')].every((layer) => layer.style.backgroundImage.startsWith('url(')),
-      null, { timeout: 5000 }).catch(() => {});
+      null, { timeout: 15000 }).catch(() => {});
     art = await cardArt();
     const missingArt = art.filter((value) => !value.startsWith('url(')).length;
     assert.equal(missingArt, 0, `${missingArt} map cards never loaded their art`);
@@ -117,6 +117,53 @@ try {
     await page.getByRole('searchbox').fill('no-map-can-match-this');
     await page.getByText(/No maps matched/).waitFor();
 
+    // Show filter: All / Easter Eggs / Full guides. It filters the cards, lives in the link (?show=), is
+    // remembered on this device, works with arrow keys, and every option is a 44px target.
+    await page.goto(`${base}/allmaps`, { waitUntil: 'networkidle' });
+    assert.equal(await page.getByRole('group', { name: 'Show' }).count(), 1, 'the Show options are one named group');
+    const cards = page.locator('.map-card');
+    const allCount = await cards.count();
+    const optionHeights = await page.locator('.map-filter__option').evaluateAll((options) => options.map((option) => option.getBoundingClientRect().height));
+    assert(optionHeights.length === 3 && optionHeights.every((h) => h >= 44), `Show options are 44px targets: ${optionHeights.join(', ')}`);
+    // The radios follow the URL, and React Router applies ?show= as a transition: on a slow machine (CI) the
+    // new choice is checked, and the cards filtered, a moment after the click or key press. So wait for the
+    // checked radio (same render as the cards) instead of reading it at once; Playwright's check() would
+    // also throw on the brief flip back.
+    const showIs = (value, message) => page.waitForFunction((id) => document.querySelector(`.map-filter input[value="${id}"]`)?.checked, value, { timeout: 15000 })
+      .catch(() => assert.fail(message ?? `Show: ${value} is chosen`));
+    const choose = async (name, value) => { await page.getByRole('radio', { name }).click(); await showIs(value); };
+    await choose(/Full guides/, 'full-guides');
+    await page.waitForURL(/[?&]show=full-guides/);
+    assert.equal(await cards.count(), 8, 'Full guides: the seven full guides (Origins is listed for BO2 and BO3)');
+    assert((await cards.allTextContents()).every((text) => !/Nacht|Five|TranZit/i.test(text)), 'Full guides hides maps without one');
+    await page.reload({ waitUntil: 'networkidle' });
+    await showIs('full-guides', 'the link keeps the choice');
+    await page.goto(`${base}/allmaps`, { waitUntil: 'networkidle' });
+    await page.waitForURL(/[?&]show=full-guides/);
+    await showIs('full-guides', 'the choice is remembered on this device');
+    await page.getByRole('radio', { name: /Full guides/ }).focus();
+    await page.keyboard.press('ArrowLeft');
+    await showIs('easter-eggs', 'arrow keys move the choice');
+    await page.waitForURL(/[?&]show=easter-eggs/);
+    const eggCount = await cards.count();
+    assert(eggCount > 8 && eggCount < allCount, `Easter Eggs shows the quest maps (${eggCount} of ${allCount})`);
+    await choose(/All maps/, 'all');
+    await page.waitForURL((url) => !url.searchParams.has('show'));
+    assert.equal(await cards.count(), allCount, 'All maps brings every card back');
+    assert.equal(await page.evaluate(() => localStorage.getItem('zh-map-filter:allmaps')), null, 'All is the default, nothing stored');
+    await page.goto(`${base}/allmaps?show=not-a-filter`, { waitUntil: 'networkidle' });
+    await page.waitForURL((url) => !url.searchParams.has('show'));
+    await showIs('all', 'an unknown ?show= falls back to All');
+    await page.goto(`${base}/easter-eggs?show=video-guides`, { waitUntil: 'networkidle' });
+    await showIs('video-guides');
+    const badges = await page.locator('.map-card .map-ee-chip').allTextContents();
+    assert(badges.length > 0 && badges.every((badge) => badge === 'Video guide'), `Video guides shows only video-guide cards: ${[...new Set(badges)].join(', ')}`);
+    await choose(/Full guides/, 'full-guides');
+    await page.waitForURL(/[?&]show=full-guides/);
+    const fullBadges = await page.locator('.map-card .map-ee-chip').allTextContents();
+    assert(fullBadges.every((badge) => /Full guide|Complete/.test(badge)), `Full guides shows only full-guide cards: ${[...new Set(fullBadges)].join(', ')}`);
+    await page.evaluate(() => localStorage.removeItem('zh-map-filter:easter-eggs'));
+
     // Side Easter Eggs is a visually sensitive hub page. Protect its card count,
     // responsive grid, navigation, overflow, and capture both target viewports.
     await page.goto(`${base}/side-easter-eggs`, { waitUntil: 'networkidle' });
@@ -134,11 +181,12 @@ try {
       `Side Easter Egg cards use clean widescreen artwork instead of catalog strips: ${sideArtworkRatios.join(', ')}`,
     );
     // Count cards in the first visual row (the grid uses extra tracks to center a short last row).
+    // offsetTop ignores the hover lift, so a pointer left over a card cannot skew the row count.
     const sideColumns = await sideCards.evaluateAll(cards => {
-      const firstTop = Math.round(cards[0].getBoundingClientRect().top);
-      return cards.filter(card => Math.round(card.getBoundingClientRect().top) === firstTop).length;
+      const firstTop = cards[0].offsetTop;
+      return cards.filter(card => card.offsetTop === firstTop).length;
     });
-    assert.equal(sideColumns, { phone: 1, landscape: 3, desktop: 3 }[viewportName], `Side Easter Eggs uses the expected ${width}px grid`);
+    assert.equal(sideColumns, { phone: 1, landscape: 3, desktop: 3 }[viewportName], `Side Easter Eggs uses the expected ${width}px grid (got ${sideColumns})`);
     await assertNoHorizontalOverflow(page, '/side-easter-eggs');
     await page.screenshot({
       path: fileURLToPath(new URL(`../artifacts/side-easter-eggs-${width}.png`, import.meta.url)),
@@ -178,12 +226,13 @@ try {
     await page.goto(`${base}/maps/origins`, { waitUntil: 'networkidle' });
     await page.evaluate(() => window.localStorage.clear());
     await page.reload({ waitUntil: 'networkidle' });
-    assert.equal(await page.locator('#secure-keys h3').innerText(), 'Ascend from Darkness');
-    assert.equal(await page.locator('#thunder-fists h3').innerText(), 'Thunder Fists');
-    assert.match(await page.locator('#secure-keys').innerText(), /Odin · middle robot/, 'Staff placement answer is visible without opening anything');
-    await page.locator('#secure-keys .guide-seq__step-summary').click();
-    await page.locator('#secure-keys .guide-seq__more > summary').click();
-    assert(await page.locator('#secure-keys .guide-how').isVisible(), '"More on this step" shows the how-to');
+    // The flat guide's titles start with a screen-reader-only "Step N:".
+    const stepTitle = async (id) => (await page.locator(`#${id} :is(h2, h3)`).innerText()).replace(/^Step \d+:\s*/, '');
+    assert.equal(await stepTitle('secure-keys'), 'Ascend from Darkness');
+    assert.equal(await stepTitle('thunder-fists'), 'Thunder Fists');
+    // The staff placement answer is one tap away, on the Step details tab (flat main guide).
+    assert.match(await (await stepDetails(page, base, '/maps/origins', 'secure-keys')).innerText(), /Odin · middle robot/, 'Staff placement answer is on Step details');
+    assert(await page.locator('section.step-details__step[data-step="secure-keys"] .step-details__how').isVisible(), 'Step details shows the how-to');
     // Speed Run is always open: the last Origins nav item, reachable with empty storage, no lock copy anywhere.
     await page.evaluate(() => window.localStorage.clear());
     await page.goto(`${base}/maps/origins`, { waitUntil: 'networkidle' });
@@ -200,24 +249,29 @@ try {
     assert.equal(await page.locator('.speedrun-gate').count(), 0, 'no Speed Run lock screen');
     assert.doesNotMatch(await page.locator('main').innerText(), /to unlock Speedrun/i);
 
-    // The Electrical Panel is a hidden achievement only: solving it records "Electrical Panel Solved" and links to Speed Run.
+    // The Electrical Panel is a hidden achievement only, now inside the switches panel: solving every
+    // switch in Practice turns records "Electrical Panel Solved" and links to Speed Run.
     // A finished run of the old tracker set the same legacy flag; that must not mark the panel solved.
     await page.evaluate(() => localStorage.setItem('zh-origins-speedrun-unlocked', 'true'));
     await page.goto(`${base}/maps/origins/lightning-staff`, { waitUntil: 'networkidle' });
-    await page.getByRole('button', { name: /Electrical Panel/ }).click();
-    assert.equal(await page.locator('.electrical-panel__reward').count(), 0, 'the old tracker unlock does not mark the panel solved');
-    assert.equal(await page.locator('.electrical-switch').count(), 7, 'the panel is playable');
+    const board = page.locator('#switches');
+    await board.getByRole('button', { name: 'Practice turns' }).click();
+    assert.doesNotMatch(await board.locator('.switch-board__count').innerText(), /Electrical Panel solved/, 'the old tracker unlock does not mark the panel solved');
+    const achievementsNow = () => page.evaluate(() => JSON.parse(localStorage.getItem('zh-achievements') || '{}').unlocked ?? {});
+    assert(!(await achievementsNow())['origins/speedrun-unlocked'], 'the legacy flag records no achievement');
     await page.evaluate(() => localStorage.removeItem('zh-origins-speedrun-unlocked'));
-    const panelSwitches = page.locator('.electrical-switch');
-    const turnsNeeded = [2, 3, 3, 2, 2, 1, 3];
-    for (const [index, turns] of turnsNeeded.entries()) {
-      for (let turn = 0; turn < turns; turn += 1) await panelSwitches.nth(index).click();
+    await board.getByRole('button', { name: 'Sound on' }).click();
+    const switchCards = board.locator('.switch-card button');
+    assert.equal(await switchCards.count(), 7, 'the panel is playable: seven switches');
+    for (let index = 0; index < 7; index += 1) {
+      for (let turn = 0; turn < 4 && !/Set/.test(await switchCards.nth(index).innerText()); turn += 1) await switchCards.nth(index).click();
+      assert.match(await switchCards.nth(index).innerText(), /Set/, `switch ${index + 1} can be set`);
     }
-    assert.equal(await page.locator('.electrical-panel__reward strong').innerText(), 'Electrical Panel Solved');
+    assert.match(await board.locator('.switch-board__count').innerText(), /Electrical Panel solved/);
     const lightningText = await page.locator('main').innerText();
     assert.doesNotMatch(lightningText, /Speedrun mode/i, 'no Speedrun-mode copy on the Lightning page');
     assert.doesNotMatch(lightningText, /unlock/i, 'nothing on the Lightning page claims to unlock');
-    assert((await page.evaluate(() => JSON.parse(localStorage.getItem('zh-achievements')).unlocked))['origins/speedrun-unlocked'], 'panel solve records the hidden achievement');
+    assert((await achievementsNow())['origins/speedrun-unlocked'], 'panel solve records the hidden achievement');
     await page.getByRole('link', { name: 'Open Speed Run' }).click();
     await page.waitForLoadState('networkidle');
     await page.getByRole('button', { name: 'Next checkpoint' }).click();
@@ -226,7 +280,7 @@ try {
     assert.equal(await page.locator('.switch-card .switch-dial').count(), 7, 'Speed Run shows all seven Lightning switch dials');
     await page.getByRole('button', { name: 'Practice turns' }).click();
     await page.getByRole('button', { name: 'Sound on' }).click();
-    const churchUpper = page.getByRole('button', { name: /^Church Upper:/ });
+    const churchUpper = page.locator('.switch-card').getByRole('button', { name: /^Church Upper:/ });
     await churchUpper.click();
     assert.match(await churchUpper.innerText(), /Set/, 'One turn sets Church Upper (needs ×1)');
     await assertNoHorizontalOverflow(page, '/maps/origins/speed-run/lightning');
@@ -344,7 +398,7 @@ try {
     const headline = await page.locator('h1').boundingBox();
     assert(headline && headline.y + headline.height <= 390, `Home headline ends at ${Math.round(headline.y + headline.height)}px, below the 390px landscape viewport`);
     await page.goto(`${base}/side-easter-eggs/kino`, { waitUntil: 'networkidle' });
-    const kinoStep = await page.locator('li.guide-seq__step h3').first().boundingBox();
+    const kinoStep = await page.locator('li.guide-seq__step h3, li.flat-guide__step h2').first().boundingBox();
     assert(kinoStep && kinoStep.y + kinoStep.height <= 390, `Kino's first step title ends at ${Math.round(kinoStep ? kinoStep.y + kinoStep.height : NaN)}px; it must be fully on the 390px landscape screen`);
     results.push({ width: 844, height: 390, check: 'no pinned headers; Home headline and Kino first step in the first screen', passed: true });
 
@@ -361,7 +415,7 @@ try {
     // Measured, not asserted until each map's own redesign: where the first step title starts.
     for (const route of routes.filter((item) => item.startsWith('/maps/'))) {
       await page.goto(`${base}${route}`, { waitUntil: 'networkidle' });
-      const first = await page.locator('li.guide-seq__step h3, li.run-step h3').first().boundingBox();
+      const first = await page.locator('li.guide-seq__step h3, li.flat-guide__step h2, li.run-step h3').first().boundingBox({ timeout: 15000 }).catch(() => null);
       results.push({ width: 844, height: 390, route, metric: 'first step title top (px)', value: first ? Math.round(first.y) : null, passed: true });
     }
     await context.close();

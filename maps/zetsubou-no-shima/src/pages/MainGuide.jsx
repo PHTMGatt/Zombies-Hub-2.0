@@ -1,21 +1,15 @@
 import React from 'react';
-import GuideSteps from '../../../../shared/guide/GuideSteps';
+import FlatGuide from '../../../../shared/guide/FlatGuide';
 import CompleteEasterEgg from '../../../../shared/achievements/CompleteEasterEgg';
 import zetsGuideSteps from '../data/zetsGuideSteps';
 // Guide.css also carries styles the cog and boss pages share (this route chunk always loads it).
 import '../styles/Guide.css';
-import '../styles/MainGuideCompact.css';
+import '../styles/MainGuideFlat.css';
 
+// Zetsubou main guide: the Easter Egg steps in order, one line each. Detail lives on the tabs.
 const MainGuide = () => (
-  <div className="zets-main-guide">
-    <header className="zets-run-header">
-      <h2>Seeds of Doubt</h2>
-      <p>Every player must finish all three of their own Trials — Cog 3 depends on it.</p>
-    </header>
-
-    <div className="zets-guide">
-      <GuideSteps label="Seeds of Doubt" steps={zetsGuideSteps} footer={<CompleteEasterEgg mapId="zetsubou-no-shima" />} />
-    </div>
+  <div className="zets-main-guide zets-main-flat">
+    <FlatGuide label="Seeds of Doubt" steps={zetsGuideSteps} footer={<CompleteEasterEgg mapId="zetsubou-no-shima" />} />
   </div>
 );
 

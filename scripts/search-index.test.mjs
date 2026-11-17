@@ -60,6 +60,21 @@ test('player-language queries land on the right reference first', () => {
   }
 });
 
+// Hub-only maps (no dedicated step guide), the World at War originals, the Coming Soon / small-card maps and each
+// map's Step details tab are searchable (2026-11-16).
+test('new entries, empty maps, World at War and Step details tabs are found', () => {
+  const top = (query) => search(query)[0]?.title;
+  const cases = [
+    ['ascension', /^Ascension · Black Ops 1/], ['tranzit', /^TranZit/], ['die rise', /^Die Rise/], ['buried', /^Buried/],
+    ['the giant', /^The Giant/], ['der riese', /^Der Riese/], ['waw nacht', /^Nacht der Untoten · World at War/],
+    ['verruckt world at war', /^Verrückt · World at War/], ['shangri la bo3', /^Shangri-La · Black Ops 3/],
+    ['gorod step details', /^Step details — Love and War/], ['five pentagon', /^Five$/], ['cotd', /^Call of the Dead/],
+  ];
+  for (const [query, expected] of cases) assert.match(top(query) ?? '', expected, `"${query}"`);
+  const everything = search('world at war').map((entry) => entry.title).join('|');
+  for (const name of ['Nacht der Untoten', 'Verrückt', 'Shi No Numa', 'Der Riese']) assert(everything.includes(`${name} · World at War`), `world at war lists ${name}`);
+});
+
 test('a map name alone lists that map, guide first among its results', () => {
   const results = search('gorod');
   assert(results.length > 3);

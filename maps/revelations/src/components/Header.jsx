@@ -10,6 +10,7 @@ const SECTIONS = [
   { to: `${BASE}/egg-locations`, label: 'Egg Locations' },
   { to: `${BASE}/summoning-key`, label: 'Summoning Key' },
   { to: `${BASE}/sound-step`, label: 'Sound Step' },
+  { to: `${BASE}/step-details`, label: 'Step details' },
 ];
 
 function Header() {

@@ -1,277 +1,83 @@
-import React from 'react';
-import RunNote from '../../../../shared/guide/RunNote';
-import apothiconSteps from './ApothiconSteps';
-import servantSpawn from '../assets/rev-ref/servant-spawn.webp';
-import servantSpawnAim from '../assets/rev-ref/servant-spawn-aim.webp';
-import servantShang from '../assets/rev-ref/servant-shang.webp';
-import servantShangAim from '../assets/rev-ref/servant-shang-aim.webp';
-import servantVerruckt from '../assets/rev-ref/servant-verruckt.webp';
-import servantVerrucktAim from '../assets/rev-ref/servant-verruckt-aim.webp';
-import servantMotd from '../assets/rev-ref/servant-motd.webp';
-import servantMotdAim from '../assets/rev-ref/servant-motd-aim.webp';
-import servantNacht from '../assets/rev-ref/servant-nacht.webp';
-import servantNachtAim from '../assets/rev-ref/servant-nacht-aim.webp';
-import boneSpawn from '../assets/rev-ref/bone-spawn.webp';
-import boneShang from '../assets/rev-ref/bone-shang.webp';
-import boneOrigins from '../assets/rev-ref/bone-origins.webp';
-import boneVerruckt from '../assets/rev-ref/bone-verruckt.webp';
-import boneDe from '../assets/rev-ref/bone-de.webp';
-import boneNacht from '../assets/rev-ref/bone-nacht.webp';
-import bonesAbsorb from '../assets/rev-ref/bones-absorb.webp';
-import turretBeam from '../assets/rev-ref/turret-beam.webp';
-
 /*
- * For The Good Of All as guide steps. Facts come only from ApothiconSteps.js (test-guarded); the
- * screenshots are the repo's own in-game captures, labelled by the region in their file names.
+ * For The Good Of All, main guide: a FLAT list (Bryen, 2026-11-16). Each step is { id, title, goal, links }: number,
+ * title, one short line, small links. Warnings, how-to lines, task lines and reference lists moved to the Step
+ * details tab (stepDetails.js, section #step-N); the blue-rock, bone and turret screenshots to the Apothicon
+ * Upgrade and Egg Locations tabs (revReferenceShots.js). Facts come only from ApothiconSteps.js (test-guarded).
  */
 const BASE = '/maps/revelations';
-const MAP = 'revelations';
-export const SYMBOL_NOTE_KEY = 'zh-rev-kronorium-symbols';
-
-const phase = (title) => {
-  const found = apothiconSteps.find((item) => item.title === title);
-  if (!found) throw new Error(`revGuideSteps: no ApothiconSteps entry titled "${title}"`);
-  return found;
-};
-const how = (title, ...skip) => [phase(title).detail, ...phase(title).bullets.filter((line) => !skip.some((pattern) => pattern.test(line)))];
-const line = (title, pattern) => {
-  const found = phase(title).bullets.find((item) => pattern.test(item));
-  if (!found) throw new Error(`revGuideSteps: no line matching ${pattern} in "${title}"`);
-  return found;
-};
-
-const IMG = { width: 1280, height: 720 };
-const servantTab = (id, label, wide, aim) => ({
-  id,
-  label,
-  refs: [
-    { type: 'image', src: aim, alt: `Aiming the Apothicon Servant at the blue rock — ${label}`, caption: 'Aim here', ...IMG },
-    { type: 'image', src: wide, alt: `Blue rock in the sky — ${label}`, caption: 'Where you stand', ...IMG },
-  ],
-});
-const boneTab = (id, label, src) => ({
-  id,
-  label,
-  refs: [{ type: 'image', src, alt: `Bone spot — ${label}`, caption: `${label}: shoot it with a Pack-a-Punched bullet weapon`, ...IMG }],
-});
-
-const T = {
-  ENGINES: 'Tombstones + Corruption Engines',
-  KEEPER: 'Keeper Protector + Required Weapons',
-  SERVANT: 'Upgrade the Apothicon Servant',
-  REEL1: 'Audio Reel 1 — Keeper Ritual',
-  REEL2: 'Audio Reel 2 — Li’l Arnie Holes',
-  REEL3: 'Audio Reel 3 — Six Bones',
-  SOPHIA: 'Materialize S.O.P.H.I.A.',
-  EGGS: 'Kronorium + Four Eggs',
-  RUNES: 'Runes of Creation',
-  SYMBOLS: 'Symbol Room + Summoning Key',
-  THROWS: 'Seven Summoning Key Throws',
-  BOSS: 'Final Boss — Shadowman',
-};
 
 const revGuideSteps = [
   {
     id: 'engines',
     title: 'Tombstones + engines',
-    // Outcome, action order, and code each have one home. Do not repeat instructions.
-    goal: 'Open Pack-a-Punch to begin the main quest.',
-    refs: [{ type: 'sequence', label: 'Tombstone order', items: ['2', '3', '1', '4'],
-      note: 'A sound cue and small fire flash confirm the code.' }],
-    tasks: [
-      { id: 'tombstones', label: 'Shoot the four Spawn tombstones' },
-      { id: 'spawn', label: 'Engine — Spawn' },
-      { id: 'de', label: 'Engine — Der Eisendrache' },
-      { id: 'verruckt', label: 'Engine — Verrückt' },
-      { id: 'motd', label: 'Engine — Mob of the Dead' },
-      { id: 'pap', label: 'Pack-a-Punch dropped', hint: 'Use the Nacht console as the Giant Apothicon passes; inside, shoot all three yellow sacs.' },
-    ],
-    // No redundant More section; all unique gameplay facts are above.
+    goal: 'Shoot the Spawn tombstones 2, 3, 1, 4, power all four Corruption Engines, then drop Pack-a-Punch.',
+    links: [{ to: `${BASE}/step-details`, section: 'step-1', label: 'Step details' }],
   },
   {
     id: 'keeper',
     title: 'Keeper parts + weapons',
     goal: 'Collect the three Keeper Protector parts. Make sure the run has Li’l Arnies and the Apothicon Servant.',
-    tasks: [
-      { id: 'gem', label: 'Gemstone' },
-      { id: 'head', label: 'Keeper head' },
-      { id: 'flag', label: 'Flag' },
-      { id: 'arnies', label: 'Li’l Arnies' },
-      { id: 'servant', label: 'Apothicon Servant' },
-    ],
-    how: how(T.KEEPER),
+    links: [{ to: `${BASE}/step-details`, section: 'step-2', label: 'Step details' }],
   },
   {
     id: 'servant',
     title: 'Upgrade the Servant',
     goal: 'Hit all five blue rocks in the sky with the Apothicon Servant, then Pack-a-Punch it in the Apothicon.',
-    refs: [
-      { type: 'tabs', label: 'Blue rocks', tabs: [
-        servantTab('spawn', 'Spawn', servantSpawn, servantSpawnAim),
-        servantTab('shang', 'Shangri-La', servantShang, servantShangAim),
-        servantTab('verruckt', 'Verrückt', servantVerruckt, servantVerrucktAim),
-        servantTab('motd', 'Mob of the Dead', servantMotd, servantMotdAim),
-        servantTab('nacht', 'Nacht', servantNacht, servantNachtAim),
-      ] },
-    ],
-    tasks: [
-      { id: 'spawn', label: 'Spawn rock' },
-      { id: 'shang', label: 'Shangri-La rock' },
-      { id: 'verruckt', label: 'Verrückt rock' },
-      { id: 'motd', label: 'Mob of the Dead rock' },
-      { id: 'nacht', label: 'Nacht rock' },
-      { id: 'pap', label: 'Servant Pack-a-Punched' },
-    ],
-    // The written rock list in the data disagrees with these captures (it names Der Eisendrache); the
-    // captures are shown and the conflicting line is left out until it is verified.
-    how: how(T.SERVANT, /transcript/i),
-    links: [{ to: `${BASE}/apothicon-upgrade`, label: 'Servant upgrade videos' }],
+    links: [{ to: `${BASE}/apothicon-upgrade`, section: 'servant-rocks', label: 'Servant rocks and videos' }, { to: `${BASE}/step-details`, section: 'step-3', label: 'Step details' }],
   },
   {
     id: 'reel-1',
     title: 'Reel 1 — Keeper ritual',
-    goal: 'Find the triangular ritual rock, crouch on it while the jump pad is off so the Keeper starts the ritual, protect the Keeper for three minutes, take the reel to Nacht’s radio.',
-    refs: [{ type: 'chips', label: 'Triangle rock: one of', items: ['Shangri-La', 'Mob of the Dead', 'Verrückt'] }],
-    tasks: [
-      { id: 'ritual', label: 'Keeper protected (3 min)' },
-      { id: 'reel', label: 'Reel in the Nacht radio' },
-    ],
-    how: how(T.REEL1),
+    goal: 'Crouch on the triangular ritual rock (jump pad off), protect the Keeper 3 minutes, take the reel to Nacht’s radio.',
+    links: [{ to: `${BASE}/step-details`, section: 'step-4', label: 'Step details' }],
   },
   {
     id: 'reel-2',
     title: 'Reel 2 — Arnie holes',
-    goal: 'In the Apothicon, throw Li’l Arnies into all nine wall holes, never the same one twice. Kill the Margwas after each three.',
-    tasks: [
-      { id: 'set1', label: 'Holes 1–3 + Margwas' },
-      { id: 'set2', label: 'Holes 4–6 + Margwas' },
-      { id: 'set3', label: 'Holes 7–9 + Margwas' },
-      { id: 'reel', label: 'Reel in the Kino stage radio' },
-    ],
-    how: how(T.REEL2),
+    goal: 'Throw Li’l Arnies into all nine Apothicon wall holes, never one twice. Kill the Margwas after each three.',
+    links: [{ to: `${BASE}/step-details`, section: 'step-5', label: 'Step details' }],
   },
   {
     id: 'reel-3',
     title: 'Reel 3 — Six bones',
     goal: 'Reveal each bone with a Pack-a-Punched bullet weapon, absorb it with the upgraded Servant, then finish the body at Nacht.',
-    refs: [
-      { type: 'tabs', label: 'Bone spots', tabs: [
-        boneTab('spawn', 'Spawn', boneSpawn),
-        boneTab('shang', 'Shangri-La', boneShang),
-        boneTab('origins', 'Origins', boneOrigins),
-        boneTab('verruckt', 'Verrückt', boneVerruckt),
-        boneTab('de', 'Der Eisendrache', boneDe),
-        boneTab('nacht', 'Nacht', boneNacht),
-        { id: 'absorb', label: 'Absorbing', refs: [
-          { type: 'image', src: bonesAbsorb, alt: 'Absorbing a revealed bone with the upgraded Apothicon Servant', caption: 'Then absorb it with the upgraded Servant', ...IMG },
-        ] },
-      ] },
-    ],
-    tasks: [
-      { id: 'spawn', label: 'Spawn bone' },
-      { id: 'shang', label: 'Shangri-La bone' },
-      { id: 'origins', label: 'Origins bone' },
-      { id: 'verruckt', label: 'Verrückt bone' },
-      { id: 'de', label: 'Der Eisendrache bone' },
-      { id: 'nacht', label: 'Nacht bone' },
-      { id: 'reel', label: 'Reel on top of the Origins mound' },
-    ],
-    how: how(T.REEL3),
+    links: [{ to: `${BASE}/egg-locations`, section: 'bone-spots', label: 'Bone spots' }, { to: `${BASE}/step-details`, section: 'step-6', label: 'Step details' }],
   },
   {
     id: 'sophia',
     title: 'Materialize S.O.P.H.I.A.',
-    goal: 'At each Corruption Engine, hit the left of the two blue rocks above it with the laser turret (left as you face the Nacht portal). Then activate S.O.P.H.I.A. at Nacht.',
-    critical: [line(T.SOPHIA, /kicks you off/)],
-    refs: [{ type: 'image', src: turretBeam, alt: 'Laser turret firing at the blue rock behind a rift', caption: 'Turret shot', ...IMG }],
-    tasks: [
-      { id: 'spawn', label: 'Turret — Spawn' },
-      { id: 'de', label: 'Turret — Der Eisendrache' },
-      { id: 'verruckt', label: 'Turret — Verrückt' },
-      { id: 'motd', label: 'Turret — Mob of the Dead' },
-      { id: 'sophia', label: 'S.O.P.H.I.A. activated' },
-    ],
-    how: how(T.SOPHIA, /kicks you off/),
+    goal: 'At each Corruption Engine, laser-turret the left of the two blue rocks above it. Then activate S.O.P.H.I.A. at Nacht.',
+    links: [{ to: `${BASE}/egg-locations`, section: 'turret-shot', label: 'Turret shot' }, { to: `${BASE}/step-details`, section: 'step-7', label: 'Step details' }],
   },
   {
     id: 'eggs',
     title: 'Kronorium + four eggs',
-    goal: 'Get the Kronorium from Samantha’s bed, place it on the podium on the Kino stage, then hatch all four eggs in the Apothicon’s nests.',
-    refs: [{ type: 'sequence', label: 'Each egg', items: ['Into a yellow nest / pustule', '10 zombie souls', 'Gateworm'] }],
-    tasks: [
-      { id: 'book', label: 'Kronorium on the stage podium' },
-      { id: 'e1', label: 'Gateworm 1' },
-      { id: 'e2', label: 'Gateworm 2' },
-      { id: 'e3', label: 'Gateworm 3' },
-      { id: 'e4', label: 'Gateworm 4' },
-    ],
-    how: how(T.EGGS),
-    links: [{ to: `${BASE}/egg-locations`, label: 'Egg locations' }],
+    goal: 'Kronorium from Samantha’s bed to the Kino stage podium, then hatch all four eggs in the Apothicon’s nests.',
+    links: [{ to: `${BASE}/egg-locations`, label: 'Egg locations' }, { to: `${BASE}/step-details`, section: 'step-8', label: 'Step details' }],
   },
   {
     id: 'runes',
     title: 'Runes of Creation',
     goal: 'Use each Gateworm to find its hidden rune. Listen for the beeping at the right spot.',
-    tasks: [
-      { id: 'r1', label: 'Rune 1' },
-      { id: 'r2', label: 'Rune 2' },
-      { id: 'r3', label: 'Rune 3' },
-      { id: 'r4', label: 'Rune 4' },
-    ],
-    how: how(T.RUNES),
-    links: [{ to: `${BASE}/sound-step`, label: 'Rune / sound reference' }],
+    links: [{ to: `${BASE}/sound-step`, label: 'Rune / sound reference' }, { to: `${BASE}/step-details`, section: 'step-9', label: 'Step details' }],
   },
   {
     id: 'symbols',
     title: 'Symbol room',
-    goal: 'All players enter together through the Kino projector room’s purple rift. Read the Kronorium, enter its symbol order, survive the Margwas.',
-    critical: [line(T.SYMBOLS, /symbol order changes every game/)],
-    refs: [
-      {
-        type: 'custom',
-        key: 'symbol-note',
-        render: () => (
-          <RunNote
-            storageKey={SYMBOL_NOTE_KEY}
-            mapId={MAP}
-            label="Kronorium order · this game"
-            hint="enter it at the back of the room"
-            slots={['1st', '2nd', '3rd', '4th']}
-          />
-        ),
-      },
-    ],
-    tasks: [
-      { id: 'w1', label: 'Margwa wave 1' },
-      { id: 'w2', label: 'Margwa wave 2' },
-      { id: 'w3', label: 'Margwa wave 3' },
-      { id: 'w4', label: 'Margwa wave 4' },
-    ],
-    how: how(T.SYMBOLS),
+    goal: 'All players enter the purple rift together, enter the Kronorium’s symbol order, survive the Margwas.',
+    links: [{ to: `${BASE}/step-details`, section: 'step-10', label: 'Step details' }],
   },
   {
     id: 'throws',
     title: 'Seven key throws',
     goal: 'Back on the map, hit all seven targets with the Summoning Key.',
-    critical: [line(T.THROWS, /melee during the transition/)],
-    tasks: [
-      { id: 'kino', label: 'Kino', hint: 'Chandelier' },
-      { id: 'de', label: 'Der Eisendrache', hint: 'Clocktower face near the Corruption Engine' },
-      { id: 'shang', label: 'Shangri-La', hint: 'Focusing Stone on the staff, top of the stairs' },
-      { id: 'origins', label: 'Origins', hint: 'Tombstone at the top of the mound' },
-      { id: 'motd', label: 'Mob of the Dead', hint: 'Poster inside the open cell' },
-      { id: 'verruckt', label: 'Verrückt', hint: 'MG42 on the fountain' },
-      { id: 'nacht', label: 'Nacht der Untoten', hint: 'Red barrel' },
-    ],
-    how: how(T.THROWS),
-    links: [{ to: `${BASE}/summoning-key`, label: 'Throw videos' }],
+    links: [{ to: `${BASE}/summoning-key`, label: 'Throw videos' }, { to: `${BASE}/step-details`, section: 'step-11', label: 'Step details' }],
   },
   {
     id: 'boss',
     title: 'Final boss — Shadowman',
-    goal: 'Charge an altar with kills, throw the Summoning Key through ghost S.O.P.H.I.A., then shoot the Shadowman into the Apothicon’s mouth.',
-    refs: [{ type: 'sequence', items: ['Charge an altar (~10 kills)', 'Key through ghost S.O.P.H.I.A.', 'Shoot the Shadowman', 'Interact with the book'] }],
-    how: how(T.BOSS),
+    goal: 'Charge an altar, throw the Key through ghost S.O.P.H.I.A., then shoot the Shadowman into the Apothicon’s mouth.',
+    links: [{ to: `${BASE}/step-details`, section: 'step-12', label: 'Step details' }],
   },
 ];
 

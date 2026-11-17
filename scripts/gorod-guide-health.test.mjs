@@ -24,7 +24,8 @@ test('Gorod safe trophy includes both the Gauntlet Whelp and melee steps', () =>
 
 test('Gorod final Group 935 challenge uses the keycard, not a motherboard', () => {
   const data = read('maps/gorod-krovi/src/data/gorodRun.js');
-  const main = read('maps/gorod-krovi/src/pages/MainGuide.jsx');
+  // The challenges step's warning moved to the Step details data when the main guide went flat (2026-11-16).
+  const main = read('maps/gorod-krovi/src/data/stepDetails.js');
   const page = read('maps/gorod-krovi/src/pages/TrophyChallenges.jsx');
   for (const source of [data, main, page]) assert.doesNotMatch(source, /motherboard/i);
   assert.match(data, /Group 935 Challenge/i);

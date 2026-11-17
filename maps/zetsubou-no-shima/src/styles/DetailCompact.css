@@ -87,3 +87,17 @@
     padding: 0.8rem 0 1.6rem;
   }
 }
+
+/* Calm pass: the tab content sits on one dark panel so text never rides on the artwork. */
+.zets-module .zets-detail-page {
+  width: min(100% - 1.5rem, 56rem);
+  margin: 1rem auto 2rem;
+  padding: 0.75rem clamp(1rem, 3vw, 2rem) 1.5rem;
+  border-radius: 12px;
+  background: rgba(3, 14, 14, 0.93);
+}
+.zets-module .zets-detail-page .zh-guide-hero { background: none; border: 0; }
+.zets-module .zets-detail-page :is(p, li, small, summary, dd) { font-size: 1.0625rem; line-height: 1.5; }
+.zets-module .zets-detail-page :is(strong, h4) { font-size: max(1.0625rem, 1em); }
+.zets-module .zets-detail-page span:not([class*="number"]):not([class*="marker"]) { font-size: max(0.95rem, 1em); letter-spacing: 0; text-transform: none; }
+.zets-module .zets-header-subtitle { font-size: 1rem; }

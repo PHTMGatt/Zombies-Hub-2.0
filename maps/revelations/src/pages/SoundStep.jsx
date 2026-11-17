@@ -67,7 +67,7 @@ function SoundStep() {
             />
           </div>
 
-          <aside className="rev-workspace__panel">
+          <div className="rev-workspace__panel">
             <RevAreaPicker
               kicker="Region"
               noun="sound spots"
@@ -87,7 +87,7 @@ function SoundStep() {
               activeKey={selectedSpot ? `${selectedSpot.area}-${selectedSpot.label}` : null}
               onSelect={handleClick}
             />
-          </aside>
+          </div>
         </div>
       </section>
     </div>

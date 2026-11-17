@@ -7,6 +7,7 @@ export default [
     released: 'February 1, 2011',
     description: 'Repair the Casimir Mechanism and free Dr. Anton Gersh. The original Black Ops quest requires four players and combines Lunar Lander routing, synchronized Space Monkey buttons, and a final weapon-powered portal sequence.',
     videoUrl: 'https://www.youtube.com/watch?v=P6RzrxQ6yNg',
+    author: 'CodeNamePizza',
   },
   {
     slug: 'call-of-the-dead',
@@ -16,6 +17,7 @@ export default [
     released: 'May 3, 2011',
     description: 'Help the trapped Ultimis crew obtain the Golden Rod while the celebrity cast survives George Romero outside the vault. The quest has a solo path, Stand-in, and an expanded co-op version, Ensemble Cast.',
     videoUrl: 'https://www.youtube.com/watch?v=8kI2w4NgUCQ',
+    author: 'CodeNamePizza',
   },
   {
     slug: 'shangri-la',
@@ -34,5 +36,52 @@ export default [
     released: 'August 23, 2011',
     description: 'Complete the Moon quest chain through the Vril Device, Focusing Stone, MPD, and Maxis’ final rocket sequence. It closes the original Black Ops Easter Egg arc with one of Zombies’ biggest story turns.',
     videoUrl: 'https://www.youtube.com/watch?v=2k6L3wBsEyA',
+    author: 'MrRoflWaffles',
+  },
+  {
+    slug: 'tranzit',
+    title: 'TranZit',
+    game: 'Black Ops 2',
+    dlc: 'Base Game',
+    released: 'November 13, 2012',
+    description: 'Travel between Bus Depot, Diner, Farm, Power Station, and Town on the bus while Denizens punish long trips through the fog. The Tower of Babble is its main quest.',
+    videoUrl: 'https://www.youtube.com/watch?v=0thNmxkIYH0',
+    author: 'CodeNamePizza', // video id verified with the YouTube oEmbed endpoint (HTTP 200, public, embeddable), 2026-11-16
+  },
+  {
+    slug: 'die-rise',
+    title: 'Die Rise',
+    game: 'Black Ops 2',
+    dlc: 'Revolution',
+    description: 'A vertical skyscraper map where elevators, one-way drops, and dangerous jumps are as important as the zombies. Complete the High Maintenance quest with Victis.',
+    videoUrl: 'https://www.youtube.com/watch?v=kpMbNt_dyME',
+    author: 'MrRoflWaffles', // video id verified with the YouTube oEmbed endpoint (HTTP 200, public, embeddable), 2026-11-16
+  },
+  {
+    slug: 'buried',
+    title: 'Buried',
+    game: 'Black Ops 2',
+    dlc: 'Vengeance',
+    description: 'Victis explores an underground Old West town filled with buildables, chalk weapon drawings, the bank, and the NPC Arthur. Resolution 1295 is its main quest.',
+    videoUrl: 'https://www.youtube.com/watch?v=EnFU6GZ2HmM',
+    author: 'MrTLexify', // video id verified with the YouTube oEmbed endpoint (HTTP 200, public, embeddable), 2026-11-16
+  },
+  {
+    slug: 'the-giant',
+    title: 'The Giant',
+    game: 'Black Ops 3',
+    dlc: 'Giant',
+    description: 'A Black Ops III reimagining of Der Riese starring Primis. Complete the Fly Trap-style hidden-object quest to unlock the Annihilator specialist weapon.',
+    videoUrl: 'https://www.youtube.com/watch?v=IUfV1egeI3Y',
+    author: 'Mar&Justin', // video id verified with the YouTube oEmbed endpoint (HTTP 200, public, embeddable), 2026-11-16
+  },
+  {
+    slug: 'shangri-la-chronicles',
+    title: 'Shangri-La',
+    game: 'Black Ops 3',
+    dlc: 'Zombies Chronicles',
+    description: 'The Black Ops III Zombies Chronicles version of Shangri-La. Its main quest uses the Eclipse mechanic and ultimately rewards the Focusing Stone.',
+    videoUrl: 'https://www.youtube.com/watch?v=tctR5oCbxWk',
+    author: 'MrRoflWaffles', // video id verified with the YouTube oEmbed endpoint (HTTP 200, public, embeddable), 2026-11-16
   },
 ];

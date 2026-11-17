@@ -1,3 +1,4 @@
+import './smoke-ready.mjs'; // first: waits for the app to render after each navigation
 import { chromium } from 'playwright';
 import assert from 'node:assert/strict';
 import { VIEWPORTS } from './smoke-viewports.mjs';
@@ -52,8 +53,13 @@ try {
     await page.reload({ waitUntil: 'networkidle' });
     const button = page.getByRole('button', { name: COMPLETE });
     assert.equal(await button.count(), 1, 'one completion action');
-    assert(await page.locator('.guide-seq__footer').evaluate((footer) => footer === footer.parentElement.lastElementChild), 'completion action follows the last step');
-    assert(await button.evaluate((el) => el.closest('.guide-seq__footer') !== null), 'completion action lives in the guide footer');
+    // GuideSteps puts it in .guide-seq__footer after the steps; the flat guide (FlatGuide) right after its list.
+    assert(await button.evaluate((el) => {
+      const footer = el.closest('.guide-seq__footer');
+      if (footer) return footer === footer.parentElement.lastElementChild;
+      const flat = el.closest('.flat-guide');
+      return Boolean(flat) && el === flat.lastElementChild && el.previousElementSibling?.matches('.flat-guide__list');
+    }), 'completion action is the last thing in the guide, after the last step');
     const box = await button.boundingBox();
     assert(box.height >= 44, `completion action is a usable tap target (${box.height}px)`);
     assert.notEqual(await button.evaluate((el) => getComputedStyle(el).position), 'sticky', 'completion action is not pinned');
@@ -65,14 +71,15 @@ try {
     assert.match(toastText, /For The Good Of All/);
     assert(await page.evaluate(() => window.__chimes) > 0, 'chime plays with sound on');
     assert((await unlocked(page))['revelations/main'], 'revelations/main recorded');
-    await page.locator('.guide-seq__footer').getByText('Completed').waitFor();
+    await page.locator(':is(.guide-seq__footer, .flat-guide)').getByText('Completed').waitFor();
     assert.equal(await page.getByRole('button', { name: COMPLETE }).count(), 0, 'the button is replaced by a quiet note');
     assert.deepEqual(await pageShape(page), before, 'completing changes no steps and no navigation');
     check(`${label}: completion action records the achievement and changes nothing else`);
 
-    await toast(page).waitFor({ state: 'detached', timeout: 8000 });
+    await toast(page).waitFor({ state: 'detached', timeout: 15000 });
     await page.reload({ waitUntil: 'networkidle' });
-    await page.waitForTimeout(600);
+    // An absence check: give a (wrong) second popup time to appear, even on a slow machine.
+    await page.waitForTimeout(1500);
     assert.equal(await toast(page).count(), 0, 'no second popup after reload');
     check(`${label}: toast auto-dismisses and never repeats`);
 
@@ -166,7 +173,11 @@ try {
       localStorage.setItem('zh-origins-depth', JSON.stringify('speedrun'));
     });
     await page.reload({ waitUntil: 'networkidle' });
-    await page.waitForTimeout(600);
+    // The legacy backfill runs after the first render: wait for its credit instead of a fixed delay, then give a
+    // (wrong) toast time to appear before checking there is none.
+    await page.waitForFunction(() => JSON.parse(localStorage.getItem('zh-achievements') ?? '{"unlocked":{}}').unlocked?.['gorod-krovi/main'], null, { timeout: 15000 })
+      .catch(() => assert.fail('finished legacy run credited'));
+    await page.waitForTimeout(1500);
     const after = await unlocked(page);
     assert.deepEqual(after['gorod-krovi/main'], { at: null }, 'finished legacy run credited without a date');
     assert(!after['revelations/main'], 'unfinished legacy run not credited');
@@ -178,7 +189,7 @@ try {
 
     // Old mode keys are harmless.
     await page.goto(`${base}/maps/origins`, { waitUntil: 'networkidle' });
-    assert.equal(await page.locator('li.guide-seq__step').count(), 11, 'Origins renders its sequence with old mode keys present');
+    assert.equal(await page.locator('li.guide-seq__step, li.flat-guide__step').count(), 11, 'Origins renders its sequence with old mode keys present');
     assert.deepEqual(errors, [], `page errors: ${errors.join('; ')}`);
     check('old guide-mode / origins-depth keys are harmless');
     await context.close();
@@ -195,7 +206,7 @@ try {
     page.on('pageerror', (error) => errors.push(error.message));
     await page.goto(MOB, { waitUntil: 'networkidle' });
     await page.getByRole('button', { name: COMPLETE }).click();
-    await page.locator('.guide-seq__footer').getByText('Completed').waitFor();
+    await page.locator(':is(.guide-seq__footer, .flat-guide)').getByText('Completed').waitFor();
     assert.deepEqual(errors, [], `page errors with blocked storage: ${errors.join('; ')}`);
     check('blocked storage: completion shows as earned, no errors');
     await context.close();

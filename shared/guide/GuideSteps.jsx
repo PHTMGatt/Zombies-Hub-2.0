@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import GuideReferences from './GuideReferences';
 import './guide.css';
+import { stepLinkHref } from './stepLinks';
 
 /*
  * An Easter Egg as one plain sequence: every step visible, in order, each addressable as #<step.id>.
@@ -100,7 +101,7 @@ export function StepItem({ step, nextStep, accordionName, collapsibleReferences 
           {links.length > 0 && (
             <div className="guide-links">
               {links.map((link) => (
-                <Link key={link.to} to={link.to} style={link.tone ? { '--gref-tone': link.tone } : undefined}>
+                <Link key={`${link.to}#${link.section ?? ''}`} to={stepLinkHref(link, step.id)} data-step-link={link.section ?? ''} style={link.tone ? { '--gref-tone': link.tone } : undefined}>
                   {link.label}
                 </Link>
               ))}

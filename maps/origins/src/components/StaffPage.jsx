@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import ZoomImage from '../../../../shared/ui/ZoomImage';
 import useHashLanding from '../../../../shared/guide/useHashLanding';
 import ExcavationRings from './ExcavationRings';
@@ -26,13 +27,15 @@ export default function StaffPage({ staff, tools = null, extra = null }) {
   // Section links (#build, #map, #puzzle, #upgrade, Lightning's #switches) land clear of the pinned tab row.
   useHashLanding(['build', 'map', 'puzzle', 'upgrade', 'switches']);
   const places = staffPlaces[id];
+  // ?nav=3 (default): section jump bar on phones. ?nav=2: no sub-nav, one scrolling page. ?nav=1: plain text jump links.
+  const navVariant = ['1', '2', '3'].includes(new URLSearchParams(useLocation().search).get('nav')) ? new URLSearchParams(useLocation().search).get('nav') : '3';
 
   return (
-    <div className={`origins-page staff-page${tools ? ' staff-page--tools' : ''}`} data-staff={id}>
+    <div className={`origins-page staff-page${tools ? ' staff-page--tools' : ''} staff-page--nav-${navVariant}`} data-staff={id}>
       <h2 className="visually-hidden">{name} Staff</h2>
       <nav className="staff-page__jump" aria-label={`${name} Staff sections`}>
         <a href="#build">Build</a>
-        <a href="#map">Map</a>
+        <a href="#map">Spots</a>
         <a href="#puzzle">Puzzle</a>
         <a href="#upgrade">Upgrade</a>
       </nav>
@@ -52,8 +55,10 @@ export default function StaffPage({ staff, tools = null, extra = null }) {
 
         {/* Every spot this staff needs, from its parts to its upgrade, on the Origins sketch. */}
         <section className="origins-panel staff-block staff-map" id="map" aria-labelledby="map-title">
-          <PanelTitle id="map-title">Map</PanelTitle>
-          <OriginsMap title={`${name} Staff spots`} pins={places.pins} layers={places.layers} />
+          <PanelTitle id="map-title">Spots</PanelTitle>
+          <ol className="staff-page__steps staff-page__spots">
+            {places.pins.map((pin) => <li key={pin.text}>{pin.text}</li>)}
+          </ol>
         </section>
 
         <section className="origins-panel staff-block" id="puzzle" aria-labelledby="puzzle-title">

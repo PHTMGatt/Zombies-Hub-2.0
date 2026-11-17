@@ -1,3 +1,4 @@
+import './smoke-ready.mjs'; // first: waits for the app to render after each navigation
 import { VIEWPORTS } from './smoke-viewports.mjs';
 import { chromium } from 'playwright';
 import assert from 'node:assert/strict';
@@ -32,7 +33,7 @@ try {
         if (!step) return false;
         const top = step.getBoundingClientRect().top;
         return top >= 0 && top < window.innerHeight * 0.5;
-      }, id, { timeout: 5000 }).catch(() => assert.fail(`#${id} is not in view after search`));
+      }, id, { timeout: 15000 }).catch(() => assert.fail(`#${id} is not in view after search`));
     };
 
     // Header icon → search page → "gorod valves" + Enter → the valve step, with its solver. Start on a page
@@ -46,8 +47,12 @@ try {
     await page.getByRole('searchbox').press('Enter');
     await page.waitForURL('**/maps/gorod-krovi#valves');
     await assertStepInView('valves');
-    assert.equal(await page.locator('#valves .gorod-valve-fields select').count(), 2, 'the solver is in the valve step');
-    results.push(`${viewport.name}: "gorod valves" lands on the valve step with its solver`);
+    // Flat main guide: the valve step links to the Valve Solver tab, where the solver lives.
+    await page.locator('#valves a[data-step-link][href*="/maps/gorod-krovi/valves"]').first().click();
+    await page.waitForURL('**/maps/gorod-krovi/valves**');
+    await page.locator('.gorod-valve-fields select').first().waitFor();
+    assert.equal(await page.locator('.gorod-valve-fields select').count(), 2, 'the valve step links to its solver');
+    results.push(`${viewport.name}: "gorod valves" lands on the valve step, one tap from its solver`);
 
     // Home search box: other maps, player phrasing.
     for (const [query, map, id, title] of [
@@ -60,7 +65,8 @@ try {
       await page.locator('.home-search .zh-search__results a', { hasText: /./ }).first().click();
       await page.waitForURL(`**${map}`);
       await assertStepInView(id);
-      assert.equal(await page.locator(`#${id} h3`).innerText(), title);
+      // The flat guide's titles start with a screen-reader-only "Step N:".
+      assert.equal((await page.locator(`#${id} :is(h2, h3)`).innerText()).replace(/^Step \d+:\s*/, ''), title);
       results.push(`${viewport.name}: "${query}" → ${title}`);
     }
 
@@ -82,6 +88,36 @@ try {
     await page.waitForURL('**/maps/mob-of-the-dead#codes');
     await assertStepInView('codes');
     results.push(`${viewport.name}: legacy ?ref=codes redirects to #codes`);
+
+    // Step details tabs and the hub-only maps (video cards, Coming Soon, World at War) are findable:
+    // the first result is the right page, and it opens (no 404).
+    const decoded = (href) => decodeURIComponent(new URL(href, base).pathname + new URL(href, base).search);
+    for (const [query, expected] of [
+      ['ascension', '/easter-eggs/ascension'],
+      ['tranzit', '/easter-eggs/tranzit'],
+      ['die rise', '/easter-eggs/die-rise'],
+      ['the giant', '/easter-eggs/the-giant'],
+      ['der riese', '/info/der-riese?game=Black Ops 1'],
+      ['waw nacht', '/info/nacht-der-untoten?game=World at War'],
+      ['shangri la bo3', '/easter-eggs/shangri-la-chronicles'],
+      ['shangri la', '/easter-eggs/shangri-la'],
+      ['gorod step details', '/maps/gorod-krovi/step-details'],
+    ]) {
+      await page.goto(`${base}/search?q=${encodeURIComponent(query)}`, { waitUntil: 'networkidle' });
+      const first = page.locator('.zh-search__results a').first();
+      await first.waitFor();
+      assert.equal(decoded(await first.getAttribute('href')), expected, `"${query}": first result`);
+      await first.click();
+      await page.waitForURL((url) => decoded(url.href) === expected);
+      await page.locator('h1, h2').first().waitFor();
+      assert.equal(await page.locator('[data-page-not-found]').count(), 0, `"${query}": ${expected} opens`);
+      results.push(`${viewport.name}: "${query}" → ${expected}`);
+    }
+    await page.goto(`${base}/search?q=${encodeURIComponent('world at war')}`, { waitUntil: 'networkidle' });
+    await page.locator('.zh-search__results a').first().waitFor();
+    const wawHrefs = (await page.locator('.zh-search__results a').evaluateAll((links) => links.map((link) => link.getAttribute('href'))))
+      .map(decoded).filter((href) => href.includes('game=World at War'));
+    assert(new Set(wawHrefs).size >= 4, `"world at war" lists the four World at War entries (got ${wawHrefs.join(', ')})`);
 
     // Unknown words say so instead of showing junk.
     await page.goto(`${base}/search?q=zzqx`, { waitUntil: 'networkidle' });

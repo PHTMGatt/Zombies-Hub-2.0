@@ -11,6 +11,7 @@ const Nav = () => (
       <li><NavLink to={`${BASE}/retriever-skulls`}>Retriever + Skulls</NavLink></li>
       <li><NavLink to={`${BASE}/codes`}>Codes</NavLink></li>
       <li><NavLink to={`${BASE}/final-step`}>Final Fight</NavLink></li>
+      <li><NavLink to={`${BASE}/step-details`}>Step details</NavLink></li>
     </ul>
   </nav>
 );

@@ -3,6 +3,8 @@ import GuideVideoPlayer from '../components/GuideVideoPlayer';
 import RevSectionHeader from '../components/RevSectionHeader';
 import RevOptionList, { formatRange } from '../components/RevOptionList';
 import { RevAreaPicker } from '../components/RevIslandMap';
+import RevShotSection from '../components/RevShotSection';
+import { boneSpots, turretShot } from '../data/revReferenceShots';
 import eggData from '../data/eggData';
 import { EGG_ISLANDS } from '../data/revIslands';
 import '../styles/Reference.css';
@@ -51,7 +53,7 @@ const EggLocations = () => {
             />
           </div>
 
-          <aside className="rev-workspace__panel">
+          <div className="rev-workspace__panel">
             <RevAreaPicker
               kicker="Map area"
               noun="egg spots"
@@ -70,8 +72,16 @@ const EggLocations = () => {
               activeKey={selectedLocation}
               onSelect={handleLocation}
             />
-          </aside>
+          </div>
         </div>
+
+        <RevShotSection
+          id="bone-spots"
+          title="Bone spots"
+          intro="Shoot each bone with a Pack-a-Punched bullet weapon, then absorb it with the upgraded Servant."
+          groups={boneSpots}
+        />
+        <RevShotSection id="turret-shot" title="Turret shot" groups={[{ id: 'turret', images: [turretShot] }]} />
       </section>
     </div>
   );

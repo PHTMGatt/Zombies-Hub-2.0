@@ -3,7 +3,7 @@ const mapInfo = {
     name: "Nacht der Untoten",
     releasedIn: "World at War (2008)",
     description:
-      "The original Treyarch Zombies survival map: three rooms, boarded windows, the Mystery Box, and the Ray Gun. Nacht is pure survival with no main quest, making it the simplest place to experience the mode's core loop.",
+      "The original Treyarch Zombies survival map: three rooms, boarded windows, the Mystery Box, and the Ray Gun. Nacht is pure survival with no main quest, making it the simplest place to experience the mode’s core loop.",
     hasEasterEgg: false
   },
   "kino-der-toten": {
@@ -17,7 +17,7 @@ const mapInfo = {
     name: "Five",
     releasedIn: "Black Ops (2010)",
     description:
-      "Fight through the Pentagon as John F. Kennedy, Richard Nixon, Robert McNamara, and Fidel Castro. DEFCON switches open the Pack-a-Punch room, while the Winter's Howl and Pentagon Thief give the map its distinctive high-pressure style.",
+      "Fight through the Pentagon as John F. Kennedy, Richard Nixon, Robert McNamara, and Fidel Castro. DEFCON switches open the Pack-a-Punch room, while the Winter’s Howl and Pentagon Thief give the map its distinctive high-pressure style.",
     hasEasterEgg: true
   },
   "dead-ops-arcade": {
@@ -73,7 +73,7 @@ const mapInfo = {
     name: "Der Riese",
     releasedIn: "World at War: Map Pack 3 (2009)",
     description:
-      "Group 935's factory map introduced Pack-a-Punch and the three-teleporter linking system that became a Zombies staple. The Wunderwaffe DG-2 returns, while the Fly Trap provides the map's signature hidden-object Easter Egg.",
+      "Group 935's factory map introduced Pack-a-Punch and the three-teleporter linking system that became a Zombies staple. The Wunderwaffe DG-2 returns, while the Fly Trap provides the map’s signature hidden-object Easter Egg.",
     hasEasterEgg: true
   },
   "tranzit": {
@@ -101,7 +101,7 @@ const mapInfo = {
     name: "Mob of the Dead",
     releasedIn: "Black Ops II: Uprising DLC (2013)",
     description:
-      "Four mobsters are trapped in a supernatural version of Alcatraz and must use Afterlife to power the prison and build the Icarus plane. Hell's Retriever, the Blundergat, Brutus, and the repeating bridge cycle all feed into Pop Goes the Weasel and the choice to break or continue the cycle.",
+      "Four mobsters are trapped in a supernatural version of Alcatraz and must use Afterlife to power the prison and build the Icarus plane. Hell’s Retriever, the Blundergat, Brutus, and the repeating bridge cycle all feed into Pop Goes the Weasel and the choice to break or continue the cycle.",
     hasEasterEgg: true
   },
   "buried": {
@@ -143,7 +143,7 @@ const mapInfo = {
     name: "Der Eisendrache",
     releasedIn: "Black Ops III: Awakening DLC (2016)",
     description:
-      "Primis assaults Griffin Castle, feeding three dragons to obtain the Wrath of the Ancients before upgrading it into elemental bows. Wunderspheres, the Death Ray, Ragnarok DG-4, wisp cycles, Keeper ritual, and a dedicated boss fight form the My Brother's Keeper quest.",
+      "Primis assaults Griffin Castle, feeding three dragons to obtain the Wrath of the Ancients before upgrading it into elemental bows. Wunderspheres, the Death Ray, Ragnarok DG-4, wisp cycles, Keeper ritual, and a dedicated boss fight form the My Brother’s Keeper quest.",
     hasEasterEgg: true
   },
   "zetsubou-no-shima": {
@@ -178,14 +178,14 @@ const mapInfo = {
     name: "Kino der Toten (Chronicles)",
     releasedIn: "Black Ops III: Zombies Chronicles (2017)",
     description:
-      "Kino rebuilt in the BO3 engine with the original theater, teleporter/Pack-a-Punch loop, Thundergun, and small Easter Eggs intact. BO3 weapons and GobbleGum modernize the setup without changing the map's basic flow.",
+      "Kino rebuilt in the BO3 engine with the original theater, teleporter/Pack-a-Punch loop, Thundergun, and small Easter Eggs intact. BO3 weapons and GobbleGum modernize the setup without changing the map’s basic flow.",
     hasEasterEgg: true
   },
   "shangri-la-chronicles": {
     name: "Shangri-La (Chronicles)",
     releasedIn: "Black Ops III: Zombies Chronicles (2017)",
     description:
-      "The BO3 remaster preserves Shangri-La's tight jungle layout, Napalm and Shrieker Zombies, 31-79 JGb215, traps, and Eclipse quest. Modern weapons and GobbleGum are layered onto the original mechanics.",
+      "The BO3 remaster preserves Shangri-La’s tight jungle layout, Napalm and Shrieker Zombies, 31-79 JGb215, traps, and Eclipse quest. Modern weapons and GobbleGum are layered onto the original mechanics.",
     hasEasterEgg: true
   },
   "moon-chronicles": {
@@ -213,7 +213,7 @@ const mapInfo = {
     name: "Verrückt (Chronicles)",
     releasedIn: "Black Ops III: Zombies Chronicles (2017)",
     description:
-      "The BO3 remaster keeps Verrückt's split spawn, narrow asylum routes, perk layout, and electric traps while adding BO3 weapons and GobbleGum. It remains a compact survival map without a main quest.",
+      "The BO3 remaster keeps Verrückt’s split spawn, narrow asylum routes, perk layout, and electric traps while adding BO3 weapons and GobbleGum. It remains a compact survival map without a main quest.",
     hasEasterEgg: false
   }
 };

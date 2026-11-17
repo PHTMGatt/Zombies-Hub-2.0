@@ -84,3 +84,7 @@
     width: 100%;
   }
 }
+
+/* Calm pass: readable bow tabs, no micro-caps label. */
+.de-module .de-bow-nav__label { font-size: 0.95rem; letter-spacing: 0; text-transform: none; }
+.de-module .de-bow-nav__links a, .de-module .de-bow-nav__links button { min-height: 44px; font-size: 1rem; }

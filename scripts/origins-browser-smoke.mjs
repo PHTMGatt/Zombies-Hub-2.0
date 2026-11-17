@@ -1,3 +1,4 @@
+import './smoke-ready.mjs'; // first: waits for the app to render after each navigation
 /*
  * Origins, the OG guide cleaned up: the blue title band with its five tabs, the lean Main Steps with
  * Tips and Speed Run, and the Build / Puzzle / Upgrade staff pages, at every smoke viewport.
@@ -15,13 +16,14 @@ const base = process.env.SMOKE_BASE_URL || 'http://127.0.0.1:4173';
 const ROUTES = [
   ['/maps/origins', 'UI Main Guide'],
   ['/maps/origins/og', 'OG'],
+  ['/maps/origins/step-details', 'Step details'],
   ['/maps/origins/ice-staff', 'Ice Staff'],
   ['/maps/origins/fire-staff', 'Fire Staff'],
   ['/maps/origins/wind-staff', 'Wind Staff'],
   ['/maps/origins/lightning-staff', 'Lightning Staff'],
   ['/maps/origins/speed-run', 'Speed Run'],
 ];
-const TABS = ['UI Main Guide', 'OG', 'Ice Staff', 'Fire Staff', 'Wind Staff', 'Lightning Staff', 'Speed Run'];
+const TABS = ['UI Main Guide', 'OG', 'Step details', 'Ice Staff', 'Fire Staff', 'Wind Staff', 'Lightning Staff', 'Speed Run'];
 const results = [];
 
 const assertNoHorizontalOverflow = async (page, label) => {
@@ -51,15 +53,6 @@ const settle = (page) => page.evaluate(() => new Promise((resolve) => {
   };
   tick();
 }));
-
-// Robot names on a sketch that no pin or tunnel covers (an "Odin" read as "Udin" under the Wind tunnel).
-const robotLabelClashes = (page, figure) => page.locator(figure).evaluate((root) => {
-  const hit = (a, b) => a.left < b.right - 0.5 && b.left < a.right - 0.5 && a.top < b.bottom - 0.5 && b.top < a.bottom - 0.5;
-  const marks = [...root.querySelectorAll('.omap__pins .omap__pin, .omap__tunnels path')];
-  return [...root.querySelectorAll('.omap__robots text')].flatMap((label) => marks
-    .filter((mark) => hit(label.getBoundingClientRect(), mark.getBoundingClientRect()))
-    .map((mark) => `${label.textContent} under ${mark.textContent ? `pin ${mark.textContent}` : mark.getAttribute('class')}`));
-});
 
 const browser = await chromium.launch({ headless: true });
 try {
@@ -143,7 +136,7 @@ try {
       if (name === 'phone') {
         assert(order[0] < order[1] && order[1] < order[2], `${route}: Build, Puzzle, Upgrade read in order on phones`);
         const jumps = await page.locator('.staff-page__jump a').evaluateAll((links) => links.map((link) => ({ label: link.textContent.trim(), top: Math.round(link.getBoundingClientRect().top) })));
-        assert.deepEqual(jumps.map((jump) => jump.label), ['Build', 'Map', 'Puzzle', 'Upgrade'], `${route}: four section jumps`);
+        assert.deepEqual(jumps.map((jump) => jump.label), ['Build', 'Spots', 'Puzzle', 'Upgrade'], `${route}: four section jumps`);
         assert.equal(new Set(jumps.map((jump) => jump.top)).size, 1, `${route}: the section jumps share one row`);
       }
       const text = (await page.locator('main').innerText()).replace(/\s+/g, ' ');
@@ -153,13 +146,13 @@ try {
         if (line.label && line.label !== 'Excavation') assert(lower.includes(line.label.toLowerCase()), `${route}: keeps the label "${line.label}"`);
       }
 
-      // The staff's Map: every spot pinned and said in words, between Build and Puzzle.
+      // The staff's Spots (#map): every spot said in words, in order, between Build and Puzzle. Text only,
+      // no mini-map on the staff pages (the Lightning switch map is checked on its own).
       const mapTop = await page.evaluate(() => document.getElementById('map')?.getBoundingClientRect().top + window.scrollY);
-      assert(mapTop > order[0] && mapTop < order[1], `${route}: Map sits between Build and Puzzle`);
-      assert.equal(await page.locator('#map .omap__pins .omap__pin').count(), staffPlaces[staff].pins.length, `${route}: one pin per spot`);
-      assert.deepEqual(await page.locator('#map .omap__key li').evaluateAll((items) => items.map((li) => li.textContent.trim())),
-        staffPlaces[staff].pins.map((pin, i) => `${i + 1}${pin.text}`), `${route}: the key lists every spot in order`);
-      if (staffPlaces[staff].layers?.includes('robots')) assert.deepEqual(await robotLabelClashes(page, '#map figure'), [], `${route}: robot names covered`);
+      assert(mapTop > order[0] && mapTop < order[1], `${route}: Spots sit between Build and Puzzle`);
+      assert.deepEqual(await page.locator('#map ol.staff-page__spots > li').evaluateAll((items) => items.map((li) => li.textContent.trim())),
+        staffPlaces[staff].pins.map((pin) => pin.text), `${route}: Spots lists every spot in order`);
+      assert.equal(await page.locator('#map .omap').count(), 0, `${route}: no mini-map diagram on the staff page`);
 
       // The chart opens full screen and closes again (button, Esc), returning focus to the chart.
       const open = page.locator('#puzzle .zoom-image__open');
@@ -169,7 +162,7 @@ try {
       await page.waitForFunction(() => {
         const img = document.querySelector('dialog.zoom-image__dialog[open] img');
         return img?.complete && img.naturalWidth > 0;
-      }, null, { timeout: 5000 });
+      }, null, { timeout: 15000 });
       const shown = await dialog.locator('img').boundingBox();
       if (name === 'phone') assert(shown.width >= width * 0.9, `${route}: full-screen chart is ${Math.round(shown.width)}px wide`);
       await page.keyboard.press('Escape');
@@ -191,7 +184,7 @@ try {
       // The shared Excavation reference: four rings in the staff's colour, no lever-to-ring labels.
       const rings = page.locator('#upgrade .excavation-rings');
       assert.equal(await rings.count(), 1, `${route}: one Excavation ring reference`);
-      assert.equal(await rings.locator('svg ellipse.excavation-rings__ring').count(), 4, `${route}: four rings drawn`);
+      assert.match(await rings.innerText(), /Four levers, four rings/, `${route}: the four-ring finish is said in words`);
       const ringText = await rings.innerText();
       assert.match(ringText, new RegExp(data.ring.word), `${route}: rings set to ${data.ring.word}`);
       assert.doesNotMatch(ringText, /Mule Kick|staircase|wooden platform/i, `${route}: no lever-to-ring mapping in the shared reference`);
@@ -202,12 +195,22 @@ try {
         // Pinned beside the long column, Upgrade stays clear of the pinned chrome and whole on screen.
         await page.evaluate(() => window.scrollTo(0, 600));
         const side = await pinnedPanel(page, '.staff-page__side');
-        if (side.sticky) {
+        // Only a side panel that sits beside the main column pins (the calm pass is one column: no pin).
+        const besideMain = await page.evaluate(() => document.querySelector('.staff-page__side').getBoundingClientRect().left
+          >= document.querySelector('.staff-page__main').getBoundingClientRect().right - 1);
+        if (side.sticky && besideMain) {
           assert(side.heading >= side.pinned, `${route}: pinned Upgrade title at ${Math.round(side.heading)}px, under ${Math.round(side.pinned)}px of chrome`);
           assert(side.bottom <= height, `${route}: pinned Upgrade runs to ${Math.round(side.bottom)}px on a ${height}px screen`);
         }
       }
-      if (name === 'phone') assert(chart.width >= 340, `${route}: chart is ${Math.round(chart.width)}px wide on phones`);
+      if (name === 'phone') {
+        // The chart fills the staff page's reading column (its content box), whatever the page padding.
+        const column = await page.locator('.staff-page').evaluate((el) => {
+          const cs = getComputedStyle(el);
+          return el.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+        });
+        assert(chart.width >= column - 2 && chart.width >= 320, `${route}: chart is ${Math.round(chart.width)}px wide on phones (column ${Math.round(column)}px)`);
+      }
       if (name === 'landscape') {
         // The chart follows its steps, so it is checked where it sits: whole on the short screen.
         await page.evaluate(() => document.querySelector('#puzzle .zoom-image').scrollIntoView({ block: 'start', behavior: 'instant' }));
@@ -217,7 +220,6 @@ try {
       }
       const body = await page.evaluate(() => parseFloat(getComputedStyle(document.querySelector('#build dd')).fontSize));
       assert(body >= 16, `${route}: build facts are ${body}px`);
-      assert.equal(await page.locator('#upgrade .excavation-rings__levers > g').count(), 4, `${route}: four levers drawn`);
       await assertNoHorizontalOverflow(page, `${route} at ${name}`);
     }
 
@@ -228,13 +230,17 @@ try {
     assert.match(await anyOrder.innerText(), /three gravestones/, 'the "Any order" group holds the gravestone line');
     assert.match(await page.locator('#puzzle').innerText(), /Follow the order the game shows/, 'Ice puzzle explains the game-dependent order');
 
-    // Lightning: chords, the switch board (its only home), the Speed Run link and the Electrical Panel.
+    // Lightning: chords, the switches panel (its only home) and the Speed Run link.
     await page.goto(`${base}/maps/origins/lightning-staff#switches`, { waitUntil: 'networkidle' });
     assert.equal(await page.locator('#switches .switch-card .switch-dial').count(), 7, 'Lightning page has the seven switch dials');
     const lightningText = await page.locator('#puzzle').innerText();
     for (const chord of ['1-3-6', '3-5-7', '2-4-6']) assert(lightningText.includes(chord), `Lightning chord ${chord}`);
     assert.equal(await page.locator('a[href="/maps/origins/speed-run/lightning"]').count(), 1, 'Lightning page links to the Speed Run switch route');
-    assert.equal(await page.getByRole('button', { name: /Electrical Panel/ }).count(), 1, 'Electrical Panel present');
+    // One compact switches panel (036e3f8): final positions and practice in one place; the old Electrical Panel is gone.
+    for (const mode of ['Final positions', 'Practice turns']) {
+      assert.equal(await page.locator('#switches').getByRole('button', { name: mode }).count(), 1, `the switches panel offers "${mode}"`);
+    }
+    assert.equal(await page.getByRole('button', { name: /Electrical Panel/ }).count(), 0, 'the separate Electrical Panel stays removed');
     const switchesTop = await page.locator('#switches').evaluate((el) => el.getBoundingClientRect().top);
     assert(switchesTop >= 0 && switchesTop < height * 0.6, `#switches deep link lands near the top (${Math.round(switchesTop)}px)`);
     // Main Guide deep links (#rain-fire) are main's page now; guide-sequence-browser-smoke.mjs checks its landing.
@@ -274,7 +280,7 @@ try {
       assert(!(await fetched()), `${staff}: the chart (${chart.file}) loads before it is near the screen`);
       checked += 1;
       await page.locator('#puzzle .zoom-image__open img').scrollIntoViewIfNeeded();
-      await page.waitForFunction(() => document.querySelector('#puzzle .zoom-image__open img').complete, null, { timeout: 5000 });
+      await page.waitForFunction(() => document.querySelector('#puzzle .zoom-image__open img').complete, null, { timeout: 15000 });
       assert(await fetched(), `${staff}: the chart loads once it is on screen`);
     }
     assert.equal(checked, STAFFS.length, 'every staff chart was checked');

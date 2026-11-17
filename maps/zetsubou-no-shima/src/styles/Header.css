@@ -17,7 +17,7 @@
   content: '';
   position: absolute;
   inset: -10px;
-  background: url('../assets/images/Zets_banner.jpg') center 47% / cover no-repeat;
+  background: url('../assets/images/Zets_banner.webp') center 47% / cover no-repeat;
   filter: blur(1.2px) saturate(0.8) brightness(0.58);
   transform: scale(1.02);
   z-index: -2;

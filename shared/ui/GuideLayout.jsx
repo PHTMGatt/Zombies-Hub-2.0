@@ -49,10 +49,10 @@ export function GuideStepCard({ step, title, summary, label, children, className
 
 export function GuideCallout({ label, children, tone = 'info', className = '' }) {
   return (
-    <aside className={`zh-guide-callout zh-guide-callout--${tone} ${className}`.trim()}>
+    <div role="note" className={`zh-guide-callout zh-guide-callout--${tone} ${className}`.trim()}>
       {label && <strong>{label}</strong>}
       <div>{children}</div>
-    </aside>
+    </div>
   );
 }
 

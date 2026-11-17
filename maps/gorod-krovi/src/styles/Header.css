@@ -60,9 +60,15 @@
 .gorod-module .gorod-header__nav {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-end;
+  justify-content: flex-start;
   gap: 0.35rem;
 }
+
+/* Right-aligned (and centred below) with auto margins, not justify-content. The pill row scrolls sideways when
+   it is wider than the screen (shared/ui/map-tabs.css), and a right-aligned or centred row that overflows
+   pushes its first pill off the left edge where it cannot be scrolled to (Guide at 844x390). Auto margins
+   align a row that fits and start at the left edge when it does not. */
+.gorod-module .gorod-header__nav > :first-child { margin-inline-start: auto; }
 
 .gorod-module .gorod-nav-link {
   min-height: 32px;
@@ -111,8 +117,8 @@
     justify-content: center;
   }
 
-  .gorod-module .gorod-header__nav {
-    justify-content: center;
+  .gorod-module .gorod-header__nav > :last-child {
+    margin-inline-end: auto;
   }
 }
 
@@ -148,6 +154,10 @@
     --zh-fade-end: var(--zh-fade);
     -webkit-mask-image: linear-gradient(90deg, transparent, #000 var(--zh-fade-start), #000 calc(100% - var(--zh-fade-end)), transparent);
     mask-image: linear-gradient(90deg, transparent, #000 var(--zh-fade-start), #000 calc(100% - var(--zh-fade-end)), transparent);
+  }
+
+  .gorod-module .gorod-header__nav > :is(:first-child, :last-child) {
+    margin-inline: 0;
   }
 
   @supports (animation-timeline: scroll()) {
@@ -209,3 +219,20 @@
     top: auto;
   }
 }
+
+/* Calm pass: readable tabs, 44px taps. */
+.gorod-module .gorod-nav-link { min-height: 44px; display: inline-flex; align-items: center; font-size: 1rem; letter-spacing: 0; }
+.gorod-module .gorod-header__subtitle { font-size: 1rem; }
+/* Tab pages sit on one dark panel so text never rides on the artwork. */
+.gorod-module .gorod-content > :not(.gorod-main-flat) {
+  width: min(100% - 1.5rem, 56rem);
+  margin: 1rem auto 2rem;
+  padding: 0.75rem clamp(1rem, 3vw, 2rem) 1.5rem;
+  border-radius: 12px;
+  background: rgba(16, 6, 6, 0.93);
+}
+.gorod-module .gorod-content .zh-guide-hero { background: none; border: 0; }
+.gorod-module .gorod-content :is(p, li, small, summary, dd) { font-size: 1.0625rem; line-height: 1.5; }
+.gorod-module .gorod-content :is(strong, h4) { font-size: max(1.0625rem, 1em); }
+.gorod-module .gorod-content span:not([class*="number"]):not([class*="marker"]):not([class*="dot"]) { font-size: max(0.95rem, 1em); letter-spacing: 0; text-transform: none; }
+.gorod-module .gorod-content :is(section, article, details):not(.gorod-valve-solver):not([class*="solver"]) { box-shadow: none; }

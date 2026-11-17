@@ -91,3 +91,7 @@
     min-height: 44px;
   }
 }
+
+/* Calm pass: readable tab labels and 44px taps. */
+.de-nav__link { min-height: 44px; padding: 0.4rem 0.8rem; font-size: 1rem; letter-spacing: 0; }
+@media (max-width: 700px) { .de-nav__link { font-size: 1rem; } }

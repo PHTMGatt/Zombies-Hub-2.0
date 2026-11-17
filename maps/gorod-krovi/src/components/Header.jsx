@@ -34,6 +34,7 @@ const Header = () => {
           <NavLink to={`${BASE}/trophies`} className="gorod-nav-link">Trophies</NavLink>
           <NavLink to={`${BASE}/buildables`} className="gorod-nav-link">Buildables</NavLink>
           <NavLink to={`${BASE}/boss`} className="gorod-nav-link">Boss Fight</NavLink>
+          <NavLink to={`${BASE}/step-details`} className="gorod-nav-link">Step details</NavLink>
         </nav>
       </div>
     </header>

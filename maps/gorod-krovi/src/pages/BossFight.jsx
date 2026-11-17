@@ -10,12 +10,12 @@ const BossFight = () => (
       <p>Two phases. Bring a fresh shield, strong perks, and preferably a Pack-a-Punched Ray Gun Mark 3.</p>
     </header>
 
-    <aside className="gorod-boss-loadout">
+    <div role="note" className="gorod-boss-loadout">
       <strong>Recommended:</strong>
       <span>Ray Gun Mark 3</span>
       <span>Fresh Shield</span>
       <span>In Plain Sight</span>
-    </aside>
+    </div>
 
     <div className="gorod-boss-phases">
       {gorodBossPhases.map((phase, index) => (

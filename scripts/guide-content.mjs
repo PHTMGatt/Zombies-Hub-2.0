@@ -5,7 +5,7 @@
  *
  *   node scripts/guide-content.mjs --write-baseline   # rewrite scripts/fixtures/guide-content.baseline.json
  */
-import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -49,9 +49,21 @@ export async function loadModules(files) {
   }
 }
 
+/*
+ * A flat main guide keeps only { id, title, goal, links } per step; everything else a step used to carry
+ * moves, verbatim and under the same field names, to the map's Step details tab:
+ *   maps/<map>/src/data/stepDetails.js  →  export default [{ id: '<step id>', how, critical, refs, … }]
+ * Content checks read both, so moving a line there never counts as losing it.
+ */
+export const detailsFile = (guide) => `maps/${guide}/src/data/stepDetails.js`;
+
 export async function loadGuides() {
-  const modules = await loadModules(GUIDES.map((entry) => entry.file));
-  return GUIDES.map(({ guide, route, exportName = 'default' }, index) => ({ guide, route, steps: modules[index][exportName] }));
+  const withDetails = GUIDES.filter(({ guide }) => existsSync(resolve(root, detailsFile(guide))));
+  const modules = await loadModules([...GUIDES.map((entry) => entry.file), ...withDetails.map(({ guide }) => detailsFile(guide))]);
+  return GUIDES.map(({ guide, route, exportName = 'default' }, index) => {
+    const at = withDetails.findIndex((entry) => entry.guide === guide);
+    return { guide, route, steps: modules[index][exportName], details: at < 0 ? [] : modules[GUIDES.length + at].default };
+  });
 }
 
 const clean = (value) => (typeof value === 'string' ? value.replace(/\s+/g, ' ').trim() : '');
@@ -106,13 +118,13 @@ export function stepStrings(step) {
 }
 
 // Every guide-facing string of one guide, trimmed, de-duplicated, in data order.
-export function guideStrings({ steps }) {
-  return [...new Set(steps.flatMap(stepStrings))];
+export function guideStrings({ steps, details = [] }) {
+  return [...new Set([...steps, ...details].flatMap(stepStrings))];
 }
 
 // Every tabs ref: its step, tab ids, and the strings each tab carries for itself.
-export function guideTabs({ steps }) {
-  return steps.flatMap((step) => (step.refs ?? [])
+export function guideTabs({ steps, details = [] }) {
+  return [...steps, ...details].flatMap((step) => (step.refs ?? [])
     .filter((ref) => ref.type === 'tabs')
     .map((ref) => ({
       step: step.id,

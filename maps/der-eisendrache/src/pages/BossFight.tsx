@@ -11,10 +11,10 @@ const BossFight: React.FC = () => (
       <p>Five phases: Keeper → Panzers → Keeper → Panzers → Keeper. Recharge Ragnaroks between every damage window.</p>
     </header>
 
-    <aside className="de-boss-warning">
+    <div role="note" className="de-boss-warning">
       <strong>Electrical charge:</strong>
       <span>Plant a Ragnarok beneath the Keeper to interrupt it. If the stun is missed, get behind a blue pillar before the shockwave.</span>
-    </aside>
+    </div>
 
     <section className="de-boss-mechanic">
       <h3>Keeper damage loop</h3>

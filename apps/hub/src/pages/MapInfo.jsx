@@ -4,6 +4,8 @@ import NotFound from '../../../../shared/ui/NotFound';
 import mapInfo from '../data/mapInfo';
 import mapData from '../data/mapData';
 import { getDedicatedGuideRoute } from '../data/dedicatedGuides';
+import { sameMapSlugs } from '../data/sameMap';
+import { mainEggStatus } from '../data/guideStatus';
 import '../styles/pageStyles/MapInfo.css';
 
 export default function MapInfo() {
@@ -25,13 +27,19 @@ export default function MapInfo() {
 
   const banner = meta.coverImage || meta.layoutImage;
   const dedicatedRoute = getDedicatedGuideRoute(canonicalSlug);
-  const guideRoute = dedicatedRoute || `/easter-eggs/${canonicalSlug}`;
+  const guideRoute = dedicatedRoute || `/easter-eggs/${slug}`;
   const hasMainQuest = Boolean(meta.isEasterEgg);
   const releasedLabel = meta.dlc === 'Zombies Chronicles'
     ? 'Black Ops III: Zombies Chronicles (2017)'
     : meta.dlc === 'DLC 4 – Rezurrection'
       ? 'Black Ops: Rezurrection DLC (2011)'
       : info.releasedIn;
+
+  // The same map in another game: other game versions of this slug, plus renamed remakes (Der Riese / The Giant).
+  const otherGames = [
+    ...variants.filter(m => m.game !== meta.game).map(m => ({ key: `${m.slug}-${m.game}`, label: `${m.name} · ${m.game}`, to: `/info/${m.slug}?game=${encodeURIComponent(m.game)}` })),
+    ...sameMapSlugs(canonicalSlug).flatMap(other => mapData.filter(m => m.slug === other)).map(m => ({ key: `${m.slug}-${m.game}`, label: `${m.name} · ${m.game}`, to: `/info/${m.slug}?game=${encodeURIComponent(m.game)}` })),
+  ];
 
   return (
     <div className="map-info-container">
@@ -58,7 +66,7 @@ export default function MapInfo() {
             {releasedLabel && <span><strong>Released:</strong> {releasedLabel}</span>}
             {hasMainQuest ? (
               <Link to={guideRoute} className="badge">
-                {dedicatedRoute ? '📖 Open Easter Egg Guide' : '🎁 Main Easter Egg'}
+                {dedicatedRoute ? '📖 Open Easter Egg Guide' : { video: '🎬 Video guide', none: '🕒 Main guide coming soon' }[mainEggStatus(meta).kind] ?? '🎁 Main Easter Egg'}
               </Link>
             ) : (
               <span className="badge no-egg">No Main Easter Egg</span>
@@ -66,6 +74,15 @@ export default function MapInfo() {
           </div>
 
           {info.description && <p className="description">{info.description}</p>}
+
+          {otherGames.length > 0 && (
+            <p className="same-map">
+              <strong>Same map in other games:</strong>{' '}
+              {otherGames.map((item, index) => (
+                <React.Fragment key={item.key}>{index > 0 && ' · '}<Link to={item.to}>{item.label}</Link></React.Fragment>
+              ))}
+            </p>
+          )}
 
           <Link to="/allmaps" className="back-link">
             ← Back to Map list

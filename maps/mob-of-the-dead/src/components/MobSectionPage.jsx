@@ -23,10 +23,10 @@ export default function MobSectionPage({
       </header>
 
       {note && (
-        <aside className="mob-sheet-note">
+        <div role="note" className="mob-sheet-note">
           <strong>{note.label}</strong>
           <span>{note.body}</span>
-        </aside>
+        </div>
       )}
 
       <div className="mob-sheet">

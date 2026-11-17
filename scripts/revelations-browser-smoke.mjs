@@ -1,3 +1,4 @@
+import './smoke-ready.mjs'; // first: waits for the app to render after each navigation
 import { chromium } from 'playwright';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
@@ -43,114 +44,44 @@ try {
     const mainRoute = '/maps/revelations';
     let response = await page.goto(`${base}${mainRoute}`, { waitUntil: 'domcontentloaded' });
     assert(response?.ok(), `${mainRoute} returned ${response?.status()}`);
-    await page.getByRole('heading', { name: 'For The Good Of All', level: 2 }).waitFor();
+    await page.locator('.flat-guide__list').waitFor();
     assert.equal(errors.length, 0, `${mainRoute} page errors: ${errors.join('; ')}`);
     assert.equal(await page.locator('.rev-header__nav').count(), 1, 'Revelations keeps one map-level navigation row');
     assert.equal(await page.locator('.rev-main-shortcuts').count(), 0, 'Revelations duplicate bottom navigation stays removed');
-    // Behavioural guard: no duplicate section strip. Only the header nav and the contextual links inside a
-    // step (servant, eggs, symbols, throws) may link to the Revelations sections.
+    // Behavioural guard: no duplicate section strip. Only the header nav and a step's own "details" links
+    // may link to the Revelations sections.
     const sectionLinksOutsideHeader = await page.locator('a[href^="/maps/revelations/"]').evaluateAll(links =>
-      links.filter(link => !link.closest('.rev-header') && !link.closest('.guide-seq__step')).map(link => link.textContent.trim()),
+      links.filter(link => !link.closest('.rev-header') && !link.closest('.flat-guide__step')).map(link => link.textContent.trim()),
     );
     assert.deepEqual(sectionLinksOutsideHeader, [], `Revelations renders a second section navigation: ${sectionLinksOutsideHeader.join(', ')}`);
-    assert.equal(await page.locator('.rev-header__nav a').count(), 5, 'Header nav reaches all five Revelations sections');
+    assert.equal(await page.locator('.rev-header__nav a').count(), 6, 'Header nav reaches all six Revelations sections (with Step details)');
     await page.reload({ waitUntil: 'networkidle' });
-    assert.equal(await page.locator('li.guide-seq__step').count(), 12, 'Revelations keeps all 12 Easter Egg steps');
-    const stepButtons = page.locator('.rev-step-list .rev-step-button');
-    assert.equal(await stepButtons.count(), 12, 'Original left-rail layout lists all twelve steps');
-    assert.equal(await page.locator('li.guide-seq__step:visible').count(), 1, 'Only one guide step is displayed at a time');
-    const selectStep = async (id) => {
-      await page.locator(`.rev-step-list button[aria-controls="${id}"]`).click();
-      assert.equal(new URL(page.url()).hash, `#${id}`, `Step selector reaches ${id}`);
-      await page.locator(`#${id}`).waitFor({ state: 'visible' });
-      assert.equal(await page.locator('li.guide-seq__step:visible').count(), 1, `Only selected step ${id} is visible`);
-    };
-    await selectStep('throws');
-    await page.goto(`${base}${mainRoute}`, { waitUntil: 'networkidle' });
+
+    // Flat main guide: all twelve steps in order, every one on screen at once, nothing to expand or open.
+    const flatSteps = page.locator('main li.flat-guide__step');
+    assert.equal(await flatSteps.count(), 12, 'Revelations keeps all 12 Easter Egg steps');
+    const stepIds = await flatSteps.evaluateAll((items) => items.map((item) => item.id));
+    assert(stepIds.every(Boolean) && new Set(stepIds).size === 12, `every step keeps its own id for deep links: ${stepIds.join(', ')}`);
+    for (const id of ['engines', 'servant', 'eggs', 'symbols', 'throws', 'boss']) assert(stepIds.includes(id), `step #${id} is still linkable`);
+    assert.equal(await page.locator('main .flat-guide details, main .flat-guide [aria-expanded]').count(), 0, 'No expanding cards on the flat guide');
+    assert.equal(await page.locator('main .flat-guide img').count(), 0, 'No images on the flat guide');
     await assertCssImageLoaded(page, mainRoute, '.rev-header');
     await assertCssImageLoaded(page, mainRoute, '.rev-backdrop');
     await assertNoHorizontalOverflow(page, mainRoute);
-    const opening = page.locator('#engines');
-    assert.equal(await opening.locator('.guide-seq__action-block .guide-seq__tasks li').count(), 6,
-      'Opening contains tombstones, four engine locations, and Pack-a-Punch');
-    assert.equal(await opening.locator('.guide-seq__reference-block .gref-sequence li').count(), 4,
-      'Tombstone code is shown as four ordered reference tokens');
-    assert.equal(await opening.locator('.guide-seq__more').count(), 0,
-      'Opening has no duplicate How-to section');
-    const openMore = (id) => page.locator(`#${id} .guide-seq__more > summary`).click();
+    assert.match(await page.locator('#boss .flat-guide__title').innerText(), /Final boss — Shadowman/);
 
-    // Servant step: original split navigation keeps full screenshots reachable.
-    await selectStep('servant');
-    // A capture's full-screen copy waits until it is opened (it was fetched with the page), then shows.
-    await page.locator('#servant .gref-image__open').first().click();
-    await page.waitForFunction(() => {
-      const img = document.querySelector('#servant dialog.gref-lightbox[open] img');
-      return img?.complete && img.naturalWidth > 0;
-    }, null, { timeout: 5000 });
-    await page.keyboard.press('Escape');
-    assert.equal(await page.locator('#servant dialog.gref-lightbox[open]').count(), 0, 'Esc closes the full-screen capture');
-    // Servant step: the in-game captures for each blue rock, one tab per map.
-    await page.locator('#servant').getByRole('tab', { name: 'Mob of the Dead' }).click();
-    const shot = page.locator('#servant .gref--image img').first();
-    await shot.scrollIntoViewIfNeeded();
-    assert(await shot.evaluate(img => img.complete && img.naturalWidth > 0), 'Servant rock capture loads');
-    // The rock tabs follow the tabs pattern: one tab stop, arrows (wrapping) / Home / End move the pick and
-    // focus with it, and the panel is the one every tab controls, named by the picked tab.
-    const rockTabs = page.locator('#servant [role="tab"]');
-    const rockPanel = page.locator('#servant [role="tabpanel"]');
-    const rocks = () => rockTabs.evaluateAll((tabs) => tabs.map((tab) => ({
-      label: tab.textContent, stop: tab.tabIndex === 0, picked: tab.getAttribute('aria-selected') === 'true',
-      focused: tab === document.activeElement, controls: tab.getAttribute('aria-controls'), id: tab.id,
-    })));
-    const rockState = async () => {
-      const tabs = await rocks();
-      const picked = tabs.filter((tab) => tab.picked);
-      const panel = { id: await rockPanel.getAttribute('id'), name: await rockPanel.getAttribute('aria-labelledby') };
-      assert.equal(picked.length, 1, 'One rock tab is picked');
-      assert.deepEqual(tabs.filter((tab) => tab.stop).map((tab) => tab.label), [picked[0].label], 'Only the picked rock tab is a tab stop');
-      assert(panel.id && tabs.every((tab) => tab.controls === panel.id), 'Every rock tab controls the rock panel');
-      assert.equal(panel.name, picked[0].id, 'The rock panel is named by the picked tab');
-      return { picked: picked[0].label, focused: tabs.find((tab) => tab.focused)?.label };
-    };
-    assert.equal((await rockState()).picked, 'Mob of the Dead');
-    await rockTabs.nth(3).focus();
-    for (const [key, rock] of [['ArrowRight', 'Nacht'], ['ArrowRight', 'Spawn'], ['ArrowLeft', 'Nacht'], ['Home', 'Spawn'], ['End', 'Nacht']]) {
-      await page.keyboard.press(key);
-      assert.deepEqual(await rockState(), { picked: rock, focused: rock }, `${key} on the rock tabs picks and focuses ${rock}`);
-    }
+    // The detail moved to the tabs: the steps link there, and the tab sections hold the captures.
+    assert.match(await page.locator('#servant a[data-step-link]').first().getAttribute('href'), /^\/maps\/revelations\/apothicon-upgrade\?from=servant/,
+      'The Servant step links to the Apothicon Upgrade tab');
+    await page.goto(`${base}/maps/revelations/apothicon-upgrade#servant-rocks`, { waitUntil: 'networkidle' });
+    const rockShot = page.locator('#servant-rocks img').first();
+    await rockShot.scrollIntoViewIfNeeded();
+    assert(await rockShot.evaluate(img => img.complete && img.naturalWidth > 0), 'Servant rock capture loads on the Apothicon Upgrade tab');
+    await page.goto(`${base}/maps/revelations/egg-locations`, { waitUntil: 'networkidle' });
+    assert.equal(await page.locator('#bone-spots').count(), 1, 'Egg Locations has the bone spots section');
+    assert.equal(await page.locator('#turret-shot').count(), 1, 'Egg Locations has the S.O.P.H.I.A. turret section');
+    await page.goto(`${base}${mainRoute}`, { waitUntil: 'networkidle' });
 
-    await selectStep('eggs');
-    let stepText = await page.locator('#eggs').innerText();
-    assert.match(stepText, /nest|pustule/i);
-    assert.match(stepText, /10 zombie souls/i);
-    await openMore('eggs');
-    assert(await page.locator('#eggs').getByRole('link', { name: /Egg locations/ }).isVisible());
-
-    await selectStep('symbols');
-    stepText = await page.locator('#symbols').innerText();
-    assert.match(stepText, /all players/i);
-    assert.match(stepText, /Kino projector/i);
-    assert.match(stepText, /purple rift|purple circle/i);
-    await page.locator('#symbols').getByLabel('1st').fill('skull');
-
-    await selectStep('throws');
-    stepText = await page.locator('#throws').innerText();
-    assert.match(stepText, /Mob of the Dead\s*Poster/i);
-    assert.match(stepText, /MG42/i);
-    assert.match(stepText, /Focusing Stone/i);
-    await openMore('throws');
-    assert(await page.locator('#throws').getByRole('link', { name: /Throw videos/ }).isVisible());
-    await selectStep('boss');
-    assert.equal(await page.locator('#boss h3').innerText(), 'Final boss — Shadowman');
-
-    // The Kronorium symbol note is game state, not progress: it survives a reload.
-    await page.reload({ waitUntil: 'networkidle' });
-    await selectStep('symbols');
-    assert.equal(await page.locator('#symbols').getByLabel('1st').inputValue(), 'skull', 'Kronorium symbol note survives a reload');
-
-    // The reload kept #symbols, so the guide lands on that step once fonts load; let that finish first,
-    // or a slow runner's late landing undoes the scroll to the top (CI TimeoutError on a28a3c1).
-    await page.evaluate(() => document.fonts.ready.then(() => new Promise((done) => requestAnimationFrame(() => requestAnimationFrame(done)))));
     await page.evaluate(() => {
       document.activeElement?.blur();
       window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
@@ -164,12 +95,6 @@ try {
       path: fileURLToPath(new URL(`revelations-${width}.png`, artifactDir)),
       fullPage: true,
     });
-    // The note's slots are heard with their note, and clearing it (which removes the Clear button) puts
-    // focus in the first slot instead of dropping it to the page.
-    assert.equal(await page.locator('#symbols').getByRole('group', { name: /Kronorium order/ }).count(), 1, 'The symbol note is a named group');
-    await page.locator('#symbols').getByRole('button', { name: 'Clear for a new game' }).click();
-    assert.equal(await page.locator('#symbols').getByLabel('1st').inputValue(), '', 'Clear empties the note');
-    assert(await page.locator('#symbols').getByLabel('1st').evaluate((input) => input === document.activeElement), 'Clear puts focus in the first slot');
     // "I completed this Easter Egg" goes away once pressed; focus moves to what replaces it.
     await page.getByRole('button', { name: 'I completed this Easter Egg' }).click();
     await page.locator('.zh-complete--earned').waitFor();

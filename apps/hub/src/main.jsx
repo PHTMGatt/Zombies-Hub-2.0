@@ -4,6 +4,7 @@ import { BrowserRouter, HashRouter } from 'react-router-dom';
 import App from './app/App';
 import '../../../shared/ui/tokens.css';
 import './styles/global.css';
+import '../../../shared/ui/map-tabs.css';
 const reviewBuild = import.meta.env.VITE_REVIEW_HASH_ROUTER === 'true';
 const Router = reviewBuild ? HashRouter : BrowserRouter;
 

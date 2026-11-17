@@ -223,3 +223,35 @@
     min-height: 44px;
   }
 }
+
+/* Reference screenshots on the tab pages (Servant rocks, bone spots, turret shot). One column, no boxes. */
+.revelations-module .rev-shots { margin: 2.5rem 0 0; padding-top: 1.5rem; border-top: 1px solid var(--rev-line); scroll-margin-top: 5rem; }
+.revelations-module .rev-shots__title { margin: 0 0 0.5rem; font-size: 1.5rem; color: var(--rev-ink); }
+.revelations-module .rev-shots__intro { margin: 0 0 1rem; font-size: 1.0625rem; color: var(--rev-text); }
+.revelations-module .rev-shots__label { margin: 1.5rem 0 0.5rem; font-size: 1.1875rem; color: var(--rev-cyan); }
+.revelations-module .rev-shots__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); gap: 0.75rem; }
+.revelations-module .rev-shots__fig { margin: 0; }
+.revelations-module .rev-shots__fig img { display: block; width: 100%; height: auto; border-radius: 6px; }
+.revelations-module .rev-shots__fig figcaption { margin-top: 0.35rem; font-size: 1rem; color: var(--rev-text); }
+
+/* Calm pass (2026-11-16): 16px+, no micro-caps, option list as plain divided rows. */
+.revelations-module .rev-kicker { font-size: 1rem; letter-spacing: 0; text-transform: none; font-weight: 700; }
+.revelations-module .rev-section-intro { font-size: 1.0625rem; line-height: 1.5; }
+.revelations-module .rev-panel-count { font-size: 1rem; }
+.revelations-module .rev-option__title { font-size: 1.125rem; }
+.revelations-module .rev-option__meta, .revelations-module .rev-option__play { font-size: 1rem; }
+.revelations-module .rev-video__hint, .revelations-module .rev-video__external { font-size: 1rem; }
+.revelations-module .rev-isle { font-size: 0.95rem; }
+.revelations-module .rev-isle__name, .revelations-module .rev-isles__caption, .revelations-module .rev-area .rev-isles__caption { font-size: 0.95rem; }
+.revelations-module .rev-option { min-height: 48px; }
+.revelations-module :is(.rev-section-head, .rev-area__head, .rev-panel-head) .rev-kicker,
+.revelations-module .rev-shell .rev-kicker { font-size: 1rem !important; letter-spacing: 0 !important; text-transform: none !important; }
+.revelations-module .rev-video__external { font-size: 1rem !important; min-height: 44px; }
+/* One panel (the shell): the side panel and the media caption sit on it without their own boxes. */
+.revelations-module .rev-workspace__panel { border: 0; background: none; box-shadow: none; padding-left: 0; padding-right: 0; }
+.revelations-module .rev-video__bar span, .revelations-module .rev-video__bar p { display: block; -webkit-line-clamp: unset; overflow: visible; }
+
+/* Tab look pass: readable intro, divided rows instead of a box per option, legible number badges. */
+.revelations-module .rev-section-head .rev-section-intro { font-size: 1.0625rem !important; line-height: 1.5; color: #d6e4ee; }
+.revelations-module .rev-option { border-radius: 0; border-width: 0 0 1px 0; background: none; box-shadow: none; }
+.revelations-module .rev-option__index { width: 30px; height: 30px; font-size: 0.95rem; }

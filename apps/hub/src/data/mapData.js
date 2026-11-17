@@ -369,6 +369,47 @@ const mapData = [
     layoutImage: getLayout("verrückt"),
     hoverImage: dlcArt["zombie chronicles"]
   },
+  // World at War originals. Entries only (no guide): the later Black Ops versions below are the ones with art and guides.
+  {
+    name: "Nacht der Untoten",
+    slug: "nacht-der-untoten",
+    game: "World at War",
+    dlc: "Base Game",
+    isEasterEgg: false,
+    coverImage: getCover("nacht der untoten"),
+    layoutImage: getLayout("nacht der untoten"),
+    hoverImage: null
+  },
+  {
+    name: "Verrückt",
+    slug: "verrückt",
+    game: "World at War",
+    dlc: "Map Pack 1",
+    isEasterEgg: false,
+    coverImage: getCover("verrückt"),
+    layoutImage: getLayout("verrückt"),
+    hoverImage: null
+  },
+  {
+    name: "Shi No Numa",
+    slug: "shi-no-numa",
+    game: "World at War",
+    dlc: "Map Pack 2",
+    isEasterEgg: false,
+    coverImage: getCover("shi no numa"),
+    layoutImage: getLayout("shi no numa"),
+    hoverImage: null
+  },
+  {
+    name: "Der Riese",
+    slug: "der-riese",
+    game: "World at War",
+    dlc: "Map Pack 3",
+    isEasterEgg: false,
+    coverImage: getCover("der riese"),
+    layoutImage: getLayout("der riese"),
+    hoverImage: null
+  },
 ];
 
 export default mapData;

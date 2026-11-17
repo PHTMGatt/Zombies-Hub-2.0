@@ -120,3 +120,8 @@
     padding-top: 0.8rem;
   }
 }
+
+/* Calm pass: one column, divided rows instead of three side-by-side cards. */
+.gorod-module .gorod-buildables-grid { grid-template-columns: minmax(0, 1fr) !important; gap: 0 !important; }
+.gorod-module .gorod-buildable-card { border: 0; border-top: 1px solid rgba(255, 112, 77, 0.22); border-radius: 0; background: none; padding-left: 0; padding-right: 0; }
+.gorod-module .gorod-sheet-header p { font-size: 1.0625rem; }

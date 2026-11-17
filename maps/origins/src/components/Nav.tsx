@@ -1,13 +1,11 @@
 import React, { useEffect, useRef } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { FaRegSnowflake } from "react-icons/fa";
-import { GiWhirlwind, GiFireTail, GiLightningHelix, GiCrownedSkull, GiStopwatch } from "react-icons/gi";
+import { GiWhirlwind, GiFireTail, GiLightningHelix, GiCrownedSkull, GiStopwatch, GiNotebook } from "react-icons/gi";
 import "../Styles/ComponentStyles/Nav.css";
-
 const Nav = () => {
   const { pathname } = useLocation();
   const linksRef = useRef<HTMLDivElement>(null);
-
   // On phones the staff tabs are a swipeable row; keep the current staff in view.
   // Only the row scrolls (never the page), and nothing happens when every tab already fits.
   useEffect(() => {
@@ -18,7 +16,6 @@ const Nav = () => {
     const activeBox = active.getBoundingClientRect();
     row.scrollLeft += activeBox.left - rowBox.left - (rowBox.width - activeBox.width) / 2;
   }, [pathname]);
-
   return (
     <nav className="origins-nav" aria-label="Origins guide navigation">
       <div className="origins-nav-links" ref={linksRef}>
@@ -34,6 +31,12 @@ const Nav = () => {
             <span>OG</span>
           </NavLink>
         </div>
+
+        <NavLink to="/maps/origins/step-details"
+          className={({ isActive }) => `origins-nav-link details ${isActive ? "active details-active" : ""}`}
+        >
+          <GiNotebook aria-hidden="true" /> <span>Step details</span>
+        </NavLink>
 
         <NavLink
           to="/maps/origins/ice-staff"
@@ -83,5 +86,4 @@ const Nav = () => {
     </nav>
   );
 };
-
 export default Nav;

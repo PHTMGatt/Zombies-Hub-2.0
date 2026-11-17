@@ -3,12 +3,19 @@
   z-index: 2;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 0.45rem;
   width: min(100%, 920px);
   margin: 0 auto;
   padding: 0;
 }
+
+/* Centred with auto margins, not justify-content: center. The tab row scrolls sideways when it is wider than
+   the screen (shared/ui/map-tabs.css), and a centred row that overflows pushes its first tabs off the left
+   edge where they cannot be scrolled to (Overview and Prerequisites at 390px). Auto margins centre a row
+   that fits and start at the left edge when it does not. */
+.zets-module .zets-nav > :first-child { margin-inline-start: auto; }
+.zets-module .zets-nav > :last-child { margin-inline-end: auto; }
 
 .zets-module .zets-nav a {
   min-height: 38px;
@@ -36,35 +43,13 @@
   transform: translateY(-1px);
 }
 
-@media (max-width: 768px) {
-  .zets-module .zets-nav {
-    display: none;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.45rem;
-    width: min(100% - 0.5rem, 620px);
-    padding-top: 0.45rem;
-  }
-
-  .zets-module .zets-nav.open {
-    display: grid;
-  }
-
-  .zets-module .zets-nav a {
-    width: 100%;
-    min-height: 42px;
-    padding-inline: 0.5rem;
-    box-sizing: border-box;
-  }
-}
-
-@media (max-width: 430px) {
-  .zets-module .zets-nav {
-    grid-template-columns: 1fr;
-  }
-}
+/* Phone behaviour comes from shared/ui/map-tabs.css: one scrolling row of pills, no menu. */
 
 @media (pointer: coarse), (max-height: 500px) and (orientation: landscape) {
   .zets-module .zets-nav a {
     min-height: 44px;
   }
 }
+
+/* Calm pass: readable tabs, 44px taps. */
+.zets-module .zets-nav a, .zets-module .zets-nav__link { min-height: 44px; font-size: 1rem; }

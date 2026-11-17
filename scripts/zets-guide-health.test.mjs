@@ -10,7 +10,8 @@ test('Zetsubou makes the every-player Trial requirement explicit wherever the co
   const sources = [
     read('maps/zetsubou-no-shima/src/data/zetsRun.js'),
     read('maps/zetsubou-no-shima/src/data/zetsGear.js'),
-    read('maps/zetsubou-no-shima/src/pages/MainGuide.jsx'),
+    // The flat main guide holds it in step 1 (data), no longer in a page header (2026-11-16).
+    read('maps/zetsubou-no-shima/src/data/zetsGuideSteps.jsx'),
     read('maps/zetsubou-no-shima/src/pages/Prerequisites.jsx'),
     read('maps/zetsubou-no-shima/src/pages/Cogs.jsx'),
     read('maps/zetsubou-no-shima/src/components/CogSteps/CogThree.jsx'),

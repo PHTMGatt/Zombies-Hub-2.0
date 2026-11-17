@@ -234,3 +234,29 @@
     gap: 0.2rem;
   }
 }
+
+/*
+ * Calm pass (2026-11-16): the shared tab layout reads at 16px+, drops the micro-caps labels, and lets
+ * steps sit on the page with a divider instead of a card each (no box-in-box).
+ */
+.zh-guide-kicker { font-size: 1rem; letter-spacing: 0; text-transform: none; font-weight: 700; }
+.zh-guide-description { font-size: 1.0625rem; line-height: 1.5; }
+.zh-guide-section-heading p { font-size: 1.0625rem; }
+.zh-guide-step-card {
+  border: 0;
+  border-top: 1px solid var(--zh-guide-border);
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  padding-left: 0;
+  padding-right: 0;
+}
+.zh-guide-step-list--roadmap .zh-guide-step-card { border: 0; border-top: 1px solid var(--zh-guide-border); background: none; }
+.zh-guide-step-marker { font-size: 1rem; }
+.zh-guide-step-label { font-size: 0.95rem; letter-spacing: 0; text-transform: none; }
+.zh-guide-step-content h4 { font-size: 1.1875rem; }
+.zh-guide-step-content p,
+.zh-guide-step-list--roadmap .zh-guide-step-content p { font-size: 1.0625rem; line-height: 1.5; }
+.zh-guide-callout { background: none; border-width: 0 0 0 3px; border-radius: 0; }
+.zh-guide-callout > div { font-size: 1.0625rem; }
+.zh-guide-chip { font-size: 0.95rem; }

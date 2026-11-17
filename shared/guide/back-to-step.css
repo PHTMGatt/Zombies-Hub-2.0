@@ -1,0 +1,17 @@
+/* "Back to step N" on a tab page opened from a main-guide step (BackToStep.jsx). Functional base: a 44px
+   target in the map's own text colour; maps restyle it under their module class. */
+a.guide-back-to-step {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 44px;
+  margin: 0.75rem 1rem 0;
+  padding: 0 0.9rem;
+  border: 1px solid color-mix(in srgb, currentColor 35%, transparent);
+  border-radius: 999px;
+  color: inherit;
+  font-weight: 600;
+  text-decoration: none;
+}
+.guide-back-to-step:hover { border-color: currentColor; }
+.guide-back-to-step:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }

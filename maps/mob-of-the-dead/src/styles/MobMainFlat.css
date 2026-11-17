@@ -1,0 +1,12 @@
+/* Mob of the Dead main guide: flat list on one calm panel (list styles: shared/guide/flat-guide.css). */
+.mobmain-page.mob-main-flat {
+  --flat-accent: #e8c15a;
+  --flat-ink: #fff9ea;
+  --flat-text: #e6ddc8;
+  width: min(100% - 1.5rem, var(--zh-panel-width));
+  margin: 1rem auto 2rem;
+  padding: 0.75rem clamp(1rem, 3vw, 2rem) 1.5rem;
+  border-radius: var(--zh-radius-panel);
+  background: rgba(10, 10, 12, 0.93);
+}
+.mob-main-flat .flat-guide { width: 100%; }

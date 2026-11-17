@@ -170,3 +170,14 @@
     margin-left: 0;
   }
 }
+
+/* Calm pass (2026-11-16): 16px+, no micro-caps, one panel with divided steps (no box-in-box). */
+.mob-module .mob-sheet-header > span { font-size: 1rem; letter-spacing: 0; text-transform: none; font-weight: 700; }
+.mob-module .mob-sheet-header p { font-size: 1.0625rem; line-height: 1.5; }
+.mob-module .mob-sheet-chips small { font-size: 0.95rem; }
+.mob-module .mob-sheet-note { background: none; border-radius: 0; }
+.mob-module .mob-sheet-note strong, .mob-module .mob-sheet-note span { font-size: 1.0625rem; }
+.mob-module .mob-sheet-step { border: 0; border-top: 1px solid rgba(232, 193, 90, 0.22); border-radius: 0; background: none; box-shadow: none; padding-left: 0; padding-right: 0; }
+.mob-module .mob-sheet-step__heading > span { font-size: 1rem; letter-spacing: 0; text-transform: none; }
+.mob-module .mob-sheet-step h3 { font-size: 1.1875rem; }
+.mob-module .mob-sheet-step > p, .mob-module .mob-sheet-step li { font-size: 1.0625rem; line-height: 1.5; }

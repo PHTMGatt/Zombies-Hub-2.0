@@ -1,0 +1,13 @@
+/* Shadows of Evil main guide: flat list on one calm panel (list styles: shared/guide/flat-guide.css). */
+.shadows-module .soe-page__content.soe-main-flat {
+  --flat-accent: #ffb454;
+  --flat-ink: #fff7ec;
+  --flat-text: #eadfce;
+  width: min(100% - 1.5rem, var(--zh-panel-width));
+  margin: 1rem auto 2rem;
+  padding: 0.75rem clamp(1rem, 3vw, 2rem) 1.5rem;
+  border-radius: var(--zh-radius-panel);
+  background: rgba(14, 8, 4, 0.93);
+}
+.shadows-module .soe-main-flat .flat-guide { width: 100%; }
+.shadows-module .soe-main-flat__related { display: inline-flex; align-items: center; min-height: var(--zh-target); margin-top: 0.75rem; color: #ffb454; font-weight: 600; }

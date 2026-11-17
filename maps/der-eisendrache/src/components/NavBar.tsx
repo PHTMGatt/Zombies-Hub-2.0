@@ -8,6 +8,7 @@ const tabs = [
   { label: 'Wisps', short: 'Wisps', path: 'wisps' },
   { label: 'Gear', short: 'Gear', path: 'parts' },
   { label: 'Boss', short: 'Boss', path: 'boss' },
+  { label: 'Step details', short: 'Details', path: 'step-details' },
 ];
 
 const BASE = '/maps/der-eisendrache';

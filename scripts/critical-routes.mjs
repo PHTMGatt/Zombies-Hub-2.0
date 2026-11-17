@@ -17,16 +17,20 @@ export const criticalRoutes = [
   ['origins-ice', '/maps/origins/ice-staff'],
   ['origins-wind', '/maps/origins/wind-staff'],
   ['origins-lightning', '/maps/origins/lightning-staff'],
+  ['origins-step-details', '/maps/origins/step-details'],
 
   ['mob-main', '/maps/mob-of-the-dead'],
+  ['mob-step-details', '/maps/mob-of-the-dead/step-details'],
   ['mob-plane', '/maps/mob-of-the-dead/plane'],
   ['mob-retriever-skulls', '/maps/mob-of-the-dead/retriever-skulls'],
   ['mob-codes', '/maps/mob-of-the-dead/codes'],
   ['mob-final-step', '/maps/mob-of-the-dead/final-step'],
 
   ['shadows-main', '/maps/shadows-of-evil'],
+  ['soe-step-details', '/maps/shadows-of-evil/step-details'],
 
   ['de-main', '/maps/der-eisendrache'],
+  ['de-step-details', '/maps/der-eisendrache/step-details'],
   ['de-parts', '/maps/der-eisendrache/parts'],
   ['de-wisps', '/maps/der-eisendrache/wisps'],
   ['de-boss', '/maps/der-eisendrache/boss'],
@@ -38,6 +42,7 @@ export const criticalRoutes = [
   ['de-bow-void', '/maps/der-eisendrache/bows/void'],
 
   ['zets-main', '/maps/zetsubou-no-shima'],
+  ['zets-step-details', '/maps/zetsubou-no-shima/step-details'],
   ['zets-prerequisites', '/maps/zetsubou-no-shima/prerequisites'],
   ['zets-blueprint', '/maps/zetsubou-no-shima/reveal-blueprint'],
   ['zets-cogs', '/maps/zetsubou-no-shima/cogs'],
@@ -49,12 +54,14 @@ export const criticalRoutes = [
   ['zets-extras', '/maps/zetsubou-no-shima/extras'],
 
   ['gorod-main', '/maps/gorod-krovi'],
+  ['gorod-step-details', '/maps/gorod-krovi/step-details'],
   ['gorod-trophies', '/maps/gorod-krovi/trophies'],
   ['gorod-valves', '/maps/gorod-krovi/valves'],
   ['gorod-buildables', '/maps/gorod-krovi/buildables'],
   ['gorod-boss', '/maps/gorod-krovi/boss'],
 
   ['revelations-main', '/maps/revelations'],
+  ['rev-step-details', '/maps/revelations/step-details'],
   ['revelations-apothicon', '/maps/revelations/apothicon-upgrade'],
   ['revelations-eggs', '/maps/revelations/egg-locations'],
   ['revelations-key', '/maps/revelations/summoning-key'],

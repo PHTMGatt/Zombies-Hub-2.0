@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import StaffPage from "../components/StaffPage";
 import LightningSwitchBoard from "../components/LightningSwitchBoard";
-import ElectricalPanel from "../components/ElectricalPanel";
 import originsStaffPages from "../data/originsStaffPages";
 
 // Lightning's puzzle is the piano chords plus the seven switches; the switch board's only home is here.
@@ -21,7 +20,6 @@ const LightningStaff = () => (
         )}
       />
     )}
-    extra={<ElectricalPanel />}
   />
 );
 
