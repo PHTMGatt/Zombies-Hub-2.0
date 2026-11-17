@@ -13,6 +13,15 @@ export const guideNav = (page) => page.getByRole('navigation', { name: GUIDE_NAV
 export const guideTabs = (page) => guideNav(page).getByRole('link');
 export const currentTab = (page) => guideNav(page).locator('a[aria-current="page"]');
 export const mainSteps = (page) => page.getByRole('main').getByRole('heading', { name: /^Step \d+:/ });
+// The flat main guide's list (the one holding the "Step N:" headings).
+export const stepList = (page) => page.getByRole('main').getByRole('list').filter({ has: page.getByRole('heading', { name: /^Step 1:/ }) });
+
+// Picker pages (video + choices). In any look the choices are buttons or radios inside a labelled group or list
+// in <main>, the chosen one has aria-pressed or aria-checked, and the player says what plays in a role="status".
+export const CHOSEN = '[aria-pressed="true"], [aria-checked="true"]';
+export const clipOptions = (page) => page.getByRole('main').locator(':is([role="group"], [role="radiogroup"], ol, ul)[aria-label] :is(button, [role="radio"])');
+export const chosenClip = (page) => clipOptions(page).and(page.locator(CHOSEN));
+export const nowPlaying = (page) => page.getByRole('status').filter({ hasNotText: /^Loading your guide/ }).first();
 
 // In the page: the guide nav's sideways-scrolling box (the nav itself or the nearest box around its links that
 // clips or scrolls), how many tabs it holds, and which tabs sit left of where the row can scroll back to.

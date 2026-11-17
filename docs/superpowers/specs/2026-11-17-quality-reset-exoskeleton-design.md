@@ -214,6 +214,18 @@ Each map is one commit with its smokes green at the three sizes.
 - Zetsubou's nav gained its missing `aria-label` ("Zetsubou No Shima guide navigation"). That was the one map
   without a named guide nav.
 
+**Update 2026-11-17 (queue item 6):**
+
+- More helpers: `clipOptions`, `chosenClip`, `nowPlaying`, `stepList`.
+- `revelations-browser-smoke` now uses roles throughout, except the art and layout-geometry checks.
+- `origins-browser-smoke` uses roles for the tabs, the chart zoom and its dialog.
+- `browser-smoke` uses roles for the Origins tabs, header, current tab and audio, and for the Revelations options.
+- Proven on the live look and on ALPHA's `?design=a|b|c` previews: same nav, tabs, steps, options, chosen option
+  and now-playing.
+
+What follows is the original list. The remaining class selectors are look-specific: art, layout geometry, and the
+Speed Run and switch-board widgets. Move them with each map's port.
+
 **Still class-coupled.** About 200 class selectors remain, mostly in the per-map deep checks. Move each one when its
 map is redesigned, not before. The changes are what break:
 
