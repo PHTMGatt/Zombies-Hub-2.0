@@ -14,7 +14,7 @@ const eggData = [
     },
     {
       section: "Spawn / Shangri-La",
-      sectionStart: 418, // 6:58
+      sectionStart: 417, // 6:57 (the first spot's clip starts here)
       sectionEnd: 434,   // 7:14
       locations: [
         { name: "Barrel Next to Jump Pad Toward Origins", start: 417, end: 425 }, // 6:57–7:05

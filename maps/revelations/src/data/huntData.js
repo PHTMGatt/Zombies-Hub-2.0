@@ -16,7 +16,7 @@ import summoningKeyData from './SummoningKey.js';
 
 export const HUNT_VIDEO = { id: 'tt3mpH7Rrfo', author: 'CodeNamePizza' };
 
-const slug = (text) => text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const slug = (text) => text.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
 /* ---- Bones: 6, shot off with a Pack-a-Punched bullet weapon, absorbed with the upgraded Servant (S1, S2). ---- */
 export const bones = [
