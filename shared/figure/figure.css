@@ -1,0 +1,21 @@
+/* GuideFigure layout only. Looks set the --zh-figure-* colours; nothing here is a visual direction. */
+.zh-figure { margin: 0; }
+.zh-figure__open { display: block; width: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; }
+.zh-figure__frame { position: relative; width: 100%; overflow: hidden; }
+.zh-figure__frame > img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.zh-figure__overlay { position: absolute; inset: 0; pointer-events: none; }
+.zh-figure__arrow { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.zh-figure__arrow line { stroke: var(--zh-figure-mark, #ffd23f); stroke-width: 3; stroke-linecap: round; }
+.zh-figure__pin {
+  position: absolute; transform: translate(-50%, -50%); box-sizing: border-box;
+  min-width: 28px; height: 28px; padding: 0 6px; border-radius: 14px;
+  display: grid; place-items: center; font: 700 16px/1 system-ui, sans-serif;
+  color: var(--zh-figure-pin-text, #111); background: var(--zh-figure-mark, #ffd23f);
+  box-shadow: 0 0 0 2px var(--zh-figure-pin-ring, #111);
+}
+.zh-figure__key { margin: 8px 0 0; padding-left: 1.6em; font-size: 16px; }
+.zh-figure figcaption { margin-top: 6px; font-size: 16px; }
+.zh-figure__dialog { max-width: 100vw; max-height: 100vh; padding: 0; border: 0; background: #000; }
+.zh-figure__dialog::backdrop { background: rgb(0 0 0 / 0.85); }
+.zh-figure__dialog > img { display: block; max-width: 100vw; max-height: calc(100vh - 56px); width: auto; height: auto; touch-action: pinch-zoom; }
+.zh-figure__close { min-height: 44px; width: 100%; font-size: 16px; }
