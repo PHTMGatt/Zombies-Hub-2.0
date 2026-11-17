@@ -115,10 +115,27 @@ S4's main-quest list says staffs go in robots: Lightning at spawn, Wind in the m
 1. Bones: six screenshots, **no video timestamps**. Needs the bone segment time ranges from CodeNamePizza's video.
 2. Egg rows 1, 9, 15, 16 and rune rows 4, 7, 8: wording differs between our video labels and S2. Needs a second source or a look at the video before the names are shown to players.
 3. Summoning Key: no screenshots, video only.
-4. Ice and Wind charts: image-only in every source. I viewed all four repo charts: Fire and Lightning match the heritage notes; the Ice pairings and the Wind order cannot be checked against any text source, and whether Wind is fixed or random per game is stated nowhere.
+4. Ice and Wind charts: image-only in every source. I viewed all four repo charts: Fire and Lightning match the heritage notes; the Ice pairings and the Wind order cannot be checked against any text source, S3 says the Wind rings use "a specific order" (fixed; Grey grey-59 agrees), so Wind is treated as fixed, still single-source and frame-check pending.
 5. Ice gravestone places and the Der Eisendrache bone "fourth wall": single-source or conflicting.
 6. Bryen's counts (5 bones, 8 throws) are both wrong by one; the designs should say six bones and seven throws.
 
 ## 8. Structured data (2026-11-17)
 
 `maps/revelations/src/data/huntData.js` (bones, eggs, runes, Summoning Key targets with landmarks, shots, video ranges, gaps; counts tested in `scripts/rev-hunt-data.test.mjs`) and `maps/origins/src/data/staffPuzzleFacts.js` (what is verified per staff). Neither is wired into a page yet: design-neutral on purpose.
+
+## 9. If Step details goes away: where each kind of fact moves (2026-11-17, Bryen: "WE DONT NEED STEP DETAILS")
+
+Decision `decision:no-step-details:2026-11-17`. Nothing is built or deleted here; this is only the destination list so no fact is lost (the content-preservation tests and `approved-removals.json` still guard every line). Counts are from each map's `stepDetails.js`.
+
+| What lives only in Step details today | Where it should go | Notes |
+| --- | --- | --- |
+| **Critical requirements / warnings** (Origins 7 steps, Der 7, Gorod 5, Mob 4, SoE 3, Zets 3, Rev 3): e.g. all six generators on at once, every player needs the Iron Fist, Mob needs 2+ players and Original difficulty, Der ranked = one bow / local = four, every Zetsubou player finishes Trials | **Main guide line**, condensed to one short clause on the step that needs it (OG style) | Keep the wording already in `critical`; shorten, never reword the fact |
+| **How-to lines** (numbered, 6 of 7 maps; Origins has none for the two staff steps) | **Staff pages** (Origins Ice/Fire/Wind/Lightning: Build, Puzzle, Upgrade) · **Specialist tabs** (Gorod Valves/Trophies/Boss, Der Bows/Wisps/Parts/Boss, Zets Cogs/Buildables/Elevator, Mob Plane/Skulls/Codes) | Most already exist there; the Step details copy is the duplicate Bryen disliked. Check each how-line against its tab before removing |
+| **Checklists / chips** (Rev eggs, bones, runes, throws; Gorod six trophies and challenges; Mob skulls; Zets part lists) | **Hunt pages**: the records are already in `huntData.js` (Revelations); Gorod trophies and Zets parts go on their buildables/trophies tabs | One consistent picker, per Bryen's hunt-page rule |
+| **Per-game state widgets** (Revelations symbol-order note, Der safe-code note, and the other maps’ run notes and pick tools: check each in its `stepDetails.js`) | **The page of the tool they belong to**: Rev symbol note → the symbol/rune hunt page; Der safe code → Wisps or Boss tab; Mob codes → Codes tab | They hold the player's own saved state; keep with the puzzle |
+| **"Not working?" tips** (`problems`, on about 33 steps across the seven maps; Revelations has only 1) | **Main guide line** only for the few that prevent progress (e.g. Rev reel 2, Der safe-code wrong entry); the rest stay unwritten until a source exists | No new tips without a source (STEP-DETAILS-GAPS) |
+| **"Before you start" intros** (Mob, Gorod, Der, Zets, SoE) | **Main guide header line** (one sentence: players, difficulty, required gear) | Same lines the old main-guide headers carried |
+| **Step videos** (Rev, Der) | **Hunt/specialist page** the video explains (Rev hunt pages, Der Bows) | Credit stays on the video |
+| **Anchors `#step-N` and `?from=` Back-to-step links** | Drop with the tab; main-guide links point straight at the staff/specialist/hunt page | Update `stepLinks`, search index and share-head routes when removed |
+
+**Not to lose when it is built:** the three removals already approved for the flat guide are in `approved-removals.json`; anything newly removed needs its destination above or an approved entry.
