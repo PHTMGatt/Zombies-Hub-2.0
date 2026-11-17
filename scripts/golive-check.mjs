@@ -6,7 +6,7 @@
  *   source verification · production build · per-route share heads · bundle budget · build info
  *   per-route meta check on the built dist (every prerendered page: title, description, og:url, canonical in
  *   sitemap.xml, og:image file; robots.txt points at the sitemap)
- *   production routing: dist served with render.yaml's rules (scripts/serve-dist.mjs), so each kind of path gets
+ *   production routing: dist served by npm start's server (scripts/serve-dist.mjs), so each kind of path gets
  *   the right head, status and card (scripts/route-heads-check.mjs)
  *   every browser smoke in `npm run test:browser` (7 maps, Coming Soon / empty maps, step links, offline,
  *   content preservation, …) plus the link/anchor check and the a11y smoke, against a local preview of dist.
@@ -131,7 +131,7 @@ if (!existsSync(path.join(dist, 'index.html'))) {
   for (const script of smokes) skip(script, 'no dist/');
 } else {
   await check(`per-route meta in dist (${prerenderRoutes().length} routes)`, metaProblems);
-  run('production routing (render.yaml rules: own heads, real 404s)', ['scripts/route-heads-check.mjs', dist]);
+  run('production routing (npm start: own heads, real 404s)', ['scripts/route-heads-check.mjs', dist]);
   const server = await startPreview(await freePort(), dist);
   try {
     for (const script of smokes) run(script.replace(/^scripts\//, ''), smokeArgs(script), { SMOKE_BASE_URL: server.base, SMOKE_DIST: dist });

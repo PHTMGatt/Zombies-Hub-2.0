@@ -1,6 +1,6 @@
 /*
  * Production routing check, no browser: what a share crawler or search engine gets for each kind of path.
- *   node scripts/route-heads-check.mjs [distDir]       serves distDir with render.yaml's rules (scripts/serve-dist.mjs)
+ *   node scripts/route-heads-check.mjs [distDir]       serves distDir with the production server (npm start, scripts/serve-dist.mjs)
  *   ROUTE_CHECK_BASE=https://zombies-hub-2-0.onrender.com node scripts/route-heads-check.mjs   checks the live site
  * Checks: a map tab and a map get their own title and that map's card (og:image), a hub page with a trailing
  * slash gets its head, Home is 200, junk is a real 404 with noindex, a client route still loads the app (200),

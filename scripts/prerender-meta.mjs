@@ -6,7 +6,7 @@
  * same shell (same scripts, same assets) with that route's title, description, og:/twitter: tags and
  * canonical URL. Text comes from apps/hub/src/app/routeMetadata.js, the same source the app's head sync
  * uses at runtime, so the prerendered head and the live head agree. dist/index.html stays the generic
- * shell: the host's /* → /index.html rewrite still serves every other path, as before.
+ * shell for Home and client-routed paths; scripts/serve-dist.mjs (npm start) picks the right file per request.
  *
  * og:image: /og/<map>.jpg (1200x630, public/og/) on the map and every one of its tabs when that file exists
  * in dist, otherwise the shared /og-image.png.
@@ -184,7 +184,7 @@ export async function prerender(distDir = path.join(root, 'dist'), readSource) {
   return routes;
 }
 
-// dist/404.html: what the host sends, with a 404 status, for a path no routing rule knows (render.yaml). The same
+// dist/404.html: what the server sends, with a 404 status, for a path that is no page (scripts/serve-dist.mjs). The same
 // app shell, so the app still boots and shows its "Page not found" page, but titled so and kept out of search.
 export function notFoundHead(shell) {
   const title = 'Page not found | Zombies Hub 2.0';
@@ -193,36 +193,17 @@ export function notFoundHead(shell) {
   return out.replace(/\s*<link rel="canonical"[^>]*>/i, '').replace(/\s*<meta property="og:url"[^>]*>/i, '');
 }
 
-// The files render.yaml's rewrites point at (dist/<route>.html), read from render.yaml itself so this works even
-// when the routes cannot be read from source.
-export const rewriteTargets = (yaml) => [...new Set([...yaml.matchAll(/destination: (\/\S+\.html)\s*$/gm)].map(([, file]) => file))]
-  .filter((file) => file !== '/index.html');
-
-// Render fallback: every rewrite target and 404.html get the plain shell, so each path still loads the app
-// (generic head, as before per-route heads existed) instead of a missing file.
-export async function writePlainShell(distDir, yaml = readFileSync(path.join(root, 'render.yaml'), 'utf8')) {
-  const shell = await readFile(path.join(distDir, 'index.html'), 'utf8');
-  const targets = rewriteTargets(yaml);
-  for (const file of [...targets, '/404.html']) {
-    const target = path.join(distDir, ...file.split('/').filter(Boolean));
-    await mkdir(path.dirname(target), { recursive: true });
-    await writeFile(target, shell);
-  }
-  return targets.length;
-}
-
 // The CLI step. A failure fails CI and golive-check (exit 1). On Render's production build (RENDER is set)
-// it warns and continues: every routed path is served the plain SPA shell, as before this step existed.
-export async function runPrerender(distDir, { env = process.env, log = console, readSource, renderYaml } = {}) {
+// it warns and continues: the deploy ships the plain SPA shell, and the server (scripts/serve-dist.mjs) serves it
+// for every page, exactly as before this step existed.
+export async function runPrerender(distDir, { env = process.env, log = console, readSource } = {}) {
   try {
     const routes = await prerender(distDir, readSource);
     log.log(`prerender-meta: wrote share-preview heads for ${routes.length} routes, sitemap.xml, robots.txt and 404.html`);
     return 0;
   } catch (error) {
     if (env.RENDER) {
-      let fallback = '';
-      try { fallback = `, ${await writePlainShell(distDir, renderYaml)} routes get it`; } catch (shellError) { fallback = `; plain shell copies failed too (${shellError.message})`; }
-      log.warn(`prerender-meta: WARNING on the Render build, serving the plain SPA index.html (${error.message})${fallback}`);
+      log.warn(`prerender-meta: WARNING on the Render build, serving the plain SPA index.html (${error.message})`);
       return 0;
     }
     log.error(`prerender-meta: FAILED (${error.message})`);
