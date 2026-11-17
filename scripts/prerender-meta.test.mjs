@@ -6,7 +6,7 @@ import path from 'node:path';
 import test from 'node:test';
 import { dedicatedGuideSlugs } from '../apps/hub/src/data/dedicatedGuides.js';
 import { routeDescription, routeTitle } from '../apps/hub/src/app/routeMetadata.js';
-import { HUB_ROUTES, OG_IMAGE, escapeAttr, escapeText, headFor, imageSize, prerender, prerenderRoutes, runPrerender, siteOrigin, tabPaths } from './prerender-meta.mjs';
+import { HUB_ROUTES, OG_IMAGE, notFoundHead, rewriteTargets, escapeAttr, escapeText, headFor, imageSize, prerender, prerenderRoutes, runPrerender, siteOrigin, tabPaths } from './prerender-meta.mjs';
 
 const shell = await readFile(new URL('../index.html', import.meta.url), 'utf8');
 const origin = siteOrigin(shell);
@@ -116,9 +116,11 @@ Sitemap: ${origin}/sitemap.xml
   }
 });
 
-test('a prerender failure fails CI, but on Render it warns and leaves the plain SPA shell serving every path', async () => {
+test('a prerender failure fails CI; on Render it warns and every routed path still gets the plain SPA shell', async () => {
   const dist = await mkdtemp(path.join(tmpdir(), 'zh-prerender-fail-'));
   const quiet = () => { const lines = []; return { lines, log: { log: (m) => lines.push(['log', m]), warn: (m) => lines.push(['warn', m]), error: (m) => lines.push(['error', m]) } }; };
+  const renderYaml = await readFile(new URL('../render.yaml', import.meta.url), 'utf8');
+  const targets = rewriteTargets(renderYaml);
   try {
     await writeFile(path.join(dist, 'index.html'), shell);
     // A routes file that cannot be read makes the step fail before any per-route file is written.
@@ -126,17 +128,23 @@ test('a prerender failure fails CI, but on Render it warns and leaves the plain 
     const ci = quiet();
     assert.equal(await runPrerender(dist, { env: {}, log: ci.log, readSource: broken }), 1, 'CI / golive-check: exit 1');
     assert.match(ci.lines[0][1], /FAILED \(routes file unreadable\)/);
+    assert.deepEqual(await readdir(dist), ['index.html'], 'CI writes nothing');
     const render = quiet();
-    assert.equal(await runPrerender(dist, { env: { RENDER: 'true' }, log: render.log, readSource: broken }), 0, 'Render: exit 0');
-    assert.match(render.lines[0][1], /WARNING on the Render build, serving the plain SPA index.html/);
-    assert.deepEqual(await readdir(dist), ['index.html'], 'nothing but the SPA shell is left in dist');
+    assert.equal(await runPrerender(dist, { env: { RENDER: 'true' }, log: render.log, readSource: broken, renderYaml }), 0, 'Render: exit 0');
+    assert.match(render.lines[0][1], /WARNING on the Render build, serving the plain SPA index.html \(routes file unreadable\), \d+ routes get it/);
+    // render.yaml rewrites each prerendered path to its .html file: on a failed prerender that file is the plain shell.
+    assert(targets.length > 70, 'render.yaml lists the prerendered pages');
+    for (const file of [...targets, '/404.html']) assert.equal(await readFile(path.join(dist, ...file.split('/').filter(Boolean)), 'utf8'), shell, `${file} is the plain shell`);
     assert.equal(await readFile(path.join(dist, 'index.html'), 'utf8'), shell, 'the shell is untouched');
 
-    // A write that fails halfway removes what it already wrote.
+    // A write that fails halfway removes what it already wrote; the plain shell then takes those paths.
+    await rm(path.join(dist, 'allmaps.html'));
+    await rm(path.join(dist, 'maps', 'origins.html'));
     await mkdir(path.join(dist, 'maps', 'origins.html'), { recursive: true }); // a directory where a file must go
-    assert.equal(await runPrerender(dist, { env: { RENDER: 'true' }, log: quiet().log }), 0);
-    assert.equal(existsSync(path.join(dist, 'allmaps.html')), false, 'files written before the failure are removed');
-    assert.equal(existsSync(path.join(dist, 'allmaps', 'index.html')), false);
+    const halfway = quiet();
+    assert.equal(await runPrerender(dist, { env: { RENDER: 'true' }, log: halfway.log, renderYaml }), 0);
+    assert.match(halfway.lines[0][1], /plain shell copies failed too/, 'says so when even the fallback cannot write');
+    assert.equal(await readFile(path.join(dist, 'allmaps.html'), 'utf8'), shell, 'no half-written per-route head is left');
     assert.equal(existsSync(path.join(dist, 'sitemap.xml')), false, 'no sitemap for pages that are not there');
   } finally {
     await rm(dist, { recursive: true, force: true });

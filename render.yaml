@@ -12,7 +12,472 @@ services:
         value: "true"
     routes:
       - type: rewrite
-        source: /*
+        source: /allmaps
+        destination: /allmaps.html
+      - type: rewrite
+        source: /allmaps/
+        destination: /allmaps.html
+      - type: rewrite
+        source: /maps
+        destination: /maps.html
+      - type: rewrite
+        source: /maps/
+        destination: /maps.html
+      - type: rewrite
+        source: /easter-eggs
+        destination: /easter-eggs.html
+      - type: rewrite
+        source: /easter-eggs/
+        destination: /easter-eggs.html
+      - type: rewrite
+        source: /side-easter-eggs
+        destination: /side-easter-eggs.html
+      - type: rewrite
+        source: /side-easter-eggs/
+        destination: /side-easter-eggs.html
+      - type: rewrite
+        source: /achievements
+        destination: /achievements.html
+      - type: rewrite
+        source: /achievements/
+        destination: /achievements.html
+      - type: rewrite
+        source: /search
+        destination: /search.html
+      - type: rewrite
+        source: /search/
+        destination: /search.html
+      - type: rewrite
+        source: /coming-soon
+        destination: /coming-soon.html
+      - type: rewrite
+        source: /coming-soon/
+        destination: /coming-soon.html
+      - type: rewrite
+        source: /easter-eggs/ascension
+        destination: /easter-eggs/ascension.html
+      - type: rewrite
+        source: /easter-eggs/ascension/
+        destination: /easter-eggs/ascension.html
+      - type: rewrite
+        source: /easter-eggs/call-of-the-dead
+        destination: /easter-eggs/call-of-the-dead.html
+      - type: rewrite
+        source: /easter-eggs/call-of-the-dead/
+        destination: /easter-eggs/call-of-the-dead.html
+      - type: rewrite
+        source: /easter-eggs/moon
+        destination: /easter-eggs/moon.html
+      - type: rewrite
+        source: /easter-eggs/moon/
+        destination: /easter-eggs/moon.html
+      - type: rewrite
+        source: /easter-eggs/tranzit
+        destination: /easter-eggs/tranzit.html
+      - type: rewrite
+        source: /easter-eggs/tranzit/
+        destination: /easter-eggs/tranzit.html
+      - type: rewrite
+        source: /easter-eggs/die-rise
+        destination: /easter-eggs/die-rise.html
+      - type: rewrite
+        source: /easter-eggs/die-rise/
+        destination: /easter-eggs/die-rise.html
+      - type: rewrite
+        source: /easter-eggs/buried
+        destination: /easter-eggs/buried.html
+      - type: rewrite
+        source: /easter-eggs/buried/
+        destination: /easter-eggs/buried.html
+      - type: rewrite
+        source: /easter-eggs/the-giant
+        destination: /easter-eggs/the-giant.html
+      - type: rewrite
+        source: /easter-eggs/the-giant/
+        destination: /easter-eggs/the-giant.html
+      - type: rewrite
+        source: /easter-eggs/shangri-la-chronicles
+        destination: /easter-eggs/shangri-la-chronicles.html
+      - type: rewrite
+        source: /easter-eggs/shangri-la-chronicles/
+        destination: /easter-eggs/shangri-la-chronicles.html
+      - type: rewrite
+        source: /side-easter-eggs/kino
+        destination: /side-easter-eggs/kino.html
+      - type: rewrite
+        source: /side-easter-eggs/kino/
+        destination: /side-easter-eggs/kino.html
+      - type: rewrite
+        source: /side-easter-eggs/gk
+        destination: /side-easter-eggs/gk.html
+      - type: rewrite
+        source: /side-easter-eggs/gk/
+        destination: /side-easter-eggs/gk.html
+      - type: rewrite
+        source: /side-easter-eggs/de
+        destination: /side-easter-eggs/de.html
+      - type: rewrite
+        source: /side-easter-eggs/de/
+        destination: /side-easter-eggs/de.html
+      - type: rewrite
+        source: /side-easter-eggs/soe
+        destination: /side-easter-eggs/soe.html
+      - type: rewrite
+        source: /side-easter-eggs/soe/
+        destination: /side-easter-eggs/soe.html
+      - type: rewrite
+        source: /side-easter-eggs/origins-speedrun
+        destination: /side-easter-eggs/origins-speedrun.html
+      - type: rewrite
+        source: /side-easter-eggs/origins-speedrun/
+        destination: /side-easter-eggs/origins-speedrun.html
+      - type: rewrite
+        source: /maps/origins
+        destination: /maps/origins.html
+      - type: rewrite
+        source: /maps/origins/
+        destination: /maps/origins.html
+      - type: rewrite
+        source: /maps/origins/og
+        destination: /maps/origins/og.html
+      - type: rewrite
+        source: /maps/origins/og/
+        destination: /maps/origins/og.html
+      - type: rewrite
+        source: /maps/origins/step-details
+        destination: /maps/origins/step-details.html
+      - type: rewrite
+        source: /maps/origins/step-details/
+        destination: /maps/origins/step-details.html
+      - type: rewrite
+        source: /maps/origins/fire-staff
+        destination: /maps/origins/fire-staff.html
+      - type: rewrite
+        source: /maps/origins/fire-staff/
+        destination: /maps/origins/fire-staff.html
+      - type: rewrite
+        source: /maps/origins/ice-staff
+        destination: /maps/origins/ice-staff.html
+      - type: rewrite
+        source: /maps/origins/ice-staff/
+        destination: /maps/origins/ice-staff.html
+      - type: rewrite
+        source: /maps/origins/wind-staff
+        destination: /maps/origins/wind-staff.html
+      - type: rewrite
+        source: /maps/origins/wind-staff/
+        destination: /maps/origins/wind-staff.html
+      - type: rewrite
+        source: /maps/origins/lightning-staff
+        destination: /maps/origins/lightning-staff.html
+      - type: rewrite
+        source: /maps/origins/lightning-staff/
+        destination: /maps/origins/lightning-staff.html
+      - type: rewrite
+        source: /maps/origins/speed-run
+        destination: /maps/origins/speed-run.html
+      - type: rewrite
+        source: /maps/origins/speed-run/
+        destination: /maps/origins/speed-run.html
+      - type: rewrite
+        source: /maps/origins/speed-run/prep
+        destination: /maps/origins/speed-run/prep.html
+      - type: rewrite
+        source: /maps/origins/speed-run/prep/
+        destination: /maps/origins/speed-run/prep.html
+      - type: rewrite
+        source: /maps/origins/speed-run/lightning
+        destination: /maps/origins/speed-run/lightning.html
+      - type: rewrite
+        source: /maps/origins/speed-run/lightning/
+        destination: /maps/origins/speed-run/lightning.html
+      - type: rewrite
+        source: /maps/origins/FireStaff
+        destination: /maps/origins/FireStaff.html
+      - type: rewrite
+        source: /maps/origins/FireStaff/
+        destination: /maps/origins/FireStaff.html
+      - type: rewrite
+        source: /maps/origins/IceStaff
+        destination: /maps/origins/IceStaff.html
+      - type: rewrite
+        source: /maps/origins/IceStaff/
+        destination: /maps/origins/IceStaff.html
+      - type: rewrite
+        source: /maps/origins/WindStaff
+        destination: /maps/origins/WindStaff.html
+      - type: rewrite
+        source: /maps/origins/WindStaff/
+        destination: /maps/origins/WindStaff.html
+      - type: rewrite
+        source: /maps/origins/LightningStaff
+        destination: /maps/origins/LightningStaff.html
+      - type: rewrite
+        source: /maps/origins/LightningStaff/
+        destination: /maps/origins/LightningStaff.html
+      - type: rewrite
+        source: /maps/mob-of-the-dead
+        destination: /maps/mob-of-the-dead.html
+      - type: rewrite
+        source: /maps/mob-of-the-dead/
+        destination: /maps/mob-of-the-dead.html
+      - type: rewrite
+        source: /maps/mob-of-the-dead/plane
+        destination: /maps/mob-of-the-dead/plane.html
+      - type: rewrite
+        source: /maps/mob-of-the-dead/plane/
+        destination: /maps/mob-of-the-dead/plane.html
+      - type: rewrite
+        source: /maps/mob-of-the-dead/retriever-skulls
+        destination: /maps/mob-of-the-dead/retriever-skulls.html
+      - type: rewrite
+        source: /maps/mob-of-the-dead/retriever-skulls/
+        destination: /maps/mob-of-the-dead/retriever-skulls.html
+      - type: rewrite
+        source: /maps/mob-of-the-dead/codes
+        destination: /maps/mob-of-the-dead/codes.html
+      - type: rewrite
+        source: /maps/mob-of-the-dead/codes/
+        destination: /maps/mob-of-the-dead/codes.html
+      - type: rewrite
+        source: /maps/mob-of-the-dead/final-step
+        destination: /maps/mob-of-the-dead/final-step.html
+      - type: rewrite
+        source: /maps/mob-of-the-dead/final-step/
+        destination: /maps/mob-of-the-dead/final-step.html
+      - type: rewrite
+        source: /maps/mob-of-the-dead/step-details
+        destination: /maps/mob-of-the-dead/step-details.html
+      - type: rewrite
+        source: /maps/mob-of-the-dead/step-details/
+        destination: /maps/mob-of-the-dead/step-details.html
+      - type: rewrite
+        source: /maps/shadows-of-evil
+        destination: /maps/shadows-of-evil.html
+      - type: rewrite
+        source: /maps/shadows-of-evil/
+        destination: /maps/shadows-of-evil.html
+      - type: rewrite
+        source: /maps/shadows-of-evil/step-details
+        destination: /maps/shadows-of-evil/step-details.html
+      - type: rewrite
+        source: /maps/shadows-of-evil/step-details/
+        destination: /maps/shadows-of-evil/step-details.html
+      - type: rewrite
+        source: /maps/der-eisendrache
+        destination: /maps/der-eisendrache.html
+      - type: rewrite
+        source: /maps/der-eisendrache/
+        destination: /maps/der-eisendrache.html
+      - type: rewrite
+        source: /maps/der-eisendrache/parts
+        destination: /maps/der-eisendrache/parts.html
+      - type: rewrite
+        source: /maps/der-eisendrache/parts/
+        destination: /maps/der-eisendrache/parts.html
+      - type: rewrite
+        source: /maps/der-eisendrache/wisps
+        destination: /maps/der-eisendrache/wisps.html
+      - type: rewrite
+        source: /maps/der-eisendrache/wisps/
+        destination: /maps/der-eisendrache/wisps.html
+      - type: rewrite
+        source: /maps/der-eisendrache/boss
+        destination: /maps/der-eisendrache/boss.html
+      - type: rewrite
+        source: /maps/der-eisendrache/boss/
+        destination: /maps/der-eisendrache/boss.html
+      - type: rewrite
+        source: /maps/der-eisendrache/step-details
+        destination: /maps/der-eisendrache/step-details.html
+      - type: rewrite
+        source: /maps/der-eisendrache/step-details/
+        destination: /maps/der-eisendrache/step-details.html
+      - type: rewrite
+        source: /maps/der-eisendrache/bows
+        destination: /maps/der-eisendrache/bows.html
+      - type: rewrite
+        source: /maps/der-eisendrache/bows/
+        destination: /maps/der-eisendrache/bows.html
+      - type: rewrite
+        source: /maps/der-eisendrache/bows/base
+        destination: /maps/der-eisendrache/bows/base.html
+      - type: rewrite
+        source: /maps/der-eisendrache/bows/base/
+        destination: /maps/der-eisendrache/bows/base.html
+      - type: rewrite
+        source: /maps/der-eisendrache/bows/electric
+        destination: /maps/der-eisendrache/bows/electric.html
+      - type: rewrite
+        source: /maps/der-eisendrache/bows/electric/
+        destination: /maps/der-eisendrache/bows/electric.html
+      - type: rewrite
+        source: /maps/der-eisendrache/bows/fire
+        destination: /maps/der-eisendrache/bows/fire.html
+      - type: rewrite
+        source: /maps/der-eisendrache/bows/fire/
+        destination: /maps/der-eisendrache/bows/fire.html
+      - type: rewrite
+        source: /maps/der-eisendrache/bows/wolf
+        destination: /maps/der-eisendrache/bows/wolf.html
+      - type: rewrite
+        source: /maps/der-eisendrache/bows/wolf/
+        destination: /maps/der-eisendrache/bows/wolf.html
+      - type: rewrite
+        source: /maps/der-eisendrache/bows/void
+        destination: /maps/der-eisendrache/bows/void.html
+      - type: rewrite
+        source: /maps/der-eisendrache/bows/void/
+        destination: /maps/der-eisendrache/bows/void.html
+      - type: rewrite
+        source: /maps/zetsubou-no-shima
+        destination: /maps/zetsubou-no-shima.html
+      - type: rewrite
+        source: /maps/zetsubou-no-shima/
+        destination: /maps/zetsubou-no-shima.html
+      - type: rewrite
+        source: /maps/zetsubou-no-shima/prerequisites
+        destination: /maps/zetsubou-no-shima/prerequisites.html
+      - type: rewrite
+        source: /maps/zetsubou-no-shima/prerequisites/
+        destination: /maps/zetsubou-no-shima/prerequisites.html
+      - type: rewrite
+        source: /maps/zetsubou-no-shima/reveal-blueprint
+        destination: /maps/zetsubou-no-shima/reveal-blueprint.html
+      - type: rewrite
+        source: /maps/zetsubou-no-shima/reveal-blueprint/
+        destination: /maps/zetsubou-no-shima/reveal-blueprint.html
+      - type: rewrite
+        source: /maps/zetsubou-no-shima/cogs
+        destination: /maps/zetsubou-no-shima/cogs.html
+      - type: rewrite
+        source: /maps/zetsubou-no-shima/cogs/
+        destination: /maps/zetsubou-no-shima/cogs.html
+      - type: rewrite
+        source: /maps/zetsubou-no-shima/cogs/1
+        destination: /maps/zetsubou-no-shima/cogs/1.html
+      - type: rewrite
+        source: /maps/zetsubou-no-shima/cogs/1/
+        destination: /maps/zetsubou-no-shima/cogs/1.html
+      - type: rewrite
+        source: /maps/zetsubou-no-shima/cogs/2
+        destination: /maps/zetsubou-no-shima/cogs/2.html
+      - type: rewrite
+        source: /maps/zetsubou-no-shima/cogs/2/
+        destination: /maps/zetsubou-no-shima/cogs/2.html
+      - type: rewrite
+        source: /maps/zetsubou-no-shima/cogs/3
+        destination: /maps/zetsubou-no-shima/cogs/3.html
+      - type: rewrite
+        source: /maps/zetsubou-no-shima/cogs/3/
+        destination: /maps/zetsubou-no-shima/cogs/3.html
+      - type: rewrite
+        source: /maps/zetsubou-no-shima/buildables
+        destination: /maps/zetsubou-no-shima/buildables.html
+      - type: rewrite
+        source: /maps/zetsubou-no-shima/buildables/
+        destination: /maps/zetsubou-no-shima/buildables.html
+      - type: rewrite
+        source: /maps/zetsubou-no-shima/elevator-battle
+        destination: /maps/zetsubou-no-shima/elevator-battle.html
+      - type: rewrite
+        source: /maps/zetsubou-no-shima/elevator-battle/
+        destination: /maps/zetsubou-no-shima/elevator-battle.html
+      - type: rewrite
+        source: /maps/zetsubou-no-shima/extras
+        destination: /maps/zetsubou-no-shima/extras.html
+      - type: rewrite
+        source: /maps/zetsubou-no-shima/extras/
+        destination: /maps/zetsubou-no-shima/extras.html
+      - type: rewrite
+        source: /maps/zetsubou-no-shima/step-details
+        destination: /maps/zetsubou-no-shima/step-details.html
+      - type: rewrite
+        source: /maps/zetsubou-no-shima/step-details/
+        destination: /maps/zetsubou-no-shima/step-details.html
+      - type: rewrite
+        source: /maps/gorod-krovi
+        destination: /maps/gorod-krovi.html
+      - type: rewrite
+        source: /maps/gorod-krovi/
+        destination: /maps/gorod-krovi.html
+      - type: rewrite
+        source: /maps/gorod-krovi/trophies
+        destination: /maps/gorod-krovi/trophies.html
+      - type: rewrite
+        source: /maps/gorod-krovi/trophies/
+        destination: /maps/gorod-krovi/trophies.html
+      - type: rewrite
+        source: /maps/gorod-krovi/valves
+        destination: /maps/gorod-krovi/valves.html
+      - type: rewrite
+        source: /maps/gorod-krovi/valves/
+        destination: /maps/gorod-krovi/valves.html
+      - type: rewrite
+        source: /maps/gorod-krovi/boss
+        destination: /maps/gorod-krovi/boss.html
+      - type: rewrite
+        source: /maps/gorod-krovi/boss/
+        destination: /maps/gorod-krovi/boss.html
+      - type: rewrite
+        source: /maps/gorod-krovi/buildables
+        destination: /maps/gorod-krovi/buildables.html
+      - type: rewrite
+        source: /maps/gorod-krovi/buildables/
+        destination: /maps/gorod-krovi/buildables.html
+      - type: rewrite
+        source: /maps/gorod-krovi/step-details
+        destination: /maps/gorod-krovi/step-details.html
+      - type: rewrite
+        source: /maps/gorod-krovi/step-details/
+        destination: /maps/gorod-krovi/step-details.html
+      - type: rewrite
+        source: /maps/revelations
+        destination: /maps/revelations.html
+      - type: rewrite
+        source: /maps/revelations/
+        destination: /maps/revelations.html
+      - type: rewrite
+        source: /maps/revelations/apothicon-upgrade
+        destination: /maps/revelations/apothicon-upgrade.html
+      - type: rewrite
+        source: /maps/revelations/apothicon-upgrade/
+        destination: /maps/revelations/apothicon-upgrade.html
+      - type: rewrite
+        source: /maps/revelations/egg-locations
+        destination: /maps/revelations/egg-locations.html
+      - type: rewrite
+        source: /maps/revelations/egg-locations/
+        destination: /maps/revelations/egg-locations.html
+      - type: rewrite
+        source: /maps/revelations/summoning-key
+        destination: /maps/revelations/summoning-key.html
+      - type: rewrite
+        source: /maps/revelations/summoning-key/
+        destination: /maps/revelations/summoning-key.html
+      - type: rewrite
+        source: /maps/revelations/sound-step
+        destination: /maps/revelations/sound-step.html
+      - type: rewrite
+        source: /maps/revelations/sound-step/
+        destination: /maps/revelations/sound-step.html
+      - type: rewrite
+        source: /maps/revelations/step-details
+        destination: /maps/revelations/step-details.html
+      - type: rewrite
+        source: /maps/revelations/step-details/
+        destination: /maps/revelations/step-details.html
+      - type: rewrite
+        source: /easter-eggs/*
+        destination: /index.html
+      - type: rewrite
+        source: /info/*
+        destination: /index.html
+      - type: rewrite
+        source: /side-easter-eggs/*
+        destination: /index.html
+      - type: rewrite
+        source: /maps/*
         destination: /index.html
     headers:
       - path: /build-info.json

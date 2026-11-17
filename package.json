@@ -18,10 +18,11 @@
     "build": "npm run check && npm run compile",
     "ci": "npm run build",
     "preview": "vite preview",
-    "start": "serve -s dist",
+    "start": "node scripts/serve-dist.mjs",
     "smoke": "node scripts/smoke-live.mjs",
     "golive-check": "node scripts/golive-check.mjs",
     "test:links": "node scripts/links-browser-smoke.mjs",
+    "test:routes": "node scripts/route-heads-check.mjs",
     "test:a11y": "node scripts/a11y-browser-smoke.mjs",
     "render": "npm ci --include=dev --no-audit --no-fund && npm run ci",
     "render-build": "npm run render"

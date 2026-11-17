@@ -6,11 +6,16 @@ export default function NotFound() {
   const Heading = /^\/maps\/(origins|mob-of-the-dead|shadows-of-evil|der-eisendrache|zetsubou-no-shima|gorod-krovi|revelations)\//.test(pathname) ? 'h2' : 'h1';
   useEffect(() => {
     document.title = 'Page not found | Zombies Hub 2.0';
-    // The host answers every path with 200 (SPA rewrite): keep this soft 404 out of search results.
-    const robots = document.createElement('meta');
-    robots.name = 'robots';
-    robots.content = 'noindex';
-    document.head.appendChild(robots);
+    // Keep this page out of search results. Paths under a client route (/maps/…, /easter-eggs/…) are answered
+    // with 200 and the app shell, so the tag is added here; a 404.html load already has it, so reuse that one.
+    // It leaves with this page either way (Find a map, Return to the Hub).
+    let robots = document.querySelector('meta[name="robots"]');
+    if (!robots) {
+      robots = document.createElement('meta');
+      robots.name = 'robots';
+      robots.content = 'noindex';
+      document.head.appendChild(robots);
+    }
     return () => robots.remove();
   }, []);
 
