@@ -72,7 +72,7 @@ test('values are escaped, and a map image replaces the shared card only when giv
   }
 });
 
-test('prerender writes <route>.html and <route>/index.html, sitemap.xml and robots.txt, and leaves the shell generic', async () => {
+test('prerender writes <route>.html and <route>/index.html, sitemap.xml, robots.txt and 404.html, and leaves the shell generic', async () => {
   const dist = await mkdtemp(path.join(tmpdir(), 'zh-prerender-'));
   try {
     await writeFile(path.join(dist, 'index.html'), shell);
@@ -106,6 +106,12 @@ test('prerender writes <route>.html and <route>/index.html, sitemap.xml and robo
       const page = await readFile(path.join(dist, ...route.split('/').filter(Boolean), 'index.html'), 'utf8');
       assert(locs.includes(page.match(/<link rel="canonical" href="([^"]+)"/)[1]), `${route}: its canonical URL is in the sitemap`);
     }
+    // 404.html: the app shell, titled Page not found, kept out of search, no canonical URL.
+    const notFound = await readFile(path.join(dist, '404.html'), 'utf8');
+    assert(notFound.includes('<title>Page not found | Zombies Hub 2.0</title>'), 'titled Page not found');
+    assert.equal((notFound.match(/name="robots" content="noindex"/g) ?? []).length, 1, 'one noindex');
+    assert.doesNotMatch(notFound, /rel="canonical"|property="og:url"/);
+    assert(notFound.includes('<div id="root"></div>'), 'the app still boots and shows its Page not found page');
     assert.equal(await readFile(path.join(dist, 'robots.txt'), 'utf8'), `User-agent: *
 Allow: /
 
@@ -138,6 +144,7 @@ test('a prerender failure fails CI, but on Render it warns and leaves the plain 
     assert.equal(existsSync(path.join(dist, 'allmaps.html')), false, 'files written before the failure are removed');
     assert.equal(existsSync(path.join(dist, 'allmaps', 'index.html')), false);
     assert.equal(existsSync(path.join(dist, 'sitemap.xml')), false, 'no sitemap for pages that are not there');
+    assert.equal(existsSync(path.join(dist, '404.html')), false, 'no 404.html either');
   } finally {
     await rm(dist, { recursive: true, force: true });
   }

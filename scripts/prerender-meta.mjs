@@ -6,7 +6,7 @@
  * same shell (same scripts, same assets) with that route's title, description, og:/twitter: tags and
  * canonical URL. Text comes from apps/hub/src/app/routeMetadata.js, the same source the app's head sync
  * uses at runtime, so the prerendered head and the live head agree. dist/index.html stays the generic
- * shell: the host's /* → /index.html rewrite still serves every other path, as before.
+ * shell for Home and client-routed paths; scripts/serve-dist.mjs (npm start) picks the right file per request.
  *
  * og:image: /og/<map>.jpg (1200x630, public/og/) on the map and every one of its tabs when that file exists
  * in dist, otherwise the shared /og-image.png.
@@ -167,6 +167,7 @@ export async function prerender(distDir = path.join(root, 'dist'), readSource) {
   const canonical = ['/', ...routes.filter((route) => !ALIASES[route])];
   pages.push({ html: sitemapFor(origin, canonical), targets: [path.join(distDir, 'sitemap.xml')] });
   pages.push({ html: robotsFor(origin), targets: [path.join(distDir, 'robots.txt')] });
+  pages.push({ html: notFoundHead(shell), targets: [path.join(distDir, '404.html')] });
   const written = [];
   try {
     for (const { html, targets } of pages) {
@@ -183,12 +184,22 @@ export async function prerender(distDir = path.join(root, 'dist'), readSource) {
   return routes;
 }
 
+// dist/404.html: what the server sends, with a 404 status, for a path that is no page (scripts/serve-dist.mjs). The same
+// app shell, so the app still boots and shows its "Page not found" page, but titled so and kept out of search.
+export function notFoundHead(shell) {
+  const title = 'Page not found | Zombies Hub 2.0';
+  let out = shell.replace(/<title>[\s\S]*?<\/title>/i, `<title>${escapeText(title)}</title>\n    <meta name="robots" content="noindex" />`);
+  out = setTag(out, 'meta', ['property', 'og:title'], 'content', title);
+  return out.replace(/\s*<link rel="canonical"[^>]*>/i, '').replace(/\s*<meta property="og:url"[^>]*>/i, '');
+}
+
 // The CLI step. A failure fails CI and golive-check (exit 1). On Render's production build (RENDER is set)
-// it warns and continues: the deploy ships the plain SPA shell, exactly as before this step existed.
+// it warns and continues: the deploy ships the plain SPA shell, and the server (scripts/serve-dist.mjs) serves it
+// for every page, exactly as before this step existed.
 export async function runPrerender(distDir, { env = process.env, log = console, readSource } = {}) {
   try {
     const routes = await prerender(distDir, readSource);
-    log.log(`prerender-meta: wrote share-preview heads for ${routes.length} routes, sitemap.xml and robots.txt`);
+    log.log(`prerender-meta: wrote share-preview heads for ${routes.length} routes, sitemap.xml, robots.txt and 404.html`);
     return 0;
   } catch (error) {
     if (env.RENDER) {
