@@ -115,7 +115,7 @@ S4's main-quest list says staffs go in robots: Lightning at spawn, Wind in the m
 1. Bones: six screenshots, **no video timestamps**. Needs the bone segment time ranges from CodeNamePizza's video.
 2. Egg rows 1, 9, 15, 16 and rune rows 4, 7, 8: wording differs between our video labels and S2. Needs a second source or a look at the video before the names are shown to players.
 3. Summoning Key: no screenshots, video only.
-4. Ice and Wind charts: image-only in every source. I viewed all four repo charts: Fire and Lightning match the heritage notes; the Ice pairings and the Wind order cannot be checked against any text source, and whether Wind is fixed or random per game is stated nowhere.
+4. Ice and Wind charts: image-only in every source. I viewed all four repo charts: Fire and Lightning match the heritage notes; the Ice pairings and the Wind order cannot be checked against any text source, S3 says the Wind rings use "a specific order" (fixed; Grey grey-59 agrees), so Wind is treated as fixed, still single-source and frame-check pending.
 5. Ice gravestone places and the Der Eisendrache bone "fourth wall": single-source or conflicting.
 6. Bryen's counts (5 bones, 8 throws) are both wrong by one; the designs should say six bones and seven throws.
 

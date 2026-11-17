@@ -15,7 +15,7 @@ export const staffPuzzleFacts = {
     upgradeSpots: {
       steps: 'Freeze three gravestones with the Ice Staff, then break each with a bullet weapon.',
       verifiedPlaces: ['Near Generator 2 outside the map, next to the destroyed Giant / fallen robot (S3 + S4 agree)'],
-      conflictingPlaces: ['Near the footprint opposite the KN-44 wall buy (S3 only)', 'Right of the KN-44 wall buy (S3 only)', 'Above the Pack-a-Punch soul box and Generator 4 soul box (S4 only)'],
+      conflictingPlaces: ['Near the footprint opposite the KN-44 wall buy (S3 only; Grey grey-59 reads it as the Gen 4 / MP40 area)', 'Right of the KN-44 wall buy (S3 only; same area)', 'Above the Pack-a-Punch soul box and Generator 4 soul box (S4 only; names differ from S3, may be the same spots)'],
     },
   },
   fire: {
@@ -27,10 +27,10 @@ export const staffPuzzleFacts = {
   },
   wind: {
     puzzle: 'Shoot the four ceiling rings with the Wind Staff until their symbols match the code.',
-    randomPerGame: null,
+    randomPerGame: false,
     chart: 'wind_staff_code.webp: outer to inner, four symbols',
-    status: 'Rings and "match the symbols" agree with S3; the symbols are the same set as the Ice tiles (S3 forum). Whether the order changes per game is stated nowhere; no heritage note covers it.',
-    open: ['Confirm whether the Wind code is fixed or random.'],
+    status: 'Rings and "match the symbols" agree with S3; the symbols are the same set as the Ice tiles (S3 forum). S3 says to set the rings "in a specific order" (fixed); the order itself is image-only. Grey grey-59 agrees (fixed answer, rotation state may differ). Single independent text source; no heritage note covers it.',
+    open: ['Frame-check the Wind ring answer against BO2 footage (S3 and Grey both image-only).'],
     upgradeSpots: {
       steps: 'Turn all three smoking stone balls so their smoke points at the Excavation Site.',
       verifiedPlaces: ['Near Generator 4, between the generator and the Wind Tunnel', 'Outside the window left of Stamin-Up (Generator 5)', 'Outside the map, left of the tank path when returning to the church (tank entrance)'],
