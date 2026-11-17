@@ -36,7 +36,9 @@ function RefText({ ref_ }) {
   return (
     <div className="step-details__ref">
       {ref_.label && <h4>{ref_.label}</h4>}
-      {ref_.type === 'sequence' ? <ol>{items.map((t, i) => <li key={`${i}-${t}`}>{t}</li>)}</ol> : <Lines items={items} />}
+      {ref_.type === 'sequence' && items.every((t) => typeof t === 'string' && t.length <= 3 && !/\s/.test(t))
+        ? <p className="step-details__order"><strong>{items.join(' → ')}</strong></p>
+        : ref_.type === 'sequence' ? <ol>{items.map((t, i) => <li key={`${i}-${t}`}>{t}</li>)}</ol> : <Lines items={items} />}
     </div>
   );
 }
