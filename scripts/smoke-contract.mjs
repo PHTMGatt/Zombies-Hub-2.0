@@ -17,8 +17,9 @@ export const mainSteps = (page) => page.getByRole('main').getByRole('heading', {
 export const stepList = (page) => page.getByRole('main').getByRole('list').filter({ has: page.getByRole('heading', { name: /^Step 1:/ }) });
 
 // Picker pages (video + choices). In any look the choices are buttons or radios inside a labelled group or list
-// in <main>, the chosen one has aria-pressed or aria-checked, and the player says what plays in a role="status".
-export const CHOSEN = '[aria-pressed="true"], [aria-checked="true"]';
+// in <main>, the chosen one has aria-pressed, aria-checked or aria-current, and the player says what plays in a
+// role="status".
+export const CHOSEN = '[aria-pressed="true"], [aria-checked="true"], [aria-current="true"]';
 export const clipOptions = (page) => page.getByRole('main').locator(':is([role="group"], [role="radiogroup"], ol, ul)[aria-label] :is(button, [role="radio"])');
 export const chosenClip = (page) => clipOptions(page).and(page.locator(CHOSEN));
 export const nowPlaying = (page) => page.getByRole('status').filter({ hasNotText: /^Loading your guide/ }).first();
