@@ -30,7 +30,7 @@ export const gorodRun = [
     title: 'Solve the Valve Network',
     summary: 'Find the green-lit valve and the Master Code Cylinder, use the valve solution to set the five valves, then take the released cylinder to S.O.P.H.I.A.',
     details: [
-      'First power the Hatchery generator, under a tarp by the incubators in the basement: destroy a Valkyrie Drone next to it. That starts a 5-minute window, and the green light only shows while it is on.',
+      'First power the Hatchery generator, under a tarp by the incubators in the basement: destroy a Valkyrie Drone next to it. That starts a window of about 5 minutes, and the green light only shows while it is on.',
       'If the time runs out, press the button beside the generator to restart it. The valves do not re-randomise.',
       'The green-light/cylinder combination changes, so use the dedicated Valve Solver rather than memorizing one arrangement.',
       'Once the valves are set correctly, the cylinder releases and can be inserted at Dragon Command.',
