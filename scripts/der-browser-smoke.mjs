@@ -2,6 +2,7 @@ import './smoke-ready.mjs'; // first: waits for the app to render after each nav
 import { chromium } from 'playwright';
 import { stepDetails } from './smoke-helpers.mjs';
 import assert from 'node:assert/strict';
+import { mainSteps } from './smoke-contract.mjs';
 import fs from 'node:fs/promises';
 
 const base = process.env.SMOKE_BASE_URL || 'http://127.0.0.1:4173';
@@ -50,7 +51,7 @@ try {
     let response = await page.goto(`${base}${mainRoute}`, { waitUntil: 'domcontentloaded' });
     assert(response?.ok(), `${mainRoute} returned ${response?.status()}`);
     // Flat main guide: no Easter Egg heading on the list; the name stays in the map header.
-    await page.locator('li.flat-guide__step').first().waitFor();
+    await mainSteps(page).first().waitFor();
     assert.match(await page.locator('body').innerText(), /My Brother’s Keeper/, 'the Easter Egg name is still on the page');
     assert.equal(errors.length, 0, `${mainRoute} page errors: ${errors.join('; ')}`);
     const mainText = await page.locator('.de-home-page').innerText();
@@ -65,7 +66,7 @@ try {
     // One sequence: 12 steps, how-to under "More", and the safe-code note shared by the two steps that need it.
     await page.evaluate(() => window.localStorage.clear());
     await page.reload({ waitUntil: 'networkidle' });
-    assert.equal(await page.locator('li.guide-seq__step, li.flat-guide__step').count(), 12, 'Der guide keeps all 12 steps');
+    assert.equal(await mainSteps(page).count(), 12, 'Der guide keeps all 12 steps');
     assert.match(await page.locator('#past-lab-1 :is(h2, h3)').innerText(), /Past lab/);
     assert.match(await page.locator('#death-ray-safe :is(h2, h3)').innerText(), /Death Ray/);
     // Flat main guide: the how-to and the per-game safe-code note live on the Step details tab.

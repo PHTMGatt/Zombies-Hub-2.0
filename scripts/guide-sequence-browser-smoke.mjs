@@ -4,6 +4,7 @@ import './smoke-ready.mjs'; // first: waits for the app to render after each nav
  * task fact as text, and none of the old run machinery (modes, progress, Mark done, swipe rail, Quick refs).
  */
 import assert from 'node:assert/strict';
+import { mainSteps } from './smoke-contract.mjs';
 import { settled } from './smoke-helpers.mjs';
 import { chromium } from 'playwright';
 import { loadGuides } from './guide-content.mjs';
@@ -104,7 +105,7 @@ try {
     const brokenErrors = [];
     coldPage.on('pageerror', (error) => brokenErrors.push(error.message));
     await coldPage.goto(`${base}/maps/origins#100%`, { waitUntil: 'networkidle' });
-    assert.equal(await coldPage.locator('li.guide-seq__step, li.flat-guide__step').count(), 11, `${name}: guide still renders with a malformed #fragment`);
+    assert.equal(await mainSteps(coldPage).count(), 11, `${name}: guide still renders with a malformed #fragment`);
     assert.deepEqual(brokenErrors, [], `${name}: malformed #fragment errors: ${brokenErrors.join('; ')}`);
     results.push(`${name}: malformed #fragment is harmless`);
     await cold.close();

@@ -1,6 +1,7 @@
 import './smoke-ready.mjs'; // first: waits for the app to render after each navigation
 import { chromium } from 'playwright';
 import assert from 'node:assert/strict';
+import { mainSteps } from './smoke-contract.mjs';
 import { VIEWPORTS } from './smoke-viewports.mjs';
 
 /*
@@ -189,7 +190,7 @@ try {
 
     // Old mode keys are harmless.
     await page.goto(`${base}/maps/origins`, { waitUntil: 'networkidle' });
-    assert.equal(await page.locator('li.guide-seq__step, li.flat-guide__step').count(), 11, 'Origins renders its sequence with old mode keys present');
+    assert.equal(await mainSteps(page).count(), 11, 'Origins renders its sequence with old mode keys present');
     assert.deepEqual(errors, [], `page errors: ${errors.join('; ')}`);
     check('old guide-mode / origins-depth keys are harmless');
     await context.close();

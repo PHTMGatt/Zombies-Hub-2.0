@@ -2,6 +2,7 @@ import './smoke-ready.mjs'; // first: waits for the app to render after each nav
 import { chromium } from 'playwright';
 import { stepDetails, visibleTitle } from './smoke-helpers.mjs';
 import assert from 'node:assert/strict';
+import { mainSteps } from './smoke-contract.mjs';
 import fs from 'node:fs/promises';
 
 const base = process.env.SMOKE_BASE_URL || 'http://127.0.0.1:4173';
@@ -42,7 +43,7 @@ try {
     let response = await page.goto(`${base}${mainRoute}`, { waitUntil: 'domcontentloaded' });
     assert(response?.ok(), `${mainRoute} returned ${response?.status()}`);
     // Flat main guide: no Easter Egg heading on the list; the name stays in the map header.
-    await page.locator('li.flat-guide__step').first().waitFor();
+    await mainSteps(page).first().waitFor();
     assert.match(await page.locator('body').innerText(), /Seeds of Doubt/, 'the Easter Egg name is still on the page');
     assert.equal(errors.length, 0, `${mainRoute} page errors: ${errors.join('; ')}`);
     const mainText = await page.locator('.zets-main-guide').innerText();
@@ -54,7 +55,7 @@ try {
 
     // One sequence: 11 steps, the Trials listed as facts on the first step, nothing to tick.
     await page.reload({ waitUntil: 'networkidle' });
-    assert.equal(await page.locator('li.guide-seq__step, li.flat-guide__step').count(), 11, 'Zetsubou guide should list 11 steps');
+    assert.equal(await mainSteps(page).count(), 11, 'Zetsubou guide should list 11 steps');
     assert.equal(await visibleTitle(page.locator('#skulls :is(h2, h3)')), 'Clean the four skulls');
     // The Trials facts live on the Step details tab (flat main guide).
     const trialsText = await (await stepDetails(page, base, mainRoute, 'trials')).innerText();
