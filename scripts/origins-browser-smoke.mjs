@@ -4,6 +4,7 @@ import './smoke-ready.mjs'; // first: waits for the app to render after each nav
  * Tips and Speed Run, and the Build / Puzzle / Upgrade staff pages, at every smoke viewport.
  */
 import assert from 'node:assert/strict';
+import { guideTabs } from './smoke-contract.mjs';
 import { chromium } from 'playwright';
 import { VIEWPORTS } from './smoke-viewports.mjs';
 import { loadModules } from './guide-content.mjs';
@@ -12,6 +13,8 @@ const [{ default: staffPages }, { staffPlaces }] = await loadModules(['maps/orig
 const staffLines = JSON.parse((await import('node:fs')).readFileSync(new URL('./fixtures/origins-staff-pages.baseline.json', import.meta.url), 'utf8'));
 const STAFFS = ['ice', 'fire', 'wind', 'lightning'];
 
+// The staff code chart: the "Enlarge: …" button in the Puzzle section, in any look.
+const chartButton = (page) => page.locator('#puzzle').getByRole('button', { name: /^Enlarge:/ });
 const base = process.env.SMOKE_BASE_URL || 'http://127.0.0.1:4173';
 const ROUTES = [
   ['/maps/origins', 'UI Main Guide'],
@@ -66,7 +69,7 @@ try {
     // Header height and the active link in view are checked in browser-smoke.mjs; this covers every route.
     for (const [route, current] of ROUTES) {
       await page.goto(`${base}${route}`, { waitUntil: 'networkidle' });
-      const tabs = await page.locator('.origins-nav-link').evaluateAll((links) => links.map((link) => {
+      const tabs = await guideTabs(page).evaluateAll((links) => links.map((link) => {
         const box = link.getBoundingClientRect();
         return { label: link.textContent.trim(), current: link.getAttribute('aria-current'), left: box.left, right: box.right };
       }));
@@ -155,31 +158,31 @@ try {
       assert.equal(await page.locator('#map .omap').count(), 0, `${route}: no mini-map diagram on the staff page`);
 
       // The chart opens full screen and closes again (button, Esc), returning focus to the chart.
-      const open = page.locator('#puzzle .zoom-image__open');
+      const open = chartButton(page);
       await open.click();
-      const dialog = page.locator('dialog.zoom-image__dialog[open]');
+      const dialog = page.getByRole('dialog');
       await dialog.waitFor();
       await page.waitForFunction(() => {
-        const img = document.querySelector('dialog.zoom-image__dialog[open] img');
+        const img = document.querySelector('dialog[open] img');
         return img?.complete && img.naturalWidth > 0;
       }, null, { timeout: 15000 });
       const shown = await dialog.locator('img').boundingBox();
       if (name === 'phone') assert(shown.width >= width * 0.9, `${route}: full-screen chart is ${Math.round(shown.width)}px wide`);
       await page.keyboard.press('Escape');
       await dialog.waitFor({ state: 'detached' }).catch(() => {});
-      assert.equal(await page.locator('dialog.zoom-image__dialog[open]').count(), 0, `${route}: Esc closes the chart`);
+      assert.equal(await page.getByRole('dialog').count(), 0, `${route}: Esc closes the chart`);
       assert(await open.evaluate((el) => document.activeElement === el), `${route}: focus returns to the chart`);
       await open.click();
       await dialog.waitFor();
       const close = dialog.getByRole('button', { name: 'Close' });
       assert((await close.boundingBox()).height >= 48, `${route}: Close is a 48px target`);
       await close.click();
-      assert.equal(await page.locator('dialog.zoom-image__dialog[open]').count(), 0, `${route}: Close closes the chart`);
+      assert.equal(await page.getByRole('dialog').count(), 0, `${route}: Close closes the chart`);
       // A tap on the dark area around the chart closes it too.
       await open.click();
       await dialog.waitFor();
       await page.mouse.click(4, height - 4);
-      assert.equal(await page.locator('dialog.zoom-image__dialog[open]').count(), 0, `${route}: a backdrop tap closes the chart`);
+      assert.equal(await page.getByRole('dialog').count(), 0, `${route}: a backdrop tap closes the chart`);
 
       // The shared Excavation reference: four rings in the staff's colour, no lever-to-ring labels.
       const rings = page.locator('#upgrade .excavation-rings');
@@ -189,7 +192,7 @@ try {
       assert.match(ringText, new RegExp(data.ring.word), `${route}: rings set to ${data.ring.word}`);
       assert.doesNotMatch(ringText, /Mule Kick|staircase|wooden platform/i, `${route}: no lever-to-ring mapping in the shared reference`);
 
-      const chart = await page.locator('#puzzle .zoom-image__open img').boundingBox();
+      const chart = await chartButton(page).getByRole('img').boundingBox();
       if (name === 'desktop') {
         assert(order[2] - (await page.evaluate(() => window.scrollY)) < height, `${route}: Upgrade is on the first screen`);
         // Pinned beside the long column, Upgrade stays clear of the pinned chrome and whole on screen.
@@ -213,8 +216,8 @@ try {
       }
       if (name === 'landscape') {
         // The chart follows its steps, so it is checked where it sits: whole on the short screen.
-        await page.evaluate(() => document.querySelector('#puzzle .zoom-image').scrollIntoView({ block: 'start', behavior: 'instant' }));
-        const capped = await page.locator('#puzzle .zoom-image__open img').boundingBox();
+        await chartButton(page).evaluate((button) => button.closest('figure').scrollIntoView({ block: 'start', behavior: 'instant' }));
+        const capped = await chartButton(page).getByRole('img').boundingBox();
         assert(capped.height <= 290, `${route}: chart is ${Math.round(capped.height)}px tall in landscape`);
         assert(capped.y >= -1 && capped.y + capped.height <= height + 1, `${route}: chart fits the landscape screen`);
       }
@@ -274,13 +277,13 @@ try {
     let checked = 0;
     for (const staff of STAFFS) {
       await page.goto(`${base}/maps/origins/${staff}-staff`, { waitUntil: 'networkidle' });
-      const chart = await page.locator('#puzzle .zoom-image__open img').evaluate((img) => ({ file: img.getAttribute('src').split('/').pop(), top: img.getBoundingClientRect().top }));
+      const chart = await chartButton(page).getByRole('img').evaluate((img) => ({ file: img.getAttribute('src').split('/').pop(), top: img.getBoundingClientRect().top }));
       const fetched = () => page.evaluate((file) => performance.getEntriesByType('resource').some((entry) => entry.name.endsWith(file)), chart.file);
       assert(chart.top > 844 + 4000, `${staff}: the chart sits ${Math.round(chart.top)}px down, inside some browser's lazy-load distance`);
       assert(!(await fetched()), `${staff}: the chart (${chart.file}) loads before it is near the screen`);
       checked += 1;
-      await page.locator('#puzzle .zoom-image__open img').scrollIntoViewIfNeeded();
-      await page.waitForFunction(() => document.querySelector('#puzzle .zoom-image__open img').complete, null, { timeout: 15000 });
+      await chartButton(page).getByRole('img').scrollIntoViewIfNeeded();
+      await chartButton(page).getByRole('img').evaluate((img) => img.complete || new Promise((done) => img.addEventListener('load', done, { once: true })));
       assert(await fetched(), `${staff}: the chart loads once it is on screen`);
     }
     assert.equal(checked, STAFFS.length, 'every staff chart was checked');

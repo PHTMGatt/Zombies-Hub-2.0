@@ -2,6 +2,7 @@ import './smoke-ready.mjs'; // first: waits for the app to render after each nav
 import { chromium } from 'playwright';
 import { stepDetails, visibleTitle } from './smoke-helpers.mjs';
 import assert from 'node:assert/strict';
+import { mainSteps } from './smoke-contract.mjs';
 import fs from 'node:fs/promises';
 
 const base = process.env.SMOKE_BASE_URL || 'http://127.0.0.1:4173';
@@ -89,8 +90,8 @@ try {
     // The guide is one sequence: 12 steps in order, the codes and audio trail readable without any clicks.
     errors.length = 0;
     await page.goto(`${base}/maps/mob-of-the-dead`, { waitUntil: 'networkidle' });
-    await page.locator('li.guide-seq__step, li.flat-guide__step').first().waitFor();
-    assert.equal(await page.locator('li.guide-seq__step, li.flat-guide__step').count(), 12, 'Mob guide should list 12 steps');
+    await mainSteps(page).first().waitFor();
+    assert.equal(await mainSteps(page).count(), 12, 'Mob guide should list 12 steps');
     assert.equal(await visibleTitle(page.locator('#codes :is(h2, h3)')), 'Afterlife codes');
     // The codes and the audio trail live on the Step details tab (flat main guide).
     const codesText = await (await stepDetails(page, base, '/maps/mob-of-the-dead', 'codes')).innerText();

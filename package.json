@@ -13,7 +13,7 @@
     "visual:compare": "node scripts/visual-baseline.mjs --compare",
     "test:browser": "node scripts/run-browser-smokes.mjs",
     "dev": "vite",
-    "check": "node scripts/verify.mjs",
+    "check": "node scripts/verify.mjs && node scripts/data-check.mjs",
     "compile": "vite build && node scripts/prerender-meta.mjs && node scripts/bundle-budget.mjs && node scripts/write-build-info.mjs",
     "build": "npm run check && npm run compile",
     "ci": "npm run build",

@@ -1,5 +1,6 @@
 import { chromium } from 'playwright';
 import { settled, stepDetails } from './smoke-helpers.mjs';
+import { clipOptions, guideTabs } from './smoke-contract.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
@@ -236,7 +237,7 @@ try {
     // Speed Run is always open: the last Origins nav item, reachable with empty storage, no lock copy anywhere.
     await page.evaluate(() => window.localStorage.clear());
     await page.goto(`${base}/maps/origins`, { waitUntil: 'networkidle' });
-    const navLinks = page.locator('.origins-nav-link');
+    const navLinks = guideTabs(page);
     const lastNav = navLinks.last();
     assert.equal((await lastNav.innerText()).trim(), 'Speed Run', 'Speed Run is the last Origins nav item');
     await lastNav.scrollIntoViewIfNeeded();
@@ -289,10 +290,12 @@ try {
     // The sticky Origins header must stay compact on phones, with an unclipped title and the active staff in view.
     await page.goto(`${base}/maps/origins/lightning-staff`, { waitUntil: 'networkidle' });
     const originsHeader = await page.evaluate(() => {
-      const active = document.querySelector('.origins-nav-link.active').getBoundingClientRect();
-      const title = document.querySelector('.origins-map-header .header-title').getBoundingClientRect();
+      // The map's own header is the <header> around its h1; the current tab is the guide nav's aria-current link.
+      const active = document.querySelector('nav[aria-label$="guide navigation"] a[aria-current="page"]').getBoundingClientRect();
+      const h1 = document.querySelector('main h1');
+      const title = h1.getBoundingClientRect();
       return {
-        height: document.querySelector('.origins-map-header').offsetHeight,
+        height: h1.closest('header').offsetHeight,
         activeInView: active.left >= 0 && active.right <= window.innerWidth,
         titleInView: title.left >= 0 && title.right <= window.innerWidth,
       };
@@ -303,7 +306,7 @@ try {
 
     // Origins guide health must cover the actual staff pages, not only the shell.
     await page.goto(`${base}/maps/origins`, { waitUntil: 'networkidle' });
-    const originsAudio = page.locator('.audio-players audio');
+    const originsAudio = page.getByRole('main').locator('audio');
     assert.equal(await originsAudio.count(), 2, 'Origins main guide keeps both audio controls');
     assert(
       await originsAudio.evaluateAll(players => players.every(player => (player.getAttribute('aria-label') || '').trim().length > 0)),
@@ -358,7 +361,7 @@ try {
     assert.equal(new URL(page.url()).pathname, mobTarget, 'Mob of the Dead guide navigation reaches its intended route');
 
     await page.goto(`${base}/maps/revelations/apothicon-upgrade`);
-    await page.locator('.rev-option').nth(1).click();
+    await clipOptions(page).nth(1).click();
     const fallback = page.getByRole('link', { name: 'Watch the selected timestamp on YouTube' });
     assert.match(await fallback.getAttribute('href'), /&t=[1-9]\d*s$/);
 

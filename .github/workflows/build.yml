@@ -2,7 +2,8 @@ name: Build Zombies Hub 2.0
 
 on:
   push:
-    branches: [main]
+    # claude-forge too, so UI breakage shows on the working branch before a PR (Bryen, 2026-11-17).
+    branches: [main, claude-forge]
   pull_request:
     branches: [main]
 
@@ -15,7 +16,8 @@ concurrency:
 
 jobs:
   quality-gate:
-    timeout-minutes: 10
+    # Unit, build and all browser smokes (3 at a time in CI mode).
+    timeout-minutes: 25
     runs-on: ubuntu-24.04
 
     steps:

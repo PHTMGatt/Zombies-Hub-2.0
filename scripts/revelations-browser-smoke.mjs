@@ -3,12 +3,15 @@ import { chromium } from 'playwright';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
+import { CHOSEN, chosenClip, clipOptions, guideNav, guideTabs, mainSteps, nowPlaying, stepList } from './smoke-contract.mjs';
 
 const base = process.env.SMOKE_BASE_URL || 'http://127.0.0.1:4173';
 const artifactDir = new URL('./artifacts/', new URL('../', import.meta.url));
 const reportUrl = new URL('browser-smoke.json', artifactDir);
 import { VIEWPORTS } from './smoke-viewports.mjs';
 const results = [];
+// The area picker's islands: the named buttons inside the island figure.
+const islands = (page) => page.getByRole('figure').getByRole('button');
 
 const assertNoHorizontalOverflow = async (page, route) => {
   const { scrollWidth, clientWidth } = await page.evaluate(() => ({
@@ -44,31 +47,30 @@ try {
     const mainRoute = '/maps/revelations';
     let response = await page.goto(`${base}${mainRoute}`, { waitUntil: 'domcontentloaded' });
     assert(response?.ok(), `${mainRoute} returned ${response?.status()}`);
-    await page.locator('.flat-guide__list').waitFor();
+    await mainSteps(page).first().waitFor();
     assert.equal(errors.length, 0, `${mainRoute} page errors: ${errors.join('; ')}`);
-    assert.equal(await page.locator('.rev-header__nav').count(), 1, 'Revelations keeps one map-level navigation row');
-    assert.equal(await page.locator('.rev-main-shortcuts').count(), 0, 'Revelations duplicate bottom navigation stays removed');
+    assert.equal(await guideNav(page).count(), 1, 'Revelations keeps one map-level navigation row');
     // Behavioural guard: no duplicate section strip. Only the header nav and a step's own "details" links
     // may link to the Revelations sections.
     const sectionLinksOutsideHeader = await page.locator('a[href^="/maps/revelations/"]').evaluateAll(links =>
-      links.filter(link => !link.closest('.rev-header') && !link.closest('.flat-guide__step')).map(link => link.textContent.trim()),
+      links.filter(link => !link.closest('nav[aria-label$="guide navigation"]') && !link.hasAttribute('data-step-link')).map(link => link.textContent.trim()),
     );
     assert.deepEqual(sectionLinksOutsideHeader, [], `Revelations renders a second section navigation: ${sectionLinksOutsideHeader.join(', ')}`);
-    assert.equal(await page.locator('.rev-header__nav a').count(), 6, 'Header nav reaches all six Revelations sections (with Step details)');
+    assert.equal(await guideTabs(page).count(), 6, 'Header nav reaches all six Revelations sections (with Step details)');
     await page.reload({ waitUntil: 'networkidle' });
 
     // Flat main guide: all twelve steps in order, every one on screen at once, nothing to expand or open.
-    const flatSteps = page.locator('main li.flat-guide__step');
+    const flatSteps = mainSteps(page);
     assert.equal(await flatSteps.count(), 12, 'Revelations keeps all 12 Easter Egg steps');
-    const stepIds = await flatSteps.evaluateAll((items) => items.map((item) => item.id));
+    const stepIds = await flatSteps.evaluateAll((headings) => headings.map((heading) => heading.closest('[id]')?.id));
     assert(stepIds.every(Boolean) && new Set(stepIds).size === 12, `every step keeps its own id for deep links: ${stepIds.join(', ')}`);
     for (const id of ['engines', 'servant', 'eggs', 'symbols', 'throws', 'boss']) assert(stepIds.includes(id), `step #${id} is still linkable`);
-    assert.equal(await page.locator('main .flat-guide details, main .flat-guide [aria-expanded]').count(), 0, 'No expanding cards on the flat guide');
-    assert.equal(await page.locator('main .flat-guide img').count(), 0, 'No images on the flat guide');
+    assert.equal(await stepList(page).locator('details, [aria-expanded]').count(), 0, 'No expanding cards on the flat guide');
+    assert.equal(await stepList(page).locator('img').count(), 0, 'No images on the flat guide');
     await assertCssImageLoaded(page, mainRoute, '.rev-header');
     await assertCssImageLoaded(page, mainRoute, '.rev-backdrop');
     await assertNoHorizontalOverflow(page, mainRoute);
-    assert.match(await page.locator('#boss .flat-guide__title').innerText(), /Final boss — Shadowman/);
+    assert.match(await page.locator('#boss').getByRole('heading').innerText(), /Final boss — Shadowman/);
 
     // The detail moved to the tabs: the steps link there, and the tab sections hold the captures.
     assert.match(await page.locator('#servant a[data-step-link]').first().getAttribute('href'), /^\/maps\/revelations\/apothicon-upgrade\?from=servant/,
@@ -108,11 +110,11 @@ try {
     assert(response?.ok(), `${upgradeRoute} returned ${response?.status()}`);
     await page.getByRole('heading', { name: 'Apothicon Servant Upgrade', level: 2 }).waitFor();
     assert.equal(errors.length, 0, `${upgradeRoute} page errors: ${errors.join('; ')}`);
-    const upgradeButtons = page.locator('.rev-option');
+    const upgradeButtons = clipOptions(page);
     assert((await upgradeButtons.count()) >= 2, 'Apothicon upgrade keeps multiple location targets');
     await upgradeButtons.nth(1).click();
-    assert.match(await page.locator('.rev-video__now').innerText(), /Playing/i);
-    assert.equal(await page.locator('.rev-option[aria-pressed="true"]').count(), 1, 'One Apothicon location is active');
+    assert.match(await nowPlaying(page).innerText(), /Playing/i);
+    assert.equal(await chosenClip(page).count(), 1, 'One Apothicon location is active');
     await assertNoHorizontalOverflow(page, upgradeRoute);
     results.push({ width, route: upgradeRoute, interaction: 'location selection', passed: true });
 
@@ -123,14 +125,17 @@ try {
     await page.getByRole('heading', { name: 'Egg Locations', level: 2 }).waitFor();
     assert.equal(errors.length, 0, `${eggRoute} page errors: ${errors.join('; ')}`);
     // One island picker on every hunt page: an area can span two islands, and either one picks it.
-    assert.equal(await page.locator('.rev-area button.rev-isle').count(), 7, 'Egg areas cover seven islands on the ring');
+    assert.equal(await islands(page).count(), 7, 'Egg areas cover seven islands on the ring');
     await page.getByRole('button', { name: 'Shangri-La: Spawn / Shangri-La' }).click();
-    assert.equal(await page.locator('.rev-area__head strong').innerText(), 'Spawn / Shangri-La', 'Tapping an island picks its egg area');
-    assert.equal(await page.locator('.rev-area button.rev-isle[aria-pressed="true"]').count(), 2, 'Both islands of the area light up');
-    const eggLocations = page.locator('.rev-option');
+    // Tapping an island picks its egg area: the spots list is now that area's.
+    await page.getByRole('group', { name: 'Spawn / Shangri-La egg locations' }).waitFor({ timeout: 5000 });
+    assert.equal(await islands(page).and(page.locator(CHOSEN)).count(), 2, 'Both islands of the area light up');
+    const eggLocations = clipOptions(page);
     assert((await eggLocations.count()) > 0, 'Selected egg area exposes spawn locations');
     await eggLocations.first().click();
-    assert.match(await page.locator('.rev-video__now').innerText(), new RegExp(await eggLocations.first().locator('.rev-option__title').innerText()));
+    // The option's name: its first line with words (not the number or the timestamp a look may show).
+    const firstEgg = (await eggLocations.first().innerText()).split('\n').map((line) => line.trim()).find((line) => /[a-z]{2}/i.test(line));
+    assert((await nowPlaying(page).innerText()).includes(firstEgg), `Now playing names "${firstEgg}"`);
     await assertNoHorizontalOverflow(page, eggRoute);
     results.push({ width, route: eggRoute, interaction: 'area + location selection', passed: true });
 
@@ -140,22 +145,22 @@ try {
     assert(response?.ok(), `${keyRoute} returned ${response?.status()}`);
     await page.getByRole('heading', { name: 'Summoning Key Throws', level: 2 }).waitFor();
     assert.equal(errors.length, 0, `${keyRoute} page errors: ${errors.join('; ')}`);
-    const throwOption = (name) => page.locator('.rev-option', { hasText: name });
+    const throwOption = (name) => clipOptions(page).filter({ hasText: name });
     await throwOption('Mob Cell Poster').click();
-    assert.match(await page.locator('.rev-video__now').innerText(), /Mob Cell Poster/);
+    assert.match(await nowPlaying(page).innerText(), /Mob Cell Poster/);
     assert(await throwOption('Verrückt MG42 Fountain').isVisible());
     assert(await throwOption('Shangri-La Focusing Stone').isVisible());
     // The ring: seven target islands numbered in throw order; tapping one plays its throw.
-    assert.equal(await page.locator('.rev-area button.rev-isle').count(), 7, 'Seven throw islands on the ring');
-    assert.equal(await page.locator('.rev-area button.rev-isle', { hasText: 'Mob' }).locator('.rev-isle__count').innerText(), '5', 'Mob is throw 5');
+    assert.equal(await islands(page).count(), 7, 'Seven throw islands on the ring');
+    assert.match(await islands(page).filter({ hasText: 'Mob' }).innerText(), /5\s*$/, 'Mob is throw 5');
     // Screen readers hear the badge too, and Tab walks the islands in throw order.
-    const isles = await page.locator('.rev-area button.rev-isle').evaluateAll((buttons) => buttons.map((b) => ({ name: b.getAttribute('aria-label'), badge: b.querySelector('.rev-isle__count').textContent })));
+    const isles = await islands(page).evaluateAll((buttons) => buttons.map((b) => ({ name: b.getAttribute('aria-label'), badge: b.textContent.match(/(\d+)\s*$/)?.[1] })));
     assert.deepEqual(isles.map((isle) => isle.badge), ['1', '2', '3', '4', '5', '6', '7'], 'Island buttons follow the throw order');
     for (const isle of isles) assert.match(isle.name, new RegExp(`^Throw ${isle.badge}, `), `"${isle.name}" names its throw number`);
     assert(isles.some((isle) => isle.name === 'Throw 5, Mob of the Dead: Cell Poster'), 'An island names its map once, then its target');
     await page.getByRole('button', { name: /^Throw \d, Verrückt: MG42 Fountain$/ }).click();
-    assert.match(await page.locator('.rev-video__now').innerText(), /Verrückt MG42 Fountain/);
-    assert.match(await page.locator('.rev-option[aria-pressed="true"]').innerText(), /MG42/, 'The island picks its throw in the list too');
+    assert.match(await nowPlaying(page).innerText(), /Verrückt MG42 Fountain/);
+    assert.match(await chosenClip(page).innerText(), /MG42/, 'The island picks its throw in the list too');
     await assertNoHorizontalOverflow(page, keyRoute);
     results.push({ width, route: keyRoute, interaction: 'exact target selection', passed: true });
 
@@ -165,15 +170,18 @@ try {
     assert(response?.ok(), `${soundRoute} returned ${response?.status()}`);
     await page.getByRole('heading', { name: 'Sound Step', level: 2 }).waitFor();
     assert.equal(errors.length, 0, `${soundRoute} page errors: ${errors.join('; ')}`);
-    const areaBefore = await page.locator('.rev-area__head strong').innerText();
+    // The spots list is labelled with its region, so the group's name says which region is current.
+    const region = async () => (await clipOptions(page).first().evaluate((option) => option.closest('[aria-label]').getAttribute('aria-label'))).replace(/ sound step locations$/, '');
+    const areaBefore = await region();
     await page.getByRole('button', { name: 'Spawn: Spawn' }).click();
-    const areaAfter = await page.locator('.rev-area__head strong').innerText();
+    await page.getByRole('group', { name: 'Spawn sound step locations' }).waitFor({ timeout: 5000 });
+    const areaAfter = await region();
     assert.notEqual(areaAfter, areaBefore, 'Tapping an island changes the Sound Step region');
     assert.equal(areaAfter, 'Spawn');
-    const soundLocations = page.locator('.rev-option');
+    const soundLocations = clipOptions(page);
     assert((await soundLocations.count()) > 0, 'Sound Step exposes locations for selected area');
     await soundLocations.first().click();
-    assert.match(await page.locator('.rev-video__now').innerText(), /Playing/i);
+    assert.match(await nowPlaying(page).innerText(), /Playing/i);
     await assertNoHorizontalOverflow(page, soundRoute);
     results.push({ width, route: soundRoute, interaction: 'island pick + location selection', passed: true });
 
@@ -219,9 +227,9 @@ try {
   const blockedPage = await blocked.newPage();
   await blockedPage.goto(`${base}/maps/revelations/sound-step`, { waitUntil: 'domcontentloaded' });
   await blockedPage.getByRole('heading', { name: 'Sound Step', level: 2 }).waitFor();
-  await blockedPage.locator('.rev-video__warning').waitFor({ timeout: 15000 });
-  assert.match(await blockedPage.locator('.rev-video__now').innerText(), /Player unavailable here/, 'Blocked YouTube shows the unavailable note');
-  assert(await blockedPage.locator('.rev-video__external').isVisible(), 'Blocked YouTube keeps the YouTube link');
+  await blockedPage.getByRole('status').filter({ hasText: /Player unavailable here/ }).waitFor({ timeout: 15000 });
+  assert.match(await nowPlaying(blockedPage).innerText(), /Player unavailable here/, 'Blocked YouTube shows the unavailable note');
+  assert(await blockedPage.getByRole('link', { name: /on YouTube/ }).first().isVisible(), 'Blocked YouTube keeps the YouTube link');
   results.push({ width: 390, route: '/maps/revelations/sound-step', check: 'blocked YouTube shows the unavailable note', passed: true });
   await blocked.close();
 

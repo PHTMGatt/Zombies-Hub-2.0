@@ -94,9 +94,9 @@ All seven have a video segment; the Main Guide's Step details also lists them as
 | Item | Our data | Sources | Verdict |
 | --- | --- | --- | --- |
 | **Ice pillar → ceiling tile** | "Pillar order is different every game; follow the order the game shows, use the chart" | S3: a pillar on the ground shows the symbol of the tile to shoot; decode with the cipher image. Nothing says the order is fixed | Consistent. **There is no fixed "Ice tile order".** The chart image (`IceCode`) was not machine-checkable; needs a human eye against Drive photos 1000004810 / 1000004814 |
-| **Fire decode** | Four cauldrons lit by ~30 Fire Staff kills on the grates; four symbols upstairs → numbered torches in the basement; 4 always one, bloodstained | S3: same, torches in any order but lit quickly, they stay lit briefly. S4: heritage decode list "11-5-9-7-6-3-4", numbers map to circles, "blood" (= 4) first; kills on the lava plate | Consistent; "4 is always one of them" is supported by S4, not S3. The 7-number list in S4 is the symbol→number key; verify the `FireCode` chart against Drive photo 1000004810 |
+| **Fire decode** (chart viewed 2026-11-17: 11, 5, 9, 7, 6, 3, blood: **matches the heritage list exactly**) | Four cauldrons lit by ~30 Fire Staff kills on the grates; four symbols upstairs → numbered torches in the basement; 4 always one, bloodstained | S3: same, torches in any order but lit quickly, they stay lit briefly. S4: heritage decode list "11-5-9-7-6-3-4", numbers map to circles, "blood" (= 4) first; kills on the lava plate | Consistent; "4 is always one of them" is supported by S4, not S3. The 7-number list in S4 is the symbol→number key; verify the `FireCode` chart against Drive photo 1000004810 |
 | **Wind rings** | Shoot the four ceiling rings until the symbols match the chart | S3: stone disc with four circles, shoot until the symbols match "a specific order shown in images"; S3 forum: symbols match the Ice puzzle's | Consistent. Order is image-only in every source: verify the `WindCode` chart by eye |
-| **Lightning piano** | 1-3-6, 3-5-7, 2-4-6 | S3 + Steam posts + S4: 136, 357, 246 (bottom-row triangles numbered 1–7). Wait for sparks to fade between codes; a mistake needs three random top-row shots before retrying | **Match.** Our page lacks the sparks / mistake-recovery note |
+| **Lightning piano** (chart viewed: first 1-3-6, second 3-5-7, third 2-4-6) | 1-3-6, 3-5-7, 2-4-6 | S3 + Steam posts + S4: 136, 357, 246 (bottom-row triangles numbered 1–7). Wait for sparks to fade between codes; a mistake needs three random top-row shots before retrying | **Match.** Our page lacks the sparks / mistake-recovery note |
 | Lightning switches | 7 dials: Spawn, Gen 2 back door, Gen 5, Gen 4, church basement behind tank, church upstairs, excavation wall | S4 list: Gen 5, behind tank, above tank, by wind tunnel, spawn, tank station, across from the church entrance at Pack-a-Punch | Same seven places. Dial positions are image-only in S3; ours are from the repo's own verified table |
 
 ### Upgrade locations our pages do not state (ALPHA may want them on the cards)
@@ -115,6 +115,10 @@ S4's main-quest list says staffs go in robots: Lightning at spawn, Wind in the m
 1. Bones: six screenshots, **no video timestamps**. Needs the bone segment time ranges from CodeNamePizza's video.
 2. Egg rows 1, 9, 15, 16 and rune rows 4, 7, 8: wording differs between our video labels and S2. Needs a second source or a look at the video before the names are shown to players.
 3. Summoning Key: no screenshots, video only.
-4. Ice, Fire, Wind charts: image-only in every source; our repo charts could not be checked by me. A human must compare them with the Drive photos.
+4. Ice and Wind charts: image-only in every source. I viewed all four repo charts: Fire and Lightning match the heritage notes; the Ice pairings and the Wind order cannot be checked against any text source, and whether Wind is fixed or random per game is stated nowhere.
 5. Ice gravestone places and the Der Eisendrache bone "fourth wall": single-source or conflicting.
 6. Bryen's counts (5 bones, 8 throws) are both wrong by one; the designs should say six bones and seven throws.
+
+## 8. Structured data (2026-11-17)
+
+`maps/revelations/src/data/huntData.js` (bones, eggs, runes, Summoning Key targets with landmarks, shots, video ranges, gaps; counts tested in `scripts/rev-hunt-data.test.mjs`) and `maps/origins/src/data/staffPuzzleFacts.js` (what is verified per staff). Neither is wired into a page yet: design-neutral on purpose.

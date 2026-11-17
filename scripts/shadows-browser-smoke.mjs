@@ -2,6 +2,7 @@ import './smoke-ready.mjs'; // first: waits for the app to render after each nav
 import { chromium } from 'playwright';
 import { stepDetails } from './smoke-helpers.mjs';
 import assert from 'node:assert/strict';
+import { mainSteps } from './smoke-contract.mjs';
 import fs from 'node:fs/promises';
 
 const base = process.env.SMOKE_BASE_URL || 'http://127.0.0.1:4173';
@@ -41,13 +42,13 @@ try {
     assert(response?.ok(), `${route} returned ${response?.status()}`);
     assert.equal(errors.length, 0, `${route} page errors: ${errors.join('; ')}`);
     // Flat main guide: no Easter Egg heading on the list; the name stays in the map header.
-    await page.locator('li.flat-guide__step').first().waitFor();
+    await mainSteps(page).first().waitFor();
     assert.match(await page.locator('body').innerText(), /Shadows of Evil/, 'the Easter Egg name is still on the page');
     await page.evaluate(() => {
       ['zh-guide-progress:shadows-of-evil', 'zh-soe-train-symbols', 'zh-soe-character'].forEach((key) => localStorage.removeItem(key));
     });
     await page.reload({ waitUntil: 'networkidle' });
-    assert.equal(await page.locator('li.guide-seq__step, li.flat-guide__step').count(), 7, 'Shadows guide should list 7 steps');
+    assert.equal(await mainSteps(page).count(), 7, 'Shadows guide should list 7 steps');
 
     // Flat main guide: the detail and the per-game tools live on the Step details tab.
     const ritualsDetails = await stepDetails(page, base, route, 'rituals');
