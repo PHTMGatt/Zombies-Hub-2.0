@@ -211,8 +211,8 @@ summary:focus-visible,
 }
 
 /* Calm pass (2026-11-16): labels, chips and counts on the hub pages never drop below 14px. */
-body :is(.home-kicker, .maps-kicker, .maps-summary-pill, .map-filter__legend, .map-filter__count, .game-count, .map-game-chip, .map-ee-chip, .map-dlc, .side-ee-card__detail, .side-ee-card__cue, .ach-medal__map, .ach-medal__status, .zh-search__label, .hub-header__mark) { font-size: 0.875rem !important; letter-spacing: 0.02em; }
-body .home-kicker, body .maps-kicker { text-transform: none !important; font-weight: 700; font-size: 1rem !important; letter-spacing: 0; }
+body :is(.maps-kicker, .maps-summary-pill, .map-filter__legend, .map-filter__count, .game-count, .map-game-chip, .map-ee-chip, .map-dlc, .side-ee-card__detail, .side-ee-card__cue, .ach-medal__map, .ach-medal__status, .zh-search__label, .hub-header__mark) { font-size: 0.875rem !important; letter-spacing: 0.02em; }
+body .maps-kicker { text-transform: none !important; font-weight: 700; font-size: 1rem !important; letter-spacing: 0; }
 
 /* Calm pass: loading / empty / error / 404 states read at 16px+. */
 .zh-status-page p { font-size: 1.0625rem; }
