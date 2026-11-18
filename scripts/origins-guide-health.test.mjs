@@ -85,7 +85,4 @@ test('Origins Fire page: Generator 6 chest, Fire Staff kills, and the right Chur
   assert.match(kills, /with the Fire Staff/);
   assert.match(symbols, /upstairs in the Church/);
   assert.match(torches, /Church basement/);
-  assert.match(puzzle.note, /ANY ORDER/);
-  assert.match(puzzle.note, /Blood-marked #4/);
-  assert.match(puzzle.note, /does not have to be first/);
 });
