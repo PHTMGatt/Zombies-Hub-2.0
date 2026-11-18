@@ -87,6 +87,9 @@ const originsStaffPages = {
         'Go upstairs in the Church: four symbols are lit on the far wall. Turn each into a number with the chart.',
         'In the Church basement (where the tank parks), light the four matching numbered torches with the Fire Staff before the puzzle resets. 4 is always one of them; its torch has a bloodstain instead of a chalk number.',
       ],
+      // Grey-83: multiple independent guides agree the four torches may be lit in any order.
+      // Keep this as a quick-reference note; don't alter verified baseline quest text.
+      note: 'ANY ORDER: light the four indicated torches quickly. Blood-marked #4 is included, but does not have to be first.',
     },
     upgrade: {
       steps: [
