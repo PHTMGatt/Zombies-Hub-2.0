@@ -49,6 +49,7 @@ const wispObjects = [
 const deGuideSteps = [
   {
     id: 'base-bow',
+    links: [{ to: `${BASE}/bows/base`, label: 'Base bow guide' }],
     title: 'Wrath of the Ancients',
     goal: 'Feed all three dragons, then take the base bow from the Family Crypt.',
     refs: [
@@ -135,6 +136,7 @@ const deGuideSteps = [
   },
   {
     id: 'gear',
+    links: [{ to: `${BASE}/parts`, label: 'Full gear page' }],
     title: 'Gear up: Shield + Ragnaroks',
     goal: 'Build as you go — every player needs a Ragnarok DG-4 before the boss.',
     critical: ['Activate the Death Ray at least once before the quest reaches the fuse and safe sequence.'],
@@ -158,6 +160,7 @@ const deGuideSteps = [
   },
   {
     id: 'first-wisps',
+    links: [{ to: `${BASE}/wisps`, label: 'Wisp reference' }],
     title: 'First wisp cycle',
     goal: 'Prime the teleporter, hit four wisps, travel to the past together.',
     critical: [phase('first-wisps').warning],
@@ -213,6 +216,7 @@ const deGuideSteps = [
   },
   {
     id: 'second-wisps',
+    links: [{ to: `${BASE}/wisps`, label: 'Wisp reference' }],
     title: 'Second wisp cycle + Keeper Stone',
     goal: 'Repeat the wisps, go back to the past, take the Keeper Stone.',
     critical: [phase('first-wisps').warning],
@@ -254,6 +258,7 @@ const deGuideSteps = [
   },
   {
     id: 'keeper-boss',
+    links: [{ to: `${BASE}/boss`, label: 'Boss survival sheet' }],
     title: 'Keeper boss',
     goal: 'Three Keeper damage phases with Panzer waves between. Stun with a Ragnarok, shoot the chest.',
     critical: ['Missed the stun? Get behind a blue pillar before the shockwave.'],
