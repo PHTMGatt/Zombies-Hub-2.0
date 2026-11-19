@@ -11,7 +11,7 @@ const deGuideSteps = [
     id: 'base-bow',
     title: 'Wrath of the Ancients',
     goal: 'Feed all three dragons, then take the base bow from the Family Crypt.',
-    links: [{ to: `${BASE}/bows/base`, label: 'Base bow guide' }, { to: DETAILS, section: 'step-1', label: 'Step details' }],
+    links: [{ to: DETAILS, section: 'step-1', label: 'Step details' }],
   },
   {
     id: 'upgrade-bow',
@@ -23,13 +23,13 @@ const deGuideSteps = [
     id: 'gear',
     title: 'Gear up: Shield + Ragnaroks',
     goal: 'Build as you go — every player needs a Ragnarok DG-4 before the boss.',
-    links: [{ to: `${BASE}/parts`, label: 'Full gear page' }, { to: DETAILS, section: 'step-3', label: 'Step details' }],
+    links: [{ to: DETAILS, section: 'step-3', label: 'Step details' }],
   },
   {
     id: 'first-wisps',
     title: 'First wisp cycle',
     goal: 'Prime the teleporter, hit four wisps, travel to the past together.',
-    links: [{ to: `${BASE}/wisps`, label: 'Wisp reference' }, { to: DETAILS, section: 'step-4', label: 'Step details' }],
+    links: [{ to: DETAILS, section: 'step-4', label: 'Step details' }],
   },
   {
     id: 'past-lab-1',
@@ -53,7 +53,7 @@ const deGuideSteps = [
     id: 'second-wisps',
     title: 'Second wisp cycle + Keeper Stone',
     goal: 'Repeat the wisps, go back to the past, take the Keeper Stone.',
-    links: [{ to: `${BASE}/wisps`, label: 'Wisp reference' }, { to: DETAILS, section: 'step-8', label: 'Step details' }],
+    links: [{ to: DETAILS, section: 'step-8', label: 'Step details' }],
   },
   {
     id: 'keeper-ritual',
@@ -71,7 +71,7 @@ const deGuideSteps = [
     id: 'keeper-boss',
     title: 'Keeper boss',
     goal: 'Three Keeper damage phases with Panzer waves between. Stun with a Ragnarok, shoot the chest.',
-    links: [{ to: `${BASE}/boss`, label: 'Boss survival sheet' }, { to: DETAILS, section: 'step-11', label: 'Step details' }],
+    links: [{ to: DETAILS, section: 'step-11', label: 'Step details' }],
   },
   {
     id: 'ending',
