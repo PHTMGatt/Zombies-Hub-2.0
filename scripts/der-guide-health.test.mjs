@@ -29,3 +29,20 @@ test('Der Wolf guide uses the actual four painting story beats', () => {
   assert.match(source, /(slain|struck by arrows)[^\n]*(servant|mourn)/i);
   assert.doesNotMatch(source, /Battlefield\/war/);
 });
+
+test('Der main guide has one Step details action per row, preserving specialist destinations', () => {
+  const main = read('maps/der-eisendrache/src/data/deGuideSteps.jsx');
+  const details = read('maps/der-eisendrache/src/data/stepDetails.js');
+  const renderer = read('shared/guide/StepDetails.jsx');
+  const rows = [...main.matchAll(/links: \[(.*?)\],/g)];
+  assert.equal(rows.length, 12);
+  for (const [, links] of rows) {
+    assert.match(links, /to: DETAILS, section: 'step-\d+', label: 'Step details'/);
+    assert.doesNotMatch(links, /, \{ to:/);
+  }
+  for (const path of ['/bows/base', '/parts', '/wisps', '/boss']) {
+    assert(details.includes('${BASE}' + path), 'Step Details retains ' + path);
+  }
+  assert.equal((details.match(/label: 'Wisp reference'/g) ?? []).length, 2);
+  assert.match(renderer, /step\.links\?\.length > 0/);
+});
