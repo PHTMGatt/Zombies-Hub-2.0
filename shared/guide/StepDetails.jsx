@@ -58,6 +58,9 @@ export default function StepDetails({ steps, guidePath, title = 'Step details' }
           {step.problems?.length > 0 && (
             <div className="step-details__ref"><h4>Not working?</h4><ul>{step.problems.map((t, k) => <li key={`${k}-${t}`}>{t}</li>)}</ul></div>
           )}
+          {step.links?.length > 0 && (
+            <p className="step-details__links">{step.links.map((link) => <Link key={link.to} to={link.to}>{link.label} →</Link>)}</p>
+          )}
           {step.video?.url && (
             <p className="step-details__video"><a href={step.video.url} target="_blank" rel="noreferrer">{step.video.label} ↗</a></p>
           )}
