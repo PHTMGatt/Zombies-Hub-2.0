@@ -1,25 +1,25 @@
-/* Origins main guide: a flat step list on one calm panel over the map art (list styles: shared/guide/flat-guide.css). */
-.origins-module .main-guide {
-  background: var(--origins-bg) center / cover fixed no-repeat;
+/* Origins main guide, mockup A: the verified flat step list dressed as the OG "Main Steps" card
+   (card chrome: OGGuide.css; list structure: shared/guide/flat-guide.css). */
+.origins-module .origins-guide__steps .flat-guide {
+  --flat-accent: #6dc2ff;
+  --flat-ink: #fff;
+  --flat-text: #e0eaff;
+  --flat-line: rgba(109, 194, 255, 0.22);
+  width: 100%;
   font-family: 'Rajdhani', sans-serif;
-  padding: clamp(0.75rem, 2vw, 1.5rem) 0.75rem 2.5rem;
+  font-size: 1.05rem;
 }
-.origins-module .origins-guide__inner {
-  --flat-accent: #9fdcff;
-  width: min(100%, 50rem);
-  margin: 0 auto;
-  padding: 1rem clamp(1rem, 3vw, 2rem) 1.5rem;
-  border-radius: var(--zh-radius-panel);
-  background: rgba(2, 12, 22, 0.93);
-  color: #dbe8f2;
+.origins-module .origins-guide__steps .flat-guide__title { font-size: 1.2rem; color: #fff; }
+.origins-module .origins-guide__steps .flat-guide__line { color: #e0eaff; }
+.origins-module .origins-guide__steps .flat-guide__links a { color: #8ed7ff; }
+/* Step titles are h2 too; keep the OG card-heading rule (underline, icon row) on the card heading only. */
+.origins-module .origins-og .guide-section .flat-guide__title {
+  display: block;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  color: #fff;
+  font-size: 1.2rem;
 }
-.origins-module .origins-guide__title {
-  margin: 0 0 0.5rem;
-  font-size: 1.75rem;
-  color: #f4faff;
-}
-.origins-module .origins-guide__inner .flat-guide { width: 100%; font-family: inherit; font-size: 1.125rem; }
-.origins-module .origins-guide__credits { margin: 1rem 0 0.5rem; font-size: 1rem; color: #b5cedf; }
-.origins-module .origins-guide__credits a { color: #9fdcff; }
-.origins-module .audio-players { display: grid; gap: 0.5rem; }
-.origins-module .audio-players audio { width: 100%; }
+.origins-module .origins-og .guide-section .flat-guide__list { padding-left: 0; list-style: none; }
+.origins-module .origins-og .guide-section .flat-guide__step { margin: 0; }

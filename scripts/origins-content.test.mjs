@@ -71,10 +71,11 @@ test('the two staff steps are one line each and link to the staff pages', () => 
   assert.deepEqual(detail('build-staffs').problems.filter((tip) => !guideModule.originsTips.includes(tip)), []);
 });
 
-test('every step has a Step details section, in the same order, and links to it', () => {
+// Bryen 2026-11-21: no Step Details in the guide. The data stays (no fact dropped); the guide no longer links to it.
+test('every step keeps its Step details section in order, and the guide no longer links to it', () => {
   assert.deepEqual(details.map((item) => item.id), steps.map((item) => item.id));
-  steps.forEach((item, i) => {
-    assert(item.links.some((link) => link.to === '/maps/origins/step-details' && link.section === `step-${i + 1}`), `${item.id} links to #step-${i + 1}`);
+  steps.forEach((item) => {
+    assert(!(item.links ?? []).some((link) => link.to.includes('step-details')), `${item.id} must not link to Step details`);
   });
 });
 
