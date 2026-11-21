@@ -24,9 +24,13 @@ function getKey(path) {
     .toLowerCase();
 }
 
+// Layout art is keyed by game folder + name ("BO1/kino der toten"): several maps exist in more than one game
+// under the same file name, and a name-only key let the last folder overwrite the others.
+const getFolder = (path) => path.split('/').slice(-2, -1)[0];
+
 const layouts = {};
 for (const p in layoutModules) {
-  layouts[getKey(p)] = layoutModules[p].default;
+  layouts[`${getFolder(p)}/${getKey(p)}`] = layoutModules[p].default;
 }
 
 const dlcArt = {};
@@ -39,8 +43,9 @@ for (const p in coverModules) {
   covers[getKey(p)] = coverModules[p].default;
 }
 
-const getCover = (key) => covers[key] || layouts[key] || null;
-const getLayout = (key) => layouts[key] || null;
+// `folder` is the map's game folder (BO1, BO2, BO3). World at War has none and borrows the Black Ops 1 art.
+const getLayout = (folder, key) => layouts[`${folder}/${key}`] || null;
+const getCover = (folder, key) => covers[key] || getLayout(folder, key);
 
 const mapData = [
   {
@@ -49,8 +54,8 @@ const mapData = [
     game: "Black Ops 1",
     dlc: "DLC 4 – Rezurrection",
     isEasterEgg: false,
-    coverImage: getCover("nacht der untoten"),
-    layoutImage: getLayout("nacht der untoten"),
+    coverImage: getCover("BO1", "nacht der untoten"),
+    layoutImage: getLayout("BO1", "nacht der untoten"),
     hoverImage: dlcArt["rezurrection"]
   },
   {
@@ -59,8 +64,8 @@ const mapData = [
     game: "Black Ops 1",
     dlc: "Base Game",
     isEasterEgg: false,
-    coverImage: getCover("kino der toten"),
-    layoutImage: getLayout("kino der toten"),
+    coverImage: getCover("BO1", "kino der toten"),
+    layoutImage: getLayout("BO1", "kino der toten"),
     hoverImage: null
   },
   {
@@ -69,8 +74,8 @@ const mapData = [
     game: "Black Ops 1",
     dlc: "Base Game",
     isEasterEgg: false,
-    coverImage: getCover("five"),
-    layoutImage: getLayout("five"),
+    coverImage: getCover("BO1", "five"),
+    layoutImage: getLayout("BO1", "five"),
     hoverImage: null
   },
   {
@@ -79,7 +84,7 @@ const mapData = [
     game: "Black Ops 1",
     dlc: "Base Game",
     isEasterEgg: false,
-    coverImage: getCover("dead ops arcade"),
+    coverImage: getCover("BO1", "dead ops arcade"),
     layoutImage: null,
     hoverImage: null
   },
@@ -89,8 +94,8 @@ const mapData = [
     game: "Black Ops 1",
     dlc: "DLC 1 – First Strike",
     isEasterEgg: true,
-    coverImage: getCover("ascension"),
-    layoutImage: getLayout("ascension"),
+    coverImage: getCover("BO1", "ascension"),
+    layoutImage: getLayout("BO1", "ascension"),
     hoverImage: dlcArt["first strike"]
   },
   {
@@ -99,8 +104,8 @@ const mapData = [
     game: "Black Ops 1",
     dlc: "DLC 2 – Escalation",
     isEasterEgg: true,
-    coverImage: getCover("call of the dead"),
-    layoutImage: getLayout("call of the dead"),
+    coverImage: getCover("BO1", "call of the dead"),
+    layoutImage: getLayout("BO1", "call of the dead"),
     hoverImage: dlcArt["escalation"]
   },
   {
@@ -109,8 +114,8 @@ const mapData = [
     game: "Black Ops 1",
     dlc: "DLC 3 – Annihilation",
     isEasterEgg: true,
-    coverImage: getCover("shangri la"),
-    layoutImage: getLayout("shangri la"),
+    coverImage: getCover("BO1", "shangri la"),
+    layoutImage: getLayout("BO1", "shangri la"),
     hoverImage: dlcArt["annihilation"]
   },
   {
@@ -119,8 +124,8 @@ const mapData = [
     game: "Black Ops 1",
     dlc: "DLC 4 – Rezurrection",
     isEasterEgg: true,
-    coverImage: getCover("moon"),
-    layoutImage: getLayout("moon"),
+    coverImage: getCover("BO1", "moon"),
+    layoutImage: getLayout("BO1", "moon"),
     hoverImage: dlcArt["rezurrection"]
   },
   {
@@ -129,8 +134,8 @@ const mapData = [
     game: "Black Ops 1",
     dlc: "DLC 4 – Rezurrection",
     isEasterEgg: false,
-    coverImage: getCover("verrückt"),
-    layoutImage: getLayout("verrückt"),
+    coverImage: getCover("BO1", "verrückt"),
+    layoutImage: getLayout("BO1", "verrückt"),
     hoverImage: dlcArt["rezurrection"]
   },
   {
@@ -139,8 +144,8 @@ const mapData = [
     game: "Black Ops 1",
     dlc: "DLC 4 – Rezurrection",
     isEasterEgg: false,
-    coverImage: getCover("shi no numa"),
-    layoutImage: getLayout("shi no numa"),
+    coverImage: getCover("BO1", "shi no numa"),
+    layoutImage: getLayout("BO1", "shi no numa"),
     hoverImage: dlcArt["rezurrection"]
   },
   {
@@ -149,8 +154,8 @@ const mapData = [
     game: "Black Ops 1",
     dlc: "DLC 4 – Rezurrection",
     isEasterEgg: false,
-    coverImage: getCover("der riese"),
-    layoutImage: getLayout("der riese"),
+    coverImage: getCover("BO1", "der riese"),
+    layoutImage: getLayout("BO1", "der riese"),
     hoverImage: dlcArt["rezurrection"]
   },
 
@@ -174,8 +179,8 @@ const mapData = [
     game: "Black Ops 2",
     dlc: "DLC – Nuketown Zombies",
     isEasterEgg: false,
-    coverImage: getCover("nuketown zombies"),
-    layoutImage: getLayout("nuketown zombies"),
+    coverImage: getCover("BO2", "nuketown zombies"),
+    layoutImage: getLayout("BO2", "nuketown zombies"),
     hoverImage: dlcArt["nuketown"]
   },
   {
@@ -184,8 +189,8 @@ const mapData = [
     game: "Black Ops 2",
     dlc: "DLC 1 – Revolution",
     isEasterEgg: true,
-    coverImage: getCover("die rise"),
-    layoutImage: getLayout("die rise"),
+    coverImage: getCover("BO2", "die rise"),
+    layoutImage: getLayout("BO2", "die rise"),
     hoverImage: dlcArt["revolution"]
   },
   {
@@ -196,7 +201,7 @@ const mapData = [
     isEasterEgg: true,
     internalRoute: '/maps/mob-of-the-dead',
     coverImage: motdCover,
-    layoutImage: getLayout("mob of the dead"),
+    layoutImage: getLayout("BO2", "mob of the dead"),
     hoverImage: dlcArt["uprising"]
   },
   {
@@ -205,8 +210,8 @@ const mapData = [
     game: "Black Ops 2",
     dlc: "DLC 3 – Vengeance",
     isEasterEgg: true,
-    coverImage: getCover("buried"),
-    layoutImage: getLayout("buried"),
+    coverImage: getCover("BO2", "buried"),
+    layoutImage: getLayout("BO2", "buried"),
     hoverImage: dlcArt["vengeance"]
   },
   {
@@ -216,8 +221,8 @@ const mapData = [
     dlc: "DLC 4 – Apocalypse",
     isEasterEgg: true,
     internalRoute: '/maps/origins',
-    coverImage: getCover("origins"),
-    layoutImage: getLayout("origins"),
+    coverImage: getCover("BO2", "origins"),
+    layoutImage: getLayout("BO2", "origins"),
     hoverImage: dlcArt["apocalypse"]
   },
 
@@ -230,8 +235,8 @@ const mapData = [
     dlc: "Base Game",
     isEasterEgg: true,
     internalRoute: '/maps/shadows-of-evil',
-    coverImage: getCover("shadows of evil"),
-    layoutImage: getLayout("shadows of evil"),
+    coverImage: getCover("BO3", "shadows of evil"),
+    layoutImage: getLayout("BO3", "shadows of evil"),
     hoverImage: null
   },
   {
@@ -240,8 +245,8 @@ const mapData = [
     game: "Black Ops 3",
     dlc: "DLC – Giant",
     isEasterEgg: true,
-    coverImage: getCover("the giant"),
-    layoutImage: getLayout("the giant"),
+    coverImage: getCover("BO3", "the giant"),
+    layoutImage: getLayout("BO3", "the giant"),
     hoverImage: dlcArt["giant"]
   },
   {
@@ -250,7 +255,7 @@ const mapData = [
     game: "Black Ops 3",
     dlc: "Bonus",
     isEasterEgg: false,
-    coverImage: getCover("dead ops arcade ii"),
+    coverImage: getCover("BO3", "dead ops arcade ii"),
     layoutImage: null,
     hoverImage: null
   },
@@ -261,8 +266,8 @@ const mapData = [
     dlc: "DLC 1 – Awakening",
     isEasterEgg: true,
     internalRoute: '/maps/der-eisendrache',
-    coverImage: getCover("der eisendrache"),
-    layoutImage: getLayout("der eisendrache"),
+    coverImage: getCover("BO3", "der eisendrache"),
+    layoutImage: getLayout("BO3", "der eisendrache"),
     hoverImage: dlcArt["awakening"]
   },
   {
@@ -272,8 +277,8 @@ const mapData = [
     dlc: "DLC 2 – Eclipse",
     isEasterEgg: true,
     internalRoute: '/maps/zetsubou-no-shima',
-    coverImage: getCover("zetsubou no shima"),
-    layoutImage: getLayout("zetsubou no shima"),
+    coverImage: getCover("BO3", "zetsubou no shima"),
+    layoutImage: getLayout("BO3", "zetsubou no shima"),
     hoverImage: dlcArt["eclipse"]
   },
   {
@@ -283,8 +288,8 @@ const mapData = [
     dlc: "DLC 3 – Descent",
     isEasterEgg: true,
     internalRoute: '/maps/gorod-krovi',
-    coverImage: getCover("gorod krovi"),
-    layoutImage: getLayout("gorod krovi"),
+    coverImage: getCover("BO3", "gorod krovi"),
+    layoutImage: getLayout("BO3", "gorod krovi"),
     hoverImage: dlcArt["descent"]
   },
   {
@@ -294,8 +299,8 @@ const mapData = [
     dlc: "DLC 4 – Salvation",
     isEasterEgg: true,
     internalRoute: '/maps/revelations',
-    coverImage: getCover("revelations"),
-    layoutImage: getLayout("revelations"),
+    coverImage: getCover("BO3", "revelations"),
+    layoutImage: getLayout("BO3", "revelations"),
     hoverImage: dlcArt["salvation"]
   },
   {
@@ -304,8 +309,8 @@ const mapData = [
     game: "Black Ops 3",
     dlc: "Zombies Chronicles",
     isEasterEgg: false,
-    coverImage: getCover("nacht der untoten"),
-    layoutImage: getLayout("nacht der untoten"),
+    coverImage: getCover("BO3", "nacht der untoten"),
+    layoutImage: getLayout("BO3", "nacht der untoten"),
     hoverImage: dlcArt["zombie chronicles"]
   },
   {
@@ -314,8 +319,8 @@ const mapData = [
     game: "Black Ops 3",
     dlc: "Zombies Chronicles",
     isEasterEgg: false,
-    coverImage: getCover("kino der toten"),
-    layoutImage: getLayout("kino der toten"),
+    coverImage: getCover("BO3", "kino der toten"),
+    layoutImage: getLayout("BO3", "kino der toten"),
     hoverImage: dlcArt["zombie chronicles"]
   },
   {
@@ -324,8 +329,8 @@ const mapData = [
     game: "Black Ops 3",
     dlc: "Zombies Chronicles",
     isEasterEgg: true,
-    coverImage: getCover("shangri la"),
-    layoutImage: getLayout("shangri la"),
+    coverImage: getCover("BO3", "shangri la"),
+    layoutImage: getLayout("BO3", "shangri la"),
     hoverImage: dlcArt["zombie chronicles"]
   },
   {
@@ -334,8 +339,8 @@ const mapData = [
     game: "Black Ops 3",
     dlc: "Zombies Chronicles",
     isEasterEgg: true,
-    coverImage: getCover("moon"),
-    layoutImage: getLayout("moon"),
+    coverImage: getCover("BO3", "moon"),
+    layoutImage: getLayout("BO3", "moon"),
     hoverImage: dlcArt["zombie chronicles"]
   },
   {
@@ -345,8 +350,8 @@ const mapData = [
     dlc: "Zombies Chronicles",
     isEasterEgg: true,
     internalRoute: '/maps/origins',
-    coverImage: getCover("origins"),
-    layoutImage: getLayout("origins"),
+    coverImage: getCover("BO3", "origins"),
+    layoutImage: getLayout("BO3", "origins"),
     hoverImage: dlcArt["zombie chronicles"]
   },
   {
@@ -355,8 +360,8 @@ const mapData = [
     game: "Black Ops 3",
     dlc: "Zombies Chronicles",
     isEasterEgg: false,
-    coverImage: getCover("shi no numa"),
-    layoutImage: getLayout("shi no numa"),
+    coverImage: getCover("BO3", "shi no numa"),
+    layoutImage: getLayout("BO3", "shi no numa"),
     hoverImage: dlcArt["zombie chronicles"]
   },
   {
@@ -365,8 +370,8 @@ const mapData = [
     game: "Black Ops 3",
     dlc: "Zombies Chronicles",
     isEasterEgg: false,
-    coverImage: getCover("verrückt"),
-    layoutImage: getLayout("verrückt"),
+    coverImage: getCover("BO3", "verrückt"),
+    layoutImage: getLayout("BO3", "verrückt"),
     hoverImage: dlcArt["zombie chronicles"]
   },
   // World at War originals. Entries only (no guide): the later Black Ops versions below are the ones with art and guides.
@@ -376,8 +381,8 @@ const mapData = [
     game: "World at War",
     dlc: "Base Game",
     isEasterEgg: false,
-    coverImage: getCover("nacht der untoten"),
-    layoutImage: getLayout("nacht der untoten"),
+    coverImage: getCover("BO1", "nacht der untoten"),
+    layoutImage: getLayout("BO1", "nacht der untoten"),
     hoverImage: null
   },
   {
@@ -386,8 +391,8 @@ const mapData = [
     game: "World at War",
     dlc: "Map Pack 1",
     isEasterEgg: false,
-    coverImage: getCover("verrückt"),
-    layoutImage: getLayout("verrückt"),
+    coverImage: getCover("BO1", "verrückt"),
+    layoutImage: getLayout("BO1", "verrückt"),
     hoverImage: null
   },
   {
@@ -396,8 +401,8 @@ const mapData = [
     game: "World at War",
     dlc: "Map Pack 2",
     isEasterEgg: false,
-    coverImage: getCover("shi no numa"),
-    layoutImage: getLayout("shi no numa"),
+    coverImage: getCover("BO1", "shi no numa"),
+    layoutImage: getLayout("BO1", "shi no numa"),
     hoverImage: null
   },
   {
@@ -406,8 +411,8 @@ const mapData = [
     game: "World at War",
     dlc: "Map Pack 3",
     isEasterEgg: false,
-    coverImage: getCover("der riese"),
-    layoutImage: getLayout("der riese"),
+    coverImage: getCover("BO1", "der riese"),
+    layoutImage: getLayout("BO1", "der riese"),
     hoverImage: null
   },
 ];
