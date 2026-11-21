@@ -8,8 +8,17 @@ Second-screen Call of Duty Zombies Easter Egg guide: glance, understand, keep pl
 - `maps/<map>/` – seven dedicated guides: origins, mob-of-the-dead, shadows-of-evil, der-eisendrache, zetsubou-no-shima, gorod-krovi, revelations
 - `shared/` – guide components, layout, search, achievements, shared data
 - `scripts/` – source verification, unit tests (`*.test.mjs`), Playwright browser smokes (`*-browser-smoke.mjs`)
-- `docs/polish-roadmap.md` – product and design direction; read it before any UI work
-- `docs/superpowers/specs/2026-10-31-zombies-hub-redesign-design.md` + `docs/superpowers/plans/2026-10-31-zombies-hub-redesign.md` – the approved redesign spec and plan; they win where the roadmap conflicts
+- `docs/polish-roadmap.md` – historical project context; not current design approval
+- `docs/superpowers/specs/2026-10-31-zombies-hub-redesign-design.md` + `docs/superpowers/plans/2026-10-31-zombies-hub-redesign.md` – **superseded design proposals, NOT approved authority**. Bryen rejected the resulting generic redesign in November 2026. Never automatically execute or impose them.
+
+## Current owner-approved product direction (supersedes older design specs)
+
+- **THE EASTER EGG SHAPES THE GUIDE, NEVER THE OTHER WAY AROUND. A GUIDE, NOT A WIKI.** Target an experienced player in a high-stress run who needs **GLANCE → RECOGNIZE → EXECUTE → RETURN TO GAME**, not a beginner tutorial. Surface codes, symbols, precise locations, switches and the next immediate action without scrolling through unrelated explanations.
+- **The original guides are read-only design/reference masters:** [Origins-Guide](https://github.com/PHTMGatt/Origins-Guide) and [Revelations-Guide](https://github.com/PHTMGatt/Revelations-Guide), both on `main`. Never edit, reset, push, or merge those repos. Their real mobile and landscape reference screenshots, source content, and actual in-game assets outrank generic art or invented UI.
+- **Do not impose a single dashboard or wiki layout across maps.** Origins uses its own robot/background, bright blue header, **Main Guide / Ice / Fire / Wind / Lightning** tabs, compact main steps and staff puzzle charts; Revelations uses its distinct cosmic header, numbered step selector, focused content and specialist hunt/video pickers. Retain each map's personality and real EE mechanics.
+- **Origins first, one map at a time.** No unapproved generic redesign, speculative gameplay copy, new illustrations, or unrelated additions. A passing build does not constitute Bryen's visual approval. Only implement a specifically approved direction on `claude-forge`, verify rendered desktop + portrait + landscape, and do not merge/deploy to production without his explicit approval.
+- **Current authority:** newest Bryen instruction → MongoDB `mithrandir.notes` key `gandalf-note:zombies-guide-philosophy` and related current owner decisions / queue → [Claude exact-slot handoff protocol](https://app.notion.com/p/41b7baca19a181299bb4fa317f31795f) → original OG repo code/assets and approved screenshots → this repository's historical plans. Do not reread huge chat logs or treat rejected designs as approved.
+- **Claude Max pacing:** Worker sessions remain paused until Bryen authorizes resumption after the Friday usage reset. No autonomous kicks. MAIN Gandalf (Sonnet Ultra Code) delegates; ALPHA Fable 5.2 designs/implements approved work; BETA Opus 5.5 reviews; CHARLIE Sonnet checks data/QA. Preserve exact slot titles and concise Mongo + Notion handoffs.
 
 ## Commands
 
