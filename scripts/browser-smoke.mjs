@@ -231,20 +231,19 @@ try {
     const stepTitle = async (id) => (await page.locator(`#${id} :is(h2, h3)`).innerText()).replace(/^Step \d+:\s*/, '');
     assert.equal(await stepTitle('secure-keys'), 'Ascend from Darkness');
     assert.equal(await stepTitle('thunder-fists'), 'Thunder Fists');
-    // The Step details page is still reachable by address (no longer linked from the guide, Bryen 2026-11-21).
+    // The staff placement answer is one tap away, on the Step details tab (flat main guide).
     assert.match(await (await stepDetails(page, base, '/maps/origins', 'secure-keys')).innerText(), /Odin · middle robot/, 'Staff placement answer is on Step details');
     assert(await page.locator('section.step-details__step[data-step="secure-keys"] .step-details__how').isVisible(), 'Step details shows the how-to');
-    // Origins tabs are the OG five (Bryen 2026-11-21): Speed Run lives under Side EEs, not in this nav.
-    // Speed Run itself stays open: reachable with empty storage, no lock copy anywhere.
+    // Speed Run is always open: the last Origins nav item, reachable with empty storage, no lock copy anywhere.
     await page.evaluate(() => window.localStorage.clear());
     await page.goto(`${base}/maps/origins`, { waitUntil: 'networkidle' });
     const navLinks = guideTabs(page);
     const lastNav = navLinks.last();
-    assert.equal((await lastNav.innerText()).trim(), 'Lightning Staff', 'Lightning Staff is the last Origins nav item');
-    assert.equal(await navLinks.filter({ hasText: /Speed Run|Step details|^OG$/ }).count(), 0, 'no Speed Run, Step details or OG tab');
+    assert.equal((await lastNav.innerText()).trim(), 'Speed Run', 'Speed Run is the last Origins nav item');
+    await lastNav.scrollIntoViewIfNeeded();
     const navBox = await lastNav.boundingBox();
-    assert(navBox && navBox.x >= 0 && navBox.x + navBox.width <= width + 1, 'Lightning Staff tab sits fully inside the viewport, no scrolling');
-    await assertNoHorizontalOverflow(page, '/maps/origins (nav)');
+    assert(navBox && navBox.x >= 0 && navBox.x + navBox.width <= width + 1, 'Speed Run nav item can sit fully inside the viewport');
+    await assertNoHorizontalOverflow(page, '/maps/origins (nav scrolled)');
     await page.goto(`${base}/side-easter-eggs/origins-speedrun`, { waitUntil: 'networkidle' });
     assert.equal(new URL(page.url()).pathname, '/maps/origins/speed-run', 'Old Origins Speed Run address redirects into the Origins guide');
     await page.getByRole('heading', { name: 'Origins Speed Run', level: 2 }).waitFor();

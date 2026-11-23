@@ -1,19 +1,32 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useEffect, useRef } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
 import './Header.css';
 
 const BASE = '/maps/revelations';
 
-// Owner spec 2026-11-21 (mockup A): the OG Revelations tabs only. Every tab is a main-EE step reference.
 const SECTIONS = [
   { to: BASE, label: 'Main Guide', end: true },
   { to: `${BASE}/apothicon-upgrade`, label: 'Apothicon Upgrade' },
   { to: `${BASE}/egg-locations`, label: 'Egg Locations' },
   { to: `${BASE}/summoning-key`, label: 'Summoning Key' },
   { to: `${BASE}/sound-step`, label: 'Sound Step' },
+  { to: `${BASE}/step-details`, label: 'Step details' },
 ];
 
 function Header() {
+  const { pathname } = useLocation();
+  const tabsRef = useRef(null);
+
+  // On phones the section tabs are a swipeable row; keep the current section centered (row only, never the page).
+  useEffect(() => {
+    const row = tabsRef.current;
+    const active = row?.querySelector('.rev-nav-link.active');
+    if (!row || !active || row.scrollWidth <= row.clientWidth) return;
+    const rowBox = row.getBoundingClientRect();
+    const activeBox = active.getBoundingClientRect();
+    row.scrollLeft += activeBox.left - rowBox.left - (rowBox.width - activeBox.width) / 2;
+  }, [pathname]);
+
   return (
     <header className="rev-header">
       <div className="rev-header__left">
@@ -25,7 +38,7 @@ function Header() {
       </div>
 
       <nav className="rev-header__nav" aria-label="Revelations guide navigation">
-        <div className="rev-header__tabs">
+        <div className="rev-header__tabs" ref={tabsRef}>
           {SECTIONS.map(({ to, label, end }) => (
             <NavLink key={to} to={to} end={end} className="rev-nav-link">{label}</NavLink>
           ))}

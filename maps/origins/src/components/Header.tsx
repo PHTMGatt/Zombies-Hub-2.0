@@ -6,6 +6,7 @@ import "../Styles/ComponentStyles/Header.css";
 const Header = () => {
   return (
     <header className="site-header origins-map-header">
+      <div className="origins-header__backdrop" aria-hidden="true" />
 
       <div className="origins-header__content">
         <div className="header-left">

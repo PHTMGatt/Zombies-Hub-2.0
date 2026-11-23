@@ -17,17 +17,16 @@ const STAFFS = ['ice', 'fire', 'wind', 'lightning'];
 const chartButton = (page) => page.locator('#puzzle').getByRole('button', { name: /^Enlarge:/ });
 const base = process.env.SMOKE_BASE_URL || 'http://127.0.0.1:4173';
 const ROUTES = [
-  ['/maps/origins', 'Main Guide'],
-  // Still reachable by address but no longer tabs (Bryen 2026-11-21, mockup A): no tab is marked current.
-  ['/maps/origins/og', null],
-  ['/maps/origins/step-details', null],
+  ['/maps/origins', 'UI Main Guide'],
+  ['/maps/origins/og', 'OG'],
+  ['/maps/origins/step-details', 'Step details'],
   ['/maps/origins/ice-staff', 'Ice Staff'],
   ['/maps/origins/fire-staff', 'Fire Staff'],
   ['/maps/origins/wind-staff', 'Wind Staff'],
   ['/maps/origins/lightning-staff', 'Lightning Staff'],
-  ['/maps/origins/speed-run', null],
+  ['/maps/origins/speed-run', 'Speed Run'],
 ];
-const TABS = ['Main Guide', 'Ice Staff', 'Fire Staff', 'Wind Staff', 'Lightning Staff'];
+const TABS = ['UI Main Guide', 'OG', 'Step details', 'Ice Staff', 'Fire Staff', 'Wind Staff', 'Lightning Staff', 'Speed Run'];
 const results = [];
 
 const assertNoHorizontalOverflow = async (page, label) => {
@@ -75,7 +74,7 @@ try {
         return { label: link.textContent.trim(), current: link.getAttribute('aria-current'), left: box.left, right: box.right };
       }));
       assert.deepEqual(tabs.map((tab) => tab.label), TABS, `${route}: Origins nav items in order`);
-      assert.deepEqual(tabs.filter((tab) => tab.current === 'page').map((tab) => tab.label), current ? [current] : [], `${route}: the current nav item is marked`);
+      assert.deepEqual(tabs.filter((tab) => tab.current === 'page').map((tab) => tab.label), [current], `${route}: the current nav item is marked`);
       const robot = await page.evaluate(() => /Robot/.test(getComputedStyle(document.querySelector('.origins-module')).backgroundImage));
       assert(robot, `${route}: the robot artwork is the page background`);
       await assertNoHorizontalOverflow(page, `${route} at ${name}`);

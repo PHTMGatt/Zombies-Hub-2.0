@@ -56,7 +56,7 @@ try {
       links.filter(link => !link.closest('nav[aria-label$="guide navigation"]') && !link.hasAttribute('data-step-link')).map(link => link.textContent.trim()),
     );
     assert.deepEqual(sectionLinksOutsideHeader, [], `Revelations renders a second section navigation: ${sectionLinksOutsideHeader.join(', ')}`);
-    assert.equal(await guideTabs(page).count(), 5, 'Header nav reaches the five OG Revelations sections (no Step details, Bryen 2026-11-21)');
+    assert.equal(await guideTabs(page).count(), 6, 'Header nav reaches all six Revelations sections (with Step details)');
     await page.reload({ waitUntil: 'networkidle' });
 
     // Flat main guide: all twelve steps in order, every one on screen at once, nothing to expand or open.

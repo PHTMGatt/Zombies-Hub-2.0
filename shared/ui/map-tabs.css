@@ -1,16 +1,17 @@
 /*
  * One tab bar for every map (2026-11-16): the same pill, size, spacing, tap target and phone behaviour
  * (a single scrolling row, never a menu). Each map keeps its identity through --map-tab-accent.
- * Origins and Revelations are excluded (Bryen, 2026-11-21, mockup A): they keep their OG header tabs.
  * Links mark the current page with aria-current="page".
  */
+.origins-module { --map-tab-accent: #9fdcff; }
+.revelations-module { --map-tab-accent: #8fe3ff; }
 .de-module { --map-tab-accent: #79cfff; }
 .zets-module { --map-tab-accent: #5ee6c8; }
 .shadows-module { --map-tab-accent: #ffb454; }
 .gorod-module { --map-tab-accent: #ff6a5c; }
 .mob-module { --map-tab-accent: #e8c15a; }
 
-.map-module :is(.de-nav, .zets-nav, .soe-tabs, .gorod-header__nav, .mob-header .nav ul) {
+.map-module :is(.origins-nav-links, .rev-header__tabs, .de-nav, .zets-nav, .soe-tabs, .gorod-header__nav, .mob-header .nav ul) {
   display: flex !important;
   flex-wrap: nowrap;
   align-items: center;
@@ -26,10 +27,10 @@
   background: none;
   box-shadow: none;
 }
-.map-module :is(.de-nav, .zets-nav, .soe-tabs, .gorod-header__nav, .mob-header .nav ul)::-webkit-scrollbar { display: none; }
+.map-module :is(.origins-nav-links, .rev-header__tabs, .de-nav, .zets-nav, .soe-tabs, .gorod-header__nav, .mob-header .nav ul)::-webkit-scrollbar { display: none; }
 .map-module .mob-header .nav li { flex: 0 0 auto; margin: 0; }
 
-.map-module :is(.de-nav a, .zets-nav a, .soe-tabs a, .gorod-header__nav a, .mob-header .nav a) {
+.map-module :is(.origins-nav-links a, .rev-header__tabs a, .de-nav a, .zets-nav a, .soe-tabs a, .gorod-header__nav a, .mob-header .nav a) {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -49,25 +50,26 @@
   scroll-snap-align: center;
   transition: background-color 0.15s ease, border-color 0.15s ease;
 }
-.map-module :is(.de-nav a, .zets-nav a, .soe-tabs a, .gorod-header__nav a, .mob-header .nav a):hover {
+.map-module :is(.origins-nav-links a, .rev-header__tabs a, .de-nav a, .zets-nav a, .soe-tabs a, .gorod-header__nav a, .mob-header .nav a):hover {
   border-color: var(--map-tab-accent);
 }
-.map-module :is(.de-nav a, .zets-nav a, .soe-tabs a, .gorod-header__nav a, .mob-header .nav a)[aria-current="page"] {
+.map-module :is(.origins-nav-links a, .rev-header__tabs a, .de-nav a, .zets-nav a, .soe-tabs a, .gorod-header__nav a, .mob-header .nav a)[aria-current="page"] {
   background: var(--map-tab-accent);
   border-color: var(--map-tab-accent);
   color: #06121c !important;
   box-shadow: none;
 }
-.map-module :is(.de-nav a, .zets-nav a, .soe-tabs a, .gorod-header__nav a, .mob-header .nav a):focus-visible {
+.map-module :is(.origins-nav-links a, .rev-header__tabs a, .de-nav a, .zets-nav a, .soe-tabs a, .gorod-header__nav a, .mob-header .nav a):focus-visible {
   outline: var(--zh-focus-ring);
   outline-offset: var(--zh-focus-offset);
 }
 .map-module .zets-nav-toggle { display: none !important; }
 @media (prefers-reduced-motion: reduce) {
-  .map-module :is(.de-nav a, .zets-nav a, .soe-tabs a, .gorod-header__nav a, .mob-header .nav a) { transition: none; }
+  .map-module :is(.origins-nav-links a, .rev-header__tabs a, .de-nav a, .zets-nav a, .soe-tabs a, .gorod-header__nav a, .mob-header .nav a) { transition: none; }
 }
+.map-module .origins-nav-links a[aria-current="page"] img { filter: brightness(0.12); }
 /* The active fill must win over each map's own .active styling (dark text needs the light fill). */
-.map-module :is(.de-nav a, .zets-nav a, .soe-tabs a, .gorod-header__nav a, .mob-header .nav a)[aria-current="page"] {
+.map-module :is(.origins-nav-links a, .rev-header__tabs a, .de-nav a, .zets-nav a, .soe-tabs a, .gorod-header__nav a, .mob-header .nav a)[aria-current="page"] {
   background: var(--map-tab-accent) !important;
   background-image: none !important;
   border-color: var(--map-tab-accent) !important;

@@ -140,11 +140,13 @@ export const SEARCH_ENTRIES = [
   { map: 'shadows-of-evil', kind: 'page', title: 'Side Easter Egg video', to: '/side-easter-eggs/soe', keywords: ['side easter egg', 'side ee', 'video'] },
 
   // Step details tab of every dedicated map: warnings, how-to lines and tips, one section per step
+  { map: 'origins', kind: 'page', title: 'Step details — Little Lost Girl', to: '/maps/origins/step-details', keywords: ['step details', 'details', 'warnings', 'how to', 'tips', 'troubleshooting', 'not working'] },
   { map: 'mob-of-the-dead', kind: 'page', title: 'Step details — Pop Goes the Weasel', to: '/maps/mob-of-the-dead/step-details', keywords: ['step details', 'details', 'warnings', 'how to', 'tips', 'troubleshooting', 'not working'] },
   { map: 'shadows-of-evil', kind: 'page', title: 'Step details — Shadows of Evil', to: '/maps/shadows-of-evil/step-details', keywords: ['step details', 'details', 'warnings', 'how to', 'tips', 'troubleshooting', 'not working'] },
   { map: 'der-eisendrache', kind: 'page', title: 'Step details — My Brother’s Keeper', to: '/maps/der-eisendrache/step-details', keywords: ['step details', 'details', 'warnings', 'how to', 'tips', 'troubleshooting', 'not working'] },
   { map: 'zetsubou-no-shima', kind: 'page', title: 'Step details — Seeds of Doubt', to: '/maps/zetsubou-no-shima/step-details', keywords: ['step details', 'details', 'warnings', 'how to', 'tips', 'troubleshooting', 'not working'] },
   { map: 'gorod-krovi', kind: 'page', title: 'Step details — Love and War', to: '/maps/gorod-krovi/step-details', keywords: ['step details', 'details', 'warnings', 'how to', 'tips', 'troubleshooting', 'not working'] },
+  { map: 'revelations', kind: 'page', title: 'Step details — For The Good Of All', to: '/maps/revelations/step-details', keywords: ['step details', 'details', 'warnings', 'how to', 'tips', 'troubleshooting', 'not working'] },
 
   // Maps without a dedicated step guide: video guide, small card, Coming Soon page or info page (one entry per game)
   { map: 'ascension', kind: 'page', title: 'Ascension · Black Ops 1 — video guide', to: '/easter-eggs/ascension', keywords: ['video guide', 'bo1', 'first strike', 'casimir', 'space monkey', 'lunar lander'] },

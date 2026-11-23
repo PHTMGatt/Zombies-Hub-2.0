@@ -13,6 +13,7 @@ const base = process.env.SMOKE_BASE_URL || 'http://127.0.0.1:4173';
 // [query, expected href of the first result, text the opened page must show]
 const cases = [
   ['gorod step details', '/maps/gorod-krovi/step-details', /Step details/i],
+  ['origins step details', '/maps/origins/step-details', /Step details/i],
   ['ascension', '/easter-eggs/ascension', /Ascension/],
   ['tranzit', '/easter-eggs/tranzit', /TranZit/],
   ['die rise', '/easter-eggs/die-rise', /Die Rise/],
