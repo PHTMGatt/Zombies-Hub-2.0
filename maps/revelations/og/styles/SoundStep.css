@@ -145,7 +145,7 @@
   border-radius: 6px;
   padding: 0.5rem 1rem;
   color: #aad4ff;
-  font-family: 'Orbitron', sans-serif;
+  font-family: 'Orbitron', 'Segoe UI', system-ui, sans-serif; /* hub: Orbitron not shipped; flagged */
   font-size: 0.95rem;
   letter-spacing: 1px;
   text-shadow: 0 0 5px #00d9ff;

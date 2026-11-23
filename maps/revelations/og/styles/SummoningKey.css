@@ -102,7 +102,7 @@
   border: 2px solid #00c3ff;
   color: #aad4ff;
   padding: 0.7rem 1.3rem;
-  font-family: 'Orbitron', sans-serif;
+  font-family: 'Orbitron', 'Segoe UI', system-ui, sans-serif; /* hub: Orbitron not shipped; flagged */
   font-size: 0.95rem;
   border-radius: 6px;
   cursor: pointer;

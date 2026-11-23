@@ -10,7 +10,7 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Poppins', 'Segoe UI', system-ui, sans-serif; /* hub: Poppins not shipped (OG never loaded it either); flagged, needs a package-lock change */
   background: linear-gradient(135deg, var(--background-primary), var(--background-secondary));
   color: var(--text-primary);
   min-height: 100vh;
@@ -19,7 +19,7 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   margin: 0;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Poppins', 'Segoe UI', system-ui, sans-serif; /* hub: Poppins not shipped (OG never loaded it either); flagged, needs a package-lock change */
 }
 
 a {
