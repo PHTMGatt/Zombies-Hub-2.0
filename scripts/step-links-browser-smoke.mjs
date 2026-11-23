@@ -9,7 +9,9 @@ import { settled } from './smoke-helpers.mjs';
 import { isFlat, readFlatDebt } from './main-guide-shape.mjs';
 
 const base = process.env.SMOKE_BASE_URL || 'http://127.0.0.1:4173';
-const guides = ['/maps/der-eisendrache', '/maps/gorod-krovi', '/maps/revelations', '/maps/zetsubou-no-shima'];
+// Origins and Revelations are pure OG (Bryen 2026-11-23): no step links, no back-to-step links, not flat guides.
+const OG_GUIDES = ['origins', 'revelations'];
+const guides = ['/maps/der-eisendrache', '/maps/gorod-krovi', '/maps/zetsubou-no-shima'];
 const results = [];
 const browser = await chromium.launch({ headless: true });
 try {
@@ -51,21 +53,16 @@ try {
     results.push(`${guide}: ${links.length} step links; ${first.href} and back to #${first.step}`);
   }
 
-  // A section deep link on a tab lands on that section, under the pinned header, with the back link.
-  await page.goto(`${base}/maps/origins/fire-staff?from=build-staffs#puzzle`, { waitUntil: 'networkidle' });
-  await settled(page);
-  const puzzleTop = await page.locator('#puzzle').evaluate((element) => element.getBoundingClientRect().top);
-  assert(puzzleTop >= 0 && puzzleTop < height / 2, `Fire Staff #puzzle lands in view (top ${Math.round(puzzleTop)})`);
-  assert(await page.locator('[data-back-to-step="build-staffs"]').isVisible(), 'Fire Staff offers the way back to its step');
-  await page.goto(`${base}/maps/origins/fire-staff?from=not-a-step`, { waitUntil: 'networkidle' });
-  assert.equal(await page.locator('[data-back-to-step]').count(), 0, 'an unknown ?from= shows no back link');
-  await page.goto(`${base}/maps/origins/fire-staff`, { waitUntil: 'networkidle' });
-  assert.equal(await page.locator('[data-back-to-step]').count(), 0, 'opened from the nav: no back link');
-  results.push('Origins Fire Staff: #puzzle lands in view; back link only when opened from a real step');
+  // Pure-OG tabs never show a back-to-step link, however they are opened.
+  for (const route of ['/maps/origins/fire-staff?from=build-staffs', '/maps/revelations/sound-step?from=servant']) {
+    await page.goto(`${base}${route}`, { waitUntil: 'networkidle' });
+    assert.equal(await page.locator('[data-back-to-step]').count(), 0, `${route}: OG tab has no back link`);
+  }
+  results.push('OG Origins / Revelations tabs: no back-to-step links');
   // A guide whose data is flat (no leftovers in fixtures/main-guide-flat.json) must also render flat:
   // no expanding cards, no images, video or maps, every step about two lines.
   const debt = readFlatDebt();
-  const allGuides = Object.keys(debt).filter((key) => key !== '_note');
+  const allGuides = Object.keys(debt).filter((key) => key !== '_note' && !OG_GUIDES.includes(key));
   const flatGuides = allGuides.filter((guide) => isFlat(guide, debt));
   for (const guide of flatGuides) {
     await page.goto(`${base}/maps/${guide}`, { waitUntil: 'networkidle' });

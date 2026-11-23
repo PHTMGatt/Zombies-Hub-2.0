@@ -34,7 +34,7 @@ try {
       return { id: item.id, title: title?.textContent.trim() };
     }));
     const readText = async () => (await page.locator('section.guide, .flat-guide').first().textContent()).replace(/\s+/g, ' ');
-    for (const { guide, route, steps } of guides.filter((entry) => entry.guide !== 'origins')) {
+    for (const { guide, route, steps } of guides.filter((entry) => !['origins', 'revelations'].includes(entry.guide))) {
       await page.goto(`${base}${route}`, { waitUntil: 'networkidle' });
       const picks = page.locator('[data-step-tabs] [role="tab"]');
       const rendered = [];
@@ -76,35 +76,17 @@ try {
     }
     results.push(`${name}: Gorod, DE and Shadows guides link to their Side Easter Egg videos`);
 
-    // Origins is a flat main guide: no expanding cards; the staff steps link out to the staff pages.
-    await page.goto(`${base}/maps/origins`, { waitUntil: 'networkidle' });
-    assert.equal(await page.locator('main .flat-guide details, main .flat-guide [aria-expanded]').count(), 0, 'Origins main guide has no expanding cards');
-    assert((await page.locator('#build-staffs a[data-step-link]').count()) > 0, 'Build the Staffs links to the staff pages');
-    results.push(`${name}: Origins flat guide, staff steps link out`);
     assert.deepEqual(errors, [], `${name}: page errors: ${errors.join('; ')}`);
     await context.close();
 
-    // A cold deep link lands on the step, below the fixed hub header, even though the map chunk loads lazily.
+    // The OG Origins guide has no step anchors; a cold load of it still works with any #fragment.
     const cold = await browser.newContext({ viewport: { width, height } });
     const coldPage = await cold.newPage();
-    await coldPage.goto(`${base}/maps/origins#upgrade-staffs`, { waitUntil: 'networkidle' });
-    await settled(coldPage);
-    // Every pinned bar counts: the hub bar and the map's own header (Origins pins one under the hub bar).
-    const position = await coldPage.evaluate(() => {
-      const target = document.getElementById('upgrade-staffs').getBoundingClientRect();
-      const headerBottom = Math.max(0, ...[...document.querySelectorAll('.hub-header, .map-module header, .map-module [data-pinned]')]
-        .filter((el) => ['fixed', 'sticky'].includes(getComputedStyle(el).position))
-        .map((el) => el.getBoundingClientRect().bottom));
-      return { top: target.top, headerBottom, viewport: window.innerHeight };
-    });
-    assert(position.top >= position.headerBottom - 1, `${name}: deep-linked step sits below every pinned header (${Math.round(position.top)} < ${Math.round(position.headerBottom)})`);
-    assert(position.top < position.viewport * 0.4, `${name}: deep-linked step is near the top (${Math.round(position.top)}px of ${position.viewport}px)`);
-    results.push(`${name}: cold #upgrade-staffs link lands on the step`);
-
     // A mistyped or truncated link (#100%) must not take the guide down.
     const brokenErrors = [];
     coldPage.on('pageerror', (error) => brokenErrors.push(error.message));
     await coldPage.goto(`${base}/maps/origins#100%`, { waitUntil: 'networkidle' });
+    await mainSteps(coldPage).first().waitFor();
     assert.equal(await mainSteps(coldPage).count(), 11, `${name}: guide still renders with a malformed #fragment`);
     assert.deepEqual(brokenErrors, [], `${name}: malformed #fragment errors: ${brokenErrors.join('; ')}`);
     results.push(`${name}: malformed #fragment is harmless`);
