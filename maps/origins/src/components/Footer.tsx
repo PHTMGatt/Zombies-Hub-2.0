@@ -1,15 +1,10 @@
 import React from "react";
 import "../Styles/ComponentStyles/Footer.css";
 
+// The original guide's footer bar.
 const Footer = () => {
   return (
-    <footer className="footer origins-footer">
-      <div className="origins-footer__content">
-        <strong>Origins</strong>
-        <span aria-hidden="true">•</span>
-        <span>Little Lost Girl</span>
-      </div>
-    </footer>
+    <footer className="footer origins-footer">© 2025 Origins Guide — Little Lost Girl</footer>
   );
 };
 

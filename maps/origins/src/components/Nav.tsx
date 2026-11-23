@@ -1,89 +1,36 @@
-import React, { useEffect, useRef } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import React from "react";
+import { NavLink } from "react-router-dom";
 import { FaRegSnowflake } from "react-icons/fa";
-import { GiWhirlwind, GiFireTail, GiLightningHelix, GiCrownedSkull, GiStopwatch, GiNotebook } from "react-icons/gi";
+import { GiWhirlwind, GiFireTail, GiLightningHelix, GiCrownedSkull } from "react-icons/gi";
 import "../Styles/ComponentStyles/Nav.css";
-const Nav = () => {
-  const { pathname } = useLocation();
-  const linksRef = useRef<HTMLDivElement>(null);
-  // On phones the staff tabs are a swipeable row; keep the current staff in view.
-  // Only the row scrolls (never the page), and nothing happens when every tab already fits.
-  useEffect(() => {
-    const row = linksRef.current;
-    const active = row?.querySelector<HTMLElement>(".origins-nav-link.active");
-    if (!row || !active || row.scrollWidth <= row.clientWidth) return;
-    const rowBox = row.getBoundingClientRect();
-    const activeBox = active.getBoundingClientRect();
-    row.scrollLeft += activeBox.left - rowBox.left - (rowBox.width - activeBox.width) / 2;
-  }, [pathname]);
-  return (
-    <nav className="origins-nav" aria-label="Origins guide navigation">
-      <div className="origins-nav-links" ref={linksRef}>
-        <div className="origins-nav-modes" role="group" aria-label="Origins guide version">
-          <NavLink to="/maps/origins" end
-            className={({ isActive }) => `origins-nav-link main ${isActive ? "active main-active" : ""}`}
-            aria-label="UI Guide">
-            <GiCrownedSkull aria-hidden="true" /> <span>UI <small>Main Guide</small></span>
-          </NavLink>
-          <NavLink to="/maps/origins/og" end
-            className={({ isActive }) => `origins-nav-link og ${isActive ? "active og-active" : ""}`}
-            aria-label="Original Origins guide">
-            <span>OG</span>
-          </NavLink>
-        </div>
 
-        <NavLink to="/maps/origins/step-details"
-          className={({ isActive }) => `origins-nav-link details ${isActive ? "active details-active" : ""}`}
-        >
-          <GiNotebook aria-hidden="true" /> <span>Step details</span>
-        </NavLink>
+// Exactly the five tabs of the original guide. `rest` is the second word, dropped on narrow screens so the row never wraps.
+const TABS = [
+  { to: "/maps/origins", end: true, id: "main", Icon: GiCrownedSkull, label: "Main", rest: "Guide", keepRest: true },
+  { to: "/maps/origins/ice-staff", id: "ice", Icon: FaRegSnowflake, label: "Ice", rest: "Staff" },
+  { to: "/maps/origins/fire-staff", id: "fire", Icon: GiFireTail, label: "Fire", rest: "Staff" },
+  { to: "/maps/origins/wind-staff", id: "wind", Icon: GiWhirlwind, label: "Wind", rest: "Staff" },
+  { to: "/maps/origins/lightning-staff", id: "lightning", Icon: GiLightningHelix, label: "Lightning", rest: "Staff" },
+];
 
-        <NavLink
-          to="/maps/origins/ice-staff"
-          className={({ isActive }) =>
-            `origins-nav-link ice ${isActive ? "active ice-active" : ""}`
-          }
-        >
-          <FaRegSnowflake /> <span>Ice Staff</span>
-        </NavLink>
+const Nav = () => (
+  <nav className="og-nav" aria-label="Origins guide navigation">
+    {TABS.map(({ to, end, id, Icon, label, rest, keepRest }) => (
+      <NavLink
+        key={id}
+        to={to}
+        end={end}
+        aria-label={`${label} ${rest}`}
+        className={({ isActive }) => `og-nav__link og-nav__link--${id}${isActive ? " active" : ""}`}
+      >
+        <Icon aria-hidden="true" />
+        <span>
+          {label}
+          <span className={keepRest ? undefined : "og-nav__rest"}> {rest}</span>
+        </span>
+      </NavLink>
+    ))}
+  </nav>
+);
 
-        <NavLink
-          to="/maps/origins/fire-staff"
-          className={({ isActive }) =>
-            `origins-nav-link fire ${isActive ? "active fire-active" : ""}`
-          }
-        >
-          <GiFireTail /> <span>Fire Staff</span>
-        </NavLink>
-
-        <NavLink
-          to="/maps/origins/wind-staff"
-          className={({ isActive }) =>
-            `origins-nav-link wind ${isActive ? "active wind-active" : ""}`
-          }
-        >
-          <GiWhirlwind /> <span>Wind Staff</span>
-        </NavLink>
-
-        <NavLink
-          to="/maps/origins/lightning-staff"
-          className={({ isActive }) =>
-            `origins-nav-link lightning ${isActive ? "active lightning-active" : ""}`
-          }
-        >
-          <GiLightningHelix /> <span>Lightning Staff</span>
-        </NavLink>
-
-        <NavLink
-          to="/maps/origins/speed-run"
-          className={({ isActive }) =>
-            `origins-nav-link speedrun ${isActive ? "active speedrun-active" : ""}`
-          }
-        >
-          <GiStopwatch /> <span>Speed Run</span>
-        </NavLink>
-      </div>
-    </nav>
-  );
-};
 export default Nav;

@@ -3,10 +3,9 @@ import '@fontsource/rajdhani/latin-500.css';
 import '@fontsource/rajdhani/latin-600.css';
 import '@fontsource/rajdhani/latin-700.css';
 import NotFound from '../../../shared/ui/NotFound';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import Header from '../src/components/Header';
 import Footer from '../src/components/Footer';
-import MainGuide from '../src/Pages/MainGuide';
 import OGGuide from '../src/Pages/OGGuide';
 import FireStaff from '../src/Pages/FireStaff';
 import IceStaff from '../src/Pages/IceStaff';
@@ -19,21 +18,18 @@ import SpeedRunLightning from '../src/Pages/SpeedRun/SpeedRunLightning';
 import RobotBg from '../public/images/Robot.webp?url';
 import '../src/Styles/origins-tokens.css';
 import '../styles/origins-shell.css';
-import BackToStep from '../../../shared/guide/BackToStep';
-import originsGuide from '../src/data/originsGuide';
-import StepDetails from '../src/Pages/StepDetails';
 
 export default function OriginsRoutes() {
   return (
-    // Main's Main Guide and OG pages paint the robot backdrop from --origins-bg (merge with main, 2026-11-15).
+    // The main guide paints the robot backdrop from --origins-bg.
     <section className="map-module origins-module" style={{ '--origins-bg': `url(${RobotBg})` }}>
       <Header />
       <div className="origins-route-content">
-        <BackToStep guidePath="/maps/origins" steps={originsGuide} />
         <Routes>
-          <Route index element={<MainGuide />} />
-          <Route path="og" element={<OGGuide />} />
-          <Route path="step-details" element={<StepDetails />} />
+          {/* The main guide is the original guide's cards. The old UI/OG split and the Step details tab are gone; their URLs land here. */}
+          <Route index element={<OGGuide />} />
+          <Route path="og" element={<Navigate to="/maps/origins" replace />} />
+          <Route path="step-details" element={<Navigate to="/maps/origins" replace />} />
           <Route path="fire-staff" element={<FireStaff />} />
           <Route path="ice-staff" element={<IceStaff />} />
           <Route path="wind-staff" element={<WindStaff />} />

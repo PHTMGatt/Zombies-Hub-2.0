@@ -18,7 +18,9 @@ test('every hub page, every map and every static map tab gets its own share-prev
   for (const route of HUB_ROUTES) assert(routes.includes(route), `${route} is prerendered`);
   for (const slug of dedicatedGuideSlugs) {
     assert(routes.includes(`/maps/${slug}`), `/maps/${slug} is prerendered`);
-    assert(routes.includes(`/maps/${slug}/step-details`), `/maps/${slug}/step-details is prerendered`);
+    // Origins has no Step details tab: its main guide is the original guide, and the old URL redirects there.
+    if (slug === 'origins') assert(!routes.includes('/maps/origins/step-details'), 'the Origins step-details redirect is not prerendered');
+    else assert(routes.includes(`/maps/${slug}/step-details`), `/maps/${slug}/step-details is prerendered`);
   }
   assert(routes.includes('/maps/origins/speed-run/prep'), 'nested tabs keep their parent path');
   assert(!routes.some((route) => /[*:]/.test(route)), 'no catch-all or param routes');

@@ -1,5 +1,7 @@
 import imageData from '../data/imageData';
 import motdCover from '../assets/images/BO2/Mob_Of_The_Dead.webp';
+// The Origins card art that shows all four characters; used for both the Black Ops 2 and Black Ops 3 entries.
+import originsCover from '../assets/images/Featured/Origins.webp';
 
 const layoutModules = import.meta.glob(
   '../assets/images/BO*/*.{webp,jpg,png,avif}',
@@ -221,7 +223,7 @@ const mapData = [
     dlc: "DLC 4 – Apocalypse",
     isEasterEgg: true,
     internalRoute: '/maps/origins',
-    coverImage: getCover("BO2", "origins"),
+    coverImage: originsCover,
     layoutImage: getLayout("BO2", "origins"),
     hoverImage: dlcArt["apocalypse"]
   },
@@ -350,7 +352,7 @@ const mapData = [
     dlc: "Zombies Chronicles",
     isEasterEgg: true,
     internalRoute: '/maps/origins',
-    coverImage: getCover("BO3", "origins"),
+    coverImage: originsCover,
     layoutImage: getLayout("BO3", "origins"),
     hoverImage: dlcArt["zombie chronicles"]
   },
