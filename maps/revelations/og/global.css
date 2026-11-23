@@ -7,6 +7,18 @@
   --background-secondary: #181830;
 }
 
+/* Hub: undo the hub's global resets inside the OG pages so they render like the OG site, which had none:
+   the hub sets * { box-sizing: border-box } and button { font: inherit }; the OG used browser defaults
+   (content-box, and Arial on buttons). The footer, glow box and tab links keep the border-box fixes below. */
+* {
+  box-sizing: content-box;
+}
+
+button {
+  font-family: Arial, sans-serif;
+  line-height: normal;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -184,5 +196,7 @@ ul {
 }
 
 
-/* Hub fix: the OG glow box overflowed its column on phones. */
-.rev-glow-box { box-sizing: border-box; max-width: 100%; }
+/* Hub fix: the OG glow box overflowed its column on phones (desktop keeps the OG content-box sizing). */
+@media (max-width: 768px) {
+  .rev-glow-box { box-sizing: border-box; max-width: 100%; }
+}
