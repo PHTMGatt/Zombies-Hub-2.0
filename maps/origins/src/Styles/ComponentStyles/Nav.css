@@ -1,26 +1,29 @@
 /*
- * The original Origins tab row: five white links with an icon, the current one in its staff colour with an
- * underline. One row at every width: narrow screens drop the word "Staff", the narrowest also drop the icons.
- * Each link keeps a 44px tap height.
+ * The original Origins tab row, value for value from the Origins-Guide stylesheet: five white links with an icon,
+ * the current one in its own colour with an underline. On phones the links are a little smaller and wrap to two
+ * centred rows, as in the original; each keeps a 44px tap height there.
  */
 .origins-module .og-nav {
   display: flex;
-  flex-wrap: nowrap;
   justify-content: center;
-  align-items: center;
+  width: 100%;
+}
+
+.origins-module .og-nav__links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 20px;
   width: 100%;
   max-width: 960px;
+  padding: 10px 0;
 }
 
 .origins-module .og-nav__link {
   position: relative;
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  justify-content: center;
-  flex: 0 0 auto;
   gap: 6px;
-  min-height: 44px;
   padding: 6px 12px;
   border-radius: 6px;
   color: #fff;
@@ -32,17 +35,19 @@
   transition: background-color 0.2s ease;
 }
 
-.origins-module .og-nav__link svg { flex: 0 0 auto; font-size: 18px; }
 .origins-module .og-nav__link:hover { background-color: rgba(255, 255, 255, 0.08); }
+.origins-module .og-nav__link svg { font-size: 18px; transition: transform 0.2s ease; }
+.origins-module .og-nav__link:hover svg { transform: scale(1.1); }
 
 .origins-module .og-nav__link::after {
   content: "";
   position: absolute;
   left: 0;
-  bottom: 4px;
+  bottom: -4px;
   width: 100%;
   height: 2px;
   background: transparent;
+  transition: background 0.3s ease;
 }
 .origins-module .og-nav__link:hover::after { background: rgba(255, 255, 255, 0.3); }
 .origins-module .og-nav__link.active::after { background: currentColor; }
@@ -53,19 +58,18 @@
 .origins-module .og-nav__link--wind.active { color: #ffe657; }
 .origins-module .og-nav__link--lightning.active { color: #d8a8ff; }
 
+/* In the single-row header the tabs must never wrap. */
+@media (min-width: 1341px) {
+  .origins-module .og-nav__links { flex-wrap: nowrap; }
+}
+
 @media (max-width: 1024px) {
-  .origins-module .og-nav { gap: 16px; }
+  .origins-module .og-nav__links { gap: 16px; padding: 6px; }
 }
 
-/* Under this width the five full labels no longer fit one row. */
-@media (max-width: 780px) {
-  .origins-module .og-nav { gap: 8px; }
-  .origins-module .og-nav__link { padding: 6px 10px; gap: 5px; }
-  .origins-module .og-nav__rest { display: none; }
-}
-
-@media (max-width: 480px) {
-  .origins-module .og-nav { gap: 2px; }
-  .origins-module .og-nav__link { padding: 6px 8px; }
-  .origins-module .og-nav__link svg { display: none; }
+@media (max-width: 768px) {
+  .origins-module .og-nav__links { row-gap: 0; }
+  .origins-module .og-nav__link { min-height: 44px; padding: 5px 10px; gap: 4px; font-size: 0.85rem; }
+  .origins-module .og-nav__link svg { font-size: 16px; }
+  .origins-module .og-nav__link::after { bottom: 4px; }
 }

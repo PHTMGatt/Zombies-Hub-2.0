@@ -15,19 +15,20 @@ test('Origins main guide is the original guide: no UI/OG split, no Step details,
   ]);
   for (const banned of ['step-details', '/og', 'speed-run', 'Step details']) assert.ok(!nav.includes(banned), `Origins tabs must not link ${banned}`);
 });
-test('Origins header keeps the title and the tab row stacked so no width half-wraps it', () => {
+test('Origins header stacks before the single row stops fitting, and never wraps the title', () => {
   const header=read('maps/origins/src/components/Header.tsx');
   const css=read('maps/origins/src/Styles/ComponentStyles/Header.css');
   const navCss=read('maps/origins/src/Styles/ComponentStyles/Nav.css');
   assert.equal(header.match(/revive-header-icon/g)?.length, 2, 'a Revive icon each side of the title');
-  assert.ok(/.site-header.origins-map-header {[^}]*flex-direction: column/.test(css));
+  const stackAt = Number(css.match(/@media \(max-width: (\d+)px\) \{\s*\.origins-module \.site-header\.origins-map-header \{\s*flex-direction: column/)?.[1]);
+  assert.ok(stackAt >= 1320, `title + tabs need about 1310px side by side; stacked layout starts at ${stackAt}px`);
+  assert.ok(navCss.includes(`@media (min-width: ${stackAt + 1}px)`), 'tabs are nowrap exactly where the single row applies');
   assert.ok(/.header-title {[^}]*white-space: nowrap/.test(css));
-  assert.ok(!/flex-direction: row/.test(css), 'no side-by-side title + tabs state');
-  assert.ok(/.og-nav {[^}]*flex-wrap: nowrap/.test(navCss));
 });
 test('OG view restores the original two-column reference', () => {
   const og=read('maps/origins/src/Pages/OGGuide.tsx');
-  for(const label of ['guide-grid','Main Steps','Tips','Rain Fire','Freedom']) assert.ok(og.includes(label));
+  for(const label of ['guide-grid','Main Steps','Elemental Fist','Tips','Craft All Staffs','Obtain Air Strike Monkeys','Get These PERKS']) assert.ok(og.includes(label), `original guide keeps ${label}`);
+  assert.equal(og.match(/<li>/g).length, 24, '11 main steps, 7 Elemental Fist lines, 6 tips');
 });
 test('the shared flat guide stays a plain step list: no accordion or images', () => {
   const flat = read('shared/guide/FlatGuide.jsx');

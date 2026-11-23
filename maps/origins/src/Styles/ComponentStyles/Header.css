@@ -1,15 +1,21 @@
 /*
- * The original Origins guide header (Origins-Guide site), restored: steel-blue gradient band, centred title in
- * black + white with a Revive icon each side, the five tabs in one row under it.
- * The title and the tab row are always stacked, so no width can leave a half-wrapped row beside the title.
+ * The original Origins guide header, value for value from the Origins-Guide stylesheet: steel-blue gradient band,
+ * title in black + white with a Revive icon each side on the left, the five tabs on the right.
+ *
+ * One change from the original: it stacked (title centred, tabs under it) only at 1024px and below, but the
+ * one-row layout needs about 1310px, so between the two the title wrapped, an icon was stranded and
+ * Lightning Staff dropped to a second row. The stacked layout now starts at 1340px instead.
  */
 .origins-module .site-header.origins-map-header {
+  position: sticky;
+  top: var(--hub-pin-height, 0px);
+  z-index: 20;
   display: flex;
-  flex-direction: column;
+  flex-wrap: nowrap;
   align-items: center;
-  gap: 8px;
+  justify-content: space-between;
   width: 100%;
-  padding: 18px 32px 12px;
+  padding: 20px 32px;
   background: linear-gradient(to right, #0a4b78, #1c7ed6, #0a4b78);
   border-bottom: 2px solid rgba(255, 255, 255, 0.15);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
@@ -17,13 +23,17 @@
   font-family: 'Rajdhani', sans-serif;
 }
 
+.origins-module .origins-map-header .header-left,
+.origins-module .origins-map-header .header-right {
+  display: flex;
+  align-items: center;
+}
+
 .origins-module .origins-map-header .title-box {
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
-  justify-content: center;
   gap: 10px;
-  max-width: 100%;
 }
 
 .origins-module .origins-map-header .header-title {
@@ -32,7 +42,6 @@
   font-weight: 700;
   line-height: 1.2;
   white-space: nowrap;
-  text-align: center;
   text-shadow: 0 0 6px #6dc2ff, 0 0 10px #ffffff;
 }
 
@@ -40,29 +49,40 @@
 .origins-module .origins-map-header .white-text { color: #fff; }
 
 .origins-module .origins-map-header .revive-header-icon {
-  flex: 0 0 auto;
+  flex-shrink: 0;
   width: 36px;
   height: 36px;
-  object-fit: contain;
+}
+
+/* Stacked: the original's narrow layout, starting where the single row stops fitting. */
+@media (max-width: 1340px) {
+  .origins-module .site-header.origins-map-header {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 20px 16px;
+  }
+  .origins-module .origins-map-header .header-left,
+  .origins-module .origins-map-header .header-right { justify-content: center; }
+  .origins-module .origins-map-header .title-box { justify-content: center; }
 }
 
 @media (max-width: 1024px) {
-  .origins-module .site-header.origins-map-header { padding: 18px 16px 10px; }
-  .origins-module .origins-map-header .header-title { font-size: 1.8rem; }
+  .origins-module .origins-map-header .header-title { font-size: 1.8rem; text-align: center; }
 }
 
 @media (max-width: 768px) {
-  .origins-module .site-header.origins-map-header { padding: 14px 12px 8px; gap: 6px; }
+  .origins-module .site-header.origins-map-header { padding: 16px 12px; gap: 8px; }
   .origins-module .origins-map-header .title-box { gap: 6px; }
   .origins-module .origins-map-header .header-title { font-size: 1.4rem; }
-  .origins-module .origins-map-header .revive-header-icon { width: 24px; height: 24px; }
+  .origins-module .origins-map-header .revive-header-icon { display: none; }
 }
 
-@media (max-width: 480px) {
-  .origins-module .origins-map-header .header-title { font-size: 1.3rem; }
+@media (max-width: 360px) {
+  .origins-module .origins-map-header .header-title { font-size: 1.25rem; }
 }
 
-@media (max-width: 380px) {
-  .origins-module .origins-map-header .header-title { font-size: 1.15rem; }
-  .origins-module .origins-map-header .revive-header-icon { width: 20px; height: 20px; }
+/* A pinned two-row band would eat a short or narrow screen. */
+@media (max-width: 900px), (max-height: 600px) {
+  .origins-module .site-header.origins-map-header { position: static; }
 }
