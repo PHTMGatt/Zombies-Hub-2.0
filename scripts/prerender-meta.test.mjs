@@ -18,8 +18,8 @@ test('every hub page, every map and every static map tab gets its own share-prev
   for (const route of HUB_ROUTES) assert(routes.includes(route), `${route} is prerendered`);
   for (const slug of dedicatedGuideSlugs) {
     assert(routes.includes(`/maps/${slug}`), `/maps/${slug} is prerendered`);
-    // Origins has no Step details tab: its main guide is the original guide, and the old URL redirects there.
-    if (slug === 'origins') assert(!routes.includes('/maps/origins/step-details'), 'the Origins step-details redirect is not prerendered');
+    // Origins and Revelations have no Step details tab (OG restore): the old URL redirects to the main guide.
+    if (slug === 'origins' || slug === 'revelations') assert(!routes.includes(`/maps/${slug}/step-details`), `the ${slug} step-details redirect is not prerendered`);
     else assert(routes.includes(`/maps/${slug}/step-details`), `/maps/${slug}/step-details is prerendered`);
   }
   assert(routes.includes('/maps/origins/speed-run/prep'), 'nested tabs keep their parent path');
@@ -93,7 +93,7 @@ test('prerender writes <route>.html and <route>/index.html, sitemap.xml, robots.
     assert.equal(meta(rev, 'name', 'twitter:image'), `${origin}/og/revelations.jpg`);
     assert.equal(meta(rev, 'property', 'og:image:type'), 'image/jpeg');
     assert.equal(unescape(meta(rev, 'property', 'og:image:alt')), routeTitle('/maps/revelations'), 'the card is described as that map');
-    const revTab = await readFile(path.join(dist, 'maps', 'revelations', 'step-details', 'index.html'), 'utf8');
+    const revTab = await readFile(path.join(dist, 'maps', 'revelations', 'sound-step', 'index.html'), 'utf8');
     assert.equal(meta(revTab, 'property', 'og:image'), `${origin}/og/revelations.jpg`, "a map's tabs share its card");
     const origins = await readFile(path.join(dist, 'maps', 'origins', 'index.html'), 'utf8');
     assert.equal(meta(origins, 'property', 'og:image'), `${origin}/og-image.png`, 'others keep the shared card');

@@ -1,37 +1,35 @@
 import React from 'react';
 import NotFound from '../../../shared/ui/NotFound';
-import { Route, Routes } from 'react-router-dom';
-import Header from '../src/components/Header';
-import Footer from '../src/components/Footer';
-import MainGuide from '../src/pages/MainGuide';
-import ApothiconUpgrade from '../src/pages/ApothiconUpgrade';
-import EggLocations from '../src/pages/EggLocations';
-import SummoningKey from '../src/pages/SummoningKey';
-import SoundStep from '../src/pages/SoundStep';
-import StepDetailsPage from '../src/pages/StepDetailsPage';
-import '../src/global.css';
-import BackToStep from '../../../shared/guide/BackToStep';
-import revGuideSteps from '../src/data/revGuideSteps';
+import { Navigate, Route, Routes } from 'react-router-dom';
+// OG restore (2026-11-22): the original Revelations-Guide pages, header and footer, copied from
+// github.com/PHTMGatt/Revelations-Guide (0fba8d0) into maps/revelations/og and adapted only for hub routes and asset paths.
+import Header from '../og/components/Header';
+import Footer from '../og/components/Footer';
+import MainGuide from '../og/pages/MainGuide';
+import ApothiconUpgrade from '../og/pages/ApothiconUpgrade';
+import EggLocations from '../og/pages/EggLocations';
+import SummoningKey from '../og/pages/SummoningKey';
+import SoundStep from '../og/pages/SoundStep';
+import '../og/global.css';
+// OG has no Step Details page: the old address goes to the main guide (data stays in src/, unrouted, for the content baseline).
+
 
 export default function RevelationsRoutes() {
   return (
     <section className="map-module revelations-module">
-      <Header />
-      {/* One cinematic backdrop shared by every section, so pages only render their own content. */}
-      <div className="rev-stage">
-        <div className="rev-backdrop" aria-hidden="true" />
-        <BackToStep guidePath="/maps/revelations" steps={revGuideSteps} />
+      <div className="app">
+        <Header />
         <Routes>
           <Route index element={<MainGuide />} />
           <Route path="apothicon-upgrade" element={<ApothiconUpgrade />} />
           <Route path="egg-locations" element={<EggLocations />} />
           <Route path="summoning-key" element={<SummoningKey />} />
           <Route path="sound-step" element={<SoundStep />} />
-          <Route path="step-details" element={<StepDetailsPage />} />
+          <Route path="step-details" element={<Navigate to="/maps/revelations" replace />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <Footer />
       </div>
-      <Footer />
     </section>
   );
 }
