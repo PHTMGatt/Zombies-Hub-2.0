@@ -200,3 +200,26 @@ ul {
 @media (max-width: 768px) {
   .rev-glow-box { box-sizing: border-box; max-width: 100%; }
 }
+
+/* Hub cleanup of the four video tabs (Bryen 2026-11-23): one card style, 16:9 player, even buttons, no overlap. */
+.sk-container .video-card { box-sizing: border-box; margin-left: auto; margin-right: auto; }
+.sk-container .video-card:hover { transform: none; }
+.sk-container .video-card iframe { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; border: 0; }
+.sk-container .sk-buttons { padding: 0.5rem 0 0; }
+.sk-container .sk-button { min-height: 44px; }
+.sk-container .egg-section-cards { max-width: 1000px; }
+.sk-container .egg-glass-card { box-sizing: border-box; width: 100%; }
+.sk-container .carousel-wrapper { height: 380px; overflow-x: clip; margin-top: 1rem; }
+.sk-container .sound-card { box-sizing: border-box; max-width: 80%; }
+.sk-container .sound-card.left { transform: translateX(-300px) scale(0.8) rotateY(12deg); }
+.sk-container .sound-card.right { transform: translateX(300px) scale(0.8) rotateY(-12deg); }
+.sk-container .card-buttons button { min-height: 44px; }
+.sk-container .spinner-controls button { min-width: 64px; min-height: 44px; }
+@media (max-width: 768px) {
+  .sk-container .sk-title { font-size: 2.2rem; }
+  .sk-container .rev-glow-box { padding: 1.25rem 0.75rem; }
+  .sk-container .sk-buttons { flex-direction: column; align-items: stretch; }
+  .sk-container .egg-glass-card { padding: 1.5rem 1rem; }
+  .sk-container .sound-card.left, .sk-container .sound-card.right { opacity: 0; pointer-events: none; }
+  .sk-container .sound-card.center { transform: none; }
+}
