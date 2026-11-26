@@ -106,3 +106,12 @@
   }
 }
 
+
+/* Hub fix (not in the OG): on short landscape phones the hub bar scrolls away, but this header stayed pinned
+   52px down and covered 186px of a 390px screen. Let it scroll with the page there; everywhere else it stays sticky. */
+@media (max-height: 500px) and (orientation: landscape) {
+  .site-header {
+    position: relative;
+    top: auto;
+  }
+}
