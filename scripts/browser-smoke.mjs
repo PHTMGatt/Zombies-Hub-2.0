@@ -276,9 +276,8 @@ try {
       .map((el) => el.className));
     for (const route of routes) {
       await page.goto(`${base}${route}`, { waitUntil: 'networkidle' });
-      // OG Origins keeps its sticky header (pure OG, flagged); everything else pins nothing here.
-      const ogOrigins = route.startsWith('/maps/origins') && !route.includes('speed-run');
-      assert.deepEqual(await pinned(), ogOrigins ? ['site-header'] : [], `${route} pins a header at 844×390`);
+      // OG Origins' sticky header scrolls away here too (340f796); no map pins anything at 844×390.
+      assert.deepEqual(await pinned(), [], `${route} pins a header at 844×390`);
     }
     await page.goto(base, { waitUntil: 'networkidle' });
     const headline = await page.locator('h1').boundingBox();
