@@ -29,6 +29,14 @@
   text-shadow: 0 0 4px #000;
 }
 
+/* Hub fix (not in the OG): the tabs are ~28px tall; an invisible 8px band above and below gives a 44px
+   tap target without changing how the tab or the header looks. Rows of tabs are >=16px apart, so bands never overlap. */
+.nav-link::before {
+  content: "";
+  position: absolute;
+  inset: -8px 0;
+}
+
 .nav-link:hover {
   background-color: rgba(255, 255, 255, 0.08);
 }

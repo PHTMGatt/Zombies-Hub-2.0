@@ -233,3 +233,8 @@
   font-size: 0.95rem;
   text-shadow: 0 0 6px #7d2fb3;
 }
+
+/* Hub fix (not in the OG): a step tap on phones scrolls the answer into view; keep it below the pinned hub bar. */
+.rev-step-panel {
+  scroll-margin-top: calc(var(--hub-pin-height, var(--hub-nav-height)) + 12px);
+}

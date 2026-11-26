@@ -1,10 +1,21 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import apothiconSteps from '../data/ApothiconSteps';
 import '../styles/MainGuide.css';
 
 const MainGuide = () => {
   const [currentStep, setCurrentStep] = useState(0);
+  const panelRef = useRef(null);
   const current = apothiconSteps[currentStep];
+
+  // Hub fix (not in the OG): when the layout stacks (phones), the answer sits below all 12 step buttons,
+  // so a tap looked like it did nothing. Bring the answer into view only when it is below the tapped button.
+  const selectStep = (index, button) => {
+    setCurrentStep(index);
+    const panel = panelRef.current;
+    if (!panel || panel.getBoundingClientRect().top <= button.getBoundingClientRect().bottom) return;
+    const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    panel.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+  };
 
   // Highlight (2-3-1-4) in Tombstones step only
   const renderDetail = (step) => {
@@ -42,7 +53,7 @@ const MainGuide = () => {
             <button
               key={index}
               className={`rev-step-button ${index === currentStep ? 'active' : ''}`}
-              onClick={() => setCurrentStep(index)}
+              onClick={(event) => selectStep(index, event.currentTarget)}
             >
               <span className="rev-step-number">{index + 1}.</span> {step.title}
             </button>
@@ -50,7 +61,7 @@ const MainGuide = () => {
         </div>
 
         {/* RIGHT SIDE - STEP */}
-        <div className="rev-step-panel">
+        <div className="rev-step-panel" ref={panelRef}>
           <div className="rev-step-detail">
             <h2 className="rev-step-title">{current.title}</h2>
             <p className="rev-step-text">{renderDetail(current)}</p>
