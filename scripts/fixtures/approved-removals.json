@@ -2460,5 +2460,22 @@
     ],
     "reason": "Reworded to \"Browse the map catalog from World at War to Black Ops 3, DLC releases, and Easter Egg coverage.\" now that the World at War originals are indexed (Bryen added them, 2026-11-16); no other change.",
     "spec": "Bryen 2026-11-16 World at War entries"
+  },
+  {
+    "text": "•",
+    "layer": "rendered",
+    "routes": [
+      "/side-easter-eggs/origins-speedrun",
+      "/maps/origins/speed-run",
+      "/maps/origins/speed-run/prep",
+      "/maps/origins/speed-run/lightning",
+      "/maps/origins",
+      "/maps/origins/fire-staff",
+      "/maps/origins/ice-staff",
+      "/maps/origins/wind-staff",
+      "/maps/origins/lightning-staff"
+    ],
+    "reason": "Decorative aria-hidden separator in the old hub Origins footer (maps/origins/src/components/Footer.tsx). The Origins pages now use the original Origins-Guide footer (aad38b9, pure OG per Bryen 2026-11-23), which has no separator. Not guide content.",
+    "spec": "decision:zombies-pure-og:2026-11-23"
   }
 ]
