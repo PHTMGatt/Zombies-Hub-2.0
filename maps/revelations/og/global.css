@@ -1,0 +1,225 @@
+:root {
+  --text-primary: #e0d7ff;
+  --text-secondary: #bbb0d9;
+  --accent-hover: rgba(157, 117, 203, 0.2);
+  --text-glow: #b783ff;
+  --background-primary: #0c0c1b;
+  --background-secondary: #181830;
+}
+
+/* Hub: undo the hub's global resets inside the OG pages so they render like the OG site, which had none:
+   the hub sets * { box-sizing: border-box } and button { font: inherit }; the OG used browser defaults
+   (content-box, and Arial on buttons). The footer, glow box and tab links keep the border-box fixes below. */
+* {
+  box-sizing: content-box;
+}
+
+button {
+  font-family: Arial, sans-serif;
+  line-height: normal;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', 'Segoe UI', system-ui, sans-serif; /* hub: Poppins not shipped (OG never loaded it either); flagged, needs a package-lock change */
+  background: linear-gradient(135deg, var(--background-primary), var(--background-secondary));
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: clip; /* hub: html/body scope to the map section; hidden would make it a scroll box and break the sticky header */
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-family: 'Poppins', 'Segoe UI', system-ui, sans-serif; /* hub: Poppins not shipped (OG never loaded it either); flagged, needs a package-lock change */
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* === Shared Revelations Page Wrapper === */
+.rev-page {
+  position: relative;
+  padding: 5rem 2rem;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  z-index: 1;
+}
+
+/* === Blurred, Glowing, Darkened Background === */
+.rev-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('../src/assets/rev-guide/Main/Revelations.webp') no-repeat center center/cover;
+  filter: blur(12px) brightness(0.5);
+  z-index: 0;
+  border: 20px solid rgba(109, 194, 255, 0.2);
+  box-shadow: 0 0 60px rgba(109, 194, 255, 0.5) inset;
+}
+
+/* === Standard Card Layout === */
+.rev-card {
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(14px);
+  border: 2px solid rgba(109, 194, 255, 0.4);
+  box-shadow: 0 0 30px rgba(109, 194, 255, 0.3);
+  border-radius: 20px;
+  padding: 2.5rem;
+  max-width: 1200px;
+  width: 100%;
+  margin-bottom: 2.5rem;
+  position: relative;
+  z-index: 2;
+  transition: all 0.3s ease;
+}
+
+.rev-card:hover {
+  transform: translateY(-5px) scale(1.01);
+  box-shadow: 0 0 40px rgba(109, 194, 255, 0.6);
+}
+
+.rev-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #cce6ff;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 0 12px var(--text-glow);
+}
+
+.rev-list li {
+  font-size: 1.25rem;
+  line-height: 1.8;
+  color: #d0e7ff;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 4px #000;
+}
+
+/* Flex layout for side-by-side cards */
+.rev-content,
+.rev-columns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  width: 100%;
+  z-index: 2;
+}
+
+.rev-intro {
+  max-width: 900px;
+  margin-bottom: 3rem;
+  z-index: 2;
+  text-align: center;
+  font-size: 1.25rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 900px) {
+  .rev-content,
+  .rev-columns {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* === Universal Video Card Styling === */
+.video-card {
+  width: 100%;
+  max-width: 960px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.7);
+  border: 4px solid rgba(109, 194, 255, 0.7);
+  margin-bottom: 1rem;
+  z-index: 2;
+  transition: all 0.3s ease;
+}
+
+.video-card:hover {
+  box-shadow: 0 0 40px rgba(109, 194, 255, 1);
+  transform: scale(1.03);
+}
+
+.video-caption {
+  color: #aad4ff;
+  font-size: 1rem;
+  text-shadow: 1px 1px 2px #000;
+  text-align: center;
+  margin: 0 0 0.3rem;
+  padding: 0;
+  width: 100%;
+  max-width: 960px;
+  z-index: 2;
+  display: inline-block;
+  background: transparent;
+}
+
+.sk-selected-label {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  color: #6dc2ff;
+  text-shadow: 0 0 12px #00bfff;
+  z-index: 2;
+}
+
+.sk-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  padding-top: 0.5rem;
+  z-index: 2;
+}
+
+
+/* Hub fix: the OG glow box overflowed its column on phones (desktop keeps the OG content-box sizing). */
+@media (max-width: 768px) {
+  .rev-glow-box { box-sizing: border-box; max-width: 100%; }
+}
+
+/* Hub cleanup of the four video tabs (Bryen 2026-11-23): one card style, 16:9 player, even buttons, no overlap. */
+.sk-container .video-card { box-sizing: border-box; margin-left: auto; margin-right: auto; }
+.sk-container .video-card:hover { transform: none; }
+.sk-container .video-card iframe { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; border: 0; }
+.sk-container .sk-buttons { padding: 0.5rem 0 0; }
+.sk-container .sk-button { min-height: 44px; }
+.sk-container .egg-section-cards { max-width: 1000px; }
+.sk-container .egg-glass-card { box-sizing: border-box; width: 100%; }
+.sk-container .carousel-wrapper { height: 380px; overflow-x: clip; margin-top: 1rem; }
+.sk-container .sound-card { box-sizing: border-box; max-width: 80%; }
+.sk-container .sound-card.left { transform: translateX(-300px) scale(0.8) rotateY(12deg); }
+.sk-container .sound-card.right { transform: translateX(300px) scale(0.8) rotateY(-12deg); }
+.sk-container .card-buttons button { min-height: 44px; }
+.sk-container .spinner-controls button { min-width: 64px; min-height: 44px; }
+@media (max-width: 768px) {
+  .sk-container .sk-title { font-size: 2.2rem; }
+  .sk-container .rev-glow-box { padding: 1.25rem 0.75rem; }
+  .sk-container .sk-buttons { flex-direction: column; align-items: stretch; }
+  .sk-container .egg-glass-card { padding: 1.5rem 1rem; }
+  .sk-container .sound-card.left, .sk-container .sound-card.right { opacity: 0; pointer-events: none; }
+  .sk-container .sound-card.center { transform: none; }
+}

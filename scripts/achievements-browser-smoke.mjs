@@ -49,7 +49,12 @@ try {
     page.on('pageerror', (error) => errors.push(error.message));
 
     // The action sits at the very end of the guide and is the only thing it changes.
-    await page.goto(REV, { waitUntil: 'networkidle' });
+    // Origins and Revelations are pure OG (2026-11-23): their pages have no completion action; Mob carries this check.
+    for (const og of ['/maps/origins', '/maps/revelations']) {
+      await page.goto(`${base}${og}`, { waitUntil: 'networkidle' });
+      assert.equal(await page.getByRole('button', { name: COMPLETE }).count(), 0, `${og}: OG page has no completion action`);
+    }
+    await page.goto(MOB, { waitUntil: 'networkidle' });
     await page.evaluate(() => localStorage.clear());
     await page.reload({ waitUntil: 'networkidle' });
     const button = page.getByRole('button', { name: COMPLETE });
@@ -69,9 +74,9 @@ try {
     await toast(page).waitFor();
     const toastText = await toast(page).innerText();
     assert.match(toastText, /Achievement unlocked/i);
-    assert.match(toastText, /For The Good Of All/);
+    assert.match(toastText, /Pop Goes the Weasel/);
     assert(await page.evaluate(() => window.__chimes) > 0, 'chime plays with sound on');
-    assert((await unlocked(page))['revelations/main'], 'revelations/main recorded');
+    assert((await unlocked(page))['mob-of-the-dead/main'], 'mob-of-the-dead/main recorded');
     await page.locator(':is(.guide-seq__footer, .flat-guide)').getByText('Completed').waitFor();
     assert.equal(await page.getByRole('button', { name: COMPLETE }).count(), 0, 'the button is replaced by a quiet note');
     assert.deepEqual(await pageShape(page), before, 'completing changes no steps and no navigation');
@@ -91,7 +96,7 @@ try {
 
     // Shelf: earned with a date, no step progress anywhere.
     await page.goto(SHELF, { waitUntil: 'networkidle' });
-    const revMedal = page.locator('.ach-medal', { hasText: 'For The Good Of All' });
+    const revMedal = page.locator('.ach-medal', { hasText: 'Pop Goes the Weasel' });
     assert.match(await revMedal.getAttribute('class'), /is-earned/);
     assert.match(await revMedal.innerText(), /\d{4}/, 'completion date shown');
     assert.match(await page.locator('.ach-head__count').innerText(), /^1\s*\/\s*7/);
@@ -115,17 +120,17 @@ try {
     check(`${label}: Clear old guide data keeps saved notes and achievements`);
 
     // Reset one map, preserving the other seven-map progress and game notes.
-    await page.goto(`${base}/maps/origins`, { waitUntil: 'networkidle' });
+    await page.goto(`${base}/maps/gorod-krovi`, { waitUntil: 'networkidle' });
     await page.getByRole('button', { name: COMPLETE }).click();
     await page.goto(SHELF, { waitUntil: 'networkidle' });
     assert.equal(await page.locator('.ach-head__count strong').innerText(), '2');
     await page.locator('.ach-danger summary').click();
-    await page.locator('#ach-reset-map').selectOption('origins');
+    await page.locator('#ach-reset-map').selectOption('gorod-krovi');
     await page.getByRole('button', { name: 'Reset selected map' }).click();
     assert.equal(await page.locator('.ach-head__count strong').innerText(), '1');
     const afterMapReset = await unlocked(page);
-    assert(!afterMapReset['origins/main'], 'selected map achievement cleared');
-    assert(afterMapReset['revelations/main'], 'other map achievement preserved');
+    assert(!afterMapReset['gorod-krovi/main'], 'selected map achievement cleared');
+    assert(afterMapReset['mob-of-the-dead/main'], 'other map achievement preserved');
     assert(await page.evaluate(() => localStorage.getItem('zh-soe-character')), 'map reset leaves game notes alone');
     check(`${label}: per-map achievement reset preserves other maps and saved game notes`);
 

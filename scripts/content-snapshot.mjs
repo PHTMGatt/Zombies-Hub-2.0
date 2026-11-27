@@ -76,7 +76,10 @@ export async function captureSegments(page, route) {
   if (railCount) {
     for (let index = 0; index < railCount; index += 1) {
       await railSteps.nth(index).click();
-      await page.locator(`#${await railSteps.nth(index).getAttribute('aria-controls')}`).waitFor({ state: 'visible' });
+      // The OG Revelations picker (pure OG, 2026-11-23) has no aria-controls: it re-renders one detail panel in place.
+      const panel = await railSteps.nth(index).getAttribute('aria-controls');
+      if (panel) await page.locator(`#${panel}`).waitFor({ state: 'visible' });
+      else await page.waitForTimeout(150);
       await collect();
       await visitTabs();
     }

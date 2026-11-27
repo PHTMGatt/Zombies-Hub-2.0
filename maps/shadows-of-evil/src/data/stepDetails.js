@@ -67,6 +67,12 @@ const soeGuideSteps = [
     refs: [
       { type: 'sequence', label: 'Train rides for the symbols', items: ['Waterfront → Footlight (symbols 1–2)', 'Footlight → Canals (symbol 3)'] },
       { type: 'custom', key: 'train-note', render: trainNote },
+      { type: 'facts', label: 'Ritual items', items: [
+        { k: 'Lawyer’s Pen', v: 'Shock the meter; the crane drops the crate outside Easy Street. Altar above Easy Street' },
+        { k: 'Championship Belt', v: 'Grapple up as the Beast and smack the hanging crate (Waterfront). Altar at the Anvil Gym' },
+        { k: 'Badge', v: 'Break the crate in the canals, shock the hidden meter (Beast mark). Altar at the Ruby Rabbit' },
+        { k: 'Toupee', v: 'Knock the crate off a ledge on the Footlight walkway. Altar at the Black Lace' },
+      ] },
     ],
     checklist: [{ k: 'Junction — Nero', v: 'Truck box: Summoning Key + pen' }, { k: 'Canals — Ruby Rabbit', v: 'Expose the police badge' }, { k: 'Waterfront — Boxing Gym', v: 'Expose the championship belt' }, { k: 'Footlight — Black Lace', v: 'Kill the Margwa that spawns' }],
     how: phase(RITUALS).notes,
@@ -75,16 +81,26 @@ const soeGuideSteps = [
     id: 'sword',
     title: 'Apothicon Sword',
     goal: 'In the Footlight rift, shock your three train symbols in order in Beast Mode, then charge the egg at all four statues.',
-    refs: [{ type: 'custom', key: 'train-note', render: trainNote }],
+    refs: [
+      { type: 'custom', key: 'train-note', render: trainNote },
+      { type: 'facts', items: [
+        { k: 'Symbol wall', v: '9 symbols by the Rift doorway (by the Mystery Box)' },
+        { k: 'Egg souls', v: '12 at each statue, every player’s own egg' },
+      ] },
+      { type: 'chips', label: 'Statues in smashable crates', items: ['Footlight alley', 'Behind the Ruby Rabbit stairs', 'Waterfront ruined building', 'Rift, across from the egg statue'] },
+    ],
     checklist: ['Symbols shocked, egg taken', 'Statue — underground rift', 'Statue — Footlight', 'Statue — Waterfront', 'Statue — Canals', 'Sword from the altar'],
     how: phase(SWORD).notes,
-    problems: [line(SWORD, /Beast Mode setup/)],
+    problems: [line(SWORD, /Beast Mode setup/), 'Wrong symbol set: locked until next round.'],
   },
   {
     id: 'pap',
     title: 'Open Pack-a-Punch',
     goal: 'Place all four Gateworms and the Summoning Key in the underground ritual room, then survive until it ends.',
-    refs: [{ type: 'sequence', items: ['Four Gateworms', 'Summoning Key on the table', 'Survive ~30 s'] }],
+    refs: [
+      { type: 'sequence', items: ['Four Gateworms', 'Summoning Key on the table', 'Survive ~30 s'] },
+      { type: 'facts', items: [{ k: 'Pedestals', v: 'The 2 on the altar side make wall-run walls; the 2 far ones make a path back' }] },
+    ],
     how: phase(PAP).notes,
   },
   {
@@ -92,19 +108,27 @@ const soeGuideSteps = [
     title: 'Upgrade the sword',
     goal: 'Get your Arch-Ovum from your Keeper, then finish one Margwa challenge per round at all four spots.',
     critical: [line(UPGRADE, /one of these locations can be completed per round/)],
-    refs: [{ type: 'custom', key: 'keeper', render: keeperPicker }],
+    refs: [
+      { type: 'custom', key: 'keeper', render: keeperPicker },
+      { type: 'chips', label: 'Red circles', items: ['Black Lace front', 'Canals, between the workbench and Ruby Rabbit', 'Anvil front', 'Easy Street entrance (Junction)'] },
+      { type: 'facts', items: [{ k: 'Margwas', v: '2 solo, up to 4 in co-op' }] },
+    ],
     checklist: ['Junction', 'Boxing Gym', 'Black Lace / Burlesque', 'Ruby Rabbit', 'Upgraded sword from your Keeper'],
     how: except(UPGRADE, /Nero’s room/, /only one of these/i),
-    problems: [line(UPGRADE, /every player must finish their upgraded sword/)],
+    problems: [line(UPGRADE, /every player must finish their upgraded sword/), 'Another player’s Margwas still alive blocks your circle.'],
   },
   {
     id: 'flag',
     title: 'The flag',
     goal: 'Raise the book in Nero’s room, take the flag underground, defend it at each district’s placements, deliver it to that ritual table.',
     critical: [line(FLAG, /flag takes too much damage/)],
-    refs: [{ type: 'sequence', label: 'District order', items: ['Canals', 'Waterfront', 'Footlight', 'Junction'] }],
+    refs: [
+      { type: 'sequence', label: 'District order', items: ['Canals', 'Waterfront', 'Footlight', 'Junction'] },
+      { type: 'facts', items: [{ k: 'Each district', v: 'Defend the flag at 2 purple-lightning spots until the chime (Max Ammo each time)' }] },
+    ],
     checklist: ['Canals', 'Waterfront', 'Footlight', 'Junction'],
     how: except(FLAG, /flag takes too much damage/),
+    problems: ['Carrier downed, or Insanity Elementals hit the flag: redo that flag (grab it again underground).'],
   },
   {
     id: 'shadowman',
@@ -118,6 +142,7 @@ const soeGuideSteps = [
       ] },
     ],
     how: except(SHADOWMAN, /Solo: interact/, /put it away/),
+    problems: ['Not trapped fast enough: the shield comes back. Re-interact with the Keepers.'],
   },
   {
     id: 'finale',
@@ -131,8 +156,10 @@ const soeGuideSteps = [
         { k: 'Centre Gateworm', v: 'Fourth player — shock all three Keepers' },
       ] },
       { type: 'warning', text: line(FINALE, /train caller stays human/) },
+      { type: 'facts', items: [{ k: 'Reward', v: '1000 XP (+6000 first time) · upgraded Civil Protector · swords back' }] },
     ],
     how: phase(FINALE).notes,
+    problems: ['Needs exactly 4 players.', 'Bled-out players respawn when a train is called.'],
   },
 ];
 

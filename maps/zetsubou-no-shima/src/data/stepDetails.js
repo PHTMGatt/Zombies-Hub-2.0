@@ -50,7 +50,7 @@ const zetsGuideSteps = [
     title: 'Three Trials each',
     goal: 'Every player completes all three of their own Trials from the challenge tablets near spawn.',
     critical: ['Cog 3 needs every player’s three Trials done.'],
-    refs: [{ type: 'chips', label: 'Grab early', items: ['A bucket', 'Anywhere But Here! (Cog 1)'] }],
+    refs: [{ type: 'chips', label: 'Grab early', items: ['A bucket', 'Anywhere But Here! (Cog 1)', '2+ seeds'] }],
     checklist: ['Trial 1', 'Trial 2', 'Trial 3'],
     how: how(TRIALS),
   },
@@ -81,6 +81,10 @@ const zetsGuideSteps = [
     id: 'reveal',
     title: 'Reveal the elevator',
     goal: 'Mesmerize the hidden blueprint and the concealed elevator panel with the Skull of Nan Sapwe.',
+    refs: [{ type: 'facts', items: [
+      { k: 'Blueprint', v: 'The paper across from the purple water (Living Quarters, Bunker)' },
+      { k: 'Elevator panel', v: 'The wall left of the dead elevator, across from the AA platform door' },
+    ] }],
     checklist: ['Blueprint revealed', { k: 'Elevator panel revealed', v: 'Shows the three missing cogs' }],
     how: step(REVEAL).details,
   },
@@ -89,12 +93,25 @@ const zetsGuideSteps = [
     title: 'Upgrade to the Masamune',
     goal: 'Gather the upgrade ingredients, then build the Masamune at the KT-4 workbench.',
     checklist: [{ k: 'Rainbow-water plant', v: 'Hidden underwater wall: seed + rainbow water' }, { k: 'Giant Spider fang', v: 'From its mouth, before you leave' }, { k: 'Divinium vial', v: 'Electrified shield at the Lab B cage (after all Trials)' }, 'Masamune built'],
+    refs: [{ type: 'facts', items: [
+      { k: 'Divinium vial', v: 'Melee the Lab B cage panel with the electrified shield · ride the cage down into the swamp · vial is on a skeleton' },
+      { k: 'Co-op cage', v: 'One shocks to open, one shocks to lower; the panel brings it back up' },
+      { k: 'Spider fang', v: 'Cave behind the blue-water pool by Lab A: clear the webs (KT-4), kill the Giant Spider, take the fang' },
+      { k: 'Rainbow plant', v: 'Mesmerize the torn blueprint (Living Quarters), then the right wall by the old underwater plant: hidden planter' },
+      { k: 'Rainbow water', v: 'Empty bucket into the Sewer Pipe ride (Bunker → behind Lab B), press Use after the 2nd blue section' },
+      { k: 'Water', v: '3 times over 3 rounds' },
+      { k: 'Craft', v: '2nd bench next to the KT-4 bench, KT-4 in hand' },
+    ] }],
     how: [step(MASAMUNE).summary, ...gear('Masamune').parts],
   },
   {
     id: 'cog-1',
     title: 'Cog 1 — Anywhere But Here!',
     goal: 'With the elevator quest active, use Anywhere But Here! to reach the hidden room and take the cog.',
+    refs: [{ type: 'facts', items: [
+      { k: 'Room', v: 'Secret room above Lab A; the cog is on the floor' },
+      { k: 'Exit', v: 'The hole in the wall' },
+    ] }],
     how: how(COG1),
   },
   {
@@ -104,6 +121,11 @@ const zetsGuideSteps = [
     refs: [
       { type: 'sequence', label: 'Each round, three rounds', items: ['Plant a seed', 'Blue Water', 'Shoot it once (KT-4 / Masamune)'] },
       { type: 'sequence', label: 'Then', items: ['Shell into the AA cannon', 'Shoot down the plane', 'Collect the cog'] },
+      { type: 'facts', items: [
+        { k: 'Plant', v: 'The pod may hold a flak shell: grow 3 at once' },
+        { k: 'Fire', v: 'As the plane lines up with the barrel (the gun can’t aim; it passes every 2-2.5 min)' },
+      ] },
+      { type: 'chips', label: '3 smoking landing spots', items: ['Big tree outside the Bunker', 'Back stairs to the Lab A zipline', 'Meteor behind Lab B'] },
     ],
     checklist: ['Plant round 1', 'Plant round 2', 'Plant round 3', 'Plane down, cog collected'],
     how: [step(COG2).summary],
@@ -118,6 +140,8 @@ const zetsGuideSteps = [
       { type: 'facts', items: [
         { k: 'Solo', v: 'Ride the zipline, melee at the drop point' },
         { k: 'Co-op', v: 'A teammate electrifies the panel for the rider' },
+        { k: 'Shield', v: 'Stand on the ritual platform with the shield out when the lightning hits' },
+        { k: 'Zipline', v: 'Lab A ↔ Docks; melee to drop onto the small dock under it (start from the Docks side)' },
       ] },
     ],
     how: [step(COG3).summary],
@@ -129,12 +153,17 @@ const zetsGuideSteps = [
     refs: [{ type: 'chips', label: 'Bring', items: ['Fresh gas mask', 'Masamune', 'Strong close-range weapon'] }],
     checklist: ['Three cogs installed', 'Fresh gas mask'],
     how: how(ELEVATOR),
+    problems: ['Everyone wears a gas mask: no mask in the elevator and you go down.'],
   },
   {
     id: 'thrasher',
     title: 'Defeat the Giant Thrasher',
     goal: 'Masamune the vine spores, keep moving, and damage the boss whenever its weak point opens.',
-    refs: [{ type: 'sequence', label: 'Each damage cycle', items: ['Masamune on the spores', 'Kill Thrashers', 'Weak point opens → hit it'] }],
+    refs: [
+      { type: 'sequence', label: 'Each damage cycle', items: ['Masamune on the spores', 'Kill Thrashers', 'Weak point opens → hit it'] },
+      { type: 'sequence', label: 'Start', items: ['Masamune the 3 glowing vines in the hall', 'Shoot a spore on the caged Giant Thrasher’s arm', '4 timed spores'] },
+      { type: 'facts', items: [{ k: 'Reward', v: 'All perks (lost if downed) · 5000 XP · achievement' }] },
+    ],
     how: how(BOSS),
   },
 ];

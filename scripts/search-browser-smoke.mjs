@@ -56,7 +56,6 @@ try {
 
     // Home search box: other maps, player phrasing.
     for (const [query, map, id, title] of [
-      ['staff upgrades', '/maps/origins#upgrade-staffs', 'upgrade-staffs', 'Secure the Keys'],
       ['mob plane parts', '/maps/mob-of-the-dead#plane', 'plane', 'Build the Plane'],
       ['DE wisps', '/maps/der-eisendrache#first-wisps', 'first-wisps', 'First wisp cycle'],
     ]) {
@@ -69,6 +68,14 @@ try {
       assert.equal((await page.locator(`#${id} :is(h2, h3)`).innerText()).replace(/^Step \d+:\s*/, ''), title);
       results.push(`${viewport.name}: "${query}" → ${title}`);
     }
+
+    // Pure-OG Origins has no step anchors (2026-11-23): its results open the OG page itself.
+    await page.goto(base, { waitUntil: 'networkidle' });
+    await page.locator('.home-search').getByRole('searchbox').fill('staff upgrades');
+    await page.locator('.home-search .zh-search__results a', { hasText: /./ }).first().click();
+    await page.waitForURL((url) => url.pathname === '/maps/origins');
+    await page.getByRole('heading', { name: /Main Steps/ }).waitFor();
+    results.push(`${viewport.name}: "staff upgrades" → the OG Origins main guide`);
 
     // Searching for the step you are already anchored to brings it back into view.
     await page.goto(`${base}/maps/mob-of-the-dead#plane`, { waitUntil: 'networkidle' });

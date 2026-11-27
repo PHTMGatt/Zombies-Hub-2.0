@@ -3,15 +3,13 @@ import { chromium } from 'playwright';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
-import { CHOSEN, chosenClip, clipOptions, guideNav, guideTabs, mainSteps, nowPlaying, stepList } from './smoke-contract.mjs';
+import { currentTab, guideNav, guideTabs, mainSteps } from './smoke-contract.mjs';
 
 const base = process.env.SMOKE_BASE_URL || 'http://127.0.0.1:4173';
 const artifactDir = new URL('./artifacts/', new URL('../', import.meta.url));
 const reportUrl = new URL('browser-smoke.json', artifactDir);
 import { VIEWPORTS } from './smoke-viewports.mjs';
 const results = [];
-// The area picker's islands: the named buttons inside the island figure.
-const islands = (page) => page.getByRole('figure').getByRole('button');
 
 const assertNoHorizontalOverflow = async (page, route) => {
   const { scrollWidth, clientWidth } = await page.evaluate(() => ({
@@ -35,7 +33,16 @@ const assertCssImageLoaded = async (page, route, selector) => {
 };
 
 await fs.mkdir(artifactDir, { recursive: true });
-
+// Pure OG Revelations (Bryen 2026-11-23 "go pure og"): the OG Revelations-Guide pages inside the hub. Checks the OG
+// structure and behaviour (11-step picker, five tabs, video pages with their timestamp buttons), loading, and layout.
+const TABS = ['Main Guide', 'Apothicon Upgrade', 'Egg Locations', 'Summoning Key', 'Sound Step'];
+const pages = [
+  ['/maps/revelations', 'For The Good Of All'],
+  ['/maps/revelations/apothicon-upgrade', 'Apothicon Upgrade Locations'],
+  ['/maps/revelations/egg-locations', 'Egg Locations'],
+  ['/maps/revelations/summoning-key', 'Summoning Key Throws'],
+  ['/maps/revelations/sound-step', 'Sound Step'],
+];
 const browser = await chromium.launch({ headless: true });
 try {
   for (const { name: viewportName, width, height } of VIEWPORTS) {
@@ -44,226 +51,45 @@ try {
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
 
-    const mainRoute = '/maps/revelations';
-    let response = await page.goto(`${base}${mainRoute}`, { waitUntil: 'domcontentloaded' });
-    assert(response?.ok(), `${mainRoute} returned ${response?.status()}`);
-    await mainSteps(page).first().waitFor();
-    assert.equal(errors.length, 0, `${mainRoute} page errors: ${errors.join('; ')}`);
-    assert.equal(await guideNav(page).count(), 1, 'Revelations keeps one map-level navigation row');
-    // Behavioural guard: no duplicate section strip. Only the header nav and a step's own "details" links
-    // may link to the Revelations sections.
-    const sectionLinksOutsideHeader = await page.locator('a[href^="/maps/revelations/"]').evaluateAll(links =>
-      links.filter(link => !link.closest('nav[aria-label$="guide navigation"]') && !link.hasAttribute('data-step-link')).map(link => link.textContent.trim()),
-    );
-    assert.deepEqual(sectionLinksOutsideHeader, [], `Revelations renders a second section navigation: ${sectionLinksOutsideHeader.join(', ')}`);
-    assert.equal(await guideTabs(page).count(), 6, 'Header nav reaches all six Revelations sections (with Step details)');
-    await page.reload({ waitUntil: 'networkidle' });
+    for (const [index, [route, title]] of pages.entries()) {
+      const response = await page.goto(`${base}${route}`, { waitUntil: 'networkidle' });
+      assert(response?.ok(), `${route} returned ${response?.status()}`);
+      await page.getByRole('heading', { name: title, level: 1 }).waitFor();
+      assert.equal(await guideNav(page).count(), 1, `${route}: one guide navigation`);
+      assert.deepEqual((await guideTabs(page).allInnerTexts()).map((text) => text.trim()), TABS, `${route}: the five OG tabs in order`);
+      assert.equal((await currentTab(page).innerText()).trim(), TABS[index], `${route}: the current tab is marked`);
+      for (const tab of await guideTabs(page).all()) assert((await tab.boundingBox()).height >= 44, `${route}: tabs are 44px targets`);
+      assert(await page.getByRole('heading', { name: 'Revelations Easter Egg Guide', level: 1 }).isVisible(), `${route}: OG header title`);
+      assert.equal(await page.locator('main a[href*="step-details"]').count(), 0, `${route}: no Step details link`);
+      await assertCssImageLoaded(page, route, '.revelations-module .header');
+      await assertCssImageLoaded(page, route, '.revelations-module .footer');
+      await assertNoHorizontalOverflow(page, `${route} @${viewportName}`);
+      if (route === '/maps/revelations') {
+        assert.equal(await mainSteps(page).count(), 11, 'the OG main guide picker lists 11 steps');
+        await mainSteps(page).nth(10).click();
+        assert.equal(await page.locator('.rev-step-title').innerText(), (await mainSteps(page).nth(10).innerText()).replace(/^\d+\.\s*/, ''), 'picking a step shows its details');
+        assert(await mainSteps(page).nth(10).evaluate((button) => button.classList.contains('active')), 'the picked step is highlighted');
+      } else {
+        assert((await page.locator('main iframe').count()) === 1, `${route}: one video player`);
+        // OG Egg Locations shows a section's spot buttons after its card is picked.
+        if (route.endsWith('/egg-locations')) {
+          await page.locator('main .egg-glass-card').first().click();
+          await page.locator('main .sk-buttons button').first().waitFor();
+        }
+        assert((await page.locator('main button').count()) >= 4, `${route}: timestamp buttons for the spots`);
+      }
+      if (viewportName === 'phone') await page.screenshot({ path: fileURLToPath(new URL(`revelations${route.replace('/maps/revelations', '').replace('/', '-')}-${width}.png`, artifactDir)) });
+      results.push({ width, route, passed: true });
+    }
+    assert.deepEqual(errors, [], `page errors: ${errors.join('; ')}`);
 
-    // Flat main guide: all twelve steps in order, every one on screen at once, nothing to expand or open.
-    const flatSteps = mainSteps(page);
-    assert.equal(await flatSteps.count(), 12, 'Revelations keeps all 12 Easter Egg steps');
-    const stepIds = await flatSteps.evaluateAll((headings) => headings.map((heading) => heading.closest('[id]')?.id));
-    assert(stepIds.every(Boolean) && new Set(stepIds).size === 12, `every step keeps its own id for deep links: ${stepIds.join(', ')}`);
-    for (const id of ['engines', 'servant', 'eggs', 'symbols', 'throws', 'boss']) assert(stepIds.includes(id), `step #${id} is still linkable`);
-    assert.equal(await stepList(page).locator('details, [aria-expanded]').count(), 0, 'No expanding cards on the flat guide');
-    assert.equal(await stepList(page).locator('img').count(), 0, 'No images on the flat guide');
-    await assertCssImageLoaded(page, mainRoute, '.rev-header');
-    await assertCssImageLoaded(page, mainRoute, '.rev-backdrop');
-    await assertNoHorizontalOverflow(page, mainRoute);
-    assert.match(await page.locator('#boss').getByRole('heading').innerText(), /Final boss — Shadowman/);
-
-    // The detail moved to the tabs: the steps link there, and the tab sections hold the captures.
-    assert.match(await page.locator('#servant a[data-step-link]').first().getAttribute('href'), /^\/maps\/revelations\/apothicon-upgrade\?from=servant/,
-      'The Servant step links to the Apothicon Upgrade tab');
-    await page.goto(`${base}/maps/revelations/apothicon-upgrade#servant-rocks`, { waitUntil: 'networkidle' });
-    const rockShot = page.locator('#servant-rocks img').first();
-    await rockShot.scrollIntoViewIfNeeded();
-    assert(await rockShot.evaluate(img => img.complete && img.naturalWidth > 0), 'Servant rock capture loads on the Apothicon Upgrade tab');
-    await page.goto(`${base}/maps/revelations/egg-locations`, { waitUntil: 'networkidle' });
-    assert.equal(await page.locator('#bone-spots').count(), 1, 'Egg Locations has the bone spots section');
-    assert.equal(await page.locator('#turret-shot').count(), 1, 'Egg Locations has the S.O.P.H.I.A. turret section');
-    await page.goto(`${base}${mainRoute}`, { waitUntil: 'networkidle' });
-
-    await page.evaluate(() => {
-      document.activeElement?.blur();
-      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-    });
-    await page.waitForFunction(() => window.scrollY === 0);
-    const heroTitle = page.getByRole('heading', { name: 'Revelations Easter Egg Guide', level: 1 });
-    assert(await heroTitle.isVisible(), 'Revelations hero title remains visible at the top of the page');
-    const heroBox = await heroTitle.boundingBox();
-    assert(heroBox && heroBox.y >= 0, `Revelations hero title is clipped above the viewport: y=${heroBox?.y}`);
-    await page.screenshot({
-      path: fileURLToPath(new URL(`revelations-${width}.png`, artifactDir)),
-      fullPage: true,
-    });
-    // "I completed this Easter Egg" goes away once pressed; focus moves to what replaces it.
-    await page.getByRole('button', { name: 'I completed this Easter Egg' }).click();
-    await page.locator('.zh-complete--earned').waitFor();
-    assert(await page.locator('.zh-complete--earned').evaluate((done) => done === document.activeElement), 'Completing the Easter Egg keeps focus on its result');
-    await page.evaluate(() => localStorage.removeItem('zh-achievements'));
-    results.push({ width, route: mainRoute, interactions: 'step sequence + contextual references + top-aligned screenshot', passed: true });
-
-    errors.length = 0;
-    const upgradeRoute = '/maps/revelations/apothicon-upgrade';
-    response = await page.goto(`${base}${upgradeRoute}`, { waitUntil: 'domcontentloaded' });
-    assert(response?.ok(), `${upgradeRoute} returned ${response?.status()}`);
-    await page.getByRole('heading', { name: 'Apothicon Servant Upgrade', level: 2 }).waitFor();
-    assert.equal(errors.length, 0, `${upgradeRoute} page errors: ${errors.join('; ')}`);
-    const upgradeButtons = clipOptions(page);
-    assert((await upgradeButtons.count()) >= 2, 'Apothicon upgrade keeps multiple location targets');
-    await upgradeButtons.nth(1).click();
-    assert.match(await nowPlaying(page).innerText(), /Playing/i);
-    assert.equal(await chosenClip(page).count(), 1, 'One Apothicon location is active');
-    await assertNoHorizontalOverflow(page, upgradeRoute);
-    results.push({ width, route: upgradeRoute, interaction: 'location selection', passed: true });
-
-    errors.length = 0;
-    const eggRoute = '/maps/revelations/egg-locations';
-    response = await page.goto(`${base}${eggRoute}`, { waitUntil: 'domcontentloaded' });
-    assert(response?.ok(), `${eggRoute} returned ${response?.status()}`);
-    await page.getByRole('heading', { name: 'Egg Locations', level: 2 }).waitFor();
-    assert.equal(errors.length, 0, `${eggRoute} page errors: ${errors.join('; ')}`);
-    // One island picker on every hunt page: an area can span two islands, and either one picks it.
-    assert.equal(await islands(page).count(), 7, 'Egg areas cover seven islands on the ring');
-    await page.getByRole('button', { name: 'Shangri-La: Spawn / Shangri-La' }).click();
-    // Tapping an island picks its egg area: the spots list is now that area's.
-    await page.getByRole('group', { name: 'Spawn / Shangri-La egg locations' }).waitFor({ timeout: 5000 });
-    assert.equal(await islands(page).and(page.locator(CHOSEN)).count(), 2, 'Both islands of the area light up');
-    const eggLocations = clipOptions(page);
-    assert((await eggLocations.count()) > 0, 'Selected egg area exposes spawn locations');
-    await eggLocations.first().click();
-    // The option's name: its first line with words (not the number or the timestamp a look may show).
-    const firstEgg = (await eggLocations.first().innerText()).split('\n').map((line) => line.trim()).find((line) => /[a-z]{2}/i.test(line));
-    assert((await nowPlaying(page).innerText()).includes(firstEgg), `Now playing names "${firstEgg}"`);
-    await assertNoHorizontalOverflow(page, eggRoute);
-    results.push({ width, route: eggRoute, interaction: 'area + location selection', passed: true });
-
-    errors.length = 0;
-    const keyRoute = '/maps/revelations/summoning-key';
-    response = await page.goto(`${base}${keyRoute}`, { waitUntil: 'domcontentloaded' });
-    assert(response?.ok(), `${keyRoute} returned ${response?.status()}`);
-    await page.getByRole('heading', { name: 'Summoning Key Throws', level: 2 }).waitFor();
-    assert.equal(errors.length, 0, `${keyRoute} page errors: ${errors.join('; ')}`);
-    const throwOption = (name) => clipOptions(page).filter({ hasText: name });
-    await throwOption('Mob Cell Poster').click();
-    assert.match(await nowPlaying(page).innerText(), /Mob Cell Poster/);
-    assert(await throwOption('Verrückt MG42 Fountain').isVisible());
-    assert(await throwOption('Shangri-La Focusing Stone').isVisible());
-    // The ring: seven target islands numbered in throw order; tapping one plays its throw.
-    assert.equal(await islands(page).count(), 7, 'Seven throw islands on the ring');
-    assert.match(await islands(page).filter({ hasText: 'Mob' }).innerText(), /5\s*$/, 'Mob is throw 5');
-    // Screen readers hear the badge too, and Tab walks the islands in throw order.
-    const isles = await islands(page).evaluateAll((buttons) => buttons.map((b) => ({ name: b.getAttribute('aria-label'), badge: b.textContent.match(/(\d+)\s*$/)?.[1] })));
-    assert.deepEqual(isles.map((isle) => isle.badge), ['1', '2', '3', '4', '5', '6', '7'], 'Island buttons follow the throw order');
-    for (const isle of isles) assert.match(isle.name, new RegExp(`^Throw ${isle.badge}, `), `"${isle.name}" names its throw number`);
-    assert(isles.some((isle) => isle.name === 'Throw 5, Mob of the Dead: Cell Poster'), 'An island names its map once, then its target');
-    await page.getByRole('button', { name: /^Throw \d, Verrückt: MG42 Fountain$/ }).click();
-    assert.match(await nowPlaying(page).innerText(), /Verrückt MG42 Fountain/);
-    assert.match(await chosenClip(page).innerText(), /MG42/, 'The island picks its throw in the list too');
-    await assertNoHorizontalOverflow(page, keyRoute);
-    results.push({ width, route: keyRoute, interaction: 'exact target selection', passed: true });
-
-    errors.length = 0;
-    const soundRoute = '/maps/revelations/sound-step';
-    response = await page.goto(`${base}${soundRoute}`, { waitUntil: 'domcontentloaded' });
-    assert(response?.ok(), `${soundRoute} returned ${response?.status()}`);
-    await page.getByRole('heading', { name: 'Sound Step', level: 2 }).waitFor();
-    assert.equal(errors.length, 0, `${soundRoute} page errors: ${errors.join('; ')}`);
-    // The spots list is labelled with its region, so the group's name says which region is current.
-    const region = async () => (await clipOptions(page).first().evaluate((option) => option.closest('[aria-label]').getAttribute('aria-label'))).replace(/ sound step locations$/, '');
-    const areaBefore = await region();
-    await page.getByRole('button', { name: 'Spawn: Spawn' }).click();
-    await page.getByRole('group', { name: 'Spawn sound step locations' }).waitFor({ timeout: 5000 });
-    const areaAfter = await region();
-    assert.notEqual(areaAfter, areaBefore, 'Tapping an island changes the Sound Step region');
-    assert.equal(areaAfter, 'Spawn');
-    const soundLocations = clipOptions(page);
-    assert((await soundLocations.count()) > 0, 'Sound Step exposes locations for selected area');
-    await soundLocations.first().click();
-    assert.match(await nowPlaying(page).innerText(), /Playing/i);
-    await assertNoHorizontalOverflow(page, soundRoute);
-    results.push({ width, route: soundRoute, interaction: 'island pick + location selection', passed: true });
-
-    errors.length = 0;
-    const badRoute = '/maps/revelations/not-a-guide';
-    response = await page.goto(`${base}${badRoute}`, { waitUntil: 'domcontentloaded' });
-    assert(response?.ok(), `${badRoute} returned ${response?.status()}`);
+    // The old Step details address lands on the main guide; unknown addresses get the shared NotFound.
+    await page.goto(`${base}/maps/revelations/step-details`, { waitUntil: 'networkidle' });
+    assert.equal(new URL(page.url()).pathname, '/maps/revelations', '/step-details redirects to the main guide');
+    await page.goto(`${base}/maps/revelations/not-a-guide`, { waitUntil: 'networkidle' });
     await page.getByRole('heading', { name: 'This route leads nowhere.', level: 2 }).waitFor();
     assert(await page.locator('[data-page-not-found]').isVisible(), 'Revelations catch-all renders shared NotFound');
-    assert.equal(errors.length, 0, `${badRoute} page errors: ${errors.join('; ')}`);
-    await assertNoHorizontalOverflow(page, badRoute);
-    results.push({ width, route: badRoute, passed: true });
-
-    await context.close();
-  }
-
-  // Tall viewports: the map backdrop must reach a bottom-pinned footer, and short subpages stay top-aligned.
-  const tall = await browser.newContext({ viewport: { width: 820, height: 1180 } });
-  const tallPage = await tall.newPage();
-  for (const route of ['/maps/revelations', '/maps/revelations/apothicon-upgrade']) {
-    await tallPage.goto(`${base}${route}`, { waitUntil: 'networkidle' });
-    const layout = await tallPage.evaluate(() => {
-      const footer = document.querySelector('.rev-footer').getBoundingClientRect();
-      const page = document.querySelector('.rev-stage').getBoundingClientRect();
-      const header = document.querySelector('.rev-header').getBoundingClientRect();
-      const firstPanel = document.querySelector('.rev-shell, .rev-run').getBoundingClientRect();
-      return {
-        gapBelowFooter: document.documentElement.scrollHeight - (footer.bottom + window.scrollY),
-        pageToFooter: footer.top - page.bottom,
-        panelOffset: firstPanel.top - header.bottom,
-      };
-    });
-    assert(layout.gapBelowFooter <= 1, `${route} leaves ${layout.gapBelowFooter}px of dead space below the footer`);
-    assert(Math.abs(layout.pageToFooter) <= 1, `${route} backdrop stops ${layout.pageToFooter}px above the footer`);
-    assert(layout.panelOffset < 60, `${route} content floats ${layout.panelOffset}px below the map header`);
-    results.push({ width: 820, route, check: 'footer boundary + top-aligned content', passed: true });
-  }
-  await tall.close();
-
-  // A blocked YouTube never fires the player's ready or error events: the page still says so in time.
-  const blocked = await browser.newContext({ viewport: { width: 390, height: 844 } });
-  await blocked.route(/^https:\/\/([a-z0-9-]+\.)?(youtube\.com|youtube-nocookie\.com|ytimg\.com)\//, (route) => route.abort());
-  const blockedPage = await blocked.newPage();
-  await blockedPage.goto(`${base}/maps/revelations/sound-step`, { waitUntil: 'domcontentloaded' });
-  await blockedPage.getByRole('heading', { name: 'Sound Step', level: 2 }).waitFor();
-  await blockedPage.getByRole('status').filter({ hasText: /Player unavailable here/ }).waitFor({ timeout: 15000 });
-  assert.match(await nowPlaying(blockedPage).innerText(), /Player unavailable here/, 'Blocked YouTube shows the unavailable note');
-  assert(await blockedPage.getByRole('link', { name: /on YouTube/ }).first().isVisible(), 'Blocked YouTube keeps the YouTube link');
-  results.push({ width: 390, route: '/maps/revelations/sound-step', check: 'blocked YouTube shows the unavailable note', passed: true });
-  await blocked.close();
-
-  // The four target viewports: every section fits, nothing clips, and the phone step selector stays compact.
-  const routes = ['', '/apothicon-upgrade', '/egg-locations', '/summoning-key', '/sound-step'].map(path => `/maps/revelations${path}`);
-  for (const [vw, vh] of [[1440, 900], [820, 1180], [390, 844], [844, 390]]) {
-    const context = await browser.newContext({ viewport: { width: vw, height: vh } });
-    const viewportPage = await context.newPage();
-    for (const route of routes) {
-      await viewportPage.goto(`${base}${route}`, { waitUntil: 'networkidle' });
-      await assertNoHorizontalOverflow(viewportPage, `${route} @${vw}x${vh}`);
-      const fit = await viewportPage.evaluate(() => {
-        const inside = element => {
-          const box = element.getBoundingClientRect();
-          return box.left >= -1 && box.right <= window.innerWidth + 1;
-        };
-        const footer = document.querySelector('.rev-footer').getBoundingClientRect();
-        const activeTab = document.querySelector('.rev-nav-link.active');
-        const steps = document.querySelector('.rev-step-list');
-        return {
-          titleInside: inside(document.querySelector('.rev-header__title')),
-          activeTabInside: activeTab ? inside(activeTab) : false,
-          gapBelowFooter: Math.round(document.documentElement.scrollHeight - (footer.bottom + window.scrollY)),
-          stepSelectorHeight: steps ? Math.round(steps.getBoundingClientRect().height) : 0,
-        };
-      });
-      assert(fit.titleInside, `${route} @${vw}x${vh} clips the Revelations title`);
-      assert(fit.activeTabInside, `${route} @${vw}x${vh} hides the active section tab`);
-      assert(fit.gapBelowFooter <= 1, `${route} @${vw}x${vh} leaves ${fit.gapBelowFooter}px below the footer`);
-      if (vw === 390 && route === '/maps/revelations') {
-        assert(fit.stepSelectorHeight <= 90, `Phone step selector is ${fit.stepSelectorHeight}px tall; it should be one swipeable row`);
-      }
-    }
-    results.push({ width: vw, height: vh, check: 'all sections fit, unclipped title/tabs, pinned footer', passed: true });
+    results.push({ width, route: 'redirect + not found', passed: true });
     await context.close();
   }
 } finally {

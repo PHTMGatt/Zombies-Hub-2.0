@@ -32,14 +32,14 @@ test('search results for a guide step link straight to that step (#step-id), not
 
 test('the Lightning switch-board search result opens the board itself', () => {
   const entry = SEARCH_ENTRIES.find((item) => item.title.startsWith('Lightning switch board'));
-  assert.equal(entry.to, '/maps/origins/lightning-staff#switches');
+  assert.equal(entry.to, '/maps/origins/lightning-staff'); // pure OG: the OG Lightning page has no #switches anchor
 });
 
 test('player-language queries land on the right reference first', () => {
   const top = (query) => search(query)[0];
   const cases = [
     ['ice staff code', 'origins', 'Ice Staff'],
-    ['staff upgrades', 'origins', 'Secure the Keys (upgrade the staffs)'],
+    ['staff upgrades', 'origins', 'Upgrade the staffs'],
     ['gorod valves', 'gorod-krovi', 'Valve Solver'],
     ['mob plane parts', 'mob-of-the-dead', 'Plane parts'],
     ['DE wisps', 'der-eisendrache', 'Wisps'],
@@ -51,7 +51,7 @@ test('player-language queries land on the right reference first', () => {
     ['where are the dog heads', 'mob-of-the-dead', 'Cerberus heads + Hell’s Retriever'],
     ['void bow', 'der-eisendrache', 'Bow upgrades (Storm · Fire · Wolf · Void)'],
     ['kino reels', 'kino', 'Film reels + radios'],
-    ['verrückt servant', 'revelations', 'Apothicon Servant blue rocks'],
+    ['verrückt servant', 'revelations', 'Apothicon Servant upgrade'],
   ];
   for (const [query, map, title] of cases) {
     const hit = top(query);

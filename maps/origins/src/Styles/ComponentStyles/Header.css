@@ -1,236 +1,88 @@
-
+/*
+ * The original Origins guide header, value for value from the Origins-Guide stylesheet: steel-blue gradient band,
+ * title in black + white with a Revive icon each side on the left, the five tabs on the right.
+ *
+ * One change from the original: it stacked (title centred, tabs under it) only at 1024px and below, but the
+ * one-row layout needs about 1310px, so between the two the title wrapped, an icon was stranded and
+ * Lightning Staff dropped to a second row. The stacked layout now starts at 1340px instead.
+ */
 .origins-module .site-header.origins-map-header {
   position: sticky;
-  top: var(--hub-nav-height);
-  z-index: 9000;
-  width: 100%;
-  min-height: 82px;
-  padding: 0;
-  overflow: hidden;
-  color: #fff;
-  font-family: 'Rajdhani', sans-serif;
-  border-bottom: 1px solid rgba(170, 224, 255, 0.18);
-  background: linear-gradient(to right, #0a4b78, #1c7ed6, #0a4b78);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
-  isolation: isolate;
-}
-
-.origins-module .origins-header__backdrop {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background:
-    linear-gradient(90deg, rgba(10, 75, 120, 0.96) 0%, rgba(15, 96, 153, 0.78) 30%, rgba(5, 27, 45, 0.6) 72%, rgba(4, 20, 34, 0.82) 100%),
-    url('../../../public/images/Robot.webp') center 40% / cover no-repeat;
-}
-
-.origins-module .origins-header__content {
-  width: min(1460px, calc(100% - 32px));
-  min-height: 82px;
-  margin: 0 auto;
+  top: var(--hub-pin-height, 0px);
+  z-index: 20;
   display: flex;
+  flex-wrap: nowrap;
   align-items: center;
   justify-content: space-between;
-  gap: 1.25rem;
-  padding: 0.45rem 0;
-}
-
-.origins-module .header-left,
-.origins-module .header-right {
-  display: flex;
-  align-items: center;
-}
-
-.origins-module .header-left {
-  flex: 0 0 auto;
-  min-width: 0;
-}
-
-.origins-module .title-box {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  flex-wrap: nowrap;
-  white-space: nowrap;
-}
-
-.origins-module .header-title {
-  display: flex;
-  align-items: center;
-  gap: 0.28rem;
-  margin: 0;
-  font-size: 2rem;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: 0;
-  text-shadow: 0 0 6px #6dc2ff, 0 0 10px rgba(255, 255, 255, 0.7);
-  white-space: nowrap;
-}
-
-/* Black letters keep the Origins title look; a tight bright halo gives
-   them an edge against the blue band (was ~2.2:1 and mushy). */
-.origins-module .black-text {
-  color: #05080b;
-  text-shadow:
-    0 0 1px #cfeeff,
-    0 0 2px #9fdcff,
-    0 0 5px #6dc2ff,
-    0 0 12px rgba(109, 194, 255, 0.55);
-}
-
-.origins-module .white-text {
+  width: 100%;
+  padding: 20px 32px;
+  background: linear-gradient(to right, #0a4b78, #1c7ed6, #0a4b78);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
   color: #fff;
+  font-family: 'Rajdhani', sans-serif;
 }
 
-.origins-module .revive-header-icon {
-  width: 32px;
-  height: 32px;
-  flex: 0 0 32px;
-  object-fit: contain;
+.origins-module .origins-map-header .header-left,
+.origins-module .origins-map-header .header-right {
+  display: flex;
+  align-items: center;
 }
 
-.origins-module .header-right {
-  flex: 1 1 auto;
-  justify-content: flex-end;
-  min-width: 0;
+.origins-module .origins-map-header .title-box {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 10px;
 }
 
-@media (max-width: 1180px) {
-  .origins-module .header-title {
-    font-size: 1.7rem;
-  }
-
-  .origins-module .revive-header-icon {
-    width: 28px;
-    height: 28px;
-    flex-basis: 28px;
-  }
-
-  .origins-module .origins-header__content {
-    width: min(100% - 20px, 1120px);
-    gap: 0.8rem;
-  }
+.origins-module .origins-map-header .header-title {
+  margin: 0;
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 1.2;
+  white-space: nowrap;
+  text-shadow: 0 0 6px #6dc2ff, 0 0 10px #ffffff;
 }
 
-@media (max-width: 980px) {
+.origins-module .origins-map-header .black-text { color: #000; }
+.origins-module .origins-map-header .white-text { color: #fff; }
+
+.origins-module .origins-map-header .revive-header-icon {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+}
+
+/* Stacked: the original's narrow layout, starting where the single row stops fitting. */
+@media (max-width: 1340px) {
   .origins-module .site-header.origins-map-header {
-    min-height: 0;
-  }
-
-  /* The title centers over the backdrop's dark middle here; light a blue pool behind it so the
-     dark-glow "Origins Easter Egg" keeps the contrast it has on the desktop's lit left edge. */
-  .origins-module .origins-header__backdrop {
-    background:
-      radial-gradient(ellipse 62% 78% at 50% 22%, rgba(28, 126, 214, 0.9), rgba(16, 98, 160, 0.55) 55%, transparent 100%),
-      linear-gradient(180deg, rgba(10, 75, 120, 0.7), rgba(4, 20, 34, 0.86)),
-      url('../../../public/images/Robot.webp') center 40% / cover no-repeat;
-  }
-
-  .origins-module .origins-header__content {
-    min-height: 0;
     flex-direction: column;
-    gap: 0.45rem;
-    padding: 0.62rem 0;
+    align-items: center;
+    gap: 12px;
+    padding: 20px 16px;
   }
-
-  .origins-module .header-right {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .origins-module .title-box {
-    justify-content: center;
-  }
+  .origins-module .origins-map-header .header-left,
+  .origins-module .origins-map-header .header-right { justify-content: center; }
+  .origins-module .origins-map-header .title-box { justify-content: center; }
 }
 
-@media (max-width: 620px) {
-  .origins-module .origins-header__content {
-    width: 100%;
-    gap: 0.5rem;
-    padding: 0.6rem 0 0.55rem;
-  }
-
-  .origins-module .header-title {
-    font-size: 1.34rem;
-  }
-
-  .origins-module .revive-header-icon {
-    width: 23px;
-    height: 23px;
-    flex-basis: 23px;
-  }
-
-  .origins-module .title-box {
-    gap: 6px;
-    padding-inline: 10px;
-  }
+@media (max-width: 1024px) {
+  .origins-module .origins-map-header .header-title { font-size: 1.8rem; text-align: center; }
 }
 
-/* Narrow phones: one short line ("Origins · Little Lost Girl") so the header stays under ~90px and the
-   current step starts higher. The revive icons are decoration and go. */
-@media (max-width: 460px) {
-  .origins-module .header-title {
-    gap: 0.4rem;
-    font-size: 1.22rem;
-    white-space: nowrap;
-  }
-
-  .origins-module .header-title__ee {
-    display: none;
-  }
-
-  .origins-module .black-text::after {
-    content: ' ·';
-  }
-
-  .origins-module .revive-header-icon {
-    display: none;
-  }
-
-  .origins-module .origins-header__content {
-    gap: 0.35rem;
-    padding: 0.45rem 0 0.4rem;
-  }
+@media (max-width: 768px) {
+  .origins-module .site-header.origins-map-header { padding: 16px 12px; gap: 8px; }
+  .origins-module .origins-map-header .title-box { gap: 6px; }
+  .origins-module .origins-map-header .header-title { font-size: 1.4rem; }
+  .origins-module .origins-map-header .revive-header-icon { display: none; }
 }
 
-/* Landscape phones: title and staff chips share one row. */
-@media (max-height: 500px) and (orientation: landscape) {
-  .origins-module .origins-header__content {
-    width: 100%;
-    flex-direction: row;
-    gap: 0.25rem;
-    padding: 0.4rem 0 0.4rem 12px;
-  }
-
-  .origins-module .origins-header__backdrop {
-    background:
-      radial-gradient(ellipse 48% 130% at 18% 50%, rgba(28, 126, 214, 0.92), rgba(16, 98, 160, 0.5) 60%, transparent 100%),
-      linear-gradient(90deg, rgba(10, 75, 120, 0.6), rgba(4, 20, 34, 0.86)),
-      url('../../../public/images/Robot.webp') center 40% / cover no-repeat;
-  }
-
-  .origins-module .header-title {
-    font-size: 1.2rem;
-  }
-
-  .origins-module .revive-header-icon {
-    display: none;
-  }
-
-  .origins-module .header-right {
-    width: auto;
-    min-width: 0;
-  }
+@media (max-width: 360px) {
+  .origins-module .origins-map-header .header-title { font-size: 1.25rem; }
 }
 
-/* Short landscape phones: the map header scrolls away instead of pinning under the hub bar. */
-@media (max-height: 500px) and (orientation: landscape) {
-  .origins-module {
-    --origins-header-height: 0px;
-  }
-
-  .origins-module .site-header.origins-map-header {
-    position: relative;
-    top: auto;
-  }
+/* A pinned two-row band would eat a short or narrow screen. */
+@media (max-width: 900px), (max-height: 600px) {
+  .origins-module .site-header.origins-map-header { position: static; }
 }

@@ -240,3 +240,27 @@ body :is(.map-filter__legend, .map-filter__count, .map-dlc, .game-count) { font-
   .main-guide, .map-route-host, .app-main, main { background: #fff !important; background-image: none !important; }
   .flat-guide .flat-guide__links { display: none !important; }
 }
+
+/* Loading shell for the OG guides (App.jsx RouteLoading): header-coloured band at the real header's measured
+   height (Origins 95/153/135px, Revelations 204/324/196px at desktop/phone/landscape), then the loading note. */
+.zh-guide-shell__band {
+  height: 95px;
+  background: linear-gradient(to right, #0a4b78, #1c7ed6, #0a4b78);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+}
+
+.zh-guide-shell--revelations .zh-guide-shell__band {
+  height: 204px;
+  background: radial-gradient(ellipse at 50% 30%, #3a1d5c 0%, #160b2a 55%, #07040f 100%);
+  border-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .zh-guide-shell__band { height: 153px; }
+  .zh-guide-shell--revelations .zh-guide-shell__band { height: 324px; }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .zh-guide-shell__band { height: 135px; }
+  .zh-guide-shell--revelations .zh-guide-shell__band { height: 196px; }
+}

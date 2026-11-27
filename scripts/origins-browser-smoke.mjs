@@ -1,32 +1,22 @@
 import './smoke-ready.mjs'; // first: waits for the app to render after each navigation
 /*
- * Origins, the OG guide cleaned up: the blue title band with its five tabs, the lean Main Steps with
- * Tips and Speed Run, and the Build / Puzzle / Upgrade staff pages, at every smoke viewport.
+ * Origins, pure OG (Bryen 2026-11-23 "go pure og"): the OG Origins-Guide header with its five tabs, the OG Main
+ * Steps / Tips page and the four OG staff pages, at every smoke viewport. Speed Run is hub-only and kept.
  */
 import assert from 'node:assert/strict';
-import { guideTabs } from './smoke-contract.mjs';
+import { guideTabs, mainSteps } from './smoke-contract.mjs';
 import { chromium } from 'playwright';
 import { VIEWPORTS } from './smoke-viewports.mjs';
-import { loadModules } from './guide-content.mjs';
 
-const [{ default: staffPages }, { staffPlaces }] = await loadModules(['maps/origins/src/data/originsStaffPages.js', 'maps/origins/src/data/originsPlaces.js']);
-const staffLines = JSON.parse((await import('node:fs')).readFileSync(new URL('./fixtures/origins-staff-pages.baseline.json', import.meta.url), 'utf8'));
-const STAFFS = ['ice', 'fire', 'wind', 'lightning'];
-
-// The staff code chart: the "Enlarge: …" button in the Puzzle section, in any look.
-const chartButton = (page) => page.locator('#puzzle').getByRole('button', { name: /^Enlarge:/ });
 const base = process.env.SMOKE_BASE_URL || 'http://127.0.0.1:4173';
 const ROUTES = [
-  ['/maps/origins', 'UI Main Guide'],
-  ['/maps/origins/og', 'OG'],
-  ['/maps/origins/step-details', 'Step details'],
+  ['/maps/origins', 'Main Guide'],
   ['/maps/origins/ice-staff', 'Ice Staff'],
   ['/maps/origins/fire-staff', 'Fire Staff'],
   ['/maps/origins/wind-staff', 'Wind Staff'],
   ['/maps/origins/lightning-staff', 'Lightning Staff'],
-  ['/maps/origins/speed-run', 'Speed Run'],
 ];
-const TABS = ['UI Main Guide', 'OG', 'Step details', 'Ice Staff', 'Fire Staff', 'Wind Staff', 'Lightning Staff', 'Speed Run'];
+const TABS = ['Main Guide', 'Ice Staff', 'Fire Staff', 'Wind Staff', 'Lightning Staff'];
 const results = [];
 
 const assertNoHorizontalOverflow = async (page, label) => {
@@ -65,21 +55,44 @@ try {
     const errors = [];
     page.on('pageerror', (error) => errors.push(error.message));
 
-    // ---- Shell: main's Origins header and nav over the robot (merge with main, 2026-11-15) ----
-    // Header height and the active link in view are checked in browser-smoke.mjs; this covers every route.
+    // ---- Hard load with a late web font: the header must not wrap in the fallback face and then jump up ----
+    const cold = await browser.newContext({ viewport: { width, height }, serviceWorkers: 'block' });
+    const first = await cold.newPage();
+    await first.route(/rajdhani.*\.woff2?$/, async (request) => { await new Promise((done) => setTimeout(done, 300)); await request.continue(); });
+    await first.addInitScript(() => {
+      window.__cls = 0;
+      new PerformanceObserver((list) => list.getEntries().forEach((entry) => { if (!entry.hadRecentInput) window.__cls += entry.value; })).observe({ type: 'layout-shift', buffered: true });
+    });
+    await first.goto(`${base}/maps/origins`, { waitUntil: 'networkidle' });
+    await first.locator('.site-header').waitFor();
+    await first.waitForTimeout(500);
+    const cls = await first.evaluate(() => window.__cls);
+    assert(cls < 0.1, `${name}: Origins hard load shifts the layout (CLS ${cls.toFixed(3)})`);
+    results.push(`${name}: hard load with a late font, CLS ${cls.toFixed(3)}`);
+    await cold.close();
+
+    // ---- Shell: the OG header and five tabs over the robot, on every OG route ----
     for (const [route, current] of ROUTES) {
       await page.goto(`${base}${route}`, { waitUntil: 'networkidle' });
-      const tabs = await guideTabs(page).evaluateAll((links) => links.map((link) => {
-        const box = link.getBoundingClientRect();
-        return { label: link.textContent.trim(), current: link.getAttribute('aria-current'), left: box.left, right: box.right };
-      }));
+      const tabs = await guideTabs(page).evaluateAll((links) => links.map((link) => ({ label: link.textContent.trim(), current: link.getAttribute('aria-current') })));
       assert.deepEqual(tabs.map((tab) => tab.label), TABS, `${route}: Origins nav items in order`);
       assert.deepEqual(tabs.filter((tab) => tab.current === 'page').map((tab) => tab.label), [current], `${route}: the current nav item is marked`);
-      const robot = await page.evaluate(() => /Robot/.test(getComputedStyle(document.querySelector('.origins-module')).backgroundImage));
+      assert.equal(await page.locator('.origins-module .revive-header-icon').count(), 2, `${route}: a Revive icon each side of the title`);
+      const robot = await page.evaluate(() => [...document.querySelectorAll('.origins-module, .origins-module *')].some((el) => /Robot/.test(getComputedStyle(el).backgroundImage)));
       assert(robot, `${route}: the robot artwork is the page background`);
+      const broken = await page.locator('.origins-module img').evaluateAll((imgs) => imgs.filter((img) => !(img.complete && img.naturalWidth > 0)).map((img) => img.src));
+      assert.deepEqual(broken, [], `${route}: every image loads`);
+      assert.equal(await page.locator('main a[href*="step-details"]').count(), 0, `${route}: no Step details link`);
       await assertNoHorizontalOverflow(page, `${route} at ${name}`);
     }
-    results.push(`${name}: Origins nav in order with the current item marked, robot background, no overflow on every Origins route`);
+    await page.goto(`${base}/maps/origins`, { waitUntil: 'networkidle' });
+    assert.equal(await mainSteps(page).count(), 11, 'the OG Main Steps list has 11 steps');
+    assert.equal(await page.locator('main audio').count(), 2, 'the OG main guide keeps both audio players');
+    for (const old of ['og', 'step-details']) {
+      await page.goto(`${base}/maps/origins/${old}`, { waitUntil: 'networkidle' });
+      assert.equal(new URL(page.url()).pathname, '/maps/origins', `/${old} redirects to the main guide`);
+    }
+    results.push(`${name}: OG header, five tabs with the current one marked, robot background, images, no overflow`);
 
     // ---- Speed Run: a way back to the Main Guide ----
     // The switch strip is named for screen readers, and its demo link is a full tap target.
@@ -126,191 +139,11 @@ try {
     assert.equal(await checkpoint(), 'Checkpoint 1 of 8', 'Previous opens checkpoint 1');
     assert(await speedPanel.evaluate((el) => el === document.activeElement), 'Previous to the first checkpoint keeps focus on the checkpoint');
 
-    // ---- Staff pages: Build → Puzzle → Upgrade ----
-    for (const staff of STAFFS) {
-      const route = `/maps/origins/${staff}-staff`;
-      const data = staffPages[staff];
-      await page.goto(`${base}${route}`, { waitUntil: 'networkidle' });
-      const order = await page.evaluate(() => ['build', 'puzzle', 'upgrade'].map((id) => {
-        const el = document.getElementById(id);
-        return el ? el.getBoundingClientRect().top + window.scrollY : null;
-      }));
-      assert(order.every((top) => top !== null), `${route}: has #build, #puzzle and #upgrade`);
-      if (name === 'phone') {
-        assert(order[0] < order[1] && order[1] < order[2], `${route}: Build, Puzzle, Upgrade read in order on phones`);
-        const jumps = await page.locator('.staff-page__jump a').evaluateAll((links) => links.map((link) => ({ label: link.textContent.trim(), top: Math.round(link.getBoundingClientRect().top) })));
-        assert.deepEqual(jumps.map((jump) => jump.label), ['Build', 'Spots', 'Puzzle', 'Upgrade'], `${route}: four section jumps`);
-        assert.equal(new Set(jumps.map((jump) => jump.top)).size, 1, `${route}: the section jumps share one row`);
-      }
-      const text = (await page.locator('main').innerText()).replace(/\s+/g, ' ');
-      const lower = text.toLowerCase();
-      for (const line of staffLines[staff].lines) {
-        assert(text.includes(line.text), `${route}: keeps "${line.text}"`);
-        if (line.label && line.label !== 'Excavation') assert(lower.includes(line.label.toLowerCase()), `${route}: keeps the label "${line.label}"`);
-      }
-
-      // The staff's Spots (#map): every spot said in words, in order, between Build and Puzzle. Text only,
-      // no mini-map on the staff pages (the Lightning switch map is checked on its own).
-      const mapTop = await page.evaluate(() => document.getElementById('map')?.getBoundingClientRect().top + window.scrollY);
-      assert(mapTop > order[0] && mapTop < order[1], `${route}: Spots sit between Build and Puzzle`);
-      assert.deepEqual(await page.locator('#map ol.staff-page__spots > li').evaluateAll((items) => items.map((li) => li.textContent.trim())),
-        staffPlaces[staff].pins.map((pin) => pin.text), `${route}: Spots lists every spot in order`);
-      assert.equal(await page.locator('#map .omap').count(), 0, `${route}: no mini-map diagram on the staff page`);
-
-      // The chart opens full screen and closes again (button, Esc), returning focus to the chart.
-      const open = chartButton(page);
-      await open.click();
-      const dialog = page.getByRole('dialog');
-      await dialog.waitFor();
-      await page.waitForFunction(() => {
-        const img = document.querySelector('dialog[open] img');
-        return img?.complete && img.naturalWidth > 0;
-      }, null, { timeout: 15000 });
-      const shown = await dialog.locator('img').boundingBox();
-      if (name === 'phone') assert(shown.width >= width * 0.9, `${route}: full-screen chart is ${Math.round(shown.width)}px wide`);
-      await page.keyboard.press('Escape');
-      await dialog.waitFor({ state: 'detached' }).catch(() => {});
-      assert.equal(await page.getByRole('dialog').count(), 0, `${route}: Esc closes the chart`);
-      assert(await open.evaluate((el) => document.activeElement === el), `${route}: focus returns to the chart`);
-      await open.click();
-      await dialog.waitFor();
-      const close = dialog.getByRole('button', { name: 'Close' });
-      assert((await close.boundingBox()).height >= 48, `${route}: Close is a 48px target`);
-      await close.click();
-      assert.equal(await page.getByRole('dialog').count(), 0, `${route}: Close closes the chart`);
-      // A tap on the dark area around the chart closes it too.
-      await open.click();
-      await dialog.waitFor();
-      await page.mouse.click(4, height - 4);
-      assert.equal(await page.getByRole('dialog').count(), 0, `${route}: a backdrop tap closes the chart`);
-
-      // The shared Excavation reference: four rings in the staff's colour, no lever-to-ring labels.
-      const rings = page.locator('#upgrade .excavation-rings');
-      assert.equal(await rings.count(), 1, `${route}: one Excavation ring reference`);
-      assert.match(await rings.innerText(), /Four levers, four rings/, `${route}: the four-ring finish is said in words`);
-      const ringText = await rings.innerText();
-      assert.match(ringText, new RegExp(data.ring.word), `${route}: rings set to ${data.ring.word}`);
-      assert.doesNotMatch(ringText, /Mule Kick|staircase|wooden platform/i, `${route}: no lever-to-ring mapping in the shared reference`);
-
-      const chart = await chartButton(page).getByRole('img').boundingBox();
-      if (name === 'desktop') {
-        assert(order[2] - (await page.evaluate(() => window.scrollY)) < height, `${route}: Upgrade is on the first screen`);
-        // Pinned beside the long column, Upgrade stays clear of the pinned chrome and whole on screen.
-        await page.evaluate(() => window.scrollTo(0, 600));
-        const side = await pinnedPanel(page, '.staff-page__side');
-        // Only a side panel that sits beside the main column pins (the calm pass is one column: no pin).
-        const besideMain = await page.evaluate(() => document.querySelector('.staff-page__side').getBoundingClientRect().left
-          >= document.querySelector('.staff-page__main').getBoundingClientRect().right - 1);
-        if (side.sticky && besideMain) {
-          assert(side.heading >= side.pinned, `${route}: pinned Upgrade title at ${Math.round(side.heading)}px, under ${Math.round(side.pinned)}px of chrome`);
-          assert(side.bottom <= height, `${route}: pinned Upgrade runs to ${Math.round(side.bottom)}px on a ${height}px screen`);
-        }
-      }
-      if (name === 'phone') {
-        // The chart fills the staff page's reading column (its content box), whatever the page padding.
-        const column = await page.locator('.staff-page').evaluate((el) => {
-          const cs = getComputedStyle(el);
-          return el.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
-        });
-        assert(chart.width >= column - 2 && chart.width >= 320, `${route}: chart is ${Math.round(chart.width)}px wide on phones (column ${Math.round(column)}px)`);
-      }
-      if (name === 'landscape') {
-        // The chart follows its steps, so it is checked where it sits: whole on the short screen.
-        await chartButton(page).evaluate((button) => button.closest('figure').scrollIntoView({ block: 'start', behavior: 'instant' }));
-        const capped = await chartButton(page).getByRole('img').boundingBox();
-        assert(capped.height <= 290, `${route}: chart is ${Math.round(capped.height)}px tall in landscape`);
-        assert(capped.y >= -1 && capped.y + capped.height <= height + 1, `${route}: chart fits the landscape screen`);
-      }
-      const body = await page.evaluate(() => parseFloat(getComputedStyle(document.querySelector('#build dd')).fontSize));
-      assert(body >= 16, `${route}: build facts are ${body}px`);
-      await assertNoHorizontalOverflow(page, `${route} at ${name}`);
-    }
-
-    // Ice: the gravestones are unordered; the symbol puzzle follows the game's sequence.
-    await page.goto(`${base}/maps/origins/ice-staff`, { waitUntil: 'networkidle' });
-    const anyOrder = page.locator('#upgrade .staff-any-order');
-    assert.match(await anyOrder.innerText(), /any order/i, 'Ice gravestones carry "Any order"');
-    assert.match(await anyOrder.innerText(), /three gravestones/, 'the "Any order" group holds the gravestone line');
-    assert.match(await page.locator('#puzzle').innerText(), /Follow the order the game shows/, 'Ice puzzle explains the game-dependent order');
-
-    // Lightning: chords, the switches panel (its only home) and the Speed Run link.
-    await page.goto(`${base}/maps/origins/lightning-staff#switches`, { waitUntil: 'networkidle' });
-    assert.equal(await page.locator('#switches .switch-card .switch-dial').count(), 7, 'Lightning page has the seven switch dials');
-    const lightningText = await page.locator('#puzzle').innerText();
-    for (const chord of ['1-3-6', '3-5-7', '2-4-6']) assert(lightningText.includes(chord), `Lightning chord ${chord}`);
-    assert.equal(await page.locator('a[href="/maps/origins/speed-run/lightning"]').count(), 1, 'Lightning page links to the Speed Run switch route');
-    // One compact switches panel (036e3f8): final positions and practice in one place; the old Electrical Panel is gone.
-    for (const mode of ['Final positions', 'Practice turns']) {
-      assert.equal(await page.locator('#switches').getByRole('button', { name: mode }).count(), 1, `the switches panel offers "${mode}"`);
-    }
-    assert.equal(await page.getByRole('button', { name: /Electrical Panel/ }).count(), 0, 'the separate Electrical Panel stays removed');
-    const switchesTop = await page.locator('#switches').evaluate((el) => el.getBoundingClientRect().top);
-    assert(switchesTop >= 0 && switchesTop < height * 0.6, `#switches deep link lands near the top (${Math.round(switchesTop)}px)`);
-    // Main Guide deep links (#rain-fire) are main's page now; guide-sequence-browser-smoke.mjs checks its landing.
-    results.push(`${name}: four staff pages — order, every line, the staff map, zoomable chart, ring reference, Ice order rules, Lightning tools`);
-
     assert.deepEqual(errors, [], `${name}: page errors: ${errors.join('; ')}`);
-    await context.close();
-  }
-  // A first visit on a phone fetches no staff chart until it is near the screen: the chart's closed
-  // full-screen copy waits too (it was eager and pulled every chart, ~250–350 KB, on page load).
-  // How far below the fold Chromium starts a lazy image depends on the build and the network it detects:
-  // desktop Chrome on 4G uses 1250px, CI's headless Chromium starts the charts on first paint (they sit about
-  // 1400–2600px down). So the test, not the page, puts the puzzle 8000px down, past every Chromium distance
-  // (the longest is 4000px), before the page renders: the check reads the page's real markup on any browser.
-  {
-    const context = await browser.newContext({ viewport: { width: 390, height: 844 } });
-    // Runs before any page script, so the first layout already has the puzzle far down.
-    await context.addInitScript(() => {
-      const add = () => {
-        if (!document.head) return false;
-        const style = document.createElement('style');
-        style.textContent = '#puzzle { margin-top: 8000px !important; }';
-        document.head.append(style);
-        return true;
-      };
-      if (add()) return;
-      const watch = new MutationObserver(() => { if (add()) watch.disconnect(); });
-      watch.observe(document, { childList: true, subtree: true });
-    });
-    const page = await context.newPage();
-    let checked = 0;
-    for (const staff of STAFFS) {
-      await page.goto(`${base}/maps/origins/${staff}-staff`, { waitUntil: 'networkidle' });
-      const chart = await chartButton(page).getByRole('img').evaluate((img) => ({ file: img.getAttribute('src').split('/').pop(), top: img.getBoundingClientRect().top }));
-      const fetched = () => page.evaluate((file) => performance.getEntriesByType('resource').some((entry) => entry.name.endsWith(file)), chart.file);
-      assert(chart.top > 844 + 4000, `${staff}: the chart sits ${Math.round(chart.top)}px down, inside some browser's lazy-load distance`);
-      assert(!(await fetched()), `${staff}: the chart (${chart.file}) loads before it is near the screen`);
-      checked += 1;
-      await chartButton(page).getByRole('img').scrollIntoViewIfNeeded();
-      await chartButton(page).getByRole('img').evaluate((img) => img.complete || new Promise((done) => img.addEventListener('load', done, { once: true })));
-      assert(await fetched(), `${staff}: the chart loads once it is on screen`);
-    }
-    assert.equal(checked, STAFFS.length, 'every staff chart was checked');
-    results.push('390x844 first visit: staff charts wait until they are near the screen');
-    await context.close();
-  }
-  // Short desktop (1280x720): a pinned Upgrade column must fit under the pinned chrome, or not be pinned.
-  {
-    const context = await browser.newContext({ viewport: { width: 1280, height: 720 } });
-    const page = await context.newPage();
-    for (const staff of STAFFS) {
-      await page.goto(`${base}/maps/origins/${staff}-staff`, { waitUntil: 'networkidle' });
-      const fit = await page.evaluate(() => {
-        const side = document.querySelector('.staff-page__side');
-        const pinned = Math.max(0, ...[...document.querySelectorAll('.hub-header, .origins-map-header')]
-          .filter((el) => ['fixed', 'sticky'].includes(getComputedStyle(el).position))
-          .map((el) => el.getBoundingClientRect().bottom));
-        return { sticky: getComputedStyle(side).position === 'sticky', height: side.offsetHeight, room: window.innerHeight - pinned - 20 };
-      });
-      assert(!fit.sticky || fit.height <= fit.room, `${staff}: pinned Upgrade (${fit.height}px) is taller than the room (${fit.room}px) at 1280x720`);
-    }
-    results.push('1280x720: Upgrade columns are only pinned when they fit');
     await context.close();
   }
 } finally {
   await browser.close();
 }
-
 console.log(`${results.length} Origins checks passed:`);
 results.forEach((line) => console.log(`- ${line}`));

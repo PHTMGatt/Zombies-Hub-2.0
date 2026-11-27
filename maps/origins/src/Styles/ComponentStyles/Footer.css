@@ -1,22 +1,13 @@
-/* One quiet line on the ground. */
+/* The original guide's footer: the header gradient as a rounded bar. */
 .origins-module .footer.origins-footer {
-  margin: 0;
-  padding: 22px clamp(20px, 5vw, 72px);
-  border-top: 1px solid var(--o-hair);
-  background: transparent;
-  color: var(--o-muted);
-  font: 600 15px/1.4 var(--o-font);
-  letter-spacing: 0.06em;
-}
-
-.origins-module .origins-footer__content {
-  display: flex;
-  gap: 10px;
-  align-items: baseline;
-}
-
-.origins-module .origins-footer__content strong {
-  color: var(--o-ink);
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
+  margin: 20px;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  background: linear-gradient(to right, #0a4b78, #1c7ed6, #0a4b78);
+  box-shadow: 0 0 12px rgba(109, 194, 255, 0.2);
+  color: #fff;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-align: center;
 }

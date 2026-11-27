@@ -65,11 +65,11 @@ export const MAP_NAMES = {
 // kind: guide (whole tracked run) · ref (in-guide reference) · tool (interactive) · page (reference page)
 export const SEARCH_ENTRIES = [
   // Origins
-  { map: 'origins', kind: 'guide', title: 'Little Lost Girl — tracked guide', to: '/maps/origins', keywords: ['main easter egg', 'main quest', 'ee', 'walkthrough', 'steps'] },
+  { map: 'origins', kind: 'guide', title: 'Little Lost Girl — main guide', to: '/maps/origins', keywords: ['main easter egg', 'main quest', 'ee', 'walkthrough', 'steps'] },
   // Staff codes, parts and upgrades live on the staff pages; the Main Guide steps only say "build" / "upgrade all four".
-  { map: 'origins', kind: 'ref', title: 'Build the Staffs', stepId: 'build-staffs', to: ref('origins', 'build-staffs'), keywords: ['build staffs', 'build the staffs', 'elemental staffs'] },
-  { map: 'origins', kind: 'ref', title: 'Secure the Keys (upgrade the staffs)', stepId: 'upgrade-staffs', to: ref('origins', 'upgrade-staffs'), keywords: ['secure the keys', 'upgrade staffs', 'staff upgrades'] },
-  { map: 'origins', kind: 'tool', title: 'Lightning switch board + Electrical Panel', to: '/maps/origins/lightning-staff#switches', keywords: ['switches', 'switch board', 'electrical panel', 'lightning code', 'dials', 'piano', 'chords'] },
+  { map: 'origins', kind: 'page', title: 'Build the Staffs', to: '/maps/origins', keywords: ['build staffs', 'build the staffs', 'elemental staffs'] },
+  { map: 'origins', kind: 'page', title: 'Upgrade the staffs', to: '/maps/origins', keywords: ['secure the keys', 'upgrade staffs', 'staff upgrades'] },
+  { map: 'origins', kind: 'tool', title: 'Lightning switch board + Electrical Panel', to: '/maps/origins/lightning-staff', keywords: ['switches', 'switch board', 'electrical panel', 'lightning code', 'dials', 'piano', 'chords'] },
   { map: 'origins', kind: 'page', title: 'Ice Staff', to: '/maps/origins/ice-staff', keywords: ['ice staff', 'ice staff code', 'ice code', 'ice puzzle', 'ice upgrade', 'gravestones', 'blue record', 'tablets', 'freya'] },
   { map: 'origins', kind: 'page', title: 'Fire Staff', to: '/maps/origins/fire-staff', keywords: ['fire staff', 'fire staff code', 'fire code', 'fire upgrade', 'cauldrons', 'red record', 'torches', 'mound'] },
   { map: 'origins', kind: 'page', title: 'Wind Staff', to: '/maps/origins/wind-staff', keywords: ['wind staff', 'wind staff code', 'wind code', 'wind upgrade', 'chimneys', 'yellow record', 'smoke', 'odin'] },
@@ -124,13 +124,13 @@ export const SEARCH_ENTRIES = [
   { map: 'gorod-krovi', kind: 'ref', title: 'KRONOS', stepId: 'kronos', to: ref('gorod-krovi', 'kronos'), keywords: ['kronos', 'letters', 'letter wheels'] },
 
   // Revelations
-  { map: 'revelations', kind: 'guide', title: 'For The Good Of All — tracked guide', to: '/maps/revelations', keywords: ['main easter egg', 'main quest', 'ee', 'walkthrough', 'steps'] },
-  { map: 'revelations', kind: 'ref', title: 'Apothicon Servant blue rocks', stepId: 'servant', to: ref('revelations', 'servant'), keywords: ['servant', 'apothicon servant', 'rocks', 'blue rocks', 'upgrade servant', 'wonder weapon'] },
-  { map: 'revelations', kind: 'ref', title: 'Six bones', stepId: 'reel-3', to: ref('revelations', 'reel-3'), keywords: ['bones', 'bone', 'reel 3'] },
-  { map: 'revelations', kind: 'tool', title: 'Kronorium symbol order notepad', stepId: 'symbols', to: ref('revelations', 'symbols'), keywords: ['symbols', 'kronorium', 'symbol room', 'arena'] },
-  { map: 'revelations', kind: 'ref', title: 'Summoning Key targets', stepId: 'throws', to: ref('revelations', 'throws'), keywords: ['summoning key', 'key', 'key throws', 'targets'] },
-  { map: 'revelations', kind: 'ref', title: 'Tombstones + Corruption Engines', stepId: 'engines', to: ref('revelations', 'engines'), keywords: ['tombstones', 'corruption engines', 'engines', 'pack a punch', 'pap'] },
-  { map: 'revelations', kind: 'ref', title: 'Kronorium + four eggs', stepId: 'eggs', to: ref('revelations', 'eggs'), keywords: ['eggs', 'gateworms', 'nests'] },
+  { map: 'revelations', kind: 'guide', title: 'For The Good Of All — main guide', to: '/maps/revelations', keywords: ['main easter egg', 'main quest', 'ee', 'walkthrough', 'steps'] },
+  { map: 'revelations', kind: 'page', title: 'Apothicon Servant upgrade', to: '/maps/revelations/apothicon-upgrade', keywords: ['servant', 'apothicon servant', 'rocks', 'blue rocks', 'upgrade servant', 'wonder weapon'] },
+  { map: 'revelations', kind: 'page', title: 'Six bones', to: '/maps/revelations', keywords: ['bones', 'bone', 'reel 3'] },
+  { map: 'revelations', kind: 'page', title: 'Kronorium symbols', to: '/maps/revelations', keywords: ['symbols', 'kronorium', 'symbol room', 'arena'] },
+  { map: 'revelations', kind: 'page', title: 'Summoning Key targets', to: '/maps/revelations/summoning-key', keywords: ['summoning key', 'key', 'key throws', 'targets'] },
+  { map: 'revelations', kind: 'page', title: 'Tombstones + Corruption Engines', to: '/maps/revelations', keywords: ['tombstones', 'corruption engines', 'engines', 'pack a punch', 'pap'] },
+  { map: 'revelations', kind: 'page', title: 'Kronorium + four eggs', to: '/maps/revelations', keywords: ['eggs', 'gateworms', 'nests'] },
   { map: 'revelations', kind: 'page', title: 'Egg locations', to: '/maps/revelations/egg-locations', keywords: ['eggs', 'egg locations'] },
 
   // Side Easter Eggs

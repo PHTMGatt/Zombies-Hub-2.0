@@ -95,6 +95,7 @@ const mobGuideSteps = [
     critical: ['Skulls show in Afterlife, but collect them while alive.'],
     checklist: [{ k: 'Cell Block / Library', v: 'Toilet of the open cell' }, { k: 'Docks', v: 'Third wooden pier pillar' }, { k: 'Juggernog', v: 'Lamp post outside the perk' }, { k: 'Rooftop', v: 'Far edge behind the plane' }, { k: 'Outside the Warden’s Office', v: 'Power-line pole, seen from the office window' }],
     how: how(SKULLS),
+    problems: ['Mystery Box Blundergats do not count: the free one appears on the table by Speed Cola.', 'Do not board the Warden’s Office window by Speed Cola.'],
   },
   {
     id: 'spoon',
@@ -105,7 +106,7 @@ const mobGuideSteps = [
     ],
     checklist: ['Spoon shocked', 'Cafeteria spoon collected'],
     how: except(SPOONS, /Golden Spork/),
-    problems: [line(SPOONS, /Golden Spork/)],
+    problems: [line(SPOONS, /Golden Spork/), 'A frag grenade on the poster works too.'],
   },
   {
     id: 'trip-3',
@@ -120,6 +121,7 @@ const mobGuideSteps = [
     goal: 'In Afterlife, enter all four prisoner numbers. Any order; you can split them across Afterlife visits.',
     checklist: ['101', '386', '872', '481'],
     how: except(CODES, /split the four numbers/),
+    problems: ['Co-op: a teammate half-reviving your body pauses the Afterlife meter.'],
   },
   {
     id: 'audio',

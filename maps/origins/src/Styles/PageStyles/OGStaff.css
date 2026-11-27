@@ -1,0 +1,115 @@
+/* The original Origins staff pages, value for value from the Origins-Guide stylesheet. Each staff sets --og-staff. */
+.origins-module .og-staff {
+  min-height: 100vh;
+  padding: 2rem;
+  background: var(--origins-bg) center / cover fixed no-repeat;
+  color: #fff;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+}
+.origins-module .og-staff--ice { --og-staff: #78e8e1; --og-staff-glow: rgba(120, 232, 225, 0.4); }
+.origins-module .og-staff--fire { --og-staff: #ff3b3b; --og-staff-glow: rgba(255, 59, 59, 0.4); }
+.origins-module .og-staff--wind { --og-staff: #ffe657; --og-staff-glow: rgba(255, 230, 87, 0.4); }
+.origins-module .og-staff--lightning { --og-staff: #bb86fc; --og-staff-glow: #bb86fc; }
+
+.origins-module .og-staff .staff-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.origins-module .og-staff .left-column,
+.origins-module .og-staff .right-column {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  min-width: 0;
+}
+
+.origins-module .og-staff .staff-section {
+  position: relative;
+  padding: 1.8rem;
+  border-radius: 12px;
+  background-color: rgba(0, 0, 0, 0.65);
+  text-align: left;
+}
+
+.origins-module .og-staff .staff-section h2 {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: 0 0 1rem;
+  padding-bottom: 0.5rem;
+  color: #efd9ff;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+.origins-module .og-staff .staff-section h2::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 3px;
+  background-color: var(--og-staff);
+  opacity: 0.9;
+}
+
+.origins-module .og-staff .revive-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 0.5rem;
+}
+
+.origins-module .og-staff ul {
+  list-style-type: disc;
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+.origins-module .og-staff li {
+  margin-bottom: 0.6rem;
+  line-height: 1.7;
+  color: #f3eaff;
+  font-size: 1rem;
+}
+
+.origins-module .og-staff__chart {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-top: 1rem;
+  border-radius: 6px;
+  box-shadow: 0 0 10px var(--og-staff-glow);
+  transition: transform 0.3s ease;
+}
+.origins-module .og-staff__chart:hover { transform: scale(1.02); }
+
+.origins-module .og-staff .switch-speedrun {
+  padding: 1.2rem 1.5rem;
+  border: 2px solid #bb86fc;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.75);
+  box-shadow: 0 0 10px rgba(187, 134, 252, 0.3);
+  color: #fff;
+}
+.origins-module .og-staff .switch-speedrun h3 {
+  margin: 0 0 0.6rem;
+  color: #bb86fc;
+  font-size: 1.15rem;
+  text-shadow: 0 0 6px rgba(187, 134, 252, 0.53);
+}
+.origins-module .og-staff .switch-speedrun .codes { margin: 0 0 0.75rem; }
+.origins-module .og-staff .switch-speedrun ul { list-style: none; padding-left: 0; }
+.origins-module .og-staff .switch-speedrun li { margin-bottom: 0.4rem; color: #f1e7ff; }
+
+@media screen and (max-width: 900px) {
+  /* Fixed backgrounds stutter on phones. */
+  .origins-module .og-staff { background-attachment: scroll; }
+  .origins-module .og-staff .staff-grid { grid-template-columns: 1fr; }
+  .origins-module .og-staff .left-column,
+  .origins-module .og-staff .right-column { gap: 1rem; }
+  .origins-module .og-staff .switch-speedrun { margin-top: 1rem; }
+}

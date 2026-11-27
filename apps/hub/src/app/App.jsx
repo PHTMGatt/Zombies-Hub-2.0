@@ -36,12 +36,28 @@ function syncHead(pathname) {
 
 // While a route's code loads, the footer is left out: drawn under the short loading note, it would jump
 // once the page arrives (a layout shift). The note reports when it is on screen.
+// The two OG guides get a loading shell: a band in their header colours, the same height as the real header,
+// so a hard load shows the guide's own top instead of a blank page and nothing jumps when it arrives.
+const LOADING_SHELLS = [
+  ['/maps/origins', 'origins'],
+  ['/maps/revelations', 'revelations'],
+];
+
 function RouteLoading({ onShow }) {
+  const { pathname } = useLocation();
   useLayoutEffect(() => {
     onShow(true);
     return () => onShow(false);
   }, [onShow]);
-  return <div className="zh-status-page" role="status" aria-live="polite">Loading your guide…</div>;
+  const shell = LOADING_SHELLS.find(([prefix]) => pathname === prefix || pathname.startsWith(`${prefix}/`))?.[1];
+  const note = <div className="zh-status-page" role="status" aria-live="polite">Loading your guide…</div>;
+  if (!shell) return note;
+  return (
+    <div className={`zh-guide-shell zh-guide-shell--${shell}`}>
+      <div className="zh-guide-shell__band" aria-hidden="true" />
+      {note}
+    </div>
+  );
 }
 
 function RootLayout() {

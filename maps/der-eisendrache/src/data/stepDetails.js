@@ -196,6 +196,7 @@ const deGuideSteps = [
     ],
     checklist: ['Panzer killed', 'Safe opened', 'Coils + key card in'],
     how: howFrom('safe', ['Kill the returning Panzer', 'Install the fuses and set Protect', 'Enter the safe code', 'Loot the safe', 'Install the large coils']),
+    problems: ['The past trip through opening the safe has to happen in one round.', 'Wrong safe code: redo the wisp cycle and the trip to the past.'],
     video: video('02:45'),
   },
   {
@@ -208,7 +209,7 @@ const deGuideSteps = [
     ],
     checklist: ['Clock Tower terminal', 'Rocket Platform terminal', 'Vril Generator taken'],
     how: howFrom('safe', ['Complete both Simon Says terminals', 'Bring Dempsey’s pod down', 'TAKE THE VRIL GENERATOR']),
-    problems: ['Hellhounds may pressure you while a Simon Says puzzle is active.'],
+    problems: ['Hellhounds may pressure you while a Simon Says puzzle is active.', 'Fail the second terminal and you redo both. Retries are free in the same round.'],
     video: video('02:45'),
   },
   {
@@ -218,6 +219,7 @@ const deGuideSteps = [
     critical: [phase('first-wisps').warning],
     refs: [
       { type: 'sequence', items: ['Base bow → 6 prongs', 'Upgraded bow → 4 wisps', 'Past lab: open the case', 'Take the Keeper Stone'] },
+      { type: 'facts', items: [{ k: 'Case computer', v: 'Left of the Kronorium (use the key card)' }] },
       { type: 'list', label: 'Same 8 wisp objects', items: wispObjects },
     ],
     checklist: ['4 wisps hit', 'Keeper Stone'],
@@ -234,10 +236,22 @@ const deGuideSteps = [
         { k: 'Which bow?', v: 'The colour at the edge of your screen while standing in the circle' },
         { k: 'Double Tap circle', v: 'Insert the Keeper Stone into the wall / lamppost slot' },
       ] },
+      { type: 'chips', label: '4 circles · random order', items: ['Church courtyard box', 'Mule Kick', 'Knight armours by power', 'Double Tap (Keeper Stone first)'] },
+      { type: 'facts', label: 'Screen tint → bow', items: [
+        { k: 'Blue', v: 'Storm', tone: TONE.storm },
+        { k: 'Teal', v: 'Wolf', tone: TONE.wolf },
+        { k: 'Orange', v: 'Fire', tone: TONE.fire },
+        { k: 'Purple', v: 'Void', tone: TONE.void },
+      ] },
     ],
     checklist: ['Circle 1', 'Circle 2', 'Circle 3', 'Circle 4'],
     how: howFrom('keeper'),
-    problems: ['Zombies do not need to be standing inside the circle — only the player does.'],
+    problems: [
+      'Zombies do not need to be standing inside the circle — only the player does.',
+      'Hellhound kills and arrow melee do not count for the circles.',
+      'Hellhounds spawn nonstop once the ghost Keeper is out.',
+      'Ranked solo: every circle wants your one upgraded bow.',
+    ],
     video: video('03:59'),
   },
   {
@@ -272,6 +286,7 @@ const deGuideSteps = [
     goal: 'Take the Summoning Key from the MPD to the Clock Tower terminal.',
     refs: [
       { type: 'sequence', items: ['Summoning Key at the MPD', 'Clock Tower terminal', 'Griffin Station destroyed'] },
+      { type: 'facts', items: [{ k: 'Reward', v: 'All perks (lost if downed) · 2500 XP · achievement' }] },
     ],
     how: deGuide.ending,
   },

@@ -8,6 +8,13 @@ import GuideSteps from '../../../../shared/guide/GuideSteps';
 import { kinoSteps } from '../data/sideEE/Kino';
 import '../styles/SideEE/SideEEInfo.css';
 
+// Embed URLs (youtube.com or youtube-nocookie.com /embed/<id>) -> a normal YouTube watch page.
+// youtube-nocookie.com has no /watch page, so a plain '/embed/' swap gave a 404 for Shadows of Evil.
+const youtubeWatchUrl = (embedUrl) => {
+  const id = embedUrl.match(/\/embed\/([\w-]{11})/)?.[1];
+  return id ? `https://www.youtube.com/watch?v=${id}` : embedUrl;
+};
+
 const SIDE_EE_META = {
   'origins-speedrun': { label: 'Origins Speed Run', artwork: sideEEArtwork['origins-speedrun'] },
   kino: { label: 'Kino der Toten', artwork: sideEEArtwork.kino },
@@ -63,7 +70,7 @@ export default function SideEEInfo() {
                     allowFullScreen
                   />
                   </div>
-                  <p><a href={ee.videoUrl.replace('/embed/', '/watch?v=')} target="_blank" rel="noopener noreferrer">Open the walkthrough on YouTube</a> if the embedded video is unavailable.</p>
+                  <p><a href={youtubeWatchUrl(ee.videoUrl)} target="_blank" rel="noopener noreferrer">Open the walkthrough on YouTube</a> if the embedded video is unavailable.</p>
                 </section>
               ) : (
                 <SideEECard key={ee.id} title={ee.title} description={ee.description} />

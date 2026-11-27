@@ -12,7 +12,11 @@ export const GUIDE_NAV = /guide navigation$/i;
 export const guideNav = (page) => page.getByRole('navigation', { name: GUIDE_NAV });
 export const guideTabs = (page) => guideNav(page).getByRole('link');
 export const currentTab = (page) => guideNav(page).locator('a[aria-current="page"]');
-export const mainSteps = (page) => page.getByRole('main').getByRole('heading', { name: /^Step \d+:/ });
+// Pure-OG guides (Origins, Revelations; Bryen 2026-11-23 "go pure og") have no "Step N:" headings: their steps are
+// the OG Main Steps list items (Origins) and the OG step-picker buttons (Revelations).
+export const mainSteps = (page) => page.getByRole('main').getByRole('heading', { name: /^Step \d+:/ })
+  .or(page.locator('main .origins-module .main-guide .left-column .guide-section:first-child li'))
+  .or(page.locator('main .rev-step-button'));
 // The flat main guide's list (the one holding the "Step N:" headings).
 export const stepList = (page) => page.getByRole('main').getByRole('list').filter({ has: page.getByRole('heading', { name: /^Step 1:/ }) });
 
