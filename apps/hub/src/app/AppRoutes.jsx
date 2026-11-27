@@ -13,7 +13,14 @@ const SideEEInfo = lazy(() => import('../pages/SideEEInfo'));
 const ComingSoon = lazy(() => import('../pages/ComingSoon'));
 const Achievements = lazy(() => import('../pages/Achievements'));
 const Search = lazy(() => import('../pages/Search'));
-const OriginsRoutes = lazy(() => import('../../../../maps/origins/routes/OriginsRoutes'));
+// The OG Origins header is one row only in Rajdhani: drawn in the wider fallback face it wraps, then jumps up
+// when the font lands. Keep the loading band until the font its stylesheet declares is in (1.5s at most).
+const headerFont = () => Promise.race([
+  document.fonts.load('700 1em Rajdhani').catch(() => {}),
+  new Promise((done) => setTimeout(done, 1500)),
+]);
+const OriginsRoutes = lazy(() => import('../../../../maps/origins/routes/OriginsRoutes')
+  .then((module) => headerFont().then(() => module)));
 const MobRoutes = lazy(() => import('../../../../maps/mob-of-the-dead/routes/MobRoutes'));
 const ShadowsRoutes = lazy(() => import('../../../../maps/shadows-of-evil/routes/ShadowsRoutes'));
 const DerEisendracheRoutes = lazy(() => import('../../../../maps/der-eisendrache/routes/DerEisendracheRoutes'));

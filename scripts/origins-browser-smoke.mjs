@@ -55,6 +55,22 @@ try {
     const errors = [];
     page.on('pageerror', (error) => errors.push(error.message));
 
+    // ---- Hard load with a late web font: the header must not wrap in the fallback face and then jump up ----
+    const cold = await browser.newContext({ viewport: { width, height }, serviceWorkers: 'block' });
+    const first = await cold.newPage();
+    await first.route(/rajdhani.*\.woff2?$/, async (request) => { await new Promise((done) => setTimeout(done, 300)); await request.continue(); });
+    await first.addInitScript(() => {
+      window.__cls = 0;
+      new PerformanceObserver((list) => list.getEntries().forEach((entry) => { if (!entry.hadRecentInput) window.__cls += entry.value; })).observe({ type: 'layout-shift', buffered: true });
+    });
+    await first.goto(`${base}/maps/origins`, { waitUntil: 'networkidle' });
+    await first.locator('.site-header').waitFor();
+    await first.waitForTimeout(500);
+    const cls = await first.evaluate(() => window.__cls);
+    assert(cls < 0.1, `${name}: Origins hard load shifts the layout (CLS ${cls.toFixed(3)})`);
+    results.push(`${name}: hard load with a late font, CLS ${cls.toFixed(3)}`);
+    await cold.close();
+
     // ---- Shell: the OG header and five tabs over the robot, on every OG route ----
     for (const [route, current] of ROUTES) {
       await page.goto(`${base}${route}`, { waitUntil: 'networkidle' });
