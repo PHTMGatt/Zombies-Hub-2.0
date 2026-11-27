@@ -2477,5 +2477,1280 @@
     ],
     "reason": "Decorative aria-hidden separator in the old hub Origins footer (maps/origins/src/components/Footer.tsx). The Origins pages now use the original Origins-Guide footer (aad38b9, pure OG per Bryen 2026-11-23), which has no separator. Not guide content.",
     "spec": "decision:zombies-pure-og:2026-11-23"
+  },
+  {
+    "text": "Rain Fire",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Unleash the Horde",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Skewer the Winged Beast",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Wield a Fist of Iron",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Raise Hell",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Freedom",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Build",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Build and upgrade the staffs as early as the run allows.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Save a zombie when you need uninterrupted time for staff puzzles or map setup.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Power Generator 6, then take the part from the reward chest beside it.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/fire-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Kill the first Panzer Soldat (normally Round 8) and pick up the part it drops.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/fire-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "After the church path is open, shoot down the orange glowing plane and collect the fallen part near the Excavation mound.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/fire-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Check its three spawn points in the Church / Generator 6 area.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/fire-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "On the floor inside the Excavation, next to a table.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/fire-staff",
+      "/maps/origins/ice-staff",
+      "/maps/origins/wind-staff",
+      "/maps/origins/lightning-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Black Record",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/fire-staff",
+      "/maps/origins/ice-staff",
+      "/maps/origins/wind-staff",
+      "/maps/origins/lightning-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Around the outside of the Excavation: by the Excavation sign, in the wheelbarrow by Pack-a-Punch, or in the trench by the church debris. Play it on the table inside the Excavation to open the stairs down to the staff pedestals.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/fire-staff",
+      "/maps/origins/ice-staff",
+      "/maps/origins/wind-staff",
+      "/maps/origins/lightning-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Take the red record and Gramophone to the Fire Tunnel near spawn, enter the Crazy Place, and collect the red crystal.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/fire-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Use the red pedestal beneath the Excavation Site.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/fire-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "In the Crazy Place, kill about 30 zombies with the Fire Staff while they stand on the metal grates, until all four cauldrons are lit.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/fire-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Go upstairs in the Church: four symbols are lit on the far wall. Turn each into a number with the chart.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/fire-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "In the Church basement (where the tank parks), light the four matching numbered torches with the Fire Staff before the puzzle resets. 4 is always one of them; its torch has a bloodstain instead of a chalk number.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/fire-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "At the Excavation Site, use the four levers to align every ring to RED.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/fire-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Go below the rings and shoot the red orb with the Fire Staff.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/fire-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Return to the Crazy Place and place the Fire Staff on the red pedestal.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/fire-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Kill zombies around the pedestal until the staff is fully charged, then pick it up.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/fire-staff",
+      "/maps/origins/ice-staff",
+      "/maps/origins/wind-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Dig snowy dig sites in the spawn / starting trenches.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/ice-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Dig snowy dig sites around the middle / Excavation area.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/ice-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Dig snowy dig sites around the Church area.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/ice-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Check the three spawn points inside the Tank Station by Generator 2.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/ice-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Take the blue record and Gramophone to the Ice Tunnel by Generator 6, enter the Crazy Place, and collect the blue crystal.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/ice-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Use the blue pedestal beneath the Excavation Site.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/ice-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Return through the Ice Tunnel and enter the Crazy Place with the Ice Staff.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/ice-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Use the code chart to match the blue-dot pillar symbol to the correct ceiling stone.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/ice-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Shoot each matching ceiling stone with the Ice Staff until the puzzle completes.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/ice-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Find all three gravestones on the main map, freeze each one with the Ice Staff, then shoot the frozen stone with a normal bullet weapon to break it.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/ice-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "At the Excavation Site, use the four levers to align every ring to BLUE.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/ice-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Go below the rings and shoot the blue orb with the Ice Staff.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/ice-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Return to the Crazy Place and place the Ice Staff on the blue pedestal.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/ice-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Enter Thor, the robot that walks through the spawn-side trenches.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/wind-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Enter Odin, the robot that crosses the middle / Excavation area.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/wind-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Enter Freya, the robot that walks through the Church area.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/wind-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Check the Generator 5 area, including Stamin-Up and the Lightning Tunnel entrance.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/wind-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Take the yellow record and Gramophone to the Wind Tunnel near Generator 4, enter the Crazy Place, and collect the yellow crystal.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/wind-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Use the yellow pedestal beneath the Excavation Site.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/wind-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "In the Crazy Place, shoot the four ceiling rings with the Wind Staff until the symbols match the Wind puzzle code.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/wind-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Return to the main map and use the Wind Staff on all three smoking stone balls so their smoke points toward the Excavation Site.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/wind-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "At the Excavation Site, use the four levers to align every ring to YELLOW.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/wind-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Go below the rings and shoot the yellow orb with the Wind Staff.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/wind-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Return to the Crazy Place and place the Wind Staff on the yellow pedestal.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/wind-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Church → Gen 2, jump right onto the cut-off wooden stairs before the trench to Generator 2.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/lightning-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Gen 2 → Church, jump left onto Excavation scaffolding.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/lightning-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Gen 2 → Church, jump right just before Church.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/lightning-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Generator 4 / Jug / Wind Tunnel area.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/lightning-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Open the Lightning Tunnel beside Generator 5 with the Gramophone + purple record, then grab the purple crystal in the Crazy Place.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/lightning-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Under Excavation.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/lightning-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Piano code",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/lightning-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Set the seven switches using the dials below.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/lightning-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Excavation:",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/lightning-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "line all four rings purple → shoot the orb with the Lightning Staff.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/lightning-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Place the staff on the purple Crazy Place pedestal → kill zombies to fill it with souls.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/lightning-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Spawn / Generator 1 stairs",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/lightning-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Tank Station / Generator 2 back door",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/lightning-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Generator 5, opposite Stamin-Up",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/lightning-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Generator 4 / Wind Tunnel entrance",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/lightning-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Church basement, behind the tank",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/lightning-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Church upstairs, by the repairable window",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/lightning-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Excavation / mound wall on the church-side path",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/lightning-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Speed Run route →",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/lightning-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Switch order, turn counts, and skips",
+    "layer": "rendered",
+    "routes": [
+      "/maps/origins/lightning-staff"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Tombstones + engines",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Keeper parts + weapons",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Upgrade the Servant",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Reel 1 — Keeper ritual",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Reel 2 — Arnie holes",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Reel 3 — Six bones",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Materialize S.O.P.H.I.A.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Kronorium + four eggs",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Symbol room",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Seven key throws",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Final boss — Shadowman",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Tombstone order",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Engine — Spawn",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Engine — Der Eisendrache",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Engine — Verrückt",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Engine — Mob of the Dead",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Pack-a-Punch dropped",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Revelations Guide · Built from the Shadows",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations",
+      "/maps/revelations/apothicon-upgrade",
+      "/maps/revelations/egg-locations",
+      "/maps/revelations/summoning-key",
+      "/maps/revelations/sound-step"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Quick Reference · Step 03",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/apothicon-upgrade"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Apothicon Servant Upgrade",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/apothicon-upgrade"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Shoot all five blue sky rocks with the Apothicon Servant. Choose a location to play only that short segment.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/apothicon-upgrade"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Choose a location to play only that segment.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/apothicon-upgrade"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Open on YouTube",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/apothicon-upgrade",
+      "/maps/revelations/egg-locations",
+      "/maps/revelations/summoning-key",
+      "/maps/revelations/sound-step"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "↗",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/apothicon-upgrade",
+      "/maps/revelations/egg-locations",
+      "/maps/revelations/summoning-key",
+      "/maps/revelations/sound-step"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Rock locations",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/apothicon-upgrade"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Spawn Corruption Engine",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/apothicon-upgrade"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "2:05 – 2:14",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/apothicon-upgrade"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "▶",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/apothicon-upgrade",
+      "/maps/revelations/egg-locations",
+      "/maps/revelations/summoning-key",
+      "/maps/revelations/sound-step"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Der Eisendrache / Shangri-La Stairs",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/apothicon-upgrade"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "2:14 – 2:21",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/apothicon-upgrade"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "2:21 – 2:24",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/apothicon-upgrade"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Mob of the Dead Corruption Engine",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/apothicon-upgrade"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "2:24 – 2:27",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/apothicon-upgrade"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "2:26 – 2:30",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/apothicon-upgrade"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Location Reference · Step 08",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/egg-locations"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Choose the map area, then the spawn spot you are checking.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/egg-locations"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Choose an area or spot to play only that clip.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/egg-locations"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Map area",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/egg-locations"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Spawn spots",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/egg-locations"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "6:39 – 6:46",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/egg-locations"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "6:46 – 6:50",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/egg-locations"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Buckets Near Wunderfizz Machine",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/egg-locations"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "6:51 – 6:53",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/egg-locations"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "6:53 – 6:57",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/egg-locations"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Quick Reference · Step 11",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/summoning-key"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Seven throws, any order. Leave Nacht for last. Tap the target you need and jump straight to that throw.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/summoning-key"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Choose a throw to play only that clip.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/summoning-key"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Suggested order",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/summoning-key"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "9:55 – 10:01",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/summoning-key"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "DE Clocktower Face",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/summoning-key"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "10:02 – 10:05",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/summoning-key"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Shangri-La Focusing Stone",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/summoning-key"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "10:05 – 10:08",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/summoning-key"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Origins Mound Tombstone",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/summoning-key"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "10:08 – 10:12",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/summoning-key"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Mob Cell Poster",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/summoning-key"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "10:13 – 10:15",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/summoning-key"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Verrückt MG42 Fountain",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/summoning-key"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "10:15 – 10:18",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/summoning-key"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "10:18 – 10:27",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/summoning-key"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Rune Placement Reference · Step 09",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/sound-step"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Pick the region you are checking, then the exact spot to hear that reference segment.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/sound-step"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "The video only jumps when you choose a spot.",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/sound-step"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Region",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/sound-step"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Next to DE Pyramid",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/sound-step"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "8:09 – 8:11",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/sound-step"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Primis Statues / Mystery Box Room",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/sound-step"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "8:11 – 8:15",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/sound-step"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "Shangri-La · In Front of Stamin-Up",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/sound-step"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
+  },
+  {
+    "text": "8:15 – 8:18",
+    "layer": "rendered",
+    "routes": [
+      "/maps/revelations/sound-step"
+    ],
+    "reason": "pure-OG restore, Bryen 2026-11-27 'keep it super og'",
+    "spec": "decision:zombies-pure-og:2026-11-23; Bryen 2026-11-27 pure-OG restore"
   }
 ]
