@@ -219,6 +219,17 @@
     padding: 0.35rem 0;
   }
 
+  /* The identity keeps its full width (it used to shrink and slide under the tabs); the tab row takes the rest and scrolls. */
+  .mob-module .mob-header__identity {
+    flex: 0 0 auto;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.1rem;
+    padding-inline: 0;
+    white-space: nowrap;
+    text-align: left;
+  }
+
   .mob-module .mob-header .header-content nav {
     min-width: 0;
   }
