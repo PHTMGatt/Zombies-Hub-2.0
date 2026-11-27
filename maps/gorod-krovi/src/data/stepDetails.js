@@ -51,6 +51,7 @@ const gorodGuideSteps = [
     refs: [
       { type: 'chips', label: 'One part per area', items: ['Armory', 'Infirmary', 'Operations Bunker / Department Store'] },
       { type: 'facts', items: [{ k: 'Build', v: 'Operations Bunker workbench' }] },
+      { type: 'facts', items: [{ k: 'All perks', v: 'Finish within 115 minutes of the game start' }] },
     ],
     checklist: ['Armory part', 'Infirmary part', 'Bunker / Dept. Store part', 'Shield built'],
     how: shield.steps,
@@ -100,6 +101,10 @@ const gorodGuideSteps = [
     goal: 'Find the green-lit valve and the Master Code Cylinder, set the other five valves, take the cylinder to S.O.P.H.I.A.',
     critical: ['Power the Hatchery generator first (basement, under a tarp by the incubators): destroy a Valkyrie Drone next to it. You get about 5 minutes; the green light only shows while it is on. If time runs out, press the button beside the generator to restart.'],
     // The compact solver and the valve map are on the Valve Solver tab (/maps/gorod-krovi/valves).
+    refs: [
+      { type: 'chips', label: '6 valves', items: ['Dragon Command (by the Bowie)', 'Infirmary, downstairs', 'Tank Factory, bottom left', 'Armory, top', 'Dept. Store, 3rd floor', 'Supply Depot, under the Speed Cola stairs'] },
+      { type: 'warning', text: 'The whistling valve holds the Master Code Cylinder: never touch it.' },
+    ],
     checklist: ['Five valves set', 'Cylinder at Dragon Command'],
     how: how('Solve the Valve Network'),
     problems: ['No settings? Re-check which valve is green and where the cylinder is — both change every game.'],
@@ -111,8 +116,10 @@ const gorodGuideSteps = [
     critical: ['Widow’s Wine or Electric Cherry effects can rotate the wheels by accident.'],
     refs: [
       { type: 'sequence', label: 'Letter wheels', items: ['K', 'R', 'O', 'N', 'O', 'S'] },
+      { type: 'facts', items: [{ k: 'Shoot', v: 'The sides of the wheels · top to bottom · then interact' }] },
     ],
     how: how('Spell KRONOS'),
+    problems: ['Wrong word: the wheels lock until next round.'],
   },
   {
     id: 'trophies',
@@ -130,7 +137,15 @@ const gorodGuideSteps = [
     checklist: gorodChallenges.map((challenge, index) => ({ k: challenge.title, v: challengeShort[index] })),
     how: gorodChallenges.map((challenge) => `${challenge.title}: ${challenge.objective}`),
     // A tip that only restates the "always comes last" warning above is left out.
-    problems: gorodChallenges.filter((challenge) => !/always comes last/i.test(challenge.tip)).map((challenge) => `${challenge.title}: ${challenge.tip}`),
+    problems: [
+      ...gorodChallenges.filter((challenge) => !/always comes last/i.test(challenge.tip)).map((challenge) => `${challenge.title}: ${challenge.tip}`),
+      'Start each task with the button under the monitor. Not on a Valkyrie round.',
+      'Bombs: the SLOW flash order is the real one. 3 minutes solo, 2 in co-op; failing downs everyone outside the safe zones.',
+      'Bombs in co-op: wait 2-3 seconds between defuses.',
+      'Gersh: the orb hums and takes Pack-a-Punched damage, 3 times. About 2 minutes with no damage fails it.',
+      'Mangler escort: no Monkey Bombs or Turned.',
+      'Valkyrie escort: one shotgun hit kills it. Open a 3rd-floor debris path first.',
+    ],
   },
   {
     id: 'power-core',
@@ -139,6 +154,7 @@ const gorodGuideSteps = [
     refs: [
       { type: 'sequence', items: ['Take the Power Core', 'Gauntlet Whelp at spawn', 'Back to S.O.P.H.I.A.', 'Enter the boss route'] },
       { type: 'chips', label: 'Bring', items: ['Strong perks', 'PaP Ray Gun Mark 3', 'Fresh shield', 'In Plain Sight'] },
+      { type: 'facts', items: [{ k: 'Entry', v: 'Floor grate opens at S.O.P.H.I.A. · everyone stands on it · press the button in the pillar ring' }] },
     ],
     how: how('Take the Power Core + Open the Boss Fight'),
   },
@@ -149,6 +165,8 @@ const gorodGuideSteps = [
     critical: [shieldTip],
     refs: [
       { type: 'sequence', label: 'Repeat each landing', items: ['Dragon lands', 'Nikolai exposes a weak point', 'Ray Gun Mark 3 on the wound'] },
+      { type: 'sequence', label: 'Weak-point order', items: ['Right wing', 'Belly', 'Neck'] },
+      { type: 'facts', items: [{ k: 'Fire breath', v: 'Stay at the edges or in the trenches' }] },
     ],
     how: [dragon.summary, ...dragon.details.filter((line) => line !== shieldTip), ...gorodBossPhases[0].details.filter((line) => /final weak point/i.test(line))],
   },
@@ -158,6 +176,8 @@ const gorodGuideSteps = [
     goal: 'In Plain Sight, break the mech weak points, then finish the center.',
     refs: [
       { type: 'sequence', items: ['In Plain Sight', 'Lit sections + upper left / right', 'Center opens', 'Finish it'] },
+      { type: 'chips', label: 'Targets before the center', items: ['2 torso lights', '2 shoulder cores'] },
+      { type: 'facts', items: [{ k: 'Reward', v: 'Unlimited perk slots + all perks · 7500 XP · achievement' }] },
     ],
     how: how('Defeat Nikolai'),
   },
